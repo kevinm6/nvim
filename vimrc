@@ -1,8 +1,7 @@
-"FONT
-set viminfo+=n~/.config/vim/viminfo
-set rtp+=$HOME/.config/vim/
-
 set guifont=Source\ Code\ Pro:h13
+
+set viminfo+=n~/.viminfo
+set rtp+=$HOME/.config/vim/
 
 syntax enable 
 
@@ -28,7 +27,6 @@ set noswapfile                  " disable swaps
 set undodir=$HOME/.config/vim/tmp/undo     " undo files
 set backupdir=$HOME/.config/vim/tmp/backup " backups files folder
 set directory=$HOME/.config/vim/tmp/swap   " swap files folder
-
 " Make those folders automatically if they don't already exist.
 if !isdirectory(expand(&undodir))
     call mkdir(expand(&undodir), "p")
@@ -40,9 +38,10 @@ if !isdirectory(expand(&directory))
     call mkdir(expand(&directory), "p")
 endif
 
+
+
 set hlsearch
 set incsearch
-
 
 set smarttab
 
@@ -53,7 +52,6 @@ set statusline+=%=\⟨\ %{&ff}
 set statusline+=%=\ ⟨\ \%l:%c\ ⟨
 
 "set title
-
 if &t_Co > 2 || has("gui_running")                                              
  set hlsearch                                                                  
 endif  
@@ -72,12 +70,11 @@ colorscheme k_colorScheme
 set cursorline
 set colorcolumn=80
 
-
 call plug#begin()
 	"Plug 'maxboisvert/vim-simple-complete'
 call plug#end()
 
-"REMAPPING
+" REMAPPING
  inoremap " ""<left>
  inoremap ' ''<left>
  inoremap ( ()<left>
