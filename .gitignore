@@ -1,7 +1,11 @@
-
 .DS_Store
 .netrwhist
-viminfo
+plugged/*
+colors/.DS_Store
 pack/*
-plugin/*
-tmp/*
+packer_compiled.lua
+.git/*
+startup_time*
+
+colors/.DS_Store
+.metals

@@ -1,8 +1,8 @@
 " Vim syntax file
-" Language:    AppleScript
-" Maintainer:  Jim Eberle <jim.eberle@fastnlight.com>
-" Last Change: Mar 18, 2010
-" URL:         http://www.fastnlight.com/syntax/applescript.vim
+" Language         : AppleScript
+" Maintainer       : Jim Eberle <jim.eberle@fastnlight.com>
+" Last Change      : Mar 18, 2010
+" URL              : http://www.fastnlight.com/syntax/applescript.vim
 
 " Use :syn w/in a buffer to see language element breakdown
 
