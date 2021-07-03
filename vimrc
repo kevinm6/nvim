@@ -71,17 +71,19 @@ set cursorline
 set colorcolumn=80
 
 call plug#begin()
+	Plug 'makerj/vim-pdf'
+	Plug 'tpope/vim-surround'
 	"Plug 'maxboisvert/vim-simple-complete'
 call plug#end()
 
 " REMAPPING
- inoremap " ""<left>
- inoremap ' ''<left>
- inoremap ( ()<left>
- inoremap [ []<left>
- inoremap { {}<left>
- inoremap {<CR> {<CR>}<ESC>O
- inoremap {;<CR> {<CR>};<ESC>O
+" inoremap " ""<left>
+" inoremap ' ''<left>
+" inoremap ( ()<left>
+" inoremap [ []<left>
+" inoremap { {}<left>
+" inoremap {<CR> {<CR>}<ESC>O
+" inoremap {;<CR> {<CR>};<ESC>O
 
 
  function! CleverTab()
