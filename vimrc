@@ -1,3 +1,4 @@
+" K Vim Configuration
 set guifont=Source\ Code\ Pro:h13
 
 set viminfo+=n~/.viminfo
@@ -37,7 +38,6 @@ endif
 if !isdirectory(expand(&directory))
     call mkdir(expand(&directory), "p")
 endif
-
 
 
 set hlsearch
@@ -94,4 +94,3 @@ call plug#end()
            endif
         endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
-

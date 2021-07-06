@@ -43,8 +43,8 @@ hi Delimiter guifg=#FFD479 ctermfg=186 "parenthesis
 hi SpecialComment guifg=#ff00ff ctermfg=201
 hi Debug guifg=#ff0000 ctermfg=Red
 
-hi StatusLine guifg=#A9A9A9 guibg=#303030 ctermbg=236 ctermfg=248
-hi StatusLineNC guifg=#B0B0B0 guibg=#303030 ctermfg=7 ctermbg=249
+"hi StatusLine guifg=#A9A9A9 guibg=#303030 ctermbg=236 ctermfg=248
+"hi StatusLineNC guifg=#B0B0B0 guibg=#303030 ctermfg=7 ctermbg=249
 
 hi User1 guifg=#00D392 guibg=#303030 ctermfg=48 ctermbg=236
 hi User2 guifg=#A9A9A9 guibg=#303030 ctermfg=248 ctermbg=236
@@ -52,7 +52,11 @@ hi User3 guifg=#86868B guibg=#303030 ctermfg=102 ctermbg=236
 
 hi Title guifg=gold gui=bold cterm=bold ctermfg=yellow
 hi Statement guifg=#08adeb ctermfg=39
+
 hi Visual guibg=#244E7A ctermbg=25 cterm=reverse
+
+hi VisualNOS cterm=bold,underline
+
 hi WarningMsg guifg=salmon ctermfg=1
 hi Macro guifg=Red ctermfg=Red
 hi PreProc guifg=Red ctermfg=Red
@@ -82,7 +86,6 @@ hi Todo guibg=yellow2 guifg=orangeRed ctermbg=190 ctermfg=2
 hi Directory guifg=#00af88 ctermfg=36
 hi ErrorMsg cterm=bold guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
 
-hi VisualNOS cterm=bold,underline
 hi WildMenu ctermfg=0 ctermbg=3
 hi DiffAdd ctermbg=4
 hi DiffChange ctermbg=5
