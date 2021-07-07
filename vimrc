@@ -19,8 +19,8 @@ set nu
 set wrap
 set smartcase
 
-set listchars=tab:\|\ 
-set list
+"set listchars=tab:\|\ 
+"set list
 
 set undofile
 set nobackup                    " disable backups
