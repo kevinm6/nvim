@@ -77,6 +77,9 @@ call plug#begin()
 call plug#end()
 
 " REMAPPING
+noremap x "_x
+vnoremap p "_dP
+
 " inoremap " ""<left>
 " inoremap ' ''<left>
 " inoremap ( ()<left>
