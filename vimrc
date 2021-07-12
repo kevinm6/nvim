@@ -18,6 +18,7 @@ set smartindent
 set nu
 set wrap
 set smartcase
+set lazyredraw
 
 "set listchars=tab:\|\ 
 "set list
