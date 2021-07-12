@@ -40,6 +40,9 @@ if !isdirectory(expand(&directory))
     call mkdir(expand(&directory), "p")
 endif
 
+if &diff
+	highlight! link DiffText MatchParen
+endif
 
 set hlsearch
 set incsearch
