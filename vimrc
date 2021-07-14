@@ -12,13 +12,39 @@ set path+=**
 set wildmenu
 
 set noerrorbells
+set novisualbell
 set tabstop=3 softtabstop=3
 set shiftwidth=3
 set smartindent
 set nu
-set wrap
 set smartcase
 set lazyredraw
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+
+" Set to auto read when a file is changed from the outside 
+set autoread
+
+" Show matching brackets when text indicator is over them
+set showmatch 
+
+
+" Properly disable sound on errors on MacVim
+if has("gui_macvim")
+    autocmd GUIEnter * set vb t_vb=
+endif
+
+
+
+" Add a bit extra margin to the left
+set foldcolumn=1
+
+" Linebreak on 500 characters
+set lbr
+set tw=500
+
+
 
 "set listchars=tab:\|\ 
 "set list
