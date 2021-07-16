@@ -109,8 +109,8 @@ call plug#end()
 noremap x "_x
 vnoremap p "_dP
 
-inoremap <leader><left> <ESC>0
-inoremap <leader><right> <ESC>$
+inoremap <Leader><left> <ESC>0
+inoremap <Leader><right> <ESC>$
 
 " inoremap \"" "<left>
 " inoremap ' ''<left>
