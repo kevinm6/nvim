@@ -16,11 +16,10 @@ set novisualbell
 set tabstop=3 softtabstop=3
 set shiftwidth=3
 set smartindent
+set autoindent
 set nu
 set smartcase
 set lazyredraw
-set ai "Auto indent
-set si "Smart indent
 set wrap "Wrap lines
 
 " Set to auto read when a file is changed from the outside 
@@ -110,7 +109,7 @@ call plug#end()
 noremap x "_x
 vnoremap p "_dP
 
-" inoremap " ""<left>
+" inoremap \"" "<left>
 " inoremap ' ''<left>
 " inoremap ( ()<left>
 " inoremap [ []<left>
