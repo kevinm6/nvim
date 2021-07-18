@@ -1,131 +1,134 @@
-" K Vim Configuration
-set guifont=Source\ Code\ Pro:h13
+" --------------------------------------------------- 
+" -------------- K Vim Configuration ----------------
+" --------------------------------------------------- 
 
-set viminfo+=n~/.viminfo
-set rtp+=$HOME/.config/vim/
+" ----------------- VIM OPTIONS ------------------ {{{
+	set guifont=Source\ Code\ Pro:h13
 
-syntax enable 
+	set viminfo+=n~/.viminfo
+	set rtp+=$HOME/.config/vim/
 
-set nocompatible
+	syntax enable 
 
-set path+=**
-set wildmenu
+	filetype on " enable recognition of filetype
+	filetype plugin indent on " enable plugin, indentation on filetypes
 
-set noerrorbells
-set novisualbell
-set tabstop=3 softtabstop=3
-set shiftwidth=3
-set smartindent
-set autoindent
-set nu
-set smartcase
-set lazyredraw
-set wrap "Wrap lines
+	set nocompatible " Vi -> ViM (Vi Improved)
 
-" Set to auto read when a file is changed from the outside 
-set autoread
+	set number " Show line numbers
 
-" Show matching brackets when text indicator is over them
-set showmatch 
+	set path+=**
+	set wildmenu " tab completion menu
+	set showmode " show active mode in status line
+	set showcmd " show command in status line
 
+	set noerrorbells " disable errors sounds
+	set novisualbell " disable visual sounds
+	set tabstop=3 softtabstop=3 " set tabs width 
+	set shiftwidth=3 
 
-" Properly disable sound on errors on MacVim
-if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
-endif
+	set autoindent " enable indentation
+	set smartindent " enable smart indentation
 
+	set smartcase " smart case for search
+	set lazyredraw " use less resources to render
+	set wrap " Wrap long lines
 
+	set autoread " enable auto read files when changed outside
 
-" Add a bit extra margin to the left
-set foldcolumn=1
+	set showmatch " Show matching brackets when over
 
-" Linebreak on 500 characters
-set lbr
-set tw=500
+	set undofile " enable undo
+	set nobackup " disable backups
+	set noswapfile " disable swaps
+	set undodir=$HOME/.config/vim/tmp/undo " undo files directory
+	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
+		 call mkdir(expand(&undodir), "p")
+	endif
 
+	set foldcolumn=1	" Add a bit extra margin to the left
 
+	set tw=500	" Linebreak on 500 characters
 
-"set listchars=tab:\|\ 
-"set list
+	"set listchars=tab:\|\ 
+	"set list
 
-set undofile
-set nobackup                    " disable backups
-set noswapfile                  " disable swaps
-set undodir=$HOME/.config/vim/tmp/undo     " undo files
-set backupdir=$HOME/.config/vim/tmp/backup " backups files folder
-set directory=$HOME/.config/vim/tmp/swap   " swap files folder
-" Make those folders automatically if they don't already exist.
-if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
-endif
-if !isdirectory(expand(&backupdir))
-    call mkdir(expand(&backupdir), "p")
-endif
-if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
-endif
+	if has("gui_macvim")	" Properly disable sound on errors on MacVim
+		 autocmd GUIEnter * set vb t_vb=
+	endif
 
-if &diff
-	highlight! link DiffText MatchParen
-endif
+	if &diff " during diff enable highlight of changes
+		highlight! link DiffText MatchParen
+	endif
 
-set hlsearch
-set incsearch
+	set hlsearch " enable highlight during search
+	set incsearch " enable incremental search
 
-set smarttab
+	set smarttab " enable smart tabs
 
-set laststatus=2
-set statusline=%1*[%n]\ \⟩\ %<%f\%*
-set statusline+=%2*\ ⟩\ \%y
-set statusline+=%=\⟨\ %{&ff}
-set statusline+=%=\ ⟨\ \%l:%c\ ⟨
+	set cursorline " highlight cursor line
+	set colorcolumn=80 " highlight column at number
+	
+	set foldenable " enable code folding
+	set foldmethod=indent " fold with indentation
+	
+	" load automatically code folding
+	autocmd BufWinLeave *.* mkview
+	autocmd BufWinEnter *.* silent loadview 
 
-"set title
-if &t_Co > 2 || has("gui_running")                                              
- set hlsearch                                                                  
-endif  
+	if has('syntax') && has('eval')
+	 packadd! matchit
+	endif
 
-if has('syntax') && has('eval')
- packadd! matchit
-endif
-
-filetype off                
-
-filetype plugin indent on    
-
-" COLOR Scheme Kevin
-colorscheme k_colorScheme
-
-set cursorline
-set colorcolumn=80
-
-call plug#begin()
-	Plug 'makerj/vim-pdf'
-	Plug 'tpope/vim-surround'
-	"Plug 'maxboisvert/vim-simple-complete'
-call plug#end()
-
-" REMAPPING
-noremap x "_x
-vnoremap p "_dP
-
-inoremap <Leader><left> <ESC>0
-inoremap <Leader><right> <ESC>$
-
-" inoremap \"" "<left>
-" inoremap ' ''<left>
-" inoremap ( ()<left>
-" inoremap [ []<left>
-" inoremap { {}<left>
-" inoremap {<CR> {<CR>}<ESC>O
-" inoremap {;<CR> {<CR>};<ESC>O
+	" COLOR SCHEME
+	colorscheme k_theme
+" }}}
 
 
- function! CleverTab()
-           if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-              return "\<Tab>"
-           else
-              return "\<C-N>"
-           endif
-        endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
+" ----------------- STATUS LINE ------------------ {
+	set laststatus=2
+	set statusline=%1*[%n]\ \⟩\ %<%f\%*
+	set statusline+=%2*\ ⟩\ \%y
+	set statusline+=%=\⟨\ %{&ff}
+	set statusline+=%=\ ⟨\ \%l:%c\ ⟨
+" }
+
+
+" ----------------- PLUGINS ----------------- {
+	call plug#begin()
+		Plug 'makerj/vim-pdf'
+		Plug 'tpope/vim-surround'
+		"Plug 'maxboisvert/vim-simple-complete'
+	call plug#end()
+" }
+
+
+" ----------------- REMAPPING ----------------- {
+	noremap x "_x
+	vnoremap p "_dP
+
+	inoremap <Leader><left> <ESC>0
+	inoremap <Leader><right> <ESC>$
+
+	inoremap <Tab> <C-R>=CleverTab()<CR>
+
+	" remapping for autoclose brackets
+	" inoremap \"" "<left>
+	" inoremap ' ''<left>
+	" inoremap ( ()<left>
+	" inoremap [ []<left>
+	" inoremap { {}<left>
+	" inoremap {<CR> {<CR>}<ESC>O
+	" inoremap {;<CR> {<CR>};<ESC>O
+" }
+
+
+" ----------------- FUNCTIONS -----------------  {
+	function! CleverTab()
+		if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+			return "\<Tab>"
+		else
+			return "\<C-N>"
+		endif
+	endfunction
+" }
