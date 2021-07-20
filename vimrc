@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" ----------------- VIM OPTIONS ------------------ {{{
+" ----------------- VIM OPTIONS ------------------ {
 	set guifont=Source\ Code\ Pro:h13
 
 	set viminfo+=n~/.viminfo
@@ -82,7 +82,7 @@
 
 	" COLOR SCHEME
 	colorscheme k_theme
-" }}}
+" }
 
 
 " ----------------- STATUS LINE ------------------ {
