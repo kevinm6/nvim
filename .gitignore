@@ -5,4 +5,6 @@ pack/*
 plugin/*
 tmp/*
 plugged/*
+plugged/vim-pdf/
+plugged/vim-surround/
 view/*
