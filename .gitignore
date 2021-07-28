@@ -1,4 +1,3 @@
-
 .DS_Store
 .netrwhist
 viminfo
@@ -6,3 +5,4 @@ pack/*
 plugin/*
 tmp/*
 plugged/*
+view/*
