@@ -5,3 +5,5 @@ viminfo
 pack/*
 plugin/*
 tmp/*
+vim-pdf
+vim-surround
