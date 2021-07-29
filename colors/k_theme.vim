@@ -46,7 +46,7 @@ hi SpecialComment guifg=#ff00ff ctermfg=201
 hi Debug guifg=#ff0000 ctermfg=Red
 
 hi StatusLine guifg=#A9A9A9 guibg=#303030 ctermbg=236 ctermfg=248
-hi StatusLineNC guifg=#B0B0B0 guibg=#303030 ctermfg=7 ctermbg=242
+hi StatusLineNC guifg=#A9A9A9 guibg=#C0C0C0 ctermfg=7 ctermbg=242
 
 hi User1 guifg=#00D392 guibg=#303030 ctermfg=48 ctermbg=236
 hi User2 guifg=#A9A9A9 guibg=#303030 ctermfg=248 ctermbg=236
