@@ -9,7 +9,7 @@ endif
 
 set background=dark
 set t_co=256
-set guicursor=n-v-i:blinkwait1000-blinkon500-blinkoff100
+set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
 
 "highlight dark
  
