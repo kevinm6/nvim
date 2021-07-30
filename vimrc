@@ -7,6 +7,7 @@
 
 	set viminfo+=n~/.viminfo
 	set rtp+=$HOME/.config/vim/
+	set path+=**
 
 	syntax enable 
 
@@ -17,7 +18,6 @@
 
 	set number " Show line numbers
 
-	set path+=**
 	set wildmenu " tab completion menu
 	set showmode " show active mode in status line
 	set showcmd " show command in status line
@@ -105,11 +105,15 @@
 
 " ----------------- REMAPPING ----------------- {
 	noremap x "_x
+	nnoremap <C-j> <C-w><C-j>
+	nnoremap <C-k> <C-w><C-k>
+	nnoremap <C-l> <C-w><C-l>
+	nnoremap <C-h> <C-w><C-h>
+
 	vnoremap p "_dP
 
 	inoremap <Leader><left> <ESC>0
 	inoremap <Leader><right> <ESC>$
-
 	inoremap <Tab> <C-R>=CleverTab()<CR>
 
 	" remapping for autoclose brackets
