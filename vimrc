@@ -67,8 +67,9 @@
 	set smarttab " enable smart tabs
 
 	set cursorline " highlight cursor line
-	set colorcolumn=80 " highlight column at number
-	
+"	set colorcolumn=86 " highlight column at number
+"	highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"	match OverLength /\%81v.\+/
 	set foldenable " enable code folding
 	set foldmethod=indent " fold with indentation
 	
@@ -87,10 +88,10 @@
 
 " ----------------- STATUS LINE ------------------ {
 	set laststatus=2
-	set statusline=%1*[%n]\ \⟩\ %<%f\%*
+	set statusline=%1*\ [%n]\ \⟩\ %<%f\%*
 	set statusline+=%2*\ ⟩\ \%y
 	set statusline+=%=\⟨\ %{&ff}
-	set statusline+=%=\ ⟨\ \%l:%c\ ⟨
+	set statusline+=%=\ ⟨\ \%l:%c\ ⟨\    
 " }
 
 

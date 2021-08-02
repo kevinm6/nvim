@@ -16,14 +16,13 @@
 	hi Normal guifg=#DCDCDC guibg=#101010 ctermfg=253 ctermbg=232
 	hi Visual guibg=#244E7A ctermbg=25 cterm=reverse
 	" Selection Not Owned by vim
-	hi VisualNOS cterm=bold,underline
+	hi VisualNOS cterm=bold,underline 
 
-	hi ModeMsg guifg=DeepSkyBlue3 ctermfg=32 ctermbg=50
+	hi ModeMsg guifg=DeepSkyBlue3 guibg=NONE ctermfg=31 ctermbg=NONE
 	hi MoreMsg guifg=DeepSkyBlue3 ctermfg=32
 
 	hi Title guifg=gold gui=bold cterm=bold ctermfg=yellow
 	hi Statement guifg=#08adeb ctermfg=39
-
 
 	hi colorColumn guibg=#606060 ctermbg=237
 
@@ -35,22 +34,24 @@
 	hi cursorLineNr guibg=NONE guifg=#36FF5A gui=bold term=bold ctermbg=NONE ctermfg=42
 
 " Split
-	hi VertSplit guibg=#c2bfa5 guifg=Grey40 gui=none cterm=reverse
+	hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
 
 " Folding
-	hi Folded guibg=black guifg=Grey40 ctermfg=Grey ctermbg=darkGrey
+	hi Folded guibg=black guifg=Grey40 ctermfg=230 ctermbg=240
 	hi FoldColumn guibg=black guifg=Grey20 ctermfg=4 ctermbg=7
 
 " Search
 	hi Search guibg=#244E7A ctermbg=25 
 	hi IncSearch guibg=black guifg=green ctermbg=black ctermfg=green cterm=none ctermfg=yellow ctermbg=green
 
-
+" Debugging
 	hi Debug guifg=#ff0000 ctermfg=Red
 
 " Status Line
 	hi StatusLine guifg=#A9A9A9 guibg=#303030 ctermbg=236 ctermfg=248
 	hi StatusLineNC guifg=#A9A9A9 guibg=#787878 ctermfg=7 ctermbg=242
+	hi StatusLineTerm guifg=#A9A9A9 guibg=#303030 ctermbg=234 ctermfg=246
+	hi StatusLineTermNC guifg=#A9A9A9 guibg=#787878 ctermfg=7 ctermbg=244
 
 " Users
 	hi User1 guifg=#00D392 guibg=#303030 ctermfg=48 ctermbg=236
@@ -58,8 +59,8 @@
 	hi User3 guifg=#86868B guibg=#303030 ctermfg=102 ctermbg=236
 
 " Syntax
-		hi String guifg=#FF7E80 ctermfg=210
-		hi Number guifg=#00fff2 ctermfg=50
+	hi String guifg=#FF7E80 ctermfg=210
+	hi Number guifg=#00fff2 ctermfg=50
 	hi Comment gui=italic guifg=#6C7986 ctermfg=102 font=Source_Code_Pro:h12
 	hi Constant guifg=#D4FB79 ctermfg=192
 	hi Boolean guifg=#FF5573 ctermfg=204
