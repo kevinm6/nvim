@@ -57,6 +57,7 @@
 
 	if has("gui_macvim")	" Properly disable sound on errors on MacVim
 		 autocmd GUIEnter * set vb t_vb=
+		 let macvim_hig_shift_movement = 1
 	endif
 
 	if &diff " during diff enable highlight of changes
