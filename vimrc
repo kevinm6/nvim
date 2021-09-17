@@ -103,6 +103,7 @@
 	call plug#begin()
 		Plug 'makerj/vim-pdf'
 		Plug 'tpope/vim-surround'
+		Plug 'tpope/vim-fugitive'
 		"Plug 'maxboisvert/vim-simple-complete'
 	call plug#end()
 " }
