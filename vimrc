@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 28.07.21
+" Version 19.09.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont=Source\ Code\ Pro:h13
@@ -93,10 +93,10 @@
 
 " ----------------- STATUS LINE ------------------ {
 	set laststatus=2
-	set statusline=%1*\ [%n]\ \⟩\ %<%f\%*
+	set statusline=%1*\ [%n]\ \⟩\ %<%f\%* 
 	set statusline+=%2*\ ⟩\ \%y
-	set statusline+=%=\⟨\ %{&ff}
-	set statusline+=%=\ ⟨\ \%l:%c\ ⟨\    
+	set statusline+=%=Git[%{gitbranch#name()}]\ ⟨\ %{&ff}
+	set statusline+=%=\ ⟨\ \%l:%c\ ⟨\   
 " }
 
 
@@ -105,6 +105,8 @@
 		Plug 'makerj/vim-pdf'
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
+		Plug 'rbong/vim-flog'
+		Plug 'itchyny/vim-gitbranch'
 		"Plug 'maxboisvert/vim-simple-complete'
 	call plug#end()
 " }
