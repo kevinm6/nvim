@@ -101,10 +101,10 @@
 	hi WildMenu guifg=#000000 guibg=#808000 ctermfg=0 ctermbg=3 
 
 " Diff 
-	hi DiffAdd ctermbg=4 guibg=#000080
-	hi DiffChange ctermbg=5 guibg=#800080
-	hi DiffDelete gui=bold guifg=#000080 guibg=#008080 cterm=bold ctermfg=4 ctermbg=6
-	hi DiffText gui=bold guibg=#800000 cterm=bold ctermbg=1
+	hi DiffAdd guifg=NONE guibg=#000080 ctermfg=NONE ctermbg=Green 
+	hi DiffChange guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE
+	hi DiffDelete gui=NONE guifg=#ff8080 guibg=#ffb0b0 cterm=none ctermfg=LightBlue ctermbg=Red
+	hi DiffText guifg=Red guibg=#0000d7 cterm=none ctermfg=Red ctermbg=20
 
 " Errors
 	hi Error guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
