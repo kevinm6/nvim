@@ -73,7 +73,7 @@
 "	set colorcolumn=86 " highlight column at number
 "	highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "	match OverLength /\%81v.\+/
-	match ErrorMsg '\%>80v\+'
+"	match ErrorMsg '\%>80v\+'  --> disabled highlighting coloumn
 
 	set foldenable " enable code folding
 	set foldmethod=indent " fold with indentation
