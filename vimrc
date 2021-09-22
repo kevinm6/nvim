@@ -50,7 +50,7 @@
 
 	set foldcolumn=1	" Add a bit extra margin to the left
 
-	set tw=500	" Linebreak on 500 characters
+	set tw=400	" Linebreak on 400 characters
 
 	"set listchars=tab:\|\ 
 	"set list
@@ -81,10 +81,16 @@
 	" load automatically code folding
 	autocmd BufWinLeave *.* mkview
 	autocmd BufWinEnter *.* silent loadview 
-
+	
 	if has('syntax') && has('eval')
 	 packadd! matchit
 	endif
+
+	" NETRW Options
+	let g:netrw_liststyle = 3 " set default list appearance
+	let g:netrw_banner = 0 " disabling banner
+	let g:netrw_browse_split = 4 " open files in vertical split as default
+	let g:netrw_winsize = 28 " set size of window
 
 	" COLOR SCHEME
 	colorscheme k_theme
