@@ -18,8 +18,9 @@
 
 	set nocompatible " Vi -> ViM (Vi Improved)
 
+	set mouse=a
+	set mousemodel=popup_setpos
 	set number " Show line numbers
-
 	set wildmenu " tab completion menu
 	set showmode " show active mode in status line
 	set showcmd " show command in status line
@@ -91,7 +92,7 @@
 	let g:netrw_banner = 0 " disabling banner
 	let g:netrw_preview = 1 " preview window in vertical split instead of horizontal
 	let g:netrw_browse_split = 4 " open files in vertical split as default
-	let g:netrw_winsize = 28 " set size of window percentage of all window
+
 	let g:netrw_keepdir = 0 " current dir & browsing dir synced
 	let g:netrw_localcopydircmd = 'cp -r' " enable recursive copy command
 	" highlight marked files
