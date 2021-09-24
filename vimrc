@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 19.09.21
+" Version 24.09.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont=Source\ Code\ Pro:h13
@@ -87,18 +87,19 @@
 	 packadd! matchit
 	endif
 
-	" NETRW Options
+" ----------------- NETRW Options ------------------ {
 	let g:netrw_liststyle = 3 " set tree as default list appearance
 	let g:netrw_banner = 0 " disabling banner
 	let g:netrw_preview = 1 " preview window in vertical split instead of horizontal
 	let g:netrw_browse_split = 4 " open files in vertical split as default
-
+	let g:netrw_silent = 1 " transfers done silently (no statusline changes when obtaining files
 	let g:netrw_keepdir = 0 " current dir & browsing dir synced
 	let g:netrw_localcopydircmd = 'cp -r' " enable recursive copy command
 	" highlight marked files
 	hi! link netrwMarkFile Search  
+" }
 
-	" COLOR SCHEME
+" COLOR SCHEME {
 	colorscheme k_theme
 " }
 
@@ -125,12 +126,12 @@
 
 
 " ----------------- REMAPPING ----------------- {
-	noremap x "_x
+	" noremap x "_x
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
-	nnoremap <C-l> <C-w><C-l>
-	nnoremap <C-h> <C-w><C-h>
-
+	nnoremap <C-w><l> <C-w><C-l>
+	nnoremap <C><h> <C-w><C-h>
+	
 	vnoremap p "_dP
 
 	inoremap <Leader><left> <ESC>0
