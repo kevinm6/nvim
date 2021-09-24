@@ -87,10 +87,11 @@
 	endif
 
 	" NETRW Options
-	let g:netrw_liststyle = 3 " set default list appearance
+	let g:netrw_liststyle = 3 " set tree as default list appearance
 	let g:netrw_banner = 0 " disabling banner
+	let g:netrw_preview = 1 " preview window in vertical split instead of horizontal
 	let g:netrw_browse_split = 4 " open files in vertical split as default
-	let g:netrw_winsize = 28 " set size of window
+	let g:netrw_winsize = 28 " set size of window percentage of all window
 	let g:netrw_keepdir = 0 " current dir & browsing dir synced
 	let g:netrw_localcopydircmd = 'cp -r' " enable recursive copy command
 	" highlight marked files
