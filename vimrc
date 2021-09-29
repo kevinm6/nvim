@@ -134,8 +134,8 @@
 	
 	vnoremap p "_dP
 
-	inoremap <Leader><left> <ESC>0
-	inoremap <Leader><right> <ESC>$
+	nnoremap <D><left> <ESC>0
+	nnoremap <D><right> <ESC>$
 	inoremap <Tab> <C-R>=CleverTab()<CR>
 
 	nnoremap ∂∂ :Lexplore %:p:h<CR>
