@@ -120,8 +120,8 @@
 		Plug 'tpope/vim-fugitive'
 		Plug 'rbong/vim-flog'
 		Plug 'itchyny/vim-gitbranch'
+		Plug 'maxboisvert/vim-simple-complete'
 		"Plug 'ycm-core/YouCompleteMe'
-		"Plug 'maxboisvert/vim-simple-complete'
 	call plug#end()
 " }
 
