@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 24.09.21
+" Version 03.10.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont=Source\ Code\ Pro:h13
@@ -120,6 +120,7 @@
 		Plug 'tpope/vim-fugitive'
 		Plug 'rbong/vim-flog'
 		Plug 'itchyny/vim-gitbranch'
+		"Plug 'ycm-core/YouCompleteMe'
 		"Plug 'maxboisvert/vim-simple-complete'
 	call plug#end()
 " }
