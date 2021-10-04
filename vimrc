@@ -83,11 +83,13 @@
 	" load automatically code folding
 	autocmd BufWinLeave *.* mkview
 	autocmd BufWinEnter *.* silent loadview 
+
 	
 	if has('syntax') && has('eval')
 	 packadd! matchit
 	endif
 
+	"autocmd BufEnter * silent! lcd %:p:h
 " ----------------- NETRW Options ------------------ {
 	let g:netrw_liststyle = 3 " set tree as default list appearance
 	let g:netrw_banner = 0 " disabling banner
