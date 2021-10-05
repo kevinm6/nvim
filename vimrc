@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 03.10.21
+" Version 05.10.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont=Source\ Code\ Pro:h13
@@ -128,33 +128,6 @@
 " }
 
 
-" ----------------- REMAPPING ----------------- {
-	" noremap x "_x
-	nnoremap <C-j> <C-w><C-j>
-	nnoremap <C-k> <C-w><C-k>
-	nnoremap <C-w><l> <C-w><C-l>
-	nnoremap <C><h> <C-w><C-h>
-	
-	vnoremap p "_dP
-
-	nnoremap <D><left> <ESC>0
-	nnoremap <D><right> <ESC>$
-	inoremap <Tab> <C-R>=CleverTab()<CR>
-
-	nnoremap ∂∂ :Lexplore %:p:h<CR>
-	nnoremap ∂å :Lexplore<CR>
-
-	" remapping for autoclose brackets
-	" inoremap \"" "<left>
-	" inoremap ' ''<left>
-	" inoremap ( ()<left>
-	" inoremap [ []<left>
-	" inoremap { {}<left>
-	" inoremap {<CR> {<CR>}<ESC>O
-	" inoremap {;<CR> {<CR>};<ESC>O
-" }
-
-
 " ----------------- FUNCTIONS -----------------  {
 function! Smart_TabComplete()
   let line = getline('.')                         " current line
@@ -180,3 +153,31 @@ endfunction
 inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
 " }
+
+
+" ----------------- REMAPPING ----------------- {
+	" noremap x "_x
+	nnoremap <C-j> <C-w><C-j>
+	nnoremap <C-k> <C-w><C-k>
+	nnoremap <C-w><l> <C-w><C-l>
+	nnoremap <C><h> <C-w><C-h>
+	
+	vnoremap p "_dP
+
+	noremap <D><left> <Esc>0
+	noremap <D><right> <Esc>$
+	inoremap <Tab> <C-R>=CleverTab()<CR>
+	
+	nnoremap ∂∂ :Lexplore %:p:h<CR>
+	nnoremap ∂å :Lexplore<CR>
+
+	" remapping for autoclose brackets
+	" inoremap \"" "<left>
+	" inoremap ' ''<left>
+	" inoremap ( ()<left>
+	" inoremap [ []<left>
+	" inoremap { {}<left>
+	" inoremap {<CR> {<CR>}<ESC>O
+	" inoremap {;<CR> {<CR>};<ESC>O
+" }
+
