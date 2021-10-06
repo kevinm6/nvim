@@ -82,7 +82,7 @@
 	
 	" load automatically code folding
 	autocmd BufWinLeave *.* mkview
-	autocmd BufEnter * silent! lcd %:p:h
+	"autocmd BufEnter * silent! lcd %:p:h
 	autocmd BufWinEnter *.* silent loadview 
 	
 	if has('syntax') && has('eval')
