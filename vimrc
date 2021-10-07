@@ -87,6 +87,11 @@
 	"autocmd BufEnter * silent! lcd %:p:h
 	autocmd BufWinEnter *.* silent loadview 
 	
+	autocmd filetype netrw call Netrw_mappings()
+	function! Netrw_mappings()
+	  noremap <buffer>% :call CreateInPreview()<cr>
+	endfunction
+
 	if has('syntax') && has('eval')
 	 packadd! matchit
 	endif
@@ -127,46 +132,28 @@
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		Plug 'airblade/vim-gitgutter'
 		Plug 'w0rp/ale'
-		"Plug 'maxboisvert/vim-simple-complete'
-		"Plug 'ycm-core/YouCompleteMe'
 	call plug#end()
 " }
 
 
 " ----------------- FUNCTIONS -----------------  {
-"function! Smart_TabComplete()
-"  let line = getline('.')                         " current line
-"
-"  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
-"                                                  " line to one character right
-"                                                  " of the cursor
-"  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-"  if (strlen(substr)==0)                          " nothing to match on empty string
-"    return "\<tab>"
-"  endif
-"  let has_period = match(substr, '\.') != -1      " position of period, if any
-"  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-"  if (!has_period && !has_slash)
-"    return "\<C-X>\<C-P>"                         " existing text matching
-"  elseif ( has_slash )
-"    return "\<C-X>\<C-F>"                         " file matching
-"  else
-"    return "\<C-X>\<C-O>"                         " plugin matching
-"  endif
-"endfunction
-"
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
+	" Plugin coc.nvim
+	" use <tab> for trigger completion and navigate to the next complete item
+	function! s:check_back_space() abort
+	  let col = col('.') - 1
+	  return !col || getline('.')[col - 1]  =~ '\s'
+	endfunction
 
+	inoremap <silent><expr> <Tab>
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<Tab>" :
+			\ coc#refresh()
 
+	function! CreateInPreview()
+	  let l:filename = input("please enter filename: ")
+	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
+	endf
 
 " }
 
