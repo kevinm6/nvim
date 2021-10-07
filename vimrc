@@ -45,7 +45,7 @@
 
 	set undofile " enable undo
 	set nobackup " disable backups
-	set nowb
+	set nowritebackup
 	set noswapfile " disable swaps
 	set undodir=$HOME/.config/vim/tmp/undo " undo files directory
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
@@ -83,7 +83,10 @@
 	set foldmethod=indent " fold with indentation
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
-	
+
+	set signcolumn=yes " always show signcolumns
+	set cmdheight=2	" bigger display for commands/logs
+
 	augroup AutoSaveGroup
 	  autocmd!
 	  " view files are about 500 bytes
