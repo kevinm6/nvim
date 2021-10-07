@@ -125,6 +125,7 @@
 		Plug 'rbong/vim-flog'
 		Plug 'itchyny/vim-gitbranch'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
+		Plug "ariblade/vim-gitgutter"
 		"Plug 'maxboisvert/vim-simple-complete'
 		"Plug 'ycm-core/YouCompleteMe'
 	call plug#end()
