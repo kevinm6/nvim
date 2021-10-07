@@ -105,7 +105,6 @@
 
 " COLOR SCHEME {
 	colorscheme k_theme
-	highlight clear SignColumn
 " }
 
 
@@ -135,26 +134,38 @@
 
 
 " ----------------- FUNCTIONS -----------------  {
-function! Smart_TabComplete()
-  let line = getline('.')                         " current line
-
-  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
-                                                  " line to one character right
-                                                  " of the cursor
-  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-  if (strlen(substr)==0)                          " nothing to match on empty string
-    return "\<tab>"
-  endif
-  let has_period = match(substr, '\.') != -1      " position of period, if any
-  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-  if (!has_period && !has_slash)
-    return "\<C-X>\<C-P>"                         " existing text matching
-  elseif ( has_slash )
-    return "\<C-X>\<C-F>"                         " file matching
-  else
-    return "\<C-X>\<C-O>"                         " plugin matching
-  endif
+"function! Smart_TabComplete()
+"  let line = getline('.')                         " current line
+"
+"  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+"                                                  " line to one character right
+"                                                  " of the cursor
+"  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+"  if (strlen(substr)==0)                          " nothing to match on empty string
+"    return "\<tab>"
+"  endif
+"  let has_period = match(substr, '\.') != -1      " position of period, if any
+"  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+"  if (!has_period && !has_slash)
+"    return "\<C-X>\<C-P>"                         " existing text matching
+"  elseif ( has_slash )
+"    return "\<C-X>\<C-F>"                         " file matching
+"  else
+"    return "\<C-X>\<C-O>"                         " plugin matching
+"  endif
+"endfunction
+"
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
 
 
 " }
@@ -163,8 +174,10 @@ endfunction
 " ----------------- REMAPPING ----------------- {
 
 	" inoremap <Tab> <C-R>=CleverTab()<CR>            --DISABLED--
-	inoremap <tab> <c-r>=Smart_TabComplete()<CR>
-	
+	" inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 	" noremap x "_x
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
