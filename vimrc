@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 05.10.21
+" Version 07.10.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont=Source\ Code\ Pro:h13
@@ -54,7 +54,7 @@
 
 	set foldcolumn=1	" Add a bit extra margin to the left
 
-	set tw=400	" Linebreak on 400 characters
+	set tw=260	" Linebreak on 400 characters
 
 	"set listchars=tab:\|\ 
 	"set list
@@ -105,6 +105,7 @@
 
 " COLOR SCHEME {
 	colorscheme k_theme
+	highlight clear SignColumn
 " }
 
 
@@ -118,14 +119,15 @@
 
 
 " ----------------- PLUGINS ----------------- {
-	call plug#begin()
+	call plug#begin('$VIMDOTDIR/plugins/')
 		Plug 'makerj/vim-pdf'
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
 		Plug 'rbong/vim-flog'
 		Plug 'itchyny/vim-gitbranch'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-		Plug "ariblade/vim-gitgutter"
+		Plug 'airblade/vim-gitgutter'
+		Plug 'w0rp/ale'
 		"Plug 'maxboisvert/vim-simple-complete'
 		"Plug 'ycm-core/YouCompleteMe'
 	call plug#end()
@@ -159,7 +161,8 @@ endfunction
 
 
 " ----------------- REMAPPING ----------------- {
-	
+
+	" inoremap <Tab> <C-R>=CleverTab()<CR>            --DISABLED--
 	inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 	
 	" noremap x "_x
@@ -174,7 +177,6 @@ endfunction
 	noremap <D><right> <Esc>$
 	noremap! <ESC>^[[1;2D b
 	noremap! <ESC>^[[1;2C w
-	inoremap <Tab> <C-R>=CleverTab()<CR>
 	
 	nnoremap ∂∂ :Lexplore %:p:h<CR>
 	nnoremap ∂å :Lexplore<CR>
