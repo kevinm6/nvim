@@ -1,7 +1,7 @@
 .DS_Store
 .netrwhist
-.$HOME_vim/
+.HOME_vim/
 viminfo
 pack/*
-plugin/*
+plugins/*
 tmp/*
