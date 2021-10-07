@@ -26,6 +26,7 @@
 	set showmode " show active mode in status line
 	set showcmd " show command in status line
 
+	set mat=10 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
 	set tabstop=3 softtabstop=3 " set tabs width 
@@ -44,6 +45,7 @@
 
 	set undofile " enable undo
 	set nobackup " disable backups
+	set nowb
 	set noswapfile " disable swaps
 	set undodir=$HOME/.config/vim/tmp/undo " undo files directory
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
