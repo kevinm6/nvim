@@ -38,7 +38,7 @@
 
 " Folding
 	hi Folded guibg=black guifg=Grey40 ctermfg=230 ctermbg=240
-	hi FoldColumn guibg=black guifg=Grey20 ctermfg=4 ctermbg=7
+	hi FoldColumn guibg=black guifg=NONE ctermfg=4 ctermbg=NONE
 
 " Search
 	hi Search guibg=#244E7A ctermbg=25 
@@ -101,10 +101,11 @@
 	hi WildMenu guifg=#000000 guibg=#808000 ctermfg=0 ctermbg=3 
 
 " Diff 
-	hi DiffAdd guifg=NONE guibg=#000080 ctermfg=NONE ctermbg=Green 
-	hi DiffChange guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE
-	hi DiffDelete gui=NONE guifg=#ff8080 guibg=#ffb0b0 cterm=none ctermfg=LightBlue ctermbg=Red
-	hi DiffText guifg=Red guibg=#0000d7 cterm=none ctermfg=Red ctermbg=20
+	hi DiffAdd guifg=Green guibg=#000080 ctermfg=Green ctermbg=NONE 
+	hi DiffChange guifg=NONE guibg=NONE ctermfg=Grey ctermbg=NONE
+	hi DiffDelete gui=NONE guifg=Red guibg=NONE cterm=none ctermfg=Red ctermbg=NONE
+	hi DiffText guifg=Red guibg=NONE cterm=none ctermfg=Red ctermbg=20
+	hi SignColumn guibg=NONE ctermbg=NONE
 
 " Errors
 	hi Error guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
