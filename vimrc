@@ -122,6 +122,7 @@
 		Plug 'tpope/vim-fugitive'
 		Plug 'rbong/vim-flog'
 		Plug 'itchyny/vim-gitbranch'
+		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		"Plug 'maxboisvert/vim-simple-complete'
 		"Plug 'ycm-core/YouCompleteMe'
 	call plug#end()
@@ -150,12 +151,14 @@ function! Smart_TabComplete()
   endif
 endfunction
 
-inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
 " }
 
 
 " ----------------- REMAPPING ----------------- {
+	
+	inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+	
 	" noremap x "_x
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
@@ -166,6 +169,8 @@ inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
 	noremap <D><left> <Esc>0
 	noremap <D><right> <Esc>$
+	noremap! <ESC>^[[1;2D b
+	noremap! <ESC>^[[1;2C w
 	inoremap <Tab> <C-R>=CleverTab()<CR>
 	
 	nnoremap ∂∂ :Lexplore %:p:h<CR>
