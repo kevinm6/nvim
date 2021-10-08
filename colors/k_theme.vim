@@ -27,7 +27,7 @@
 	hi colorColumn guibg=#606060 ctermbg=237
 
 " Cursor
-	set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
+	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
 	hi Cursor guibg=#36FF5A guifg=#36FF5A ctermbg=42 ctermfg=42
 	hi LineNr guibg=#101010 guifg=#808080 ctermbg=232 ctermfg=240
 	hi cursorline guibg=NONE cterm=NONE gui=NONE
