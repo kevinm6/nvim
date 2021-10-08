@@ -1,9 +1,8 @@
-" B
 " --------------------------------------------------- 
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 07.10.21
+" Version 08.10.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont=Source\ Code\ Pro:h13
@@ -55,7 +54,7 @@
 
 	set foldcolumn=1	" Add a bit extra margin to the left
 
-	set tw=260	" Linebreak on 400 characters
+	set tw=200	" Linebreak on 400 characters
 
 	"set listchars=tab:\|\ 
 	"set list
@@ -63,6 +62,16 @@
 	if has("gui_macvim")	" Properly disable sound on errors on MacVim
 		 autocmd GUIEnter * set vb t_vb=
 		 let macvim_hig_shift_movement = 1
+	endif
+	
+	if has("unix")
+		let s:uname = system("uname -s")
+		if s:uname == "Darwin"
+			" macOS clipboard sharing works with unnamed.
+			set clipboard=unnamed
+		else
+			set clipboard=unnamedplus
+		endif
 	endif
 
 	if &diff " during diff enable highlight of changes
@@ -75,10 +84,34 @@
 	set smarttab " enable smart tabs
 
 	set cursorline " highlight cursor line
-"	set colorcolumn=86 " highlight column at number
-"	highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"	match OverLength /\%81v.\+/
-"	match ErrorMsg '\%>80v\+'  --> disabled highlighting coloumn
+
+	" CURSOR {
+		"Cursor settings:
+
+		"  1 -> blinking block
+		"  2 -> solid block 
+		"  3 -> blinking underscore
+		"  4 -> solid underscore
+		"  5 -> blinking vertical bar
+		"  6 -> solid vertical bar
+	if $TERM_PROGRAM =~ "iTerm"
+		" Block Bar in normal mode
+		let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+		" Vertical Bar in Insert Mode
+		let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+		" Underline in Replace Mode
+		let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+	elseif $TERM_PROGRAM == "Apple_Terminal"
+		let &t_SI.="\e[5 q" "SI = INSERT mode
+		let &t_SR.="\e[4 q" "SR = REPLACE mode
+		let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+	endif
+	" }
+	
+	"	set colorcolumn=86 " highlight column at number
+	"	highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+	"	match OverLength /\%81v.\+/
+	"	match ErrorMsg '\%>80v\+'  --> disabled highlighting coloumn
 
 	set foldenable " enable code folding
 	set foldmethod=indent " fold with indentation
@@ -86,7 +119,7 @@
 	set sessionoptions=folds
 
 	set signcolumn=yes " always show signcolumns
-	set cmdheight=2	" bigger display for commands/logs
+	set cmdheight=1	" bigger display for commands/logs
 
 	augroup AutoSaveGroup
 	  autocmd!
@@ -98,7 +131,6 @@
 	  autocmd BufWinEnter ?* silent! loadview
 	augroup end
 
-	autocmd InsertEnter,InsertLeave * set cul!	
 	autocmd filetype netrw call Netrw_mappings()
 	function! Netrw_mappings()
 	  noremap <buffer>% :call CreateInPreview()<cr>
