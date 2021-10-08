@@ -141,6 +141,7 @@
 		Plug 'rbong/vim-flog'
 		Plug 'itchyny/vim-gitbranch'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
+		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
 		Plug 'w0rp/ale'
 	call plug#end()
