@@ -98,6 +98,7 @@
 	  autocmd BufWinEnter ?* silent! loadview
 	augroup end
 
+	autocmd InsertEnter,InsertLeave * set cul!	
 	autocmd filetype netrw call Netrw_mappings()
 	function! Netrw_mappings()
 	  noremap <buffer>% :call CreateInPreview()<cr>
