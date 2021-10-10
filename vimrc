@@ -64,16 +64,6 @@
 		 let macvim_hig_shift_movement = 1
 	endif
 	
-	if has("unix")
-		let s:uname = system("uname -s")
-		if s:uname == "Darwin"
-			" macOS clipboard sharing works with unnamed.
-			set clipboard=unnamed
-		else
-			set clipboard=unnamedplus
-		endif
-	endif
-
 	if &diff " during diff enable highlight of changes
 		highlight! link DiffText MatchParen
 	endif
