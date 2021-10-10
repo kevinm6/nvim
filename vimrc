@@ -5,7 +5,7 @@
 " Version 10.10.21
 
 " ----------------- VIM OPTIONS ------------------ {
-	set guifont=Source\ Code\ Pro:h13
+	set guifont="Source Code Pro":h13
 
 	set viminfo+=n~/.viminfo
 	set rtp+=$HOME/.config/vim/
