@@ -163,13 +163,15 @@
 		Plug 'tpope/vim-fugitive'
 		Plug 'rbong/vim-flog'
 		Plug 'itchyny/vim-gitbranch'
-		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
 		Plug 'w0rp/ale'
+		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
 " }
 
+	" Coc Configuration File
+	let g:coc_config_home = "/Users/Kevin/Documents/Devices/Backup_Files/Shell/vim/plugins/coc.nvim"
 
 " ----------------- FUNCTIONS -----------------  {
 
@@ -185,7 +187,6 @@
 			\ <SID>check_back_space() ? "\<Tab>" :
 			\ coc#refresh()
 
-	let g:coc_user_config = "/Users/Kevin/.config/coc/coc-settings.json"
 
 	function! CreateInPreview()
 	  let l:filename = input("please enter filename: ")
