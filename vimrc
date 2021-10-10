@@ -185,7 +185,7 @@
 			\ <SID>check_back_space() ? "\<Tab>" :
 			\ coc#refresh()
 
-	let g:coc_user_config = "$VIMDOTDIR/coc-settings.json"
+	let g:coc_user_config = "/Users/Kevin/.config/coc/coc-settings.json"
 
 	function! CreateInPreview()
 	  let l:filename = input("please enter filename: ")
