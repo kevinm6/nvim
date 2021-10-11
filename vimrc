@@ -7,17 +7,17 @@
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont="Source Code Pro":h13
 
-	set viminfo+=n~/.viminfo
+	set viminfo+=n$HOME/.config/vim/.viminfo
 	set rtp+=$HOME/.config/vim/
 	set path+=**
 
 	if &t_Co > 2 || has("gui_running")
 		syntax enable
 		set hlsearch
-		" COLOR SCHEME {
 		syntax reset " Initializing syntax
+	" COLOR SCHEME {
 		colorscheme k_theme
-		" }
+	" }
 	endif
 
 	if has("gui_macvim")	" Properly disable sound on errors on MacVim
@@ -33,7 +33,7 @@
 	filetype on " enable recognition of filetype
 	filetype plugin indent on " enable plugin, indentation on filetypes
 
-	set omnifunc=syntaxcomplete#Complete
+	"set omnifunc=syntaxcomplete#Complete
 
 	set nocompatible " Vi -> ViM (Vi Improved)
 
@@ -158,7 +158,7 @@
 	set laststatus=2
 	set statusline=%1*\ [%n]\ \⟩\ %<%f\%* 
 	set statusline+=%2*\ ⟩\ \%y
-	set statusline+=%=Git[%{gitbranch#name()}]\ ⟨\ %{&ff}
+	set statusline+=%=%{FugitiveStatusline()}\ ⟨\ %{&ff}
 	set statusline+=%=\ ⟨\ \%l:%c\ ⟨\   
 " }
 
@@ -169,7 +169,6 @@
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
 		Plug 'rbong/vim-flog'
-		Plug 'itchyny/vim-gitbranch'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
 		Plug 'w0rp/ale'
