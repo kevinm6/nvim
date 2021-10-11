@@ -2,13 +2,8 @@
 " #------------- K Color Scheme Vim ----------------#
 " ################################################### 
 
-" Initializing syntax
-	if exists("syntax_on") 
-	 syntax reset 
-	endif
-
 " Setting main options
-	let colors_name ='K' 
+	let colors_name ='k_theme' 
 	set background=dark
 	set t_co=256
 
