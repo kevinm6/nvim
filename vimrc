@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 10.10.21
+" Version 11.10.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont="Source Code Pro":h13
@@ -12,9 +12,9 @@
 	set path+=**
 
 	syntax enable 
-
 	filetype on " enable recognition of filetype
 	filetype plugin indent on " enable plugin, indentation on filetypes
+
 	set omnifunc=syntaxcomplete#Complete
 
 	set nocompatible " Vi -> ViM (Vi Improved)
@@ -36,7 +36,7 @@
 	set smartindent " enable smart indentation
 
 	set smartcase " smart case for search
-	set lazyredraw " use less resources to render
+"	set lazyredraw " use less resources to render
 	set wrap " Wrap long lines
 
 	set autoread " enable auto read files when changed outside
@@ -60,8 +60,9 @@
 	"set list
 
 	if has("gui_macvim")	" Properly disable sound on errors on MacVim
-		 autocmd GUIEnter * set vb t_vb=
-		 let macvim_hig_shift_movement = 1
+		autocmd GUIEnter * set vb t_vb=
+		let macvim_hig_shift_movement = 1
+		let macvim_skip_colorscheme=1
 	endif
 	
 	if &diff " during diff enable highlight of changes
@@ -142,10 +143,6 @@
 	hi! link netrwMarkFile Search  
 " }
 
-" COLOR SCHEME {
-	colorscheme k_theme
-" }
-
 
 " ----------------- STATUS LINE ------------------ {
 	set laststatus=2
@@ -157,7 +154,7 @@
 
 
 " ----------------- PLUGINS ----------------- {
-	call plug#begin('$VIMDOTDIR/plugins/')
+	call plug#begin('$VIMDOTDIR/plugins')
 		Plug 'makerj/vim-pdf'
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
@@ -211,6 +208,7 @@
 	
 	vnoremap p "_dP
 
+	noremap ø o<Esc>k
 	noremap <D><left> <Esc>0
 	noremap <D><right> <Esc>$
 	noremap! <ESC>^[[1;2D b
@@ -228,4 +226,10 @@
 	" inoremap {<CR> {<CR>}<ESC>O
 	" inoremap {;<CR> {<CR>};<ESC>O
 " }
+
+
+" COLOR SCHEME {
+	colorscheme k_theme
+" }
+
 
