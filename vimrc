@@ -217,8 +217,8 @@
 	vnoremap p "_dP
 
 	noremap ø o<Esc>k
-	noremap <D><left> <Esc>0
-	noremap <D><right> <Esc>$
+	"noremap <D><left> <Esc>0
+	"noremap <D><right> <Esc>$
 	noremap! <ESC>^[[1;2D b
 	noremap! <ESC>^[[1;2C w
 	
@@ -234,6 +234,4 @@
 	" inoremap {<CR> {<CR>}<ESC>O
 	" inoremap {;<CR> {<CR>};<ESC>O
 " }
-
-
 
