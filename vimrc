@@ -201,7 +201,6 @@
 
 " }
 
-
 " ----------------- REMAPPING ----------------- {
 
 	" inoremap <Tab> <C-R>=CleverTab()<CR>            --DISABLED--
