@@ -11,7 +11,25 @@
 	set rtp+=$HOME/.config/vim/
 	set path+=**
 
-	syntax enable 
+	if &t_Co > 2 || has("gui_running")
+		syntax enable
+		set hlsearch
+		" COLOR SCHEME {
+		syntax reset " Initializing syntax
+		colorscheme k_theme
+		" }
+	endif
+
+	if has("gui_macvim")	" Properly disable sound on errors on MacVim
+		autocmd GUIEnter * set vb t_vb=
+		let macvim_hig_shift_movement = 1
+		let macvim_skip_colorscheme=1
+	endif
+	
+	if has('syntax') && has('eval')
+	 packadd! matchit
+	endif
+	
 	filetype on " enable recognition of filetype
 	filetype plugin indent on " enable plugin, indentation on filetypes
 
@@ -25,6 +43,7 @@
 	set wildmenu " tab completion menu
 	set showmode " show active mode in status line
 	set showcmd " show command in status line
+	set scrolloff=2 " # of line leave above and below cursor
 
 	set mat=10 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
@@ -59,17 +78,11 @@
 	"set listchars=tab:\|\ 
 	"set list
 
-	if has("gui_macvim")	" Properly disable sound on errors on MacVim
-		autocmd GUIEnter * set vb t_vb=
-		let macvim_hig_shift_movement = 1
-		let macvim_skip_colorscheme=1
-	endif
-	
+
 	if &diff " during diff enable highlight of changes
 		highlight! link DiffText MatchParen
 	endif
 
-	set hlsearch " enable highlight during search
 	set incsearch " enable incremental search
 
 	set smarttab " enable smart tabs
@@ -127,10 +140,7 @@
 	  noremap <buffer>% :call CreateInPreview()<cr>
 	endfunction
 
-	if has('syntax') && has('eval')
-	 packadd! matchit
-	endif
-	
+
 " ----------------- NETRW Options ------------------ {
 	let g:netrw_liststyle = 3 " set tree as default list appearance
 	let g:netrw_banner = 0 " disabling banner
@@ -227,9 +237,5 @@
 	" inoremap {;<CR> {<CR>};<ESC>O
 " }
 
-
-" COLOR SCHEME {
-	colorscheme k_theme
-" }
 
 
