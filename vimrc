@@ -7,8 +7,8 @@
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont="Source Code Pro":h13
 		
-	set viminfo+=n$HOME/.config/vim/.viminfo
 	set rtp+=$HOME/.config/vim/
+	set viminfo+=n$HOME/.config/vim/.viminfo
 	set path+=**
 
 	if &t_Co > 2 || has("gui_running")
