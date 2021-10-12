@@ -12,6 +12,9 @@
 	set path+=**
 
 	if &t_Co > 2 || has("gui_running")
+		if ! $TERM_PROGRAM == "vscode"
+			set clipboard=unnamed
+		endif
 		syntax enable
 		set hlsearch
 		syntax reset " Initializing syntax
