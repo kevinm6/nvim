@@ -6,8 +6,10 @@
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont="Source Code Pro":h13
-
-	set viminfo+=n$HOME/.config/vim/.viminfo
+		
+	if !has('nvim')
+		set viminfo+=n$HOME/.config/vim/.viminfo
+	endif
 	set rtp+=$HOME/.config/vim/
 	set path+=**
 
