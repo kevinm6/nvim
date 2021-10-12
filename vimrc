@@ -7,13 +7,12 @@
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont="Source Code Pro":h13
 		
-	if !has('nvim')
-		set viminfo+=n$HOME/.config/vim/.viminfo
-	endif
+	set viminfo+=n$HOME/.config/vim/.viminfo
 	set rtp+=$HOME/.config/vim/
 	set path+=**
 
 	if &t_Co > 2 || has("gui_running")
+		set guifont="Source Code Pro":h13.5
 		if ! $TERM_PROGRAM == "vscode"
 			set clipboard=unnamed
 		endif
