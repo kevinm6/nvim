@@ -27,7 +27,7 @@
 	hi Cursor guibg=#36FF5A guifg=#36FF5A ctermbg=42 ctermfg=42
 	hi LineNr guibg=#101010 guifg=#808080 ctermbg=232 ctermfg=240
 	hi cursorline guibg=NONE cterm=NONE gui=NONE
-	hi cursorLineNr guibg=NONE guifg=#36FF5A gui=bold term=bold ctermbg=NONE ctermfg=42
+	hi cursorLineNr guibg=NONE guifg=#36FF5A gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
 " Split
 	hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
@@ -66,9 +66,9 @@
 	hi Identifier guifg=salmon ctermfg=Red
 	hi Include guifg=Red ctermfg=Red
 	hi Operator guifg=#00D392 ctermfg=48
-	hi Define guifg=gold gui=bold ctermfg=yellow
+	hi Define guifg=gold gui=bold ctermfg=yellow cterm=bold
 	hi Type guifg=#009193 ctermfg=2
-	hi Function guifg=#0bafed ctermfg=38
+	hi Function guifg=#00afd7 ctermfg=38
 	hi Structure guifg=#65ba08 ctermfg=70
 	hi Keyword guifg=#00D392 ctermfg=48
 	hi Exception guifg=Red ctermfg=Red
