@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 11.10.21
+" Version 13.10.21
 
 " ----------------- VIM OPTIONS ------------------ {
 	set guifont="Source Code Pro":h13
@@ -31,7 +31,9 @@
 	endif
 	
 	if has('syntax') && has('eval')
-	 packadd! matchit
+		packadd! matchit
+		" Hide and format markdown elements like **bold**
+		autocmd FileType markdown set conceallevel=2
 	endif
 	
 	filetype on " enable recognition of filetype
@@ -202,7 +204,6 @@
 	  let l:filename = input("please enter filename: ")
 	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
-
 " }
 
 " ----------------- REMAPPING ----------------- {
@@ -227,7 +228,7 @@
 	noremap! <ESC>^[[1;2C w
 	
 	nnoremap ∂∂ :Sexplore %:p:h<CR>
-	nnoremap ∂å :Lexplore %:p:h<CR>
+	nnoremap ∂å :Lexplore<CR>
 
 	" remapping for autoclose brackets
 	" inoremap \"" "<left>
