@@ -226,8 +226,8 @@
 	noremap! <ESC>^[[1;2D b
 	noremap! <ESC>^[[1;2C w
 	
-	nnoremap ∂∂ :Lexplore %:p:h<CR>
-	nnoremap ∂å :Lexplore<CR>
+	nnoremap ∂∂ :Sexplore %:p:h<CR>
+	nnoremap ∂å :Lexplore %:p:h<CR>
 
 	" remapping for autoclose brackets
 	" inoremap \"" "<left>
