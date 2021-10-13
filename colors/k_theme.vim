@@ -20,7 +20,7 @@
 	hi Statement guifg=#08adeb ctermfg=39
 
 	hi colorColumn guibg=#606060 ctermbg=237
-	hi MatchParen gui=bold guibg=NONE guifg=yellow cterm=bold ctermbg=NONE ctermfg=yellow
+	hi MatchParen gui=bold guibg=NONE guifg=red cterm=bold ctermbg=NONE ctermfg=red
 
 " Cursor
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
