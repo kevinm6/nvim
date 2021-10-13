@@ -50,8 +50,7 @@
 
 
 " ----------------- CURSOR ----------------- {
-		"Cursor settings:
-
+	 "Cursor settings:
 		"  1 -> blinking block
 		"  2 -> solid block 
 		"  3 -> blinking underscore
@@ -145,15 +144,8 @@
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
 		 call mkdir(expand(&undodir), "p")
 	endif
-" }
 
-
-" ----------------- SEARCH ----------------- {
-	set incsearch " enable incremental search
-	set smartcase " smart case for search
-" }
-
-	augroup AutoSaveGroup
+ 	augroup AutoSaveGroup
 	  autocmd!
 	  " view files are about 500 bytes
 	  " bufleave but not bufwinleave captures closing 2nd tab
@@ -168,17 +160,30 @@
 	  noremap <buffer>% :call CreateInPreview()<cr>
 	endfunction
 
+  " Coc Configuration File
+	let g:coc_config_home = "/Users/Kevin/Documents/Devices/Backup_Files/Shell/vim/plugins/coc.nvim"
+
+" }
+
+
+" ----------------- SEARCH ----------------- {
+	set incsearch " enable incremental search
+	set smartcase " smart case for search
+" }
+
 
 " ----------------- NETRW OPTIONS ----------------- {
-	let g:netrw_liststyle = 3 " set tree as default list appearance
 	let g:netrw_banner = 0 " disabling banner
 	let g:netrw_preview = 1 " preview window in vertical split instead of horizontal
-	let g:netrw_browse_split = 4 " open files in vertical split as default
-	let g:netrw_silent = 1 " transfers done silently (no statusline changes when obtaining files
+	let g:netrw_liststyle = 3 " set tree as default list appearance
+	let g:netrw_browse_split = 4 " open files in vertical split
+	let g:netrw_silent = 1 " transfers silently (no statusline changes when obtaining files
+	let g:netrw_winsize = 26
 	let g:netrw_keepdir = 0 " current dir & browsing dir synced
 	let g:netrw_localcopydircmd = 'cp -r' " enable recursive copy command
-	
-	hi! link netrwMarkFile Search  "highlight marked files
+	let g:netrw_mousemaps = 1
+ "highlight marked files
+	hi! link netrwMarkFile Search 
 " }
 
 
@@ -191,6 +196,7 @@
 " }
 
 " }
+
 
 " ----------------- PLUGINS ----------------- {
 	call plug#begin('$VIMDOTDIR/plugins')
@@ -206,8 +212,6 @@
 	call plug#end()
 " }
 
-	" Coc Configuration File
-	let g:coc_config_home = "/Users/Kevin/Documents/Devices/Backup_Files/Shell/vim/plugins/coc.nvim"
 
 " ----------------- FUNCTIONS -----------------  {
 
@@ -223,24 +227,19 @@
 			\ <SID>check_back_space() ? "\<Tab>" :
 			\ coc#refresh()
 
-
 	function! CreateInPreview()
-	  let l:filename = input("please enter filename: ")
+	  let l:filename = input("> Enter filename: ")
 	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
 " }
 
 " ----------------- REMAPPING ----------------- {
 
-	" inoremap <Tab> <C-R>=CleverTab()<CR>            --DISABLED--
-	" inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-	" noremap x "_x
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
-	nnoremap <C-w><l> <C-w><C-l>
 	nnoremap <C><h> <C-w><C-h>
 	
 	vnoremap p "_dP
