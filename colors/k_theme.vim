@@ -7,7 +7,7 @@
 	set background=dark
 	set t_co=256
 
-" Modes
+	" Modes
 	hi Normal guifg=#DCDCDC guibg=#101010 ctermfg=253 ctermbg=232
 	hi Visual guibg=#244E7A ctermbg=25 cterm=reverse
 	" Selection Not Owned by vim
@@ -20,6 +20,7 @@
 	hi Statement guifg=#08adeb ctermfg=39
 
 	hi colorColumn guibg=#606060 ctermbg=237
+	hi MatchParen gui=bold guibg=NONE guifg=yellow cterm=bold ctermbg=NONE ctermfg=yellow
 
 " Cursor
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
