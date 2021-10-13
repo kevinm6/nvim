@@ -51,17 +51,17 @@
 	set showcmd " show command in status line
 	set scrolloff=2 " # of line leave above and below cursor
 
-	set mat=10 " tenths of second to blink during matching brackets
+	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
-	set tabstop=3 softtabstop=3 " set tabs width 
-	set shiftwidth=3 
+	set tabstop=3 softtabstop=2 " set tabs width 
+	set shiftwidth=2 
 
 	set autoindent " enable indentation
 	set smartindent " enable smart indentation
 
 	set smartcase " smart case for search
-"	set lazyredraw " use less resources to render
+	set lazyredraw " use less resources to render
 	set wrap " Wrap long lines
 
 	set autoread " enable auto read files when changed outside
@@ -93,7 +93,7 @@
 
 	set smarttab " enable smart tabs
 
-	set cursorline " highlight cursor line
+	set cursorline! " highlight cursor line
 
 	" CURSOR {
 		"Cursor settings:
@@ -177,7 +177,8 @@
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
-		Plug 'w0rp/ale'
+		Plug 'junegunn/goyo.vim'
+	"	Plug 'plasticboy/vim-markdown'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
 " }
