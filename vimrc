@@ -242,6 +242,7 @@
 	nnoremap <C-k> <C-w><C-k>
 	nnoremap <C><h> <C-w><C-h>
 	
+	nnoremap ˘ "_dd
 	vnoremap p "_dP
 
 	noremap ø o<Esc>k
