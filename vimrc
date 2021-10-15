@@ -170,7 +170,7 @@
   au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,README.md  setf markdown
   " vim-markdown
   let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'pseudocode', 'swift' ]
-  let g:markdown_syntax_conceal = 1
+  let g:markdown_syntax_conceal = 2
 " }
 
 
