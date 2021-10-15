@@ -217,7 +217,6 @@
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
-		"Plug 'plasticboy/vim-markdown'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
 " }
