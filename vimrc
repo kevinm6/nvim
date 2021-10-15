@@ -165,6 +165,9 @@
   " Coc Configuration File
 	let g:coc_config_home = "/Users/Kevin/Documents/Devices/Backup_Files/Shell/vim/plugins/coc.nvim"
 
+  " vim-markdown
+  let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'pseudocode', 'swift' ]
+  let g:markdown_syntax_conceal = 1
 " }
 
 
@@ -205,6 +208,7 @@
 		Plug 'makerj/vim-pdf'
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
+		Plug 'tpope/vim-markdown'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
