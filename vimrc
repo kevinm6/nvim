@@ -165,8 +165,7 @@
   " Coc Configuration File
 	let g:coc_config_home = "/Users/Kevin/Documents/Devices/Backup_Files/Shell/vim/plugins/coc.nvim"
 
-
-	" Markdown
+  " Markdown
   au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,README.md  setf markdown
   " vim-markdown
   let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'swift']
@@ -226,15 +225,15 @@
 
 	" Plugin coc.nvim
 	" use <tab> for trigger completion and navigate to the next complete item
-	function! s:check_back_space() abort
-	  let col = col('.') - 1
-	  return !col || getline('.')[col - 1]  =~ '\s'
-	endfunction
+  function! s:check_back_space() abort
+	 let col = col('.') - 1
+	 return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
 
-	inoremap <silent><expr> <Tab>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<Tab>" :
-			\ coc#refresh()
+  inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
 	function! CreateInPreview()
 	  let l:filename = input("> Enter filename: ")
@@ -243,7 +242,6 @@
 " }
 
 " ----------------- REMAPPING ----------------- {
-
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
