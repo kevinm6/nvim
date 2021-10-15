@@ -212,7 +212,7 @@
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-markdown'
-		Plug 'masukomi/vim-markdown-folding'
+		Plug 'masukomi/vim-markdown-folding', { 'for': 'markdown' }
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
