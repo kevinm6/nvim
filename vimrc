@@ -208,7 +208,7 @@
 
 " ----------------- PLUGINS ----------------- {
 	call plug#begin('$VIMDOTDIR/plugins')
-		Plug 'makerj/vim-pdf'
+	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-markdown'
