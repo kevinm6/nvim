@@ -2,9 +2,11 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 15.10.21 13:00
+" Version 17.10.21 20:30
 
 " ----------------- VIM OPTIONS ------------------ {
+
+	set nocompatible " Vi -> ViM (Vi Improved)
 
 
 " ----------------- FONT ----------------- {
@@ -18,33 +20,25 @@
 	set path+=**
 " }
 
-	set nocompatible " Vi -> ViM (Vi Improved)
-
 
 " ----------------- GUI MANAGEMENT ----------------- {
-	if &t_Co > 2 || has("gui_running")
-		set guifont="Source Code Pro":h13.5
-		if ! $TERM_PROGRAM == "vscode"
-			set clipboard=unnamed
-		endif
+	if &t_Co > 2
+		syntax reset
 		syntax enable
-		set hlsearch
-		syntax reset " Initializing syntax
-	" COLOR SCHEME {
-		colorscheme k_theme
-	" }
+		colorscheme k_theme " COLOR SCHEME
 	endif
 
-	if has("gui_macvim")	" Properly disable sound on errors on MacVim
+	if has("gui_macvim")	" MacVim ad hoc config
+		set guifont="Source Code Pro":h13.5
 		autocmd GUIEnter * set vb t_vb=
+		set clipboard=unnamed
 		let macvim_hig_shift_movement = 1
 		let macvim_skip_colorscheme=1
 	endif
 	
 	if has('syntax') && has('eval')
 		packadd! matchit
-		" Hide and format markdown elements like **bold**
-		autocmd FileType markdown set conceallevel=2
+		autocmd FileType markdown set conceallevel=2	 " Hide and format markdown elements
 	endif
 " }
 
@@ -174,6 +168,7 @@
 
 
 " ----------------- SEARCH ----------------- {
+   set hlsearch
 	set incsearch " enable incremental search
 	set smartcase " smart case for search
 " }
