@@ -5,3 +5,4 @@ viminfo
 pack/*
 plugins/*
 tmp/*
+.viminfo*
