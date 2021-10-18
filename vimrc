@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 17.10.21 20:30
+" Version 18.10.21 09:00
 
 " ----------------- VIM OPTIONS ------------------ {
 
@@ -22,19 +22,17 @@
 
 
 " ----------------- GUI MANAGEMENT ----------------- {
-	if &t_Co > 2
-		syntax reset
-		syntax enable
-		colorscheme k_theme " COLOR SCHEME
-	endif
+	 syntax reset
+	 syntax enable
+	 colorscheme k_theme " COLOR SCHEME
 
-	if has("gui_macvim")	" MacVim ad hoc config
+	 if has("gui_macvim")	" MacVim ad hoc config
 		set guifont="Source Code Pro":h13.5
 		autocmd GUIEnter * set vb t_vb=
 		set clipboard=unnamed
 		let macvim_hig_shift_movement = 1
 		let macvim_skip_colorscheme=1
-	endif
+	 endif
 	
 	if has('syntax') && has('eval')
 		packadd! matchit
