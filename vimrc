@@ -32,6 +32,8 @@
 		set clipboard=unnamed
 		let macvim_hig_shift_movement = 1
 		let macvim_skip_colorscheme=1
+		set antialias
+
 	 endif
 	
 	if has('syntax') && has('eval')
@@ -60,6 +62,8 @@
 		let &t_SI.="\e[5 q" "SI = INSERT mode
 		let &t_SR.="\e[4 q" "SR = REPLACE mode
 		let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+	elseif $TERM_PROGRAM == "vscode"
+	  break
 	endif
 " }
 
