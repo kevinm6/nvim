@@ -131,8 +131,10 @@
 
 
 " ----------------- FILE MANAGEMENT ----------------- {
- 	set autoread " enable auto read files when changed outside
-
+ 	set autoread " auto read files when changed outside
+   set autowrite " auto write files
+	set autochdir " auto change directory of explore
+	set autoshelldir " auto change dir of shell
 	set undofile " enable undo
 	set nobackup " disable backups
 	set nowritebackup
