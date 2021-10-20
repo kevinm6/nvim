@@ -2,6 +2,8 @@
 " #------------- K Color Scheme Vim ----------------#
 " ################################################### 
 
+" Version 20/10/2021 - 12:00
+
 " Setting main options
 	let colors_name ='k_theme' 
 	set background=dark
@@ -9,9 +11,9 @@
 
 	" Modes
 	hi Normal guifg=#DCDCDC guibg=#101010 ctermfg=253 ctermbg=232
-	hi Visual guibg=#244E7A ctermbg=25 cterm=reverse
+	hi Visual gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
 	" Selection Not Owned by vim
-	hi VisualNOS cterm=bold,underline 
+	hi VisualNOS gui=NONE guifg=#244E7A guibg=NONE cterm=NONE ctermfg=25 ctermbg=NONE
 
 	hi ModeMsg guifg=DeepSkyBlue3 guibg=NONE ctermfg=31 ctermbg=NONE
 	hi MoreMsg guifg=DeepSkyBlue3 ctermfg=32
@@ -24,9 +26,9 @@
 
 " Cursor
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
-	hi Cursor guibg=#36FF5A guifg=#36FF5A ctermbg=42 ctermfg=42
+	hi Cursor gui=NONE guibg=fg guifg=bg cterm=NONE ctermbg=fg ctermfg=bg
 	hi LineNr guibg=#101010 guifg=#808080 ctermbg=232 ctermfg=240
-	hi cursorline guibg=NONE cterm=NONE gui=NONE
+	hi cursorline gui=NONE guibg=NONE cterm=NONE 
 	hi cursorLineNr guibg=NONE guifg=#36FF5A gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
 " Split
@@ -38,7 +40,7 @@
 
 " Search
 	hi Search guibg=#244E7A ctermbg=25 
-	hi IncSearch guibg=black guifg=green ctermbg=black ctermfg=green cterm=none ctermfg=yellow ctermbg=green
+	hi IncSearch guibg=black guifg=green ctermbg=black ctermfg=green cterm=NONE ctermfg=yellow ctermbg=green
 
 " Debugging
 	hi Debug guifg=#ff0000 ctermfg=Red
@@ -99,8 +101,8 @@
 " Diff 
 	hi DiffAdd guifg=Green guibg=#000080 ctermfg=Green ctermbg=NONE 
 	hi DiffChange guifg=NONE guibg=NONE ctermfg=Grey ctermbg=NONE
-	hi DiffDelete gui=NONE guifg=Red guibg=NONE cterm=none ctermfg=Red ctermbg=NONE
-	hi DiffText guifg=Red guibg=NONE cterm=none ctermfg=Red ctermbg=20
+	hi DiffDelete gui=NONE guifg=Red guibg=NONE cterm=NONE ctermfg=Red ctermbg=NONE
+	hi DiffText guifg=Red guibg=NONE cterm=NONE ctermfg=Red ctermbg=20
 	hi SignColumn guibg=NONE ctermbg=NONE
 
 " Errors
