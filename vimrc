@@ -38,7 +38,7 @@
 	
 	if has('syntax') && has('eval')
 		packadd! matchit
-		autocmd FileType markdown set conceallevel=2	 " Hide and format markdown elements
+		set conceallevel=2	 " Hide and format elements
 	endif
 " }
 
@@ -163,10 +163,9 @@
   " Coc Configuration File
 	let g:coc_config_home = "/Users/Kevin/Documents/Devices/Backup_Files/Shell/vim/plugins/coc.nvim"
 
-  " Markdown
-  au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,README.md  setf markdown
-  " vim-markdown
-  let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'swift']
+  " Markdown w/ tpope/vim-markdown files
+  "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
+ let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'swift', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'csv', 'changelog', 'cpp', 'php' ]
   let g:markdown_syntax_conceal = 2
 " }
 
