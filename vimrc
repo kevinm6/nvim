@@ -260,7 +260,7 @@
 	noremap ø o<Esc>k
 	noremap! <ESC>^[[1;2D b
 	noremap! <ESC>^[[1;2C w
-	
+
 	nnoremap ∂∂ :Sexplore %:p:h<CR>
 	nnoremap ∂å :Lexplore<CR>
 " }
