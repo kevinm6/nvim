@@ -1,3 +1,3 @@
 # Vim & MacVim Configuration
 
-**Version 2.2, Build 18.10.21**
+**Version 2.2, Build 20.10.21**
