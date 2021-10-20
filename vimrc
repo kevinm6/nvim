@@ -165,7 +165,7 @@
 
   " Markdown w/ tpope/vim-markdown files
   "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
- let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'swift', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'csv', 'changelog', 'cpp', 'php' ]
+ let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'swift', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php' ]
   let g:markdown_syntax_conceal = 2
 " }
 
