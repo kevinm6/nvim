@@ -33,7 +33,6 @@
 		let macvim_hig_shift_movement = 1
 		let macvim_skip_colorscheme=1
 		set antialias
-
 	 endif
 	
 	if has('syntax') && has('eval')
