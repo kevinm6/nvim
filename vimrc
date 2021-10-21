@@ -35,9 +35,10 @@
 		set antialias
 	 endif
 	
+	 set conceallevel=2	 " Hide and format elements
+
 	if has('syntax') && has('eval')
 		packadd! matchit
-		set conceallevel=2	 " Hide and format elements
 	endif
 " }
 
@@ -208,7 +209,6 @@
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-markdown'
-		Plug 'masukomi/vim-markdown-folding', { 'for': 'markdown' }
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
