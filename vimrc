@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 20.10.21 09:00
+" Version 21.10.21 21:30
 
 " ----------------- VIM OPTIONS ------------------ {
 
@@ -114,6 +114,7 @@
 	set smarttab " enable smart tabs
 	set tabstop=3 softtabstop=2 " set tabs width 
 	set shiftwidth=2 
+	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 	"set listchars=tab:\|\ 
 	"set list
 " }
@@ -131,8 +132,9 @@
 
 
 " ----------------- FILE MANAGEMENT ----------------- {
- 	set autoread " auto read files when changed outside
-   set autowrite " auto write files
+ 	set autoread " read files when changed outside
+   set autowrite " write files
+	set autowriteall " write files on exit or other changes
 	set autochdir " auto change directory of explore
 	set autoshelldir " auto change dir of shell
 	set undofile " enable undo
@@ -146,16 +148,17 @@
 	endif
 
  	augroup AutoSaveGroup
-	  autocmd!
+	  au!
 	  " view files are about 500 bytes
 	  " bufleave but not bufwinleave captures closing 2nd tab
 	  " nested is needed by bufwrite* (if triggered via other autocmd)
 	  " BufHidden for compatibility with `set hidden`
-	  autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
-	  autocmd BufWinEnter ?* silent! loadview
+	  au BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
+	  au BufWinEnter ?* silent! loadview
+	  au CursorHold, BufEnter * :checktime
 	augroup end
 
-	autocmd filetype netrw call Netrw_mappings()
+	au filetype netrw call Netrw_mappings()
 	function! Netrw_mappings()
 	  noremap <buffer>% :call CreateInPreview()<cr>
 	endfunction
@@ -213,6 +216,7 @@
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
+		Plug 'tpope/vim-commentary'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
 " }
