@@ -81,7 +81,7 @@
   	set number " Show line numbers
 	set wildmenu " tab completion menu
 	set showmode " show active mode in status line
-	set showcmd " show command in status line
+	"set showcmd " show command in status line
 	set scrolloff=2 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
@@ -94,6 +94,8 @@
 	set cmdheight=1	" #lines for vim for commands/logs
 	set splitbelow " set defaults splitting position
 	set splitright " \									  /
+	set timeoutlen=1000
+	set ttimeoutlen=0
 
 	if &diff " during diff enable highlight of changes
 		highlight! link DiffText MatchParen
