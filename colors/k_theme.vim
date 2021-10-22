@@ -2,7 +2,7 @@
 " #------------- K Color Scheme Vim ----------------#
 " ################################################### 
 
-" Version 20/10/2021 - 12:00
+" Version 22/10/2021 - 12:30
 
 " Setting main options
 	let colors_name ='k_theme' 
@@ -59,7 +59,7 @@
 " Syntax
 	hi String guifg=#FF7E80 ctermfg=210
 	hi Number guifg=#00fff2 ctermfg=50
-	hi Comment gui=italic guifg=#6C7986 ctermfg=102 font=Source_Code_Pro:h12
+	hi Comment gui=italic guifg=#6c6c6c ctermfg=242 font=Source_Code_Pro:h12
 	hi Constant guifg=#D4FB79 ctermfg=192
 	hi Boolean guifg=#FF5573 ctermfg=204
 	hi Label guifg=#FF8AD8 ctermfg=212
@@ -85,7 +85,7 @@
 	hi PreCondit guifg=Red ctermfg=Red
 	hi Tag guifg=#ff00ff ctermfg=201
 	hi Delimiter guifg=#FFD479 ctermfg=186 "parenthesis
-	hi SpecialComment guifg=#ff00ff ctermfg=201
+	hi SpecialComment guifg=#6C7986 ctermfg=102
 
 " Add highlight for the rest of the screen without text
 	hi NonText guibg=#262626 guifg=RoyalBlue ctermbg=235 ctermfg=63
