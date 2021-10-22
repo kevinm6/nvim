@@ -81,7 +81,7 @@
   	set number " Show line numbers
 	set wildmenu " tab completion menu
 	set showmode " show active mode in status line
-	"set showcmd " show command in status line
+	set showcmd " show command in status line
 	set scrolloff=2 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
