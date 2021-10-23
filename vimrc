@@ -88,7 +88,13 @@
 	set wildmenu " tab completion menu
 	set showmode " show active mode in status line
 	set showcmd " show command in status line
-	set scrolloff=2 " # of line leave above and below cursor
+	if !&scrolloff
+	  set scrolloff=3       " Show next 3 lines while scrolling.
+	endif
+	if !&sidescrolloff
+	  set sidescrolloff=5   " Show next 5 columns while side-scrolling.
+   endif
+	set scrolloff=3 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
@@ -150,6 +156,7 @@
 	set nowritebackup
 	set noswapfile " disable swaps
 	set undodir=$HOME/.config/vim/tmp/undo " undo files directory
+	set clipboard+=unnamedplus
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
 		 call mkdir(expand(&undodir), "p")
@@ -185,6 +192,15 @@
    set hlsearch
 	set incsearch " enable incremental search
 	set smartcase " smart case for search
+	set gdefault " use 'g' flag by default w/ :s/<toChange>/<as>/
+" }
+
+
+" ----------------- SESSION ----------------- {
+
+  let g:session_autosave = 'yes'
+  let g:session_autoload = 'yes'
+  let g:session_default_to_last = 1
 " }
 
 
