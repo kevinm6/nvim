@@ -2,7 +2,7 @@
 " -------------- K Vim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 21.10.21 21:30
+" Version 23.10.21 12:40
 
 " ----------------- VIM OPTIONS ------------------ {
 
@@ -26,6 +26,12 @@
 	 syntax enable
 	 colorscheme k_theme " COLOR SCHEME
 
+	 if exists('g:vscode')
+		break
+	 endif
+	 if !has('nvim')
+		set ttymouse=xterm2
+	 endif
 	 if has("gui_macvim")	" MacVim ad hoc config
 		set guifont="Source Code Pro":h13.5
 		autocmd GUIEnter * set vb t_vb=
@@ -138,7 +144,7 @@
    set autowrite " write files
 	set autowriteall " write files on exit or other changes
 	set autochdir " auto change directory of explore
-	set autoshelldir " auto change dir of shell
+   "set autoshelldir " auto change dir of shell
 	set undofile " enable undo
 	set nobackup " disable backups
 	set nowritebackup
@@ -201,8 +207,7 @@
 	set laststatus=2
 	set statusline=%1*\ [%n]\ \⟩\ %<%f\%* 
 	set statusline+=%2*\ ⟩\ \%y
-	set statusline+=%=%{FugitiveStatusline()}\ ⟨\ %{&ff}
-	set statusline+=%=\ ⟨\ \%l:%c\ ⟨\   
+	set statusline+=%=%{FugitiveStatusline()}\ ⟨\ %{&ff}\ ⟨\ \%l:%c\ ⟨
 " }
 
 " }
