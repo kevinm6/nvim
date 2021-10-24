@@ -1,13 +1,10 @@
 " --------------------------------------------------- 
-" -------------- K Vim Configuration ----------------
+" -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 23.10.21 12:40
+" Version 24.10.21 12:40
 
 " ----------------- VIM OPTIONS ------------------ {
-
-	set nocompatible " Vi -> ViM (Vi Improved)
-
 
 " ----------------- FONT ----------------- {
 	set guifont="Source Code Pro":h13
@@ -22,33 +19,13 @@
 
 
 " ----------------- GUI MANAGEMENT ----------------- {
-	 syntax reset
-	 syntax enable
 	 colorscheme k_theme " COLOR SCHEME
 
+	 set display="lastline,msgsep"
 	 if exists('g:vscode')
 		break
-	 endif
-	 if !has('nvim')
-		set ttymouse=xterm2
-	 endif
-	 if has("gui_macvim")	" MacVim ad hoc config
-		set guifont="Source Code Pro":h13.5
-		autocmd GUIEnter * set vb t_vb=
+	 else
 		set clipboard=unnamed
-		let macvim_hig_shift_movement = 1
-		let macvim_skip_colorscheme=1
-		set antialias
-	 endif
-	
-	 set conceallevel=2	 " Hide and format elements
-
-	if has('syntax') && has('eval')
-		packadd! matchit
-	endif
-" }
-
-
 " ----------------- CURSOR ----------------- {
 	 "Cursor settings:
 		"  1 -> blinking block
@@ -57,21 +34,20 @@
 		"  4 -> solid underscore
 		"  5 -> blinking vertical bar
 		"  6 -> solid vertical bar
-	if $TERM_PROGRAM =~ "iTerm"
-		" Block Bar in normal mode
-		let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-		" Vertical Bar in Insert Mode
-		let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-		" Underline in Replace Mode
-		let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-	elseif $TERM_PROGRAM == "Apple_Terminal"
+	 if $TERM_PROGRAM =~ "iTerm"
+		let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block Bar Normal Mode
+		let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical Bar Insert Mode
+		let &t_SR = "\<Esc>]50;CursorShape=2\x7" " Underline Replace Mode
+	 elseif $TERM_PROGRAM == "Apple_Terminal"
 		let &t_SI.="\e[5 q" "SI = INSERT mode
 		let &t_SR.="\e[4 q" "SR = REPLACE mode
 		let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
-	elseif $TERM_PROGRAM == "vscode"
-	  break
-	endif
+	 endif
+	" }
+	 endif
 " }
+
+
 
 
 " ----------------- MOUSE ----------------- {
@@ -84,16 +60,12 @@
  	filetype on " enable recognition of filetype
 	"set omnifunc=syntaxcomplete#Complete
 
+	set conceallevel=2	 " Hide and format elements
   	set number " Show line numbers
-	set wildmenu " tab completion menu
 	set showmode " show active mode in status line
-	set showcmd " show command in status line
 	if !&scrolloff
 	  set scrolloff=3       " Show next 3 lines while scrolling.
 	endif
-	if !&sidescrolloff
-	  set sidescrolloff=5   " Show next 5 columns while side-scrolling.
-   endif
 	set scrolloff=3 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
@@ -106,8 +78,7 @@
 	set cmdheight=1	" #lines for vim for commands/logs
 	set splitbelow " set defaults splitting position
 	set splitright " \									  /
-	set timeoutlen=1000
-	set ttimeoutlen=0
+	set ttimeoutlen=50
 
 	if &diff " during diff enable highlight of changes
 		highlight! link DiffText MatchParen
@@ -123,14 +94,10 @@
 " ----------------- INDENTATION ----------------- {
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
-	set autoindent " enable indentation
 	set smartindent " enable smart indentation
-	set smarttab " enable smart tabs
 	set tabstop=3 softtabstop=2 " set tabs width 
 	set shiftwidth=2 
 	autocmd FileType markdown setlocal shiftwidth=2 expandtab
-	"set listchars=tab:\|\ 
-	"set list
 " }
 
 
@@ -139,14 +106,12 @@
 
 	set foldenable " enable code folding
 	set foldmethod=indent " fold with indentation
-	set viewoptions=folds,cursor
 	set sessionoptions=folds
 	set foldcolumn=1	" Add a bit extra margin to the left
  " }
 
 
 " ----------------- FILE MANAGEMENT ----------------- {
- 	set autoread " read files when changed outside
    set autowrite " write files
 	set autowriteall " write files on exit or other changes
 	set autochdir " auto change directory of explore
@@ -189,8 +154,6 @@
 
 
 " ----------------- SEARCH ----------------- {
-   set hlsearch
-	set incsearch " enable incremental search
 	set smartcase " smart case for search
 	set gdefault " use 'g' flag by default w/ :s/<toChange>/<as>/
 " }
@@ -220,7 +183,6 @@
 
 
 " ----------------- STATUS LINE ------------------ {
-	set laststatus=2
 	set statusline=%1*\ [%n]\ \⟩\ %<%f\%* 
 	set statusline+=%2*\ ⟩\ \%y
 	set statusline+=%=%{FugitiveStatusline()}\ ⟨\ %{&ff}\ ⟨\ \%l:%c\ ⟨
