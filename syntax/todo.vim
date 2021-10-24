@@ -1,5 +1,5 @@
 " Vim syntax file
-" Language: Todo
+" Language: Markdown
 " Mantainer: Kevin Manca
 " Latest Revision: 21 October 2021
 
