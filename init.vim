@@ -2,9 +2,9 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 24.10.21 12:40
+" Version 25.10.2021 - 10:30
 
-" ----------------- VIM OPTIONS ------------------ {
+" ----------------- NVIM OPTIONS ------------------ {
 
 " ----------------- FONT ----------------- {
 	set guifont="Source Code Pro":h13
@@ -12,20 +12,21 @@
 
 
 " ----------------- PATH SETTINGS ----------------- {
-	set viminfo+=n/Users/Kevin/.config/vim/.viminfo
-	set rtp+=$HOME/.config/vim/
+   set runtimepath+=~/.config/nvim/
+	set packpath+=~/.config/nvim
+	set viminfo+=n~/.config/nvim/main.shada
 	set path+=**
 " }
 
-
 " ----------------- GUI MANAGEMENT ----------------- {
 	 colorscheme k_theme " COLOR SCHEME
+	 set termguicolors
 
 	 set display="lastline,msgsep"
 	 if exists('g:vscode')
 		break
 	 else
-		set clipboard=unnamed
+		set clipboard=unnamedplus
 " ----------------- CURSOR ----------------- {
 	 "Cursor settings:
 		"  1 -> blinking block
@@ -44,10 +45,8 @@
 		let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 	 endif
 	" }
-	 endif
+	endif
 " }
-
-
 
 
 " ----------------- MOUSE ----------------- {
@@ -58,7 +57,6 @@
 
 " ----------------- GRAPHIC ----------------- {
  	filetype on " enable recognition of filetype
-	"set omnifunc=syntaxcomplete#Complete
 
 	set conceallevel=2	 " Hide and format elements
   	set number " Show line numbers
@@ -66,11 +64,9 @@
 	if !&scrolloff
 	  set scrolloff=3       " Show next 3 lines while scrolling.
 	endif
-	set scrolloff=3 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
-	set lazyredraw " use less resources to render
 	set cursorline! " highlight cursor line
 	set showmatch " Show matching brackets when over
 	set tw=200	" Linebreak on 400 characters
@@ -83,11 +79,6 @@
 	if &diff " during diff enable highlight of changes
 		highlight! link DiffText MatchParen
 	endif
-
-	"	set colorcolumn=86 " highlight column at number
-	"	highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-	"	match OverLength /\%81v.\+/
-	"	match ErrorMsg '\%>80v\+'  --> disabled highlighting coloumn
 " }
 
 
@@ -95,8 +86,8 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=3 softtabstop=2 " set tabs width 
-	set shiftwidth=2 
+	set tabstop=3 softtabstop=2 shiftwidth=2" set tabs 
+	" set spaces instead of tabs for markdown files
 	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
 
@@ -104,7 +95,7 @@
  " ----------------- FOLDING ----------------- {
 	set wrap " Wrap long lines
 
-	set foldenable " enable code folding
+	set foldenable	" enable code folding
 	set foldmethod=indent " fold with indentation
 	set sessionoptions=folds
 	set foldcolumn=1	" Add a bit extra margin to the left
@@ -112,16 +103,14 @@
 
 
 " ----------------- FILE MANAGEMENT ----------------- {
-   set autowrite " write files
+	set autowrite " write files
 	set autowriteall " write files on exit or other changes
 	set autochdir " auto change directory of explore
-   "set autoshelldir " auto change dir of shell
 	set undofile " enable undo
 	set nobackup " disable backups
 	set nowritebackup
 	set noswapfile " disable swaps
-	set undodir=$HOME/.config/vim/tmp/undo " undo files directory
-	set clipboard+=unnamedplus
+	set undodir=$XDG_CONFIG_HOME/nvim/tmp/undo " undo files directory
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
 		 call mkdir(expand(&undodir), "p")
@@ -144,7 +133,7 @@
 	endfunction
 
   " Coc Configuration File
-	let g:coc_config_home = "/Users/Kevin/Documents/Devices/Backup_Files/Shell/vim/plugins/coc.nvim"
+	let g:coc_config_home = "$XDG_CONFIG_HOME/nvim/plugins/coc.nvim"
 
   " Markdown w/ tpope/vim-markdown files
   "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
@@ -192,11 +181,11 @@
 
 
 " ----------------- PLUGINS ----------------- {
-	call plug#begin('$VIMDOTDIR/plugins')
+	call plug#begin('$XDG_CONFIG_HOME/nvim/plugins')
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
-		Plug 'tpope/vim-markdown'
+		" Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
