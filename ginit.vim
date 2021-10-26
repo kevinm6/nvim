@@ -7,9 +7,8 @@
 " ----------------- VIMR OPTIONS ------------------ {
 
 " ----------------- PATH SETTINGS ----------------- {
-   set runtimepath+=$NVIMDOTDIR/ginit.vim
-   let &packpath=&runtimepath
-	set viminfo+=n$NVIMDOTDIR/main.shada
+	set viminfo+=n~/.config/nvim/main.shada
+   set runtimepath+=n~/.config/nvim/
 	set path+=**
 " }
 
@@ -18,10 +17,7 @@
 	 colorscheme k_theme " COLOR SCHEME
 
 	 set display="lastline,msgsep"
-	 if exists('g:vscode')
-		break
-	 else
-		set clipboard=unnamedplus
+	 set clipboard=unnamedplus
 " ----------------- CURSOR ----------------- {
 	 "Cursor settings:
 		"  1 -> blinking block
@@ -40,7 +36,6 @@
 		let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 	 endif
 	" }
-	endif
 " }
 
 
