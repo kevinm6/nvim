@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 25.10.2021 - 10:30
+" Version 26.10.2021 - 11:30
 
 " ----------------- NVIM OPTIONS ------------------ {
 
@@ -12,9 +12,9 @@
 
 
 " ----------------- PATH SETTINGS ----------------- {
-   set runtimepath+=~/.config/nvim/
-	set packpath+=~/.config/nvim
-	set viminfo+=n~/.config/nvim/main.shada
+   set runtimepath+=$NVIMDOTDIR
+	set packpath+=&runtimepath
+	set viminfo+=$NVIMDOTDIR/main.shada
 	set path+=**
 " }
 
@@ -110,7 +110,7 @@
 	set nobackup " disable backups
 	set nowritebackup
 	set noswapfile " disable swaps
-	set undodir=$XDG_CONFIG_HOME/nvim/tmp/undo " undo files directory
+	set undodir=$NVIMDOTDIR/tmp/undo " undo files directory
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
 		 call mkdir(expand(&undodir), "p")
@@ -133,7 +133,7 @@
 	endfunction
 
   " Coc Configuration File
-	let g:coc_config_home = "$XDG_CONFIG_HOME/nvim/plugins/coc.nvim"
+	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
   " Markdown w/ tpope/vim-markdown files
   "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
@@ -181,7 +181,7 @@
 
 
 " ----------------- PLUGINS ----------------- {
-	call plug#begin('$XDG_CONFIG_HOME/nvim/plugins')
+	call plug#begin('$NVIMDOTDIR/plugins')
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
@@ -223,8 +223,6 @@
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-"	inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-"	inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
