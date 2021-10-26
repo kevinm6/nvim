@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 26.10.2021 - 11:30
+" Version 26.10.2021 - 15:30
 
 " ----------------- NVIM OPTIONS ------------------ {
 
@@ -12,9 +12,9 @@
 
 
 " ----------------- PATH SETTINGS ----------------- {
-   set runtimepath+=$NVIMDOTDIR
+	set viminfo+=n~/.config/nvim/main.shada
+	set runtimepath+=~/.config/nvim/
 	set packpath+=&runtimepath
-	set viminfo+=$NVIMDOTDIR/main.shada
 	set path+=**
 " }
 
@@ -86,9 +86,9 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=3 softtabstop=2 shiftwidth=2" set tabs 
-	" set spaces instead of tabs for markdown files
-	autocmd FileType markdown setlocal shiftwidth=2 expandtab
+	set tabstop=4 softtabstop=-1 shiftwidth=0 " set tabs behavior
+	" use spaces instead of tabs in markdown files
+	autocmd FileType markdown setlocal shiftwidth=3 expandtab
 " }
 
 
@@ -185,7 +185,7 @@
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
-		" Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+		" Plug 'tpope/vim-markdown'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
