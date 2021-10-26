@@ -1,20 +1,15 @@
 " --------------------------------------------------- 
-" -------------- K NeoVim Configuration ----------------
+" -------------- K VimR Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 25.10.21 08:30
+" Version 26.10.21 11:30
 
-" ----------------- NVIM OPTIONS ------------------ {
-
-" ----------------- FONT ----------------- {
-	set guifont="Source Code Pro":h13
-" }
-
+" ----------------- VIMR OPTIONS ------------------ {
 
 " ----------------- PATH SETTINGS ----------------- {
-   set runtimepath+=~/.config/vim/init.vim
+   set runtimepath+=$NVIMDOTDIR/ginit.vim
    let &packpath=&runtimepath
-	set viminfo+=n$VIMDOTDIR/main.shada
+	set viminfo+=n$NVIMDOTDIR/main.shada
 	set path+=**
 " }
 
@@ -68,7 +63,6 @@
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
-	set lazyredraw " use less resources to render
 	set cursorline! " highlight cursor line
 	set showmatch " Show matching brackets when over
 	set tw=200	" Linebreak on 400 characters
@@ -112,7 +106,7 @@
 	set nobackup " disable backups
 	set nowritebackup
 	set noswapfile " disable swaps
-	set undodir=$XDG_CONFIG_HOME/nvim/tmp/undo " undo files directory
+	set undodir=$NVIMDOTDIR/tmp/undo " undo files directory
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
 		 call mkdir(expand(&undodir), "p")
@@ -183,11 +177,10 @@
 
 
 " ----------------- PLUGINS ----------------- {
-	call plug#begin('$VIMDOTDIR/plugins')
+	call plug#begin('$NVIMDOTDIR/plugins')
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
-		Plug 'tpope/vim-markdown'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'airblade/vim-gitgutter'
