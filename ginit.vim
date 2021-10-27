@@ -2,13 +2,13 @@
 " -------------- K VimR Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 26.10.21 11:30
+" Version 27.10.21 10:00
 
 " ----------------- VIMR OPTIONS ------------------ {
 
 " ----------------- PATH SETTINGS ----------------- {
-	set viminfo+=n~/.config/nvim/main.shada
    set runtimepath+=n~/.config/nvim/
+	set viminfo+=n~/.config/nvim/main.shada
 	set path+=**
 " }
 
@@ -77,7 +77,7 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=3 softtabstop=2 shiftwidth=2" set tabs 
+	set tabstop=3 softtabstop=2 shiftwidth=2 " set tabs 
 	" set spaces instead of tabs for markdown files
 	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
@@ -101,7 +101,7 @@
 	set nobackup " disable backups
 	set nowritebackup
 	set noswapfile " disable swaps
-	set undodir=$NVIMDOTDIR/tmp/undo " undo files directory
+	set undodir=$NVIMDOTDIR/tmpr/undo " undo files directory
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
 		 call mkdir(expand(&undodir), "p")
@@ -124,7 +124,7 @@
 	endfunction
 
   " Coc Configuration File
-	let g:coc_config_home = "$XDG_CONFIG_HOME/vim/plugins/coc.nvim"
+	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
   " Markdown w/ tpope/vim-markdown files
   "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
@@ -176,11 +176,13 @@
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
+		Plug 'tpope/vim-markdown'
+		Plug 'tpope/vim-commentary'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+		Plug 'joelbeedle/pseudo-syntax'
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
-		Plug 'tpope/vim-commentary'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
 " }
@@ -213,8 +215,6 @@
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-"	inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-"	inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
