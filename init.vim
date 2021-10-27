@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 26.10.2021 - 15:30
+" Version 27.10.2021 - 10:00
 
 " ----------------- NVIM OPTIONS ------------------ {
 
@@ -12,9 +12,18 @@
 
 
 " ----------------- PATH SETTINGS ----------------- {
-	set viminfo+=n~/.config/nvim/main.shada
+
+	if !has('nvim')
+		source $VIMDOTDIR/vimrc
+		finish
+	elseif has('gui_vimr')
+		source $NVIMDOTDIR/ginit.vim
+		finish
+	endif
+	
 	set runtimepath+=~/.config/nvim/
 	set packpath+=&runtimepath
+	set viminfo+=n~/.config/nvim/main.shada
 	set path+=**
 " }
 
@@ -42,7 +51,7 @@
 	 elseif $TERM_PROGRAM == "Apple_Terminal"
 		let &t_SI.="\e[5 q" "SI = INSERT mode
 		let &t_SR.="\e[4 q" "SR = REPLACE mode
-		let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+		let &t_EI.="\e[1 q" "EI = NORMAL mode
 	 endif
 	" }
 	endif
@@ -86,7 +95,7 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=4 softtabstop=-1 shiftwidth=0 " set tabs behavior
+	set tabstop=3 softtabstop=-1 shiftwidth=0 " set tabs behavior
 	" use spaces instead of tabs in markdown files
 	autocmd FileType markdown setlocal shiftwidth=3 expandtab
 " }
@@ -185,12 +194,13 @@
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
-		" Plug 'tpope/vim-markdown'
+		Plug 'tpope/vim-markdown'
+		Plug 'tpope/vim-commentary'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+		Plug 'joelbeedle/pseudo-syntax'
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
-		Plug 'tpope/vim-commentary'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
 " }
@@ -238,4 +248,3 @@
 	nnoremap ∂∂ :Sexplore %:p:h<CR>
 	nnoremap ∂å :Lexplore<CR>
 " }
-
