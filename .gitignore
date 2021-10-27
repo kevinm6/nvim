@@ -5,4 +5,5 @@ main.shada
 pack/*
 plugins/*
 tmp/*
+tmpr/*
 colors/.DS_Store
