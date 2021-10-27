@@ -239,6 +239,8 @@
 	nnoremap <TAB> <C-W> w
 	nnoremap <S-TAB> <C-W> <C-P>
 
+	nnoremap <M-m> :MarkdownPreview<CR>
+
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
 	nnoremap <C><h> <C-w><C-h>
