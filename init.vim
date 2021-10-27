@@ -5,6 +5,11 @@
 " Version 27.10.2021 - 12:10
 
 " ----------------- NVIM OPTIONS ------------------ {
+	if has('gui_vimr')
+		source $NVIMDOTDIR/ginit.vim
+		finish
+	endif
+	
 
 " ----------------- FONT ----------------- {
 	set guifont="Source Code Pro":h13
@@ -13,11 +18,6 @@
 
 " ----------------- PATH SETTINGS ----------------- {
 
-	if has('gui_vimr')
-		source $NVIMDOTDIR/ginit.vim
-		finish
-	endif
-	
 	set runtimepath+=~/.config/nvim/
 	set packpath+=&runtimepath
 	set viminfo+=n~/.config/nvim/main.shada
@@ -191,7 +191,7 @@
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
-		Plug 'tpope/vim-markdown'
+		" Plug 'tpope/vim-markdown'
 		Plug 'tpope/vim-commentary'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
