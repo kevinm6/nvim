@@ -206,6 +206,14 @@
 	  let l:filename = input("> Enter filename: ")
 	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
+	
+	function! s:VimRTempMaxWin() abort
+	  VimRMakeSessionTemporary    " The tools, tool buttons and window settings are not persisted
+	  VimRHideTools
+	  VimRMaximizeWindow
+	endfunction
+	command! -nargs=0 VimRTempMaxWin call s:VimRTempMaxWin()
+
 " }
 
 " ----------------- REMAPPING ----------------- {
