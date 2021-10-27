@@ -191,7 +191,7 @@
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
-		" Plug 'tpope/vim-markdown'
+		Plug 'tpope/vim-markdown'
 		Plug 'tpope/vim-commentary'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
