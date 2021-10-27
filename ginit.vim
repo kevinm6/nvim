@@ -229,11 +229,9 @@
 	inoremap jk <Esc>
 	inoremap kj <Esc>
 	
-	" TAB in general mode will move to text buffer
-	nnoremap <TAB> :bnext<CR>
-	" SHIFT-TAB will go back
-	nnoremap <S-TAB> :bprevious<CR>
-
+	nnoremap <TAB> <C-W> w
+	nnoremap <S-TAB> <C-W> <C-P>
+	
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
 	nnoremap <C><h> <C-w><C-h>
