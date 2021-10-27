@@ -2,11 +2,11 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 27.10.2021 - 14:20
+" Version 27.10.21 15:52
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
-		source $NVIMDOTDIR/ginit.vim
+		source "$NVIMDOTDIR/ginit.vim"
 		finish
 	endif
 	
@@ -30,7 +30,7 @@
 
 	 set display="lastline,msgsep"
 	 if exists('g:vscode')
-		break
+		finish
 	 else
 		set clipboard=unnamedplus
 " ----------------- CURSOR ----------------- {
@@ -226,8 +226,7 @@
 " }
 
 " ----------------- REMAPPING ----------------- {
-   " use <c-space>for trigger completion
-   inoremap <silent><expr> <c-space> coc#refresh()
+  inoremap <silent><expr> <c-space> coc#refresh()
 
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -235,11 +234,12 @@
 
 	inoremap jk <Esc>
 	inoremap kj <Esc>
+	
+	noremap <Tab> <C-W> <C-W>
+	noremap <S-Tab> <C-W> <C-P>
 
-	nnoremap <TAB> <C-W> w
-	nnoremap <S-TAB> <C-W> <C-P>
-
-	nnoremap <M-m> :MarkdownPreview<CR>
+	nnoremap µ :MarkdownPreview<CR>
+	nnoremap Ú :MarkdownPreviewStop<CR>
 
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
@@ -254,4 +254,7 @@
 
 	nnoremap ∂∂ :Sexplore %:p:h<CR>
 	nnoremap ∂å :Lexplore<CR>
+
+	map <F2> :echo 'Current time is ' . strftime('%c')<CR>
+	iab <expr> dts strftime("%d.%m.%y %H:%M")
 " }

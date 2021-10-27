@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 27.10.21 10:00
+" Version 27.10.21 15:52
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -219,7 +219,6 @@
 " }
 
 " ----------------- REMAPPING ----------------- {
-   " use <c-space>for trigger completion
    inoremap <silent><expr> <c-space> coc#refresh()
 
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -229,10 +228,8 @@
 	inoremap jk <Esc>
 	inoremap kj <Esc>
 	
-	nnoremap <TAB> <C-W> w
-	nnoremap <S-TAB> <C-W> <C-P>
-	
-	nnoremap <M-m> :MarkdownPreview<CR>
+	nnoremap µ :MarkdownPreview<CR>
+	nnoremap Ú :MarkdownPreviewStop<CR>
 	
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
@@ -247,5 +244,8 @@
 
 	nnoremap ∂∂ :Sexplore %:p:h<CR>
 	nnoremap ∂å :Lexplore<CR>
+	
+	map <F2> :echo 'Current time is ' . strftime('%c')<CR>
+	iab <expr> dts strftime("%d.%m.%y %H:%M")
 " }
 
