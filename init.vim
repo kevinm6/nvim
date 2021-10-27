@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 27.10.2021 - 12:10
+" Version 27.10.2021 - 14:20
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -80,6 +80,7 @@
 	set cmdheight=1	" #lines for vim for commands/logs
 	set splitbelow " set defaults splitting position
 	set splitright " \									  /
+	set timeoutlen=500
 	set ttimeoutlen=50
 
 	if &diff " during diff enable highlight of changes
@@ -92,9 +93,9 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=3 softtabstop=-1 shiftwidth=0 " set tabs behavior
+	set tabstop=2 softtabstop=-1 shiftwidth=0 " set tabs behavior
 	" use spaces instead of tabs in markdown files
-	autocmd FileType markdown setlocal shiftwidth=3 expandtab
+	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
 
 
@@ -231,6 +232,14 @@
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+	inoremap jk <Esc>
+	inoremap kj <Esc>
+	
+	" TAB in general mode will move to text buffer
+	nnoremap <TAB> :bnext<CR>
+	" SHIFT-TAB will go back
+	nnoremap <S-TAB> :bprevious<CR>
 
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>

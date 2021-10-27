@@ -65,6 +65,7 @@
 	set cmdheight=1	" #lines for vim for commands/logs
 	set splitbelow " set defaults splitting position
 	set splitright " \									  /
+	set timeoutlen=500
 	set ttimeoutlen=50
 
 	if &diff " during diff enable highlight of changes
@@ -224,6 +225,14 @@
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+	inoremap jk <Esc>
+	inoremap kj <Esc>
+	
+	" TAB in general mode will move to text buffer
+	nnoremap <TAB> :bnext<CR>
+	" SHIFT-TAB will go back
+	nnoremap <S-TAB> :bprevious<CR>
 
 	nnoremap <C-j> <C-w><C-j>
 	nnoremap <C-k> <C-w><C-k>
