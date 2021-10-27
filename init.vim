@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 27.10.2021 - 10:00
+" Version 27.10.2021 - 12:10
 
 " ----------------- NVIM OPTIONS ------------------ {
 
@@ -13,10 +13,7 @@
 
 " ----------------- PATH SETTINGS ----------------- {
 
-	if !has('nvim')
-		source $VIMDOTDIR/vimrc
-		finish
-	elseif has('gui_vimr')
+	if has('gui_vimr')
 		source $NVIMDOTDIR/ginit.vim
 		finish
 	endif
@@ -202,6 +199,7 @@
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
+		Plug 'ryanoasis/vim-devicons'
 	call plug#end()
 " }
 
