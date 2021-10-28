@@ -76,14 +76,12 @@
 
 	set smartindent " enable smart indentation
 	set tabstop=2 softtabstop=2 shiftwidth=2 " set tabs 
-	" set spaces instead of tabs for markdown files
 	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
 
 
  " ----------------- FOLDING ----------------- {
 	set wrap " Wrap long lines
-
 	set foldenable	" enable code folding
 	set foldmethod=indent " fold with indentation
 	set sessionoptions=folds
@@ -126,7 +124,7 @@
 
   " Markdown w/ tpope/vim-markdown files
   "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
- let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php' ]
+ let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo' ]
   let g:markdown_syntax_conceal = 2
   let g:vim_markdown_conceal_code_blocks = 1
 " }
@@ -249,6 +247,8 @@
 	map <S-Tab> <C-W><C-P>
 	map <C-Tab> gt
 	map <C-S-Tab> gT
+	map <S-left> b
+	map <S-right> w
 	map <F2> :echo 'Current time is ' . strftime('%c')<CR>
 
 	" Substitution
