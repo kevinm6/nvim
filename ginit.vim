@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 27.10.21 15:52
+" Version 28.10.21 10:02
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -14,7 +14,7 @@
 
 
 " ----------------- GUI MANAGEMENT ----------------- {
-	 colorscheme k_theme " COLOR SCHEME
+	 try | colorscheme k_theme | catch "‚ö†Ô∏è  Error loading colorscheme" | endtry
 
 	 set display="lastline,msgsep"
 	 set clipboard=unnamedplus
@@ -41,20 +41,17 @@
 
 " ----------------- MOUSE ----------------- {
   	set mouse=a
-	set mousemodel=popup_setpos
 " }
 
 
 " ----------------- GRAPHIC ----------------- {
  	filetype on " enable recognition of filetype
 
-	set conceallevel=2	 " Hide and format elements
   	set number " Show line numbers
 	set showmode " show active mode in status line
 	if !&scrolloff
 	  set scrolloff=3       " Show next 3 lines while scrolling.
 	endif
-	set scrolloff=3 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
@@ -64,7 +61,7 @@
 	set signcolumn=yes " always show signcolumns
 	set cmdheight=1	" #lines for vim for commands/logs
 	set splitbelow " set defaults splitting position
-	set splitright " \									  /
+	set splitright " \
 	set timeoutlen=500
 	set ttimeoutlen=50
 
@@ -78,7 +75,7 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=3 softtabstop=2 shiftwidth=2 " set tabs 
+	set tabstop=2 softtabstop=2 shiftwidth=2 " set tabs 
 	" set spaces instead of tabs for markdown files
 	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
@@ -129,8 +126,9 @@
 
   " Markdown w/ tpope/vim-markdown files
   "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
- let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash', 'json', 'swift', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php' ]
+ let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php' ]
   let g:markdown_syntax_conceal = 2
+  let g:vim_markdown_conceal_code_blocks = 1
 " }
 
 
@@ -185,7 +183,7 @@
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-		Plug 'ryanoasis/vim-devicons'
+	  " Plug 'ryanoasis/vim-devicons'    " need other fonts and plugin
 	call plug#end()
 " }
 
@@ -219,33 +217,40 @@
 " }
 
 " ----------------- REMAPPING ----------------- {
-   inoremap <silent><expr> <c-space> coc#refresh()
 
+   " Insert Mode
+   inoremap <silent><expr> <c-space> coc#refresh()
 	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
+	inoremap <Esc> <Esc>`^
 	inoremap jk <Esc>
 	inoremap kj <Esc>
+	inoremap <S-Tab> <C-d>
 	
+   " Command Mode
 	nnoremap µ :MarkdownPreview<CR>
 	nnoremap Ú :MarkdownPreviewStop<CR>
-	
-	nnoremap <C-j> <C-w><C-j>
-	nnoremap <C-k> <C-w><C-k>
-	nnoremap <C><h> <C-w><C-h>
-	
-	nnoremap ˘ "_dd
-	vnoremap p "_dP
-
-	noremap ø o<Esc>k
+	nnoremap <C-j> <C-W><C-j>
+	nnoremap <C-k> <C-W><C-k>
+	nnoremap <C><h> <C-W><C-h>
+  	noremap ø o<Esc>k
 	noremap! <ESC>^[[1;2D b
 	noremap! <ESC>^[[1;2C w
-
 	nnoremap ∂∂ :Sexplore %:p:h<CR>
 	nnoremap ∂å :Lexplore<CR>
-	
+	nnoremap ˘ "_dd
+
+ " Visual Mode
+	vnoremap p "_dP
+
+	" Global Mapping
+	map <Tab> <C-W><C-W>
+	map <S-Tab> <C-W><C-P>
+	map <C-Tab> gt
+	map <C-S-Tab> gT
 	map <F2> :echo 'Current time is ' . strftime('%c')<CR>
+
+	" Substitution
 	iab <expr> dts strftime("%d.%m.%y %H:%M")
 " }
-
