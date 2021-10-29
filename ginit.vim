@@ -1,20 +1,20 @@
 " --------------------------------------------------- 
-" -------------- K VimR Configuration ----------------
+" -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 28.10.21 10:02
+" Version 29.10.21 14:30
 
 " ----------------- VIMR OPTIONS ------------------ {
 
 " ----------------- PATH SETTINGS ----------------- {
-   set runtimepath+=n~/.config/nvim/
+	set runtimepath+=n~/.config/nvim/
 	set viminfo+=n~/.config/nvim/main.shada
 	set path+=**
 " }
 
 
 " ----------------- GUI MANAGEMENT ----------------- {
-	 try | colorscheme k_theme | catch "‚ö†Ô∏è  Error loading colorscheme" | endtry
+	 try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
 
 	 set display="lastline,msgsep"
 	 set clipboard=unnamedplus
@@ -47,7 +47,7 @@
 " ----------------- GRAPHIC ----------------- {
  	filetype on " enable recognition of filetype
 
-  	set number " Show line numbers
+	set number " Show line numbers
 	set showmode " show active mode in status line
 	if !&scrolloff
 	  set scrolloff=3       " Show next 3 lines while scrolling.
@@ -82,6 +82,7 @@
 
  " ----------------- FOLDING ----------------- {
 	set wrap " Wrap long lines
+	set wrapmargin=68
 	set foldenable	" enable code folding
 	set foldmethod=indent " fold with indentation
 	set sessionoptions=folds
@@ -122,11 +123,12 @@
   " Coc Configuration File
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
-  " Markdown w/ tpope/vim-markdown files
-  "au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
- let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo' ]
-  let g:markdown_syntax_conceal = 2
-  let g:vim_markdown_conceal_code_blocks = 1
+	" Python
+	let g:python_host_prog = "/usr/local/bin/python3.9"
+
+  " Markdown
+	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
+	let g:markdown_fenced_languages = ['html', 'python', 'zsh','java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo' ]
 " }
 
 
@@ -154,7 +156,7 @@
 	let g:netrw_keepdir = 0 " current dir & browsing dir synced
 	let g:netrw_localcopydircmd = 'cp -r' " enable recursive copy command
 	let g:netrw_mousemaps = 1
- "highlight marked files
+	"highlight marked files
 	hi! link netrwMarkFile Search 
 " }
 
@@ -195,7 +197,7 @@
 	 return !col || getline('.')[col - 1]  =~ '\s'
   endfunction
 
-  inoremap <silent><expr> <Tab>
+  imap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
@@ -216,41 +218,53 @@
 
 " ----------------- REMAPPING ----------------- {
 
-   " Insert Mode
-   inoremap <silent><expr> <c-space> coc#refresh()
-	inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-	inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-	inoremap <Esc> <Esc>`^
-	inoremap jk <Esc>
-	inoremap kj <Esc>
-	inoremap <S-Tab> <C-d>
+	" Normal-Visual-Operator-pending Mode 
+	map <A-left> b
+	map <A-right> w
+
+  " Insert Mode
+	imap <silent><expr> <c-space> coc#refresh()
+	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+	imap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+	imap <Esc> <Esc>`^
+	imap jk <Esc>
+	imap kj <Esc>
+	imap <S-Tab> <C-d>
+	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
 	
-   " Command Mode
-	nnoremap µ :MarkdownPreview<CR>
-	nnoremap Ú :MarkdownPreviewStop<CR>
-	nnoremap <C-j> <C-W><C-j>
-	nnoremap <C-k> <C-W><C-k>
-	nnoremap <C><h> <C-W><C-h>
-  	noremap ø o<Esc>k
-	noremap! <ESC>^[[1;2D b
-	noremap! <ESC>^[[1;2C w
-	nnoremap ∂∂ :Sexplore %:p:h<CR>
-	nnoremap ∂å :Lexplore<CR>
-	nnoremap ˘ "_dd
+  " Command Mode
+	nmap <Space> <PageDown>
+ 	nmap <Tab> <C-W><C-W>
+	nmap <S-Tab> <C-W><C-P>
+	nmap <C-Tab> gt
+	nmap <C-S-Tab> gT
+	nmap <S-left> vh
+	nmap <S-right> vl
+	nmap <S-up> vk
+	nmap <S-down> vj
+	nmap µ :MarkdownPreview<CR>
+	nmap Ú :MarkdownPreviewStop<CR>
+	nmap <C-j> <C-W><C-j>
+	nmap <C-k> <C-W><C-k>
+	nmap <C><h> <C-W><C-h>
+	nmap ø o<Esc>k
+	nmap ∂∂ :Sexplore %:p:h<CR>
+	nmap ∂å :Lexplore<CR>
+	nmap † "_x
+	nmap ˘ "_d
 
- " Visual Mode
-	vnoremap p "_dP
-
+	" Visual Mode
+	vmap <BS> "_x
+	vmap <Tab> >gv
+	vmap <S-Tab> <gv
+	vmap <A-]> >gv|
+	vmap <A-[> <gv
+	vmap p "_dP
+	
 	" Global Mapping
-	map <Tab> <C-W><C-W>
-	map <S-Tab> <C-W><C-P>
-	map <C-Tab> gt
-	map <C-S-Tab> gT
-	map <S-left> b
-	map <S-right> w
-	map <F2> :echo 'Current time is ' . strftime('%c')<CR>
-
+	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>
+		
 	" Substitution
-	iab <expr> dts strftime("%d.%m.%y %H:%M")
+	" iab <expr> dts strftime("%d.%m.%y %H:%M")	
 " }
