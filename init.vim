@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 29.10.21 14:30
+" Version 31.10.21 16:58
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -101,6 +101,7 @@
 	set wrapmargin=68
 	set foldenable	" enable code folding
 	set foldmethod=indent " fold with indentation
+	set viewoptions=folds,cursor
 	set sessionoptions=folds
 	set foldcolumn=1	" Add a bit extra margin to the left
  " }
@@ -200,7 +201,7 @@
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-		" Plug 'ryanoasis/vim-devicons'    " need other fonts and plugin
+		Plug 'ryanoasis/vim-devicons'    " need other fonts and plugin
 	call plug#end()
 " }
 
@@ -252,9 +253,10 @@
 	nmap <S-down> vj
 	nmap µ :MarkdownPreview<CR>
 	nmap Ú :MarkdownPreviewStop<CR>
-	nmap <C-j> <C-W><C-j>
-	nmap <C-k> <C-W><C-k>
-	nmap <C><h> <C-W><C-h>
+	nmap <A-j> <C-W>J
+	nmap <A-k> <C-W>K
+	nmap <A-h> <C-W>H
+	nmap <A-l> <C-W>L
 	nmap ø o<Esc>k
 	nmap ∂∂ :Sexplore %:p:h<CR>
 	nmap ∂å :Lexplore<CR>
