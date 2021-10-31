@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 31.10.21 16:58
+" Version 31.10.21 21:28
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -33,7 +33,7 @@
 	 elseif $TERM_PROGRAM == "Apple_Terminal"
 		let &t_SI.="\e[5 q" "SI = INSERT mode
 		let &t_SR.="\e[4 q" "SR = REPLACE mode
-		let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+		let &t_EI.="\e[1 q" "EI = NORMAL mode
 	 endif
 	" }
 " }
@@ -184,7 +184,7 @@
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-	  " Plug 'ryanoasis/vim-devicons'    " need other fonts and plugin
+	  Plug 'ryanoasis/vim-devicons'	" need other fonts and plugin
 	call plug#end()
 " }
 
@@ -217,13 +217,14 @@
 
 " }
 
+
 " ----------------- REMAPPING ----------------- {
 
 	" Normal-Visual-Operator-pending Mode 
 	map <A-left> b
 	map <A-right> w
-
-  " Insert Mode
+	" }
+  " Insert Mode {
 	imap <silent><expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -233,8 +234,8 @@
 	imap kj <Esc>
 	imap <S-Tab> <C-d>
 	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
-	
-  " Command Mode
+	" }
+  " Command Mode {
 	nmap <Space> <PageDown>
  	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
@@ -246,27 +247,27 @@
 	nmap <S-down> vj
 	nmap µ :MarkdownPreview<CR>
 	nmap Ú :MarkdownPreviewStop<CR>
-	nmap <A-j> <C-W>J
-	nmap <A-k> <C-W>K
-	nmap <A-h> <C-W>H
-	nmap <A-l> <C-W>L
+	nmap ˝ <C-W>J
+	nmap ˛ <C-W>K
+	nmap ¸ <C-W>H
+	nmap ˇ <C-W>L
 	nmap ø o<Esc>k
 	nmap ∂∂ :Sexplore %:p:h<CR>
 	nmap ∂å :Lexplore<CR>
 	nmap † "_x
 	nmap ˘ "_d
-
-	" Visual Mode
+	" }
+	" Visual Mode {
 	vmap <BS> "_x
 	vmap <Tab> >gv
 	vmap <S-Tab> <gv
 	vmap <A-]> >gv|
 	vmap <A-[> <gv
 	vmap p "_dP
-	
-	" Global Mapping
+	" }	
+	" Global Mapping {
 	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>
-		
+	" }
 	" Substitution
 	" iab <expr> dts strftime("%d.%m.%y %H:%M")	
 " }
