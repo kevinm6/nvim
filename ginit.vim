@@ -164,8 +164,8 @@
 
 " ----------------- STATUS LINE ------------------ {
 	set statusline=%1*\ [%n]\ \⟩\ %<%f\%* 
-	set statusline+=%2*\ ⟩\ \%y
-	set statusline+=%=%{FugitiveStatusline()}\ ⟨\ %{&ff}\ ⟨\ \%l:%c\ ⟨
+	set statusline+=%3*\ ⟩\ \%y
+	set statusline+=%=%2*%{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ \%l:%c\ ⟨
 " }
 
 " }
@@ -223,6 +223,10 @@
 	" Normal-Visual-Operator-pending Mode 
 	map <A-left> b
 	map <A-right> w
+	map <D-right> $
+	map <D-left> 0
+	map <D-down> G
+	map <D-up> gg
 	" }
   " Insert Mode {
 	imap <silent><expr> <c-space> coc#refresh()
