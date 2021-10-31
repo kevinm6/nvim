@@ -53,7 +53,7 @@
 
 " Users
 	hi User1 guifg=#00D392 guibg=#303030 ctermfg=48 ctermbg=236
-	hi User2 guifg=#A9A9A9 guibg=#303030 ctermfg=248 ctermbg=236
+	hi User2 guifg=#af8700 guibg=#303030 ctermfg=136 ctermbg=236
 	hi User3 guifg=#86868B guibg=#303030 ctermfg=102 ctermbg=236
 
 " Syntax
