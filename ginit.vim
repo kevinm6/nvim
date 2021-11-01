@@ -241,6 +241,8 @@
 	map <D-up> gg
 	" }
 	" Insert Mode {
+	imap <D-right> <Esc>$A
+	imap <D-left> <Esc>I
 	imap <silent><expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
