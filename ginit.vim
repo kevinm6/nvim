@@ -188,7 +188,7 @@
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-		Plug 'ryanoasis/vim-devicons'
+		" Plug 'ryanoasis/vim-devicons'
 	call plug#end()
 " }
 
