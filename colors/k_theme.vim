@@ -10,9 +10,7 @@
 	set t_co=256
 	
 " ----------------- FONT ----------------- {
-	if has('gui_vimr')
-		set guifont="Source Code Pro":h13.5
-	else
+	if !has('gui_vimr')
 		set guifont="Source Code Pro":h13
 	endif
 " }
