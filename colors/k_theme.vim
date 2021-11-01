@@ -2,9 +2,9 @@
 " #------------- K Color Scheme Vim ----------------#
 " ################################################### 
 
-" Version 22/10/2021 - 12:30
+" Version 01.11.21 14:10
 
-" Setting main options
+" Set main options
 	let colors_name ='k_theme' 
 	set background=dark
 	set t_co=256
@@ -28,7 +28,7 @@
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
 	hi Cursor gui=NONE guibg=fg guifg=bg cterm=NONE ctermbg=fg ctermfg=bg
 	hi LineNr guibg=#101010 guifg=#808080 ctermbg=232 ctermfg=240
-	hi cursorline gui=NONE guibg=NONE cterm=NONE 
+	hi cursorline gui=NONE guibg=NONE cterm=NONE ctermbg=NONE
 	hi cursorLineNr guibg=NONE guifg=#36FF5A gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
 " Split
@@ -79,7 +79,7 @@
 	hi Question guifg=springgreen ctermfg=green
 	hi SpecialKey guifg=#303030 ctermfg=236
 	hi Special guifg=#FFF000 ctermfg=228
-	hi SpecialChar guifg=Red
+	hi SpecialChar guifg=Red ctermfg=Red
 	hi Macro guifg=Red ctermfg=Red
 	hi PreProc guifg=Red ctermfg=Red
 	hi PreCondit guifg=Red ctermfg=Red
@@ -99,11 +99,16 @@
 	hi WildMenu guifg=#000000 guibg=#808000 ctermfg=0 ctermbg=3 
 
 " Diff 
-	hi DiffAdd guifg=Green guibg=#000080 ctermfg=Green ctermbg=NONE 
-	hi DiffChange guifg=NONE guibg=NONE ctermfg=Grey ctermbg=NONE
-	hi DiffDelete gui=NONE guifg=Red guibg=NONE cterm=NONE ctermfg=Red ctermbg=NONE
-	hi DiffText guifg=Red guibg=NONE cterm=NONE ctermfg=Red ctermbg=20
+	hi DiffAdd guifg=NONE guibg=#000080 ctermfg=NONE ctermbg=4
+	hi DiffChange guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE
+	hi DiffDelete gui=NONE guifg=NONE guibg=Red cterm=NONE ctermfg=NONE ctermbg=Red
+	hi DiffText gui=NONE guifg=magenta guibg=NONE cterm=NONE ctermfg=magenta ctermbg=NONE
 	hi SignColumn guibg=NONE ctermbg=NONE
+
+" GitGutter
+	hi GitGutterAdd    guifg=#00afd7 guibg=NONE ctermfg=2 ctermbg=NONE
+	hi GitGutterChange guifg=#808000 guibg=NONE ctermfg=3 ctermbg=NONE
+	hi GitGutterDelete guifg=#ff2222 guibg=NONE ctermfg=1 ctermbg=NONE
 
 " Errors
 	hi Error guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
