@@ -110,10 +110,10 @@
 	if &diff 
 		hi! link DiffText MatchParen
 	endif
-"	hi DiffAdd guifg=#005fff guibg=NONE ctermfg=27 ctermbg=NONE
-"	hi DiffChange guifg=olive guibg=NONE ctermfg=3 ctermbg=NONE
-"	hi DiffDelete guifg=Red3 guibg=NONE ctermfg=160 ctermbg=NONE
-"	hi DiffText guifg=magenta guibg=NONE ctermfg=magenta ctermbg=NONE
+	hi DiffAdd guifg=#005fff guibg=NONE ctermfg=27 ctermbg=NONE
+	hi DiffChange guifg=olive guibg=NONE ctermfg=3 ctermbg=NONE
+	hi DiffDelete guifg=Red3 guibg=NONE ctermfg=160 ctermbg=NONE
+	hi DiffText guifg=magenta guibg=NONE ctermfg=magenta ctermbg=NONE
 	hi! link SignColumn LineNr
 
 " GitGutter
