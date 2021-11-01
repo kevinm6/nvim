@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 31.10.21 21:28
+" Version 01.11.21 00:52
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -12,6 +12,7 @@
 	set path+=**
 " }
 
+set encoding=utf8
 
 " ----------------- GUI MANAGEMENT ----------------- {
 	 try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry

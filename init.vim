@@ -24,6 +24,9 @@
 	set path+=**
 " }
 
+set encoding=utf8
+
+
 " ----------------- GUI MANAGEMENT ----------------- {
    try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
 	 set termguicolors
