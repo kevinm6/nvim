@@ -2,12 +2,20 @@
 " #------------- K Color Scheme Vim ----------------#
 " ################################################### 
 
-" Version 01.11.21 14:10
+" Version 01.11.21 16:20
 
 " Set main options
 	let colors_name ='k_theme' 
 	set background=dark
 	set t_co=256
+	
+" ----------------- FONT ----------------- {
+	if has('gui_vimr')
+		set guifont="Source Code Pro":h13.5
+	else
+		set guifont="Source Code Pro":h13
+	endif
+" }
 
 	" Modes
 	hi Normal guifg=#DCDCDC guibg=#101010 ctermfg=253 ctermbg=232
@@ -22,13 +30,12 @@
 	hi Statement guifg=#08adeb ctermfg=39
 
 	hi colorColumn guibg=#606060 ctermbg=237
-	hi MatchParen gui=bold guibg=NONE guifg=magenta cterm=bold ctermbg=NONE ctermfg=magenta
 
 " Cursor
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
 	hi Cursor gui=NONE guibg=fg guifg=bg cterm=NONE ctermbg=fg ctermfg=bg
 	hi LineNr guibg=#101010 guifg=#808080 ctermbg=232 ctermfg=240
-	hi cursorline gui=NONE guibg=NONE cterm=NONE ctermbg=NONE
+	hi cursorline gui=NONE guifg=NONE guibg=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
 	hi cursorLineNr guibg=NONE guifg=#36FF5A gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
 " Split
@@ -99,22 +106,26 @@
 	hi WildMenu guifg=#000000 guibg=#808000 ctermfg=0 ctermbg=3 
 
 " Diff 
-	hi DiffAdd guifg=NONE guibg=#000080 ctermfg=NONE ctermbg=4
-	hi DiffChange guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE
-	hi DiffDelete gui=NONE guifg=NONE guibg=Red cterm=NONE ctermfg=NONE ctermbg=Red
-	hi DiffText gui=NONE guifg=magenta guibg=NONE cterm=NONE ctermfg=magenta ctermbg=NONE
-	hi SignColumn guibg=NONE ctermbg=NONE
+	hi MatchParen gui=bold guibg=NONE guifg=magenta cterm=bold ctermbg=NONE ctermfg=magenta
+	if &diff 
+		hi! link DiffText MatchParen
+	endif
+"	hi DiffAdd guifg=#005fff guibg=NONE ctermfg=27 ctermbg=NONE
+"	hi DiffChange guifg=olive guibg=NONE ctermfg=3 ctermbg=NONE
+"	hi DiffDelete guifg=Red3 guibg=NONE ctermfg=160 ctermbg=NONE
+"	hi DiffText guifg=magenta guibg=NONE ctermfg=magenta ctermbg=NONE
+	hi! link SignColumn LineNr
 
 " GitGutter
-	hi GitGutterAdd    guifg=#00afd7 guibg=NONE ctermfg=2 ctermbg=NONE
-	hi GitGutterChange guifg=#808000 guibg=NONE ctermfg=3 ctermbg=NONE
-	hi GitGutterDelete guifg=#ff2222 guibg=NONE ctermfg=1 ctermbg=NONE
+	hi GitGutterAdd    guifg=#005fff ctermfg=27
+	hi GitGutterChange guifg=olive ctermfg=3
+	hi GitGutterDelete guifg=Red3 ctermfg=160
 
 " Errors
 	hi Error guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
 	hi ErrorMsg cterm=bold guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
 	hi SpellErrors guibg=Red guifg=White ctermbg=Red ctermfg=White gui=bold ctermfg=7 ctermbg=1
-	hi WarningMsg guifg=salmon ctermfg=1
+	hi WarningMsg guifg=salmon ctermfg=209
 
 " Popup Menu
 	hi Pmenu ctermfg=253 ctermbg=236 cterm=None guifg=#DCDCDC guibg=#303030
