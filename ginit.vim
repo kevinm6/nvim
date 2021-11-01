@@ -2,23 +2,25 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 01.11.21 00:52
+" Version 01.11.21 13:30
 
 " ----------------- VIMR OPTIONS ------------------ {
 
 " ----------------- PATH SETTINGS ----------------- {
 	set runtimepath+=n~/.config/nvim/
-	set viminfo+=n~/.config/nvim/main.shada
+	set viminfo+=n~/.config/nvim/gmain.shada
 	set path+=**
+	set shada='20,<50,s10
 " }
 
-set encoding=utf8
+	set encoding=utf8
+
 
 " ----------------- GUI MANAGEMENT ----------------- {
-	 try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
+ try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
 
-	 set display="lastline,msgsep"
-	 set clipboard=unnamedplus
+	set display="lastline,msgsep"
+	set clipboard=unnamedplus
 " ----------------- CURSOR ----------------- {
 	 "Cursor settings:
 		"  1 -> blinking block
@@ -41,7 +43,7 @@ set encoding=utf8
 
 
 " ----------------- MOUSE ----------------- {
-  	set mouse=a
+	set mouse=a
 " }
 
 
@@ -51,7 +53,7 @@ set encoding=utf8
 	set number " Show line numbers
 	set showmode " show active mode in status line
 	if !&scrolloff
-	  set scrolloff=3       " Show next 3 lines while scrolling.
+		set scrolloff=3 " # of line leave above and below cursor
 	endif
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
@@ -65,10 +67,6 @@ set encoding=utf8
 	set splitright " \
 	set timeoutlen=500
 	set ttimeoutlen=50
-
-	if &diff " during diff enable highlight of changes
-		highlight! link DiffText MatchParen
-	endif
 " }
 
 
@@ -76,7 +74,7 @@ set encoding=utf8
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=2 softtabstop=2 shiftwidth=2 " set tabs 
+	set tabstop=2 softtabstop=2 shiftwidth=2 " set tabs
 	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
 
@@ -84,7 +82,7 @@ set encoding=utf8
  " ----------------- FOLDING ----------------- {
 	set wrap " Wrap long lines
 	set wrapmargin=68
-	set foldenable	" enable code folding
+	set foldenable " enable code folding
 	set foldmethod=indent " fold with indentation
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
@@ -122,13 +120,18 @@ set encoding=utf8
 	  noremap <buffer>% :call CreateInPreview()<cr>
 	endfunction
 
-  " Coc Configuration File
+ function! GitStatus()
+		let [a,m,r] = GitGutterGetHunkSummary()
+		return printf('+%d ~%d -%d', a, m, r)
+	endfunction
+
+ " Coc Configuration File
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
 	" Python
 	let g:python_host_prog = "/usr/local/bin/python3.9"
 
-  " Markdown
+	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md  setf markdown
 	let g:markdown_fenced_languages = ['html', 'python', 'zsh','java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo' ]
 " }
@@ -164,10 +167,10 @@ set encoding=utf8
 
 
 " ----------------- STATUS LINE ------------------ {
-	set statusline=%1*\ [%n]\ \⟩\ %<%f\%* 
+	set statusline=%1*\[%n]\⟩\ %<%f\%*
 	set statusline+=%3*\ ⟩\ \%y
-	set statusline+=%=%2*%{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ \%l:%c\ ⟨
-" }
+	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ %l:%c\/%L\ ⟨
+	" }
 
 " }
 
@@ -185,7 +188,7 @@ set encoding=utf8
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-	  Plug 'ryanoasis/vim-devicons'	" need other fonts and plugin
+		Plug 'ryanoasis/vim-devicons'
 	call plug#end()
 " }
 
@@ -199,7 +202,7 @@ set encoding=utf8
 	 return !col || getline('.')[col - 1]  =~ '\s'
   endfunction
 
-  imap <silent><expr> <Tab>
+  imap <silent><expr><Tab>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
@@ -221,7 +224,15 @@ set encoding=utf8
 
 " ----------------- REMAPPING ----------------- {
 
-	" Normal-Visual-Operator-pending Mode 
+	" Command Mode {
+	set wildcharm=<C-Z>
+	cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
+	cnoremap <expr> <down> wildmenumode() ? "\<right>" : "\<down>"
+	cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
+	cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+	" }
+	" Normal-Visual-Operator-pending Mode {
+	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>	
 	map <A-left> b
 	map <A-right> w
 	map <D-right> $
@@ -229,20 +240,21 @@ set encoding=utf8
 	map <D-down> G
 	map <D-up> gg
 	" }
-  " Insert Mode {
+	" Insert Mode {
 	imap <silent><expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-	imap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+	imap <cr> <cr>
 	imap <Esc> <Esc>`^
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-Tab> <C-d>
 	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
 	" }
-  " Command Mode {
+	" Normal Mode {
 	nmap <Space> <PageDown>
- 	nmap <Tab> <C-W><C-W>
+	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
 	nmap <C-Tab> gt
 	nmap <C-S-Tab> gT
@@ -264,15 +276,10 @@ set encoding=utf8
 	" }
 	" Visual Mode {
 	vmap <BS> "_x
-	vmap <Tab> >gv
-	vmap <S-Tab> <gv
-	vmap <A-]> >gv|
-	vmap <A-[> <gv
+	vmap <Tab> > gv
+	vmap <S-Tab> < gv
+	vmap ] >
+	vmap [ <
 	vmap p "_dP
-	" }	
-	" Global Mapping {
-	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>
 	" }
-	" Substitution
-	" iab <expr> dts strftime("%d.%m.%y %H:%M")	
 " }
