@@ -170,7 +170,7 @@
 " ----------------- STATUS LINE ------------------ {
 	set statusline=%1*\[%n]\⟩\ %<%f\%*
 	set statusline+=%3*\ ⟩\ \%y
-	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ %l:%c\/%L\ ⟨
+	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ R%l\/%L\:\C%c\ ⟨
 	" }
 
 " }
@@ -234,8 +234,6 @@
 	" }
 	" Normal-Visual-Operator-pending Mode {
 	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>	
-	map <A-left> b
-	map <A-right> w
 	map <D-right> $
 	map <D-left> 0
 	map <D-down> G

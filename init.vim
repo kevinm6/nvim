@@ -182,7 +182,7 @@
 " ----------------- STATUS LINE ------------------ {
 	set statusline=%1*\[%n]\⟩\ %<%f\%*
 	set statusline+=%3*\ ⟩\ \%y
-	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ %l:%c\/%L\ ⟨
+	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ R%l\/%L\:\C%c\ ⟨
 " }
 
 " }
