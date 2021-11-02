@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 01.11.21 13:30
+" Version 02.11.21 10:56
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -74,7 +74,7 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
-	set tabstop=2 softtabstop=2 shiftwidth=2 " set tabs
+	set tabstop=2 softtabstop=-1 shiftwidth=0 " set tabs
 	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
 
@@ -250,6 +250,8 @@
 	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 	imap <cr> <cr>
 	imap <Esc> <Esc>`^
+	imap <A-left> <Esc>bi
+	imap <A-right> <Esc>wi
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-Tab> <C-d>
@@ -259,6 +261,8 @@
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
+	nmap <A-left> b
+	nmap <A-right> w
 	nmap <C-Tab> gt
 	nmap <C-S-Tab> gT
 	nmap <S-left> vh
@@ -281,6 +285,8 @@
 	vmap <BS> "_x
 	vmap <Tab> > gv
 	vmap <S-Tab> < gv
+	vmap <A-left> b
+	vmap <A-right> w
 	vmap ] >
 	vmap [ <
 	vmap p "_dP

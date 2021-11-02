@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 01.11.21 13:30
+" Version 02.11.21 10:56
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -238,8 +238,6 @@
 	" }
 	" Normal-Visual-Operator-pending Mode {
 	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>
-	map <A-left> b
-	map <A-right> w
 	" }
 	" Insert Mode {
 	imap <silent><expr> <c-space> coc#refresh()
@@ -248,6 +246,8 @@
 	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 	imap <cr> <cr>
 	imap <Esc> <Esc>`^
+	imap <A-left> <Esc>bi
+	imap <A-right> <Esc>wi
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-Tab> <C-d>
@@ -257,6 +257,8 @@
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
+	nmap <A-left> b
+	nmap <A-right> w
 	nmap <S-left> vh
 	nmap <S-right> vl
 	nmap <S-up> vk
@@ -277,6 +279,8 @@
 	vmap <BS> "_x
 	vmap <Tab> > gv
 	vmap <S-Tab> < gv
+	vmap <A-left> b
+	vmap <A-right> w
 	vmap ] >
 	vmap [ <
 	vmap p "_dP
