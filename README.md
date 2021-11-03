@@ -1,9 +1,8 @@
-# NeoVim Configuration
-
-> **Version** *03.11.21 14:44*
+# NeoVim & VimR Versions
 
 ---
 
-## VimR Configuration
+| **NeoVim Configuration** | **VimR Configuration** |
+| --- | --- |
+| **Version** *03.11.21 14:44* | **Version** *03.11.21 14:44* |
 
-> **Version** *03.11.21 14:44*
