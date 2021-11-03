@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 02.11.21 10:56
+" Version 03.11.21 15:42
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -140,7 +140,7 @@
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
 	" Python
-	let g:python_host_prog = "/usr/local/bin/python3.9"
+	let g:python3_host_prog = "/usr/local/bin/python3.9"
 
 	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
@@ -202,6 +202,7 @@
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		" Plug 'ryanoasis/vim-devicons'
+		Plug 'jiangmiao/auto-pairs'
 	call plug#end()
 " }
 
