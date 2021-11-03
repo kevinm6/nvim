@@ -1,9 +1,9 @@
 # NeoVim Configuration
 
-> **Version** *29.10.21 14:30*
+> **Version** *03.11.21 14:44*
 
 ---
 
 ## VimR Configuration
 
-> **Version** *29.10.21 14:30*
+> **Version** *03.11.21 14:44*
