@@ -6,4 +6,5 @@ pack/*
 plugins/*
 tmp/*
 tmpr/*
+mvimtmp/*
 colors/.DS_Store
