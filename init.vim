@@ -9,6 +9,11 @@
 		source $NVIMDOTDIR/ginit.vim
 		finish
 	endif
+
+	if has('gui_macvim')
+		source $NVIMDOTDIR/macviminit.vim
+		finish
+	endif
 	
 " ----------------- PATH SETTINGS ----------------- {
 
