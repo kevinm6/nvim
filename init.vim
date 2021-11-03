@@ -229,6 +229,8 @@
 
 " ----------------- REMAPPING ----------------- {
 
+	let mapleader=","
+
 	" Command Mode {
 	set wildcharm=<C-Z>
 	cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
@@ -238,18 +240,22 @@
 	" }
 	" Normal-Visual-Operator-pending Mode {
 	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>
+	map <A-left> b
+	map <A-right> w
 	" }
 	" Insert Mode {
 	imap <silent><expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-	imap <cr> <cr>
+	imap <cr> <C-j>
 	imap <Esc> <Esc>`^
 	imap <A-left> <Esc>bi
 	imap <A-right> <Esc>wi
 	imap jk <Esc>
 	imap kj <Esc>
+	imap <S-right> <C-o>vl
+	imap <S-left> <C-o>vh
 	imap <S-Tab> <C-d>
 	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
 	" }
@@ -257,8 +263,6 @@
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
-	nmap <A-left> b
-	nmap <A-right> w
 	nmap <S-left> vh
 	nmap <S-right> vl
 	nmap <S-up> vk
@@ -277,10 +281,8 @@
 	" }
 	" Visual Mode {
 	vmap <BS> "_x
-	vmap <Tab> > gv
-	vmap <S-Tab> < gv
-	vmap <A-left> b
-	vmap <A-right> w
+	vmap <Tab> >
+	vmap <S-Tab> <
 	vmap ] >
 	vmap [ <
 	vmap p "_dP
