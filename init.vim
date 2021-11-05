@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 03.11.21 15:42
+" Version 05.11.21 20:36
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -86,7 +86,6 @@
 
 	set smartindent " enable smart indentation
 	set tabstop=2 softtabstop=-1 shiftwidth=0 " set tabs
-	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
 
 
@@ -145,7 +144,10 @@
 	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
 	let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo' ]
-	au filetype markdown set conceallevel=2
+	au filetype markdown
+            \ setlocal conceallevel=2  |
+            \ setlocal shiftwidth=2
+						\ expandtab
 " }
 
 
@@ -191,6 +193,7 @@
 " ----------------- PLUGINS ----------------- {
 	call plug#begin('$NVIMDOTDIR/plugins')
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
+		Plug 'jiangmiao/auto-pairs'
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-markdown'
@@ -201,25 +204,11 @@
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-		" Plug 'ryanoasis/vim-devicons'
-		Plug 'jiangmiao/auto-pairs'
 	call plug#end()
 " }
 
 
 " ----------------- FUNCTIONS -----------------  {
-
-	" Plugin coc.nvim
-	" use <tab> for trigger completion and navigate to the next complete item
-  function! s:check_back_space() abort
-	 let col = col('.') - 1
-	 return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
-
-  imap <silent><expr><Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
 
 	function! CreateInPreview()
 	  let l:filename = input("> Enter filename: ")
@@ -230,8 +219,6 @@
 
 " ----------------- REMAPPING ----------------- {
 
-	let mapleader=","
-
 	" Command Mode {
 	set wildcharm=<C-Z>
 	cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
@@ -239,17 +226,18 @@
 	cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
 	cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
 	" }
+	
 	" Normal-Visual-Operator-pending Mode {
 	map <A-F2> :echo 'Current time is ' . strftime('%c')<CR>
 	map <A-left> b
 	map <A-right> w
 	" }
+	
 	" Insert Mode {
 	imap <silent><expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-	imap <cr> <C-j>
 	imap <Esc> <Esc>`^
 	imap <A-left> <Esc>bi
 	imap <A-right> <Esc>wi
@@ -260,6 +248,7 @@
 	imap <S-Tab> <C-d>
 	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
 	" }
+	
 	" Normal Mode {
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
@@ -275,11 +264,12 @@
 	nmap ¸ <C-W>H
 	nmap ˇ <C-W>L
 	nmap ø o<Esc>k
-	nmap ∂∂ :Sexplore %:p:h<CR>
-	nmap ∂å :Lexplore<CR>
+	nmap ˘˘ :Sexplore %:p:h<CR>
+	nmap ˘Å :Lexplore<CR>
 	nmap † "_x
-	nmap ˘ "_d
+	nmap ∂ "_d
 	" }
+	
 	" Visual Mode {
 	vmap <BS> "_x
 	vmap <Tab> >
