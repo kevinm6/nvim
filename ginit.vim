@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 06.11.21 12:16
+" Version 06.11.21 18:18
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -129,7 +129,7 @@
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
 	" Python
-	let g:python3_host_prog = "/usr/local/bin/python3.9"
+	let g:python3_host_prog = "/usr/local/bin/python3.10"
 
 	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
