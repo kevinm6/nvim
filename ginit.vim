@@ -242,6 +242,7 @@
 	imap <Esc> <Esc>`^
 	imap <A-left> <Esc>Bi
 	imap <A-right> <Esc>Ei
+	imap <A-BS> <C-w>
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-right> <C-o>vl
