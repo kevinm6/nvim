@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 06.11.21 18:18
+" Version 08.11.21 09:12
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -265,8 +265,7 @@
 	nmap <S-right> vl
 	nmap <S-up> vk
 	nmap <S-down> vj
-	nmap µ :MarkdownPreview<CR>
-	nmap Ú :MarkdownPreviewStop<CR>
+	nmap µ :MarkdownPreviewToggle<CR>
 	nmap ˝ <C-W>J
 	nmap ˛ <C-W>K
 	nmap ¸ <C-W>H
