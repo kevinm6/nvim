@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 08.11.21 09:12
+" Version 10.11.21 09:10
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -12,8 +12,6 @@
 	set path+=**
 	set shada='20,<50,s10
 " }
-
-	set encoding=utf8
 
 
 " ----------------- GUI MANAGEMENT ----------------- {
@@ -133,7 +131,7 @@
 
 	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
-	let g:markdown_fenced_languages = ['html', 'python', 'zsh','java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo' ]
+	let g:markdown_fenced_languages = ['html', 'python', 'zsh','java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo', 'sql' ]
 	au filetype markdown
             \ setlocal conceallevel=2  |
             \ setlocal shiftwidth=2
@@ -243,6 +241,7 @@
 	imap <A-left> <Esc>Bi
 	imap <A-right> <Esc>Ei
 	imap <A-BS> <C-w>
+	imap <S-A-BS> <C-o>dw
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-right> <C-o>vl
