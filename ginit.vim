@@ -2,12 +2,13 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 10.11.21 09:10
+" Version 10.11.21 19:50
 
 " ----------------- VIMR OPTIONS ------------------ {
 
+
 " ----------------- PATH SETTINGS ----------------- {
-	set runtimepath+=n~/.config/nvim/
+	set rtp+=n~/.config/nvim/
 	set viminfo+=n~/.config/nvim/gmain.shada
 	set path+=**
 	set shada='20,<50,s10
@@ -77,7 +78,7 @@
 " }
 
 
- " ----------------- FOLDING ----------------- {
+" ----------------- FOLDING ----------------- {
 	set wrap " Wrap long lines
 	set wrapmargin=68
 	set foldenable " enable code folding
@@ -85,7 +86,7 @@
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
 	set foldcolumn=1	" Add a bit extra margin to the left
- " }
+" }
 
 
 " ----------------- FILE MANAGEMENT ----------------- {
@@ -138,6 +139,22 @@
 						\ expandtab
 " }
 
+	
+" ----------------- FUNCTIONS -----------------  {
+	function! CreateInPreview()
+			let l:filename = input("> Enter filename: ")
+			execute 'pedit ' . b:netrw_curdir.'/'.l:filename
+		endf
+		
+		function! s:VimRTempMaxWin() abort
+			VimRMakeSessionTemporary    " The tools, tool buttons and window settings are not persisted
+			VimRHideTools
+			VimRMaximizeWindow
+		endf
+		command! -nargs=0 VimRTempMaxWin call s:VimRTempMaxWin()
+
+" }
+
 
 " ----------------- SEARCH ----------------- {
 	set smartcase " smart case for search
@@ -146,7 +163,6 @@
 
 
 " ----------------- SESSION ----------------- {
-
   let g:session_autosave = 'yes'
   let g:session_autoload = 'yes'
   let g:session_default_to_last = 1
@@ -172,8 +188,6 @@
 	set statusline=%1*\[%n]\⟩\ %<%f\%*
 	set statusline+=%3*\ ⟩\ \%y
 	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ R%l\/%L\:\C%c\ ⟨
-	" }
-
 " }
 
 
@@ -192,23 +206,6 @@
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
-" }
-
-
-" ----------------- FUNCTIONS -----------------  {
-
-	function! CreateInPreview()
-	  let l:filename = input("> Enter filename: ")
-	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
-	endf
-	
-	function! s:VimRTempMaxWin() abort
-	  VimRMakeSessionTemporary    " The tools, tool buttons and window settings are not persisted
-	  VimRHideTools
-	  VimRMaximizeWindow
-	endfunction
-	command! -nargs=0 VimRTempMaxWin call s:VimRTempMaxWin()
-
 " }
 
 
@@ -241,14 +238,17 @@
 	imap <A-left> <Esc>Bi
 	imap <A-right> <Esc>Ei
 	imap <A-BS> <C-w>
-	imap <S-A-BS> <C-o>dw
+	imap <A-S-BS> <C-o>"_dw
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-right> <C-o>vl
 	imap <S-left> <C-o>vh
+	imap <S-down> <C-o>vj
+	imap <S-up> <C-o>vk
 	imap <S-Tab> <C-d>
 	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
-	" Command-key imap
+	imap <D-BS> <C-u>
+	imap <D-Del> <C-o>"_d$
 	imap <D-right> <Esc>A
 	imap <D-left> <Esc>I
 	imap <D-right> <C-o>$
@@ -256,7 +256,7 @@
 	imap <D-down> <C-o>G
 	imap <D-up> <C-o>gg
 	" }
-	
+
 	" Normal Mode {
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>

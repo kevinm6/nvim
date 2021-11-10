@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 10.11.21 09:15
+" Version 10.11.21 19:50
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -10,11 +10,11 @@
 		finish
 	endif
 	
-" ----------------- PATH SETTINGS ----------------- {
 
+" ----------------- PATH SETTINGS ----------------- {
 	set rtp+=n~/.config/nvim/
-	set packpath+=&runtimepath
 	set viminfo+=n~/.config/nvim/main.shada
+	set packpath+=&runtimepath
 	set path+=**
 	set shada='20,<50,s10
 " }
@@ -87,7 +87,7 @@
 " }
 
 
- " ----------------- FOLDING ----------------- {
+" ----------------- FOLDING ----------------- {
 	set wrap " Wrap long lines
 	set wrapmargin=68
 	set foldenable " enable code folding
@@ -95,7 +95,7 @@
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
 	set foldcolumn=1	" Add a bit extra margin to the left
- " }
+" }
 
 
 " ----------------- FILE MANAGEMENT ----------------- {
@@ -148,6 +148,14 @@
 						\ expandtab
 " }
 
+	
+" ----------------- FUNCTIONS -----------------  {
+	function! CreateInPreview()
+	  let l:filename = input("> Enter filename: ")
+	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
+	endf
+" }
+
 
 " ----------------- SEARCH ----------------- {
 	set smartcase " smart case for search
@@ -157,7 +165,6 @@
 
 
 " ----------------- SESSION ----------------- {
-
   let g:session_autosave = 'yes'
   let g:session_autoload = 'yes'
   let g:session_default_to_last = 1
@@ -185,8 +192,6 @@
 	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ R%l\/%L\:\C%c\ ⟨
 " }
 
-" }
-
 
 " ----------------- PLUGINS ----------------- {
 	call plug#begin('$NVIMDOTDIR/plugins')
@@ -203,15 +208,6 @@
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 	call plug#end()
-" }
-
-
-" ----------------- FUNCTIONS -----------------  {
-
-	function! CreateInPreview()
-	  let l:filename = input("> Enter filename: ")
-	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
-	endf
 " }
 
 
@@ -242,6 +238,8 @@
 	imap kj <Esc>
 	imap <S-right> <C-o>vl
 	imap <S-left> <C-o>vh
+	imap <S-down> <C-o>vj
+	imap <S-up> <C-o>vk
 	imap <S-Tab> <C-d>
 	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
 	" }
