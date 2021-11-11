@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 10.11.21 19:50
+" Version 11.11.21 11:58
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -16,7 +16,7 @@
 
 
 " ----------------- GUI MANAGEMENT ----------------- {
- try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
+	try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
 
 	set display="lastline,msgsep"
 	set clipboard=unnamedplus
@@ -28,11 +28,11 @@
 		"  4 -> solid underscore
 		"  5 -> blinking vertical bar
 		"  6 -> solid vertical bar
-	 if $TERM_PROGRAM =~ "iTerm"
+	if $TERM_PROGRAM =~ "iTerm"
 		let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block Bar Normal Mode
 		let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical Bar Insert Mode
 		let &t_SR = "\<Esc>]50;CursorShape=2\x7" " Underline Replace Mode
-	 elseif $TERM_PROGRAM == "Apple_Terminal"
+	elseif $TERM_PROGRAM == "Apple_Terminal"
 		let &t_SI.="\e[5 q" "SI = INSERT mode
 		let &t_SR.="\e[4 q" "SR = REPLACE mode
 		let &t_EI.="\e[1 q" "EI = NORMAL mode
@@ -100,7 +100,7 @@
 	set undodir=$NVIMDOTDIR/tmpr/undo " undo files directory
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
-		 call mkdir(expand(&undodir), "p")
+		call mkdir(expand(&undodir), "p")
 	endif
 
  	augroup AutoSaveGroup
@@ -119,12 +119,12 @@
 	  noremap <buffer>% :call CreateInPreview()<cr>
 	endfunction
 
- function! GitStatus()
+	function! GitStatus()
 		let [a,m,r] = GitGutterGetHunkSummary()
 		return printf('+%d ~%d -%d', a, m, r)
 	endfunction
 
- " Coc Configuration File
+	" Coc Configuration File
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
 	" Python
@@ -132,7 +132,7 @@
 
 	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
-	let g:markdown_fenced_languages = ['html', 'python', 'zsh','java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo', 'sql' ]
+	let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo', 'sql' ]
 	au filetype markdown
             \ setlocal conceallevel=2  |
             \ setlocal shiftwidth=2
@@ -144,9 +144,9 @@
 	
 " ----------------- FUNCTIONS -----------------  {
 	function! CreateInPreview()
-			let l:filename = input("> Enter filename: ")
-			execute 'pedit ' . b:netrw_curdir.'/'.l:filename
-		endf
+		let l:filename = input("> Enter filename: ")
+		execute 'pedit ' . b:netrw_curdir.'/'.l:filename
+	endf
 		
 		function! s:VimRTempMaxWin() abort
 			VimRMakeSessionTemporary    " The tools, tool buttons and window settings are not persisted
@@ -165,8 +165,8 @@
 
 
 " ----------------- SESSION ----------------- {
-  let g:session_autosave = 'yes'
-  let g:session_autoload = 'yes'
+	let g:session_autosave = 'yes'
+	let g:session_autoload = 'yes'
   let g:session_default_to_last = 1
 " }
 

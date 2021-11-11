@@ -1,8 +1,8 @@
 " --------------------------------------------------- 
-" -------------- K NeoVim Configuration ----------------
+" -------------- K NeoVim Configuration -------------
 " --------------------------------------------------- 
 
-" Version 11.11.21 11:28
+" Version 11.11.21 11:58
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -21,10 +21,10 @@
 
 
 " ----------------- GUI MANAGEMENT ----------------- {
-	 try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
+	try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
 	 set termguicolors
 
-	 set display="lastline,msgsep"
+	set display="lastline,msgsep"
 	 if exists('g:vscode')
 		finish
 	 else
@@ -37,11 +37,11 @@
 		"  4 -> solid underscore
 		"  5 -> blinking vertical bar
 		"  6 -> solid vertical bar
-	 if $TERM_PROGRAM =~ "iTerm"
+	if $TERM_PROGRAM =~ "iTerm"
 		let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block Bar Normal Mode
 		let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical Bar Insert Mode
 		let &t_SR = "\<Esc>]50;CursorShape=2\x7" " Underline Replace Mode
-	 elseif $TERM_PROGRAM == "Apple_Terminal"
+	elseif $TERM_PROGRAM == "Apple_Terminal"
 		let &t_SI.="\e[5 q" "SI = INSERT mode
 		let &t_SR.="\e[4 q" "SR = REPLACE mode
 		let &t_EI.="\e[1 q" "EI = NORMAL mode
@@ -109,7 +109,7 @@
 	set undodir=$NVIMDOTDIR/tmp/undo " undo files directory
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
-		 call mkdir(expand(&undodir), "p")
+		call mkdir(expand(&undodir), "p")
 	endif
 
  	augroup AutoSaveGroup
@@ -133,7 +133,7 @@
 		return printf('+%d ~%d -%d', a, m, r)
 	endfunction
 
-  " Coc Configuration File
+	" Coc Configuration File
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
 	" Python
@@ -148,14 +148,13 @@
 						\ expandtab
 	let g:markdown_folding = 1
 	let g:rmd_include_html = 1
-
 " }
 
 	
 " ----------------- FUNCTIONS -----------------  {
 	function! CreateInPreview()
-	  let l:filename = input("> Enter filename: ")
-	  execute 'pedit ' . b:netrw_curdir.'/'.l:filename
+		let l:filename = input("> Enter filename: ")
+		execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
 " }
 
@@ -168,8 +167,8 @@
 
 
 " ----------------- SESSION ----------------- {
-  let g:session_autosave = 'yes'
-  let g:session_autoload = 'yes'
+	let g:session_autosave = 'yes'
+	let g:session_autoload = 'yes'
   let g:session_default_to_last = 1
 " }
 
