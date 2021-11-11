@@ -146,8 +146,8 @@
             \ setlocal conceallevel=2  |
             \ setlocal shiftwidth=2
 						\ expandtab
-						\ let g:markdown_folding = 1
-	let rmd_include_html = 1
+	let g:markdown_folding = 1
+	let g:rmd_include_html = 1
 
 " }
 
