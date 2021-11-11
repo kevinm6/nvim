@@ -85,7 +85,7 @@
 	set foldmethod=indent " fold with indentation
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
-	set foldcolumn=1	" Add a bit extra margin to the left
+	set foldcolumn=1	" Add a bit extra margin to the Left
 " }
 
 
@@ -137,6 +137,8 @@
             \ setlocal conceallevel=2  |
             \ setlocal shiftwidth=2
 						\ expandtab
+						\ let g:markdown_folding = 1
+	let rmd_include_html = 1
 " }
 
 	
@@ -211,23 +213,23 @@
 
 " ----------------- REMAPPING ----------------- {
 
+	" Terminal go back to normal mode
+	tnoremap <Esc> <C-\><C-n>
+	" }
+	
 	" Command Mode {
 	set wildcharm=<C-Z>
-	cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
-	cnoremap <expr> <down> wildmenumode() ? "\<right>" : "\<down>"
-	cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
-	cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+	cnoremap <expr> <up> wildmenumode() ? "\<Left>" : "\<up>"
+	cnoremap <expr> <down> wildmenumode() ? "\<Right>" : "\<down>"
+	cnoremap <expr> <Left> wildmenumode() ? "\<up>" : "\<left>"
+	cnoremap <expr> <Right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
 	" }
 	
 	" Normal-Visual-Operator-pending Mode {
-	map <A-left> B
-	map <A-right> E
-	" Command-key map
-	map <D-right> $
-	map <D-left> 0
-	map <D-down> G
-	map <D-up> gg
-	" }
+	map <A-Left> B
+	map <A-Right> E
+	map <Leader>t :sb<bar>term<cr><C-W>J:resize12<cr>
+	" }	
 	
 	" Insert Mode {
 	imap <silent><expr> <c-space> coc#refresh()
@@ -235,34 +237,28 @@
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 	imap <Esc> <Esc>`^
-	imap <A-left> <Esc>Bi
-	imap <A-right> <Esc>Ei
+	imap <A-Left> <Esc>Bi
+	imap <A-Right> <Esc>Ei
 	imap <A-BS> <C-w>
 	imap <A-S-BS> <C-o>"_dw
 	imap jk <Esc>
 	imap kj <Esc>
-	imap <S-right> <C-o>vl
-	imap <S-left> <C-o>vh
+	imap <S-Right> <C-o>vl
+	imap <S-Left> <C-o>vh
 	imap <S-down> <C-o>vj
 	imap <S-up> <C-o>vk
 	imap <S-Tab> <C-d>
 	imap <F2> <C-R>=strftime("%d.%m.%y %H:%M")<CR>
-	imap <D-BS> <C-u>
-	imap <D-Del> <C-o>"_d$
-	imap <D-right> <Esc>A
-	imap <D-left> <Esc>I
-	imap <D-right> <C-o>$
-	imap <D-left> <C-o>0
-	imap <D-down> <C-o>G
-	imap <D-up> <C-o>gg
 	" }
 
 	" Normal Mode {
+	nmap <Leader>e :e $NVIMDOTDIR/ginit.vim<CR>
+	nmap <Leader>s :source $NVIMDOTDIR/ginit.vim<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
-	nmap <S-left> vh
-	nmap <S-right> vl
+	nmap <S-Left> vh
+	nmap <S-Right> vl
 	nmap <S-up> vk
 	nmap <S-down> vj
 	nmap µ :MarkdownPreviewToggle<CR>
@@ -271,7 +267,7 @@
 	nmap ¸ <C-W>H
 	nmap ˇ <C-W>L
 	nmap ø o<Esc>k
-	nmap ˘˘ :Sexplore %:p:h<CR>
+	nmap ˘˘ :Hexplore %:p:h<CR><C-W>K:resize12<cr>
 	nmap ˘Å :Lexplore<CR>
 	nmap † "_x
 	nmap ∂ "_d
@@ -287,4 +283,20 @@
 	vmap [ <
 	vmap p "_dP
 	" }
+	
+	" Command-key map
+	map <D-Right> $
+	map <D-Left> 0
+	map <D-down> G
+	map <D-up> gg
+	imap <D-BS> <C-u>
+	imap <D-Del> <C-o>"_d$
+	imap <D-Right> <Esc>A
+	imap <D-Left> <Esc>I
+	imap <D-Right> <C-o>$
+	imap <D-Left> <C-o>0
+	imap <D-down> <C-o>G
+	imap <D-up> <C-o>gg
+	" }
+
 " }

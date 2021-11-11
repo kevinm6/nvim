@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration ----------------
 " --------------------------------------------------- 
 
-" Version 10.11.21 19:50
+" Version 11.11.21 11:28
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -94,7 +94,7 @@
 	set foldmethod=indent " fold with indentation
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
-	set foldcolumn=1	" Add a bit extra margin to the left
+	set foldcolumn=1	" Add a bit extra margin to the Left
 " }
 
 
@@ -146,6 +146,9 @@
             \ setlocal conceallevel=2  |
             \ setlocal shiftwidth=2
 						\ expandtab
+						\ let g:markdown_folding = 1
+	let rmd_include_html = 1
+
 " }
 
 	
@@ -213,17 +216,22 @@
 
 " ----------------- REMAPPING ----------------- {
 
+	" Terminal go back to normal mode
+	tnoremap <Esc> <C-\><C-n>
+	" }
+	
 	" Command Mode {
 	set wildcharm=<C-Z>
-	cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
-	cnoremap <expr> <down> wildmenumode() ? "\<right>" : "\<down>"
-	cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
-	cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+	cnoremap <expr> <up> wildmenumode() ? "\<Left>" : "\<up>"
+	cnoremap <expr> <down> wildmenumode() ? "\<Right>" : "\<down>"
+	cnoremap <expr> <Left> wildmenumode() ? "\<up>" : "\<left>"
+	cnoremap <expr> <Right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
 	" }
 	
 	" Normal-Visual-Operator-pending Mode {
-	map <A-left> B
-	map <A-right> E
+	map <A-Left> B
+	map <A-Right> E
+	map <Leader>t :sb<bar>term<cr><C-W>J:resize12<cr>
 	" }
 	
 	" Insert Mode {
@@ -232,12 +240,12 @@
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 	imap <Esc> <Esc>`^
-	imap <A-left> <Esc>Bi
-	imap <A-right> <Esc>Ei
+	imap <A-Left> <Esc>Bi
+	imap <A-Right> <Esc>Ei
 	imap jk <Esc>
 	imap kj <Esc>
-	imap <S-right> <C-o>vl
-	imap <S-left> <C-o>vh
+	imap <S-Right> <C-o>vl
+	imap <S-Left> <C-o>vh
 	imap <S-down> <C-o>vj
 	imap <S-up> <C-o>vk
 	imap <S-Tab> <C-d>
@@ -245,11 +253,13 @@
 	" }
 	
 	" Normal Mode {
+	nmap <Leader>e :e $NVIMDOTDIR/init.vim<CR>
+	nmap <Leader>s :source $NVIMDOTDIR/init.vim<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
-	nmap <S-left> vh
-	nmap <S-right> vl
+	nmap <S-Left> vh
+	nmap <S-Right> vl
 	nmap <S-up> vk
 	nmap <S-down> vj
 	nmap µ :MarkdownPreviewToggle<CR>
@@ -258,7 +268,7 @@
 	nmap ¸ <C-W>H
 	nmap ˇ <C-W>L
 	nmap ø o<Esc>k
-	nmap ˘˘ :Sexplore %:p:h<CR>
+	nmap ˘˘ :Hexplore %:p:h<CR><C-W>K:resize12<cr>
 	nmap ˘Å :Lexplore<CR>
 	nmap † "_x
 	nmap ∂ "_d
