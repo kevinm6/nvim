@@ -2,7 +2,7 @@
 " -------------- K NeoVim Configuration -------------
 " --------------------------------------------------- 
 
-" Version 11.11.21 11:58
+" Version 11.11.21 20:33
 
 " ----------------- NVIM OPTIONS ------------------ {
 	if has('gui_vimr')
@@ -148,6 +148,9 @@
 						\ expandtab
 	let g:markdown_folding = 1
 	let g:rmd_include_html = 1
+	
+	" SQL
+	au BufNewFile, BufRead psql* set filetype sql
 " }
 
 	
@@ -203,6 +206,8 @@
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-markdown'
 		Plug 'tpope/vim-commentary'
+		Plug 'tpope/vim-dadbod'
+		Plug 'kristijanhusak/vim-dadbod-ui'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'joelbeedle/pseudo-syntax'

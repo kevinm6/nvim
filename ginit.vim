@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 11.11.21 11:58
+" Version 11.11.21 20:33
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -74,7 +74,6 @@
 
 	set smartindent " enable smart indentation
 	set tabstop=2 softtabstop=-1 shiftwidth=0 " set tabs
-	autocmd FileType markdown setlocal shiftwidth=2 expandtab
 " }
 
 
@@ -139,6 +138,9 @@
 						\ expandtab
 	let g:markdown_folding = 1
 	let g:rmd_include_html = 1
+	
+	" SQL
+	au BufNewFile, BufRead psql* set filetype sql
 " }
 
 	
@@ -201,6 +203,8 @@
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-markdown'
 		Plug 'tpope/vim-commentary'
+		Plug 'tpope/vim-dadbod'
+		Plug 'kristijanhusak/vim-dadbod-ui'
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'joelbeedle/pseudo-syntax'
@@ -240,7 +244,7 @@
 	imap <A-Left> <Esc>Bi
 	imap <A-Right> <Esc>Ei
 	imap <A-BS> <C-w>
-	imap <A-S-BS> <C-o>"_dw
+	imap <A-Del> <C-o>"_dw
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-Right> <C-o>vl
