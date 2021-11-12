@@ -2,7 +2,7 @@
 " -------------- K VimR Configuration ---------------
 " --------------------------------------------------- 
 
-" Version 11.11.21 20:33
+" Version 12.11.21 10:50
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -217,7 +217,7 @@
 
 " ----------------- REMAPPING ----------------- {
 
-	" Terminal go back to normal mode
+	" Terminal Mode
 	tnoremap <Esc> <C-\><C-n>
 	" }
 	
