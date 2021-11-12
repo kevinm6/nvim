@@ -4,4 +4,4 @@
 
 | **NeoVim Configuration** | **VimR Configuration** |
 | --- | --- |
-| **Version** *11.11.21 20:33* | **Version** *11.11.21 20:33* |
+| **Version** *12.11.21 10:50* | **Version** *12.11.21 10:50* |
