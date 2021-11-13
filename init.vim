@@ -1,9 +1,9 @@
 " -------------------------------------------------
 " File: init.vim
-" Description: VimR K configuration
+" Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6
-" Last Modified: 13.11.21 20:15
+" Last Modified: 13.11.21 20:36
 " -------------------------------------------------
 
 
@@ -11,13 +11,10 @@
 	if !has('nvim')
 		source $VIMDOTDIR/vimrc
 		finish
-	endif
-
-	if has('gui_vimr')
+	elseif has('gui_vimr')
 		source $NVIMDOTDIR/ginit.vim
 		finish
 	endif
-	
 
 " ----------------- PATH SETTINGS ----------------- {
 	set rtp+=n~/.config/nvim/
