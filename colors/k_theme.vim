@@ -2,7 +2,7 @@
 " #------------- K Color Scheme Vim ----------------#
 " ################################################### 
 
-" Version 01.11.21 16:20
+" Version 13.11.21 18:40
 
 " Set main options
 	let colors_name ='k_theme' 
@@ -33,8 +33,8 @@
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
 	hi Cursor gui=NONE guibg=fg guifg=bg cterm=NONE ctermbg=fg ctermfg=bg
 	hi LineNr guibg=#101010 guifg=#808080 ctermbg=232 ctermfg=240
-	hi cursorline gui=NONE guifg=NONE guibg=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
-	hi cursorLineNr guibg=NONE guifg=#36FF5A gui=bold cterm=bold ctermbg=NONE ctermfg=42
+	hi Cursorline gui=NONE guifg=NONE guibg=grey15 cterm=NONE ctermfg=NONE ctermbg=235
+	hi CursorLineNr guibg=NONE guifg=#36FF5A gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
 " Split
 	hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
