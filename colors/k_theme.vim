@@ -96,7 +96,7 @@
 
 " Add highlight for the rest of the screen without text
 	hi NonText guibg=#262626 guifg=RoyalBlue ctermbg=235 ctermfg=63
-	hi EndOfBuffer guifg=fg guibg=bg ctermbg=fg ctermfg=bg
+	hi EndOfBuffer guifg=grey10 guibg=#101010 ctermbg=232 ctermfg=253
 
 	hi Ignore guifg=Grey40 cterm=bold ctermfg=7
 	hi Todo guibg=yellow2 guifg=orangeRed ctermbg=190 ctermfg=2
