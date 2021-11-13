@@ -8,6 +8,11 @@
 
 
 " ----------------- NVIM OPTIONS ------------------ {
+	if !has('nvim')
+		source $VIMDOTDIR/vimrc
+		finish
+	endif
+
 	if has('gui_vimr')
 		source $NVIMDOTDIR/ginit.vim
 		finish
