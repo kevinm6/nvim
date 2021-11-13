@@ -214,6 +214,7 @@
 		Plug 'airblade/vim-gitgutter'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
+		Plug 'morhetz/gruvbox'
 	call plug#end()
 " }
 
