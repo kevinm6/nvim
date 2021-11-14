@@ -57,11 +57,12 @@
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
-	set cursorline! " highlight cursor line
+	set cursorline " highlight cursor line
 	set showmatch " Show matching brackets when over
 	set tw=200	" Linebreak on 400 characters
 	set signcolumn=yes " always show signcolumns
 	set cmdheight=1	" #lines for vim for commands/logs
+	set pumheight=14 " set popup menu height
 	set splitbelow " set defaults splitting position
 	set splitright " \
 	set timeoutlen=500
