@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim
-" Last Modified: 14.11.21 13:02
+" Last Modified: 14.11.21 20:18
 " -------------------------------------------------
 
 
@@ -142,7 +142,7 @@
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
 
 	" Python
-	let g:python3_host_prog = "/usr/local/bin/python3.10"
+	let g:python3_host_prog = "/usr/local/bin/python3.9"
 
 	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
