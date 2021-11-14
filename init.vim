@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim
-" Last Modified: 14.11.21 10:12
+" Last Modified: 14.11.21 13:02
 " -------------------------------------------------
 
 
@@ -135,8 +135,7 @@
 	endfunction
 
 	function! GitStatus()
-		let [a,m,r] = GitGutterGetHunkSummary()
-		return printf('+%d ~%d -%d', a, m, r)
+	    return sy#repo#get_stats_decorated()
 	endfunction
 
 	" Coc Configuration File
@@ -217,7 +216,7 @@
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'joelbeedle/pseudo-syntax'
-		Plug 'airblade/vim-gitgutter'
+		Plug 'mhinz/vim-signify'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		Plug 'morhetz/gruvbox'

@@ -1,9 +1,9 @@
 " -------------------------------------------------
-" File: init.vim
+" File: ginit.vim
 " Description: VimR K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.vim
-" Last Modified: 14.11.21 10:12
+" Last Modified: 14.11.21 13:02
 " -------------------------------------------------
 
 
@@ -65,7 +65,7 @@
 	set tw=200	" Linebreak on 400 characters
 	set signcolumn=yes " always show signcolumns
 	set cmdheight=1	" #lines for vim for commands/logs
-	set pumheight=14 " set popup menu height
+	set pumheight=16 " popup menu height
 	set splitbelow " set defaults splitting position
 	set splitright " \
 	set timeoutlen=500
@@ -123,8 +123,7 @@
 	endfunction
 
 	function! GitStatus()
-		let [a,m,r] = GitGutterGetHunkSummary()
-		return printf('+%d ~%d -%d', a, m, r)
+	    return sy#repo#get_stats_decorated()
 	endfunction
 
 	" Coc Configuration File
@@ -212,10 +211,12 @@
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'joelbeedle/pseudo-syntax'
-		Plug 'airblade/vim-gitgutter'
+		Plug 'mhinz/vim-signify'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		Plug 'morhetz/gruvbox'
+		Plug 'nvim-lua/plenary.nvim'
+		Plug 'nvim-telescope/telescope.nvim'
 	call plug#end()
 " }
 
@@ -263,8 +264,6 @@
 	" Normal Mode {
 	nmap <Leader>e :e $NVIMDOTDIR/ginit.vim<CR>
 	nmap <Leader>s :source $NVIMDOTDIR/ginit.vim<CR>
-	nmap <Leader>html :-1read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a
-	nmap <Leader>java :-1read $NVIMDOTDIR/snippets/skeleton.java<CR>3jf>a
 	nmap <Leader>html :-1read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a
 	nmap <Leader>java :-1read $NVIMDOTDIR/snippets/skeleton.java<CR>2j$o
 	nmap <Leader>vim :-1read $NVIMDOTDIR/snippets/skeleton.vim<CR>jA<C-r>%<C-o>j<Space>
