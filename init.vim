@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim
-" Last Modified: 14.11.21 20:18
+" Last Modified: 15.11.21 00:35
 " -------------------------------------------------
 
 
@@ -273,6 +273,7 @@
 	nmap <Leader>vim :-1read $NVIMDOTDIR/snippets/skeleton.vim<CR>jA<C-r>%<C-o>j<Space>
 	nmap <Leader>md :-1read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go
 	nmap <Leader>imd :-1read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go
+	nmap <Leader>f :CocCommand explorer<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
@@ -280,6 +281,7 @@
 	nmap <S-Right> vl
 	nmap <S-up> vk
 	nmap <S-down> vj
+	nmap S :%s//g<Left><Left>
 	nmap µ :MarkdownPreviewToggle<CR>
 	nmap ˝ <C-W>J
 	nmap ˛ <C-W>K
