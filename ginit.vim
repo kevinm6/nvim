@@ -1,8 +1,11 @@
-" --------------------------------------------------- 
-" -------------- K VimR Configuration ---------------
-" --------------------------------------------------- 
+" -------------------------------------------------
+" File: init.vim
+" Description: VimR K configuration
+" Author: Kevin
+" Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.vim
+" Last Modified: 14.11.21 10:12
+" -------------------------------------------------
 
-" Version 13.11.21 17:10
 
 " ----------------- VIMR OPTIONS ------------------ {
 
@@ -82,7 +85,7 @@
 	set wrap " Wrap long lines
 	set wrapmargin=68
 	set foldenable " enable code folding
-	set foldmethod=indent " fold with indentation
+	set foldmethod=syntax " fold w/ syntax
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
 	set foldcolumn=1	" Add a bit extra margin to the Left
@@ -260,6 +263,12 @@
 	" Normal Mode {
 	nmap <Leader>e :e $NVIMDOTDIR/ginit.vim<CR>
 	nmap <Leader>s :source $NVIMDOTDIR/ginit.vim<CR>
+	nmap <Leader>html :-1read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a
+	nmap <Leader>java :-1read $NVIMDOTDIR/snippets/skeleton.java<CR>3jf>a
+	nmap <Leader>html :-1read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a
+	nmap <Leader>java :-1read $NVIMDOTDIR/snippets/skeleton.java<CR>2j$o
+	nmap <Leader>vim :-1read $NVIMDOTDIR/snippets/skeleton.vim<CR>jA<C-r>%<C-o>j<Space>
+	nmap <Leader>md :-1read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
