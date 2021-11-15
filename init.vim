@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim
-" Last Modified: 15.11.21 00:35
+" Last Modified: 15.11.21 14:40
 " -------------------------------------------------
 
 
@@ -112,7 +112,7 @@
 	set nobackup " disable backups
 	set nowritebackup
 	set noswapfile " disable swaps
-	set undodir=$NVIMDOTDIR/tmp/undo " undo files directory
+	set undodir=$HOME/.local/share/nvim/tmp/undo " undo files directory
 
 	if !isdirectory(expand(&undodir)) " Create undo dir if doesn't exist
 		call mkdir(expand(&undodir), "p")
