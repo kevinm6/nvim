@@ -2,9 +2,6 @@
 .netrwhist
 .HOME_vim/*
 main.shada
-pack/*
 plugins/*
-tmp/*
-tmpr/*
 mvimtmp/*
 colors/.DS_Store
