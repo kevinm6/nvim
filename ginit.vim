@@ -215,8 +215,6 @@
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		Plug 'morhetz/gruvbox'
-		Plug 'nvim-lua/plenary.nvim'
-		Plug 'nvim-telescope/telescope.nvim'
 	call plug#end()
 " }
 
