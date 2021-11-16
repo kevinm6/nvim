@@ -38,6 +38,8 @@
 	hi Cursorline gui=NONE guifg=NONE guibg=grey15 cterm=NONE ctermfg=NONE ctermbg=235
 	hi CursorLineNr guibg=NONE guifg=#36FF5A  gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
+	hi HighlightedyankRegion gui=reverse guibg=NONE cterm=reverse ctermbg=NONE
+
 " Split
 	hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
 
