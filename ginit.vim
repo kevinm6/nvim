@@ -3,7 +3,7 @@
 " Description: VimR K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.vim
-" Last Modified: 15.11.21 14:40
+" Last Modified: 16.11.21 11:03
 " -------------------------------------------------
 
 
@@ -12,7 +12,7 @@
 
 " ----------------- PATH SETTINGS ----------------- {
 	set rtp+=n~/.config/nvim/
-	set viminfo+=n~/.config/nvim/gmain.shada
+	set viminfo+=n~/.local/share/nvim/gmain.shada
 	set path+=**
 	set shada='20,<50,s10
 " }
@@ -267,7 +267,7 @@
 	nmap <Leader>fjava :-1read $NVIMDOTDIR/snippets/method.java<CR>7ggt(a
 	nmap <Leader>vim :-1read $NVIMDOTDIR/snippets/skeleton.vim<CR>jA<C-r>%<C-o>j<Space>
 	nmap <Leader>md :-1read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go
-	nmap <Leader>infomd :-1read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go
+	nmap <Leader>imd :-1read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go
 	nmap <Leader>f :CocCommand explorer<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>

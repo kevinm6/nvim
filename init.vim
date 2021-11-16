@@ -2,8 +2,8 @@
 " File: init.vim
 " Description: Neovim K configuration
 " Author: Kevin
-" Source: https://github.com/kevinm6/nvim
-" Last Modified: 15.11.21 14:40
+" Source: https://github.com/kevinm6/nvim/blob/nvim/init.vim
+" Last Modified: 16.11.21 11:03
 " -------------------------------------------------
 
 
@@ -18,7 +18,7 @@
 
 " ----------------- PATH SETTINGS ----------------- {
 	set rtp+=n~/.config/nvim/
-	set viminfo+=n~/.config/nvim/main.shada
+	set viminfo+=n~/.local/share/nvim/main.shada
 	set packpath+=&runtimepath
 	set path+=**
 	set shada='20,<50,s10
