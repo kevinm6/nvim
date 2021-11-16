@@ -3,7 +3,7 @@
 " Description: VimR K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.vim
-" Last Modified: 16.11.21 11:03
+" Last Modified: 16.11.21 13:49
 " -------------------------------------------------
 
 
@@ -188,6 +188,14 @@
 	let g:netrw_mousemaps = 1
 	"highlight marked files
 	hi! link netrwMarkFile Search 
+" }
+
+
+" ----------------- DATABASES ----------------- {
+	let g:dbs = {
+		\ 'imdb': 'postgres://:@localhost/imdb'
+		\ 'lezione': 'postgres://:@localhost/lezione'
+	}
 " }
 
 
