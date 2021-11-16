@@ -268,6 +268,7 @@
 	nmap <Leader>vim :-1read $NVIMDOTDIR/snippets/skeleton.vim<CR>jA<C-r>%<C-o>j<Space>
 	nmap <Leader>md :-1read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go
 	nmap <Leader>imd :-1read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go
+	nmap <silent> <Leader>y  :<C-u>CocList -A --normal yank<cr>
 	nmap <Leader>f :CocCommand explorer<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
