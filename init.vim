@@ -89,6 +89,7 @@
  	filetype plugin indent on " enable plugin, indentation on filetypes
 
 	set smartindent " enable smart indentation
+	set cindent	" enable indentation as C lang
 	set tabstop=2 softtabstop=-1 shiftwidth=0 " set tabs
 " }
 
@@ -198,9 +199,9 @@
 
 " ----------------- DATABASES ----------------- {
 	let g:dbs = {
-		\ 'imdb': 'postgres://:@localhost/imdb'
+		\ 'imdb': 'postgres://:@localhost/imdb',
 		\ 'lezione': 'postgres://:@localhost/lezione'
-	}
+		\}
 " }
 
 
