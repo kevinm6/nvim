@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/init.vim
-" Last Modified: 16.11.21 13:49
+" Last Modified: 17.11.21 12:30
 " -------------------------------------------------
 
 
@@ -212,23 +212,23 @@
 " ----------------- STATUS LINE ------------------ {
 	set statusline=%1*\[%n]\⟩\ %<%f\%*
 	set statusline+=%3*\ ⟩\ \%y
-	set statusline+=%=%2*%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %3*⟨\ %{&ff}\ ⟨\ R%l\/%L\:\C%c\ ⟨
+	set statusline+=%=%2*%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %3*⟨\ %{&ff}\ ⟨\ %l\:%c\/%L\ ⟨
 " }
 
 
 " ----------------- PLUGINS ----------------- {
 	call plug#begin('$NVIMDOTDIR/plugins')
-	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'jiangmiao/auto-pairs'
 		Plug 'tpope/vim-surround'
-		Plug 'tpope/vim-markdown'
+		Plug 'rbong/vim-flog'
 		Plug 'tpope/vim-commentary'
 		Plug 'tpope/vim-dadbod'
 		Plug 'kristijanhusak/vim-dadbod-ui'
-		Plug 'rbong/vim-flog'
+		Plug 'tpope/vim-markdown'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'joelbeedle/pseudo-syntax'
 		Plug 'junegunn/goyo.vim'
+	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		Plug 'morhetz/gruvbox'
 	call plug#end()
@@ -277,6 +277,7 @@
 	nmap <Leader>e :e $NVIMDOTDIR/init.vim<CR>
 	nmap <Leader>s :source $NVIMDOTDIR/init.vim<CR>
 	nmap <Leader>html :-1read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a
+	nmap <Leader>c :-1read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja
 	nmap <Leader>java :-1read $NVIMDOTDIR/snippets/skeleton.java<CR>2j$o
 	nmap <Leader>fjava :-1read $NVIMDOTDIR/snippets/method.java<CR>7ggt(a
 	nmap <Leader>vim :-1read $NVIMDOTDIR/snippets/skeleton.vim<CR>jA<C-r>%<C-o>j<Space>
@@ -297,6 +298,7 @@
 	nmap ˛ <C-W>K
 	nmap ¸ <C-W>H
 	nmap ˇ <C-W>L
+	nmap Ø O<Esc>j
 	nmap ø o<Esc>k
 	nmap ˘˘ :Hexplore %:p:h<CR><C-W>K:resize12<cr>
 	nmap ˘Å :Lexplore<CR>
