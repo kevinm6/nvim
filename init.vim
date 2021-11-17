@@ -252,7 +252,7 @@
 	cmap ga Git add
 	cmap gaa Git add .<CR>
 	cmap gc Git commit -m ""<Left>
-	cmap gac Git add .<CR> :Git commit -m ""<Left>
+	cmap gac Git add . | Git commit -m ""<Left>
 	" }
 
 	" Normal-Visual-Operator-pending Mode {
