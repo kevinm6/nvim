@@ -3,7 +3,7 @@
 " Description: VimR K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.vim
-" Last Modified: 17.11.21 12:30
+" Last Modified: 17.11.21 14:30
 " -------------------------------------------------
 
 
@@ -215,6 +215,7 @@
 	call plug#begin('$NVIMDOTDIR/plugins')
 		Plug 'jiangmiao/auto-pairs'
 		Plug 'tpope/vim-surround'
+		Plug 'tpope/vim-fugitive'
 		Plug 'rbong/vim-flog'
 		Plug 'tpope/vim-commentary'
 		Plug 'tpope/vim-dadbod'
