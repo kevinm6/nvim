@@ -95,14 +95,14 @@
 	hi Tag guifg=#ff00ff ctermfg=201
 	hi Delimiter guifg=#FFD479 ctermfg=186 "parenthesis
 	hi SpecialComment guifg=#6C7986 ctermfg=102
+	hi Todo guibg=yellow2 guifg=orangeRed ctermbg=190 ctermfg=2
+	hi Directory guifg=#00af88 ctermfg=36
 
 " Add highlight for the rest of the screen without text
 	hi NonText guibg=#262626 guifg=RoyalBlue ctermbg=235 ctermfg=63
 	hi EndOfBuffer guifg=grey10 guibg=#101010 ctermbg=232 ctermfg=253
 
 	hi Ignore guifg=Grey40 cterm=bold ctermfg=7
-	hi Todo guibg=yellow2 guifg=orangeRed ctermbg=190 ctermfg=2
-	hi Directory guifg=#00af88 ctermfg=36
 
 " Menu
 	hi WildMenu guifg=#000000 guibg=#808000 ctermfg=0 ctermbg=3 
