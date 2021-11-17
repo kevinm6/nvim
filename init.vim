@@ -244,10 +244,13 @@
 	
 	" Command Mode {
 	set wildcharm=<C-Z>
-	cnoremap <expr> <up> wildmenumode() ? "\<Left>" : "\<up>"
-	cnoremap <expr> <down> wildmenumode() ? "\<Right>" : "\<down>"
-	cnoremap <expr> <Left> wildmenumode() ? "\<up>" : "\<left>"
-	cnoremap <expr> <Right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+	cmap <expr> <up> wildmenumode() ? "\<Left>" : "\<up>"
+	cmap <expr> <down> wildmenumode() ? "\<Right>" : "\<down>"
+	cmap <expr> <Left> wildmenumode() ? "\<up>" : "\<left>"
+	cmap <expr> <Right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+	cmap gs Git status<CR>
+	cmap ga Git add
+	cmap gaa Git add .<CR>
 	" }
 
 	" Normal-Visual-Operator-pending Mode {
