@@ -247,7 +247,7 @@
 	cmap ga Git add
 	cmap gaa Git add .<CR>
 	cmap gc Git commit -m ""<Left>
-	cmap gac Git add .<CR> | Git commit -m ""<Left>
+	cmap gac Git add . | Git commit -m ""<Left>
 	cmap gp Git push<CR>
 	" }
 	
@@ -313,7 +313,7 @@
 	" }
 	
 	" Visual Mode {
-	vmap <BS> "_x
+	vmap <BS> "_d
 	vmap <Tab> >
 	vmap <S-Tab> <
 	vmap ] >
