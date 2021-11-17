@@ -123,12 +123,16 @@
 	  noremap <buffer>% :call CreateInPreview()<cr>
 	endfunction
 
-	function! GitStatus()
-	    return sy#repo#get_stats_decorated()
-	endfunction
-
 	" Coc Configuration File
 	let g:coc_config_home = "$NVIMDOTDIR/plugins/coc.nvim"
+
+	" Automation for coc-syntax using omnifunc
+	if has("autocmd") && exists("+omnifunc")
+	autocmd Filetype *
+		    \	if &omnifunc == "" |
+		    \		setlocal omnifunc=syntaxcomplete#Complete |
+		    \	endif
+  endif
 
 	" Python
 	let g:python3_host_prog = "/usr/local/bin/python3.9"
@@ -203,7 +207,7 @@
 " ----------------- STATUS LINE ------------------ {
 	set statusline=%1*\[%n]\⟩\ %<%f\%*
 	set statusline+=%3*\ ⟩\ \%y
-	set statusline+=%=%2*%{GitStatus()}\ %{FugitiveStatusline()}\ %3*⟨\ %{&ff}\ ⟨\ R%l\/%L\:\C%c\ ⟨
+	set statusline+=%=%2*%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %3*⟨\ %{&ff}\ ⟨\ R%l\/%L\:\C%c\ ⟨
 " }
 
 
@@ -212,7 +216,6 @@
 	 	Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'jiangmiao/auto-pairs'
 		Plug 'tpope/vim-surround'
-		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-markdown'
 		Plug 'tpope/vim-commentary'
 		Plug 'tpope/vim-dadbod'
@@ -220,7 +223,6 @@
 		Plug 'rbong/vim-flog'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'joelbeedle/pseudo-syntax'
-		Plug 'mhinz/vim-signify'
 		Plug 'junegunn/goyo.vim'
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
 		Plug 'morhetz/gruvbox'
