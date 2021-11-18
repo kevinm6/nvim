@@ -1,0 +1,65 @@
+{
+	"list.normalMappings": {
+    "<C-c>": "do:exit"
+  },
+  "list.insertMappings": {
+    "<C-c>": "do:exit"
+  },
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/12.0.1/clangd_12.0.1/bin/clangd",
+  "suggest.noselect":false,
+  "suggest.enablePreselect": true,
+  "suggest.enablePreview": true,
+  "suggest.floatEnable": true,
+	"suggest.removeDuplicateItems": false,
+	"suggest.acceptSuggestionOnCommitCharacter": true,
+	"suggest.detailField": "preview",
+	"suggest.maxCompleteItemCount": 24,
+	"coc.preferences.bracketEnterImprove": true,
+  "coc.preferences.enableMarkdown": true,
+  "coc.source.gocode.filetypes":["go"],
+	"java.home":"/usr/local/opt/openjdk",
+	"java.configuration.runtimes": [
+		{
+			"name": "JavaSE-11",
+			"path": "/usr/local/opt/openjdk@11"
+		},
+		{
+			"name": "JavaSE-14",
+			"path": "/usr/local/opt/openjdk",
+			"default": true
+		}
+	],
+	"git.command": "git",
+	"git.remoteName": "origin",
+  "git.enableGutters": true,
+ 	"git.addedSign.text": "+",
+	"git.changedSign.text": "~",
+	"git.changeRemovedSign.text": "-",
+	"git.addedSign.hlGroup": "DiffAdd",
+	"git.removedSign.hlGroup": "DiffDelete",
+	"git.changeRemovedSign.hlGroup": "DiffChange",
+	"git.changedDecorator": "",
+  "coc.source.issues.filetypes":[
+		"gitcommit", 
+		"gina-commit"
+	],
+	"sql.database": "postgresql",
+  "markdownlint.onChange":true,
+  "markdownlint.config":{
+	  "default":true,
+	  "line-length":false,
+	  "no-multiple-blanks":false,
+	  "header-increment":false,
+		"no-emphasis-as-heading": false,
+		"no-inline-html": false 
+  },
+	"explorer.width": 28,
+	"explorer.focus": true,
+	"explorer.git.enable": true,
+	"explorer.icon.source": "builtin",
+	"explorer.position": "floating",
+	"explorer.floating.height": -30,
+	"yank.list.maxsize": 60,
+	"yank.enableCompletion": true,
+  "yank.highlight.duration": 400
+}
