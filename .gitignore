@@ -1,7 +1,6 @@
 **/**/.DS_Store
 .netrwhist
 .HOME_vim/*
-main.shada
 plugins/*
 mvimtmp/*
 colors/.DS_Store
