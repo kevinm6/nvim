@@ -6,10 +6,10 @@
 
 " Use :syn w/in a buffer to see language element breakdown
 
-if version < 600
-  syntax clear
-elseif exists("b:current_syntax")
-  finish
+if\ version < 600
+  \syntax clear
+el\seif exists("b:current_syntax")
+  \finish
 endif
 
 " --- Statement ---
