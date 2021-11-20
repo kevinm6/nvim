@@ -16,6 +16,7 @@
 		Plug 'tpope/vim-commentary'
 		Plug 'tpope/vim-dadbod'
 		Plug 'kristijanhusak/vim-dadbod-ui'
+		Plug 'liuchengxu/vim-which-key'
 		Plug 'tpope/vim-markdown'
 		Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 		Plug 'joelbeedle/pseudo-syntax'
