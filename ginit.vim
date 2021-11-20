@@ -3,7 +3,7 @@
 " Description: VimR K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.vim
-" Last Modified: 19.11.21 10:45
+" Last Modified: 20.11.21 16:26
 " ------------------------------------
 
 

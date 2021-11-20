@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/init.vim
-" Last Modified: 19.11.21 10:45
+" Last Modified: 20.11.21 16:26
 " ------------------------------------
 
 
@@ -20,7 +20,6 @@
 		finish
 	endif
 " }
-
 
 " Section: Path Settings {
 	set rtp+=~/.config/nvim/
