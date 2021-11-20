@@ -5,8 +5,10 @@
   "list.insertMappings": {
     "<C-c>": "do:exit"
   },
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/12.0.1/clangd_12.0.1/bin/clangd",
-  "suggest.noselect":false,
+  
+	"clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/12.0.1/clangd_12.0.1/bin/clangd",
+  
+	"suggest.noselect":false,
   "suggest.enablePreselect": true,
   "suggest.enablePreview": true,
   "suggest.floatEnable": true,
@@ -16,19 +18,17 @@
 	"suggest.maxCompleteItemCount": 24,
 	"coc.preferences.bracketEnterImprove": true,
   "coc.preferences.enableMarkdown": true,
-  "coc.source.gocode.filetypes":["go"],
-	"java.home":"/usr/local/opt/openjdk",
+	"coc.source.gocode.filetypes":["go"],
+
+	"java.home":"/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
 	"java.configuration.runtimes": [
 		{
 			"name": "JavaSE-11",
-			"path": "/usr/local/opt/openjdk@11"
-		},
-		{
-			"name": "JavaSE-14",
-			"path": "/usr/local/opt/openjdk",
-			"default": true
+			"path": "/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home",
+			"default":false
 		}
 	],
+
 	"git.command": "git",
 	"git.remoteName": "origin",
   "git.enableGutters": true,
@@ -39,12 +39,15 @@
 	"git.removedSign.hlGroup": "DiffDelete",
 	"git.changeRemovedSign.hlGroup": "DiffChange",
 	"git.changedDecorator": "",
+
   "coc.source.issues.filetypes":[
 		"gitcommit", 
 		"gina-commit"
 	],
+	
 	"sql.database": "postgresql",
-  "markdownlint.onChange":true,
+  
+	"markdownlint.onChange":true,
   "markdownlint.config":{
 	  "default":true,
 	  "line-length":false,
@@ -53,12 +56,20 @@
 		"no-emphasis-as-heading": false,
 		"no-inline-html": false 
   },
+	
 	"explorer.width": 28,
+	"explorer.icon.source": "builtin",
+	"explorer.file.root.template": "[icon] [git] [hidden & 1][root]",
 	"explorer.focus": true,
 	"explorer.git.enable": true,
-	"explorer.icon.source": "builtin",
 	"explorer.position": "floating",
 	"explorer.floating.height": -30,
+	"explorer.file.showHiddenFiles": false,
+	"explorer.keyMappings.global": {
+    "<cr>": ["expandable?", "expand", "open"],
+    "v": "open:vsplit"
+  },
+	
 	"yank.list.maxsize": 60,
 	"yank.enableCompletion": true,
   "yank.highlight.duration": 400
