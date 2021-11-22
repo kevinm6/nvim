@@ -3,21 +3,21 @@
 " Description: Kevin personal colorscheme for vim/neovim/vimr
 " Author: Kevin
 " Source: https://github.com/kevinm6/
-" Last Modified: 13.11.21 20:30
+" Last Modified: 22.11.21 15:37
 " -----------------------------------------------------------------------------
 
-" Set main options
+" Section: Set main options
 	let colors_name ='k_theme' 
 	set background=dark
 	set t_co=256
 	
-" ----------------- FONT ----------------- {
+" Section: Font {
 	if !has('gui_vimr')
 		set guifont="Source Code Pro":h13
 	endif
 " }
 
-	" Modes
+" Section: Modes
 	hi Normal guifg=#DCDCDC guibg=#101010 ctermfg=253 ctermbg=232
 	hi Visual gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
 	" Selection Not Owned by vim
@@ -31,7 +31,7 @@
 
 	hi colorColumn guibg=#606060 ctermbg=237
 
-" Cursor
+" Section: Cursor
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
 	hi Cursor gui=NONE guibg=fg guifg=bg cterm=NONE ctermbg=fg ctermfg=bg
 	hi LineNr guibg=#101010 guifg=#808080 ctermbg=232 ctermfg=240
@@ -40,32 +40,32 @@
 
 	hi HighlightedyankRegion gui=reverse guibg=NONE cterm=reverse ctermbg=NONE
 
-" Split
+" Section: Split
 	hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
 
-" Folding
+" Section: Folding
 	hi Folded guibg=black guifg=Grey40 ctermfg=230 ctermbg=240
 	hi FoldColumn guibg=black guifg=NONE ctermfg=4 ctermbg=NONE
 
-" Search
+" Section: Search
 	hi Search guibg=#244E7A ctermbg=25 
 	hi IncSearch guibg=black guifg=green ctermbg=black ctermfg=green cterm=NONE ctermfg=yellow ctermbg=green
 
-" Debugging
+" Section: Debugging
 	hi Debug guifg=#ff0000 ctermfg=Red
 
-" Status Line
+" Section: Status Line
 	hi StatusLine guifg=#A9A9A9 guibg=#303030 ctermbg=236 ctermfg=248
 	hi StatusLineNC guifg=#A9A9A9 guibg=#787878 ctermfg=7 ctermbg=242
 	hi StatusLineTerm guifg=#A9A9A9 guibg=#303030 ctermbg=234 ctermfg=246
 	hi StatusLineTermNC guifg=#A9A9A9 guibg=#787878 ctermfg=7 ctermbg=244
 
-" Users
+" Section: Users
 	hi User1 guifg=#00D392 guibg=#303030 ctermfg=48 ctermbg=236
 	hi User2 guifg=#af8700 guibg=#303030 ctermfg=136 ctermbg=236
 	hi User3 guifg=#86868B guibg=#303030 ctermfg=102 ctermbg=236
 
-" Syntax
+" Section: Syntax
 	hi String guifg=#FF7E80 ctermfg=210
 	hi Number guifg=#00fff2 ctermfg=50
 	hi Comment gui=italic guifg=#6c6c6c ctermfg=242 font=Source_Code_Pro:h12
@@ -98,16 +98,16 @@
 	hi Todo guibg=yellow2 guifg=orangeRed ctermbg=190 ctermfg=2
 	hi Directory guifg=#00af88 ctermfg=36
 
-" Add highlight for the rest of the screen without text
+" Section: End of buffer and non text
 	hi NonText guibg=#262626 guifg=RoyalBlue ctermbg=235 ctermfg=63
 	hi EndOfBuffer guifg=grey10 guibg=#101010 ctermbg=232 ctermfg=253
 
 	hi Ignore guifg=Grey40 cterm=bold ctermfg=7
 
-" Menu
+" Section: Menu
 	hi WildMenu guifg=#000000 guibg=#808000 ctermfg=0 ctermbg=3 
 
-" Diff 
+" Section: Diff
 	hi MatchParen gui=bold guibg=NONE guifg=magenta cterm=bold ctermbg=NONE ctermfg=magenta
 	if &diff 
 		hi! link DiffText MatchParen
@@ -118,18 +118,13 @@
 	hi DiffText guifg=magenta guibg=NONE ctermfg=magenta ctermbg=NONE
 	hi! link SignColumn LineNr
 
-" GitGutter
-	hi GitGutterAdd    guifg=#005fff ctermfg=27
-	hi GitGutterChange guifg=olive ctermfg=3
-	hi GitGutterDelete guifg=Red3 ctermfg=160
-
-" Errors
+" Section: Errors
 	hi Error guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
 	hi ErrorMsg cterm=bold guibg=Red guifg=White ctermbg=Red ctermfg=White cterm=bold ctermfg=7 ctermbg=1
 	hi SpellErrors guibg=Red guifg=White ctermbg=Red ctermfg=White gui=bold ctermfg=7 ctermbg=1
 	hi WarningMsg guifg=salmon ctermfg=209
 
-" Popup Menu
+" Section: Popup Menu
 	hi Pmenu ctermfg=253 ctermbg=236 cterm=None guifg=#DCDCDC guibg=#303030
 	hi PmenuSel ctermfg=42 ctermbg=238 cterm=Bold guifg=#36FF5A guibg=#444444 gui=Bold
 	hi PmenuSbar ctermbg=Red guibg=Red
