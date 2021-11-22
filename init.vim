@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/init.vim
-" Last Modified: 20.11.21 16:26
+" Last Modified: 22.11.21 09:25
 " ------------------------------------
 
 
@@ -27,7 +27,7 @@
 	set packpath+=&runtimepath
 	set path+=**
 	set shada='20,<50,s10
-	set undodir=$HOME/.local/share/nvim/tmp/undo " undo directory
+	set undodir=$HOME/.local/share/nvim/tmp/undo " undo dir
 " }
 
 
@@ -43,8 +43,13 @@
 		\ 'imdb': 'postgres://:@localhost/imdb',
 		\ 'lezione': 'postgres://:@localhost/lezione'
 		\}
-" }
 
+	" Markdown
+	let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo', 'sql' ]
+
+	let g:markdown_folding = 1
+	let g:rmd_include_html = 1
+" }
 
 
 " Section: keymap to edit/source config file {

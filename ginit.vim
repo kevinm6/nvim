@@ -3,11 +3,10 @@
 " Description: VimR K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.vim
-" Last Modified: 20.11.21 16:26
+" Last Modified: 22.11.21 09:25
 " ------------------------------------
 
 
-" Section: PATH SETTINGS {
 " Section: Path Settings {
 	set rtp+=~/.config/nvim/
 	set viminfo+=n~/.local/share/nvim/gmain.shada
@@ -30,6 +29,12 @@
 		\ 'imdb': 'postgres://:@localhost/imdb',
 		\ 'lezione': 'postgres://:@localhost/lezione'
 		\}
+	
+	" Markdown
+	let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo', 'sql' ]
+
+	let g:markdown_folding = 1
+	let g:rmd_include_html = 1
 " }
 	
 " Section: VimR FullScreen {
