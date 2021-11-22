@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 19.11.21 10:45
+" Last Modified: 22.11.21 19:25
 " ------------------------------------
 
 
@@ -144,7 +144,7 @@
 " }
 
 
-" Section: NETRW Global Options {
+" Section: NETRW {
 	let g:netrw_banner = 0 " disabling banner
 	let g:netrw_preview = 1 " preview window in vertical split instead of horizontal
 	let g:netrw_liststyle = 3 " set tree as default list appearance
@@ -160,15 +160,15 @@
 
 
 " Section: STATUS LINE {
-	set statusline=%1*\[%n]\⟩\ %<%f\%*
-	set statusline+=%3*\ ⟩\ \%y
-	set statusline+=%=%2*%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\ %3*⟨\ %{&ff}\ ⟨\ %l\:%c\/%L\ ⟨
+	set statusline=%1*\|%n\⟩\%2*\ %{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\%1*⟩\ %<%f\%3*\ \%4*▶︎
+	set statusline+=%=%4*\◀︎\%1*\ %y\ %3*⟨\ %{&ff}\ ⟨\ %l\:%c\/%L\ \|
 " }
 
 
-" Section: FUNCTIONS -----------------  {
+" Section: FUNCTIONS {
 	function! CreateInPreview()
 		let l:filename = input("> Enter filename: ")
 		execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
 " }
+
