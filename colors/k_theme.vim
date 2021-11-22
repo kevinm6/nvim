@@ -1,12 +1,12 @@
-" -----------------------------------------------------------------------------
+" ------------------------------
 " File: k_theme.vim
-" Description: Kevin personal colorscheme for vim/neovim/vimr
+" Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
-" Source: https://github.com/kevinm6/
-" Last Modified: 22.11.21 15:37
-" -----------------------------------------------------------------------------
+" Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
+" Last Modified: 22.11.21 15:44
+" ------------------------------
 
-" Section: Set main options
+" Section: Set Main Options
 	let colors_name ='k_theme' 
 	set background=dark
 	set t_co=256
