@@ -46,7 +46,12 @@
 	],
 	
 	"sql.database": "postgresql",
-  
+
+	"markdown-preview-enhanced.liveUpdate": true,
+	"markdown-preview-enhanced.previewTheme": "github-dark.css",
+	"markdown-preview-enhanced.singlePreview": true,
+	"markdown-preview-enhanced.enableHTML5Embed": false,
+
 	"markdownlint.onChange":true,
   "markdownlint.config":{
 	  "default":true,
