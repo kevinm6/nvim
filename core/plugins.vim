@@ -3,7 +3,7 @@
 " Description: NeoVim | VimR | Vim plugins to load
 " Author: Kevin
 " Source: https://github.com/kevinm6/
-" Last Modified: 18.11.21 21:26
+" Last Modified: 22.11.21 15:38
 " -------------------------------------------------
 
 
