@@ -170,5 +170,15 @@
 		let l:filename = input("> Enter filename: ")
 		execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
+
+	function! Scratch()
+    split
+    noswapfile hide enew
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal nobuflisted
+    "lcd ~
+    file scratch
+	endf
 " }
 
