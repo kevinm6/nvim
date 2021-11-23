@@ -3,7 +3,7 @@
 " Description: keymaps for NeoVim & VimR & Vim
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/keymaps.vim
-" Last Modified: 22.11.21 15:30
+" Last Modified: 23.11.21 10:30
 " -------------------------------------------------
 
 
@@ -79,7 +79,7 @@
 	nmap <silent><Leader>gs :Git status<CR>
 	nmap <Leader>gaa :Git add .<CR>
 	nmap <Leader>gc :Git commit -m ''<Left>
-	nmap <Leader>gac :Git add <C-r>% <bar> Git commit -m ""<Left>
+	nmap <Leader>gac :Git add ./<C-r>% <bar> Git commit -m ""<Left>
 	nmap <silent><Leader>gp :Git push<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
