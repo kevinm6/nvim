@@ -25,6 +25,9 @@
 	let g:python3_host_prog = "/usr/local/bin/python3.9"
 
 	" Database
+	let g:sql_type_default = 'postgresql'
+	let g:omni_sql_no_default_maps = 1
+
 	let g:dbs = {
 		\ 'imdb': 'postgres://:@localhost/imdb',
 		\ 'lezione': 'postgres://:@localhost/lezione'
