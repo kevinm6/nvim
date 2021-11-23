@@ -13,10 +13,10 @@
 		tnoremap <Esc> <C-\><C-n>
 
 		if has('gui_vimr') " VimR keymaps (command key and others)
-			nmap <D-Right> $
-			nmap <D-Left> 0
-			nmap <D-down> G
-			nmap <D-up> gg
+			map <D-Right> $
+			map <D-Left> 0
+			map <D-down> G
+			map <D-up> gg
 			nmap <C-Tab> gt
 			nmap <C-S-Tab> gT
 			imap <D-BS> <C-u>
@@ -77,9 +77,9 @@
 	nmap <silent> <Leader>y  :<C-u>CocList -A --normal yank<cr>
 	nmap <Leader>f :CocCommand explorer<CR>
 	nmap <silent><Leader>gs :Git status<CR>
-	nmap <silent><Leader>gaa :Git add .<CR>
-	nmap <silent><Leader>gc :Git commit -m ''<Left>
-	nmap <silent><Leader>gac :Git add . <bar> Git commit -m ""<Left>
+	nmap <Leader>gaa :Git add .<CR>
+	nmap <Leader>gc :Git commit -m ''<Left>
+	nmap <Leader>gac :Git add <C-r>% <bar> Git commit -m ""<Left>
 	nmap <silent><Leader>gp :Git push<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
