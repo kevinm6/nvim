@@ -37,7 +37,12 @@
 		imap <ESC>oD <ESC>hi
 	endif
 " }
-	
+
+" Section: N-V-O Mode {
+	map <A-Left> B
+	map <A-Right> E
+" }
+
 " Section: Command Mode {
 	set wildcharm=<C-Z>
 	cnor <expr> <up> wildmenumode() ? "\<Left>" : "\<up>"
@@ -65,8 +70,6 @@
 " }
 
 " Section: Normal Mode {
-	nmap <A-Left> B
-	nmap <A-Right> E
 	nmap <Leader>html :-1read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a
 	nmap <Leader>c :-1read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja
 	nmap <Leader>java :-1read $NVIMDOTDIR/snippets/skeleton.java<CR>2j$o
