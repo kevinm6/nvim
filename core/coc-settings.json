@@ -16,10 +16,37 @@
 	"suggest.acceptSuggestionOnCommitCharacter": true,
 	"suggest.detailField": "preview",
 	"suggest.maxCompleteItemCount": 24,
+	
 	"coc.preferences.bracketEnterImprove": true,
   "coc.preferences.enableMarkdown": true,
-	"coc.source.gocode.filetypes":["go"],
 
+	"hover.target": "float",
+	"hover.autoHide": true,
+	"hover.previewMaxHeight": 16,
+	
+	"coc.source.dictionary.enable": true,
+	"coc.source.dictionary.priority": 1,
+
+	"explorer.position": "floating",
+	"explorer.floating.height": 46,
+	"explorer.floating.width": -46,
+	"explorer.icon.source": "nerdfont.vim",
+	"explorer.icon.enableNerdfont": true,
+	"explorer.file.root.template": "[icon] [git] [hidden & 1][root]",
+	"explorer.focus": true,
+	"explorer.git.enable": true,
+	"explorer.git.showIgnored": true,
+	"explorer.mouseMode": "singleclick",
+	"explorer.file.showHiddenFiles": false,
+	"explorer.keyMappings.global": {
+    "<cr>": ["expandable?", "expand", "open"],
+    "v": "open:vsplit"
+  },
+	
+	"yank.list.maxsize": 60,
+	"yank.enableCompletion": true,
+  "yank.highlight.duration": 400,
+	"yank.priority": 90,
 	"java.home":"/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
 	"java.configuration.runtimes": [
 		{
@@ -61,21 +88,6 @@
 		"no-emphasis-as-heading": false,
 		"no-inline-html": false 
   },
-	
-	"explorer.width": 28,
-	"explorer.icon.source": "builtin",
-	"explorer.file.root.template": "[icon] [git] [hidden & 1][root]",
-	"explorer.focus": true,
-	"explorer.git.enable": true,
-	"explorer.git.showIgnored": false,
-	"explorer.position": "floating",
-	"explorer.file.showHiddenFiles": false,
-	"explorer.keyMappings.global": {
-    "<cr>": ["expandable?", "expand", "open"],
-    "v": "open:vsplit"
-  },
-	
-	"yank.list.maxsize": 60,
-	"yank.enableCompletion": true,
-  "yank.highlight.duration": 400
+
+	"coc.source.gocode.filetypes":["go"]
 }

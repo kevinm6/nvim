@@ -3,7 +3,7 @@
 " Description: NeoVim | VimR | Vim plugins to load
 " Author: Kevin
 " Source: https://github.com/kevinm6/
-" Last Modified: 22.11.21 15:38
+" Last Modified: 24.11.21 15:54
 " -------------------------------------------------
 
 
@@ -22,6 +22,7 @@
 		Plug 'junegunn/goyo.vim'
 		Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
+		Plug 'lambdalisue/nerdfont.vim'
 		Plug 'morhetz/gruvbox'
 	call plug#end()
 " }
