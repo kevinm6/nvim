@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 22.11.21 19:25
+" Last Modified: 24.11.21 23:40
 " ------------------------------------
 
 
@@ -33,7 +33,7 @@
 	elseif $TERM_PROGRAM == "vscode"
 	  finish
 	endif
-	" }
+" }
 
 
 " Section: MOUSE {
@@ -57,6 +57,8 @@
 	function! Netrw_mappings()
 	  noremap <buffer>% :call CreateInPreview()<cr>
 	endfunction
+
+	au BufWritePre * %s/\s+$//e
 
 	" Markdown
 	au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
@@ -92,8 +94,7 @@
 	set signcolumn=yes " always show signcolumns
 	set cmdheight=1	" #lines for vim for commands/logs
 	set pumheight=16 " popup menu height
-	set splitbelow " set defaults splitting position
-	set splitright " \
+	set splitbelow splitright " set defaults splitting position
 	set timeoutlen=500
 	set ttimeoutlen=50
 " }
