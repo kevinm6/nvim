@@ -3,7 +3,7 @@
 " Description: keymaps for NeoVim & VimR & Vim
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/keymaps.vim
-" Last Modified: 23.11.21 10:30
+" Last Modified: 24.11.21 14:40
 " -------------------------------------------------
 
 
