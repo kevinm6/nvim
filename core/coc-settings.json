@@ -67,8 +67,8 @@
 	"explorer.file.root.template": "[icon] [git] [hidden & 1][root]",
 	"explorer.focus": true,
 	"explorer.git.enable": true,
+	"explorer.git.showIgnored": false,
 	"explorer.position": "floating",
-	"explorer.floating.height": -30,
 	"explorer.file.showHiddenFiles": false,
 	"explorer.keyMappings.global": {
     "<cr>": ["expandable?", "expand", "open"],
