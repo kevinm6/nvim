@@ -74,7 +74,7 @@
 	nmap <Leader>c :-1read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja
 	nmap <Leader>java :-1read $NVIMDOTDIR/snippets/skeleton.java<CR>2j$o
 	nmap <Leader>fjava :-1read $NVIMDOTDIR/snippets/method.java<CR>7ggt(a
-	nmap <Leader>vim :-1read $NVIMDOTDIR/snippets/skeleton.vim<CR>jA<C-r>%<C-o>j<Space>
+	nmap <Leader>inf :-1read $NVIMDOTDIR/snippets/skeleton.info<CR><C-v>}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA
 	nmap <Leader>md :-1read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go
 	nmap <Leader>imd :-1read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go
 	nmap <silent><Leader>y  :<C-u>CocList -A --normal yank<cr>
