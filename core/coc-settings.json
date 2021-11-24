@@ -29,8 +29,8 @@
 
 	"explorer.position": "floating",
 	"explorer.floating.height": 46,
-	"explorer.floating.width": -46,
-	"explorer.icon.source": "nerdfont.vim",
+	"explorer.floating.width": -16,
+	"explorer.icon.source": "builtin",
 	"explorer.icon.enableNerdfont": true,
 	"explorer.file.root.template": "[icon] [git] [hidden & 1][root]",
 	"explorer.focus": true,

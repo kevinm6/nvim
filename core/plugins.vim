@@ -22,7 +22,6 @@
 		Plug 'junegunn/goyo.vim'
 		Plug 'makerj/vim-pdf', { 'for': 'pdf' }
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
-		Plug 'lambdalisue/nerdfont.vim'
 		Plug 'morhetz/gruvbox'
 	call plug#end()
 " }
