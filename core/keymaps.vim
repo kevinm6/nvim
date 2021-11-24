@@ -39,8 +39,8 @@
 " }
 
 " Section: N-V-O Mode {
-	map <A-Left> B
-	map <A-Right> E
+	map <A-Left> b
+	map <A-Right> w
 " }
 
 " Section: Command Mode {
@@ -57,8 +57,8 @@
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 	imap <Esc> <Esc>`^
-	imap <A-Left> <Esc>Bi
-	imap <A-Right> <Esc>Ei
+	imap <A-Left> <Esc>bi
+	imap <A-Right> <Esc>wi
 	imap jk <Esc>
 	imap kj <Esc>
 	imap <S-Right> <C-o>vl
