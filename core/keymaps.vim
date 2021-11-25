@@ -55,6 +55,11 @@
 	imap <silent> <expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+	inor <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+	 if exists('*complete_info')
+	 	inor <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
+	 endif
 	imap <Esc> <Esc>`^
 	imap <A-Left> <Esc>bi
 	imap <A-Right> <Esc>wi
