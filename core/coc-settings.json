@@ -43,7 +43,7 @@
     "<cr>": ["expandable?", "expand", "open"],
     "v": "open:vsplit"
   },
-	
+
 	"yank.list.maxsize": 60,
 	"yank.enableCompletion": true,
   "yank.highlight.duration": 400,

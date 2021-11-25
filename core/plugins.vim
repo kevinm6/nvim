@@ -3,16 +3,14 @@
 " Description: NeoVim | VimR | Vim plugins to load
 " Author: Kevin
 " Source: https://github.com/kevinm6/
-" Last Modified: 24.11.21 15:54
+" Last Modified: 25.11.21 10:33
 " -------------------------------------------------
 
 
 " Section: PLUGINS {
 	call plug#begin('$NVIMDOTDIR/plugins')
-		Plug 'jiangmiao/auto-pairs'
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
-		Plug 'rbong/vim-flog'
 		Plug 'tpope/vim-commentary'
 		Plug 'tpope/vim-dadbod'
 		Plug 'kristijanhusak/vim-dadbod-ui'
