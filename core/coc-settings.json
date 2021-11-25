@@ -24,6 +24,8 @@
 	"hover.autoHide": true,
 	"hover.previewMaxHeight": 16,
 	
+	"pairs.enableBackspace": true,
+
 	"coc.source.dictionary.enable": true,
 	"coc.source.dictionary.priority": 1,
 
