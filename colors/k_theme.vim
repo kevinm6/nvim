@@ -3,7 +3,7 @@
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 22.11.21 20:12
+" Last Modified: 25.11.21 09:22
 " ------------------------------
 
 " Section: Set Main Options
@@ -55,10 +55,12 @@
 	hi Debug guifg=#ff0000 ctermfg=Red
 
 " Section: Status Line
-	hi StatusLine guifg=#A9A9A9 guibg=#303030 ctermbg=236 ctermfg=red
-	hi StatusLineNC guifg=#A9A9A9 guibg=#787878 ctermfg=7 ctermbg=242
-	hi StatusLineTerm guifg=#A9A9A9 guibg=#303030 ctermbg=234 ctermfg=246
-	hi StatusLineTermNC guifg=#A9A9A9 guibg=#787878 ctermfg=7 ctermbg=244
+	hi StatusLine guifg=#606060 guibg=#303030 ctermbg=236 ctermfg=246
+	hi StatusLineNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
+	if !has('nvim')
+		hi StatusLineTerm guifg=#606060 guibg=#303030 ctermbg=234 ctermfg=246
+		hi StatusLineTermNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
+	endif
 
 " Section: Users
 	hi User1 guifg=#00D392 guibg=#303030 ctermfg=48 ctermbg=236
