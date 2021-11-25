@@ -7,7 +7,7 @@
 " ------------------------------------
 
 
-	" Section: check VScode/codium 
+" Section: check VScode/codium 
 	if exists('g:vscode')
 		finish
 	endif
