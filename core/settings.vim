@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 24.11.21 23:40
+" Last Modified: 25.11.21 10:26
 " ------------------------------------
 
 
@@ -73,6 +73,8 @@
 		    \		setlocal omnifunc=syntaxcomplete#Complete |
 		    \	endif
   endif
+
+	autocmd CursorHold * silent call CocActionAsync('highlight')
 " }
 
 
@@ -95,6 +97,8 @@
 	set cmdheight=2	" #lines for vim for commands/logs
 	set pumheight=16 " popup menu height
 	set splitbelow splitright " set defaults splitting position
+	set updatetime=300 " set a low updatetime for better UX even w/ CoC
+	set shortmess+=c " do not pass messages to ins-completion-menu
 	set timeoutlen=500
 	set ttimeoutlen=50
 " }
@@ -181,5 +185,15 @@
     "lcd ~
     file scratch
 	endf
+
+	function! s:show_documentation() " Coc Show Documentation
+		if (index(['vim','help'], &filetype) >= 0)
+			execute 'h '.expand('<cword>')
+		elseif (coc#rpc#ready())
+			call CocActionAsync('doHover')
+		else
+			execute '!' . &keywordprg . " " . expand('<cword>')
+		endif
+	endfunction
 " }
 
