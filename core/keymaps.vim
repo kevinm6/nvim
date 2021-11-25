@@ -78,7 +78,7 @@
 	nmap <Leader>md :-1read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go
 	nmap <Leader>imd :-1read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go
 	nmap <silent><Leader>y  :<C-u>CocList -A --normal yank<cr>
-	nmap <Leader>f :CocCommand explorer<CR>
+	nmap <Leader>e :CocCommand explorer<CR>
 	nmap <silent><Leader>gs :Git status<CR>
 	nmap <Leader>gaa :Git add .<CR>
 	nmap <Leader>gc :Git commit -m ''<Left>
