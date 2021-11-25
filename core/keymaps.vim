@@ -3,7 +3,7 @@
 " Description: keymaps for NeoVim & VimR & Vim
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/keymaps.vim
-" Last Modified: 24.11.21 14:40
+" Last Modified: 25.11.21 10:26
 " -------------------------------------------------
 
 
@@ -52,10 +52,11 @@
 " }
 	
 " Section: Insert Mode {
-	imap <silent><expr> <c-space> coc#refresh()
+	imap <silent> <expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-	imap <silent><expr><cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+	inor <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 	imap <Esc> <Esc>`^
 	imap <A-Left> <Esc>bi
 	imap <A-Right> <Esc>wi
@@ -78,12 +79,19 @@
 	nmap <Leader>md :-1read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go
 	nmap <Leader>imd :-1read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go
 	nmap <silent><Leader>y  :<C-u>CocList -A --normal yank<cr>
-	nmap <Leader>e :CocCommand explorer<CR>
+	nmap <Leader>f :CocCommand explorer<CR>
 	nmap <silent><Leader>gs :Git status<CR>
 	nmap <Leader>gaa :Git add .<CR>
 	nmap <Leader>gc :Git commit -m ''<Left>
-	nmap <Leader>gac :Git add ./<C-r>% <bar> Git commit -m ""<Left>
+	nmap <Leader>gac :Git add % <bar> Git commit -m ""<Left>
 	nmap <silent><Leader>gp :Git push<CR>
+	" GoTo code navigation.
+	nmap <silent> gd <Plug>(coc-definition)
+	nmap <silent> gy <Plug>(coc-type-definition)
+	nmap <silent> gi <Plug>(coc-implementation)
+	nmap <silent> gr <Plug>(coc-references)
+	" Use K to show documentation in preview window.
+	nnoremap <silent> K :call <SID>show_documentation()<CR>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
