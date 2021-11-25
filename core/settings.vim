@@ -92,7 +92,7 @@
 	set showmatch " Show matching brackets when over
 	set tw=200	" Linebreak on 400 characters
 	set signcolumn=yes " always show signcolumns
-	set cmdheight=1	" #lines for vim for commands/logs
+	set cmdheight=2	" #lines for vim for commands/logs
 	set pumheight=16 " popup menu height
 	set splitbelow splitright " set defaults splitting position
 	set timeoutlen=500
