@@ -111,7 +111,7 @@
 	set wrap " Wrap long lines
 	set wrapmargin=68
 	set foldenable " enable code folding
-	set foldmethod=syntax
+	set foldmethod=diff
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
 	set foldcolumn=0	" Add a bit extra margin to the Left
