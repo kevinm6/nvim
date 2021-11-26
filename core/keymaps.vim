@@ -3,7 +3,7 @@
 " Description: keymaps for NeoVim & VimR & Vim
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/keymaps.vim
-" Last Modified: 26.11.21 11:56
+" Last Modified: 26.11.21 13:55
 " -------------------------------------------------
 
 
@@ -55,11 +55,12 @@
 	imap <silent> <expr> <c-space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+	if exists('*complete_info')
+		inor <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
+	endif
 	inor <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-	 if exists('*complete_info')
-	 	inor <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
-	 endif
+
 	imap <Esc> <Esc>`^
 	imap <A-Left> <Esc>bi
 	imap <A-Right> <Esc>wi
@@ -103,7 +104,7 @@
 	nmap <S-Right> vl
 	nmap <S-up> vk
 	nmap <S-down> vj
-	nmap S :%s///g<Left><Left><Left>
+	nmap S :%s///<Left><Left>
 	nmap µ :CocCommand markdown-preview-enhanced.openPreview<CR>
 	nmap ˝ <C-W>J
 	nmap ˛ <C-W>K
