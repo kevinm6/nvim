@@ -34,7 +34,7 @@
 	"coc.source.dictionary.priority": 1,
 
 	"explorer.position": "floating",
-	"explorer.floating.height": 46,
+	"explorer.floating.height": 28,
 	"explorer.floating.width": -16,
 	"explorer.icon.source": "builtin",
 	"explorer.icon.enableNerdfont": true,
