@@ -26,6 +26,9 @@
 	
 	"pairs.enableBackspace": true,
 
+	"highlight.colors.enable": false,
+	"highlight.colorNames.enable": false,
+
 	"coc.source.dictionary.enable": true,
 	"coc.source.dictionary.priority": 1,
 
