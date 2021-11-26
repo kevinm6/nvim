@@ -1,6 +1,6 @@
 **/**/.DS_Store
 .netrwhist
 .HOME_vim/*
-plugins/*
+plugged/*
 mvimtmp/*
 colors/.DS_Store
