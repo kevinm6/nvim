@@ -156,14 +156,13 @@
 	let g:netrw_keepdir = 0 " current dir & browsing dir synced
 	let g:netrw_localcopydircmd = 'cp -r' " enable recursive copy command
 	let g:netrw_mousemaps = 1
-	"highlight marked files
 	hi! link netrwMarkFile Search 
 " }
 
 
 " Section: STATUS LINE {
-	set statusline=%1*\|%n\⟩\%2*\ %{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\%1*⟩\ %<%f\%3*\ \%4*▶︎
-	set statusline+=%=%4*\◀︎\%1*\ %y\ %3*⟨\ %{&ff}\ ⟨\ %l\:%c\/%L\ \|
+	set statusline=%1*\|%n\⟩\%2*\ %{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\%1*⟩\ %<%f\%3*\ \%4*
+	set statusline+=%=%4*\%1*\ %y\ %3*⟨\ %{&ff}\ ⟨\ %l\:%L\ |
 " }
 
 
