@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 25.11.21 10:26
+" Last Modified: 26.11.21 12:00
 " ------------------------------------
 
 
