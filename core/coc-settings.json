@@ -19,15 +19,26 @@
 	
 	"coc.preferences.bracketEnterImprove": true,
   "coc.preferences.enableMarkdown": true,
-	"coc.preferences.formatOnType": true,
+	"coc.preferences.formatOnType": false,
+	"coc.preferences.colorSupport": true,
 
 	"hover.target": "float",
 	"hover.autoHide": true,
 	"hover.previewMaxHeight": 16,
 	
 	"pairs.enableBackspace": true,
+	"pairs.enableCharacters": [
+		"(",
+		"[",
+		"{",
+		"<",
+		"'",
+		"\"",
+		"`"
+	],
 
-	"highlight.colors.enable": false,
+
+	"highlight.colors.enable": true,
 	"highlight.colorNames.enable": false,
 
 	"coc.source.dictionary.enable": true,
@@ -38,8 +49,8 @@
 	"explorer.floating.width": -16,
 	"explorer.icon.source": "builtin",
 	"explorer.icon.enableNerdfont": true,
-	"explorer.buffer.root.template": "[icon] [title] [hidden & 1]",
-	"explorer.file.root.template": "[git] [icon] [hidden & 1][root]",
+	"explorer.buffer.root.template": "[hidden & 1] [icon] [title]",
+	"explorer.file.root.template": "[git] [hidden & 1] [icon] [root]",
 	"explorer.focus": true,
 	"explorer.git.enable": true,
 	"explorer.git.showIgnored": true,
