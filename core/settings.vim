@@ -79,9 +79,6 @@
 
 
 " Section: GRAPHIC {
- 	filetype on " enable recognition of filetype
- 	filetype plugin indent on " enable plugin, indentation on filetypes
-
 	set number " Show line numbers
 	set showmode " show active mode in status line
 	if !&scrolloff
