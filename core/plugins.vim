@@ -3,12 +3,13 @@
 " Description: NeoVim | VimR | Vim plugins to load
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.vim
-" Last Modified: 26.11.21 09:06
+" Last Modified: 26.11.21 09:33
 " -------------------------------------------------
 
 
 " Section: PLUGINS {
-	call plug#begin('$NVIMDOTDIR/plugins')
+	call plug#begin('$NVIMDOTDIR/plugged')
+		Plug 'junegunn/vim-plug'
 		Plug 'tpope/vim-surround'
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-commentary'
