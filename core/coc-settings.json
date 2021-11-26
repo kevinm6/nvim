@@ -19,6 +19,7 @@
 	
 	"coc.preferences.bracketEnterImprove": true,
   "coc.preferences.enableMarkdown": true,
+	"coc.preferences.formatOnType": true,
 
 	"hover.target": "float",
 	"hover.autoHide": true,
@@ -53,6 +54,7 @@
 	"yank.enableCompletion": true,
   "yank.highlight.duration": 400,
 	"yank.priority": 90,
+
 	"java.home":"/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
 	"java.configuration.runtimes": [
 		{
