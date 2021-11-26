@@ -3,7 +3,5 @@
 	 *	Post-condition:
 	 *	Effects:
 	 *	@param: 
-	 */
-	public () {
-
-	}
+	  */
+	public ()
