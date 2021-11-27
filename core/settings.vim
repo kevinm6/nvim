@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 26.11.21 12:00
+" Last Modified: 27.11.21 10:33
 " ------------------------------------
 
 
@@ -81,9 +81,7 @@
 " Section: GRAPHIC {
 	set number " Show line numbers
 	set showmode " show active mode in status line
-	if !&scrolloff
-		set scrolloff=3 " # of line leave above and below cursor
-	endif
+	set scrolloff=3 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
 	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
@@ -156,7 +154,6 @@
 	let g:netrw_keepdir = 0 " current dir & browsing dir synced
 	let g:netrw_localcopydircmd = 'cp -r' " enable recursive copy command
 	let g:netrw_mousemaps = 1
-	hi! link netrwMarkFile Search 
 " }
 
 
