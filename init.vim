@@ -35,6 +35,12 @@
 	" Coc
 	let g:coc_config_home = "$NVIMDOTDIR/core/"
 
+	"UltiSnips
+	let g:UltiSnipsExpandTrigger="<cr>"
+	let g:UltiSnipsJumpForwardTrigger="<Down>"
+	let g:UltiSnipsJumpBackwardTrigger="<Up>"
+	let g:UltiSnipsEditSplit="vertical"
+
 	" Python
 	let g:python3_host_prog = "/usr/local/bin/python3.9"
 
