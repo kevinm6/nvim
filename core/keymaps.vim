@@ -3,7 +3,7 @@
 " Description: keymaps for NeoVim & VimR & Vim
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/keymaps.vim
-" Last Modified: 26.11.21 13:55
+" Last Modified: 27.11.21 10:10
 " -------------------------------------------------
 
 
@@ -92,10 +92,10 @@
 	" GoTo code navigation.
 	nmap <silent> gd <Plug>(coc-definition)
 	nmap <silent> gy <Plug>(coc-type-definition)
-	nmap <silent> gi <Plug>(coc-implementation)
+	nmap <silent> gœ <Plug>(coc-implementation)
 	nmap <silent> gr <Plug>(coc-references)
 	" Use K to show documentation in preview window.
-	nnoremap <silent> K :call <SID>show_documentation()<CR>
+	nnoremap <silent> <C-k> :call <SID>show_documentation()<CR>
 	nnoremap <C-l> :nohlsearch<CR><C-l>
 	nmap <Space> <PageDown>
 	nmap <Tab> <C-W><C-W>
