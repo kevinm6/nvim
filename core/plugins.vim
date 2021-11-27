@@ -14,9 +14,10 @@
 		Plug 'tpope/vim-commentary'
 		Plug 'tpope/vim-dadbod'
 		Plug 'kristijanhusak/vim-dadbod-ui'
-		Plug 'liuchengxu/vim-which-key', { 'on': [] }
+		Plug 'SirVer/ultisnips'
 		Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
 		Plug 'joelbeedle/pseudo-syntax', { 'for': ['markdown', 'pseudo'] }
+		Plug 'liuchengxu/vim-which-key', { 'on': [] }
 		Plug 'junegunn/goyo.vim'
 		Plug 'makerj/vim-pdf', { 'for': ['pdf'] }
 		Plug 'neoclide/coc.nvim', {'branch':'release'}
