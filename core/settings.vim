@@ -3,15 +3,8 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 27.11.21 10:33
+" Last Modified: 27.11.21 17:40
 " ------------------------------------
-
-
-" Section: GUI MANAGEMENT {
-	try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
-	set display="lastline,msgsep"
-	set termguicolors
-" }
 
 
 " Section: CURSOR {
@@ -22,14 +15,17 @@
 		"  4 -> solid underscore
 		"  5 -> blinking vertical bar
 		"  6 -> solid vertical bar
+		"SI = INSERT mode
+		"SR = REPLACE mode
+		"EI = NORMAL mode
 	if $TERM_PROGRAM =~ "iTerm"
-		let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block Bar Normal Mode
-		let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical Bar Insert Mode
-		let &t_SR = "\<Esc>]50;CursorShape=2\x7" " Underline Replace Mode
+		let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+		let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+		let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 	elseif $TERM_PROGRAM == "Apple_Terminal"
-		let &t_SI.="\e[5 q" "SI = INSERT mode
-		let &t_SR.="\e[4 q" "SR = REPLACE mode
-		let &t_EI.="\e[1 q" "EI = NORMAL mode
+		let &t_SI.="\e[5 q"
+		let &t_SR.="\e[4 q"
+		let &t_EI.="\e[1 q"
 	elseif $TERM_PROGRAM == "vscode"
 	  finish
 	endif
@@ -79,6 +75,9 @@
 
 
 " Section: GRAPHIC {
+	try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
+	set display="lastline,msgsep"
+	set termguicolors
 	set number " Show line numbers
 	set showmode " show active mode in status line
 	set scrolloff=3 " # of line leave above and below cursor
