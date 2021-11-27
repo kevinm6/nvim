@@ -132,3 +132,7 @@
 	hi PmenuSel gui=Bold guifg=#36FF5A guibg=#444444 cterm=bold ctermfg=42 ctermbg=238
 	hi PmenuSbar guibg=#ff0000 ctermbg=9
 	hi PmenuThumb guifg=#800080 ctermfg=5
+
+" Section: CoC
+	hi CocHighlightText gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
+
