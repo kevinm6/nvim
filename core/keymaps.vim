@@ -3,12 +3,9 @@
 " Description: keymaps for NeoVim & VimR & Vim
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/keymaps.vim
-" Last Modified: 27.11.21 17:45
+" Last Modified: 28.11.21 11:46
 " -------------------------------------------------
 
-" Section: Mapleader {
-	let mapleader = ","
-" }
 
 " Section: Special keys and commands {
 	if exists(':tnoremap') " NeoVim & VimR keymaps
