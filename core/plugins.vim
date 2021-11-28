@@ -14,7 +14,6 @@
 		Plug 'tpope/vim-commentary'
 		Plug 'tpope/vim-dadbod'
 		Plug 'kristijanhusak/vim-dadbod-ui'
-		Plug 'SirVer/ultisnips'
 		Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
 		Plug 'joelbeedle/pseudo-syntax', { 'for': ['markdown', 'pseudo'] }
 		Plug 'liuchengxu/vim-which-key', { 'on': [] }
