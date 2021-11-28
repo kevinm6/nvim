@@ -25,6 +25,9 @@
 	"hover.target": "float",
 	"hover.autoHide": true,
 	"hover.previewMaxHeight": 16,
+
+	"snippets.userSnippetsDirectory": "snippets",
+	"snippets.shortcut": "S",
 	
 	"pairs.enableBackspace": true,
 	"pairs.enableCharacters": [
@@ -36,7 +39,6 @@
 		"\"",
 		"`"
 	],
-
 
 	"highlight.colors.enable": true,
 	"highlight.colorNames.enable": false,
