@@ -52,7 +52,7 @@
 " }
 	
 " Section: Insert Mode {
-	imap <silent> <expr> <c-space> coc#refresh()
+	imap <silent> <expr> <c-Space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	if exists('*complete_info')
@@ -97,7 +97,7 @@
 	" Use K to show documentation in preview window.
 	nnoremap <silent> <C-k> :call <SID>show_documentation()<CR>
 	nnoremap <C-l> :nohlsearch<CR><C-l>
-	nmap <Space> <PageDown>
+	nmap <Space> :WhichKey '<Space>'<CR>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
 	nmap <S-Left> vh
