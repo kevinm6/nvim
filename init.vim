@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/init.vim
-" Last Modified: 22.11.21 09:25
+" Last Modified: 29.11.21 09:45
 " ------------------------------------
 
 
@@ -35,11 +35,35 @@
 	" Coc
 	let g:coc_config_home = "$NVIMDOTDIR/core/"
 
-	"UltiSnips
-	let g:UltiSnipsExpandTrigger="<cr>"
-	let g:UltiSnipsJumpForwardTrigger="<Down>"
-	let g:UltiSnipsJumpBackwardTrigger="<Up>"
-	let g:UltiSnipsEditSplit="vertical"
+	let g:coc_global_extensions = [ 
+	\ 'coc-yank', 
+	\ 'coc-webview', 
+	\ 'coc-syntax', 
+	\ 'coc-snippets', 
+	\ 'coc-pairs', 
+	\ 'coc-lists', 
+	\ 'coc-highlight', 
+	\ 'coc-git', 
+	\ 'coc-explorer', 
+	\ 'coc-dictionary', 
+	\ 'coc-xml', 'coc-sql', 
+	\ 'coc-sourcekit', 
+	\ 'coc-sh', 
+	\ 'coc-python', 
+	\ 'coc-markdownlint', 
+	\ 'coc-markdown-preview-enhanced', 
+	\ 'coc-json', 
+	\ 'coc-java', 
+	\ 'coc-gocode', 
+	\ 'coc-go', 
+	\ 'coc-css', 
+	\ 'coc-clangd', 
+	\ 'coc-translator', 
+	\ 'coc-html-css-support', 
+	\ 'coc-html', 
+	\ 'coc-emoji', 
+	\ 'coc-calc'
+	\]
 
 	" Python
 	let g:python3_host_prog = "/usr/local/bin/python3.9"
@@ -54,14 +78,31 @@
 		\}
 
 	" Markdown
-	let g:markdown_fenced_languages = ['html', 'python', 'zsh', 'java', 'c', 'bash=sh', 'json', 'xml', 'javascript', 'js=javascript', 'css', 'C', 'changelog', 'cpp', 'php', 'pseudo', 'sql' ]
+	let g:markdown_fenced_languages = [
+				\ 'html', 
+				\ 'python', 
+				\ 'zsh', 
+				\ 'java', 
+				\ 'c', 'C',
+				\ 'bash=sh', 
+				\ 'json', 
+				\ 'xml', 
+				\ 'javascript', 'js=javascript', 
+				\ 'css', 
+				\ 'changelog', 
+				\ 'cpp', 
+				\ 'php', 
+				\ 'pseudo', 
+				\ 'sql' 
+				\]
 
 	let g:markdown_folding = 1
 	let g:rmd_include_html = 1
 " }
 
 
-" Section: keymap to edit/source config file {
+" Section: set mapleader & add maps configFile edit/source {
+	let mapleader = ","
 	nmap <Leader>e :e $NVIMDOTDIR/init.vim<CR>
 	nmap <Leader>s :source $NVIMDOTDIR/init.vim<CR>
 " }
