@@ -22,12 +22,9 @@
 	"coc.preferences.formatOnType": false,
 	"coc.preferences.colorSupport": true,
 
-	"hover.target": "float",
-	"hover.autoHide": true,
 	"hover.previewMaxHeight": 16,
 
-	"snippets.userSnippetsDirectory": "snippets",
-	"snippets.shortcut": "S",
+	"snippets.userSnippetsDirectory": "$NVIMDOTDIR/snippets",
 	
 	"pairs.enableBackspace": true,
 	"pairs.enableCharacters": [
