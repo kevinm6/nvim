@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 27.11.21 17:40
+" Last Modified: 29.11.21 19:58
 " ------------------------------------
 
 
@@ -157,14 +157,25 @@
 
 
 " Section: STATUS LINE {
-	set statusline=%1*\|%n\⟩\%2*\ %{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}\%1*⟩\ %<%f\%3*\ \%4*
-	set statusline+=%=%4*\%1*\ %y\ %3*⟨\ %{&ff}\ ⟨\ %l\:%L\ |
+	" Left Side
+	set statusline=%1*%n⟩
+	set statusline+=%2*\ %{get(g:,'coc_git_status','')}
+	set statusline+=%{get(b:,'coc_git_status','')}
+	set statusline+=%{get(b:,'coc_git_blame','')}
+	set statusline+=%1*⟩\ %m\ %<%f\  
+	set statusline+=%4*
+	" Right Side
+	set statusline+=%=%4*
+	set statusline+=%3*\ %{&fileencoding?&fileencoding:&encoding}
+	set statusline+=%1*\ %y
+	set statusline+=%3*\ ⟨\ %{&ff}
+	set statusline+=\ ⟨\ %l\:%L\ 
 " }
 
 
 " Section: FUNCTIONS {
 	function! CreateInPreview()
-		let l:filename = input("> Enter filename: ")
+		let l:filename = input("⟩ Enter filename: ")
 		execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
 
