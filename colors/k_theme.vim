@@ -6,6 +6,7 @@
 " Last Modified: 27.11.21 14:54
 " ------------------------------
 
+
 " Section: Set Main Options
 	let colors_name ='k_theme' 
 	set background=dark
@@ -73,7 +74,7 @@
 	hi Number guifg=#00fff2 ctermfg=50
 	hi Comment gui=italic guifg=#626262 cterm=italic ctermfg=241
 	hi Constant guifg=#D4FB79 ctermfg=192
-	hi Boolean guifg=#FF5573 ctermfg=204
+	hi Boolean gui=bold guifg=#FF5573 cterm=bold ctermfg=204
 	hi Label guifg=#FF8AD8 ctermfg=212
 	hi Conditional guifg=#00ff87 ctermfg=48
 	hi Special guifg=#585480 ctermfg=60
@@ -98,7 +99,7 @@
 	hi Tag guifg=#ff00ff ctermfg=13
 	hi Delimiter guifg=#d7d787 ctermfg=186
 	hi SpecialComment guifg=#6C7986 ctermfg=102
-	hi Todo guibg=#d7ff00 guifg=#ff5f00 ctermbg=190 ctermfg=202
+	hi Todo gui=italic guibg=#d7ff00 guifg=#ff5f00 cterm=italic ctermbg=190 ctermfg=202
 	hi Directory guifg=#00af87 ctermfg=36
 
 " Section: End of buffer and non text
@@ -122,11 +123,11 @@
 	hi! link SignColumn LineNr
 
 " Section: Errors
-	hi Error gui=bold guibg=#ffffff guifg=#ff0000 cterm=bold ctermfg=9 ctermbg=15
-	hi ErrorMsg gui=bold guibg=#ff0000 guifg=#ffffff cterm=bold ctermbg=9 ctermfg=15
-	hi SpellErrors guibg=Red guifg=White ctermbg=Red ctermfg=White gui=bold ctermfg=7 ctermbg=1
+	hi Error guibg=#ffffff guifg=#ff0000 cterm=bold ctermfg=9 ctermbg=15
+	hi ErrorMsg guibg=#ff0000 guifg=#ffffff cterm=bold ctermbg=9 ctermfg=15
+	hi SpellErrors guifg=#ff005f ctermfg=197
 	hi WarningMsg guifg=#ff5f00 ctermfg=202
-
+	
 " Section: Popup Menu
 	hi Pmenu ctermfg=253 ctermbg=236 cterm=None guifg=#DCDCDC guibg=#303030
 	hi PmenuSel gui=Bold guifg=#36FF5A guibg=#444444 cterm=bold ctermfg=42 ctermbg=238
