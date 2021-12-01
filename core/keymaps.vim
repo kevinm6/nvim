@@ -88,6 +88,8 @@
 	nmap <Leader>gaa :Git add .<CR>
 	nmap <Leader>gc :Git commit -m ''<Left>
 	nmap <Leader>gac :Git add % <bar> Git commit -m ""<Left>
+	nmap <Leader>gdf :Git df % <CR>
+	nmap <Leader>gda :Git df <CR>
 	nmap <silent><Leader>gp :Git push<CR>
 	" GoTo code navigation.
 	nmap <silent> gd <Plug>(coc-definition)
@@ -113,7 +115,6 @@
 	nmap Ø O<Esc>j
 	nmap ø o<Esc>k
 	nmap ∂∂ :Hexplore %:p:h<CR><C-W>K:resize12<cr>
-	nmap ∂å :Lexplore<CR>
 
 	nnoremap x "_x
 	nnoremap d "_d
@@ -126,6 +127,7 @@
 	vnoremap <leader>d ""dnmap † "_x
 	vnoremap d "_d
 	vmap <BS> "_d
+
 	vmap <Tab> >
 	vmap <S-Tab> <
 	vmap ] >
