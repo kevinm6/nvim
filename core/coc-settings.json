@@ -43,7 +43,9 @@
 	"coc.source.dictionary.enable": true,
 	"coc.source.dictionary.priority": 1,
 
-	"explorer.position": "left",
+	"explorer.previewAction.onHover": "content",
+	"explorer.position": "floating",
+	"explorer.floating.position": "center-top",
 	"explorer.floating.height": 28,
 	"explorer.floating.width": -16,
 	"explorer.icon.source": "builtin",
@@ -57,7 +59,9 @@
 	"explorer.file.showHiddenFiles": false,
 	"explorer.keyMappings.global": {
     "<cr>": ["expandable?", "expand", "open"],
-    "v": "open:vsplit"
+    "v": "open:vsplit",
+		"<leader><tab>": "actionMenu",
+		"<tab>": "esc"
   },
 
 	"yank.list.maxsize": 60,
