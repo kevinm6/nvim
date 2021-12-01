@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 01/12/21 - 10:44
+" Last Modified: 01/12/21 - 17:08
 " ------------------------------------
 
 
@@ -111,6 +111,7 @@
 	set foldmethod=diff
 	set viewoptions=folds,cursor
 	set sessionoptions=folds
+	set diffopt=internal,filler,closeoff,vertical
 	set foldcolumn=0	" Add a bit extra margin to the Left
 " }
 
