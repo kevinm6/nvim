@@ -16,7 +16,7 @@
 		Plug 'kristijanhusak/vim-dadbod-ui'
 		Plug 'honza/vim-snippets'
 		Plug 'junegunn/goyo.vim'
-		Plug 'liuchengxu/vim-which-key'
+		Plug 'liuchengxu/vim-which-key', { 'on' : [] } 
 		Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
 		Plug 'joelbeedle/pseudo-syntax', { 'for': ['markdown', 'pseudo'] }
 		Plug 'makerj/vim-pdf', { 'for': ['pdf'] }
