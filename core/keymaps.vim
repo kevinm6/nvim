@@ -3,7 +3,7 @@
 " Description: keymaps for NeoVim & VimR & Vim
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/keymaps.vim
-" Last Modified: 01/12/21 - 09:59
+" Last Modified: 01/12/21 - 16:59
 " -------------------------------------------------
 
 
@@ -95,7 +95,7 @@
 	nmap <silent> gœ <Plug>(coc-implementation)
 	nmap <silent> gr <Plug>(coc-references)
 	" Use <C-k> to show documentation in preview window.
-	nnoremap <silent> <C-k> :call <SID>show_documentation()<CR>
+	nnoremap K :call <SID>show_documentation()<CR>
 	nnoremap <C-l> :nohlsearch<CR><C-l>
 	" nmap <silent> <leader> :<c-u>WhichKey ','<CR>
 	nmap <Tab> <C-W><C-W>
@@ -114,11 +114,17 @@
 	nmap ø o<Esc>k
 	nmap ∂∂ :Hexplore %:p:h<CR><C-W>K:resize12<cr>
 	nmap ∂å :Lexplore<CR>
-	nmap † "_x
-	nmap ∂ "_d
+
+	nnoremap x "_x
+	nnoremap d "_d
+	nnoremap D "_D
+	nnoremap <leader>d ""d
+	nnoremap <leader>D ""D
 " }
 	
 " Section: Visual Mode {
+	vnoremap <leader>d ""dnmap † "_x
+	vnoremap d "_d
 	vmap <BS> "_d
 	vmap <Tab> >
 	vmap <S-Tab> <
