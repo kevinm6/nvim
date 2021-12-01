@@ -3,7 +3,7 @@
 " Description: Neovim K configuration
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/init.vim
-" Last Modified: 01/12/21 - 10:26
+" Last Modified: 01/12/21 - 16:52
 " ------------------------------------
 
 
@@ -33,6 +33,7 @@
 
 
 " Section: set mapleader & add maps configFile edit/source {
+	let mapleader = ","
 	let g:mapleader = ","
 	nmap <Leader>e :e $NVIMDOTDIR/init.vim<CR>
 	nmap <Leader>s :source $NVIMDOTDIR/init.vim<CR>
