@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 03/12/21 - 10:57
+" Last Modified: 03/12/21 - 22:01
 " ------------------------------------
 
 
@@ -115,7 +115,6 @@
 
 
 " Section: FILE MANAGEMENT {
-	set clipboard=unnamedplus
 	set autowrite " write files
 	set autowriteall " write files on exit or other changes
 	set autochdir " auto change directory of explore

@@ -1,11 +1,26 @@
 " ------------------------------------
 " File: variables.vim
-" Description: VimR & NeoVim settings
+" Description: NeoVim, VimR & Vim variables
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 01/12/21 - 10:01
+" Last Modified: 03/12/21 - 21:59
 " ------------------------------------
 
+
+" Section: Clipboard {
+	let g:clipboard = {
+		\ 'name': 'pbcopy',
+		\ 'copy': {
+		\    '+': 'pbcopy',
+		\    '*': 'pbcopy',
+		\  },
+		\ 'paste': {
+		\    '+': 'pbpaste',
+		\    '*': 'pbpaste',
+		\ },
+		\ 'cache_enabled': 0,
+		\ }
+" }
 
 " Section: Coc {
 	let g:coc_config_home = "$NVIMDOTDIR/core/"
