@@ -1,10 +1,10 @@
-" ------------------------------
+" -------------------------------
 " File: k_theme.vim
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 27.11.21 14:54
-" ------------------------------
+" Last Modified: 03/12/21 - 09:02
+" -------------------------------
 
 
 " Section: Set Main Options
@@ -19,7 +19,7 @@
 " Section: Modes
 	hi Normal guifg=#d0d0d0 guibg=#141414 ctermfg=252 ctermbg=233
 	hi Visual gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
-	" Selection Not Owned by vim
+	" Selection Not Owne by vim
 	hi VisualNOS gui=NONE guifg=#244E7A guibg=NONE cterm=NONE ctermfg=25 ctermbg=NONE
 
 	hi ModeMsg guifg=DeepSkyBlue3 guibg=NONE ctermfg=31 ctermbg=NONE
@@ -72,7 +72,7 @@
 " Section: Syntax
 	hi String guifg=#FF7E80 ctermfg=210
 	hi Number guifg=#00fff2 ctermfg=50
-	hi Comment gui=italic guifg=#626262 cterm=italic ctermfg=241
+	hi Comment gui=italic guifg=#626262 guibg=NONE cterm=italic ctermfg=241 ctermbg=NONE
 	hi Constant guifg=#D4FB79 ctermfg=192
 	hi Boolean gui=bold guifg=#FF5573 cterm=bold ctermfg=204
 	hi Label guifg=#FF8AD8 ctermfg=212
