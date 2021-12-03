@@ -15,7 +15,10 @@
 	"suggest.removeDuplicateItems": false,
 	"suggest.acceptSuggestionOnCommitCharacter": true,
 	"suggest.detailField": "preview",
-	"suggest.maxCompleteItemCount": 24,
+	"suggest.maxCompleteItemCount": 60,
+	"suggest.timeout": 500,
+
+	"coc.source.buffer.ignoreGitignore": false,
 	
 	"coc.preferences.bracketEnterImprove": true,
   "coc.preferences.enableMarkdown": true,
@@ -27,15 +30,6 @@
 	"snippets.userSnippetsDirectory": "$NVIMDOTDIR/snippets",
 	
 	"pairs.enableBackspace": true,
-	"pairs.enableCharacters": [
-		"(",
-		"[",
-		"{",
-		"<",
-		"'",
-		"\"",
-		"`"
-	],
 
 	"highlight.colors.enable": true,
 	"highlight.colorNames.enable": false,
