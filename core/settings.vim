@@ -89,7 +89,7 @@
 	set signcolumn=yes " always show signcolumns
 	set cmdheight=2	" #lines for vim for commands/logs
 	set pumheight=16 " popup menu height
-	set splitbelow splitright " set defaults splitting position
+	set splitright " set defaults splitting position
 	set updatetime=300 " set a low updatetime for better UX even w/ CoC
 	set shortmess+=c " do not pass messages to ins-completion-menu
 	set timeoutlen=500
