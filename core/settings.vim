@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 01/12/21 - 17:08
+" Last Modified: 03/12/21 - 09:14
 " ------------------------------------
 
 
@@ -78,7 +78,7 @@
 	try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
 	set display="lastline,msgsep"
 	set termguicolors
-	set number " Show line numbers
+	set number relativenumber " Show line numbers - relativenumber from current
 	set showmode " show active mode in status line
 	set scrolloff=3 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
@@ -86,7 +86,6 @@
 	set novisualbell " disable visual sounds
 	set cursorline " highlight cursor line
 	set showmatch " Show matching brackets when over
-	set tw=200	" Linebreak on 400 characters
 	set signcolumn=yes " always show signcolumns
 	set cmdheight=2	" #lines for vim for commands/logs
 	set pumheight=16 " popup menu height
@@ -105,8 +104,7 @@
 
 
 " Section: FOLDING {
-	set wrap " Wrap long lines
-	set wrapmargin=68
+	set wrap linebreak " Wrap long lines showing a linebreak
 	set foldenable " enable code folding
 	set foldmethod=diff
 	set viewoptions=folds,cursor
