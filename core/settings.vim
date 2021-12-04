@@ -3,7 +3,7 @@
 " Description: VimR & NeoVim settings
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/core/settings.vim
-" Last Modified: 03/12/21 - 22:01
+" Last Modified: 04/12/21 - 11:31
 " ------------------------------------
 
 
@@ -27,7 +27,7 @@
 		let &t_SR.="\e[4 q"
 		let &t_EI.="\e[1 q"
 	elseif $TERM_PROGRAM == "vscode"
-	  finish
+		finish
 	endif
 " }
 
