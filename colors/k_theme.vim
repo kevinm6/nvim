@@ -3,7 +3,7 @@
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 04/12/21 - 11:41
+" Last Modified: 04/12/21 - 18:31
 " -------------------------------
 
 
@@ -12,7 +12,11 @@
 	set t_co=256
 	
 " Section: Font {
-	set guifont=Source_Code_Pro:h13
+	if has('gui_vimr')
+		set guifont=Source_Code_Pro:h13
+	else 
+		set guifont=Source_Code_Pro:h13.5,\ Hack_Nerd_Font:h15
+	endif
 " }
 
 " Section: Modes
