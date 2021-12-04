@@ -10,10 +10,10 @@
 " Section: PLUGINS {
 	call plug#begin('$NVIMDOTDIR/plugged')
 		Plug 'tpope/vim-surround'
-		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-commentary'
-		Plug 'tpope/vim-dadbod'
-		Plug 'kristijanhusak/vim-dadbod-ui'
+		Plug 'tpope/vim-fugitive'
+		Plug 'tpope/vim-dadbod', { 'for': ['sql'] }
+		Plug 'kristijanhusak/vim-dadbod-ui', { 'for': ['sql'] }
 		Plug 'honza/vim-snippets'
 		Plug 'junegunn/goyo.vim'
 		Plug 'liuchengxu/vim-which-key', { 'on' : [] } 
