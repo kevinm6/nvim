@@ -97,8 +97,8 @@
 	nmap <silent> gœ <Plug>(coc-implementation)
 	nmap <silent> gr <Plug>(coc-references)
 	" Use <C-k> to show documentation in preview window.
-	nnoremap K :call <SID>show_documentation()<CR>
-	nnoremap <C-l> :nohlsearch<CR><C-l>
+	nmap K :call <SID>show_documentation()<CR>
+	nmap <C-l> :nohlsearch<CR><C-l>
 	" nmap <silent> <leader> :<c-u>WhichKey ','<CR>
 	nmap <Tab> <C-W><C-W>
 	nmap <S-Tab> <C-W><C-P>
@@ -115,17 +115,18 @@
 	nmap Ø O<Esc>j
 	nmap ø o<Esc>k
 	nmap ∂∂ :Hexplore %:p:h<CR><C-W>K:resize12<cr>
-
-	nnoremap x "_x
-	nnoremap d "_d
-	nnoremap D "_D
-	nnoremap <leader>d ""d
-	nnoremap <leader>D ""D
+	" changing copying into register when deleting
+	nmap x "_x
+	nmap d "_d
+	nmap D "_D
+	nmap <leader>x ""x
+	nmap <leader>d ""d
+	nmap <leader>D ""D
 " }
 	
 " Section: Visual Mode {
-	vnoremap <leader>d ""dnmap † "_x
-	vnoremap d "_d
+	vmap <leader>d ""dnmap † "_x
+	vmap d "_d
 	vmap <BS> "_d
 
 	vmap <Tab> >
