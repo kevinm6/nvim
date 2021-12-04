@@ -139,7 +139,7 @@
 	set statusline+=%2*\ %{get(g:,'coc_git_status','')}
 	set statusline+=%{get(b:,'coc_git_status','')}
 	set statusline+=%{get(b:,'coc_git_blame','')}
-	set statusline+=%1*⟩\ %m\ %<%f\  
+	set statusline+=%1*\ ⟩\ %m\ %<%f\  
 	set statusline+=%4*
 	" Right Side
 	set statusline+=%=%4*
