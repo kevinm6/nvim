@@ -76,13 +76,11 @@
 
 " Section: GRAPHIC {
 	try | colorscheme k_theme | catch "⚠️  Error loading colorscheme" | endtry
-	set display="lastline,msgsep"
 	set termguicolors
 	set number relativenumber " Show line numbers - relativenumber from current
 	set showmode " show active mode in status line
 	set scrolloff=3 " # of line leave above and below cursor
 	set mat=2 " tenths of second to blink during matching brackets
-	set noerrorbells " disable errors sounds
 	set novisualbell " disable visual sounds
 	set cursorline " highlight cursor line
 	set showmatch " Show matching brackets when over
@@ -107,8 +105,6 @@
 	set wrap linebreak " Wrap long lines showing a linebreak
 	set foldenable " enable code folding
 	set foldmethod=diff
-	set viewoptions=folds,cursor
-	set sessionoptions=folds
 	set diffopt=internal,filler,closeoff,vertical
 	set foldcolumn=0	" Add a bit extra margin to the Left
 " }
