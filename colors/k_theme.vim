@@ -3,13 +3,12 @@
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 03/12/21 - 09:02
+" Last Modified: 04/12/21 - 11:41
 " -------------------------------
 
 
 " Section: Set Main Options
 	let colors_name ='k_theme' 
-	set background=dark
 	set t_co=256
 	
 " Section: Font {
