@@ -52,14 +52,14 @@
 " }
 	
 " Section: Insert Mode {
-	imap <silent> <expr> <c-Space> coc#refresh()
+	" imap <silent> <expr> <c-Space> coc#refresh()
 	imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 	imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 	if exists('*complete_info')
 		inor <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
 	endif
-	inor <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+	" inor <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              " \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 	imap <Esc> <Esc>`^
 	imap <A-Left> <Esc>bi
@@ -92,9 +92,9 @@
 	nmap <Leader>gda :Git df <CR>
 	nmap <silent><Leader>gp :Git push<CR>
 	" GoTo code navigation.
-	nmap <silent> gd <Plug>(coc-definition)
-	nmap <silent> gy <Plug>(coc-type-definition)
-	nmap <silent> gœ <Plug>(coc-implementation)
+	" nmap <silent> gd <Plug>(coc-definition)
+	" nmap <silent> gy <Plug>(coc-type-definition)
+	" nmap <silent> gœ <Plug>(coc-implementation)
 	nmap <silent> gr <Plug>(coc-references)
 	" Use <C-k> to show documentation in preview window.
 	nnoremap K :call <SID>show_documentation()<CR>

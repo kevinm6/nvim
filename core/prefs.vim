@@ -70,7 +70,7 @@
 		    \	endif
   endif
 
-	autocmd CursorHold * silent call CocActionAsync('highlight')
+	" autocmd CursorHold * silent call CocActionAsync('highlight')
 " }
 
 
@@ -92,6 +92,7 @@
 	set shortmess+=c " do not pass messages to ins-completion-menu
 	set timeoutlen=500
 	set ttimeoutlen=50
+	set completeopt=menu,menuone,noselect
 " }
 
 
@@ -162,14 +163,14 @@
     file scratch
 	endf
 
-	function! s:show_documentation() " Coc Show Documentation
-		if (index(['vim','help'], &filetype) >= 0)
-			execute 'h '.expand('<cword>')
-		elseif (coc#rpc#ready())
-			call CocActionAsync('doHover')
-		else
-			execute '!' . &keywordprg . " " . expand('<cword>')
-		endif
-	endfunction
-" }
+	" function! s:show_documentation() " Coc Show Documentation
+	" 	if (index(['vim','help'], &filetype) >= 0)
+	" 		execute 'h '.expand('<cword>')
+	" 	elseif (coc#rpc#ready())
+	" 		call CocActionAsync('doHover')
+	" 	else
+	" 		execute '!' . &keywordprg . " " . expand('<cword>')
+	" 	endif
+	" endfunction
+" " }
 
