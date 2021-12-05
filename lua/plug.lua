@@ -8,28 +8,75 @@
 
 
 -- Section: PLUGINS {
-	call plug#begin('$NVIMDOTDIR/plugged')
-		Plug 'tpope/vim-surround'
-		Plug 'tpope/vim-commentary'
-		Plug 'tpope/vim-fugitive'
-		Plug 'tpope/vim-dadbod', { 'for': ['sql'] }
-		Plug 'kristijanhusak/vim-dadbod-ui', { 'for': ['sql'] }
-		Plug 'neovim/nvim-lspconfig'
-		Plug 'williamboman/nvim-lsp-installer'
-		Plug 'hrsh7th/cmp-nvim-lsp'
-		Plug 'hrsh7th/cmp-buffer'
-		Plug 'hrsh7th/cmp-path'
-		Plug 'hrsh7th/cmp-cmdline'
-		Plug 'hrsh7th/nvim-cmp'
-		Plug 'honza/vim-snippets'
-		Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-		Plug 'junegunn/goyo.vim'
-		Plug 'liuchengxu/vim-which-key', { 'on' : [] } 
-		Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
-		Plug 'joelbeedle/pseudo-syntax', { 'for': ['markdown', 'pseudo'] }
-		Plug 'makerj/vim-pdf', { 'for': ['pdf'] }
-		Plug 'neoclide/coc.nvim', { 'on': [] }" { 'branch':'release' }
-		Plug 'morhetz/gruvbox', { 'on': [] }
-	call plug#end()
+
+	return require('packer').startup(function()
+		-- Packer can manage itself
+		use 'wbthomason/packer.nvim'
+		use 'tpope/vim-surround'
+		use 'tpope/vim-commentary'
+		use 'tpope/vim-fugitive'
+		use { 
+			'tpope/vim-dadbod', 
+			ft = { 'sql' },
+			cmd = 'DB'
+		}
+		use {
+			'kristijanhusak/vim-dadbod-ui',
+			ft = { 'sql' }
+			cmd = 'DBUI'
+		}
+		use 'neovim/nvim-lspconfig'
+		use 'williamboman/nvim-lsp-installer'
+		use 'hrsh7th/cmp-nvim-lsp'
+		use 'hrsh7th/cmp-buffer'
+		use 'hrsh7th/cmp-path'
+		use 'hrsh7th/cmp-cmdline'
+		use 'hrsh7th/nvim-cmp'
+		use 'honza/vim-snippets'
+		use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+		use 'junegunn/goyo.vim'
+		use { 'tpope/vim-markdown',
+			ft = { 'markdown', 'pseudo', 'md', 'latex' }
+		}
+		use {
+			'joelbeedle/pseudo-syntax',
+			ft = {'markdown', 'pseudo'} 
+		}
+		use {
+			'makerj/vim-pdf', 
+			ft = { 'pdf' } 
+		}
+		use {
+			'morhetz/gruvbox', 
+			opt = true, 
+			cmd = { 'colorscheme' } 
+		}
+		-- Plugins can have dependencies on other plugins
+		use {
+			'haorenW1025/completion-nvim',
+			opt = true,
+			requires = {{'hrsh7th/vim-vsnip', opt = true}, {'hrsh7th/vim-vsnip-integ', opt = true}}
+		}
+
+		-- Plugins can also depend on rocks from luarocks.org:
+		use {
+			'my/supercoolplugin',
+			rocks = {'lpeg', {'lua-cjson', version = '2.1.0'}}
+		}
+
+		-- Plugins can have post-install/update hooks
+		use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
+
+		-- Post-install/update hook with neovim command
+		use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+
+		-- Use dependency and run lua function after load
+		use {
+			'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
+			config = function() require('gitsigns').setup() end
+		}
+
+	end)
 -- }
 
