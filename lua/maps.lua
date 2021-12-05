@@ -1,10 +1,37 @@
  -------------------------------------
- --File: maps.lua
- --Description: 
- --Author: Kevin
- --Source: https://github.com/kevinm6/
- --Last Modified: 05.12.21 02:03
+ -- File: maps.lua
+ -- Description: 
+ -- Author: Kevin
+ -- Source: https://github.com/kevinm6/
+ -- Last Modified: 05.12.21 05:29
  -------------------------------------
+
+
+-- Section: Function to make easy mapping in Lua
+	function map(mode, shortcut, command)
+		vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = false })
+	end
+
+	function nmap(shortcut, command)
+		map('n', shortcut, command)
+	end
+
+	function imap(shortcut, command)
+		map('i', shortcut, command)
+	end
+
+	function vmap(shortcut, command)
+		map('v', shortcut, command)
+	end
+
+	function cmap(shortcut, command)
+		map('c', shortcut, command)
+	end
+
+	function tmap(shortcut, command)
+		map('t', shortcut, command)
+	end
+-- }
 
 
 -- Section: Special keys and commands {
@@ -38,31 +65,7 @@
 	endif
 -- }
 
--- Section: Function to make easy mapping in Lua
-	function map(mode, shortcut, command)
-		vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = false })
-	end
 
-	function nmap(shortcut, command)
-		map('n', shortcut, command)
-	end
-
-	function imap(shortcut, command)
-		map('i', shortcut, command)
-	end
-
-	function vmap(shortcut, command)
-		map('v', shortcut, command)
-	end
-
-	function cmap(shortcut, command)
-		map('c', shortcut, command)
-	end
-
-	function tmap(shortcut, command)
-		map('t', shortcut, command)
-	end
--- }
 
 -- Section: N-V-O Mode {
 	map('<A-Left>', 'b')
