@@ -1,32 +1,36 @@
- -------------------------------------
- -- File: init.lua
- -- Description: 
- -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/init.lua
- -- Last Modified: 05.12.21 05:15
- -------------------------------------
+--------------------------------------
+-- File: init.lua
+-- Description: NeoVim K configuration
+-- Author: Kevin
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
+-- Last Modified: 07.12.21 18:23
+--------------------------------------
 
 
 -- Section: check VScode/codium 
 	if vim.fn.exists('g:vscode') == 1 then
 		return
 	end
-
 	if not(vim.fn.has('nvim')) == 1 then
-		vim.cmd('source $VIMDOTDIR/vimrc; finish')
+		vim.cmd [[source $VIMDOTDIR/vimrc]]
+		return
 	elseif vim.fn.has('gui_vimr') == 1 then
-		vim.cmd('source $NVIMDOTDIR/ginit.vim; finish')
+		package.path = package.path .. ';../?.lua'
+		require 'nvim.ginit'
+		return
 	end
 -- }
 
 
 -- Section: Path Settings {
-	vim.opt.rtp = '~/.config/nvim/'
-	--vim.opt.viminfo = '~/.local/share/nvim/main.shada'
-	vim.opt.packpath = '&runtimepath'
-	vim.opt.path = '**'
-	--vim.opt.shada = '20,<50,s10'
-	vim.opt.undodir = '$HOME/.local/share/nvim/tmp/undo' -- undo dir
+	vim.cmd([[
+	set rtp+=~/.config/nvim/
+	set viminfo+=n~/.local/share/nvim/shada/main.shada
+	set packpath+=~/.config/nvim/pack/
+	set path=**
+	set shada='20,<50,s10
+	set undodir=~/.cache/nvim/tmp/undo
+	]])
 -- }
 
 
@@ -36,12 +40,14 @@
 		vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = false })
 	end
 
-	map('n', '<Leader>e', ':e $NVIMDOTDIR/init.vim<CR>')
-	map('n', '<Leader>s', ':source $NVIMDOTDIR/init.vim<CR>')
+	map('n', '<Leader>e', ':e $NVIMDOTDIR/init.lua<CR>')
+	map('n', '<Leader>s', ':source $NVIMDOTDIR/init.lua<CR>')
 -- }
 
-require('lsp-config')
-require('prefs')
-require('vars')
-require('maps')
-require('plug')
+-- Section:	Other config files to source {
+	require('lsp-config')
+	require('plug')
+	require('prefs')
+	require('vars')
+	require('maps')
+-- }
