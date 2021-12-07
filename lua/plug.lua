@@ -1,9 +1,9 @@
  -------------------------------------
  -- File: plug.lua
- -- Description: 
+ -- Description: K plugins w/ packer as Package Manager
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plug.lua
- -- Last Modified: 07/12/21 11:12
+ -- Last Modified: 07.12.21 18:30
  -------------------------------------
 
 
