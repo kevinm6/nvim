@@ -2,3 +2,5 @@
 .netrwhist
 plugged/*
 colors/.DS_Store
+pack/*
+plugin/*
