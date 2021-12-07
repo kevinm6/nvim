@@ -35,11 +35,11 @@
 
 
 -- Section: Special keys and commands {
-	if exists(':tnoremap') -- NeoVim & VimR keymaps
+	if vim.fn.exists(':tnoremap') == 1 then -- NeoVim & VimR keymaps
 		nmap('<Leader>t', ':sb<bar>term<cr><C-W>J:resize12<cr>')
-		tmap('<Esc>', '<C-\><C-n>')
+		tmap('<Esc>', '<C-\\><C-n>')
 
-		if has('gui_vimr') -- VimR keymaps (command key and others)
+		if vim.fn.has('gui_vimr') == 1 then -- VimR keymaps (command key and others)
 			map('<D-Right>', ' $')
 			map('<D-Left>', ' 0')
 			map('<D-down>', 'G')
@@ -62,22 +62,22 @@
 		imap('<ESC>oB', '<ESC>ji')
 		imap('<ESC>oC', '<ESC>li')
 		imap('<ESC>oD', '<ESC>hi')
-	endif
+	end
 -- }
 
 
 
 -- Section: N-V-O Mode {
-	map('<A-Left>', 'b')
-	map('<A-Right>', 'w')
+	nmap('<A-Left>', 'b')
+	nmap('<A-Right>', 'w')
 -- }
 
 -- Section: Command Mode {
-	vim.o.wildcharm = '<C-Z>'
+	vim.cmd('set wcm=<C-Z>')
 	cmap('<expr>', '<up> wildmenumode() ? "<Left>-- : "<up>"')
 	cmap('<expr>', '<down> wildmenumode() ? "<Right>-- : "<down>"')
 	cmap('<expr>', '<Left> wildmenumode() ? "<up>-- : "<left>"')
-	cmap('<expr>', '<Right> wildmenumode() ? -- <bs><C-Z>": "\<right>"')
+	cmap('<expr>', '<Right> wildmenumode() ? -- <bs><C-Z>": "\\<right>"')
 -- }
 	
 -- Section: Insert Mode {
@@ -105,7 +105,7 @@
 	nmap('<silent><Leader>y', ':<C-u>CocList -A --normal yank<cr>')
 	nmap('<silent><Leader>gs', ':Git status<CR>')
 	nmap('<Leader>gaa', ':Git add .<CR>')
-	nmap('<Leader>gc', ':Git commit -m ''<Left>')
+	nmap('<Leader>gc', ':Git commit -m \'\'<Left>')
 	nmap('<Leader>gac', ':Git add % <bar> Git commit -m ""<Left>')
 	nmap('<Leader>gdf', ':Git df % <CR>')
 	nmap('<Leader>gda', ':Git df <CR>')

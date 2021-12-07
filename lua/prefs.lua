@@ -41,11 +41,12 @@
 
 -- Section: AutoCommands {
 	vim.cmd([[
-	augroup AutoSaveGroup
+		augroup AutoSaveGroup
 			au!
 			au BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
 			au BufWinEnter ?* silent! loadview
 			au CursorHold, BufEnter * :checktime
+			au BufWritePost lua/plug.lua PackerCompile
 		augroup end
 
 		au filetype netrw call Netrw_mappings()
@@ -120,7 +121,7 @@
 	vim.o.undofile = true -- enable undo
 	vim.o.backup = false -- disable backups
 	vim.o.swapfile = false -- disable swaps
-	vim.o.backupdir = HOME .. '.local/nvim/'
+	vim.o.backupdir = HOME .. "/.local/nvim/"
 -- }
 
 -- Section: SEARCH {
@@ -130,18 +131,21 @@
 
 -- Section: STATUS LINE {
 	-- Left Side
-	vim.o.statusline = "%1*%n⟩"
-		.. "%2* %{get(g:,\'coc_git_status\',\'\')}"
-		.. "%{get(b:,\'coc_git_status',\'\')}"
-		.. "%{get(b:,\'coc_git_blame\',\'\')}"
-		.. "%1* ⟩ %m %<%f  "
-		.. "%4*"
+	local stl = {
+		"%1*%n⟩",
+		-- '%2* %{get(g:,'coc_git_status','')}',
+		-- '%{get(b:,'coc_git_status','')}',
+		-- '%{get(b:,'coc_git_blame','')}',
+		'%1* ⟩ %m %<%f  ',
+		'%4*',
 	-- Right Side
-		.. "%=%4*"
-		.. "%3* %{&fileencoding?&fileencoding:&encoding}"
-		.. "%1* %y"
-		.. "%3* ⟨ %{&ff}"
-		.. "= ⟨ %l:%L "
+		'%=%4*',
+		'%3* %{&fileencoding?&fileencoding:&encoding}',
+		'%1* %y',
+		'%3* ⟨ %{&ff}',
+		"= ⟨ %l:%L "
+	}
+	vim.o.statusline = table.concat(stl)
 -- }
 
 

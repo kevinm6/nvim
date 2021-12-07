@@ -2,23 +2,23 @@
  -- File: vars.lua
  -- Description: 
  -- Author: Kevin
- -- Source: https://github.com/kevinm6/
+ -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
  -- Last Modified: 05.12.21 02:04
  -------------------------------------
 
 
 -- Section: Clipboard {
 	vim.g.clipboard = {
-		'name': 'pbcopy',
-		'copy': {
-		  '+': 'pbcopy',
-		  '*': 'pbcopy',
+		name = 'pbcopy',
+		copy = {
+		  ['+'] = 'pbcopy',
+		  ['*'] = 'pbcopy',
 		},
-		'paste': {
-		  '+': 'pbpaste',
-		  '*': 'pbpaste',
+		paste = {
+		  ['+'] = 'pbpaste',
+		  ['*'] = 'pbpaste',
 		},
-		'cache_enabled': 0,
+		cache_enabled = 0,
 		}
 -- }
 
@@ -57,21 +57,21 @@
 -- }
 
 -- Section: Python {
-	let g:python3_host_prog = "/usr/local/bin/python3.9"
+		vim.g.python3_host_prog = "/usr/local/bin/python3.9"
 -- }
 
 -- Section: Database {
-	let g:sql_type_default = 'postgresql'
-	let g:omni_sql_no_default_maps = 1
+	vim.g.sql_type_default = 'postgresql'
+	vim.g.omni_sql_no_default_maps = 1
 
-	let g:dbs = {
-		'imdb' = 'postgres://:@localhost/imdb',
-		'lezione' = 'postgres://:@localhost/lezione'
+	vim.g.dbs = {
+		imdb = 'postgres://:@localhost/imdb',
+		lezione = 'postgres://:@localhost/lezione'
 		}
 -- }
 
 -- Section: Markdown {
-	let g:markdown_fenced_languages = {
+	vim.g.markdown_fenced_languages = {
 		'html', 
 		'python', 
 		'zsh', 
