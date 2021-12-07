@@ -25,7 +25,7 @@
 " Section: Path Settings {
 	set rtp+=~/.config/nvim/
 	set viminfo+=n~/.local/share/nvim/main.shada
-	set packpath+=&runtimepath
+	set packpath+=~/.config/nvim/pack/
 	set path+=**
 	set shada='20,<50,s10
 	set undodir=$HOME/.local/share/nvim/tmp/undo " undo dir
