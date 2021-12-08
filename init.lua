@@ -24,11 +24,13 @@
 
 -- Section: Path Settings {
 	-- vim.cmd ([[set rtp+=~/.config/nvim]])
-	vim.cmd ([[set viminfo+=n~/.local/share/nvim/shada/main.shada]])
-	vim.opt.packpath:append("~/.config/nvim/pack")
-	vim.opt.path = "**"
-	vim.opt.shada = { "'20", "<50", "s10" }
-	vim.opt.undodir = "~./.cache/nvim/tmp/undo"
+	vim.cmd ([[
+	set viminfo+=n~/.local/share/nvim/shada/main.shada
+	set packpath+=~/.config/nvim/pack
+	set shada='20,<50,s10
+	set path=**
+	set undodir=~./.cache/nvim/tmp/undo
+	]])
 -- }
 
 

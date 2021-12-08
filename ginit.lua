@@ -8,14 +8,16 @@
 
 -- Section: Path Settings {
 	-- vim.cmd ([[set rtp+=~/.config/nvim]])
-	vim.cmd ([[set viminfo+=n~/.local/share/nvim/shada/gmain.shada]])
-	vim.opt.packpath:append("~/.config/nvim/pack")
-	vim.opt.path = "**"
-	vim.opt.shada = { "'20", "<50", "s10" }
-	vim.opt.undodir = "~./.cache/nvim/tmpr/undo"
+		vim.cmd ([[
+			set viminfo+=n~/.local/share/nvim/shada/gmain.shada
+			set packpath+=~/.config/nvim/pack
+			set shada='20,<50,s10
+			set path=**
+			set undodir=~./.cache/nvim/tmpr/undo
+		]])
 -- }
 
-	
+
 -- Section: VimR FullScreen {
 		-- function! s:VimRTempMaxWin() abort
 		-- 	VimRMakeSessionTemporary    -- The tools, tool buttons and window settings are not persisted
