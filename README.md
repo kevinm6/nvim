@@ -1,3 +1,3 @@
-# NeoVim & VimR Versions
+# NeoVim & VimR in Lua
 
 ***
