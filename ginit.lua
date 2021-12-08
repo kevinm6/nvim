@@ -3,19 +3,16 @@
 -- Description: VimR K configuration
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.lua
--- Last Modified: 07.12.21 18:23
+-- Last Modified: 08.12.21 13:42
 --------------------------------------
 
-
 -- Section: Path Settings {
-	vim.cmd([[
-	set rtp+=~/.config/nvim/
-	set viminfo+=n~/.local/share/nvim/shada/gmain.shada
-	set packpath+=~/.config/nvim/pack/
-	set path=**
-	set shada='20,<50,s10
-	set undodir=~/.cache/nvim/tmpr/undo
-	]])
+	-- vim.cmd ([[set rtp+=~/.config/nvim]])
+	vim.cmd ([[set viminfo+=n~/.local/share/nvim/shada/gmain.shada]])
+	vim.opt.packpath:append("~/.config/nvim/pack")
+	vim.opt.path = "**"
+	vim.opt.shada = { "'20", "<50", "s10" }
+	vim.opt.undodir = "~./.cache/nvim/tmpr/undo"
 -- }
 
 	
@@ -35,13 +32,13 @@
 		vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = false })
 	end
 
-	map('n', '<Leader>e', ':e $NVIMDOTDIR/ginit.lua<CR>')
-	map('n', '<Leader>s', ':source $NVIMDOTDIR/ginit.lua<CR>')
+	vim.api.nvim_set_keymap('n', '<Leader>e', ':e $NVIMDOTDIR/ginit.lua<CR>', { noremap = true, silent = false })
+	vim.api.nvim_set_keymap('n', '<Leader>s', ':so $NVIMDOTDIR/ginit.lua<CR>', { noremap = true, silent = false })
 -- }
 
 -- Section: Other config files to source {
-	require('lsp-config')
 	require('plug')
+	require('lsp-config')
 	require('prefs')
 	require('vars')
 	require('maps')
