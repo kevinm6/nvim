@@ -3,19 +3,18 @@
 -- Description: LanguageServerProtocol K configuration
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/
--- Last Modified: 07/12/21 11:31
+-- Last Modified: 09/12/21 - 09:50
 -------------------------------------
 
-	install_root_dir = "~/.local/share/nvim/lsp_servers/"
+	install_root_dir = "/Users/Kevin/.local/share/nvim/lsp_servers/"
 
 	-- Setup nvim-cmp.
-	local cmp = require "cmp"
-	local lsp_installer = require "nvim-lsp-installer"
-	--
-	-- Add additional capabilities supported by nvim-cmp
+	local cmp = require("cmp")
+	local lsp_installer = require("nvim-lsp-installer")
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
-	local lspconfig = require'lspconfig'
+	capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+	local lspconfig = require("lspconfig")
+	local luasnip = require("luasnip")
 
 	-- Include the servers you want to have installed by default below
 	local servers = {
@@ -81,6 +80,10 @@
 		server:setup(server_options)
 	end)
 
+	local runtime_path = vim.split(package.path, ';')
+	table.insert(runtime_path, "lua/?.lua")
+	table.insert(runtime_path, "lua/?/init.lua")
+
 	lspconfig.sumneko_lua.setup {
 		cmd = { "lua-language-server" },
 		filetypes = { "lua" },
@@ -89,18 +92,19 @@
 				runtime = {
 					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 					version = 'LuaJIT',
-					-- Setup your lua path
-					path = "/Users/Kevin/.local/share/nvim/lsp_servers/sumneko_lua",
+					-- Setup lua path
+					path = runtime_path,
+					-- path = "/Users/Kevin/.local/share/nvim/lsp_servers/sumneko_lua",
 				},
 				diagnostics = {
 					-- Get the language server to recognize the `vim` global
-					globals = { 'vim' },
+					globals = {'vim'},
 				},
 				workspace = {
 					-- Make the server aware of Neovim runtime files
 					library = vim.api.nvim_get_runtime_file("", true),
 				},
-				telemetry = { enable = false },
+				telemetry = {enable = false},
 			},
 		},
 		single_file_support = false
@@ -121,7 +125,7 @@
 		-- },
 		init_options = {
 			jvm_args = {},
-			workspace = "~/.workspaces"
+			workspace = "~/.cache/workspaces"
 		},
 		-- root_dir = { 
 		-- 				{
@@ -206,13 +210,13 @@
 
 
 	cmp.setup({
-	snippet = {
-		-- REQUIRED - you must specify a snippet engine
-		expand = function(args)
-		require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-		-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-	end,
-	},
+		snippet = {
+			-- REQUIRED - you must specify a snippet engine
+			expand = function(args)
+			require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+			-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+			end,
+		},
 		mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -222,9 +226,12 @@
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+			-- Insert-mode
+			i = cmp.mapping.confirm({ select = true }),
+			-- Command-mode
+			c = cmp.mapping.confirm({ select = false }),
     },
-    ['<Tab>'] = function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -232,8 +239,8 @@
       else
         fallback()
       end
-    end,
-    ['<S-Tab>'] = function(fallback)
+    end),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -241,22 +248,23 @@
       else
         fallback()
       end
-    end,
+    end),
 		},
 		sources = {
 			{ name = 'nvim_lsp' },
 			{ name = 'luasnip' },
-			},
+			{ name = 'ultisnips' },
+		},
 	})
 
-	-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+	-- Use buffer source for `/`
 	cmp.setup.cmdline('/', {
 		sources = {
 			{ name = 'buffer' }
 			}
 		})
 
-	-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+	-- Use cmdline & path source for ':'
 	cmp.setup.cmdline(':', {
 		sources = cmp.config.sources({
 		{ name = 'path' }
@@ -264,4 +272,5 @@
 		{ name = 'cmdline' }
 		})
 	})
+
 
