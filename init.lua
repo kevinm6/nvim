@@ -12,11 +12,10 @@
 		return
 	end
 	if not(vim.fn.has('nvim')) == 1 then
-		vim.cmd 'source $VIMDOTDIR/vimrc'
+		vim.cmd	'source $VIMDOTDIR/vimrc'
 		return
 	elseif vim.fn.has('gui_vimr') == 1 then
-		package.path = package.path .. ';../?.lua'
-		require 'nvim.ginit'
+		vim.cmd 'source $NVIMDOTDIR/ginit.lua'
 		return
 	end
 -- }
@@ -24,13 +23,13 @@
 
 -- Section: Path Settings {
 	-- vim.cmd ([[set rtp+=~/.config/nvim]])
-	vim.cmd ([[
-	set viminfo+=n~/.local/share/nvim/shada/main.shada
-	set packpath+=~/.config/nvim/pack
-	set shada='20,<50,s10
-	set path=**
-	set undodir=~./.cache/nvim/tmp/undo
-	]])
+	-- vim.cmd ([[
+	-- set viminfo+=n~/.local/share/nvim/shada/main.shada
+	-- set packpath+=~/.config/nvim/pack
+	-- set shada='20,<50,s10
+	-- set path=**
+	-- set undodir=~./.cache/nvim/tmp/undo
+	-- ]])
 -- }
 
 
@@ -42,7 +41,7 @@
 -- }
 
 
--- Section:	Other config files to source {
+-- Section: Other config files to source {
 	require('plug')
 	require('lsp-config')
 	require('prefs')
