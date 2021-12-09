@@ -1,16 +1,17 @@
  -------------------------------------
  -- File: prefs.lua
- -- Description: 
+ -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
  -- Last Modified: 05.12.21 04:50
  -------------------------------------
 
- HOME = os.getenv("HOME")
+HOME = os.getenv("HOME")
+local set = vim.opt
 
 -- Section: CURSOR {
 	-- 1 -> blinking block
-	-- 2 -> solid block 
+	-- 2 -> solid block
 	-- 3 -> blinking underscore
 	-- 4 -> solid underscore
 	-- 5 -> blinking vertical bar
@@ -35,7 +36,7 @@
 
 
 -- Section: MOUSE {
-	vim.o.mouse = 'a'
+	set.mouse = 'a'
 -- }
 
 
@@ -70,72 +71,71 @@
 					\	endif
 		endif
 	]])
-	-- autocmd CursorHold * silent call CocActionAsync('highlight')
 -- }
 
 
 -- Section: GRAPHIC {
-	vim.cmd('colorscheme k_theme')
-	vim.o.termguicolors = true
-	vim.o.relativenumber = true -- Show line numbers - relativenumber from current
-	vim.o.showmode = true -- show active mode in status line
-	vim.o.scrolloff = 3 -- # of line leave above and below cursor
-	vim.o.mat = 2 -- tenths of second to blink during matching brackets
-	vim.o.visualbell = false -- disable visual sounds
-	vim.o.cursorline = true -- highlight cursor line
-	vim.o.showmatch = true -- Show matching brackets when over
-	vim.o.signcolumn = 'yes' -- always show signcolumns
-	vim.o.cmdheight = 2	-- #lines for vim for commands/logs
-	vim.o.pumheight = 16 -- popup menu height
-	vim.o.splitbelow = true -- split below in horizontal split
-	vim.o.splitright = true -- split right in vertical split
-	vim.o.updatetime = 300 -- set a low updatetime for better UX even w/ CoC
-	vim.o.shortmess = 'filnxtToOFc' -- do not pass messages to ins-completion-menu
-	vim.o.timeoutlen = 500
-	vim.o.ttimeoutlen = 50
-	vim.o.completeopt = 'menu,menuone,noselect'
+	vim.cmd 'colorscheme k_theme'
+	set.termguicolors = true
+	set.relativenumber = true -- Show line numbers - relativenumber from current
+	set.showmode = true -- show active mode in status line
+	set.scrolloff = 3 -- # of line leave above and below cursor
+	set.mat = 2 -- tenths of second to blink during matching brackets
+	set.visualbell = false -- disable visual sounds
+	set.cursorline = true -- highlight cursor line
+	set.showmatch = true -- Show matching brackets when over
+	set.signcolumn = 'yes' -- always show signcolumns
+	set.cmdheight = 2	-- #lines for vim for commands/logs
+	set.pumheight = 16 -- popup menu height
+	set.splitbelow = true -- split below in horizontal split
+	set.splitright = true -- split right in vertical split
+	set.updatetime = 300 -- set a low updatetime for better UX even w/ CoC
+	set.shortmess:append("c") -- do not pass messages to ins-completion-menu
+	set.listchars = { tab = ":▸ ", eol = "↲", trail = "~" }
+	set.timeoutlen = 500
+	set.ttimeoutlen = 50
+	set.completeopt = 'menu,menuone,noselect'
 -- }
 
 
 -- Section: INDENTATION {
-	vim.o.smartindent = true -- enable smart indentation
-	vim.o.tabstop = 2 
-	vim.o.softtabstop = -1 
-	vim.o.shiftwidth = 0 -- set tabs
+	set.smartindent = true -- enable smart indentation
+	set.tabstop = 2 
+	set.softtabstop = -1 
+	set.shiftwidth = 0 -- set tabs
 -- }
 
 
 -- Section: FOLDING {
-	vim.o.wrap = true -- Wrap long lines showing a linebreak
-	vim.o.foldenable = true -- enable code folding
-	vim.o.foldmethod = 'diff'
-	vim.o.diffopt = 'internal,filler,closeoff,vertical'
-	vim.o.foldcolumn = 'auto'	-- Add a bit extra margin to the Left
+	set.wrap = true -- Wrap long lines showing a linebreak
+	set.foldenable = true -- enable code folding
+	set.foldmethod = 'diff'
+	set.diffopt = 'internal,filler,closeoff,vertical'
+	set.foldcolumn = 'auto'	-- Add a bit extra margin to the Left
 -- }
 
 
 -- Section: FILE MANAGEMENT {
-	vim.o.autowrite = true -- write files
-	vim.o.autowriteall = true -- write files on exit or other changes
-	vim.o.autochdir = true -- auto change directory of explore
-	vim.o.undofile = true -- enable undo
-	vim.o.backup = false -- disable backups
-	vim.o.swapfile = false -- disable swaps
-	vim.o.backupdir = HOME .. "/.local/nvim/"
+	set.autowrite = true -- write files
+	set.autowriteall = true -- write files on exit or other changes
+	set.autochdir = true -- auto change directory of explore
+	set.undofile = true -- enable undo
+	set.backup = false -- disable backups
+	set.swapfile = false -- disable swaps
+	set.backupdir = HOME .. "/.local/nvim/"
 -- }
 
+
 -- Section: SEARCH {
-	vim.o.smartcase = true -- smart case for search
+	set.smartcase = true -- smart case for search
 -- }
 
 
 -- Section: STATUS LINE {
-	-- Left Side
 	local stl = {
+	-- Left Side
 		"%1*%n⟩",
-		-- '%2* %{get(g:,'coc_git_status','')}',
-		-- '%{get(b:,'coc_git_status','')}',
-		-- '%{get(b:,'coc_git_blame','')}',
+		'%2*  %{FugitiveStatusline()}',
 		'%1* ⟩ %m %<%f  ',
 		'%4*',
 	-- Right Side
@@ -145,7 +145,7 @@
 		'%3* ⟨ %{&ff}',
 		"= ⟨ %l:%L "
 	}
-	vim.o.statusline = table.concat(stl)
+	set.statusline = table.concat(stl)
 -- }
 
 
@@ -166,14 +166,4 @@
     file scratch
 	endf
 	]])
-	-- function! s:show_documentation() " Coc Show Documentation
-	-- 	if (index(['vim','help'], &filetype) >= 0)
-	-- 		execute 'h '.expand('<cword>')
-	-- 	elseif (coc#rpc#ready())
-	-- 		call CocActionAsync('doHover')
-	-- 	else
-	-- 		execute '!' . &keywordprg . " " . expand('<cword>')
-	-- 	endif
-	-- endfunction
 -- }
-
