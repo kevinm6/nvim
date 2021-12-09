@@ -25,9 +25,11 @@
 			'tpope/vim-commentary',
 			'tpope/vim-fugitive',
 			'nvim-treesitter/nvim-treesitter',
-			'sharkdp/fd',
-			'BurntSushi/ripgrep',
-			'L3MON4D3/LuaSnip'
+			'nvim-lua/plenary.nvim',
+			'windwp/nvim-autopairs',
+
+			'L3MON4D3/LuaSnip',
+			'saadparwaiz1/cmp_luasnip'
 		}
 		use {
 			'tpope/vim-dadbod',
@@ -69,10 +71,10 @@
 
 		use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
 
-		use {
-			'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-			config = function() require('gitsigns').setup() end
-		}
+		-- use {
+		-- 	'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
+		-- 	config = function() require('gitsigns').setup() end
+		-- }
 
 	end)
 -- }
