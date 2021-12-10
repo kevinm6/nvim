@@ -3,29 +3,19 @@
 -- Description: VimR K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/ginit.lua
--- Last Modified: 10/12/21 - 10:15
+-- Last Modified: 10/12/21 - 12:30
 --------------------------------------
-
--- Section: Path Settings {
-	-- vim.cmd ([[set rtp+=~/.config/nvim]])
-		vim.cmd ([[
-			" -- set rtp+=~/.config/nvim
-			" set viminfo+=n~/.local/share/nvim/shada/gmain.shada
-			" set packpath+=~/.config/nvim/pack
-			set shada='20,<50,s10
-			" set path=**
-			" set undodir=~./.cache/nvim/tmpr/undo
-		]])
--- }
 
 
 -- Section: VimR FullScreen {
-		-- function! s:VimRTempMaxWin() abort
-		-- 	VimRMakeSessionTemporary    -- The tools, tool buttons and window settings are not persisted
-			-- VimRHideTools
-			-- VimRMaximizeWindow
-		-- end
-		-- command! -nargs=0 VimRTempMaxWin call s:VimRTempMaxWin()
+	vim.cmd([[
+		function! s:VimRTempMaxWin() abort
+			VimRMakeSessionTemporary
+			VimRHideTools
+			VimRMaximizeWindow
+		end
+		command! -nargs=0 VimRTempMaxWin call s:VimRTempMaxWin()
+	]])
 -- }
 
 
