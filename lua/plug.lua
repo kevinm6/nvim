@@ -53,7 +53,7 @@
 			{ 'kristijanhusak/vim-dadbod-ui', ft = { 'sql' }, cmd = 'DBUI' },
 
 			-- markdown
-			{ 'joelbeedle/pseudo-syntax', ft = { 'markdown', 'pseudo', 'md' } },
+			{ 'joelbeedle/pseudo-syntax', cmd = 'InsertEnter', ft = { 'markdown', 'pseudo', 'md' } },
 			{ 'tpope/vim-markdown', ft = { 'markdown', 'pseudo', 'md', 'latex' } },
 			{ 'iamcco/markdown-preview.nvim', ft = { 'markdown', 'pseudo', 'md' },
 				run = 'cd app && yarn install',
@@ -100,7 +100,7 @@
 		end)
 	-- nvim-lsp-installer }
 
-	-- CMP { 
+	-- CMP {
 		local cmp =  require('cmp')
 		cmp.setup {
 			snippet = {
@@ -118,6 +118,8 @@
 				['<C-Space>'] = cmp.mapping.complete(),
 				['<Down>'] = cmp.mapping.select_next_item(),
 				['<Up>'] = cmp.mapping.select_prev_item(),
+				['<Left>'] = cmp.mapping.abort(),
+				['<Right>'] = cmp.mapping.abort(),
 				['<CR>'] = cmp.mapping.confirm {
 					behavior = cmp.ConfirmBehavior.Replace,
 					-- Insert-mode
