@@ -14,7 +14,7 @@
 			" set packpath+=~/.config/nvim/pack
 			set shada='20,<50,s10
 			" set path=**
-			set undodir=~./.cache/nvim/tmpr/undo
+			" set undodir=~./.cache/nvim/tmpr/undo
 		]])
 -- }
 
