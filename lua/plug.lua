@@ -9,76 +9,68 @@
 
 -- Section: PLUGINS {
 
-local use = require('packer').use
-require('packer').startup(function()
-	use {
-		-- Plugin/package manager
-		'wbthomason/packer.nvim',
+	local use = require('packer').use
+	require('packer').startup(function()
+		use {
+			-- Plugin/package manager
+			'wbthomason/packer.nvim',
 
-		-- lsp
-		'neovim/nvim-lspconfig',
-		'williamboman/nvim-lsp-installer',
+			-- lsp
+			'neovim/nvim-lspconfig',
+			'williamboman/nvim-lsp-installer',
 
-		-- autocompletion
-		'hrsh7th/nvim-cmp',
-		'hrsh7th/cmp-nvim-lsp',
-		'hrsh7th/cmp-buffer',
-		'hrsh7th/cmp-path',
-		'hrsh7th/cmp-cmdline',
+			-- autocompletion
+			'hrsh7th/nvim-cmp',
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
+			'hrsh7th/cmp-cmdline',
+			'windwp/nvim-autopairs',
 
-		-- file finder
-		'nvim-telescope/telescope.nvim',
+			-- file finder
+			'nvim-telescope/telescope.nvim',
 
-		-- coding helper
-		'nvim-treesitter/nvim-treesitter',
-		'windwp/nvim-autopairs',
-		'tpope/vim-surround',
-		'tpope/vim-commentary',
-		{ 'junegunn/goyo.vim', run = ':Goyo' },
+			-- coding helper
+			'nvim-treesitter/nvim-treesitter',
+			'tpope/vim-surround',
+			'tpope/vim-commentary',
+			{ 'junegunn/goyo.vim', run = ':Goyo' },
 
-		-- git
-		'tpope/vim-fugitive',
-		{ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } },
+			-- git
+			'tpope/vim-fugitive',
+			{ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } },
 
-		'nvim-lua/plenary.nvim',
-		'nvim-lua/popup.nvim',
+			'nvim-lua/plenary.nvim',
+			'nvim-lua/popup.nvim',
 
-		-- snippets
-		'L3MON4D3/LuaSnip',
-		'saadparwaiz1/cmp_luasnip',
-		{'honza/vim-snippets', cmd = 'InsertEnter'},
+			-- snippets
+			'L3MON4D3/LuaSnip',
+			'saadparwaiz1/cmp_luasnip',
+			{'honza/vim-snippets', cmd = 'InsertEnter'},
 
-		-- database
-		{ 'tpope/vim-dadbod', ft = { 'sql' }, cmd = 'DB' },
-		{ 'kristijanhusak/vim-dadbod-ui', ft = { 'sql' }, cmd = 'DBUI' },
+			-- database
+			{ 'tpope/vim-dadbod', ft = { 'sql' }, cmd = 'DB' },
+			{ 'kristijanhusak/vim-dadbod-ui', ft = { 'sql' }, cmd = 'DBUI' },
 
-		-- pdf
-		{ 'makerj/vim-pdf', ft = { 'pdf' } }
-	}
+			-- markdown
+			{ 'joelbeedle/pseudo-syntax', ft = { 'markdown', 'pseudo', 'md' } },
+			{ 'tpope/vim-markdown', ft = { 'markdown', 'pseudo', 'md', 'latex' } },
+			{ 'iamcco/markdown-preview.nvim', ft = { 'markdown', 'pseudo', 'md' },
+				run = 'cd app && yarn install',
+				cmd = 'MarkdownPreview',
+			},
 
-	use { 
-		'tpope/vim-markdown',
-		'joelbeedle/pseudo-syntax',
-		ft = { 'markdown', 'pseudo', 'md', 'latex' }
-	}
+			-- pdf
+			{ 'makerj/vim-pdf', ft = { 'pdf' } },
 
-	use {
-		'iamcco/markdown-preview.nvim',
-		run = 'cd app && yarn install',
-		cmd = 'MarkdownPreview',
-		ft = { 'markdown', 'pseudo', 'md' }
-	}
+			-- theme
+			{ 'morhetz/gruvbox', opt = true, cmd = { 'colorscheme' } }
 
-	use { -- Theme (loaded only when calling function 'colorscheme')
-		'morhetz/gruvbox',
-		opt = true,
-		cmd = { 'colorscheme' }
-	}
-
-end)
+		}
+	end)
 -- }
 
--- PER-PLUGIN SETTINGs {
+-- PER-PLUGIN SETTINGS {
 
 	-- NVIM-LSP-INSTALLER {
 		local lsp_installer = require('nvim-lsp-installer')
@@ -180,13 +172,15 @@ end)
 		-- }
 	-- cmp }
 
+
 	-- AUTOPAIRS {
-		require('nvim-autopairs').setup({
-			require('nvim-autopairs').enable(),
-			cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({  map_char = { tex = '' } })),
-			enable_check_bracket_line = false
+		local autopairs = require('nvim-autopairs')
+		autopairs.setup({
+			disable_filetype = { "TelescopePrompt" },
+			cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({  map_char = { tex = '' } }))
 		})
 	-- autopairs }
+
 
 	-- GITSIGNS {
 		require('gitsigns').setup {
