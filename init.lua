@@ -3,19 +3,15 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 10/12/21 - 12:30
+-- Last Modified: 10/12/21 - 22:35
 --------------------------------------
 
 
--- Section: check VScode/codium 
+-- Section: check VScodium | Vim (standard)
 	if vim.fn.exists('g:vscode') == 1 then
 		return
-	end
-	if not(vim.fn.has('nvim')) == 1 then
-		vim.cmd	'source $VIMDOTDIR/vimrc'
-		return
-	elseif vim.fn.has('gui_vimr') == 1 then
-		vim.cmd 'source $NVIMDOTDIR/ginit.lua'
+	elseif not(vim.fn.has('nvim')) == 1 then
+		vim.cmd	'source ~/.config/vim/vimrc'
 		return
 	end
 -- }
