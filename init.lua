@@ -1,9 +1,9 @@
 --------------------------------------
 -- File: init.lua
--- Description: NeoVim K configuration
+-- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 08.12.21 13:42
+-- Last Modified: 10/12/21 - 10:15
 --------------------------------------
 
 
@@ -22,14 +22,14 @@
 
 
 -- Section: Path Settings {
-	-- vim.cmd ([[set rtp+=~/.config/nvim]])
-	-- vim.cmd ([[
-	-- set viminfo+=n~/.local/share/nvim/shada/main.shada
-	-- set packpath+=~/.config/nvim/pack
-	-- set shada='20,<50,s10
-	-- set path=**
-	-- set undodir=~./.cache/nvim/tmp/undo
-	-- ]])
+	vim.cmd ([[
+		" -- set rtp+=~/.config/nvim
+		" set viminfo+=n~/.local/share/nvim/shada/main.shada
+		" set packpath+=~/.config/nvim/pack
+		set shada='20,<50,s10
+		" set path=**
+		set undodir=~./.cache/nvim/tmp/undo
+	]])
 -- }
 
 
