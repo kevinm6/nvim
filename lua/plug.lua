@@ -1,81 +1,222 @@
- -------------------------------------
- -- File: plug.lua
- -- Description: K plugins w/ packer as Package Manager
- -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plug.lua
- -- Last Modified: 07.12.21 18:30
- -------------------------------------
+-------------------------------------
+-- File: plug.lua
+-- Description: Lua K NeoVim & VimR plugins w/ packer
+-- Author: Kevin
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plug.lua
+-- Last Modified: 10/12/21 - 10:10
+-------------------------------------
 
 
 -- Section: PLUGINS {
 
-	local use = require('packer').use
-	require('packer').startup(function()
-		use {
-			'wbthomason/packer.nvim',
-			'neovim/nvim-lspconfig',
-			'williamboman/nvim-lsp-installer',
-			'hrsh7th/cmp-nvim-lsp',
-			'hrsh7th/cmp-buffer',
-			'hrsh7th/cmp-path',
-			'hrsh7th/cmp-cmdline',
-			'hrsh7th/nvim-cmp',
-			'nvim-telescope/telescope.nvim',
-			'tpope/vim-surround',
-			'tpope/vim-commentary',
-			'tpope/vim-fugitive',
-			'nvim-treesitter/nvim-treesitter',
-			'nvim-lua/plenary.nvim',
-			'windwp/nvim-autopairs',
+local use = require('packer').use
+require('packer').startup(function()
+	use {
+		-- Plugin/package manager
+		'wbthomason/packer.nvim',
 
-			'L3MON4D3/LuaSnip',
-			'saadparwaiz1/cmp_luasnip'
-		}
-		use {
-			'tpope/vim-dadbod',
-			ft = { 'sql' },
-			cmd = 'DB'
-		}
-		use {
-			'kristijanhusak/vim-dadbod-ui',
-			ft = { 'sql' },
-			cmd = 'DBUI'
-		}
+		-- lsp
+		'neovim/nvim-lspconfig',
+		'williamboman/nvim-lsp-installer',
 
-		use {
-			'honza/vim-snippets',
-			cmd = 'InsertEnter'
-		}
-		use { 'junegunn/goyo.vim', run = ':Goyo' }
-		use { 'tpope/vim-markdown',
-					'joelbeedle/pseudo-syntax',
-					ft = { 'markdown', 'pseudo', 'md', 'latex' }
-		}
+		-- autocompletion
+		'hrsh7th/nvim-cmp',
+		'hrsh7th/cmp-nvim-lsp',
+		'hrsh7th/cmp-buffer',
+		'hrsh7th/cmp-path',
+		'hrsh7th/cmp-cmdline',
 
-		use {
-			'makerj/vim-pdf',
-			ft = { 'pdf' }
-		}
+		-- file finder
+		'nvim-telescope/telescope.nvim',
 
-		use {
-			'morhetz/gruvbox',
-			opt = true,
-			cmd = { 'colorscheme' }
-		}
+		-- coding helper
+		'nvim-treesitter/nvim-treesitter',
+		'windwp/nvim-autopairs',
+		'tpope/vim-surround',
+		'tpope/vim-commentary',
+		{ 'junegunn/goyo.vim', run = ':Goyo' },
 
-		use {
-			'haorenW1025/completion-nvim',
-			opt = true,
-			requires = {{'hrsh7th/vim-vsnip', opt = true}, {'hrsh7th/vim-vsnip-integ', opt = true}}
-		}
+		-- git
+		'tpope/vim-fugitive',
+		{ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } },
 
-		use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
+		'nvim-lua/plenary.nvim',
+		'nvim-lua/popup.nvim',
 
-		-- use {
-		-- 	'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-		-- 	config = function() require('gitsigns').setup() end
-		-- }
+		-- snippets
+		'L3MON4D3/LuaSnip',
+		'saadparwaiz1/cmp_luasnip',
+		{'honza/vim-snippets', cmd = 'InsertEnter'},
 
-	end)
+		-- database
+		{ 'tpope/vim-dadbod', ft = { 'sql' }, cmd = 'DB' },
+		{ 'kristijanhusak/vim-dadbod-ui', ft = { 'sql' }, cmd = 'DBUI' },
+
+		-- pdf
+		{ 'makerj/vim-pdf', ft = { 'pdf' } }
+	}
+
+	use { 
+		'tpope/vim-markdown',
+		'joelbeedle/pseudo-syntax',
+		ft = { 'markdown', 'pseudo', 'md', 'latex' }
+	}
+
+	use {
+		'iamcco/markdown-preview.nvim',
+		run = 'cd app && yarn install',
+		cmd = 'MarkdownPreview',
+		ft = { 'markdown', 'pseudo', 'md' }
+	}
+
+	use { -- Theme (loaded only when calling function 'colorscheme')
+		'morhetz/gruvbox',
+		opt = true,
+		cmd = { 'colorscheme' }
+	}
+
+end)
 -- }
 
+-- PER-PLUGIN SETTINGs {
+
+	-- NVIM-LSP-INSTALLER {
+		local lsp_installer = require('nvim-lsp-installer')
+		lsp_installer.settings({
+			ui = {
+				server_installed = "✓",
+				server_pending = "➜",
+				server_uninstalled = "✗"
+			},
+			keymaps = {
+				toggle_server_expand = "<CR>", "o"
+			},
+		})
+
+		lsp_installer.on_server_ready(function(server)
+
+		-- Specify the default options which we'll use to setup all servers
+		local default_opts = {
+			on_attach = on_attach,
+		}
+
+		local server_opts = {}
+
+		-- Use the server's custom settings, if they exist, otherwise default to the default options
+		local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
+			server:setup(server_options)
+		end)
+	-- nvim-lsp-installer }
+
+	-- CMP { 
+		local cmp =  require('cmp')
+		cmp.setup {
+			snippet = {
+				-- REQUIRED - you must specify a snippet engine
+				expand = function(args)
+					require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+					-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+				end,
+			},
+			mapping = {
+				['<C-p>'] = cmp.mapping.select_prev_item(),
+				['<C-n>'] = cmp.mapping.select_next_item(),
+				['<C-d>'] = cmp.mapping.scroll_docs(-4),
+				['<C-f>'] = cmp.mapping.scroll_docs(4),
+				['<C-Space>'] = cmp.mapping.complete(),
+				['<Down>'] = cmp.mapping.select_next_item(),
+				['<Up>'] = cmp.mapping.select_prev_item(),
+				['<CR>'] = cmp.mapping.confirm {
+					behavior = cmp.ConfirmBehavior.Replace,
+					-- Insert-mode
+					i = cmp.mapping.confirm({ select = true }),
+					-- Command-mode
+					c = cmp.mapping.confirm({ select = false })
+				},
+				['<Tab>'] = cmp.mapping(function(fallback)
+					if cmp.visible() then
+						cmp.select_next_item()
+					elseif luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					else
+						fallback()
+					end
+				end),
+				['<S-Tab>'] = cmp.mapping(function(fallback)
+					if cmp.visible() then
+						cmp.select_prev_item()
+					elseif luasnip.jumpable(-1) then
+						luasnip.jump(-1)
+					else
+						fallback()
+					end
+				end),
+			},
+			sources = {
+				{ name = 'nvim_lsp' },
+				{ name = 'buffer' },
+				{ name = 'path' },
+				{ name = 'cmdline' },
+				{ name = 'luasnip' }
+				-- { name = 'ultisnips' },
+			},
+		}
+		-- Use buffer source for `/`
+		cmp.setup.cmdline('/', {
+			sources = {
+				{ name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+			}
+		})
+		-- }	
+
+		-- Use cmdline & path source for '/'
+		cmp.setup.cmdline(':', {
+			sources = cmp.config.sources({
+				{ name = 'path' }
+			}, {
+				{ name = 'cmdline' }
+			})
+		})
+		-- }
+	-- cmp }
+
+	-- AUTOPAIRS {
+		require('nvim-autopairs').setup({
+			require('nvim-autopairs').enable(),
+			cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({  map_char = { tex = '' } })),
+			enable_check_bracket_line = false
+		})
+	-- autopairs }
+
+	-- GITSIGNS {
+		require('gitsigns').setup {
+			signs = {
+				add = {
+					hl = 'GitSignsAdd',	text = '+',
+					numhl='GitSignsAddNr', linehl='GitSignsAddLn'
+				},
+				change = {
+					hl = 'GitSignsChange', text = '\\', 
+					numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn'
+				},
+				delete = {
+					hl = 'GitSignsDelete', text = '_',
+					numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'
+				},
+				topdelete = {
+					hl = 'GitSignsDelete', text = '‾',
+					numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'
+				},
+				changedelete = {
+					hl = 'GitSignsChange', text = '~',
+					numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'
+				},
+			},
+			signcolumn = true,
+			numhl = false,
+			linehl = false,
+			word_diff = false,
+		}
+	-- gitsigns }
+
+-- per-plugin settings }

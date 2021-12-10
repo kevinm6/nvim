@@ -92,9 +92,9 @@ local set = vim.opt
 	set.updatetime = 300 -- set a low updatetime for better UX even w/ CoC
 	set.shortmess:append("c") -- do not pass messages to ins-completion-menu
 	set.listchars = { tab = ":▸ ", eol = "↲", trail = "~" }
-	set.timeoutlen = 500
+	set.timeoutlen = 200
 	set.ttimeoutlen = 50
-	set.completeopt = 'menu,menuone,noselect'
+	set.completeopt = { "menu", "menuone", "noselect"}
 -- }
 
 
@@ -143,7 +143,7 @@ local set = vim.opt
 		'%3* %{&fileencoding?&fileencoding:&encoding}',
 		'%1* %y',
 		'%3* ⟨ %{&ff}',
-		"= ⟨ %l:%L "
+		" ⟨ %l:%L "
 	}
 	set.statusline = table.concat(stl)
 -- }
