@@ -3,7 +3,7 @@
  -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 10/12/21 - 12:01
+ -- Last Modified: 13/12/21 - 19:16
  -------------------------------------
 
 HOME = os.getenv("HOME")
@@ -61,6 +61,8 @@ local set = vim.opt
 		
 		" SQL
 		au BufNewFile, BufRead psql* setf sql
+
+		command! Scratch lua require'tool'.makeScratch()
 
 		" Automation for coc-syntax using omnifunc
 		" if has("autocmd") && exists("+omnifunc")
@@ -155,15 +157,6 @@ local set = vim.opt
 		let l:filename = input("⟩ Enter filename: ")
 		execute 'pedit ' . b:netrw_curdir.'/'.l:filename
 	endf
-
-	function! Scratch()
-    split
-    noswapfile hide enew
-    setlocal buftype=nofile
-    setlocal bufhidden=hide
-    setlocal nobuflisted
-    " lcd ~
-    file scratch
-	endf
 	]])
+
 -- }

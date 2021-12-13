@@ -3,7 +3,7 @@
 -- Description: Lua keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
--- Last Modified: 13/12/21 - 14:00
+-- Last Modified: 13/12/21 - 19:14
 -------------------------------------
 
 
@@ -58,14 +58,6 @@
 -- }
 
 
--- Section: Command Mode {
-	-- keymap('c', "<C-j>",  'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } )
-	-- keymap('c', "<C-k>",  'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } )
-	-- keymap('c', "<Left>",  'cmp.visible() ? "cmp.close()"', { expr = true, noremap = true } )
-	-- keymap('c', "<Right>",  'cmp.visible() ? "cmp.get_selected_entry()', { expr = true, noremap = true } )
--- }
-
-
 -- Section: Insert Mode {
 	keymap('i', '<Esc>', '<Esc>`^', opts)
 	keymap('i', '<M-Left>', '<Esc>bi', opts)
@@ -77,7 +69,7 @@
 	keymap('i', '<S-down>', '<C-o>vj', opts)
 	keymap('i', '<S-up>', '<C-o>vk', opts)
 	keymap('i', '<S-Tab>', '<C-d>', opts)
-	keymap('i', '<F2>', '<C-R>=strftime("%d.%m.%y %H:%M")<CR>', opts)
+	keymap('i', '<F2>', '<C-R>=strftime("%d/%m/%y - %H:%M")<CR>', opts)
 -- }
 
 -- Section: Normal Mode {
