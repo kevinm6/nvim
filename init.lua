@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 10/12/21 - 22:35
+-- Last Modified: 13/12/21 - 14:00
 --------------------------------------
 
 
@@ -26,9 +26,13 @@
 
 
 -- Section: Other config files to source {
-	require('plug')
-	require('lsp-config')
-	require('prefs')
-	require('vars')
-	require('maps')
+	require("user.plugins")
+	require("user.prefs")
+	require("user.vars")
+	require("user.maps")
+	require("user.lsp-config")
+	require("user.cmp")
+	require("user.treesitter")
+	require("user.gitsigns")
+	require("user.autopairs")
 -- }
