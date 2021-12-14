@@ -3,7 +3,7 @@
 -- Description: Lua keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
--- Last Modified: 13/12/21 - 19:14
+-- Last Modified: 14/12/21 - 09:40
 -------------------------------------
 
 
@@ -129,10 +129,14 @@
 	keymap('v', '<M-Left>', 'b', opts)
 	keymap('v', '<M-Right>', 'w', opts)
 
-	keymap('v', '<Tab>', '>', opts)
-	keymap('v', '<S-Tab>', '', opts)
-	keymap('v', ']', '', opts)
-	keymap('v', '[', '', opts)
+	keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+	keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+	keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
+	keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+	keymap('v', '<', '<gv', opts)
+	keymap('v', '>', '>gv', opts)
+	keymap('v', ']', '>', opts)
+	keymap('v', '[', '<', opts)
 	keymap('v', 'p', '_dP', opts)
 -- }
 
