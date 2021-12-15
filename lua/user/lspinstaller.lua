@@ -78,8 +78,14 @@ lsp_installer.on_server_ready(function(server)
 	}
 
 	local server_opts = {
-
-	}
+    ["jdtls"] = function ()
+      default_opts,settings = {
+        init_options = {
+          workspace = vim.fn.expand("~/.local/java/workspace/")
+        }
+      }
+    end,
+  }
 
 	local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
   server:setup(server_options)
