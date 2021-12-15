@@ -28,10 +28,11 @@ vim.cmd([[
 		return
 	end
 
+	-- display packer in a popup window
 	packer.init({
 		display = {
 			open_fn = function()
-				return require('packer.util').float({ border = 'single' })
+				return require('packer.util').float ({ border = 'single' })
 			end
 		}
 	})
@@ -62,7 +63,10 @@ vim.cmd([[
 			'nvim-telescope/telescope.nvim',
 
 			-- coding helper
-			'nvim-treesitter/nvim-treesitter',
+			{
+				'nvim-treesitter/nvim-treesitter',
+				run = ":TSUpdate"
+			},
 			'blackCauldron7/surround.nvim',
 			'tpope/vim-commentary',
 			{ 'junegunn/goyo.vim', run = ':Goyo' },
@@ -102,7 +106,6 @@ vim.cmd([[
 		if PACKER_BOOTSTRAP then
 			require('packer').sync()
 		end
-
 	end)
 
 	-- Surround {
