@@ -3,7 +3,7 @@
 -- Description: Lua keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
--- Last Modified: 14/12/21 - 09:40
+-- Last Modified: 15/12/21 - 21:02
 -------------------------------------
 
 
@@ -64,6 +64,11 @@
 	keymap('i', '<M-Right>', '<Esc>wi', opts)
 	keymap('i', 'jk', '<Esc>', opts)
 	keymap('i', 'kj', '<Esc>', opts)
+	keymap('i', ',', ',<C-g>u', opts)
+	keymap('i', '.', ',<C-g>u', opts)
+	keymap('i', '{', ',<C-g>u', opts)
+	keymap('i', '(', ',<C-g>u', opts)
+	keymap('i', '[', ',<C-g>u', opts)
 	keymap('i', '<S-Right>', '<C-o>vl', opts)
 	keymap('i', '<S-Left>', '<C-o>vh', opts)
 	keymap('i', '<S-down>', '<C-o>vj', opts)
@@ -94,6 +99,9 @@
 	keymap('n', '<M-Left>', 'b', opts)
 	keymap('n', '<M-Right>', 'w', opts)
 	keymap('n', 'U', '<C-r>', opts)
+	keymap('n', 'Y', 'y$', opts)
+	keymap('n', 'n', 'nzzzv', opts)
+	keymap('n', 'N', 'Nzzzv', opts)
 	keymap('n', '<Tab>', '<C-W><C-W>', opts)
 	keymap('n', '<S-Tab>', '<C-W><C-P>', opts)
 	keymap('n', '<S-Left>', 'vh', opts)
@@ -125,18 +133,17 @@
 	keymap('v', '<leader>d', '""dnmap † "_x', opts)
 	keymap('v', 'd', '"_d', opts)
 	keymap('v', '<BS>', '"_d', opts)
-
 	keymap('v', '<M-Left>', 'b', opts)
 	keymap('v', '<M-Right>', 'w', opts)
-
-	keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-	keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-	keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-	keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 	keymap('v', '<', '<gv', opts)
 	keymap('v', '>', '>gv', opts)
 	keymap('v', ']', '>', opts)
 	keymap('v', '[', '<', opts)
 	keymap('v', 'p', '_dP', opts)
+
+	keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+	keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+	keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
+	keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 -- }
 
