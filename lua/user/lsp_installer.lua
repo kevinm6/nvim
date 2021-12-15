@@ -3,7 +3,7 @@
 -- Description: nvim-lsp-installer K config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp_installer.lua
--- Last Modified: 13/12/21 - 16:00
+-- Last Modified: 15/12/21 - 11:00
 -------------------------------------
 
 -- NVIM-LSP-INSTALLER {
@@ -14,10 +14,9 @@
 			server_pending = "➜",
 			server_uninstalled = "✗"
 		},
-		keymaps = {
-			toggle_server_expand = "<CR>", "o"
-		},
 	})
+
+  install_root_dir = vim.fn.expand("~/.local/share/nvim/lsp_servers/")
 
 	lsp_installer.on_server_ready(function(server)
 
