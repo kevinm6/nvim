@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 13/12/21 - 16:00
+-- Last Modified: 15/12/21 - 09:55
 -------------------------------------
 
 -- Automatically install packer
@@ -62,8 +62,8 @@ vim.cmd([[
 			'nvim-telescope/telescope.nvim',
 
 			-- coding helper
-			{ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
-			'tpope/vim-surround',
+			'nvim-treesitter/nvim-treesitter',
+			'blackCauldron7/surround.nvim',
 			'tpope/vim-commentary',
 			{ 'junegunn/goyo.vim', run = ':Goyo' },
 
@@ -81,12 +81,14 @@ vim.cmd([[
 			{ 'kristijanhusak/vim-dadbod-ui', ft = { 'sql' }, cmd = ':DBUI' },
 
 			-- markdown
-			{ 'joelbeedle/pseudo-syntax', cmd = 'InsertEnter', ft = { 'markdown', 'pseudo', 'md' } },
-			{ 'tpope/vim-markdown', ft = { 'markdown', 'pseudo', 'md', 'latex' } },
-			{ 'iamcco/markdown-preview.nvim', ft = { 'markdown', 'pseudo', 'md' },
+			{ 'tpope/vim-markdown', ft = { 'markdown', 'latex' } },
+			{
+				'iamcco/markdown-preview.nvim',
 				run = 'cd app && yarn install',
-				cmd = 'MarkdownPreview',
+				ft = 'markdown',
 			},
+			{ 'joelbeedle/pseudo-syntax', cmd = 'InsertEnter', ft = 'markdown' },
+      'ellisonleao/glow.nvim',
 
 			-- pdf
 			{ 'makerj/vim-pdf', ft = { 'pdf' } },
