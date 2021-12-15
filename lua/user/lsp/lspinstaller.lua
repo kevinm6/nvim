@@ -1,5 +1,5 @@
 -------------------------------------
--- File: lsp_installer.lua
+-- File: lspinstaller.lua
 -- Description: nvim-lsp-installer K config
 -- Author: Kevin
 -- Source: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/lsp/lsp-installer.lua
@@ -13,57 +13,57 @@ end
 
 -- Servers {
 -- Include the servers you want to have installed by default below
-	local servers = {
-		'sumneko_lua',
-		'vimls',
-		'bashls',
-		'intelephense',
-		'pyright',
-		'clangd',
-		'cssls',
-		'html',
-		'jdtls',
-		'jsonls',
-		'lemminx',
-		'ltex',
-		'sqlls'
-	}
+	--local servers = {
+	--	'sumneko_lua',
+	--	'vimls',
+	--	'bashls',
+	--	'intelephense',
+	--	'pyright',
+	--	'clangd',
+	--	'cssls',
+	--	'html',
+	--	'jdtls',
+	--	'jsonls',
+	--	'lemminx',
+	--	'ltex',
+	--	'sqlls'
+	--}
 
-	for _, name in pairs(servers) do
-		local server_is_found, server = lsp_installer.get_server(name)
-		if server_is_found then
-			if not server:is_installed() then
-				print("Installing " .. name)
-				server:install()
-			end
-		end
-	end
--- Servers }
-
-
--- Set capabilities {
-	for _, srv in pairs(servers) do
-		lspconfig[srv].setup {
-				capabilities = capabilities
-		}
-	end
--- Set capabilities }
+	--for _, name in pairs(servers) do
+	--	local server_is_found, server = lsp_installer.get_server(name)
+	--	if server_is_found then
+	--		if not server:is_installed() then
+	--			print("Installing " .. name)
+	--			server:install()
+	--		end
+	--	end
+	--end
+---- Servers }
 
 
-lsp_installer.settings {
-	ui = {
-		server_installed = "✓",
-		server_pending = "➜",
-		server_uninstalled = "✗"
-	},
-}
+---- Set capabilities {
+	--for _, srv in pairs(servers) do
+	--	lspconfig[srv].setup {
+	--			capabilities = capabilities
+	--	}
+	--end
+---- Set capabilities }
 
-install_root_dir = vim.fn.expand("~/.local/share/nvim/lsp_servers/")
+
+--lsp_installer.settings {
+	--ui = {
+	--	server_installed = "✓",
+	--	server_pending = "➜",
+	--	server_uninstalled = "✗"
+	--},
+--}
+
+--install_root_dir = vim.fn.expand("~/.local/share/nvim/lsp_servers/")
 
 lsp_installer.on_server_ready(function(server)
 	local opts = {
-		on_attach = require("handlers").on_attach,
-		capabilities = require("handlers").capabilities,
+		on_attach = require("user.lsp.handlers").on_attach,
+		capabilities = require("user.lsp.handlers").capabilities,
 	}
 
 	if server.name == "jsonls" then
