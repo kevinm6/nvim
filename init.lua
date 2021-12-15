@@ -30,7 +30,7 @@
 	require("user.prefs")
 	require("user.vars")
 	require("user.maps")
-	require("user.lsp-config")
+	require("user.lsp.lspconfig")
 	require("user.cmp")
 	require("user.treesitter")
 	require("user.gitsigns")
