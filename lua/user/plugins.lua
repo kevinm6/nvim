@@ -104,5 +104,10 @@ vim.cmd([[
 		end
 
 	end)
+
+	-- Surround {
+	require('surround').setup {mappings_style = "surround"}
+	-- Surround }
+
 -- }
 
