@@ -48,6 +48,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 			au BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
 			au BufWinEnter ?* silent! loadview
 			au CursorHold, BufEnter * :checktime
+      au TextYankPost * silent! lua vim.highlight.on_yank{higroup="Search", timeout=400}
 		augroup end
 
 		au filetype netrw call Netrw_mappings()
@@ -64,14 +65,6 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		au BufNewFile, BufRead psql* setf sql
 
 		command! Scratch lua require'tool'.makeScratch()
-
-		" Automation for coc-syntax using omnifunc
-		" if has("autocmd") && exists("+omnifunc")
-		" autocmd Filetype *
-		" 			\	if &omnifunc == "" |
-		" 			\		setlocal omnifunc=syntaxcomplete#Complete |
-		" 			\	endif
-		" endif
 	]])
 -- }
 
@@ -79,7 +72,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 -- Section: GRAPHIC {
 	vim.cmd 'colorscheme k_theme'
 	set.termguicolors = true
-	set.guifont = { "Source Code Pro:h13", "Hack Nerd Font Mono:h15" }
+	set.guifont = { "Source Code Pro:h13", "Hack Nerd Font Mono:h14" }
 	set.relativenumber = true -- Show line numbers - relativenumber from current
 	set.showmode = true -- show active mode in status line
 	set.scrolloff = 3 -- # of line leave above and below cursor
@@ -112,7 +105,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 -- Section: FOLDING {
 	set.wrap = true -- Wrap long lines showing a linebreak
 	set.foldenable = true -- enable code folding
-	set.foldmethod = 'diff'
+	set.foldmethod = 'syntax'
 	set.diffopt = { 'internal', 'filler', 'closeoff', 'vertical' }
 	set.foldcolumn = 'auto'	-- Add a bit extra margin to the Left
 -- }
@@ -125,7 +118,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	set.undofile = true -- enable undo
 	set.backup = false -- disable backups
 	set.swapfile = false -- disable swaps
-	set.undodir = HOME .. "/.local/nvim/"
+	set.undodir = HOME .. "/.cache/nvim/tmp/undo"
 -- }
 
 
