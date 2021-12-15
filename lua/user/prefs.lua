@@ -3,11 +3,12 @@
  -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 13/12/21 - 19:16
+ -- Last Modified: 14/12/21 - 14:46
  -------------------------------------
 
 HOME = os.getenv("HOME")
 local set = vim.opt
+vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 -- Section: CURSOR {
 	-- 1 -> blinking block
