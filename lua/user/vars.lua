@@ -11,12 +11,10 @@
 	vim.g.clipboard = {
 		name = 'pbcopy',
 		copy = {
-		  -- ['+'] = 'pbcopy',
-		  ['*'] = 'pbcopy',
+		  ['"'] = 'pbcopy',
 		},
 		paste = {
-		  -- ['+'] = 'pbpaste',
-		  ['*'] = 'pbpaste',
+		  ['"'] = 'pbpaste',
 		},
 		cache_enabled = 0,
 		}
