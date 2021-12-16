@@ -3,8 +3,9 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/cmp.lua
--- Last Modified: 13/12/21 - 16:00
+-- Last Modified: 16/12/21 - 21:11
 -------------------------------------
+
 
 local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
@@ -17,11 +18,10 @@ if not snip_status_ok then
 end
 
 -- CMP {
-	-- local cmp =  require('cmp')
 		cmp.setup ({
 			snippet = {
 				expand = function(args)
-					require'luasnip'.lsp_expand(args.body) -- For `luasnip` users.
+					require'luasnip'.lsp_expand(args.body)
 				end,
 			},
 			mapping = {
@@ -30,8 +30,6 @@ end
 				['<C-d>'] = cmp.mapping.scroll_docs(-4),
 				['<C-f>'] = cmp.mapping.scroll_docs(4),
 				['<C-Space>'] = cmp.mapping.complete(),
-				['<Down>'] = cmp.mapping.select_next_item(),
-				['<Up>'] = cmp.mapping.select_prev_item(),
 				['<CR>'] = cmp.mapping.confirm {
 					behavior = cmp.ConfirmBehavior.Replace,
 					-- Insert-mode
