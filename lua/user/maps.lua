@@ -3,7 +3,8 @@
 -- Description: Lua keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
--- Last Modified: 15/12/21 - 21:02
+-- HelpSource: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/keymaps.lua
+-- Last Modified: 16/12/21 - 15:30
 -------------------------------------
 
 
@@ -11,16 +12,14 @@
 	local opts = { noremap = true, silent = true }
 	local term_opts = { silent = true }
 	local keymap = vim.api.nvim_set_keymap
+  keymap("", ",", "<Nop>", opts)
 	vim.g.mapleader = ","
 	vim.g.maplocalleader = ","
 -- }
 
 
 -- Section: Special keys and commands {
-	if vim.fn.exists(':tnoremap') == 2 then -- NeoVim & VimR keymaps
-		keymap('t', '<Leader>t', ':sb<bar>term<cr><C-W>J:resize12<cr>', term_opts)
-		keymap('t', '<Esc>', '<C-\\><C-n>', term_opts)
-		if vim.fn.has('gui_vimr') == 1 then -- VimR keymaps (command key and others)
+  if vim.fn.has('gui_vimr') == 1 then -- VimR keymaps (command key and others)
 			-- Normal-mode
 			keymap('n', '<D-Right>', '$', opts)
 			keymap('n', '<D-Left>', '0', opts)
@@ -48,13 +47,13 @@
 			keymap('v', '<D-Left>', '$', opts)
 			keymap('v', '<D-down>', 'G', opts)
 			keymap('v', '<D-up>', 'gg', opts)
-		end
-	else -- Vim keymaps
-		keymap('i', '<ESC>oA', '<ESC>ki', opts)
-		keymap('i', '<ESC>oB', '<ESC>ji', opts)
-		keymap('i', '<ESC>oC', '<ESC>li', opts)
-		keymap('i', '<ESC>oD', '<ESC>hi', opts)
-	end
+  end
+-- }
+
+
+-- Section: Terminal Mode {
+		keymap('t', '<Leader>t', ':sb<bar>term<cr><C-W>J:resize12<cr>', term_opts)
+		keymap('t', '<Esc>', '<C-\\><C-n>', term_opts)
 -- }
 
 
@@ -78,22 +77,11 @@
 -- }
 
 -- Section: Normal Mode {
-	keymap('n', '<Leader>html', ':1-read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a', opts)
-	keymap('n', '<Leader>c', ':1-read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja', opts)
-	keymap('n', '<Leader>java', ':1-read $NVIMDOTDIR/snippets/skeleton.java<CR>2jA<Left><Left><C-r>%<Esc>d2b2jo', opts)
-	keymap('n', '<Leader>fjava', ':1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i', opts)
-	keymap('n', '<Leader>inf', ':1-read $NVIMDOTDIR/snippets/skeleton.info<CR><C-v>}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA', opts)
-	keymap('n', '<Leader>md', ':1-read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go', opts)
-	keymap('n', '<Leader>imd', ':1-read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go', opts)
-	keymap('n', '<Leader>gs', ':Git status<CR>', opts)
-	keymap('n', '<Leader>gaa', ':Git add .<CR>', opts)
-	keymap('n', '<Leader>gc', ':Git commit -m \'\'<Left>', opts)
-	keymap('n', '<Leader>gac', ':Git add % <bar> Git commit -m \\"\\"<Left>', opts)
-	keymap('n', '<Leader>gdf', ':Git df % <CR>', opts)
-	keymap('n', '<Leader>gda', ':Git df <CR>', opts)
-	keymap('n', '<Leader>w', ':write<CR>', opts)
-	keymap('n', '<Leader>gp', ':Git push<CR>', opts)
-	keymap('n', '<C-l>', ':nohlsearch<CR><C-l>', opts)
+  keymap("n", "<C-h>", "<C-w>h", opts)
+  keymap("n", "<C-j>", "<C-w>j", opts)
+  keymap("n", "<C-k>", "<C-w>k", opts)
+  keymap("n", "<C-l>", "<C-w>l", opts)
+	keymap('n', '<esc><esc>', '<cmd>nohlsearch<CR>', opts)
 	keymap("n", "<S-l>", ":bnext<CR>", opts)
 	keymap("n", "<S-h>", ":bprevious<CR>", opts)
 	keymap('n', '<M-Left>', 'b', opts)
@@ -119,6 +107,26 @@
 	keymap('n', 'ø', 'o<Esc>k', opts)
 	keymap('n', '∂∂', ':Hexplore %:p:h<CR><C-W>K:resize12<cr>', opts)
 
+  -- Git
+	keymap('n', '<Leader>gs', ':Git status<CR>', opts)
+	keymap('n', '<Leader>gg', ':Git<CR>', opts)
+	keymap('n', '<Leader>gaa', ':Git add .<CR>', opts)
+	keymap('n', '<Leader>gc', ':Git commit -m ""<Left>', opts)
+	keymap('n', '<Leader>gac', ':Git add % <bar> Git commit -m ""<Left>', { noremap = true })
+	keymap('n', '<Leader>gdf', ':Git df % <CR>', opts)
+	keymap('n', '<Leader>gda', ':Git df <CR>', opts)
+	keymap('n', '<Leader>w', ':write<CR>', opts)
+	keymap('n', '<Leader>gp', ':Git push<CR>', opts)
+
+  -- skeletons
+	keymap('n', '<Leader>html', ':1-read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a', opts)
+	keymap('n', '<Leader>c', ':1-read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja', opts)
+	keymap('n', '<Leader>java', ':1-read $NVIMDOTDIR/snippets/skeleton.java<CR>2jA<Left><Left><C-r>%<Esc>d2b2jo', opts)
+	keymap('n', '<Leader>fjava', ':1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i', opts)
+	keymap('n', '<Leader>inf', ':1-read $NVIMDOTDIR/snippets/skeleton.info<CR><C-v>}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA', opts)
+	keymap('n', '<Leader>md', ':1-read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go', opts)
+	keymap('n', '<Leader>imd', ':1-read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go', opts)
+
 	-- delete & cut
 	keymap('n', 'x', '"_x', opts)
 	keymap('n', 'd', '"_d', opts)
@@ -131,7 +139,7 @@
 
 
 -- Section: Visual Mode {
-	keymap('v', '<leader>d', '""dnmap † "_x', opts)
+	keymap('v', '<leader>d', '""d', opts)
 	keymap('v', 'd', '"_d', opts)
 	keymap('v', '<BS>', '"_d', opts)
 	keymap('v', '<M-Left>', 'b', opts)
@@ -142,6 +150,7 @@
 	keymap('v', '[', '<', opts)
 	keymap('v', 'p', '_dP', opts)
 
+  -- move selected text
 	keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 	keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 	keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
