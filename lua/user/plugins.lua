@@ -3,24 +3,9 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 15/12/21 - 09:55
+-- Last Modified: 16/12/21 - 20:46
 -------------------------------------
 
--- Automatically install packer
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-  print("Installing packer close and reopen Neovim...")
-  vim.cmd [[packadd packer.nvim]]
-end
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
 
 -- Section: PLUGINS {
 	local status_ok, packer = pcall(require, "packer")
@@ -30,18 +15,20 @@ vim.cmd([[
 
 	-- display packer in a popup window
 	packer.init({
+		package_root = require('packer.util').join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
+		compile_path = require('packer.util').join_paths(vim.fn.stdpath('config'), 'lua', 'user', 'packer_compiled.lua'),
 		display = {
 			open_fn = function()
-				return require('packer.util').float ({ border = 'single' })
+				return require('packer.util').float ({ border = 'rounded' })
 			end
-		}
+		},
 	})
 
 	local use = require('packer').use
 	packer.startup(function()
 		use {
 			-- Plugin/package manager
-			'wbthomason/packer.nvim',
+			{ 'wbthomason/packer.nvim', opt = true },
 
 			-- utility plugins
 			'nvim-lua/plenary.nvim',
@@ -102,15 +89,6 @@ vim.cmd([[
 			{ 'ChristianChiarulli/nvcode-color-schemes.vim', opt = true, cmd = { 'colorscheme' } }
 
 		}
-
-		if PACKER_BOOTSTRAP then
-			require('packer').sync()
-		end
 	end)
-
-	-- Surround {
-	require('surround').setup {mappings_style = "surround"}
-	-- Surround }
-
 -- }
 
