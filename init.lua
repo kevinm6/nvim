@@ -36,4 +36,5 @@
 	require("user.gitsigns")
 	require("user.autopairs")
 	require("user.statusline")
+	require("user.surround")
 -- }
