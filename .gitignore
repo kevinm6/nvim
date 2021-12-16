@@ -4,3 +4,4 @@ plugged/*
 colors/.DS_Store
 pack/*
 plugin/*
+lua/user/packer_compiled.lua
