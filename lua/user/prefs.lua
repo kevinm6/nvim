@@ -3,7 +3,7 @@
  -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 14/12/21 - 14:46
+ -- Last Modified: 16/12/21 - 13:36
  -------------------------------------
 
 HOME = os.getenv("HOME")
@@ -69,10 +69,10 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 -- }
 
 
--- Section: GRAPHIC {
+-- Section: GRAPHIC
 	vim.cmd 'colorscheme k_theme'
 	set.termguicolors = true
-	set.guifont = { "Source Code Pro:h13", "Hack Nerd Font Mono:h14" }
+	set.guifont = 'Source Code Pro:h13' -- { "Hack Nerd Font Mono:h14" }
 	set.relativenumber = true -- Show line numbers - relativenumber from current
 	set.showmode = true -- show active mode in status line
 	set.scrolloff = 3 -- # of line leave above and below cursor
@@ -83,6 +83,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	set.signcolumn = 'yes' -- always show signcolumns
 	set.cmdheight = 2	-- #lines for vim for commands/logs
 	set.pumheight = 16 -- popup menu height
+	set.pumblend = 8 -- popup menu transparency {0..100}
 	set.splitbelow = true -- split below in horizontal split
 	set.splitright = true -- split right in vertical split
 	set.updatetime = 300 -- set a low updatetime for better UX even w/ CoC
@@ -124,24 +125,6 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 -- Section: SEARCH {
 	set.smartcase = true -- smart case for search
--- }
-
-
--- Section: STATUS LINE {
-	local stl = {
-	-- Left Side
-		"%1*%n⟩",
-		'%2*  %{FugitiveStatusline()}',
-		'%1* ⟩ %m %<%f  ',
-		'%4*',
-	-- Right Side
-		'%=%4*',
-		'%3* %{&fileencoding?&fileencoding:&encoding}',
-		'%1* %y',
-		'%3* ⟨ %{&ff}',
-		" ⟨ %l:%L "
-	}
-	set.statusline = table.concat(stl)
 -- }
 
 
