@@ -3,7 +3,7 @@
 -- Description: nvim-lsp-installer K config
 -- Author: Kevin
 -- Source: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/lsp/lsp-installer.lua
--- Last Modified: 15/12/21 - 12:20
+-- Last Modified: 17/12/21 - 11:46
 -------------------------------------
 
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -15,9 +15,6 @@ end
 -- Local variables {
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-	local lspconfig = require('lspconfig')
-	local luasnip = require('luasnip')
-	local lsp_installer = require('nvim-lsp-installer')
 -- Local variables }
 
 -- Servers {
@@ -49,36 +46,29 @@ end
 -- Servers }
 
 
--- Set capabilities {
-	--for _, srv in pairs(servers) do
-	--	lspconfig[srv].setup {
-	--			capabilities = capabilities
-	--	}
-	--end
--- Set capabilities }
-
-
-lsp_installer.settings {
-	install_root_dir = "/Users/Kevin/.local/share/nvim/lsp_servers/",
+lsp_installer.settings({
+	install_root_dir =  vim.fn.stdpath "data".."/lsp_servers",
 	ui = {
-		server_installed = "✓",
-		server_pending = "↓",
-		server_uninstalled = "✗"
+    icons = {
+      server_installed = "✓",
+      server_pending = "↓",
+      server_uninstalled = "✗"
+    },
 	},
-}
+})
 
 
 lsp_installer.on_server_ready(function(server)
 	local default_opts = {
     on_attach = on_attach,
 	}
-
-	require("lspconfig")[server.name].setup {
+  local lspconfig = require('lspconfig')
+	lspconfig[server.name].setup {
 		capabilities = capabilities
 	}
 
 	local server_opts = {
-    ["jdtls"] = function ()
+    ['jdtls'] = function ()
       default_opts,settings = {
         init_options = {
           workspace = vim.fn.expand("~/.local/java/workspace/")
