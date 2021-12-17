@@ -3,7 +3,7 @@
 -- Description:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/
--- Last Modified: 16/12/21 - 16:24
+-- Last Modified: 17/12/21 - 08:57
 --------------------------------------
 
 local status_ok, surround = pcall(require, "surround")
@@ -14,7 +14,7 @@ end
 surround.setup {
   context_offset = 100,
   load_autogroups = false,
-  mappings_style = "sandwich",
+  mappings_style = "surround",
   map_insert_mode = true,
   quotes = {"'", '"'},
   brackets = {"(", '{', '['},

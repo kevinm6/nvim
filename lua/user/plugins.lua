@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 16/12/21 - 20:46
+-- Last Modified: 17/12/21 - 09:00
 -------------------------------------
 
 
@@ -28,7 +28,7 @@
 	packer.startup(function()
 		use {
 			-- Plugin/package manager
-			{ 'wbthomason/packer.nvim', opt = true },
+			'wbthomason/packer.nvim',
 
 			-- utility plugins
 			'nvim-lua/plenary.nvim',
@@ -78,7 +78,7 @@
 				run = 'cd app && yarn install',
 				ft = 'markdown',
 			},
-			{ 'joelbeedle/pseudo-syntax', cmd = 'InsertEnter', ft = 'markdown' },
+			-- { 'joelbeedle/pseudo-syntax', cmd = 'InsertEnter', ft = 'markdown' },
       'ellisonleao/glow.nvim',
 
 			-- pdf
