@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
 -- HelpSource: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/keymaps.lua
--- Last Modified: 17/12/21 - 15:33
+-- Last Modified: 17/12/21 - 15:40
 -------------------------------------
 
 
@@ -77,7 +77,9 @@
   keymap("n", "<C-h>", "<C-w>h", opts)
   keymap("n", "<C-j>", "<C-w>j", opts)
   keymap("n", "<C-k>", "<C-w>k", opts)
+	keymap('n', '<C-l>', '<Nop>', opts)
   keymap("n", "<C-l>", "<C-w>l", opts)
+  keymap("n", "<C-r>", "<cmd>redraw!<CR>", opts)
 	keymap('n', '<esc><esc>', '<cmd>nohlsearch<CR>', opts)
 	keymap("n", "<S-l>", ":bnext<CR>", opts)
 	keymap("n", "<S-h>", ":bprevious<CR>", opts)
