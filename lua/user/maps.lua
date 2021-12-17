@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
 -- HelpSource: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/keymaps.lua
--- Last Modified: 17/12/21 - 11:03
+-- Last Modified: 17/12/21 - 15:33
 -------------------------------------
 
 
@@ -103,6 +103,11 @@
 	keymap('n', 'Ø', 'O<Esc>j', opts)
 	keymap('n', 'ø', 'o<Esc>k', opts)
 	keymap('n', '∂∂', ':Hexplore %:p:h<CR><C-W>K:resize12<cr>', opts)
+
+  -- Telescope
+	keymap('n', '<Leader>ff', ':Telescope fd<CR>', opts)
+	keymap('n', '<Leader>fb', ':Telescope buffers<CR>', opts)
+	keymap('n', '<Leader>flg', ':Telescope live_grep<CR>', opts)
 
   -- Git
 	keymap('n', '<Leader>gs', ':Git status<CR>', opts)
