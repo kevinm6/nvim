@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 17/12/21 - 09:00
+-- Last Modified: 17/12/21 - 10:00
 -------------------------------------
 
 
@@ -60,7 +60,7 @@
 
 			-- git
 			'tpope/vim-fugitive',
-			{ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } },
+			'lewis6991/gitsigns.nvim',
 
 			-- snippets
 			'L3MON4D3/LuaSnip',
@@ -73,13 +73,13 @@
 
 			-- markdown
 			{ 'tpope/vim-markdown', ft = { 'markdown', 'latex' } },
+      'ellisonleao/glow.nvim',
 			{
 				'iamcco/markdown-preview.nvim',
+				opt = true,
 				run = 'cd app && yarn install',
 				ft = 'markdown',
 			},
-			-- { 'joelbeedle/pseudo-syntax', cmd = 'InsertEnter', ft = 'markdown' },
-      'ellisonleao/glow.nvim',
 
 			-- pdf
 			{ 'makerj/vim-pdf', ft = { 'pdf' } },
