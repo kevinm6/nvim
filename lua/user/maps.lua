@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
 -- HelpSource: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/keymaps.lua
--- Last Modified: 16/12/21 - 15:30
+-- Last Modified: 17/12/21 - 11:03
 -------------------------------------
 
 
@@ -44,7 +44,7 @@
 			keymap('i', '<M-Del>', '<C-o>"_dw', opts)
 			-- Visual-mode
 			keymap('v', '<D-Right>', '$', opts)
-			keymap('v', '<D-Left>', '$', opts)
+			keymap('v', '<D-Left>', '0', opts)
 			keymap('v', '<D-down>', 'G', opts)
 			keymap('v', '<D-up>', 'gg', opts)
   end
@@ -59,15 +59,12 @@
 
 -- Section: Insert Mode {
 	keymap('i', '<Esc>', '<Esc>`^', opts)
-	keymap('i', '<M-Left>', '<Esc>bi', opts)
-	keymap('i', '<M-Right>', '<Esc>wi', opts)
+	keymap('i', '<M-Left>', '<C-o>b', opts)
+	keymap('i', '<M-Right>', '<C-o>w', opts)
 	keymap('i', 'jk', '<Esc>', opts)
 	keymap('i', 'kj', '<Esc>', opts)
 	keymap('i', ',', ',<C-g>u', opts)
 	keymap('i', '.', '.<C-g>u', opts)
-	keymap('i', '{', '{<C-g>u', opts)
-	keymap('i', '(', '(<C-g>u', opts)
-	keymap('i', '[', '[<C-g>u', opts)
 	keymap('i', '<S-Right>', '<C-o>vl', opts)
 	keymap('i', '<S-Left>', '<C-o>vh', opts)
 	keymap('i', '<S-down>', '<C-o>vj', opts)
