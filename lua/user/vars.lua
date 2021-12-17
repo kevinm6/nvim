@@ -3,7 +3,7 @@
  -- Description: K specific variables
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 10/12/21 - 12:05
+ -- Last Modified: 17/12/21 - 09:15
  -------------------------------------
 
 
@@ -56,7 +56,6 @@
 		'changelog',
 		'cpp',
 		'php',
-		'pseudo',
 		'sql'
 	}
 
