@@ -3,7 +3,7 @@
  -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 16/12/21 - 13:36
+ -- Last Modified: 17/12/21 - 09:48
  -------------------------------------
 
 HOME = os.getenv("HOME")
@@ -63,6 +63,9 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		
 		" SQL
 		au BufNewFile, BufRead psql* setf sql
+
+		" Pseudo
+		au BufRead,BufNewFile *.pseudo setf pseudo
 
 		command! Scratch lua require'tool'.makeScratch()
 	]])

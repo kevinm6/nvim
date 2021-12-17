@@ -3,7 +3,7 @@
  -- Description: K specific variables
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 17/12/21 - 09:15
+ -- Last Modified: 17/12/21 - 09:40
  -------------------------------------
 
 
@@ -24,7 +24,7 @@
 
 
 -- Section: Python {
-		vim.g.python3_host_prog = "/usr/local/bin/python3.9"
+	vim.g.python3_host_prog = "/usr/local/bin/python3.9"
 -- }
 
 
@@ -55,12 +55,15 @@
 		'css',
 		'changelog',
 		'cpp',
+		'pseudo',
 		'php',
 		'sql'
 	}
 
 	vim.g.markdown_folding = 1
 	vim.g.rmd_include_html = 1
+
+	vim.g.glow_binary_path = vim.env.HOME .. "/.local/bin"
 -- }
 
 
