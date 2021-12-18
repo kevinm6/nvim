@@ -3,7 +3,7 @@
  -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 17/12/21 - 09:48
+ -- Last Modified: 18/12/21 - 16:44
  -------------------------------------
 
 HOME = os.getenv("HOME")
@@ -20,35 +20,26 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	-- SI = INSERT mode
 	-- SR = REPLACE mode
 	-- EI = NORMAL mode
-	vim.cmd([[
-	if $TERM_PROGRAM =~ "iTerm"
-		let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-		let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-		let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-	if $TERM_PROGRAM == "Apple_Terminal"
-		let &t_SI.="\e[5 q"
-		let &t_SR.="\e[4 q"
-		let &t_EI.="\e[1 q"
-	if $TERM_PROGRAM == "vscode"
-		finish
-	end
-	]])
--- }
+	vim.api.nvim_exec([[
+		if $TERM_PROGRAM =~ "iTerm"
+			let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+			let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+			let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+		if $TERM_PROGRAM == "Apple_Terminal"
+			let &t_SI.="\e[5 q"
+			let &t_SR.="\e[4 q"
+			let &t_EI.="\e[1 q"
+		if $TERM_PROGRAM == "vscode"
+			finish
+		end
 
-
--- Section: MOUSE {
-	set.mouse = 'a'
--- }
-
-
--- Section: AutoCommands {
-	vim.cmd([[
+		" AutoCommands
 		augroup AutoSaveGroup
 			au!
 			au BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
 			au BufWinEnter ?* silent! loadview
 			au CursorHold, BufEnter * :checktime
-      au TextYankPost * silent! lua vim.highlight.on_yank{higroup="Search", timeout=400}
+			au TextYankPost * silent! lua vim.highlight.on_yank{higroup="Search", timeout=400}
 		augroup end
 
 		au filetype netrw call Netrw_mappings()
@@ -56,6 +47,12 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 			noremap <buffer>% :call CreateInPreview()<cr>
 		endfunction
 
+		function! CreateInPreview()
+			let l:filename = input("⟩ Enter filename: ")
+			execute 'splitbelow ' . b:netrw_curdir.'/'.l:filename
+		endf
+
+		" Remove trailing spaces on writing file
 		au BufWritePre * %s/\s+$//e
 
 		" Markdown
@@ -68,7 +65,12 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		au BufRead,BufNewFile *.pseudo setf pseudo
 
 		command! Scratch lua require'tool'.makeScratch()
-	]])
+	]], false)
+-- }
+
+
+-- Section: MOUSE {
+	set.mouse = 'a'
 -- }
 
 
@@ -130,13 +132,3 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	set.smartcase = true -- smart case for search
 -- }
 
-
--- Section: FUNCTIONS {
-	vim.cmd([[
-	function! CreateInPreview()
-		let l:filename = input("⟩ Enter filename: ")
-		execute 'pedit ' . b:netrw_curdir.'/'.l:filename
-	endf
-	]])
-
--- }
