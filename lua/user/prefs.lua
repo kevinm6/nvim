@@ -3,7 +3,7 @@
  -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 18/12/21 - 16:44
+ -- Last Modified: 19/12/21 - 19:46
  -------------------------------------
 
 HOME = os.getenv("HOME")
@@ -56,13 +56,13 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		au BufWritePre * %s/\s+$//e
 
 		" Markdown
-		au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setf markdown
+		au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setlocal filetype markdown
 		
 		" SQL
-		au BufNewFile, BufRead psql* setf sql
+		au BufNewFile, BufRead psql* setlocal filetype sql
 
 		" Pseudo
-		au BufRead,BufNewFile *.pseudo setf pseudo
+		au BufRead,BufNewFile *.pseudo setlocal filetype pseudo
 
 		command! Scratch lua require'tool'.makeScratch()
 	]], false)
@@ -75,7 +75,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 
 -- Section: GRAPHIC
-	vim.cmd 'colorscheme k_theme'
+	vim.api.nvim_exec('colorscheme k_theme', true)
 	set.termguicolors = true
 	set.guifont = 'Source Code Pro:h13' -- { "Hack Nerd Font Mono:h14" }
 	set.relativenumber = true -- Show line numbers - relativenumber from current
@@ -93,8 +93,8 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	set.splitright = true -- split right in vertical split
 	set.updatetime = 300 -- set a low updatetime for better UX even w/ CoC
 	set.shortmess:append("c") -- do not pass messages to ins-completion-menu
-	set.listchars = { tab = ":▸ ", eol = "↲", trail = "~" }
-	set.timeoutlen = 200
+	set.listchars = { tab = "⇥ ", eol = "↲", trail = "~" }
+	set.timeoutlen = 240
 	set.ttimeoutlen = 50
 	set.completeopt = { "menu", "menuone", "noselect"}
 -- }
