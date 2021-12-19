@@ -115,7 +115,7 @@
 	keymap('n', '<Leader>gs', ':Git status<CR>', opts)
 	keymap('n', '<Leader>gg', ':Git<CR>', opts)
 	keymap('n', '<Leader>gaa', ':Git add .<CR>', opts)
-	keymap('n', '<Leader>gc', ':Git commit -m ""<Left>', opts)
+	keymap('n', '<Leader>gc', ':Git commit -m ""<Left>', { noremap = true })
 	keymap('n', '<Leader>gac', ':Git add % <bar> Git commit -m ""<Left>', { noremap = true })
 	keymap('n', '<Leader>gdf', ':Git df % <CR>', opts)
 	keymap('n', '<Leader>gda', ':Git df <CR>', opts)
