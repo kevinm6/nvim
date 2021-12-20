@@ -11,8 +11,10 @@
 	local M = {}
 
 	M.trunc_width = setmetatable({
-		git_status = 80,
-		diagnostic = 60,
+		filename = 120,
+		git_status = 90,
+		diagnostic = 120,
+		row_onTot = 60,
 	}, {
 		__index = function()
 			return 80
@@ -25,6 +27,16 @@
 		return current_width < width
 	end
 
+
+	M.get_filename = function (self)
+		if self:is_truncated(self.trunc_width.filename) then return "%t" end
+		return "%<%f"
+	end
+
+	M.get_line_onTot = function(self)
+		if self:is_truncated(self.trunc_width.row_onTot) then return '%l:%L ' end
+		return 'row %l / %L '
+	end
 
 	M.get_lsp_diagnostic = function(self)
 		local result = {}
@@ -40,7 +52,7 @@
 		end
 
 		if self:is_truncated(self.trunc_width.diagnostic) then
-			return ". . ."
+			return "..."
 		end
 
 		return string.format(
@@ -67,20 +79,20 @@
 			or ''
 	end
 
-	M.status_line = function(self)
-		local bufN = "%1*%n⟩ "
-		local git = "%2*"..self:get_git_status()
-		local fname = "%1* ⟩ %m %<%f  "
-		local endLeftSide =	"%4*"
+	M.active_status_line =  function(self)
+		local bufN = '%1*%n⟩ '
+		local git = '%2*'..self:get_git_status()
+		local fname = '%1* ⟩ '..self:get_filename()..'%m '
+		local endLeftSide =	'%4*'
 
-		local sideSep = "%="
+		local sideSep = '%='
 		local lspDiag = self:get_lsp_diagnostic()
 
-		local endRightSide = "%4*"
-		local fencoding = "%3* %{&fileencoding?&fileencoding:&encoding}"
-		local ftype = "%1* %y"
-		local fformat = "%3* ⟨ %{&ff}"
-		local rowOnRowTot = " ⟨ %l:%L "
+		local endRightSide = '%4*'
+		local fencoding = '%3* %{&fileencoding?&fileencoding:&encoding}'
+		local ftype = '%1* %y'
+		local fformat = '%3* ⟨ %{&ff}'
+		local rowOnTot = ' ⟨ '..self:get_line_onTot()
 
 		return table.concat({
 			-- Left Side
@@ -89,24 +101,37 @@
 			sideSep, lspDiag, sideSep,
 			-- Right Side
 			endRightSide, fencoding, ftype,
-			fformat, rowOnRowTot
+			fformat, rowOnTot
 		})
 	end
 
-	-- StatusLine = setmetatable(M, {
-	-- 	__call = function(sl)
-	-- 		return sl:status_line()
-	-- 	end
-	-- })
+  M.inactive_status_line = function(self)
+    return '%= %f %='
+  end
 
-	vim.opt.statusline = M:status_line()
+  M.explorer_status_line = function(self)
+    return '   '
+  end
 
-	-- vim.api.nvim_exec([[
-	-- 	augroup Statusline
-	-- 	au!
-	-- 	au WinEnter,BufEnter setlocal statusline=%!v:lua.Statusline()
-	-- 	augroup END
-	-- ]], false)
+
+  Statusline = setmetatable(M, {
+    __call = function(statusline, mode)
+      if mode == "active" then return statusline:active_status_line() end
+      if mode == "inactive" then return statusline:inactive_status_line() end
+      if mode == "explorer" then return statusline:explorer_status_line() end
+    end
+  })
+
+
+  vim.api.nvim_exec([[
+    augroup Statusline
+    au!
+    au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline('active')
+    au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline('inactive')
+    au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline('explorer')
+    augroup END
+  ]], false)
+
 -- }
 
 
