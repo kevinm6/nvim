@@ -3,7 +3,7 @@
  -- Description: K specific variables
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 17/12/21 - 09:40
+ -- Last Modified: 20/12/21 - 09:43
  -------------------------------------
 
 
@@ -13,10 +13,12 @@
 		copy = {
 		  ['+'] = 'pbcopy',
 		  ['*'] = 'pbcopy',
+		  ['"'] = 'pbcopy',
 		},
 		paste = {
 		  ['+'] = 'pbpaste',
 		  ['*'] = 'pbpaste',
+		  ['"'] = 'pbpaste',
 		},
 		cache_enabled = 0,
   }
