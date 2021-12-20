@@ -86,5 +86,8 @@
 	vim.g.netrw_keepdir = 0 -- current dir & browsing dir synced
 	vim.g.netrw_localcopydircmd = 'cp -r' -- enable recursive copy command
 	vim.g.netrw_mousemaps = 1
+	vim.g.netrw_hide = 1
+	local ghregex='\\(^\\|\\s\\s\\)\\zs\\.\\S\\+'
+	vim.g.netrw_list_hide=ghregex
 -- }
 
