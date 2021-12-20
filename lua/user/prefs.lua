@@ -3,11 +3,9 @@
  -- Description: VimR & NeoVim settings in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 19/12/21 - 19:46
+ -- Last Modified: 20/12/21 - 09:41
  -------------------------------------
 
-HOME = os.getenv("HOME")
-local set = vim.opt
 vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 -- Section: CURSOR {
@@ -65,70 +63,75 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		au BufRead,BufNewFile *.pseudo setlocal filetype pseudo
 
 		command! Scratch lua require'tool'.makeScratch()
-	]], false)
--- }
+		]], true)
+ -- }
 
-
--- Section: MOUSE {
-	set.mouse = 'a'
--- }
-
-
--- Section: GRAPHIC
+-- Section: Colorscheme
 	vim.api.nvim_exec('colorscheme k_theme', true)
-	set.termguicolors = true
-	set.guifont = 'Source Code Pro:h13' -- { "Hack Nerd Font Mono:h14" }
-	set.relativenumber = true -- Show line numbers - relativenumber from current
-	set.showmode = true -- show active mode in status line
-	set.scrolloff = 3 -- # of line leave above and below cursor
-	set.mat = 2 -- tenths of second to blink during matching brackets
-	set.visualbell = false -- disable visual sounds
-	set.cursorline = true -- highlight cursor line
-	set.showmatch = true -- Show matching brackets when over
-	set.signcolumn = 'yes' -- always show signcolumns
-	set.cmdheight = 2	-- #lines for vim for commands/logs
-	set.pumheight = 16 -- popup menu height
-	set.pumblend = 8 -- popup menu transparency {0..100}
-	set.splitbelow = true -- split below in horizontal split
-	set.splitright = true -- split right in vertical split
-	set.updatetime = 300 -- set a low updatetime for better UX even w/ CoC
-	set.shortmess:append("c") -- do not pass messages to ins-completion-menu
-	set.listchars = { tab = "⇥ ", eol = "↲", trail = "~" }
-	set.timeoutlen = 240
-	set.ttimeoutlen = 50
-	set.completeopt = { "menu", "menuone", "noselect"}
 -- }
 
+	local options = {
+	-- Section: MOUSE {
+		mouse = 'a',
+	-- }
 
--- Section: INDENTATION {
-	set.smartindent = true -- enable smart indentation
-	set.tabstop = 2
-	set.softtabstop = -1
-	set.shiftwidth = 0 -- set tabs
--- }
+	-- Section: GRAPHIC
+		termguicolors = true,
+		guifont = 'Source Code Pro:h13', -- { "Hack Nerd Font Mono:h14" }
+		relativenumber = true, -- Show line numbers - relativenumber from current
+		showmode = true, -- show active mode in status line
+		scrolloff = 3, -- # of line leave above and below cursor
+		mat = 2, -- tenths of second to blink during matching brackets
+		visualbell = false, -- disable visual sounds
+		cursorline = true, -- highlight cursor line
+		showmatch = true, -- Show matching brackets when over
+		signcolumn = 'yes', -- always show signcolumns
+		cmdheight = 2,	-- #lines for vim for commands/logs
+		pumheight = 16, -- popup menu height
+		pumblend = 8, -- popup menu transparency {0..100}
+		splitbelow = true, -- split below in horizontal split
+		splitright = true, -- split right in vertical split
+		updatetime = 300, -- set a low updatetime for better UX even w/ CoC
+		listchars = { tab = "⇥ ", eol = "↲", trail = "~" },
+		timeoutlen = 240,
+		ttimeoutlen = 50,
+		completeopt = { "menu", "menuone", "noselect"},
+	-- }
 
+	-- Section: INDENTATION {
+		smartindent = true, -- enable smart indentation
+		tabstop = 2,
+		softtabstop = -1,
+		shiftwidth = 0, -- set tabs
+	-- }
 
--- Section: FOLDING {
-	set.wrap = true -- Wrap long lines showing a linebreak
-	set.foldenable = true -- enable code folding
-	set.foldmethod = 'syntax'
-	set.diffopt = { 'internal', 'filler', 'closeoff', 'vertical' }
-	set.foldcolumn = 'auto'	-- Add a bit extra margin to the Left
--- }
+	-- Section: FOLDING {
+		wrap = true, -- Wrap long lines showing a linebreak
+		foldenable = true, -- enable code folding
+		foldmethod = 'syntax',
+		diffopt = { 'internal', 'filler', 'closeoff', 'vertical' },
+		foldcolumn = 'auto',	-- Add a bit extra margin to the Left
+	-- }
 
+	-- Section: FILE MANAGEMENT {
+		autowrite = true, -- write files
+		autowriteall = true, -- write files on exit or other changes
+		autochdir = true, -- auto change directory of explore
+		undofile = true, -- enable undo
+		backup = false, -- disable backups
+		swapfile = false, -- disable swaps
+		undodir = os.getenv("HOME") .. "/.cache/nvim/tmp/undo",
+	-- }
 
--- Section: FILE MANAGEMENT {
-	set.autowrite = true -- write files
-	set.autowriteall = true -- write files on exit or other changes
-	set.autochdir = true -- auto change directory of explore
-	set.undofile = true -- enable undo
-	set.backup = false -- disable backups
-	set.swapfile = false -- disable swaps
-	set.undodir = HOME .. "/.cache/nvim/tmp/undo"
--- }
+	-- Section: SEARCH {
+		smartcase = true, -- smart case for search
+	-- }
+	}
 
+	-- Setting value
+	for k, v in pairs(options) do
+		vim.opt[k] = v
+	end
 
--- Section: SEARCH {
-	set.smartcase = true -- smart case for search
--- }
+	vim.opt.shortmess:append("c") -- do not pass messages to ins-completion-menu
 
