@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/cmp.lua
--- Last Modified: 16/12/21 - 21:11
+-- Last Modified: 20/12/21 - 08:46
 -------------------------------------
 
 
@@ -73,7 +73,7 @@ end
 				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 			},
 			experimental = {
-				ghost_text = false,
+				ghost_text = true,
 				native_menu = false,
 			},
 		})
