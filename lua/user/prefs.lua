@@ -54,7 +54,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		au BufWritePre * %s/\s+$//e
 
 		" Markdown
-		au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setlocal filetype markdown
+		au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setlocal filetype markdown 
 		
 		" SQL
 		au BufNewFile, BufRead psql* setlocal filetype sql
