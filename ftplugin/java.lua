@@ -91,5 +91,4 @@ vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gref', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gA', '<cmd>lua require(\'jdtls\').code_action()<CR>', {silent = true})
 
--- vim.api.nvim_set_keymap('n', <leader>df <Cmd>lua require'jdtls'.test_class()<CR>)
--- vim.api.nvim_set_keymap('n', <leader>dn <Cmd>lua require'jdtls'.test_nearest_method()<CR>)
+
