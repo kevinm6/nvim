@@ -3,7 +3,7 @@
 -- Description: nvim-lsp-installer K config
 -- Author: Kevin
 -- Source: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/lsp/lsp-installer.lua
--- Last Modified: 17/12/21 - 11:46
+-- Last Modified: 21/12/21 - 18:09
 -------------------------------------
 
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -27,7 +27,7 @@ end
 		'clangd',
 		'cssls',
 		'html',
-		'jdtls',
+    'jtdls',
 		'jsonls',
 		'lemminx',
 		'ltex',
@@ -67,15 +67,7 @@ lsp_installer.on_server_ready(function(server)
 		capabilities = capabilities
 	}
 
-	local server_opts = {
-    ['jdtls'] = function ()
-      default_opts,settings = {
-        init_options = {
-          workspace = vim.fn.expand("~/.local/java/workspace/")
-        }
-      }
-    end,
-  }
+	local server_opts = {}
 
 	local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
   server:setup(server_options)
