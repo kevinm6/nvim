@@ -50,6 +50,11 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 			execute 'splitbelow ' . b:netrw_curdir.'/'.l:filename
 		endf
 
+		augroup jdtls_lsp
+			autocmd!
+			autocmd FileType java lua require'jdtls_setup'.setup()
+		augroup end
+
 		" Markdown
 		au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setlocal filetype markdown 
 		

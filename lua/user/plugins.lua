@@ -38,6 +38,7 @@
 			-- lsp
 			'neovim/nvim-lspconfig',
 			'williamboman/nvim-lsp-installer',
+			'mfussenegger/nvim-jdtls',
 
 			-- autocompletion
 			'hrsh7th/nvim-cmp',
