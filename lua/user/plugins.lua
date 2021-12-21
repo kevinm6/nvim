@@ -38,8 +38,8 @@
 			-- lsp
 			'neovim/nvim-lspconfig',
 			'williamboman/nvim-lsp-installer',
+			'ray-x/lsp_signature.nvim',
 			'mfussenegger/nvim-jdtls',
-			'sumneko/lua-language-server',
 
 			-- autocompletion
 			'hrsh7th/nvim-cmp',
