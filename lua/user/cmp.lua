@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/cmp.lua
--- Last Modified: 20/12/21 - 08:46
+-- Last Modified: 21/12/21 - 20:33
 -------------------------------------
 
 
@@ -16,6 +16,8 @@ local snip_status_ok, luasnip = pcall(require, "luasnip")
 if not snip_status_ok then
 	return
 end
+
+require("luasnip/loaders/from_vscode").lazy_load()
 
 -- CMP {
 		cmp.setup ({
@@ -69,9 +71,10 @@ end
 				behavior = cmp.ConfirmBehavior.Replace,
 				select = false,
 			},
-			documentation = {
-				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-			},
+			documentation = false,
+			-- documentation = {
+			-- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			-- },
 			experimental = {
 				ghost_text = true,
 				native_menu = false,
