@@ -58,10 +58,10 @@ end
 			},
 			sources = {
 				{ name = 'nvim_lsp' },
+				{ name = 'luasnip' },
 				{ name = 'buffer' },
 				{ name = 'path' },
 				{ name = 'cmdline' },
-				{ name = 'luasnip' }
 				-- { name = 'vim-snippets' }
 				-- { name = 'ultisnips' },
 			},

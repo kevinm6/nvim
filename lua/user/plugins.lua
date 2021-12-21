@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 17/12/21 - 10:00
+-- Last Modified: 21/12/21 - 19:09
 -------------------------------------
 
 
@@ -39,6 +39,7 @@
 			'neovim/nvim-lspconfig',
 			'williamboman/nvim-lsp-installer',
 			'mfussenegger/nvim-jdtls',
+			'sumneko/lua-language-server',
 
 			-- autocompletion
 			'hrsh7th/nvim-cmp',

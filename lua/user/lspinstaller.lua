@@ -3,7 +3,7 @@
 -- Description: nvim-lsp-installer K config
 -- Author: Kevin
 -- Source: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/lsp/lsp-installer.lua
--- Last Modified: 21/12/21 - 18:09
+-- Last Modified: 21/12/21 - 19:36
 -------------------------------------
 
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -67,7 +67,31 @@ lsp_installer.on_server_ready(function(server)
 		capabilities = capabilities
 	}
 
-	local server_opts = {}
+	local lua_runtime_path = vim.split(package.path, ';')
+	table.insert(lua_runtime_path, "lua/?.lua")
+	table.insert(lua_runtime_path, "lua/?/init.lua")
+
+	local server_opts = {
+    ['sumneko_lua'] = function()
+      default_opts.settings = {
+				Lua = {
+					runtime = {
+						version = 'LuaJIT',
+						path = lua_runtime_path,
+					},
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						library = vim.api.nvim_get_runtime_file("", true),
+					},
+					telemetry = {
+						enable = false,
+					},
+				},
+			}
+		end
+ }
 
 	local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
   server:setup(server_options)
