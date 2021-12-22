@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 21/12/21 - 19:09
+-- Last Modified: 22/12/21 - 14:27
 -------------------------------------
 
 
@@ -16,7 +16,7 @@
 	-- display packer in a popup window
 	packer.init({
 		package_root = require('packer.util').join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-		compile_path = require('packer.util').join_paths(vim.fn.stdpath('config'), 'lua', 'user', 'packer_compiled.lua'),
+		compile_path = require('packer.util').join_paths(vim.fn.stdpath('data'), 'packer_compiled.lua'),
 		display = {
 			open_fn = function()
 				return require('packer.util').float ({ border = 'rounded' })
@@ -35,12 +35,6 @@
 			'nvim-lua/popup.nvim',
 			'windwp/nvim-autopairs',
 
-			-- lsp
-			'neovim/nvim-lspconfig',
-			'williamboman/nvim-lsp-installer',
-			'ray-x/lsp_signature.nvim',
-			'mfussenegger/nvim-jdtls',
-
 			-- autocompletion
 			'hrsh7th/nvim-cmp',
 			'hrsh7th/cmp-buffer',
@@ -50,6 +44,7 @@
 
 			-- file finder
 			'nvim-telescope/telescope.nvim',
+			'nvim-telescope/telescope-media-files.nvim',
 
 			-- coding helper
 			{
@@ -69,12 +64,18 @@
 			'saadparwaiz1/cmp_luasnip',
 			{'honza/vim-snippets', cmd = 'InsertEnter'},
 
+			-- lsp
+			'neovim/nvim-lspconfig',
+			'williamboman/nvim-lsp-installer',
+			'ray-x/lsp_signature.nvim',
+			'mfussenegger/nvim-jdtls',
+			'filipdutescu/renamer.nvim',
+
 			-- database
 			{ 'tpope/vim-dadbod', ft = { 'sql' }, cmd = ':DB' },
 			{ 'kristijanhusak/vim-dadbod-ui', ft = { 'sql' }, cmd = ':DBUI' },
 
 			-- markdown
-			{ 'tpope/vim-markdown', ft = { 'markdown', 'latex' } },
       'ellisonleao/glow.nvim',
 			{
 				'iamcco/markdown-preview.nvim',
