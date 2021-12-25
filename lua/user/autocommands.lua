@@ -15,15 +15,19 @@ vim.cmd [[
 		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Search", timeout=300}
 	augroup end
 
+	augroup netrw_mapping
+		autocmd!
+		autocmd filetype netrw call	NetrwMapping()
+	augroup end
+
+	function! NetrwMapping()
+		noremap <buffer>% :call CreateInPreview()<cr>
+	endfunction
+
 	function! CreateInPreview()
 		let l:filename = input("⟩ Enter filename: ")
 		execute 'splitbelow ' . b:netrw_curdir.'/'.l:filename
 	endf
-
-	au filetype netrw call Netrw_mappings()
-	function! Netrw_mappings()
-		noremap <buffer>% :call CreateInPreview()<cr>
-	endfunction
 
 	" Java
 	augroup jdtls_lsp
