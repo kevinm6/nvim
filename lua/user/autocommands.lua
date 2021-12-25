@@ -29,12 +29,6 @@ vim.cmd [[
 		execute 'splitbelow ' . b:netrw_curdir.'/'.l:filename
 	endf
 
-	" Java
-	augroup jdtls_lsp
-		autocmd!
-		autocmd FileType java lua require'jdtls_setup'.setup()
-	augroup end
-
 	" Markdown
 	augroup _markdown
 		autocmd!
