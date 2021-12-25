@@ -3,23 +3,18 @@
 -- Description:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/
--- Last Modified: 21/12/21 - 19:52
+-- Last Modified: 22/12/21 - 13:50
 -------------------------------------
 
-local M = {}
+	local M = {}
 
-M.setup = function()
-  local signs = {
-
-    --   error
-    --   info
-    --   question
-    --   warning
-    { name = "DiagnosticSignError", text = " " },
-    { name = "DiagnosticSignWarn", text = " " },
-    { name = "DiagnosticSignHint", text = " " },
-    { name = "DiagnosticSignInfo", text = " " },
-  }
+	M.setup = function()
+		local signs = {
+			{ name = "DiagnosticSignError", text = "𝒙" },
+			{ name = "DiagnosticSignWarn", text = "!" },
+			{ name = "DiagnosticSignHint", text = "💡" },
+			{ name = "DiagnosticSignInfo", text = "¡" },
+		}
 
   for _, sign in ipairs(signs) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
@@ -39,7 +34,7 @@ M.setup = function()
       focusable = true,
       style = "minimal",
       border = "rounded",
-     source = "always",
+      source = "always",
       header = "",
       prefix = "",
     },
@@ -96,11 +91,10 @@ local function lsp_keymaps(bufnr)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
-local notify_status_ok, notify = pcall(require, "notify")
-if not notify_status_ok then
-  return
-end
-
+-- local notify_status_ok, notify = pcall(require, "notify")
+-- if not notify_status_ok then
+--   return
+-- end
 
 M.on_attach = function(client, bufnr)
   -- notify(client.name)
@@ -128,12 +122,12 @@ function M.enable_format_on_save()
       autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
     augroup end
   ]]
-  notify "Enabled format on save"
+  vim.notify "Enabled format on save"
 end
 
 function M.disable_format_on_save()
   M.remove_augroup "format_on_save"
-  notify "Disabled format on save"
+  vim.notify "Disabled format on save"
 end
 
 function M.toggle_format_on_save()
@@ -152,4 +146,4 @@ end
 
 vim.cmd [[ command! LspToggleAutoFormat execute 'lua require("user.lsp.handlers").toggle_format_on_save()' ]]
 
-return M 
+return M
