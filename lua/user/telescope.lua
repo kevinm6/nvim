@@ -3,7 +3,7 @@
 -- Description: telescope config 
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope/init.lua
--- Last Modified: 21/12/21 - 20:30
+-- Last Modified: 22/12/21 - 08:30
 -------------------------------------
 
 
@@ -18,8 +18,8 @@ telescope.load_extension "media_files"
 telescope.setup {
   defaults = {
 
-    prompt_prefix = "  ",
-    selection_caret = " ",
+    prompt_prefix = "   ",
+    selection_caret = "  ",
     path_display = { "smart" },
 
     mappings = {
