@@ -1,6 +1,6 @@
 -------------------------------------
 -- File: whichkey.lua
--- Description:
+-- Descriptions:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/
 -- Last Modified: 27/12/21 - 11:20
@@ -55,7 +55,7 @@ local setup = {
     position = "bottom", -- bottom, top
     margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
     padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-    winblend = 0,
+    winblend = 8,
   },
   layout = {
     height = { min = 4, max = 25 }, -- min and max height of the columns

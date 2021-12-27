@@ -34,7 +34,7 @@
 			'nvim-lua/plenary.nvim',
 			'nvim-lua/popup.nvim',
 			'windwp/nvim-autopairs',
-			'folke/which-key.nvim',
+			{ 'folke/which-key.nvim', run = 'WhichKey' },
 
 			-- autocompletion
 			'hrsh7th/nvim-cmp',
