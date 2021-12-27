@@ -26,7 +26,7 @@ vim.cmd [[
 
 	function! CreateInPreview()
 		let l:filename = input("⟩ Enter filename: ")
-		execute 'splitbelow ' . b:netrw_curdir.'/'.l:filename
+		execute 'split ' . b:netrw_curdir.'/'.l:filename
 	endf
 
 	" Markdown

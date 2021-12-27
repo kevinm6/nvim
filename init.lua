@@ -42,4 +42,5 @@
   require "user.renamer"
   require "user.tools"
   require "user.registers"
+	require "user.whichkey"
 -- }
