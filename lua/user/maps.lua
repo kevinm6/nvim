@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
 -- HelpSource: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/keymaps.lua
--- Last Modified: 27/12/21 - 12:11
+-- Last Modified: 28/12/21 - 15:31
 -------------------------------------
 
 
@@ -12,7 +12,7 @@
 	local opts = { noremap = true, silent = true }
 	local term_opts = { silent = true }
 	local keymap = vim.api.nvim_set_keymap
-  keymap("", ",", "<Nop>", opts)
+  -- keymap("", ",", "<Nop>", opts)
 	vim.g.mapleader = ","
 	vim.g.maplocalleader = ","
 -- }
@@ -121,8 +121,6 @@
 	keymap('v', '<M-Right>', 'w', opts)
 	keymap('v', '<', '<gv', opts)
 	keymap('v', '>', '>gv', opts)
-	keymap('v', ']', '>', opts)
-	keymap('v', '[', '<', opts)
 	keymap('v', 'p', '_dP', opts)
 
   -- move selected text

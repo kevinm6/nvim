@@ -3,7 +3,7 @@
 -- Descriptions:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/
--- Last Modified: 28/12/21 - 11:27
+-- Last Modified: 28/12/21 - 15:51
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -42,29 +42,29 @@ local setup = {
     -- ["<tab>"] = "TAB",
   },
   icons = {
-    breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+    breadcrumb = ">", -- symbol used in the command line area that shows your active key combo
     separator = "➜", -- symbol used between a key and it's label
-    group = "+", -- symbol prepended to a group
+    group = "[] ", -- symbol prepended to a group
   },
   popup_mappings = {
     scroll_down = "<c-d>", -- binding to scroll down inside the popup
     scroll_up = "<c-u>", -- binding to scroll up inside the popup
   },
   window = {
-    border = "rounded", -- none, single, double, shadow
+    border = "shadow", -- none, single, double, shadow
     position = "bottom", -- bottom, top
     margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
     padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
     winblend = 8,
   },
   layout = {
-    height = { min = 4, max = 25 }, -- min and max height of the columns
-    width = { min = 20, max = 50 }, -- min and max width of the columns
+    height = { min = 4, max = 28 }, -- min and max height of the columns
+    width = { min = 20, max = 46 }, -- min and max width of the columns
     spacing = 3, -- spacing between columns
-    align = "left", -- align columns left, center or right
+    align = "center", -- align columns left, center or right
   },
   ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
-  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "<cr>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
   show_help = true, -- show help message on the command line when the popup is visible
   -- triggers = "auto", -- automatically setup triggers
   -- triggers = {"<leader>"} -- or specify a list manually
@@ -80,27 +80,25 @@ local setup = {
 local opts = {
   mode = "n", -- NORMAL mode
   prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
 }
 
-local alt_opts = {
+local nosilent_opts = {
   mode = "n", -- NORMAL mode
   prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  buffer = nil,
   silent = false,
   noremap = true,
   nowait = true,
 }
 
-
-
 local leader_mappings = {
   w = { "<cmd>w!<CR>", "Save" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+  c = { "<cmd>bdelete!<CR>", "Close Buffer" },
 
 	f = {
 		f = {
@@ -114,8 +112,11 @@ local leader_mappings = {
 			"Buffers",
 		},
 	},
+
+  -- Renamer
 	R = { '<cmd>lua require("renamer").rename()<cr>', "Renamer" },
 
+  -- Packer
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
@@ -125,6 +126,7 @@ local leader_mappings = {
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
 
+  -- Git
 	g =  {
 		name = "Git",
 		s = { "<cmd>Git status<cr>", "Git status in cmdline" },
@@ -135,6 +137,7 @@ local leader_mappings = {
 		p = { "<cmd>Git push<cr>", "Git push" },
 	},
 
+  -- Telescope & Gitsigns
 	G = {
     name = "GitSigns & Telescope-git",
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
@@ -154,7 +157,9 @@ local leader_mappings = {
     d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Diff", },
 	},
 
-	sk = {
+  -- Skeletons
+	s = {
+    name = "Skeletons",
 		h = {
 			"<cmd>1-read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a",
 			"Create Html skeleton"
@@ -180,6 +185,29 @@ local leader_mappings = {
 		},
 	},
 
+  -- Telescope
+  t = {
+    name = "Telescope",
+    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+    c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+    f = { "<cmd>Telescope find_files<cr>", "Find File" },
+    h = { "<cmd>Telescope help_tags<cr>", "Help" },
+    i = { "<cmd>Telescope media_files<cr>", "Media" },
+    l = { "<cmd>Telescope resume<cr>", "Last Search" },
+    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+    r = { "<cmd>Telescope oldfiles<cr>", "Recent File" },
+    R = { "<cmd>Telescope registers<cr>", "Registers" },
+    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+    C = { "<cmd>Telescope commands<cr>", "Commands" },
+		p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" },
+  },
+
+	T = {
+    name = "Treesitter",
+		u = { "<cmd>TSUpdate<cr>", "Update Treesitter parsers" },
+  },
+
+  -- LSP
   l = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
@@ -212,44 +240,29 @@ local leader_mappings = {
 		},
   },
 
+  -- Deletion
 	d = { "\"*d", "Copy deletion into register (\")" },
 	D = { "\"*D", "Copy deletion to end into register (\")" },
 	y = { "\"*y", "Copy yank into register (\")" },
 	x = { "\"*d", "Copy char deletion into register (\")" },
-
-  s = {
-    name = "Search",
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-    -- f = { "<cmd>Telescope find_files<cr>", "Find File" },
-    h = { "<cmd>Telescope help_tags<cr>", "Help" },
-    i = { "<cmd>Telescope media_files<cr>", "Media" },
-    l = { "<cmd>Telescope resume<cr>", "Last Search" },
-    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    r = { "<cmd>Telescope oldfiles<cr>", "Recent File" },
-    R = { "<cmd>Telescope registers<cr>", "Registers" },
-    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-    C = { "<cmd>Telescope commands<cr>", "Commands" },
-  },
-
-	T = {
-    name = "Treesitter",
-		u = { "<cmd>TSUpdate", "Update Treesitter parsers" },
-    h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight" },
-    p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" },
-  },
 }
 
-local alt_mappings = {
+local nosilent_mappings = {
 	g = {
 		c = { ":Git commit -m \"\"<Left>", "Git commit" },
-		ac = { ":Git add % <bar> Git commit -m \"\"<Left>" },
+		C = {
+      ":Git add % <bar> Git commit -m \"\"<Left>",
+      "Git add current file and commit"
+    },
 	},
-	so = { ":source $NVIMDOTDIR/init.lua<cr>", "Source Neovim config file" },
-	ed = { ":edit $NVIMDOTDIR/init.lua<cr>", "Edit Neovim config file" },
+	[0] = {
+    name = "Configuration File",
+    s = { ":source $NVIMDOTDIR/init.lua<cr>", "Source Neovim config file" },
+    e = { ":edit $NVIMDOTDIR/init.lua<cr>", "Edit Neovim config file" },
+  },
 }
 
 
 which_key.setup(setup)
 which_key.register(leader_mappings, opts)
-which_key.register(alt_mappings, alt_opts)
+which_key.register(nosilent_mappings, nosilent_opts)
