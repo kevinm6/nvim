@@ -34,6 +34,8 @@
 			'nvim-lua/plenary.nvim',
 			'nvim-lua/popup.nvim',
 			'windwp/nvim-autopairs',
+			'numToStr/Comment.nvim',
+			'JoosepAlviste/nvim-ts-context-commentstring',
 			{ 'folke/which-key.nvim', run = 'WhichKey' },
 
 			-- autocompletion
@@ -52,8 +54,8 @@
 				'nvim-treesitter/nvim-treesitter',
 				run = ":TSUpdate"
 			},
+			'nvim-treesitter/playground',
 			'blackCauldron7/surround.nvim',
-			'tpope/vim-commentary',
 			{ 'junegunn/goyo.vim', run = ':Goyo' },
 
 			-- git
