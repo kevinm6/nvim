@@ -194,11 +194,6 @@ local leader_maps = {
 		p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" },
   },
 
-	T = {
-    name = "Treesitter",
-		u = { "<cmd>TSUpdate<cr>", "Update Treesitter parsers" },
-  },
-
   -- LSP
   l = {
     name = "LSP",
