@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 22/12/21 - 13:58
+-- Last Modified: 28/12/21 - 12:12
 --------------------------------------
 
 
@@ -15,15 +15,6 @@
 		return
 	end
 -- }
-
-
--- Section: set mapleader & add maps configFile edit/source {
-	vim.g.mapleader = ","
-
-	vim.api.nvim_set_keymap('n', '<Leader>e', ':e $NVIMDOTDIR/init.lua<CR>', { noremap = true, silent = false })
-	vim.api.nvim_set_keymap('n', '<Leader>s', ':so $NVIMDOTDIR/init.lua<CR>', { noremap = true, silent = false })
--- }
-
 
 -- Section: Other config files to source {
 	require "user.prefs"
