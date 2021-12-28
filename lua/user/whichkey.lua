@@ -3,7 +3,7 @@
 -- Descriptions:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/
--- Last Modified: 27/12/21 - 11:20
+-- Last Modified: 28/12/21 - 11:27
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -86,71 +86,57 @@ local opts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 
-local m_opts = {
+local alt_opts = {
   mode = "n", -- NORMAL mode
-  prefix = "m",
+  prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  silent = false,
+  noremap = true,
+  nowait = true,
 }
 
-local m_mappings = {
-  a = { "<cmd>BookmarkAnnotate<cr>", "Annotate" },
-  c = { "<cmd>BookmarkClear<cr>", "Clear" },
-  m = { "<cmd>BookmarkToggle<cr>", "Toggle" },
-  h = { '<cmd>lua require("harpoon.mark").add_file()<cr>', "Harpoon" },
-  j = { "<cmd>BookmarkNext<cr>", "Next" },
-  k = { "<cmd>BookmarkPrev<cr>", "Prev" },
-  s = {
-    "<cmd>lua require('telescope').extensions.vim_bookmarks.all({ hide_filename=false, prompt_title=\"bookmarks\", shorten_path=false })<cr>",
-    "Show",
-  },
-  x = { "<cmd>BookmarkClearAll<cr>", "Clear All" },
-  u = { '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>', "Harpoon UI" },
-}
 
-local mappings = {
-  ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
-  ["b"] = {
-    "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-    "Buffers",
-  },
-  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-  -- ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["h"] = { "<cmd>nohlsearch<CR>", "No HL" },
-  -- ["q"] = { "<cmd>q!<CR>", "Quit" },
-  ["/"] = { "<cmd>lua require(\"Comment.api\").toggle_current_linewise()<CR>", "Comment" },
-  ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-  ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-    "Find files",
-  },
-  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-  ["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
-  ["R"] = { '<cmd>lua require("renamer").rename()<cr>', "Projects" },
-  ["z"] = { "<cmd>ZenMode<cr>", "Zen" },
-  ["gy"] = "Link",
+
+local leader_mappings = {
+  w = { "<cmd>w!<CR>", "Save" },
+  h = { "<cmd>nohlsearch<CR>", "No Highlight" },
+  c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+
+	f = {
+		f = {
+			"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+			"Find files",
+		},
+		F = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text (live grep)" },
+		P = { "<cmd>Telescope projects<cr>", "Projects" },
+		b = {
+			"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+			"Buffers",
+		},
+	},
+	R = { '<cmd>lua require("renamer").rename()<cr>', "Renamer" },
 
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
     i = { "<cmd>PackerInstall<cr>", "Install" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
+    S = { "<cmd>PackerSync<cr>", "Sync" },
+    s = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
 
-  r = {
-    name = "Replace",
-    r = { "<cmd>lua require('spectre').open()<cr>", "Replace" },
-    w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
-    f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
-  },
+	g =  {
+		name = "Git",
+		s = { "<cmd>Git status<cr>", "Git status in cmdline" },
+		g = { "<cmd>Git<cr>", "Git summary" },
+		A = { "<cmd>Git add .<cr>", "Git add folder" },
+		d = { "<cmd>Git df %<cr>", "Git diff current file" },
+		D = { "<cmd>Git df<cr>", "Git diff" },
+		p = { "<cmd>Git push<cr>", "Git push" },
+	},
 
-  g = {
-    name = "Git",
-    g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
+	G = {
+    name = "GitSigns & Telescope-git",
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
     l = { "<cmd>GitBlameToggle<cr>", "Blame" },
@@ -165,20 +151,34 @@ local mappings = {
     o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-    d = {
-      "<cmd>Gitsigns diffthis HEAD<cr>",
-      "Diff",
-    },
-    G = {
-      name = "Gist",
-      a = { "<cmd>Gist -b -a<cr>", "Create Anon" },
-      d = { "<cmd>Gist -d<cr>", "Delete" },
-      f = { "<cmd>Gist -f<cr>", "Fork" },
-      g = { "<cmd>Gist -b<cr>", "Create" },
-      l = { "<cmd>Gist -l<cr>", "List" },
-      p = { "<cmd>Gist -b -p<cr>", "Create Private" },
-    },
-  },
+    d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Diff", },
+	},
+
+	sk = {
+		h = {
+			"<cmd>1-read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a",
+			"Create Html skeleton"
+		},
+		c = {
+			":1-read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja",
+			"Create C skeleton"
+		},
+		j = { ":1-read $NVIMDOTDIR/snippets/skeleton.java<CR>2jA<Left><Left><C-r>%<Esc>d2b2jo",
+			"Create java skeleton"
+		},
+		fj = {
+			":1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i",
+			"Create java function skeleton"
+		},
+		i = {
+			":1-read $NVIMDOTDIR/snippets/skeleton.info<CR><C-v>}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA",
+			"Create info skeleton"
+		},
+		m = {
+			":1-read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go",
+			"Create markdown skeleton"
+		},
+	},
 
   l = {
     name = "LSP",
@@ -209,8 +209,13 @@ local mappings = {
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
-    },
+		},
   },
+
+	d = { "\"*d", "Copy deletion into register (\")" },
+	D = { "\"*D", "Copy deletion to end into register (\")" },
+	y = { "\"*y", "Copy yank into register (\")" },
+	x = { "\"*d", "Copy char deletion into register (\")" },
 
   s = {
     name = "Search",
@@ -227,50 +232,24 @@ local mappings = {
     C = { "<cmd>Telescope commands<cr>", "Commands" },
   },
 
-  S = {
-    name = "Session",
-    s = { "<cmd>SaveSession<cr>", "Save" },
-    l = { "<cmd>LoadLastSession!<cr>", "Load Last" },
-    d = { "<cmd>LoadCurrentDirSession!<cr>", "Load Last Dir" },
-    f = { "<cmd>Telescope sessions save_current=false<cr>", "Find Session" },
-  },
-
-  t = {
-    name = "Terminal",
-    -- ["1"] = { ":1ToggleTerm<cr>", "1" },
-    -- ["2"] = { ":2ToggleTerm<cr>", "2" },
-    -- ["3"] = { ":3ToggleTerm<cr>", "3" },
-    -- ["4"] = { ":4ToggleTerm<cr>", "4" },
-    n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-    u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
-    t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
-    p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
-    f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-    h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
-    v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
-  },
-
-  T = {
+	T = {
     name = "Treesitter",
+		u = { "<cmd>TSUpdate", "Update Treesitter parsers" },
     h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight" },
     p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" },
   },
 }
 
-local vopts = {
-  mode = "v", -- VISUAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
-}
-local vmappings = {
-  ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
+local alt_mappings = {
+	g = {
+		c = { ":Git commit -m \"\"<Left>", "Git commit" },
+		ac = { ":Git add % <bar> Git commit -m \"\"<Left>" },
+	},
+	so = { ":source $NVIMDOTDIR/init.lua<cr>", "Source Neovim config file" },
+	ed = { ":edit $NVIMDOTDIR/init.lua<cr>", "Edit Neovim config file" },
 }
 
 
 which_key.setup(setup)
-which_key.register(mappings, opts)
-which_key.register(vmappings, vopts)
-which_key.register(m_mappings, m_opts)
+which_key.register(leader_mappings, opts)
+which_key.register(alt_mappings, alt_opts)

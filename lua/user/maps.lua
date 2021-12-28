@@ -95,7 +95,7 @@
 	keymap('n', '<S-Right>', 'vl', opts)
 	keymap('n', '<S-up>', 'vk', opts)
 	keymap('n', '<S-down>', 'vj', opts)
-	keymap('n', 'S', ':%s///<Left><Left>', opts)
+	keymap('n', 'S', ':%s///<Left><Left>', { silent = false, noremap = true })
 	keymap('n', 'µ', ':Glow<CR>', opts)
 	keymap('n', 'Ú', '<C-w>| <C-w>_', opts)
 	keymap('n', '˝', '<C-W>J', opts)
@@ -106,39 +106,10 @@
 	keymap('n', 'ø', 'o<Esc>k', opts)
 	keymap('n', '∂∂', ':Hexplore %:p:h<CR><C-W>K:resize12<CR>', opts)
 
-  -- Telescope
-	keymap('n', '<Leader>ff', ':Telescope fd<CR>', opts)
-	keymap('n', '<Leader>fb', ':Telescope buffers<CR>', opts)
-	keymap('n', '<Leader>flg', ':Telescope live_grep<CR>', opts)
-
-  -- Git
-	keymap('n', '<Leader>gs', ':Git status<CR>', opts)
-	keymap('n', '<Leader>gg', ':Git<CR>', opts)
-	keymap('n', '<Leader>gaa', ':Git add .<CR>', opts)
-	keymap('n', '<Leader>gc', ':Git commit -m ""<Left>', { noremap = true })
-	keymap('n', '<Leader>gac', ':Git add % <bar> Git commit -m ""<Left>', { noremap = true })
-	keymap('n', '<Leader>gdf', ':Git df % <CR>', opts)
-	keymap('n', '<Leader>gda', ':Git df <CR>', opts)
-	keymap('n', '<Leader>w', ':write<CR>', opts)
-	keymap('n', '<Leader>gp', ':Git push<CR>', opts)
-
-  -- skeletons
-	keymap('n', '<Leader>html', ':1-read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a', opts)
-	keymap('n', '<Leader>c', ':1-read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja', opts)
-	keymap('n', '<Leader>java', ':1-read $NVIMDOTDIR/snippets/skeleton.java<CR>2jA<Left><Left><C-r>%<Esc>d2b2jo', opts)
-	keymap('n', '<Leader>fjava', ':1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i', opts)
-	keymap('n', '<Leader>inf', ':1-read $NVIMDOTDIR/snippets/skeleton.info<CR><C-v>}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA', opts)
-	keymap('n', '<Leader>md', ':1-read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go', opts)
-	keymap('n', '<Leader>imd', ':1-read $NVIMDOTDIR/snippets/info.md<CR>i<C-r>%<Esc>6ggA<C-o>i<F2><Esc>Go', opts)
-
 	-- delete & cut
 	keymap('n', 'x', '"_x', opts)
 	keymap('n', 'd', '"_d', opts)
 	keymap('n', 'D', '"_D', opts)
-	keymap('n', '<leader>y', '"*y', opts)
-	keymap('n', '<leader>x', '"*x', opts)
-	keymap('n', '<leader>d', '"*d', opts)
-	keymap('n', '<leader>D', '"*D', opts)
 -- }
 
 
