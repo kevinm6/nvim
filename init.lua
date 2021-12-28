@@ -29,7 +29,7 @@
 	require "user.gitsigns"
 	require "user.autopairs"
 	require "user.telescope"
-	-- require "user.surround"
+	require "user.surround"
   require "user.comment"
 	require "user.renamer"
 	require "user.tools"
