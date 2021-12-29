@@ -106,7 +106,7 @@ nvim_tree.setup {
       },
     },
     number = true,
-    relativenumber = false,
+    relativenumber = true,
   },
   trash = {
     cmd = "trash",

@@ -2,8 +2,9 @@
 -- File: whichkey.lua
 -- Descriptions:
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 28/12/21 - 17:24
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
+-- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
+-- Last Modified: 29/12/21 - 20:12
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -230,6 +231,7 @@ local leader_maps = {
 	["<C-n>"] = {
 		name = "Nvim-Tree",
 		r = { "<cmd>NvimTreeRefresh<cr>", "Refresh Nvim-Tree" },
+		o = { "<cmd>NvimTreeOpen<cr>", "Open Nvim-Tree window" },
 		c = { "<cmd>NvimTreeClose<cr>", "Close Nvim-Tree window" },
 		C = { "<cmd>NvimTreeClipboard<cr>", "Show Nvim-Tree clipboard" },
 	},
