@@ -3,8 +3,7 @@
 -- Description: Lua keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/maps.lua
--- HelpSource: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/keymaps.lua
--- Last Modified: 28/12/21 - 15:31
+-- Last Modified: 29/12/21 - 18:45
 -------------------------------------
 
 
@@ -89,8 +88,8 @@
 	keymap('n', 'Y', 'y$', opts)
 	keymap('n', 'n', 'nzzzv', opts)
 	keymap('n', 'N', 'Nzzzv', opts)
-	keymap('n', '<Tab>', '<C-W><C-W>', opts)
-	keymap('n', '<S-Tab>', '<C-W><C-P>', opts)
+	keymap('n', '<Tab>', '<C-w><C-w>', opts)
+	keymap('n', '<S-Tab>', '<C-w><C-p>', opts)
 	keymap('n', '<S-Left>', 'vh', opts)
 	keymap('n', '<S-Right>', 'vl', opts)
 	keymap('n', '<S-up>', 'vk', opts)
@@ -104,7 +103,7 @@
 	keymap('n', 'ˇ', '<C-W>L', opts)
 	keymap('n', 'Ø', 'O<Esc>j', opts)
 	keymap('n', 'ø', 'o<Esc>k', opts)
-	keymap('n', '∂∂', ':Hexplore %:p:h<CR><C-W>K:resize12<CR>', opts)
+	keymap('n', '∂∂', '<cmd>NvimTreeFindFileToggle<cr>', opts)
 
 	-- delete & cut
 	keymap('n', 'x', '"_x', opts)

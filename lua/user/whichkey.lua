@@ -227,6 +227,13 @@ local leader_maps = {
 		},
   },
 
+	["<C-n>"] = {
+		name = "Nvim-Tree",
+		r = { "<cmd>NvimTreeRefresh<cr>", "Refresh Nvim-Tree" },
+		c = { "<cmd>NvimTreeClose<cr>", "Close Nvim-Tree window" },
+		C = { "<cmd>NvimTreeClipboard<cr>", "Show Nvim-Tree clipboard" },
+	},
+
   -- Deletion
 	d = { "\"*d", "Copy deletion into register \"" },
 	D = { "\"*D", "Copy deletion to end into register \"" },

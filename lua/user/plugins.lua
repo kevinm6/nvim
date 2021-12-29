@@ -48,6 +48,10 @@
 			-- file finder
 			'nvim-telescope/telescope.nvim',
 			'nvim-telescope/telescope-media-files.nvim',
+			{
+				'kyazdani42/nvim-tree.lua',
+				requires = { 'kyazdani42/nvim-web-devicons' }
+			},
 
 			-- coding helper
 			{
