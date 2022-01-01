@@ -39,16 +39,11 @@
 	end
 
 	M.get_lsp_diagnostic = function(self)
-		local result = {}
-		local levels = {
-			errors = 'Error',
-			warnings = 'Warning',
-			info = 'Information',
-			hints = 'Hint'
-		}
+		local diagnostics = vim.diagnostic.get(0)
+		local count = { 0, 0, 0, 0 }
 
-		for k, level in pairs(levels) do
-			result[k] = vim.lsp.diagnostic.get_count(0, level)
+		for _, diagnostic in ipairs(diagnostics) do
+			count[diagnostic.severity] = count[diagnostic.severity] + 1
 		end
 
 		if self:is_truncated(self.trunc_width.diagnostic) then
@@ -57,8 +52,8 @@
 
 		return string.format(
 			" X:%s !:%s ℹ:%s :%s ",
-			result['errors'] or 0, result['warnings'] or 0,
-			result['info'] or 0, result['hints'] or 0
+			count[vim.diagnostic.severity.ERROR] or 0, count[vim.diagnostic.severity.WARN] or 0,
+			count[vim.diagnostic.severity.INFO] or 0, count[vim.diagnostic.severity.HINT] or 0
 		)
 	end
 
