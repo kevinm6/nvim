@@ -3,7 +3,7 @@
  -- Description:
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 22/12/21 - 14:04
+ -- Last Modified: 01/01/22 - 13:45
  -------------------------------------
 
 vim.cmd [[
@@ -14,20 +14,6 @@ vim.cmd [[
 		autocmd FileType qf set nobuflisted
 		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Search", timeout=300}
 	augroup end
-
-	augroup netrw_mapping
-		autocmd!
-		autocmd filetype netrw call	NetrwMapping()
-	augroup end
-
-	function! NetrwMapping()
-		noremap <buffer>% :call CreateInPreview()<cr>
-	endfunction
-
-	function! CreateInPreview()
-		let l:filename = input("⟩ Enter filename: ")
-		execute 'split ' . b:netrw_curdir.'/'.l:filename
-	endf
 
 	" Markdown
 	augroup _markdown
