@@ -1,10 +1,11 @@
  -------------------------------------
  -- File: prefs.lua
- -- Description: VimR & NeoVim settings in lua
+ -- Description: VimR & NeoVim preferences in lua
  -- Author: Kevin
- -- Source: https://github.com/kevinm6/
+ -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
  -- Last Modified: 22/12/21 - 14:15
  -------------------------------------
+
 
 vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -93,6 +94,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	for k, v in pairs(options) do
 		vim.opt[k] = v
 	end
+
 
 	vim.opt.shortmess:append("c") -- do not pass messages to ins-completion-menu
 
