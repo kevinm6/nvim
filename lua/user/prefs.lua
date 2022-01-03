@@ -3,7 +3,7 @@
  -- Description: VimR & NeoVim preferences in lua
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 02/01/22 - 11:25
+ -- Last Modified: 02/01/22 - 18:01
  -------------------------------------
 
 
@@ -44,7 +44,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 	-- Section: GRAPHIC
 		termguicolors = true,
-		guifont = 'Sauce Code Pro Nerd Font Mono:h13', -- { "Hack Nerd Font Mono:h14" }
+		guifont = 'Sauce Code Pro Nerd Font Complete Mono:h13', -- { "Hack Nerd Font Mono:h14" }
 		relativenumber = true, -- Show line numbers - relativenumber from current
 		showmode = true, -- show active mode in status line
 		scrolloff = 3, -- # of line leave above and below cursor
