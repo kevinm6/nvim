@@ -3,14 +3,14 @@
  -- Description:
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/
- -- Last Modified: 01/01/22 - 13:45
+ -- Last Modified: 05/01/22 - 13:29
  -------------------------------------
 
 vim.cmd [[
 	" AutoCommands
 	augroup _general_settings
 		autocmd!
-		autocmd FileType qf,help,man,lspinfo,spectre_panel nnoremap <silent> <buffer> q :close<CR>
+		autocmd FileType qf,help,man,lspinfo,spectre_panel,Scratch nnoremap <silent> <buffer> q :close<CR>
 		autocmd FileType qf set nobuflisted
 		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Search", timeout=300}
 	augroup end
@@ -31,6 +31,5 @@ vim.cmd [[
 		autocmd!
 		autocmd VimResized * tabdo wincmd =
 	augroup end
-
-	command! Scratch lua require'tool'.makeScratch()
 ]]
+
