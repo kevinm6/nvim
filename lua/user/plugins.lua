@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 22/12/21 - 14:27
+-- Last Modified: 08/01/22 - 09:43
 -------------------------------------
 
 
@@ -37,6 +37,8 @@
 			'numToStr/Comment.nvim',
 			'JoosepAlviste/nvim-ts-context-commentstring',
 			{ 'folke/which-key.nvim', run = 'WhichKey' },
+			{ 'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons' },
+			'moll/vim-bbye',
 
 			-- autocompletion
 			'hrsh7th/nvim-cmp',
