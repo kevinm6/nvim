@@ -53,7 +53,7 @@ nvim_tree.setup {
   update_cwd = true,
   update_to_buf_dir = {
     enable = true,
-    auto_open = false,
+    auto_open = true,
   },
 --  𝒙 error
 --  ¡ info
@@ -117,7 +117,7 @@ nvim_tree.setup {
   disable_window_picker = 0,
   root_folder_modifier = ":t",
   show_icons = {
-    git = 0,
+    git = 1,
     folders = 1,
     files = 1,
     folder_arrows = 1,

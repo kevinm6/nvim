@@ -7,8 +7,6 @@
  -------------------------------------
 
 
-vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
 -- Section: CURSOR {
 	-- 1 -> blinking block
 	-- 2 -> solid block
@@ -44,10 +42,12 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 	-- Section: GRAPHIC
 		termguicolors = true,
-		guifont = 'Sauce Code Pro Nerd Font Complete Mono:h13', -- { "Hack Nerd Font Mono:h14" }
+		guifont = 'Sauce Code Pro Nerd Font Complete Mono:h13', -- font for gui-apps
+		clipboard = 'unnamedplus', -- allow neovim access to system clipboard
 		relativenumber = true, -- Show line numbers - relativenumber from current
 		showmode = true, -- show active mode in status line
-		scrolloff = 3, -- # of line leave above and below cursor
+		scrolloff = 4, -- # of line leave above and below cursor
+		sidescrolloff = 4, -- # of columns on the sides
 		mat = 2, -- tenths of second to blink during matching brackets
 		visualbell = false, -- disable visual sounds
 		cursorline = true, -- highlight cursor line
@@ -56,7 +56,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		cmdheight = 2,	-- #lines for vim for commands/logs
 		pumheight = 16, -- popup menu height
 		pumblend = 8, -- popup menu transparency {0..100}
-		-- splitbelow = true, -- split below in horizontal split
+		splitbelow = true, -- split below in horizontal split
 		splitright = true, -- split right in vertical split
 		updatetime = 300, -- set a low updatetime for better UX even w/ CoC
 		listchars = { tab = "⇥ ", eol = "↲", trail = "~" },
@@ -71,7 +71,7 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 		shiftwidth = 0, -- set tabs
 
 	-- Section: FOLDING
-		wrap = true, -- Wrap long lines showing a linebreak
+		wrap = false, -- Wrap long lines showing a linebreak
 		foldenable = true, -- enable code folding
 		foldmethod = 'syntax',
 		diffopt = { 'internal', 'filler', 'closeoff', 'vertical' },
@@ -80,7 +80,6 @@ vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	-- Section: FILE MANAGEMENT
 		autowrite = true, -- write files
 		autowriteall = true, -- write files on exit or other changes
-		autochdir = true, -- auto change directory of explore
 		undofile = true, -- enable undo
 		backup = false, -- disable backups
 		swapfile = false, -- disable swaps

@@ -3,24 +3,8 @@
  -- Description: K specific variables
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 20/12/21 - 09:43
+ -- Last Modified: 08/01/22 - 10:18
  -------------------------------------
-
-
--- Section: Clipboard {
-	vim.g.clipboard = {
-		name = 'pbcopy',
-		copy = {
-		  ['+'] = 'pbcopy',
-		  ['*'] = 'pbcopy',
-		},
-		paste = {
-		  ['+'] = 'pbpaste',
-		  ['*'] = 'pbpaste',
-		},
-		cache_enabled = 0,
-  }
--- }
 
 
 -- Section: Python {
@@ -71,21 +55,5 @@
 	vim.g.session_autosave = 'yes'
 	vim.g.session_autoload = 'yes'
   vim.g.session_default_to_last = 1
--- }
-
-
--- Section: NETRW {
-	vim.g.netrw_banner = 0 -- disabling banner
-	vim.g.netrw_preview = 1 -- preview window in vertical split instead of horizontal
-	vim.g.netrw_liststyle = 3 -- set tree as default list appearance
-	vim.g.netrw_browse_split = 2 -- open files in vertical split
-	vim.g.netrw_silent = 1 -- transfers silently (no statusline changes when obtaining files
-	vim.g.netrw_winsize = 26
-	vim.g.netrw_keepdir = 0 -- current dir & browsing dir synced
-	vim.g.netrw_localcopydircmd = 'cp -r' -- enable recursive copy command
-	vim.g.netrw_mousemaps = 1
-	vim.g.netrw_hide = 1
-	local ghregex='\\(^\\|\\s\\s\\)\\zs\\.\\S\\+'
-	vim.g.netrw_list_hide=ghregex
 -- }
 
