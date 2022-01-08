@@ -55,9 +55,13 @@
 	hi StatusLine guifg=#606060 guibg=#303030 ctermfg=236 ctermbg=236
 	hi StatusLineNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
 	if !has('nvim')
-		hi StatusLineTerm guifg=#606060 guibg=#303030 ctermbg=234 ctermfg=236
-		hi StatusLineTermNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
+		hi StatusLineTerm guifg=#606060 guibg=#303030 ctermbg=234 ctermfg=236 hi StatusLineTermNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
 	endif
+
+" Section: TabLine
+	hi TabLineSel guifg=#606060 guibg=#303030 ctermfg=236 ctermbg=236
+	hi TabLine guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
+
 
 " Section: Users
 	hi User1 guifg=#00ff87 guibg=#303030 ctermfg=48 ctermbg=236
