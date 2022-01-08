@@ -3,7 +3,7 @@
  -- Description:
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/nvim-tree.lua
- -- Last Modified: 29/12/21 - 17:40
+ -- Last Modified: 08/01/22 - 11:14
  -------------------------------------
 
  -- following options are the default
@@ -45,7 +45,7 @@ local tree_cb = nvim_tree_config.nvim_tree_callback
 nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
-  open_on_setup = true,
+  open_on_setup = false,
   ignore_ft_on_setup = {},
   auto_close = false,
   open_on_tab = false,
@@ -85,7 +85,7 @@ nvim_tree.setup {
   git = {
     enable = false,
     ignore = true,
-    timeout = 500,
+    timeout = 60,
   },
   view = {
     width = 30,
@@ -97,8 +97,6 @@ nvim_tree.setup {
       custom_only = false,
       list = {
         { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-        { key = "<Tab>", cb = "<C-w><C-w>" },
-        { key = "<S-Tab>", cb = "<C-w><C-p>" },
         { key = "h", cb = tree_cb "close_node" },
         { key = "v", cb = tree_cb "vsplit" },
 				{ key = "p", cb = tree_cb "preview" },
@@ -113,15 +111,15 @@ nvim_tree.setup {
     require_confirm = true,
   },
   quit_on_open = 0,
-  git_hl = 1,
+  git_hl = 0,
   disable_window_picker = 0,
   root_folder_modifier = ":t",
   show_icons = {
-    git = 1,
+    git = 0,
     folders = 1,
     files = 1,
     folder_arrows = 1,
-    tree_width = 30,
+    tree_width = 18,
   },
 }
 
