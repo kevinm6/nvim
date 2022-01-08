@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 05/01/22 - 13:31
+-- Last Modified: 08/01/22 - 10:28
 --------------------------------------
 
 
@@ -20,6 +20,7 @@
 	require "user.prefs"
 	require "user.vars"
 	require "user.autocommands"
+	require "user.bufferline"
 	require "user.statusline"
 	require "user.plugins"
 	require "user.maps"
