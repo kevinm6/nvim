@@ -88,8 +88,6 @@
 	keymap('n', 'Y', 'y$', opts)
 	keymap('n', 'n', 'nzzzv', opts)
 	keymap('n', 'N', 'Nzzzv', opts)
-	keymap('n', '<Tab>', '<C-w><C-w>', opts)
-	keymap('n', '<S-Tab>', '<C-w><C-p>', opts)
 	keymap('n', '<S-Left>', 'vh', opts)
 	keymap('n', '<S-Right>', 'vl', opts)
 	keymap('n', '<S-up>', 'vk', opts)
