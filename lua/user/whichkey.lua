@@ -164,12 +164,15 @@ local leader_maps = {
 		j = { ":1-read $NVIMDOTDIR/snippets/skeleton.java<CR>2jA<Left><Left><C-r>%<Esc>d2b2jo",
 			"Create java skeleton"
 		},
-		fj = {
-			":1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i",
-			"Create java function skeleton"
+		f = {
+      name = "Functions",
+			j = {
+        ":1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i",
+			  "Create java function skeleton"
+      },
 		},
 		i = {
-			":1-read $NVIMDOTDIR/snippets/skeleton.info<CR><C-v>}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA",
+			":1-read $NVIMDOTDIR/snippets/skeleton.info<CR>v}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA",
 			"Create info skeleton"
 		},
 		m = {
