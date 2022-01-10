@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 08/01/22 - 09:43
+-- Last Modified: 10/01/22 - 09:40
 -------------------------------------
 
 
@@ -24,7 +24,7 @@
 		},
 	})
 
-	local use = require('packer').use
+	local use = packer.use
 	packer.startup(function()
 		use {
 			-- Plugin/package manager
@@ -71,7 +71,7 @@
 			-- snippets
 			'L3MON4D3/LuaSnip',
 			'saadparwaiz1/cmp_luasnip',
-			{'honza/vim-snippets', cmd = 'InsertEnter'},
+			'honza/vim-snippets',
 
 			-- lsp
 			'neovim/nvim-lspconfig',
@@ -88,7 +88,6 @@
       'ellisonleao/glow.nvim',
 			{
 				'iamcco/markdown-preview.nvim',
-				opt = true,
 				run = 'cd app && yarn install',
 				ft = 'markdown',
 			},
