@@ -3,7 +3,7 @@
 -- Description:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/
--- Last Modified: 21/12/21 - 20:25 
+-- Last Modified: 10/01/22 - 12:29
 -------------------------------------
 
 
@@ -172,7 +172,7 @@ local schemas = {
   },
 }
 
-local opts = {
+return {
   settings = {
     json = {
       schemas = schemas,
@@ -189,4 +189,3 @@ local opts = {
   },
 }
 
-return opts
