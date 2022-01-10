@@ -3,7 +3,7 @@
 -- Description:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/
--- Last Modified: 29/12/21 - 10:43
+-- Last Modified: 10/01/22 - 12:03
 -------------------------------------
 
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -37,6 +37,11 @@ lsp_installer.on_server_ready(function(server)
 	if server.name == "jdtls" then
 		local jdtls_opts = require("user.lsp.settings.jdtls")
 		opts = vim.tbl_deep_extend("force", jdtls_opts, opts)
+	end
+
+	if server.name == "sqlls" then
+		local sqlls_opts = require("user.lsp.settings.sqlls")
+		opts = vim.tbl_deep_extend("force", sqlls_opts, opts)
 	end
 
 	-- This setup() function is exactly the same as lspconfig's setup function.
