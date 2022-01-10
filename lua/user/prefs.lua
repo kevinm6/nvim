@@ -71,7 +71,7 @@
 		shiftwidth = 0, -- set tabs
 
 	-- Section: FOLDING
-		wrap = false, -- Wrap long lines showing a linebreak
+		wrap = true, -- Wrap long lines showing a linebreak
 		foldenable = true, -- enable code folding
 		foldmethod = 'syntax',
 		diffopt = { 'internal', 'filler', 'closeoff', 'vertical' },

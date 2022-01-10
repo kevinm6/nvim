@@ -3,7 +3,7 @@
  -- Description:
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
- -- Last Modified: 16/12/21 - 13:40
+ -- Last Modified: 10/01/22 - 11:59
  -------------------------------------
 
 
@@ -105,7 +105,7 @@
   end
 
   M.explorer_status_line = function(self)
-    return '   '
+    return ' File Explorer '
   end
 
 
