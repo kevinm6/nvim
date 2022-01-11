@@ -2,8 +2,8 @@
 -- File: jsonls.lua
 -- Description:
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 10/01/22 - 12:29
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/settings/jsonls.lua
+-- Last Modified: 11/01/22 - 15:22
 -------------------------------------
 
 local status_ok, packer = pcall(require, "packer")
