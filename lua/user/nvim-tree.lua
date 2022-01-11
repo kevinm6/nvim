@@ -3,22 +3,20 @@
  -- Description:
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/nvim-tree.lua
- -- Last Modified: 08/01/22 - 11:14
+ -- Last Modified: 11/01/22 - 15:03
  -------------------------------------
 
- -- following options are the default
--- each of these are documented in `:help nvim-tree.OPTION_NAME`
 vim.g.nvim_tree_icons = {
   default = " ",
   symlink = " ",
-  git = {
-		unstaged = "✗",
-    staged = "✓",
-    unmerged = "",
-    renamed = "➜",
-    untracked = "★",
-    deleted = "",
-	},
+ --  git = {
+	-- 	unstaged = "✗",
+ --    staged = "✓",
+ --    unmerged = "",
+ --    renamed = "➜",
+ --    untracked = "★",
+ --    deleted = "",
+	-- },
   folder = {
     -- arrow_open = " ",
     -- arrow_closed = "",
@@ -45,7 +43,7 @@ local tree_cb = nvim_tree_config.nvim_tree_callback
 nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
-  open_on_setup = false,
+  open_on_setup = true,
   ignore_ft_on_setup = {},
   auto_close = false,
   open_on_tab = false,
@@ -55,18 +53,14 @@ nvim_tree.setup {
     enable = true,
     auto_open = true,
   },
---  𝒙 error
---  ¡ info
---  ? question
---  ! warning
---	 lightbulb
   diagnostics = {
     enable = true,
     icons = {
 			hint = "",
 			info = "¡",
 			warning = "!",
-			error = "",
+			error = "𝒙",
+			question = "?"
      },
   },
   update_focused_file = {
@@ -84,7 +78,7 @@ nvim_tree.setup {
   },
   git = {
     enable = false,
-    ignore = true,
+    ignore = false,
     timeout = 60,
   },
   view = {
@@ -111,11 +105,11 @@ nvim_tree.setup {
     require_confirm = true,
   },
   quit_on_open = 0,
-  git_hl = 0,
+  -- git_hl = 0,
   disable_window_picker = 0,
   root_folder_modifier = ":t",
   show_icons = {
-    git = 0,
+    -- git = 0,
     folders = 1,
     files = 1,
     folder_arrows = 1,
