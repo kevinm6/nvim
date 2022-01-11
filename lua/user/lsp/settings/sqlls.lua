@@ -2,11 +2,13 @@
 -- File: settings/sqlls.lua
 -- Description:
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 11/01/22 - 09:23
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/settings/sqlls.lua
+-- Last Modified: 11/01/22 - 20:18
 -------------------------------------
 
-return {
+local M = {}
+
+local config = {
 	cmd = { "sql-language-server", "up", "--method", "stdio" },
 	filetypes = { "sql", "mysql" },
 	root_dir = function(startpath)
@@ -14,4 +16,6 @@ return {
 	end,
 	settings = {},
 }
+
+return config
 
