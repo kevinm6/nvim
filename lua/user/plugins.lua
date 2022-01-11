@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 10/01/22 - 09:40
+-- Last Modified: 11/01/22 - 09:47
 -------------------------------------
 
 
@@ -79,6 +79,7 @@
 			'ray-x/lsp_signature.nvim',
 			'mfussenegger/nvim-jdtls',
 			'filipdutescu/renamer.nvim',
+			'b0o/SchemaStore.nvim',
 
 			-- database
 			{ 'tpope/vim-dadbod', ft = { 'sql' }, cmd = ':DB' },
