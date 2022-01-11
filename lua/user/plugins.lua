@@ -2,8 +2,8 @@
 -- File: plugins.lua
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/core/plugins.lua
--- Last Modified: 11/01/22 - 09:47
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
+-- Last Modified: 11/01/22 - 19:31
 -------------------------------------
 
 
@@ -39,6 +39,7 @@
 			{ 'folke/which-key.nvim', run = 'WhichKey' },
 			{ 'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons' },
 			'moll/vim-bbye',
+			'akinsho/toggleterm.nvim',
 
 			-- autocompletion
 			'hrsh7th/nvim-cmp',
