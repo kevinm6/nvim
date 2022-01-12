@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 12/01/22 - 09:58
+-- Last Modified: 12/01/22 - 15:19
 -------------------------------------
 
 
@@ -16,7 +16,7 @@
 	-- display packer in a popup window
 	packer.init({
 		package_root = require('packer.util').join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-		compile_path = require('packer.util').join_paths(vim.fn.expand('$NVIMDOTDIR'), 'packer_compiled.lua'),
+		compile_path = require('packer.util').join_paths(vim.fn.expand('$NVIMDOTDIR/lua/user/'), 'packer_compiled.lua'),
 		display = {
 			open_fn = function()
 				return require('packer.util').float ({ border = 'rounded' })
