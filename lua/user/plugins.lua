@@ -16,7 +16,7 @@
 	-- display packer in a popup window
 	packer.init({
 		package_root = require('packer.util').join_paths(vim.fn.stdpath('data'), 'site', 'pack'),
-		compile_path = require('packer.util').join_paths(vim.fn.stdpath('data'), 'packer_compiled.lua'),
+		compile_path = require('packer.util').join_paths(vim.fn.expand('$NVIMDOTDIR'), 'packer_compiled.lua'),
 		display = {
 			open_fn = function()
 				return require('packer.util').float ({ border = 'rounded' })
