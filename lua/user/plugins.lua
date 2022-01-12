@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 11/01/22 - 19:31
+-- Last Modified: 12/01/22 - 09:58
 -------------------------------------
 
 
@@ -47,6 +47,7 @@
 			'hrsh7th/cmp-path',
 			'hrsh7th/cmp-cmdline',
 			'hrsh7th/cmp-nvim-lsp',
+			'saadparwaiz1/cmp_luasnip',
 
 			-- file finder
 			'nvim-telescope/telescope.nvim',
@@ -71,8 +72,7 @@
 
 			-- snippets
 			'L3MON4D3/LuaSnip',
-			'saadparwaiz1/cmp_luasnip',
-			'honza/vim-snippets',
+			'rafamadriz/friendly-snippets',
 
 			-- lsp
 			'neovim/nvim-lspconfig',
