@@ -1,9 +1,9 @@
 -------------------------------------
--- File: jtls.lua
+-- File: jdtls.lua
 -- Description:
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/settings/jdtls.lua
--- Last Modified: 29/12/21 - 10:19
+-- Last Modified: 12/01/22 - 09:12
 -------------------------------------
 
 -- If you started neovim within `~/dev/xy/project-1` this would resolve to `project-1`
@@ -11,7 +11,7 @@ local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
 local workspace_dir = '/Users/Kevin/.cache/workspace/' .. project_name
 
-local config = {
+return {
   cmd = {
 		'java',
 
@@ -30,8 +30,14 @@ local config = {
     '-configuration', '/Users/Kevin/.local/share/nvim/lsp_servers/jdtls/config_mac',
 
     '-data', workspace_dir
-  }
+  },
+	settings = {
+		java = {
+			codeGeneration = {
+				generateComments = true
+			},
+		}
+	}
 }
 
-return config
 
