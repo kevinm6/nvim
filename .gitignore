@@ -1,7 +1,7 @@
-**/**/.DS_Store
+.DS_Store
 .netrwhist
 plugged/*
 colors/.DS_Store
 pack/*
 plugin/*
-lua/user/packer_compiled.lua
+packer_compiled.lua
