@@ -3,7 +3,7 @@
  -- Description:
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
- -- Last Modified: 11/01/22 - 09:55
+ -- Last Modified: 12/01/22 - 10:05
  -------------------------------------
 
 vim.cmd [[
@@ -17,8 +17,6 @@ vim.cmd [[
 	augroup _markdown
 		autocmd!
 		autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md set filetype=markdown 
-		autocmd FileType markdown setlocal wrap
-		autocmd FileType markdown setlocal spell
 	augroup end
 
 	" SQL
