@@ -1,4 +1,4 @@
-if exists('b:current_syntax') | finish | endif
+" if exists('b:current_syntax') | finish | endif
 
 syn keyword pseudoStatement     Function Procedure Class function func procedure class nextgroup=pseudoFunction skipwhite
 syn keyword pseudoPrint         print
