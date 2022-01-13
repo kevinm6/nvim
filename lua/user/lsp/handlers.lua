@@ -1,9 +1,9 @@
 -----------------------------------
 -- File: handlers.lua
--- Description:
+-- Description: Lsp handlers config
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 11/01/22 - 09:41
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
+-- Last Modified: 13/01/22 - 15:56
 -------------------------------------
 
 	local M = {}
@@ -85,10 +85,6 @@ local function lsp_keymaps(bufnr)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
--- local notify_status_ok, notify = pcall(require, "notify")
--- if not notify_status_ok then
---   return
--- end
 
 M.on_attach = function(client, bufnr)
   -- notify(client.name)

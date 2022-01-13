@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 13/01/22 - 09:40
+-- Last Modified: 13/01/22 - 16:03
 -------------------------------------
 
 
@@ -15,13 +15,33 @@
 
 	packer.init({
 		package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
-		compile_path = require("packer.util").join_paths(vim.fn.stdpath("data"), "packer_compiled.lua"),
+		compile_path = require("packer.util").join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.lua'),
+		plugin_package = 'packer',
 		display = {
 			open_fn = function()
 				return require("packer.util").float { border = "rounded" }
-			end
+			end,
+			working_sym = '⟳',
+			error_sym = '✗',
+			done_sym = '✓',
+			removed_sym = '-',
+			moved_sym = '→',
+			header_sym = '━',
 		},
 	})
+
+
+	vim.cmd([[
+		augroup packer_user_config
+			autocmd!
+			autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+		augroup end
+	]])
+
+	local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+	if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+		packer_bootstrap = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+	end
 
 	return packer.startup(function(use)
 		-- Plugin/package manager
@@ -136,6 +156,9 @@
 			}
 		}
 
+		if packer_bootstrap then
+			require('packer').sync()
+		end
 	end)
 -- }
 

@@ -1,9 +1,9 @@
 -----------------------------------
 -- File: lsp-installer.lua
--- Description:
+-- Description: Lsp-Installer config
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 10/01/22 - 20:27
+-- Source: https://github.com/kevinm6/lua/user/lsp/lsp-installer.lua
+-- Last Modified: 13/01/22 - 15:33
 -------------------------------------
 
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -48,8 +48,7 @@ lsp_installer.on_server_ready(function(server)
 		local ltex_opts = require("user.lsp.settings.ltex")
 		opts = vim.tbl_deep_extend("force", ltex_opts, opts)
 	end
-	-- This setup() function is exactly the same as lspconfig's setup function.
-	-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+
 	server:setup(opts)
 end)
 

@@ -1,9 +1,9 @@
 -------------------------------------
 -- File: jsonls.lua
--- Description:
+-- Description: Jsonls server config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/settings/jsonls.lua
--- Last Modified: 11/01/22 - 15:22
+-- Last Modified: 13/01/22 - 15:57
 -------------------------------------
 
 local status_ok, packer = pcall(require, "packer")
