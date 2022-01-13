@@ -3,7 +3,7 @@
 -- Description: Keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/maps.lua
--- Last Modified: 13/01/22 - 09:51
+-- Last Modified: 13/01/22 - 15:27
 -------------------------------------
 
 
@@ -101,7 +101,6 @@
 	keymap('n', 'ˇ', '<C-W>L', opts)
 	keymap('n', 'Ø', 'O<Esc>j', opts)
 	keymap('n', 'ø', 'o<Esc>k', opts)
-	keymap('n', '∂∂', '<cmd>NvimTreeFindFileToggle<cr>', opts)
 
 	-- delete & cut
 	keymap('n', 'x', '"_x', opts)
