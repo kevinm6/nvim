@@ -17,7 +17,7 @@
 	-- SI = INSERT mode
 	-- SR = REPLACE mode
 	-- EI = NORMAL mode
-	vim.api.nvim_exec([[
+	vim.cmd [[
 		if $TERM_PROGRAM =~ "iTerm"
 			let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 			let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -29,12 +29,14 @@
 		if $TERM_PROGRAM == "vscode"
 			finish
 		end
-	]], true)
- -- }
+	]]
+-- }
+
 
 -- Section: Colorscheme
 	vim.api.nvim_exec('colorscheme k_theme', true)
 -- }
+
 
 	local options = {
 	-- Section: MOUSE

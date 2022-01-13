@@ -2,8 +2,8 @@
  -- File: vars.lua
  -- Description: NeoVim & VimR global vars
  -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/vars.lua
- -- Last Modified: 13/01/22 - 09:54
+ -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
+ -- Last Modified: 08/01/22 - 10:18
  -------------------------------------
 
 
@@ -24,6 +24,29 @@
 
 
 -- Section: Markdown {
+	vim.g.markdown_fenced_languages = {
+		'html',
+		'python',
+		'zsh',
+		'java',
+		'c', 'C',
+		'bash=sh',
+		'json',
+		'xml',
+		'vim',
+		'help',
+		'javascript', 'js=javascript',
+		'css',
+		'changelog',
+		'cpp',
+		'pseudo',
+		'php',
+		'sql'
+	}
+
+	vim.g.markdown_folding = 1
+	vim.g.rmd_include_html = 1
+
 	vim.g.glow_binary_path = vim.env.HOME .. "/.local/bin"
 -- }
 
