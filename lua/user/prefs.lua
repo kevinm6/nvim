@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 13/01/22 - 09:52
+ -- Last Modified: 13/01/22 - 19:39
  -------------------------------------
 
 
@@ -44,7 +44,7 @@
 
 	-- Section: GRAPHIC
 		termguicolors = true,
-		guifont = 'Sauce Code Pro Nerd Font Complete Mono:h13', -- font for gui-apps
+		guifont = { 'Sauce Code Pro Nerd Font Complete Mono:h13' }, -- font for gui-apps
 		clipboard = 'unnamedplus', -- allow neovim access to system clipboard
 		relativenumber = true, -- Show line numbers - relativenumber from current
 		showmode = true, -- show active mode in status line
