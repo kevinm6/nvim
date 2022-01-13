@@ -2,8 +2,8 @@
 -- File: gitsigns.lua
 -- Description: Lua K NeoVim & VimR gitsigns config
 -- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/core/gitsigns.lua
--- Last Modified: 13/12/21 - 16:00
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/gitsigns.lua
+-- Last Modified: 13/01/22 - 09:50
 -------------------------------------
 
 local status_ok, gitsigns = pcall(require, "gitsigns")

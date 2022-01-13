@@ -1,9 +1,9 @@
 -------------------------------------
 -- File: treesitter.lua
--- Description:
+-- Description: TreeSitter config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/treesitter.lua
--- Last Modified: 27/12/21 - 11:16
+-- Last Modified: 13/01/22 - 09:54
 -------------------------------------
 
 

@@ -1,9 +1,9 @@
  -------------------------------------
  -- File: vars.lua
- -- Description: K specific variables
+ -- Description: NeoVim & VimR global vars
  -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 12/01/22 - 13:53
+ -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/vars.lua
+ -- Last Modified: 13/01/22 - 09:54
  -------------------------------------
 
 

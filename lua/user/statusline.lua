@@ -1,9 +1,9 @@
  -------------------------------------
  -- File: statusline.lua
- -- Description:
+ -- Description: StatusLine config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
- -- Last Modified: 10/01/22 - 11:59
+ -- Last Modified: 13/01/22 - 09:53
  -------------------------------------
 
 

@@ -1,9 +1,9 @@
  -------------------------------------
  -- File: autocommands.lua
- -- Description:
+ -- Description: Autocommands config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
- -- Last Modified: 12/01/22 - 10:05
+ -- Last Modified: 13/01/22 - 09:48
  -------------------------------------
 
 vim.cmd [[

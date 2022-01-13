@@ -1,9 +1,9 @@
  -------------------------------------
  -- File: prefs.lua
- -- Description: VimR & NeoVim preferences in lua
+ -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 02/01/22 - 18:01
+ -- Last Modified: 13/01/22 - 09:52
  -------------------------------------
 
 

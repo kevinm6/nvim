@@ -1,9 +1,9 @@
 -------------------------------------
--- File: renamer.lua 
--- Description:
+-- File: renamer.lua
+-- Description: Renamer config
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 21/12/21 - 21:15
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/renamer.lua
+-- Last Modified: 13/01/22 - 09:53
 -------------------------------------
 
 local status_ok, renamer = pcall(require, "renamer")

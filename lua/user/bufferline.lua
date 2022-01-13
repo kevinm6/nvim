@@ -1,9 +1,9 @@
  -------------------------------------
  -- File: bufferline.lua
- -- Description:
+ -- Description: Bufferline config
  -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/bufferline.lua
- -- Last Modified: 08/01/22 - 10:36
+ -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/bufferline.lua
+ -- Last Modified: 13/01/22 - 09:49
  -------------------------------------
 
 local status_ok, bufferline = pcall(require, "bufferline")

@@ -1,9 +1,9 @@
  -------------------------------------
  -- File: comment.lua
- -- Description:
+ -- Description: Comment config
  -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/comment.lua
- -- Last Modified: 28/12/21 - 16:38
+ -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/comment.lua
+ -- Last Modified: 13/01/22 - 09:50
  -------------------------------------
 
 
