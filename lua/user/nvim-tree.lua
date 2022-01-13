@@ -3,7 +3,7 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvim-tree.lua
- -- Last Modified: 13/01/22 - 09:51
+ -- Last Modified: 13/01/22 - 10:31
  -------------------------------------
 
 vim.g.nvim_tree_icons = {
@@ -18,13 +18,24 @@ vim.g.nvim_tree_icons = {
     deleted = "",
 	},
   folder = {
-    default = " ",
-    open = " ",
+		-- arrow_open = " ",
+		-- arrow_close = " ",
+    default = "📁 ",
+    open = "📂 ",
+		-- default = " ",
+		-- open = " ",
     empty = " ",
     empty_open = " ",
     symlink = " ",
   },
 }
+
+vim.g.nvim_tree_special_files = {
+	[".gitignore"] = true,
+	["README.md"] = true,
+	["readme.md"] = true,
+}
+
 
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
 if not status_ok then
@@ -44,7 +55,7 @@ nvim_tree.setup {
   open_on_setup = true,
   ignore_ft_on_setup = {},
   auto_close = false,
-  open_on_tab = false,
+  open_on_tab = true,
   hijack_cursor = true,
   update_cwd = true,
   update_to_buf_dir = {
@@ -64,7 +75,7 @@ nvim_tree.setup {
   update_focused_file = {
     enable = true,
     update_cwd = true,
-    ignore_list = { ".git", "node_modules", ".cache", ".DS_Store" },
+    ignore_list = {},
   },
   system_open = {
     cmd = nil,
@@ -76,7 +87,7 @@ nvim_tree.setup {
   },
   git = {
     enable = false,
-    ignore = false,
+    ignore = true,
     timeout = 200,
   },
   view = {
@@ -102,16 +113,15 @@ nvim_tree.setup {
     cmd = "trash",
     require_confirm = true,
   },
-  quit_on_open = 0,
+  quit_on_open = true,
   git_hl = 0,
   disable_window_picker = 0,
   root_folder_modifier = ":t",
   show_icons = {
-    git = 1,
+    git = 0,
     folders = 1,
     files = 1,
-    folder_arrows = 1,
+    folder_arrows = 0,
     tree_width = 20,
   },
 }
-

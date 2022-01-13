@@ -3,7 +3,7 @@
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 05/01/22 - 21:23
+" Last Modified: 13/01/22 - 19:17
 " -------------------------------
 
 
@@ -135,4 +135,5 @@
 	hi PmenuThumb guifg=#800080 ctermfg=5
 
 " Section: Nvim-Tree
-	hi NvimTreeFolderIcon guifg=blue ctermfg=blue
+	hi NvimTreeFolderIcon guifg=#00afd7 ctermfg=38
+	hi NvimTreeSpecialFile gui=bold,italic guifg=#afaf00 cterm=bold,italic ctermfg=142
