@@ -11,7 +11,6 @@ syn keyword pseudoBuiltIn       String List Int Float Double Array Long string f
 syn keyword pseudoBoolean       true false True False
 
 syn region  pseudoString        start=+'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend
-syn region  pseudoString        start=+"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend
 
 syn match   pseudoComment       '//.*$' display
 
