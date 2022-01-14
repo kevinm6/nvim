@@ -8,7 +8,7 @@
 			"\tAuthor: Kevin",
 			"\tSource: https://github.com/kevinm6/${1:Link}",
 			"\tLast Modified: ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}",
-			"-----------------------------------\n\n",
+			"-----------------------------------\n",
 			"$0"
     ],
     "description": "file main info"
