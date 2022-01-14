@@ -1,6 +1,0 @@
-
-==============
-
-**Author:** *Kevin*
-
-**Last Modified:** **
