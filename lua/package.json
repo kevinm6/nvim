@@ -1,0 +1,22 @@
+{
+  "name": "k-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "all",
+          "markdown",
+          "global"
+        ],
+        "path": "./snippets/global.json"
+      },
+      {
+        "language": "markdown",
+        "path": "./snippets/markdown.json"
+      }
+		]
+	}
+}
