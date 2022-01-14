@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/toggleterm.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/toggleterm.lua
--- Last Modified: 13/01/22 - 09:48
+-- Last Modified: 13/01/22 - 22:58
 -------------------------------------
 
 local status_ok, toggleterm = pcall(require, "toggleterm")
@@ -48,15 +48,18 @@ end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 function _LAZYGIT_TOGGLE()
 	lazygit:toggle()
 end
 
 local htop = Terminal:new({ cmd = "htop", hidden = true })
-
 function _HTOP_TOGGLE()
 	htop:toggle()
 end
 
+local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
+function _NCDU_TOGGLE()
+	ncdu:toggle()
+end

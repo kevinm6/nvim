@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 13/01/22 - 09:55
+-- Last Modified: 14/01/22 - 08:45
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -146,29 +146,29 @@ local leader_maps = {
 	s = {
     name = "Skeletons",
 		h = {
-			"<cmd>1-read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a",
+			"<cmd>1-read $NVIMDOTDIR/snippets/skeleton.html<cr>3jf>a",
 			"Create Html skeleton"
 		},
 		c = {
-			":1-read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja",
+			":1-read $NVIMDOTDIR/snippets/skeleton.c<cr>4ja",
 			"Create C skeleton"
 		},
-		j = { ":1-read $NVIMDOTDIR/snippets/skeleton.java<CR>2jA<Left><Left><C-r>%<Esc>d2b2jo",
+		j = { ":1-read $NVIMDOTDIR/snippets/skeleton.java<cr>2jA<Left><Left><C-r>%<Esc>d2b2jo",
 			"Create java skeleton"
 		},
 		f = {
       name = "Functions",
 			j = {
-        ":1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i",
+        ":1-read $NVIMDOTDIR/snippets/method.java<cr>6jf(i",
 			  "Create java function skeleton"
       },
 		},
 		i = {
-			":1-read $NVIMDOTDIR/snippets/skeleton.info<CR>v}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA",
+			":1-read $NVIMDOTDIR/snippets/skeleton.info<cr>v}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA",
 			"Create info skeleton"
 		},
 		m = {
-			":1-read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go",
+			":1-read $NVIMDOTDIR/snippets/skeleton.md<cr>A<Space><C-r>%<Esc>Go",
 			"Create markdown skeleton"
 		},
 	},
@@ -236,6 +236,8 @@ local leader_maps = {
 	T = {
 		name = "Terminal",
     t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
+    l = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazygit" },
+    n = { "<cmd>lua _NCDU_TOGGLE()<cr>", "Ncdu" },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
     h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
