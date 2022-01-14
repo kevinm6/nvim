@@ -1,0 +1,12 @@
+{
+	"Markdown Head": {
+    "prefix": "head",
+    "body": [
+			"# ${TM_FILENAME}\n\n",
+			"---\n\n",
+			"$0"
+    ],
+    "description": "Markdown files head (info)"
+  }
+}
+
