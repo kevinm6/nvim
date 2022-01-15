@@ -3,33 +3,16 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 13/01/22 - 19:39
+ -- Last Modified: 15/01/2022 - 10:07
  -------------------------------------
 
 
 -- Section: CURSOR {
-	-- 1 -> blinking block
-	-- 2 -> solid block
-	-- 3 -> blinking underscore
-	-- 4 -> solid underscore
-	-- 5 -> blinking vertical bar
-	-- 6 -> solid vertical bar
-	-- SI = INSERT mode
-	-- SR = REPLACE mode
-	-- EI = NORMAL mode
-	vim.cmd [[
-		if $TERM_PROGRAM =~ "iTerm"
-			let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-			let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-			let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-		if $TERM_PROGRAM == "Apple_Terminal"
-			let &t_SI.="\e[5 q"
-			let &t_SR.="\e[4 q"
-			let &t_EI.="\e[1 q"
-		if $TERM_PROGRAM == "vscode"
-			finish
-		end
-	]]
+	vim.opt.guicursor = { -- cursor shape mode-based
+		"n-v-c:block",
+		"i-ci-ve:ver25",
+		"r-cr:hor20,o:hor50"
+	}
 -- }
 
 
@@ -44,7 +27,7 @@
 
 	-- Section: GRAPHIC
 		termguicolors = true,
-		guifont = { 'Sauce Code Pro Nerd Font Complete Mono:h13' }, -- font for gui-apps
+		guifont = 'Sauce Code Pro Nerd Font Complete Mono:h13', -- font for gui-apps
 		clipboard = 'unnamedplus', -- allow neovim access to system clipboard
 		relativenumber = true, -- Show line numbers - relativenumber from current
 		showmode = true, -- show active mode in status line
