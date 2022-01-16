@@ -3,16 +3,22 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 13/01/22 - 14:20
+-- Last Modified: 16/01/2022 - 11:04
 --------------------------------------
 
 
 -- Section: check VScodium | Vim (standard)
-	if vim.fn.exists('g:vscode') == 1 then
+	if vim.fn.exists("g:vscode") == 1 then
 		return
-	elseif not(vim.fn.has('nvim')) == 1 then
-		vim.cmd	'source ~/.config/vim/vimrc'
+	elseif not(vim.fn.has("nvim")) == 1 then
+		vim.cmd	"source ~/.config/vim/vimrc"
 		return
+	end
+
+	if vim.fn.has("gui_vimr") == 1 then
+		vim.opt.shadafile = vim.fn.expand("~/.local/share/nvim/shada/gmain.shada")
+	else
+		vim.opt.shadafile = vim.fn.expand("~/.local/share/nvim/shada/main.shada")
 	end
 -- }
 
