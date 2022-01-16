@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 14/01/2022 - 14:05
+-- Last Modified: 15/01/22 - 10:36
 -------------------------------------
 
 
@@ -16,8 +16,6 @@ local snip_status_ok, luasnip = pcall(require, "luasnip")
 if not snip_status_ok then
 	return
 end
-
-luasnip.filetype_extend("all", { "_" })
 
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").load({ paths = { vim.fn.expand("$NVIMDOTDIR/lua/") } })
