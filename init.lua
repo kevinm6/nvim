@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 16/01/2022 - 11:04
+-- Last Modified: 17/01/2022 - 10:18
 --------------------------------------
 
 
@@ -34,7 +34,7 @@
 	require "user.autopairs"
   require "user.comment"
 	require "user.gitsigns"
-	require "user.nvim-tree"
+	require "user.nvimtree"
 	require "user.bufferline"
 	require "user.toggleterm"
 	require "user.whichkey"
