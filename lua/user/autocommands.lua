@@ -3,14 +3,14 @@
  -- Description: Autocommands config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
- -- Last Modified: 13/01/22 - 09:48
+ -- Last Modified: 17/01/2022 - 10:44
  -------------------------------------
 
 vim.cmd [[
 	augroup _general_settings
 		autocmd!
-		autocmd FileType qf,help,man,lspinfo,spectre_panel,Scratch nnoremap <silent> <buffer> q :close<CR>
-		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Search", timeout=300}
+		autocmd FileType qf,help,man,lspinfo,Scratch nnoremap <silent> <buffer> q :close<CR>
+		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Search", timeout=320}
 	augroup end
 
 	" Markdown
@@ -29,10 +29,5 @@ vim.cmd [[
     autocmd!
     autocmd VimResized * tabdo wincmd = 
   augroup end
-
-	augroup _packer_user_config
-		autocmd!
-		autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-	augroup end
 ]]
 
