@@ -1,9 +1,9 @@
  -------------------------------------
- -- File: nvim-tree.lua
+ -- File: nvimtree.lua
  -- Description: NvimTree config
  -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvim-tree.lua
- -- Last Modified: 13/01/22 - 10:31
+ -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
+ -- Last Modified: 17/01/2022 - 10:16
  -------------------------------------
 
 vim.g.nvim_tree_icons = {
@@ -20,10 +20,10 @@ vim.g.nvim_tree_icons = {
   folder = {
 		-- arrow_open = " ",
 		-- arrow_close = " ",
-    default = "📁 ",
-    open = "📂 ",
 		-- default = " ",
 		-- open = " ",
+    default = "📁 ",
+    open = "📂 ",
     empty = " ",
     empty_open = " ",
     symlink = " ",
