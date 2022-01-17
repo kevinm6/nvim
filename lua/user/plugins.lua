@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 13/01/22 - 16:03
+-- Last Modified: 17/01/2022 - 10:46
 -------------------------------------
 
 
@@ -125,7 +125,10 @@
 		}
 
 		-- markdown
-		use "ellisonleao/glow.nvim"
+		use {
+			"ellisonleao/glow.nvim",
+			ft = "markdown",
+		}
 		use {
 			"iamcco/markdown-preview.nvim",
 			run = "cd app && yarn install",
@@ -135,9 +138,7 @@
 		-- pdf
 		use {
 			"makerj/vim-pdf",
-					ft = {
-			"pdf"
-			}
+			ft = "pdf",
 		}
 
 		-- themes
@@ -152,7 +153,7 @@
 			"ChristianChiarulli/nvcode-color-schemes.vim",
 			opt = true,
 			cmd = {
-			"colorscheme"
+				"colorscheme"
 			}
 		}
 
