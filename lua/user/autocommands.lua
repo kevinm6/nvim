@@ -3,7 +3,7 @@
  -- Description: Autocommands config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
- -- Last Modified: 17/01/2022 - 10:44
+ -- Last Modified: 18/01/2022 - 09:38
  -------------------------------------
 
 vim.cmd [[
@@ -11,17 +11,11 @@ vim.cmd [[
 		autocmd!
 		autocmd FileType qf,help,man,lspinfo,Scratch nnoremap <silent> <buffer> q :close<CR>
 		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Search", timeout=320}
-	augroup end
 
 	" Markdown
-	augroup _markdown
-		autocmd!
 		autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md set filetype=markdown 
-	augroup end
 
 	" SQL
-	augroup _sql
-		autocmd!
 		autocmd BufNewFile, BufRead psql* setlocal filetype sql
 	augroup end
 
