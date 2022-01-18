@@ -23,24 +23,33 @@
 -- }
 
 -- Section: Config Files to source {
-	require "user.prefs"
-	require "user.maps"
-	require "user.plugins"
-	require "user.vars"
-	require "user.cmp"
-	require "user.lsp"
-	require "user.telescope"
-	require "user.treesitter"
-	require "user.autopairs"
-  require "user.comment"
-	require "user.gitsigns"
-	require "user.nvim-tree"
-	require "user.bufferline"
-	require "user.toggleterm"
-	require "user.whichkey"
-	require "user.autocommands"
-	require "user.statusline"
-	require "user.surround"
-	require "user.renamer"
-	require "user.registers"
+	local modules = {
+		"user.prefs",
+		"user.maps",
+		"user.plugins",
+		"user.vars",
+		"user.cmp",
+		"user.lsp",
+		"user.telescope",
+		"user.treesitter",
+		"user.autopairs",
+		"user.comment",
+		"user.gitsigns",
+		"user.nvim-tree",
+		"user.bufferline",
+		"user.toggleterm",
+		"user.whichkey",
+		"user.autocommands",
+		"user.statusline",
+		"user.surround",
+		"user.renamer",
+		"user.registers",
+	}
+
+	for _, module in ipairs(modules) do
+    local ok, err = pcall(require, module)
+    if not ok then
+        error("Error loading " .. module .. "\n\n" .. err)
+    end
+	end
 -- }
