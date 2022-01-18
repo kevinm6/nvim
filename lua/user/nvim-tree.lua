@@ -88,7 +88,7 @@ nvim_tree.setup {
   },
   filters = {
     dotfiles = false,
-    custom = { ".git", "node_modules", ".cache", ".DS_Store" },
+    custom = { ".git", "node_modules", ".cache", ".DS_Store", ".git/*" },
   },
   git = {
     enable = false,
@@ -119,11 +119,11 @@ nvim_tree.setup {
     require_confirm = true,
   },
   quit_on_open = 0,
-  git_hl = 0,
+  git_hl = 1,
   disable_window_picker = 0,
   root_folder_modifier = ":t",
   show_icons = {
-    git = 0,
+    git = 1,
     folders = 1,
     files = 1,
     folder_arrows = 1,
