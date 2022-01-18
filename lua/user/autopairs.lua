@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR autopairs config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autopairs.lua
--- Last Modified: 13/01/22 - 09:49
+-- Last Modified: 18/01/2022 - 09:44
 -------------------------------------
 
 local status_ok, npairs  = pcall(require, "nvim-autopairs")
@@ -32,9 +32,3 @@ npairs.setup {
   },
 }
 
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-	return
-end
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
