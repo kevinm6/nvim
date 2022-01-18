@@ -3,8 +3,23 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 17/01/2022 - 10:46
+-- Last Modified: 18/01/2022 - 09:00
 -------------------------------------
+
+
+-- install packer if not found
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    BOOTSTRAPED = vim.fn.system({
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        install_path,
+    })
+end
 
 
 -- Section: PLUGINS {
