@@ -3,18 +3,19 @@
 -- Description: Lsp handlers config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 13/01/22 - 15:56
+-- Last Modified: 18/01/2022 - 09:13
 -------------------------------------
 
-	local M = {}
 
-	M.setup = function()
-		local signs = {
+local M = {}
+
+M.setup = function()
+  local signs = {
 			{ name = "DiagnosticSignError", text = "𝒙" },
 			{ name = "DiagnosticSignWarn", text = "!" },
 			{ name = "DiagnosticSignHint", text = "💡" },
 			{ name = "DiagnosticSignInfo", text = "¡" },
-		}
+	}
 
   for _, sign in ipairs(signs) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
@@ -58,8 +59,9 @@ local function lsp_highlight_document(client)
       [[
       augroup lsp_document_highlight
         autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+				autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+				autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
     ]],
       false
@@ -80,14 +82,12 @@ local function lsp_keymaps(bufnr)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
-
 M.on_attach = function(client, bufnr)
-  -- notify(client.name)
   if client.name == "tsserver" then
     client.resolved_capabilities.document_formatting = false
   end
