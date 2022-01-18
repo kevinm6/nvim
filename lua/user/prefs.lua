@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 15/01/2022 - 10:07
+ -- Last Modified: 18/01/2022 - 09:05
  -------------------------------------
 
 
@@ -47,7 +47,20 @@
 		listchars = { tab = "⇥ ", eol = "↲", trail = "~" },
 		timeoutlen = 240,
 		ttimeoutlen = 50,
+		lazyredraw = true,
 		completeopt = { "menu", "menuone", "noselect"},
+		matchpairs = vim.opt.matchpairs:append("<:>"),
+		wildignore = vim.opt.wildignore:append({
+			"*.DS_Store",
+			"*.bak",
+			"*.gif",
+			"*.jpeg",
+			"*.jpg",
+			"*.png",
+			"*.swp",
+			"*.zip",
+			"*/.git/*",
+		}),
 
 	-- Section: INDENTATION
 		smartindent = true, -- enable smart indentation
