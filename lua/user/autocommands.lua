@@ -9,13 +9,11 @@
 vim.cmd [[
 	augroup general_settings
 		autocmd!
-		autocmd! BufWritePost $MYVIMRC source $MYVIMRC
-
 		autocmd FileType qf,help,man,lspinfo,Scratch nnoremap <silent> <buffer> q :close<CR>
-		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Search", timeout=320}
+		autocmd TextYankPost * silent! lua require('vim.highlight').on_yank{higroup="Visual", timeout=320}
 
 	" Markdown
-		autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md set filetype=markdown 
+		autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setlocal filetype markdown 
 
 	" SQL
 		autocmd BufNewFile, BufRead psql* setlocal filetype sql
