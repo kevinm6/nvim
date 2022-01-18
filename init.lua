@@ -8,9 +8,7 @@
 
 
 -- Section: check VScodium | Vim (standard)
-	if vim.fn.exists("g:vscode") == 1 then
-		return
-	elseif not(vim.fn.has("nvim")) == 1 then
+	if not(vim.fn.has("nvim")) == 1 then
 		vim.cmd	"source ~/.config/vim/vimrc"
 		return
 	end
