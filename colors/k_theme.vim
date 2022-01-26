@@ -137,3 +137,8 @@
 " Section: Nvim-Tree
 	hi NvimTreeFolderIcon guifg=#00afd7 ctermfg=38
 	hi NvimTreeSpecialFile gui=bold,italic guifg=#afaf00 cterm=bold,italic ctermfg=142
+
+" Section: Lsp
+	hi LspReferenceText gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
+	hi LspReferenceWrite gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
+	hi LspReferenceRead gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
