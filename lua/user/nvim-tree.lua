@@ -3,7 +3,7 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
- -- Last Modified: 17/01/2022 - 10:22
+ -- Last Modified: 26/01/2022 - 17:20
  -------------------------------------
 
 vim.g.nvim_tree_icons = {
@@ -16,14 +16,13 @@ vim.g.nvim_tree_icons = {
     renamed = "➜",
     untracked = "★",
     deleted = "",
+		ignored = "◌",
 	},
   folder = {
 		-- arrow_open = " ",
 		-- arrow_close = " ",
-		-- default = " ",
-		-- open = " ",
-    default = "📁 ",
-    open = "📂 ",
+		default = " ",
+		open = " ",
     empty = " ",
     empty_open = " ",
     symlink = " ",
@@ -65,16 +64,16 @@ nvim_tree.setup {
   diagnostics = {
     enable = true,
     icons = {
-			hint = " ",
-			info = " ",
-			warning = " ",
-			error = " ",
-			question = " ",
-			-- hint = "",
-			-- info = "¡",
-			-- warning = "!",
-			-- error = "𝒙",
-			-- question = "?",
+			-- hint = " ",
+			-- info = " ",
+			-- warning = " ",
+			-- error = " ",
+			-- question = " ",
+			hint = "",
+			info = "¡",
+			warning = "!",
+			error = "𝒙",
+			question = "?",
      },
   },
   update_focused_file = {
@@ -88,10 +87,10 @@ nvim_tree.setup {
   },
   filters = {
     dotfiles = false,
-    custom = { ".git", "node_modules", ".cache", ".DS_Store", ".git/*" },
+    custom = { ".git", ".cache", ".DS_Store" },
   },
   git = {
-    enable = false,
+    enable = true,
     ignore = true,
     timeout = 500,
   },
