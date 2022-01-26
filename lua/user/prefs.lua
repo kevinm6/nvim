@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 18/01/2022 - 09:05
+ -- Last Modified: 26/01/2022 - 17:08
  -------------------------------------
 
 
@@ -22,6 +22,7 @@
 
 
 	local options = {
+		shell="/bin/bash",
 	-- Section: MOUSE
 		mouse = 'a',
 
