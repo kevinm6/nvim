@@ -3,7 +3,7 @@
 -- Description: Lsp handlers config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 18/01/2022 - 09:13
+-- Last Modified: 26/01/2022 - 17:23
 -------------------------------------
 
 
@@ -109,7 +109,7 @@ function M.enable_format_on_save()
   vim.cmd [[
     augroup format_on_save
       autocmd! 
-      autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+      autocmd BufWritePre * lua vim.lsp.buf.formatting()
     augroup end
   ]]
   vim.notify "Enabled format on save"
