@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 18/01/2022 - 09:00
+-- Last Modified: 07/02/2022 - 17:40
 -------------------------------------
 
 
@@ -121,6 +121,7 @@ end
 		use "ray-x/lsp_signature.nvim"
 		use "mfussenegger/nvim-jdtls"
 		use "filipdutescu/renamer.nvim"
+		use "antoinemadec/FixCursorHold.nvim"
 		use "b0o/SchemaStore.nvim"
 
 		-- database
