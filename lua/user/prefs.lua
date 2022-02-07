@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 26/01/2022 - 17:08
+ -- Last Modified: 07/02/2022 - 17:42
  -------------------------------------
 
 
@@ -44,7 +44,7 @@
 		pumblend = 8, -- popup menu transparency {0..100}
 		splitbelow = true, -- split below in horizontal split
 		splitright = true, -- split right in vertical split
-		updatetime = 300, -- set a low updatetime for better UX even w/ CoC
+		updatetime = 300, -- lower than default for faster completion
 		listchars = { tab = "⇥ ", eol = "↲", trail = "~" },
 		timeoutlen = 240,
 		ttimeoutlen = 50,
