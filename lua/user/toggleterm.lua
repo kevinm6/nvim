@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/toggleterm.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/toggleterm.lua
--- Last Modified: 13/01/22 - 22:58
+-- Last Modified: 07/02/2022 - 18:54
 -------------------------------------
 
 local status_ok, toggleterm = pcall(require, "toggleterm")
@@ -24,7 +24,7 @@ toggleterm.setup({
 	persist_size = true,
 	direction = "float",
 	close_on_exit = true,
-	shell = vim.o.shell,
+	shell = "/bin/zsh",
 	float_opts = {
 		border = "curved",
 		winblend = 0,
