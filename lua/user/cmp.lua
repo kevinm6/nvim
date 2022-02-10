@@ -72,10 +72,10 @@ require("luasnip.loaders.from_vscode").load({ paths = { vim.fn.expand("$NVIMDOTD
 				behavior = cmp.ConfirmBehavior.Replace,
 				select = false,
 			},
-			documentation = false,
-			-- documentation = {
-			-- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-			-- },
+			-- documentation = false,
+			documentation = {
+				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			},
 			experimental = {
 				ghost_text = true,
 				native_menu = false,
