@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 07/02/2022 - 17:40
+-- Last Modified: 10/02/2022 - 10:20
 -------------------------------------
 
 
@@ -53,11 +53,6 @@ end
 		augroup end
 	]])
 
-	local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-	if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-		packer_bootstrap = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-	end
-
 	return packer.startup(function(use)
 		-- Plugin/package manager
 		use "wbthomason/packer.nvim"
@@ -67,8 +62,6 @@ end
 		use "nvim-lua/popup.nvim"
 		use "windwp/nvim-autopairs"
 		use "numToStr/Comment.nvim"
-		use "nvim-telescope/telescope.nvim"
-		use "nvim-telescope/telescope-media-files.nvim"
 		use {
 			"kyazdani42/nvim-tree.lua",
 			requires = {
@@ -92,6 +85,7 @@ end
 		use "hrsh7th/cmp-path"
 		use "hrsh7th/cmp-cmdline"
 		use "hrsh7th/cmp-nvim-lsp"
+		use "hrsh7th/cmp-nvim-lua"
 		use "saadparwaiz1/cmp_luasnip"
 
 		-- coding helper
@@ -122,7 +116,20 @@ end
 		use "mfussenegger/nvim-jdtls"
 		use "filipdutescu/renamer.nvim"
 		use "antoinemadec/FixCursorHold.nvim"
+		use "simrat39/symbols-outline.nvim"
 		use "b0o/SchemaStore.nvim"
+		use {
+			"folke/trouble.nvim",
+			cmd = "TroubleToggle",
+		}
+
+		-- Telescope
+		use "nvim-telescope/telescope.nvim"
+		use "nvim-telescope/telescope-media-files.nvim"
+		use "nvim-telescope/telescope-file-browser.nvim"
+		use "nvim-telescope/telescope-ui-select"
+		use "nvim-telescope/telescope-packer.nvim"
+		use "gbrlsnchs/telescope-lsp-handlers.nvim"
 
 		-- database
 		use {
