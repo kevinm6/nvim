@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 14/01/22 - 08:45
+-- Last Modified: 09/02/2022 - 15:56
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -54,7 +54,7 @@ local setup = {
   },
   ignore_missing = false,
   hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "<cr>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-  show_help = true,
+  show_help = false,
   triggers_blacklist = {
     i = { "j", "k" },
     v = { "j", "k" },
@@ -104,7 +104,8 @@ local leader_maps = {
   -- Packer
   p = {
     name = "Packer",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
+    C = { "<cmd>PackerCompile<cr>", "Compile" },
+    c = { "<cmd>PackerClean<cr>", "Clean" },
     i = { "<cmd>PackerInstall<cr>", "Install" },
     S = { "<cmd>PackerSync<cr>", "Sync" },
     s = { "<cmd>PackerStatus<cr>", "Status" },
@@ -128,6 +129,7 @@ local leader_maps = {
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
     l = { "<cmd>GitBlameToggle<cr>", "Blame" },
+    g = { "<cmd>lua _LAZYGIT_TOGGLE<cr>", "Lazygit" },
     p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
     r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
     R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
@@ -143,7 +145,7 @@ local leader_maps = {
 	},
 
   -- Skeletons
-	s = {
+	S = {
     name = "Skeletons",
 		h = {
 			"<cmd>1-read $NVIMDOTDIR/snippets/skeleton.html<cr>3jf>a",
@@ -193,8 +195,8 @@ local leader_maps = {
   -- LSP
   l = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    d = { "<cmd>TroubleToggle<cr>", "Diagnostics" },
+		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		d = { "<cmd>TroubleToggle<cr>", "Diagnostics" },
     w = {
       "<cmd>Telescope lsp_workspace_diagnostics<cr>",
       "Workspace Diagnostics",
@@ -204,11 +206,11 @@ local leader_maps = {
     i = { "<cmd>LspInfo<cr>", "Info" },
     I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
     j = {
-      "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+      "<cmd>lua vim.diagnostic.get_next()<CR>",
       "Next Diagnostic",
     },
     k = {
-      "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
+      "<cmd>lua vim.diagnostic.get_prev()<cr>",
       "Prev Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
@@ -220,7 +222,18 @@ local leader_maps = {
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
-		},
+    },
+	},
+
+	-- SURROUND
+	s = {
+    name = "Surround",
+    ["."] = { "<cmd>lua require('surround').repeat_last()<cr>", "Repeat" },
+    a = { "<cmd>lua require('surround').surround_add(true)<cr>", "Add" },
+    d = { "<cmd>lua require('surround').surround_delete()<cr>", "Delete" },
+    r = { "<cmd>lua require('surround').surround_replace()<cr>", "Replace" },
+    q = { "<cmd>lua require('surround').toggle_quotes()<cr>", "Quotes" },
+    b = { "<cmd>lua require('surround').toggle_brackets()<cr>", "Brackets" },
   },
 
 	-- NVIMTREE
