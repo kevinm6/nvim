@@ -3,7 +3,7 @@
 -- Description: Telescope config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
--- Last Modified: 13/01/22 - 09:53
+-- Last Modified: 09/02/2022 - 10:09
 -------------------------------------
 
 
@@ -14,6 +14,8 @@ end
 
 local actions = require "telescope.actions"
 telescope.load_extension "media_files"
+telescope.load_extension "lsp_handlers"
+telescope.load_extension "packer"
 
 telescope.setup {
   defaults = {
