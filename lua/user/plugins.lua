@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 10/02/2022 - 10:20
+-- Last Modified: 13/02/2022 - 11:07
 -------------------------------------
 
 
@@ -127,9 +127,9 @@ end
 		use "nvim-telescope/telescope.nvim"
 		use "nvim-telescope/telescope-media-files.nvim"
 		use "nvim-telescope/telescope-file-browser.nvim"
-		use "nvim-telescope/telescope-ui-select"
 		use "nvim-telescope/telescope-packer.nvim"
 		use "gbrlsnchs/telescope-lsp-handlers.nvim"
+		use "nvim-telescope/telescope-ui-select.nvim"
 
 		-- database
 		use {
