@@ -3,7 +3,7 @@
 -- Description: TreeSitter config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/treesitter.lua
--- Last Modified: 09/02/2022 - 10:16
+-- Last Modified: 13/02/2022 - 11:08
 -------------------------------------
 
 
@@ -25,7 +25,7 @@ configs.setup({
 	autopairs = {
 		enable = true,
 	},
-	indent = { enable = true, disable = { "python" } },
+	indent = { enable = true, disable = { "css", "python" } },
 	context_commentstring = {
 		enable = true,
 		enable_autocmd = false,
@@ -40,9 +40,9 @@ configs.setup({
 			"Gold",
 			"Orchid",
 			"DodgerBlue",
+			"LawnGreen",
 			-- "Cornsilk",
 			-- "Salmon",
-			-- "LawnGreen",
 		},
 		disable = { "html" },
 	},
