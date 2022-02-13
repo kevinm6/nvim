@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 09/02/2022 - 15:56
+-- Last Modified: 13/02/2022 - 11:03
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -206,11 +206,11 @@ local leader_maps = {
     i = { "<cmd>LspInfo<cr>", "Info" },
     I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
     j = {
-      "<cmd>lua vim.diagnostic.get_next()<CR>",
+      "<cmd>lua vim.diagnostic.goto_next({buffer=0)<CR>",
       "Next Diagnostic",
     },
     k = {
-      "<cmd>lua vim.diagnostic.get_prev()<cr>",
+      "<cmd>lua vim.diagnostic.goto_prev({buffer=0)<cr>",
       "Prev Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
