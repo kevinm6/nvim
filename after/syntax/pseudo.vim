@@ -1,8 +1,8 @@
-" if exists('b:current_syntax') | finish | endif
+if exists('b:current_syntax') | finish | endif
 
 syn keyword pseudoStatement     Function Procedure Class function func procedure class nextgroup=pseudoFunction skipwhite
 syn keyword pseudoPrint         print
-syn match   pseudoFunction      "[a-zA-z][a-zA-Z0-9_]*" display contained
+syn match   pseudoFunction      '[a-zA-z][a-zA-Z0-9_]*' display contained
 syn keyword pseudoFunction      add sum length append remove pop size insert indexOf 
 syn keyword pseudoConditional   if else endif
 syn keyword pseudoRepeat        for while foreach endfor endwhile endforeach return pass break each
