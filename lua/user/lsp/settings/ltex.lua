@@ -10,7 +10,6 @@ return {
   settings = {
     ltex = {
       language = {
-        "",
         "en",
         "en_US",
 				"it"
