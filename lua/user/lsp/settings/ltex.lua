@@ -10,16 +10,16 @@ return {
   settings = {
     ltex = {
       language = {
+				"it",
         "en",
         "en_US",
-				"it"
       },
 			additionalRules = {
 				motherTongue = {
+					"it",
 					"en",
 					"en-US",
 					"en-GB",
-					"it"
 				},
 			},
       completionEnabled = true,
