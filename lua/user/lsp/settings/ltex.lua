@@ -3,7 +3,7 @@
 -- Description: ltex server config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/settings/ltex.lua
--- Last Modified: 13/01/22 - 15:47
+-- Last Modified: 14/02/2022 - 10:14
 -------------------------------------
 
 return {
@@ -13,9 +13,20 @@ return {
         "",
         "en",
         "en_US",
-        "it"
+				"it"
       },
-      completionEnabled = true
+			additionalRules = {
+				motherTongue = {
+					"en",
+					"en-US",
+					"en-GB",
+					"it"
+				},
+			},
+      completionEnabled = true,
+			java = {
+				path = "$JAVA_HOME",
+			},
     },
   }
 }
