@@ -3,7 +3,7 @@
 -- Description: Lsp handlers config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 26/01/2022 - 17:23
+-- Last Modified: 14/02/2022 - 13:56
 -------------------------------------
 
 
@@ -34,7 +34,7 @@ M.setup = function()
     float = {
       focusable = true,
       style = "minimal",
-      border = "rounded",
+      border = "shadow",
       source = "always",
       header = "",
       prefix = "",
@@ -44,11 +44,11 @@ M.setup = function()
   vim.diagnostic.config(config)
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
+    border = "shadow",
   })
 
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
+    border = "shadow",
   })
 end
 
