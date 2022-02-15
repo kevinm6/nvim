@@ -3,7 +3,7 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
- -- Last Modified: 13/02/2022 - 12:36
+ -- Last Modified: 15/02/2022 - 11:57
  -------------------------------------
 
 vim.g.nvim_tree_icons = {
@@ -53,7 +53,7 @@ nvim_tree.setup {
   hijack_netrw = true,
   open_on_setup = false,
   ignore_ft_on_setup = {},
-  auto_close = true,
+  auto_close = false,
   open_on_tab = false,
   hijack_cursor = true,
   update_cwd = true,
@@ -104,10 +104,12 @@ nvim_tree.setup {
       custom_only = false,
       list = {
         { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
+        { key = { "-", "<BS>"}, cb = tree_cb "dir_up" },
         { key = "h", cb = tree_cb "close_node" },
         { key = "v", cb = tree_cb "vsplit" },
 				{ key = "p", cb = tree_cb "preview" },
-				{ key = "<C-p>", cb = tree_cb "parent_node" }
+				{ key = "<C-p>", cb = tree_cb "parent_node" },
+				{ key = "?", cb = tree_cb "toggle_help" }
       },
     },
     number = false,
