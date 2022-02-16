@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 16/02/2022 - 10:29
+-- Last Modified: 16/02/2022 - 11:52
 -------------------------------------
 
 
@@ -94,7 +94,7 @@ end
 			run = ":TSUpdate"
 		}
 		use "nvim-treesitter/playground"
-		use "blackCauldron7/surround.nvim"
+		use "Mephistophiles/surround.nvim"
 		use {
 			"junegunn/goyo.vim",
 			run = ":Goyo"
