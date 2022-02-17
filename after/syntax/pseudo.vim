@@ -18,13 +18,14 @@ syn keyword pseudoFunction      add sum length append remove pop size insert ind
 syn keyword pseudoConditional   if else endif
 syn keyword pseudoRepeat        for to while foreach endfor endwhile endforeach return pass break each
 syn keyword pseudoOperator      and in is not or do then to
-syn keyword pseudoBuiltIn       String List Int Float Double Array Long string float int list double array arraylist, ArrayList, dictionary, Dictionary, dict
+syn keyword pseudoBuiltIn       String List Int Float Double Array Long string float int list double array arraylist, ArrayList, dictionary, Dictionary, dict, tree, Tree, graph, Graph
 syn keyword pseudBoolean       true false True False
 
 syn region  pseudoString        start=+'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend
 syn region  pseudoString        start=+"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend
 
 syn match   pseudoComment       '//.*$' display
+syn match   pseudoComment       '#.*$' display
 
 syn match   pseudoNumber        '\<\d\>' display
 syn match   pseudoNumber        '\<[1-9][_0-9]*\d\>' display
