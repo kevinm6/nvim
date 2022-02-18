@@ -13,10 +13,25 @@
     ],
     "description": "file main info"
   },
+	"file-info_yaml": {
+		"prefix": "inf-yaml",
+		"body": [
+			"---",
+			"Title: ${1:TM_FILENAME}",
+			"Author: Kevin",
+			"Date: ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+			"Abstract: ${2:types}",
+			"output:",
+			"\tpdf_document: default",
+			"\thtml_notebook: default",
+			"---"
+		],
+		"description": "file info in yaml for rmd files"
+	},
 	"Date": {
     "prefix": "date",
     "body": [
-      "${CURRENT_DATE}-${CURRENT_MONTH}-${CURRENT_YEAR}"
+      "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}"
     ],
     "description": ""
   },
@@ -26,6 +41,22 @@
       "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}"
     ],
     "description": "Date and time stamp"
-  }
+  },
+  "Time": {
+    "prefix": "time",
+    "body": [
+      "${CURRENT_HOUR}:${CURRENT_MINUTE}"
+    ],
+    "description": "Timestamp"
+  },
+	"TOC": {
+		"prefix": "toc",
+		"body": [
+			"# TOC",
+			"- ${1}",
+			"  - ${2}"
+		],
+		"description": "Table of Contents"
+	}
 }
 
