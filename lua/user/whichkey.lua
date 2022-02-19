@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 16/02/2022 - 12:04
+-- Last Modified: 19/02/2022 - 10:18
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -215,7 +215,7 @@ local leader_maps = {
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     o = { "<cmd>SymbolsOutline<cr>", "Outline" },
-    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist({buffer=0})<cr>", "Quickfix" },
+    q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     R = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
