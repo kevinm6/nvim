@@ -3,7 +3,7 @@
 -- Description: Telescope config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
--- Last Modified: 13/02/2022 - 11:06
+-- Last Modified: 19/02/2022 - 10:31
 -------------------------------------
 
 
@@ -13,6 +13,7 @@ if not status_ok then
 end
 
 local actions = require "telescope.actions"
+telescope.load_extension "fzf"
 telescope.load_extension "media_files"
 telescope.load_extension "lsp_handlers"
 telescope.load_extension "packer"
@@ -20,7 +21,6 @@ telescope.load_extension "ui-select"
 
 telescope.setup {
   defaults = {
-
     prompt_prefix = "   ",
     selection_caret = "  ",
     path_display = { "smart" },
@@ -103,8 +103,45 @@ telescope.setup {
     media_files = {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = { "png", "webp", "jpg", "jpeg" },
+      filetypes = { "png", "mp4", "pdf", "webp", "jpg", "jpeg" },
       find_cmd = "rg", -- find command (defaults to `fd`)
     },
-  },
+		fzf = {
+			fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+		},
+		["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      }
+    },
+		packer = {
+			theme = "k_theme",
+			layout_config = {
+				height = .5
+			}
+		},
+		lsp_handlers = {
+			disable = {},
+			location = {
+				telescope = {},
+				no_results_message = 'No references found',
+			},
+			symbol = {
+				telescope = {},
+				no_results_message = 'No symbols found',
+			},
+			call_hierarchy = {
+				telescope = {},
+				no_results_message = 'No calls found',
+			},
+			code_action = {
+				telescope = {},
+				no_results_message = 'No code actions available',
+				prefix = '',
+			},
+		},
+	}
 }
