@@ -3,7 +3,7 @@
 -- Description: Lsp-Installer config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/lua/user/lsp/lsp-installer.lua
--- Last Modified: 16/01/2022 - 12:16
+-- Last Modified: 19/02/2022 - 13:50
 -------------------------------------
 
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -48,6 +48,11 @@ lsp_installer.on_server_ready(function(server)
 	if server.name == "ltex" then
 		local ltex_opts = require("user.lsp.settings.ltex")
 		opts = vim.tbl_deep_extend("force", ltex_opts, opts)
+	end
+
+	if server.name == "emmet_ls" then
+		local emmet_ls_opts = require "user.lsp.settings.emmet_ls"
+		opts = vim.tbl_deep_extend("force", emmet_ls_opts, opts)
 	end
 
 	server:setup(opts)
