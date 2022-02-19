@@ -138,7 +138,7 @@ telescope.setup {
 				no_results_message = 'No calls found',
 			},
 			code_action = {
-				telescope = {},
+				telescope = require('telescope.themes').get_dropdown({}),
 				no_results_message = 'No code actions available',
 				prefix = '',
 			},
