@@ -78,6 +78,13 @@ end
 		}
 		use "moll/vim-bbye"
 		use "akinsho/toggleterm.nvim"
+		use {
+			"tweekmonster/startuptime.vim",
+			opt = true,
+			cmd = {
+				"StartupTime"
+			}
+		}
 
 		-- autocompletion
 		use "hrsh7th/nvim-cmp"
