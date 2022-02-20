@@ -3,7 +3,7 @@
 -- Description: Keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/maps.lua
--- Last Modified: 13/01/22 - 15:27
+-- Last Modified: 20/02/2022 - 18:00
 -------------------------------------
 
 
@@ -11,7 +11,7 @@
 	local opts = { noremap = true, silent = true }
 	local term_opts = { silent = true }
 	local keymap = vim.api.nvim_set_keymap
-  -- keymap("", ",", "<Nop>", opts)
+  keymap("", ",", "<Nop>", opts)
 	vim.g.mapleader = ","
 	vim.g.maplocalleader = ","
 -- }
@@ -51,7 +51,6 @@
 
 
 -- Section: Terminal Mode {
-		keymap('t', '<Leader>t', ':sb<bar>term<cr><C-W>J:resize12<cr>', term_opts)
 		keymap('t', '<Esc>', '<C-\\><C-n>', term_opts)
 -- }
 
