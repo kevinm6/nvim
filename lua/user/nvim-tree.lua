@@ -3,7 +3,7 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
- -- Last Modified: 15/02/2022 - 11:57
+ -- Last Modified: 20/02/2022 - 13:06
  -------------------------------------
 
 vim.g.nvim_tree_icons = {
@@ -31,8 +31,7 @@ vim.g.nvim_tree_icons = {
 
 vim.g.nvim_tree_special_files = {
 	[".gitignore"] = true,
-	["README.md"] = true,
-	["readme.md"] = true,
+	["README.md"] = true
 }
 
 
@@ -41,12 +40,33 @@ if not status_ok then
   return
 end
 
-local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
-if not config_status_ok then
-  return
+local lib = require("nvim-tree.lib")
+local view = require("nvim-tree.view")
+
+local function collapse_all()
+    require("nvim-tree.actions.collapse-all").fn()
 end
 
-local tree_cb = nvim_tree_config.nvim_tree_callback
+local function vsplit_preview()
+	-- open as vsplit on current node
+	local action = "vsplit"
+	local node = lib.get_node_at_cursor()
+
+	-- Just copy what's done normally with vsplit
+	if node.link_to and not node.nodes then
+			require('nvim-tree.actions.open-file').fn(action, node.link_to)
+
+	elseif node.nodes ~= nil then
+			lib.expand_or_collapse(node)
+
+	else
+			require('nvim-tree.actions.open-file').fn(action, node.absolute_path)
+
+	end
+
+	-- Finally refocus on tree if it was lost
+	view.focus()
+end
 
 nvim_tree.setup {
   disable_netrw = true,
@@ -103,13 +123,15 @@ nvim_tree.setup {
     mappings = {
       custom_only = false,
       list = {
-        { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-        { key = { "-", "<BS>"}, cb = tree_cb "dir_up" },
-        { key = "h", cb = tree_cb "close_node" },
-        { key = "v", cb = tree_cb "vsplit" },
-				{ key = "p", cb = tree_cb "preview" },
-				{ key = "<C-p>", cb = tree_cb "parent_node" },
-				{ key = "?", cb = tree_cb "toggle_help" }
+				{ key = { "l", "<CR>", "o" }, action = "edit" },
+				{ key = { "-", "<BS>"}, action = "dir_up" },
+				{ key = "h", action = "close_node" },
+				{ key = "<C-h>", action = "collapse_all", action_cb = collapse_all },
+				{ key = "v", action = "vsplit" },
+				{ key = "L", action = "vsplit_preview", action_cb = vsplit_preview },
+				{ key = "p", action = "preview" },
+				{ key = "<C-p>", action = "parent_node" },
+				{ key = "?", action = "toggle_help" },
       },
     },
     number = false,
