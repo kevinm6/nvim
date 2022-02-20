@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 19/02/2022 - 10:18
+-- Last Modified: 20/02/2022 - 18:39
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -27,6 +27,7 @@ local setup = {
       windows = true,
       nav = true,
       z = true,
+			-- Z = true,
       g = true,
     },
   },
@@ -79,10 +80,13 @@ local nosilent_opts = {
   nowait = true,
 }
 
+
 local leader_maps = {
   w = { "<cmd>w!<CR>", "Save" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  c = { "<cmd>bdelete!<CR>", "Close Buffer" },
+  c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+	z = { "<cmd>update<cr> | <cmd>Bdelete<cr>", "Save and Close Buffer" },
+	q = { "<cmd>quit<cr>", "Quit" },
 
 	f = {
 		name = "Find (Telescope)",
@@ -286,6 +290,7 @@ local vopts = {
   noremap = true, -- use `noremap` when creating keymaps
   nowait = true, -- use `nowait` when creating keymaps
 }
+
 local vmappings = {
   ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
 
@@ -301,7 +306,25 @@ local vmappings = {
   },
 }
 
+local Zopts = {
+  mode = "n", -- NORMAL mode
+  prefix = "Z",
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
+}
+
+
+local Zmappings = {
+	Z = { "<cmd>update<cr> | <cmd>Bdelete<cr>", "Save and Close buffer" },
+	Q = { "<cmd>Bdelete<cr> | <cmd>bnext<cr>", "Close buffer" },
+	A = { "<cmd>quit!<cr>", "Quit" },
+}
+
+
 which_key.setup(setup)
 which_key.register(leader_maps, opts)
 which_key.register(nosilent_maps, nosilent_opts)
 which_key.register(vmappings, vopts)
+which_key.register(Zmappings, Zopts)
