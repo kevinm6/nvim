@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 15/01/22 - 10:36
+-- Last Modified: 20/02/2022 - 20:52
 -------------------------------------
 
 
@@ -85,7 +85,7 @@ require("luasnip.loaders.from_vscode").load({ paths = { vim.fn.expand("$NVIMDOTD
 	-- Use buffer source for `/`
 	cmp.setup.cmdline('/', {
 		sources = {
-			{ name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+			{ name = 'buffer' }
 		}
 	})
 	-- }
