@@ -85,6 +85,7 @@ end
 				"StartupTime"
 			}
 		}
+		use "goolord/alpha-nvim"
 
 		-- autocompletion
 		use "hrsh7th/nvim-cmp"

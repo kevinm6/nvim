@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 22/02/2022 - 17:46
+-- Last Modified: 22/02/2022 - 19:29
 --------------------------------------
 
 
@@ -42,7 +42,8 @@
 		"user.surround",
 		"user.renamer",
 		"user.registers",
-		"user.symbol-outline"
+		"user.symbol-outline",
+		"user.alpha"
 	}
 
 	for _, module in ipairs(modules) do
