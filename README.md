@@ -1,3 +1,3 @@
-# NeoVim & VimR in Lua
+# Neovim & VimR in Lua
 
 ---

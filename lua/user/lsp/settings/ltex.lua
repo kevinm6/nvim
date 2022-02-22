@@ -25,7 +25,11 @@ return {
 			java = {
 				path = "$JAVA_HOME",
 			},
+			-- dictionary = {
+			-- 	"en-US:[:$NVIMDOTDIR/spell/en-US.utf-8.add]",
+			-- 	"it-IT:[:$NVIMDOTDIR/spell/it-IT.utf-8.add]"
+			-- },
     },
-  }
+  },
 }
 

@@ -35,6 +35,7 @@
 		scrolloff = 4, -- # of line leave above and below cursor
 		sidescrolloff = 4, -- # of columns on the sides
 		mat = 2, -- tenths of second to blink during matching brackets
+		spell = false,
 		visualbell = false, -- disable visual sounds
 		cursorline = true, -- highlight cursor line
 		showmatch = true, -- Show matching brackets when over
