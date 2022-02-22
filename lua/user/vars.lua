@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR global vars
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 08/01/22 - 10:18
+ -- Last Modified: 22/02/2022 - 18:06
  -------------------------------------
 
 
@@ -39,7 +39,7 @@
 		'css',
 		'changelog',
 		'cpp',
-		'pseudo',
+		'pseudocode',
 		'php',
 		'sql'
 	}
