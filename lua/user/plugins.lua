@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 19/02/2022 - 10:31
+-- Last Modified: 23/02/2022 - 09:25
 -------------------------------------
 
 
@@ -85,6 +85,7 @@ end
 				"StartupTime"
 			}
 		}
+		use "lewis6991/impatient.nvim"
 		use "goolord/alpha-nvim"
 
 		-- autocompletion

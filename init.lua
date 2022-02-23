@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 22/02/2022 - 19:29
+-- Last Modified: 23/02/2022 - 09:27
 --------------------------------------
 
 
@@ -26,6 +26,7 @@
 		"user.maps",
 		"user.plugins",
 		"user.vars",
+		"user.impatient",
 		"user.cmp",
 		"user.lsp",
 		"user.telescope",
