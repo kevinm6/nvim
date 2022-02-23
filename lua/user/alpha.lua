@@ -23,6 +23,7 @@ dashboard.section.header.val = {
   [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
   [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
 }
+
 dashboard.section.buttons.val = {
   dashboard.button("f", icons.documents.Files .. " Find file", ":Telescope find_files <CR>"),
   dashboard.button("e", icons.ui.NewFile .. " New file", ":ene <BAR> startinsert <CR>"),
@@ -48,9 +49,9 @@ end
 
 dashboard.section.footer.val = footer()
 
-dashboard.section.footer.opts.hl = "Comment"
-dashboard.section.header.opts.hl = "Type"
-dashboard.section.buttons.opts.hl = "Keyword"
+dashboard.section.header.opts.hl = "AlphaHeader"
+dashboard.section.buttons.opts.hl = "AlphaButtons"
+dashboard.section.footer.opts.hl = "AlphaFooter"
 
 dashboard.opts.opts.noautocmd = true
 -- vim.cmd([[autocmd User AlphaReady echo 'ready']])

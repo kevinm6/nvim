@@ -158,3 +158,7 @@
 	hi DiagnosticsVirtualTextInformation guifg=#ffcc66 ctermfg=221 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 	hi DiagnosticsVirtualTextHint guifg=#4fc1ff ctermfg=75 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
+" Section: Alpha
+	hi AlphaHeader guifg=#74D15C ctermfg=113
+	hi! link AlphaButtons Keyword
+	hi! link AlphaFooter Comment
