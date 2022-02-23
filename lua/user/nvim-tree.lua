@@ -3,7 +3,7 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
- -- Last Modified: 20/02/2022 - 20:39
+ -- Last Modified: 23/02/2022 - 09:20
  -------------------------------------
 
 vim.g.nvim_tree_icons = {
@@ -72,7 +72,9 @@ nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = true,
-  ignore_ft_on_setup = {},
+  ignore_ft_on_setup = {
+		 "alpha"
+	 },
   auto_close = false,
   open_on_tab = false,
   hijack_cursor = true,
