@@ -38,12 +38,8 @@ dashboard.section.buttons.val = {
   dashboard.button("c", icons.ui.Gear .. " Config", ":e ~/.config/nvim/init.lua <CR>"),
   dashboard.button("q", icons.diagnostics.Error .. " Quit", ":qa<CR>"),
 }
+
 local function footer()
-  -- NOTE: requires the fortune-mod package to work
-  -- local handle = io.popen("fortune")
-  -- local fortune = handle:read("*a")
-  -- handle:close()
-  -- return fortune
   return "https://github.com/kevinm6/nvim"
 end
 
