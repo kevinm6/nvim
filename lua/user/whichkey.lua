@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 23/02/2022 - 10:00
+-- Last Modified: 24/02/2022 - 09:59
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -182,6 +182,7 @@ local leader_maps = {
   -- Telescope
   t = {
     name = "Telescope",
+		o = { "<cmd>Telescope<cr>", "Open Telescope" },
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
