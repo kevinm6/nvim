@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 23/02/2022 - 09:27
+-- Last Modified: 24/02/2022 - 17:25
 --------------------------------------
 
 
@@ -29,6 +29,7 @@
 		"user.impatient",
 		"user.cmp",
 		"user.lsp",
+		"user.notify",
 		"user.telescope",
 		"user.treesitter",
 		"user.autopairs",
