@@ -3,12 +3,14 @@
  -- Description: StatusLine config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
- -- Last Modified: 13/01/22 - 09:53
+ -- Last Modified: 24/02/2022 - 11:00
  -------------------------------------
 
 
 -- Section: STATUS LINE {
 	local M = {}
+
+	local icons = require "user.icons"
 
 	M.trunc_width = setmetatable({
 		filename = 120,
@@ -50,12 +52,19 @@
 			return "..."
 		end
 
+		local errors = count[vim.diagnostic.severity.ERROR] or 0
+		local warnings = count[vim.diagnostic.severity.WARN] or 0
+		local infos = count[vim.diagnostic.severity.INFO] or 0
+		local hints = count[vim.diagnostic.severity.HINT] or 0
+
 		return string.format(
-			" X:%s !:%s ℹ:%s :%s ",
-			count[vim.diagnostic.severity.ERROR] or 0, count[vim.diagnostic.severity.WARN] or 0,
-			count[vim.diagnostic.severity.INFO] or 0, count[vim.diagnostic.severity.HINT] or 0
+				"%s %s %s %s",
+			 icons.diagnostics.Error .. ":" .. errors,
+			 icons.diagnostics.Warning .. ":" .. warnings,
+			 icons.diagnostics.Information .. ":" .. infos,
+			 icons.diagnostics.Hint .. ":" .. hints
 		)
-	end
+ end
 
 
 	M.get_git_status = function(self)
@@ -63,7 +72,7 @@
 		local is_head_empty = signs.head ~= ''
 
 		if self:is_truncated(self.trunc_width.git_status) then
-			return is_head_empty and string.format(' %s', signs.head or '') or ''
+			return is_head_empty and string.format(' %s', signs.head or "") or ""
 		end
 
 		return is_head_empty
@@ -100,12 +109,12 @@
 		})
 	end
 
-  M.inactive_status_line = function(self)
+  M.inactive_status_line = function()
     return '%= %f %='
   end
 
-  M.explorer_status_line = function(self)
-    return ' File Explorer '
+  M.explorer_status_line = function()
+    return '%= File Explorer %='
   end
 
 
