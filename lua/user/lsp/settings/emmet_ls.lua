@@ -7,7 +7,7 @@
 -------------------------------------
 
 return {
-	 cmd = { "ls_emmet", "--stdio" },
+	cmd = { "ls_emmet", "--stdio" },
   filetypes = {
     "html",
     "css",

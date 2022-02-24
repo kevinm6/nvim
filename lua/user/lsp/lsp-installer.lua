@@ -3,7 +3,7 @@
 -- Description: Lsp-Installer config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/lua/user/lsp/lsp-installer.lua
--- Last Modified: 19/02/2022 - 13:50
+-- Last Modified: 24/02/2022 - 11:15
 -------------------------------------
 
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -36,8 +36,6 @@ lsp_installer.on_server_ready(function(server)
 
 	if server.name == "jdtls" then
 		return
-		-- local jdtls_opts = require("user.lsp.settings.jdtls")
-		-- opts = vim.tbl_deep_extend("force", jdtls_opts, opts)
 	end
 
 	if server.name == "sqlls" then
