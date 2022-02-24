@@ -3,7 +3,7 @@
 -- Description: Telescope config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
--- Last Modified: 19/02/2022 - 10:31
+-- Last Modified: 24/02/2022 - 09:39
 -------------------------------------
 
 
@@ -13,15 +13,16 @@ if not status_ok then
 end
 
 local actions = require "telescope.actions"
+local icons = require ("user.icons")
+
 telescope.load_extension "fzf"
 telescope.load_extension "media_files"
 telescope.load_extension "lsp_handlers"
 telescope.load_extension "packer"
-telescope.load_extension "ui-select"
 
 telescope.setup {
   defaults = {
-    prompt_prefix = "   ",
+    prompt_prefix = icons.ui.Telescope .. "  ",
     selection_caret = "  ",
     path_display = { "smart" },
 
@@ -34,6 +35,7 @@ telescope.setup {
         ["<C-k>"] = actions.move_selection_previous,
 
         ["<C-c>"] = actions.close,
+        ["<esc>"] = actions.close,
 
         ["<Down>"] = actions.move_selection_next,
         ["<Up>"] = actions.move_selection_previous,
@@ -145,3 +147,6 @@ telescope.setup {
 		},
 	}
 }
+
+telescope.load_extension "ui-select"
+telescope.load_extension "file_browser"
