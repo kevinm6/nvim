@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 24/02/2022 - 17:25
+-- Last Modified: 25/02/2022 - 09:52
 --------------------------------------
 
 
@@ -14,9 +14,9 @@
 	end
 
 	if vim.fn.has("gui_vimr") == 1 then
-		vim.opt.shadafile = vim.fn.expand("~/.local/share/nvim/shada/gmain.shada")
+		vim.opt.shadafile = vim.fn.expand("~/.cache/nvim/shada/gmain.shada")
 	else
-		vim.opt.shadafile = vim.fn.expand("~/.local/share/nvim/shada/main.shada")
+		vim.opt.shadafile = vim.fn.expand("~/.cache/nvim/shada/main.shada")
 	end
 -- }
 

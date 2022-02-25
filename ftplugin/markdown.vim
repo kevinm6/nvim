@@ -1,14 +1,14 @@
 " ------------------------------------------------
 " File: markdown.vim
 " Description: Filetype markdown specific settings in lua (the file is vim for
-"								compatibility w/ tpope's plugin)
+"								compatibility w/ tpope's syntax markdown.vim file)
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ftplugin/markdown.vim
-" Last Modified: 21/12/21 - 15:31
+" Last Modified: 25/02/2022 - 11:54
 " ------------------------------------------------
 
 
-lua << EOF
+lua <<EOF
 	if vim.fn.exists("b:ftplugin_markdown") == 1 then
 			return
 	end
@@ -18,7 +18,6 @@ lua << EOF
 	vim.opt.shiftwidth = 2
 	vim.opt.expandtab = true
 
-	vim.opt.cindent = true
 	vim.opt.spell = false
-	vim.opt.spelllang = { 'en_US', 'it_IT' }
+  vim.opt.spellfile = '/Users/Kevin/.MacDotfiles/nvim/.config/nvim/spell/en.utf-8.add'
 EOF

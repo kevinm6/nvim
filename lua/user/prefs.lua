@@ -25,6 +25,7 @@
 		shell="/bin/bash",
 	-- Section: MOUSE
 		mouse = 'a',
+    fileencoding = "utf-8",
 
 	-- Section: GRAPHIC
 		termguicolors = true,
@@ -35,7 +36,6 @@
 		scrolloff = 4, -- # of line leave above and below cursor
 		sidescrolloff = 4, -- # of columns on the sides
 		mat = 2, -- tenths of second to blink during matching brackets
-		spell = false,
 		visualbell = false, -- disable visual sounds
 		cursorline = true, -- highlight cursor line
 		showmatch = true, -- Show matching brackets when over
@@ -83,7 +83,7 @@
 		undofile = true, -- enable undo
 		backup = false, -- disable backups
 		swapfile = false, -- disable swaps
-		undodir = os.getenv("HOME") .. "/.cache/nvim/tmp/undo",
+		undodir = vim.fn.expand("~/.cache/nvim/tmp/undo"),
 
 	-- Section: SEARCH
 		smartcase = true, -- smart case for search
