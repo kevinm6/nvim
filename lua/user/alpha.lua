@@ -33,6 +33,7 @@ dashboard.section.buttons.val = {
     "<cmd>lua require('telescope').extensions.projects.projects()<CR>"
   ),
   dashboard.button("p", icons.ui.Download .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
+  dashboard.button("l", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
   dashboard.button("g", " Git", "<cmd>WhichKey <leader>g <CR>"),
   dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
   dashboard.button("t", icons.ui.List .. " Find text", "<cmd>Telescope live_grep <CR>"),
