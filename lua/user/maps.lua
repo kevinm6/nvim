@@ -80,6 +80,7 @@
   keymap("n", "<C-r>", "<cmd>redraw!<CR>", opts)
 	keymap("n", "<esc><esc>", "<cmd>nohlsearch<CR>", opts)
   keymap("n", "Q", "<cmd>Bdelete<CR>", opts)
+	keymap("n", "<Tab>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 	keymap("n", "<S-l>", ":bnext<CR>", opts)
 	keymap("n", "<S-h>", ":bprevious<CR>", opts)
 	keymap("n", "<M-Left>", "b", opts)
