@@ -105,6 +105,7 @@ return {
 		Table = "",
 		Calendar = "",
 		Download = "",
+		Uni = "🎓",
 	},
 	diagnostics = {
 		Error = "",
