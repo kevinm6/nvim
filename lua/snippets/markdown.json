@@ -7,6 +7,31 @@
 			"$0"
     ],
     "description": "Markdown files head (info)"
-  }
+  },
+	"Right Arrow": {
+    "prefix": "rarr",
+    "body": [ "&rarr;" ],
+		"description": "Insert Right Arrow"
+  },
+	"Left Arrow": {
+    "prefix": "larr",
+    "body": [ "&larr;" ],
+		"description": "Insert Left Arrow"
+  },
+	"Up Arrow": {
+    "prefix": "uarr",
+    "body": [ "&uarr;" ],
+		"description": "Insert Up Arrow"
+  },
+	"Down Arrow": {
+    "prefix": "darr",
+    "body": [ "&darr;" ],
+		"description": "Insert Down Arrow"
+  },
+	"Double Arrow": {
+		"prefix": "rlarr",
+		"body": [ "&larr;&rarr;" ],
+		"descritption": "Insert Left and Right Arrow"
+	}
 }
 
