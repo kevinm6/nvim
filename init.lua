@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 25/02/2022 - 09:52
+-- Last Modified: 01/03/2022 - 20:40
 --------------------------------------
 
 
@@ -22,11 +22,11 @@
 
 -- Section: Config Files to source {
 	local modules = {
+		"user.impatient",
 		"user.prefs",
 		"user.maps",
 		"user.plugins",
 		"user.vars",
-		"user.impatient",
 		"user.cmp",
 		"user.lsp",
 		"user.notify",
@@ -44,8 +44,8 @@
 		"user.surround",
 		"user.renamer",
 		"user.registers",
-		"user.symbol-outline",
-		"user.alpha"
+		"user.alpha",
+		"user.symbol-outline"
 	}
 
 	for _, module in ipairs(modules) do

@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 01/03/2022 - 13:34
+-- Last Modified: 01/03/2022 - 20:44
 -------------------------------------
 
 
@@ -144,6 +144,7 @@ end
 		use "nvim-telescope/telescope-packer.nvim"
 		use "gbrlsnchs/telescope-lsp-handlers.nvim"
 		use "nvim-telescope/telescope-ui-select.nvim"
+		use "nvim-telescope/telescope-project.nvim"
 
 		-- database
 		use {
@@ -166,11 +167,7 @@ end
       "ahmedkhalf/jupyter-nvim",
       run = ":UpdateRemotePlugins",
       config = function()
-        require("jupyter-nvim").setup {
-          -- your configuration comes here
-          -- or leave it empty to use the default settings
-          -- refer to the configuration section below
-        }
+        require("jupyter-nvim").setup {}
       end
     }
 
