@@ -27,17 +27,13 @@ dashboard.section.header.val = {
 dashboard.section.buttons.val = {
   dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>Telescope find_files <CR>"),
   dashboard.button("e", icons.ui.NewFile .. " New file", "<cmd>ene <BAR> startinsert <CR>"),
-  -- dashboard.button(
-  --   "P",
-  --   icons.git.Repo .. " Find project",
-  --   "<cmd>lua require('telescope').extensions.projects.projects()<CR>"
-  -- ),
+  dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
+  dashboard.button( "R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
   dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
   dashboard.button("p", icons.ui.Packer .. " Plugin config", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
   dashboard.button("P", icons.ui.Packer .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
   dashboard.button("l", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
   dashboard.button("g", icons.ui.Git .. " Git", "<cmd>WhichKey <leader>g <CR>"),
-  dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
   dashboard.button("t", icons.ui.List .. " Find text", "<cmd>Telescope live_grep <CR>"),
   -- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
   dashboard.button("c", icons.ui.Gear .. " Config", "<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"),
