@@ -3,12 +3,12 @@
  -- Description: NeoVim & VimR global vars
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 22/02/2022 - 18:06
+ -- Last Modified: 01/03/2022 - 15:42
  -------------------------------------
 
 
 -- Section: Python {
-	vim.g.python3_host_prog = "/usr/local/bin/python3.9"
+	vim.g.python3_host_prog = "/usr/local/bin/python3.10"
 -- }
 
 
@@ -41,7 +41,8 @@
 		'cpp',
 		'pseudocode',
 		'php',
-		'sql'
+		'sql',
+		'sequence'
 	}
 
 	vim.g.markdown_folding = 1

@@ -162,10 +162,17 @@ end
 		}
 
     -- Python
-		use {
-			'dccsillag/magma-nvim',
-			run = ':UpdateRemotePlugins'
-		}
+    use {
+      "ahmedkhalf/jupyter-nvim",
+      run = ":UpdateRemotePlugins",
+      config = function()
+        require("jupyter-nvim").setup {
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+        }
+      end
+    }
 
 		-- markdown
 		use {
