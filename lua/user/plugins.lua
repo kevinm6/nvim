@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 28/02/2022 - 12:29
+-- Last Modified: 01/03/2022 - 13:34
 -------------------------------------
 
 
@@ -159,6 +159,12 @@ end
 				"sql"
 			},
 			cmd = ":DBUI"
+		}
+
+    -- Python
+		use {
+			'dccsillag/magma-nvim',
+			run = ':UpdateRemotePlugins'
 		}
 
 		-- markdown
