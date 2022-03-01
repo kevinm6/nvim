@@ -3,7 +3,7 @@
 -- Description: Telescope config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
--- Last Modified: 24/02/2022 - 09:39
+-- Last Modified: 01/03/2022 - 19:14
 -------------------------------------
 
 
@@ -19,6 +19,7 @@ telescope.load_extension "fzf"
 telescope.load_extension "media_files"
 telescope.load_extension "lsp_handlers"
 telescope.load_extension "packer"
+telescope.load_extension "project"
 
 telescope.setup {
   defaults = {
