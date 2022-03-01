@@ -3,7 +3,7 @@
 --	Description: K Neovim all icons
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/icons.lua
---	Last Modified: 24/02/2022 - 09:54
+--	Last Modified: 01/03/2022 - 09:56
 -----------------------------------
 
 
@@ -104,8 +104,12 @@ return {
 		ChevronRight = ">",
 		Table = "",
 		Calendar = "",
-		Download = "",
-		Uni = "🎓",
+		Download = "",
+		Packer = "練",
+		Uni = "",
+		Health = "♥️",
+		Git = "",
+		AppleSym = "",
 	},
 	diagnostics = {
 		Error = "",

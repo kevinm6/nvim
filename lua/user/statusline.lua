@@ -72,12 +72,12 @@
 		local is_head_empty = signs.head ~= ''
 
 		if self:is_truncated(self.trunc_width.git_status) then
-			return is_head_empty and string.format(' %s', signs.head or "") or ""
+			return is_head_empty and string.format(' %s', signs.head or "") or ""
 		end
 
 		return is_head_empty
 			and string.format(
-				'+%s ~%s -%s |  %s',
+				'+%s ~%s -%s |  %s',
 				signs.added, signs.changed, signs.removed, signs.head
 			)
 			or ''

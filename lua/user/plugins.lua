@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 24/02/2022 - 17:23
+-- Last Modified: 28/02/2022 - 12:29
 -------------------------------------
 
 
@@ -170,6 +170,7 @@ end
 			"iamcco/markdown-preview.nvim",
 			run = "cd app && yarn install",
 			ft = "markdown",
+			cmd = { "MarkdownPreview" }
 		}
 
 		-- pdf

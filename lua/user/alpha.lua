@@ -33,13 +33,14 @@ dashboard.section.buttons.val = {
   --   "<cmd>lua require('telescope').extensions.projects.projects()<CR>"
   -- ),
   dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
-  dashboard.button("p", icons.ui.Download .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
+  dashboard.button("p", icons.ui.Packer .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
   dashboard.button("l", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
-  dashboard.button("g", " Git", "<cmd>WhichKey <leader>g <CR>"),
+  dashboard.button("g", icons.ui.Git .. " Git", "<cmd>WhichKey <leader>g <CR>"),
   dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
   dashboard.button("t", icons.ui.List .. " Find text", "<cmd>Telescope live_grep <CR>"),
   -- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
   dashboard.button("c", icons.ui.Gear .. " Config", "<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"),
+  dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
   dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
 }
 
