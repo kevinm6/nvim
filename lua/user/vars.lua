@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR global vars
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 01/03/2022 - 15:42
+ -- Last Modified: 02/03/2022 - 09:58
  -------------------------------------
 
 
@@ -41,8 +41,7 @@
 		'cpp',
 		'pseudocode',
 		'php',
-		'sql',
-		'sequence'
+		'sql'
 	}
 
 	vim.g.markdown_folding = 1
