@@ -30,7 +30,7 @@ dashboard.section.buttons.val = {
   dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
   dashboard.button( "R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
   dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
-  dashboard.button("p", icons.ui.Packer .. " Plugin config", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
+  dashboard.button("p", icons.ui.Plugin .. " Plugin config", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
   dashboard.button("P", icons.ui.Packer .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
   dashboard.button("l", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
   dashboard.button("g", icons.ui.Git .. " Git", "<cmd>WhichKey <leader>g <CR>"),
