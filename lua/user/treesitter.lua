@@ -40,7 +40,7 @@ configs.setup({
 			"Gold",
 			"Orchid",
 			"DodgerBlue",
-			"LawnGreen",
+			-- "LawnGreen",
 			-- "Cornsilk",
 			-- "Salmon",
 		},
