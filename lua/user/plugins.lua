@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 01/03/2022 - 20:44
+-- Last Modified: 02/03/2022 - 09:38
 -------------------------------------
 
 
@@ -99,17 +99,25 @@ end
 		use "saadparwaiz1/cmp_luasnip"
 
 		-- coding helper
-		use {
-			"nvim-treesitter/nvim-treesitter",
-			run = ":TSUpdate"
-		}
-		use "nvim-treesitter/playground"
 		use "Mephistophiles/surround.nvim"
 		use {
 			"junegunn/goyo.vim",
 			run = ":Goyo"
 		}
+		use "br1anchen/nvim-colorizer.lua"
+
+		-- Treesitter
+		use {
+			"nvim-treesitter/nvim-treesitter",
+			run = ":TSUpdate"
+		}
+		use "nvim-treesitter/playground"
 		use "JoosepAlviste/nvim-ts-context-commentstring"
+		use "windwp/nvim-ts-autotag"
+		use "romgrk/nvim-treesitter-context"
+		use "SmiteshP/nvim-gps"
+		use "p00f/nvim-ts-rainbow"
+
 
 		-- git
 		use "tpope/vim-fugitive"
@@ -193,16 +201,17 @@ end
 		use {
 			"morhetz/gruvbox",
 			opt = true,
-			cmd = {
-				"colorscheme"
-			}
+			cmd = { "colorscheme" }
 		}
 		use {
 			"ChristianChiarulli/nvcode-color-schemes.vim",
 			opt = true,
-			cmd = {
-				"colorscheme"
-			}
+			cmd = { "colorscheme" }
+		}
+		use {
+			"Shatur/neovim-ayu",
+			opt = true,
+			cmd = { "colorscheme" }
 		}
 
 		if PACKER_BOOTSTRAP then
