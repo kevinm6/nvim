@@ -30,6 +30,7 @@
 		"user.cmp",
 		"user.lsp",
 		"user.notify",
+		"user.gps",
 		"user.telescope",
 		"user.treesitter",
 		"user.autopairs",
