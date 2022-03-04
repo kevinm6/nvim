@@ -24,9 +24,7 @@ end
 
 -- Section: PLUGINS {
 	local status_ok, packer = pcall(require, "packer")
-	if not status_ok then
-		return
-	end
+	if not status_ok then return end
 
 	packer.init({
 		package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
@@ -115,7 +113,10 @@ end
 		use "JoosepAlviste/nvim-ts-context-commentstring"
 		use "windwp/nvim-ts-autotag"
 		use "romgrk/nvim-treesitter-context"
-		use "SmiteshP/nvim-gps"
+		use {
+			"SmiteshP/nvim-gps",
+			requires = "nvim-treesitter/nvim-treesitter"
+		}
 		use "p00f/nvim-ts-rainbow"
 
 

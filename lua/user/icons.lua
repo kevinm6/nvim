@@ -3,21 +3,17 @@
 --	Description: K Neovim all icons
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/icons.lua
---	Last Modified: 01/03/2022 - 09:56
+--	Last Modified: 03/03/2022 - 21:22
 -----------------------------------
 
-
--- https://github.com/microsoft/vscode/blob/main/src/vs/base/common/codicons.ts
--- go to the above and then enter <c-v>u<unicode> and the symbold should appear
--- or go here and upload the font file: https://mathew-kurian.github.io/CharacterMap/
--- find more here: https://www.nerdfonts.com/cheat-sheet
+-- Font: SauceCodePro Nerd Font Mono
 
 return {
 	kind = {
 		Text = "",
-		-- Method = "m",
-		-- Function = "",
-		-- Constructor = "",
+		AltMethod = "",
+		AltFunction = "",
+		AltConstructor = "",
 		Method = "",
 		Function = "",
 		Constructor = "",
@@ -100,8 +96,17 @@ return {
 		Note = "",
 		BookMark = "",
 		Pencil = "",
-		-- ChevronRight = "",
-		ChevronRight = ">",
+		-- ChevronRight = "",
+		ChevronRight = "",
+		ChevronLeft = "",
+		BoldChevronRight = "",
+		BoldChevronLeft = "",
+		SlChevronRight = "⟩",
+		SlChevronLeft = "⟨",
+		SlArrowRight = "",
+		AltSlArrowRight = "",
+		SlArrowLeft = "",
+		AltSlArrowLeft = "",
 		Table = "",
 		Calendar = "",
 		Download = "",

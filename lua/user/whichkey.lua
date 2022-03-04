@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 24/02/2022 - 09:59
+-- Last Modified: 02/03/2022 - 11:45
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -100,6 +100,12 @@ local leader_maps = {
 			"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
 			"Buffers",
 		},
+	},
+	m = {
+		name = "Markdown",
+		o = { "<cmd>MarkdownPreview <CR>", "Start MarkdownPreview" },
+		s = { "<cmd>MarkdownPreviewStop <CR>", "Stop MarkdownPreview" },
+		t = { "<cmd>MarkdownPreviewToggle <CR>", "Toggle MarkdownPreview" }
 	},
 
   -- Renamer

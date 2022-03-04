@@ -8,12 +8,10 @@
 
 
 local status_ok, telescope = pcall(require, "telescope")
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 local actions = require "telescope.actions"
-local icons = require ("user.icons")
+local icons = require "user.icons"
 
 telescope.load_extension "fzf"
 telescope.load_extension "media_files"

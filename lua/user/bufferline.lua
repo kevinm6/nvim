@@ -3,13 +3,13 @@
  -- Description: Bufferline config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/bufferline.lua
- -- Last Modified: 13/01/22 - 09:49
+ -- Last Modified: 04/03/2022 - 09:08
  -------------------------------------
 
 local status_ok, bufferline = pcall(require, "bufferline")
-if not status_ok then
-  return
-end
+if not status_ok then return end
+
+local icons = require "user.icons"
 
 bufferline.setup {
   options = {
@@ -21,7 +21,7 @@ bufferline.setup {
     -- NOTE: this plugin is designed with this icon in mind,
     -- and so changing this is NOT recommended, this is intended
     -- as an escape hatch for people who canno bear it for whatever reason
-    indicator_icon = "▎",
+    indicator_icon =  icons.ui.AltSlArrowRight,--  "▎",
     buffer_close_icon = "",
     -- buffer_close_icon = '',
     modified_icon = "●",
@@ -89,11 +89,11 @@ bufferline.setup {
       guibg = { attribute = "bg", highlight = "TabLine" },
     },
 
-    -- buffer_selected = {
-    --   guifg = {attribute='fg',highlight='#ff0000'},
-    --   guibg = {attribute='bg',highlight='#0000ff'},
-    --   gui = 'none'
-    --   },
+		-- buffer_selected = {
+		--    guifg = {attribute='fg',highlight='#ff0000'},
+		--    guibg = {attribute='bg',highlight='#0000ff'},
+		--		gui = 'none'
+		-- },
     buffer_visible = {
       guifg = { attribute = "fg", highlight = "TabLine" },
       guibg = { attribute = "bg", highlight = "TabLine" },
@@ -107,10 +107,10 @@ bufferline.setup {
       guifg = { attribute = "fg", highlight = "TabLine" },
       guibg = { attribute = "bg", highlight = "TabLine" },
     },
-    -- close_button_selected = {
-    --   guifg = {attribute='fg',highlight='TabLineSel'},
-    --   guibg ={attribute='bg',highlight='TabLineSel'}
-    --   },
+    close_button_selected = {
+      guifg = { attribute = 'fg', highlight = 'Identifier' },
+      -- guibg = { attribute = 'bg', highlight = 'TabLine' }
+		},
 
     tab_selected = {
       guifg = { attribute = "fg", highlight = "Normal" },
@@ -122,7 +122,7 @@ bufferline.setup {
     },
     tab_close = {
       -- guifg = {attribute='fg',highlight='LspDiagnosticsDefaultError'},
-      guifg = { attribute = "fg", highlight = "TabLineSel" },
+      guifg = { attribute = "fg", highlight = "Boolean" },
       guibg = { attribute = "bg", highlight = "Normal" },
     },
 

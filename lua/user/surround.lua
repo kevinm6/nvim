@@ -7,9 +7,7 @@
 --------------------------------------
 
 local status_ok, surround = pcall(require, "surround")
-if not status_ok then
-	return
-end
+if not status_ok then return end
 
 surround.setup {
   context_offset = 100,

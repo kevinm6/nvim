@@ -36,12 +36,10 @@ vim.g.nvim_tree_special_files = {
 
 
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
-local lib = require("nvim-tree.lib")
-local view = require("nvim-tree.view")
+local lib = require "nvim-tree.lib"
+local view = require "nvim-tree.view"
 
 local function collapse_all()
     require("nvim-tree.actions.collapse-all").fn()
@@ -54,13 +52,13 @@ local function vsplit_preview()
 
 	-- Just copy what's done normally with vsplit
 	if node.link_to and not node.nodes then
-			require('nvim-tree.actions.open-file').fn(action, node.link_to)
+			require("nvim-tree.actions.open-file").fn(action, node.link_to)
 
 	elseif node.nodes ~= nil then
 			lib.expand_or_collapse(node)
 
 	else
-			require('nvim-tree.actions.open-file').fn(action, node.absolute_path)
+			require("nvim-tree.actions.open-file").fn(action, node.absolute_path)
 
 	end
 
@@ -128,6 +126,8 @@ nvim_tree.setup {
 				{ key = { "l", "<CR>", "o" }, action = "edit" },
 				{ key = { "-", "<BS>"}, action = "dir_up" },
 				{ key = "h", action = "close_node" },
+				{ key = "O", action = "system_open" },
+				{ key = "s", action = "split" },
 				{ key = "<C-h>", action = "collapse_all", action_cb = collapse_all },
 				{ key = "v", action = "vsplit" },
 				{ key = "L", action = "vsplit_preview", action_cb = vsplit_preview },

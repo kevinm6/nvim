@@ -3,13 +3,11 @@
 --	Description: colorizer plugin configuration
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/colorizer.lua
---	Last Modified: 02/03/2022 - 09:47
+--	Last Modified: 04/03/2022 - 10:42
 -----------------------------------
 
 local status_ok, colorizer = pcall(require, "colorizer")
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 colorizer.setup({ "*" }, {
   RGB = true, -- #RGB hex codes

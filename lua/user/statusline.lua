@@ -3,139 +3,141 @@
  -- Description: StatusLine config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
- -- Last Modified: 24/02/2022 - 11:00
+ -- Last Modified: 04/03/2022 - 18:40
  -------------------------------------
 
 
--- Section: STATUS LINE {
-	local M = {}
+local icons = require "user.icons"
 
-	local icons = require "user.icons"
+local status_gps_ok, gps = pcall(require, "nvim-gps")
+if not status_gps_ok then	return end
 
-	M.trunc_width = setmetatable({
-		filename = 120,
-		git_status = 90,
-		diagnostic = 120,
-		row_onTot = 60,
-	}, {
-		__index = function()
-			return 80
-		end
+
+local trunc_width = setmetatable({
+	filename = 120,
+	git_status = 90,
+	diagnostic = 130,
+	row_onTot = 60,
+	gps_loc = 80,
+}, {
+	__index = function()
+		return 80
+	end
+})
+
+
+local function is_truncated(width)
+	local current_width = vim.api.nvim_win_get_width(0)
+	return current_width < width
+end
+
+
+local function get_filename()
+	if is_truncated(trunc_width.filename) then return "%t" end
+	return "%<%f"
+end
+
+
+local function get_line_onTot()
+	if is_truncated(trunc_width.row_onTot) then return " %2*%l%3*÷%L " end
+	return " row %2*%l%3*÷%L "
+end
+
+
+local function get_lsp_diagnostic()
+	if is_truncated(trunc_width.diagnostic) then return "" end
+
+	local diagnostics = vim.diagnostic.get(0)
+	local count = { 0, 0, 0, 0 }
+
+	for _, diagnostic in ipairs(diagnostics) do
+		count[diagnostic.severity] = count[diagnostic.severity] + 1
+	end
+
+	local errors = icons.diagnostics.Error .. ":" .. (count[vim.diagnostic.severity.ERROR] or 0)
+	local warnings = icons.diagnostics.Warning .. ":" .. (count[vim.diagnostic.severity.WARN] or 0)
+	local infos = icons.diagnostics.Warning .. ":" .. (count[vim.diagnostic.severity.INFO] or 0)
+	local hints = icons.diagnostics.Hint .. ":" .. (count[vim.diagnostic.severity.HINT] or 0)
+
+	return string.format(
+		 "%s %s %s %s",
+		 errors, warnings, infos, hints)
+end
+
+
+local function get_git_status()
+	local signs = vim.b.gitsigns_status_dict or {head = "", added = 0, changed = 0, removed = 0}
+	local is_head_empty = signs.head ~= ""
+
+	if is_truncated(trunc_width.git_status) then
+		return is_head_empty and string.format(" %s ", signs.head or "") or ""
+	end
+
+	return is_head_empty
+		and string.format(
+			"+%s ~%s -%s |  %s ",
+			signs.added, signs.changed, signs.removed, signs.head
+		) or ""
+end
+
+
+local	function nvim_gps()
+	if (not gps.is_available()) or (is_truncated(trunc_width.gps_loc)) then return "" end
+	return gps.get_location()
+end
+
+
+Statusline = {}
+
+Statusline.active = function()
+	-- LeftSide
+	local bufN = '%1*%n' .. icons.ui.SlChevronRight
+	local git = '%2*'.. get_git_status()
+	local fname = '%1*' .. icons.ui.SlChevronRight .. ' ' .. get_filename() .. '%m '
+	local endLeftSide =	'%4*' .. icons.ui.SlArrowRight
+	-- Center & separators
+	local sideSep = '%='
+	-- RightSide
+	local endRightSide = '%4*' .. icons.ui.SlArrowLeft
+	local fencoding = '%3* %{&fileencoding?&fileencoding:&encoding}'
+	local ftype = '%1* %y'
+	local fformat = '%3* ' .. icons.ui.SlChevronLeft .. ' %{&ff}'
+
+	return table.concat({
+		-- Left Side
+		bufN, " ", git, fname, endLeftSide, " ", nvim_gps(),
+		-- Center & separators
+		sideSep,
+		get_lsp_diagnostic(), " ",
+		-- Right Side
+		endRightSide, fencoding, ftype,
+		fformat, " ", icons.ui.SlChevronLeft .. get_line_onTot()
 	})
+end
 
 
-	M.is_truncated = function(_, width)
-		local current_width = vim.api.nvim_win_get_width(0)
-		return current_width < width
-	end
+function Statusline.inactive()
+	return "%= %f %="
+end
 
 
-	M.get_filename = function (self)
-		if self:is_truncated(self.trunc_width.filename) then return "%t" end
-		return "%<%f"
-	end
-
-	M.get_line_onTot = function(self)
-		if self:is_truncated(self.trunc_width.row_onTot) then return '%l:%L ' end
-		return 'row %l / %L '
-	end
-
-	M.get_lsp_diagnostic = function(self)
-		local diagnostics = vim.diagnostic.get(0)
-		local count = { 0, 0, 0, 0 }
-
-		for _, diagnostic in ipairs(diagnostics) do
-			count[diagnostic.severity] = count[diagnostic.severity] + 1
-		end
-
-		if self:is_truncated(self.trunc_width.diagnostic) then
-			return "..."
-		end
-
-		local errors = count[vim.diagnostic.severity.ERROR] or 0
-		local warnings = count[vim.diagnostic.severity.WARN] or 0
-		local infos = count[vim.diagnostic.severity.INFO] or 0
-		local hints = count[vim.diagnostic.severity.HINT] or 0
-
-		return string.format(
-				"%s %s %s %s",
-			 icons.diagnostics.Error .. ":" .. errors,
-			 icons.diagnostics.Warning .. ":" .. warnings,
-			 icons.diagnostics.Information .. ":" .. infos,
-			 icons.diagnostics.Hint .. ":" .. hints
-		)
- end
+function Statusline.explorer()
+	return "%= File Explorer %="
+end
 
 
-	M.get_git_status = function(self)
-		local signs = vim.b.gitsigns_status_dict or {head = '', added = 0, changed = 0, removed = 0}
-		local is_head_empty = signs.head ~= ''
-
-		if self:is_truncated(self.trunc_width.git_status) then
-			return is_head_empty and string.format(' %s', signs.head or "") or ""
-		end
-
-		return is_head_empty
-			and string.format(
-				'+%s ~%s -%s |  %s',
-				signs.added, signs.changed, signs.removed, signs.head
-			)
-			or ''
-	end
-
-	M.active_status_line =  function(self)
-		local bufN = '%1*%n⟩ '
-		local git = '%2*'..self:get_git_status()
-		local fname = '%1* ⟩ '..self:get_filename()..'%m '
-		local endLeftSide =	'%4*'
-
-		local sideSep = '%='
-		local lspDiag = self:get_lsp_diagnostic()
-
-		local endRightSide = '%4*'
-		local fencoding = '%3* %{&fileencoding?&fileencoding:&encoding}'
-		local ftype = '%1* %y'
-		local fformat = '%3* ⟨ %{&ff}'
-		local rowOnTot = ' ⟨ '..self:get_line_onTot()
-
-		return table.concat({
-			-- Left Side
-			bufN, git, fname, endLeftSide,
-			-- Center & separators
-			sideSep, lspDiag, sideSep,
-			-- Right Side
-			endRightSide, fencoding, ftype,
-			fformat, rowOnTot
-		})
-	end
-
-  M.inactive_status_line = function()
-    return '%= %f %='
-  end
-
-  M.explorer_status_line = function()
-    return '%= File Explorer %='
-  end
+function Statusline.dashboard()
+	return "%= Dashboard %="
+end
 
 
-  Statusline = setmetatable(M, {
-    __call = function(statusline, mode)
-      if mode == "active" then return statusline:active_status_line() end
-      if mode == "inactive" then return statusline:inactive_status_line() end
-      if mode == "explorer" then return statusline:explorer_status_line() end
-    end
-  })
-
-
-  vim.api.nvim_exec([[
-    augroup Statusline
-    au!
-    au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline('active')
-    au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline('inactive')
-    au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline('explorer')
-    augroup END
-  ]], false)
-
--- }
-
+vim.api.nvim_exec([[
+	augroup Statusline
+	au!
+	au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()
+	au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline.inactive()
+	au WinEnter,BufEnter,FileType NvimTree* setlocal statusline=%!v:lua.Statusline.explorer()
+	au WinEnter,BufEnter,FileType alpha setlocal statusline=%!v:lua.Statusline.dashboard()
+	augroup END
+]], false)
 

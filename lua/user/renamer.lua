@@ -7,9 +7,7 @@
 -------------------------------------
 
 local status_ok, renamer = pcall(require, "renamer")
-if not status_ok then
-	return
-end
+if not status_ok then return end
 
 vim.api.nvim_set_keymap(
 	"i",

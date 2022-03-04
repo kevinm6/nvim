@@ -8,9 +8,7 @@
 
 
 local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-if not status_ok then
-	return
-end
+if not status_ok then return end
 
 configs.setup({
 	ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages

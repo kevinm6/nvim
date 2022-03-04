@@ -3,12 +3,12 @@
  -- Description: NeoVim & VimR global vars
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 02/03/2022 - 09:58
+ -- Last Modified: 04/03/2022 - 18:54
  -------------------------------------
 
 
 -- Section: Python {
-	vim.g.python3_host_prog = "/usr/local/bin/python3.10"
+	vim.g.python3_host_prog = "/usr/local/bin/python3.9"
 -- }
 
 
