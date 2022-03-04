@@ -3,14 +3,12 @@
 --	Description: alplha config for Neovim
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
---	Last Modified: 01/03/2022 - 13:36
+--	Last Modified: 04/03/2022 - 18:46
 -----------------------------------
 
 
 local status_ok, alpha = pcall(require, "alpha")
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 local icons = require "user.icons"
 
@@ -42,7 +40,7 @@ dashboard.section.buttons.val = {
 }
 
 local function footer()
-  return "https://github.com/kevinm6/nvim"
+  return icons.ui.BoldChevronLeft .. " https://github.com/kevinm6/nvim " .. icons.ui.BoldChevronRight
 end
 
 dashboard.section.footer.val = footer()
@@ -51,6 +49,7 @@ dashboard.section.header.opts.hl = "AlphaHeader"
 dashboard.section.buttons.opts.hl = "AlphaButtons"
 dashboard.section.footer.opts.hl = "AlphaFooter"
 
-dashboard.opts.opts.noautocmd = true
--- vim.cmd([[autocmd User AlphaReady echo 'ready']])
+dashboard.opts.opts.noautocmd = false
+vim.cmd [[ autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2 ]]
+
 alpha.setup(dashboard.opts)
