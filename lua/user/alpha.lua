@@ -3,7 +3,7 @@
 --	Description: alplha config for Neovim
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
---	Last Modified: 04/03/2022 - 18:46
+--	Last Modified: 05/03/2022 - 22:04
 -----------------------------------
 
 
@@ -26,10 +26,10 @@ dashboard.section.buttons.val = {
   dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>Telescope find_files <CR>"),
   dashboard.button("e", icons.ui.NewFile .. " New file", "<cmd>ene <BAR> startinsert <CR>"),
   dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
-  dashboard.button( "R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
+  dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
   dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
-  dashboard.button("p", icons.ui.Plugin .. " Plugin config", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
-  dashboard.button("P", icons.ui.Packer .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
+  dashboard.button("p", icons.ui.Packer .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
+  dashboard.button("P", icons.ui.Plugin .. " Plugin Configuration", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
   dashboard.button("l", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
   dashboard.button("g", icons.ui.Git .. " Git", "<cmd>WhichKey <leader>g <CR>"),
   dashboard.button("t", icons.ui.List .. " Find text", "<cmd>Telescope live_grep <CR>"),
