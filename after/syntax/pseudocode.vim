@@ -49,4 +49,4 @@ hi def link pseudoString        String
 hi def link pseudoBoolean       Boolean
 hi def link pseudoComment       Comment
 
-let b:current_syntax = 'pseudo'
+let b:current_syntax = 'pseudocode'
