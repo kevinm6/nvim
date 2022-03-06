@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 07/02/2022 - 17:42
+ -- Last Modified: 06/03/2022 - 12:16
  -------------------------------------
 
 
@@ -29,8 +29,8 @@
 
 	-- Section: GRAPHIC
 		termguicolors = true,
-		guifont = 'Sauce Code Pro Nerd Font Complete Mono:h13', -- font for gui-apps
-		clipboard = 'unnamedplus', -- allow neovim access to system clipboard
+		guifont = "Sauce Code Pro Nerd Font Complete Mono:h13", -- font for gui-apps
+		clipboard = "unnamedplus", -- allow neovim access to system clipboard
 		relativenumber = true, -- Show line numbers - relativenumber from current
 		showmode = true, -- show active mode in status line
 		scrolloff = 4, -- # of line leave above and below cursor
@@ -39,7 +39,7 @@
 		visualbell = false, -- disable visual sounds
 		cursorline = true, -- highlight cursor line
 		showmatch = true, -- Show matching brackets when over
-		signcolumn = 'yes', -- always show signcolumns
+		signcolumn = "yes", -- always show signcolumns
 		cmdheight = 2,	-- #lines for vim for commands/logs
 		pumheight = 16, -- popup menu height
 		pumblend = 8, -- popup menu transparency {0..100}
@@ -73,9 +73,9 @@
 	-- Section: FOLDING
 		wrap = true, -- Wrap long lines showing a linebreak
 		foldenable = true, -- enable code folding
-		foldmethod = 'syntax',
-		diffopt = { 'internal', 'filler', 'closeoff', 'vertical' },
-		foldcolumn = 'auto',	-- Add a bit extra margin to the Left
+		foldmethod = "syntax",
+		diffopt = { "internal", "filler", "closeoff", "vertical" },
+		foldcolumn = "auto",	-- Add a bit extra margin to the Left
 
 	-- Section: FILE MANAGEMENT
 		autowrite = true, -- write files
