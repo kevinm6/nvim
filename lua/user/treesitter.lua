@@ -3,7 +3,7 @@
 -- Description: TreeSitter config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/treesitter.lua
--- Last Modified: 02/03/2022 - 09:19
+-- Last Modified: 06/03/2022 - 12:28
 -------------------------------------
 
 
@@ -13,8 +13,7 @@ if not status_ok then return end
 configs.setup({
 	ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 	sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-	ignore_install = { "beancount", "bibtex", "c_sharp", "clojure", "cmake", "commonlisp", "cuda", "d", "dart", "eex", "elixir", "elm", "erlang", "fennel", "foam", "fortran", "fusion", "gdscript", "glimmer", "glsl", "gomod", "gowork", "haskell", "hcl", "heex", "hocon", "ledger", "ninja", "norg", "ocaml", "ocaml_interface", "ocamllex", "pioasm", "prisma", "pug", "r", "rasi", "rst", "scala", "sparql", "supercollider", "surface", "svelte", "teal", "tlaplus", "toml", "tsx", "turtle", "verilog", "yang", "zig"
-	},
+	ignore_install = {},
 	highlight = {
 		enable = true, -- false will disable the whole extension
 		disable = { "" }, -- list of language that will be disabled
@@ -38,8 +37,8 @@ configs.setup({
 			"Gold",
 			"Orchid",
 			"DodgerBlue",
+			"Cornsilk",
 			-- "LawnGreen",
-			-- "Cornsilk",
 			-- "Salmon",
 		},
 		disable = { "html" },
