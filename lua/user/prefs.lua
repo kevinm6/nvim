@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 06/03/2022 - 12:16
+ -- Last Modified: 07/03/2022 - 14:16
  -------------------------------------
 
 
@@ -63,6 +63,7 @@
 			"*.zip",
 			"*/.git/*",
 		}),
+		shortmess = vim.opt.shortmess:append("c"), -- do not pass messages to ins-completion-menu
 
 	-- Section: INDENTATION
 		smartindent = true, -- enable smart indentation
@@ -93,7 +94,4 @@
 	for k, v in pairs(options) do
 		vim.opt[k] = v
 	end
-
-
-	vim.opt.shortmess:append("c") -- do not pass messages to ins-completion-menu
 
