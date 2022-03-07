@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 02/03/2022 - 09:38
+-- Last Modified: 07/03/2022 - 21:00
 -------------------------------------
 
 
@@ -103,6 +103,7 @@ end
 			run = ":Goyo"
 		}
 		use "br1anchen/nvim-colorizer.lua"
+		use "RRethy/vim-illuminate"
 
 		-- Treesitter
 		use {
