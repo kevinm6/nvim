@@ -3,7 +3,7 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
- -- Last Modified: 23/02/2022 - 09:20
+ -- Last Modified: 07/03/2022 - 08:50
  -------------------------------------
 
 vim.g.nvim_tree_icons = {
@@ -126,14 +126,17 @@ nvim_tree.setup {
 				{ key = { "l", "<CR>", "o" }, action = "edit" },
 				{ key = { "-", "<BS>"}, action = "dir_up" },
 				{ key = "h", action = "close_node" },
+				{ key = "L", action = "cd" },
+				{ key = "]", action = "cd" },
 				{ key = "O", action = "system_open" },
 				{ key = "s", action = "split" },
 				{ key = "<C-h>", action = "collapse_all", action_cb = collapse_all },
 				{ key = "v", action = "vsplit" },
-				{ key = "L", action = "vsplit_preview", action_cb = vsplit_preview },
+				{ key = "V", action = "vsplit_preview", action_cb = vsplit_preview },
 				{ key = "p", action = "preview" },
 				{ key = "<C-p>", action = "parent_node" },
 				{ key = "?", action = "toggle_help" },
+				{ key = "<Esc>", action = "toggle_help" },
       },
     },
     number = false,
