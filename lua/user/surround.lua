@@ -3,7 +3,7 @@
 -- Description: Surround config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/surround.lua
--- Last Modified: 17/12/21 - 10:15
+-- Last Modified: 07/03/2022 - 11:36
 --------------------------------------
 
 local status_ok, surround = pcall(require, "surround")
@@ -19,7 +19,7 @@ surround.setup {
 	space_on_closing_char = false,
   pairs = {
     nestable = {{"(", ")"}, {"[", "]"}, {"{", "}"}},
-    linear = {{"'", "'"}, {"`", "`"}, {'"', '"'}}
+    linear = {{"'", "'"}, {"`", "`"}, {'"', '"'}, { "*", "*"}}
   },
   prefix = "s"
 }
