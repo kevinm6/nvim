@@ -3,7 +3,7 @@
 --	Description: alplha config for Neovim
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
---	Last Modified: 05/03/2022 - 22:04
+--	Last Modified: 06/03/2022 - 19:43
 -----------------------------------
 
 
@@ -28,7 +28,7 @@ dashboard.section.buttons.val = {
   dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
   dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
   dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
-  dashboard.button("p", icons.ui.Packer .. " Packer", "<cmd>WhichKey <leader>p <CR>"),
+  dashboard.button("p", icons.ui.Packer .. " Packer", "<cmd>PackerSync <CR>"),
   dashboard.button("P", icons.ui.Plugin .. " Plugin Configuration", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
   dashboard.button("l", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
   dashboard.button("g", icons.ui.Git .. " Git", "<cmd>WhichKey <leader>g <CR>"),
