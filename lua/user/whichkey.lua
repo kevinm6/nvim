@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 02/03/2022 - 11:45
+-- Last Modified: 07/03/2022 - 13:03
 -------------------------------------
 
 local status_ok, which_key = pcall(require, "which-key")
@@ -252,6 +252,8 @@ local leader_maps = {
 		name = "Nvim-Tree",
 		r = { "<cmd>NvimTreeRefresh<cr>", "Refresh Nvim-Tree" },
 		o = { "<cmd>NvimTreeOpen<cr>", "Open Nvim-Tree window" },
+		t = { "<cmd>NvimTreeToggle<cr>", "Toggle Nvim-Tree" },
+		f = { "<cmd>NvimTreeFocus<cr>", "Focus file in Nvim-Tree" },
 		c = { "<cmd>NvimTreeClose<cr>", "Close Nvim-Tree window" },
 		C = { "<cmd>NvimTreeClipboard<cr>", "Show Nvim-Tree clipboard" },
 	},
