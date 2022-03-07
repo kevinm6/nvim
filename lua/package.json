@@ -6,11 +6,7 @@
   "contributes": {
     "snippets": [
       {
-        "language": [
-          "all",
-          "markdown",
-          "global"
-        ],
+        "language": "all",
         "path": "./snippets/global.json"
       },
       {
