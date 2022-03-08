@@ -3,7 +3,7 @@
 -- Description: Keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/keymaps.lua
--- Last Modified: 08/03/2022 - 10:06
+-- Last Modified: 08/03/2022 - 11:31
 -------------------------------------
 
 
@@ -26,8 +26,8 @@ if vim.fn.has("gui_vimr") == 1 then -- VimR keymaps (command key and others)
 	keymap("n", "<C-Tab>", "gt", opts)
 	keymap("n", "<C-S-Tab>", "gT", opts)
 	-- move text
-	keymap("n", "<A-j>", "<Esc>:move .+1<CR>==gi", opts)
-	keymap("n", "<A-k>", "<Esc>:move .-2<CR>==gi", opts)
+	keymap("n", "ª", "<cmd>:move .+1<CR>==gi", opts) -- "ª" = "<A-j>"
+	keymap("n", "º", "<cmd>:move .-2<CR>==gi", opts) -- "º" = "<A-k>"
 
 	-- Insert-mode
 	keymap("i", "<D-Right>", "$", opts)
