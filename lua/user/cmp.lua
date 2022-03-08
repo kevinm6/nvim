@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 20/02/2022 - 20:52
+-- Last Modified: 08/03/2022 - 10:00
 -------------------------------------
 
 
@@ -22,7 +22,8 @@ local icons = require "user.icons"
 
 -- Sources
 require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").load({ paths = { vim.fn.expand("$NVIMDOTDIR/lua/") } })
+require("luasnip.loaders.from_vscode").load({ paths = { ("./lua/") } })
+
 
 
 -- Configuration
