@@ -24,7 +24,7 @@
 	local modules = {
 		"user.impatient",
 		"user.prefs",
-		"user.maps",
+		"user.keymaps",
 		"user.plugins",
 		"user.vars",
 		"user.cmp",
