@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 07/03/2022 - 21:00
+-- Last Modified: 10/03/2022 - 11:25
 -------------------------------------
 
 
@@ -174,13 +174,15 @@ end
 		}
 
     -- Python
-    use {
+    use { -- Render jupyter notebook (in alpha version)
       "ahmedkhalf/jupyter-nvim",
       run = ":UpdateRemotePlugins",
       config = function()
         require("jupyter-nvim").setup {}
       end
     }
+		use { "jupyter-vim/jupyter-vim" } -- work with Python envs and render in QTconsole
+		use { "bfredl/nvim-ipy" }
 
 		-- markdown
 		use {
