@@ -1,15 +1,19 @@
 -------------------------------------
 -- File: java.lua
--- Description:
+-- Description: java language server configuration
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/ftplugin/java.lua
--- Last Modified: 16/01/2022 - 12:28
+-- Last Modified: 12/03/2022 - 18:30
 -------------------------------------
 
 
-local status, jdtls = pcall(require, "jdtls")
-if not status then
-	print("Error jdtls")
+local ok, jdtls = pcall(require, "jdtls")
+if not ok then
+	require("notify")(
+		"  Error jdtls plugin config  ",
+		"Error",
+		{ timeout = 4600}
+	)
 	return
 end
 

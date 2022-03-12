@@ -3,11 +3,12 @@
 -- Description: Lua K NeoVim & VimR gitsigns config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/gitsigns.lua
--- Last Modified: 13/01/22 - 09:50
+-- Last Modified: 12/03/2022 - 16:23
 -------------------------------------
 
-local status_ok, gitsigns = pcall(require, "gitsigns")
-if not status_ok then return end
+local ok, gitsigns = pcall(require, "gitsigns")
+if not ok then return end
+
 
 gitsigns.setup {
   signs = {

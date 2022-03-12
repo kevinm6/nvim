@@ -3,12 +3,12 @@
  -- Description: Comment config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/comment.lua
- -- Last Modified: 13/01/22 - 09:50
+ -- Last Modified: 12/03/2022 - 16:07
  -------------------------------------
 
 
-local status_ok, comment = pcall(require, "Comment")
-if not status_ok then return end
+local ok, comment = pcall(require, "Comment")
+if not ok then return end
 
 comment.setup {
   pre_hook = function(ctx)

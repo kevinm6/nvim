@@ -3,11 +3,11 @@
 -- Description: Renamer config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/renamer.lua
--- Last Modified: 13/01/22 - 09:53
+-- Last Modified: 12/03/2022 - 17:31
 -------------------------------------
 
-local status_ok, renamer = pcall(require, "renamer")
-if not status_ok then return end
+local ok, renamer = pcall(require, "renamer")
+if not ok then return end
 
 vim.api.nvim_set_keymap(
 	"i",
@@ -15,13 +15,15 @@ vim.api.nvim_set_keymap(
 	'<cmd>lua require("renamer").rename({empty = true})<cr>',
 	{ noremap = true, silent = true }
 )
+
 vim.api.nvim_set_keymap(
 	"n",
 	"<F4>",
 	'<cmd>lua require("renamer").rename({empty = true})<cr>',
 	{ noremap = true, silent = true }
 )
-local mappings_utils = require("renamer.mappings.utils")
+
+local mappings_utils = require "renamer.mappings.utils"
 renamer.setup({
 	-- The popup title, shown if `border` is true
 	title = "Rename",

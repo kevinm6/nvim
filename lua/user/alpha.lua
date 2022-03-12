@@ -3,16 +3,16 @@
 --	Description: alplha config for Neovim
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
---	Last Modified: 08/03/2022 - 09:26
+--	Last Modified: 12/03/2022 - 12:18
 -----------------------------------
 
-
-local status_ok, alpha = pcall(require, "alpha")
-if not status_ok then return end
+local ok, alpha = pcall(require, "alpha")
+if not ok then return end
 
 local icons = require "user.icons"
 
 local dashboard = require "alpha.themes.dashboard"
+
 dashboard.section.header.val = {
   [[                               __                ]],
   [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
@@ -24,7 +24,7 @@ dashboard.section.header.val = {
 
 dashboard.section.buttons.val = {
   dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>Telescope find_files <CR>"),
-  dashboard.button("e", icons.ui.NewFile .. " New file", "<cmd>ene <BAR> startinsert <CR>"),
+  dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>ene <BAR> startinsert <CR>"),
   dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
   dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
   dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),

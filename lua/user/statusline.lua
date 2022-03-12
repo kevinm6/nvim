@@ -3,15 +3,14 @@
  -- Description: StatusLine config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
- -- Last Modified: 04/03/2022 - 18:40
+ -- Last Modified: 12/03/2022 - 17:34
  -------------------------------------
 
 
+local ok, gps = pcall(require, "nvim-gps")
+if not ok then return end
+
 local icons = require "user.icons"
-
-local status_gps_ok, gps = pcall(require, "nvim-gps")
-if not status_gps_ok then	return end
-
 
 local trunc_width = setmetatable({
 	filename = 120,

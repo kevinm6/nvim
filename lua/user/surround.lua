@@ -3,11 +3,11 @@
 -- Description: Surround config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/surround.lua
--- Last Modified: 07/03/2022 - 11:36
+-- Last Modified: 12/03/2022 - 18:02
 --------------------------------------
 
-local status_ok, surround = pcall(require, "surround")
-if not status_ok then return end
+local ok, surround = pcall(require, "surround")
+if not ok then return end
 
 surround.setup {
   context_offset = 100,

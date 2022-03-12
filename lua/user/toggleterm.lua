@@ -1,14 +1,15 @@
 -------------------------------------
--- File: whichkey.lua
+-- File: toggleterm.lua
 -- Descriptions: ToggleTerm config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/toggleterm.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/toggleterm.lua
--- Last Modified: 07/02/2022 - 18:54
+-- Last Modified: 12/03/2022 - 17:37
 -------------------------------------
 
-local status_ok, toggleterm = pcall(require, "toggleterm")
-if not status_ok then return end
+local ok, toggleterm = pcall(require, "toggleterm")
+if not ok then return end
+
 
 toggleterm.setup({
 	size = 20,

@@ -3,12 +3,12 @@
 -- Description: TreeSitter config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/treesitter.lua
--- Last Modified: 06/03/2022 - 12:28
+-- Last Modified: 12/03/2022 - 17:43
 -------------------------------------
 
 
-local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-if not status_ok then return end
+local ok, configs = pcall(require, "nvim-treesitter.configs")
+if not ok then return end
 
 configs.setup({
 	ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -22,7 +22,14 @@ configs.setup({
 	autopairs = {
 		enable = true,
 	},
-	indent = { enable = true, disable = { "css", "python", "yaml" } },
+	indent = {
+		enable = true,
+		disable = {
+			"css",
+			"python",
+			"yaml"
+		}
+	},
 	context_commentstring = {
 		enable = true,
 		enable_autocmd = true,

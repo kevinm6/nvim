@@ -3,15 +3,16 @@
 -- Description: Telescope config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
--- Last Modified: 01/03/2022 - 19:14
+-- Last Modified: 12/03/2022 - 17:36
 -------------------------------------
 
 
-local status_ok, telescope = pcall(require, "telescope")
-if not status_ok then return end
+local ok, telescope = pcall(require, "telescope")
+if not ok then return end
+
+local icons = require "user.icons"
 
 local actions = require "telescope.actions"
-local icons = require "user.icons"
 
 telescope.load_extension "fzf"
 telescope.load_extension "media_files"

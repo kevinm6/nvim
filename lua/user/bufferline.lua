@@ -3,13 +3,15 @@
  -- Description: Bufferline config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/bufferline.lua
- -- Last Modified: 04/03/2022 - 09:08
+ -- Last Modified: 12/03/2022 - 16:18
  -------------------------------------
 
-local status_ok, bufferline = pcall(require, "bufferline")
-if not status_ok then return end
+
+local ok, bufferline = pcall(require, "bufferline")
+if not ok then return end
 
 local icons = require "user.icons"
+
 
 bufferline.setup {
   options = {

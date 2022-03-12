@@ -3,11 +3,11 @@
 -- Description: Lua K NeoVim & VimR autopairs config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autopairs.lua
--- Last Modified: 18/01/2022 - 09:44
+-- Last Modified: 12/03/2022 - 16:18
 -------------------------------------
 
-local status_ok, npairs  = pcall(require, "nvim-autopairs")
-if not status_ok then return end
+local ok, npairs = pcall(require, "nvim-autopairs")
+if not ok then return end
 
 npairs.setup {
 	check_ts = true,

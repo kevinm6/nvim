@@ -1,9 +1,9 @@
 -----------------------------------
 -- File: handlers.lua
--- Description: Lsp handlers config
+-- Description: Lsp handlers file, to manage various lsp behaviours config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 14/02/2022 - 13:56
+-- Last Modified: 12/03/2022 - 18:28
 -------------------------------------
 
 

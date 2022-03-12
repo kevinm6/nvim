@@ -1,15 +1,13 @@
 -------------------------------------
 -- File: init.lua
--- Description:
+-- Description: lsp function signature configuration
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 21/12/21 - 19:49
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/lsp-signature.lua
+-- Last Modified: 12/03/2022 - 18:27
 -------------------------------------
 
-local status_ok, signature = pcall(require, "lsp_signature")
-if not status_ok then
-  return
-end
+local ok, signature = pcall(require, "lsp_signature")
+if not ok then return end
 
 local icons = require "user.icons"
 

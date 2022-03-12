@@ -3,13 +3,14 @@
 --	Description: gps plugin config
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/gps.lua
---	Last Modified: 02/03/2022 - 10:04
+--	Last Modified: 12/03/2022 - 16:25
 -----------------------------------
 
-local status_gps_ok, gps = pcall(require, "nvim-gps")
-if not status_gps_ok then return end
+local ok, gps = pcall(require, "nvim-gps")
+if not ok then return end
 
 local icons = require "user.icons"
+
 
 -- Customized config
 gps.setup {

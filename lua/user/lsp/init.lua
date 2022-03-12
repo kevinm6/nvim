@@ -1,17 +1,14 @@
 -------------------------------------
 -- File: init.lua
--- Description:
+-- Description: config all module to be imported
 -- Author: Kevin
--- Source: https://github.com/kevinm6/
--- Last Modified: 21/12/21 - 19:49
+-- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/init.lua
+-- Last Modified: 12/03/2022 - 18:25
 -------------------------------------
 
 
-
-local status_ok, _ = pcall(require, "lspconfig")
-if not status_ok then
-  return
-end
+local ok, _ = pcall(require, "lspconfig")
+if not ok then return end
 
 require "user.lsp.lsp-signature"
 require "user.lsp.lsp-installer"

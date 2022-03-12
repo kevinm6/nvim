@@ -3,11 +3,11 @@
 --	Description: notify plugin configuration
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/notify.lua
---	Last Modified: 24/02/2022 - 17:25
+--	Last Modified: 12/03/2022 - 17:20
 -----------------------------------
 
-local status_ok, notify = pcall(require, "notify")
-if not status_ok then return end
+local ok, notify = pcall(require, "notify")
+if not ok then return end
 
 local icons = require "user.icons"
 

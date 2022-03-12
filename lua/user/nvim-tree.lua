@@ -3,26 +3,32 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
- -- Last Modified: 07/03/2022 - 08:50
+ -- Last Modified: 12/03/2022 - 17:23
  -------------------------------------
+
+
+local ok, nvim_tree = pcall(require, "nvim-tree")
+if not ok then return end
+
+local icons = require "user.icons"
 
 vim.g.nvim_tree_icons = {
   default = " ",
   symlink = " ",
   git = {
-		unstaged = "✗",
-    staged = "✓",
-    unmerged = "",
-    renamed = "➜",
-    untracked = "★",
-    deleted = "",
-		ignored = "◌",
+		unstaged = icons.git.unstaged,
+    staged = icons.git.staged,
+    unmerged = icons.git.unmerged,
+    renamed = icons.git.renamed,
+    untracked = icons.git.untracked,
+    deleted = icons.git.deleted,
+		ignored = icons.git.ignored,
 	},
   folder = {
 		-- arrow_open = " ",
 		-- arrow_close = " ",
-		default = " ",
-		open = " ",
+		default = icons.kind.Folder,
+		open = icons.documents.OpenFolder,
     empty = " ",
     empty_open = " ",
     symlink = " ",
@@ -34,9 +40,6 @@ vim.g.nvim_tree_special_files = {
 	["README.md"] = true
 }
 
-
-local status_ok, nvim_tree = pcall(require, "nvim-tree")
-if not status_ok then return end
 
 local lib = require "nvim-tree.lib"
 local view = require "nvim-tree.view"
@@ -70,9 +73,7 @@ nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = true,
-  ignore_ft_on_setup = {
-		 "alpha"
-	 },
+  ignore_ft_on_setup = { "alpha" },
   auto_close = false,
   open_on_tab = false,
   hijack_cursor = true,
@@ -84,16 +85,11 @@ nvim_tree.setup {
   diagnostics = {
     enable = true,
     icons = {
-			-- hint = " ",
-			-- info = " ",
-			-- warning = " ",
-			-- error = " ",
-			-- question = " ",
-			hint = "",
-			info = "¡",
-			warning = "!",
-			error = "𝒙",
-			question = "?",
+			hint = icons.diagnostics.Hint,
+			info = icons.diagnostics.Information,
+			warning = icons.diagnostics.Warning,
+			error = icons.diagnostics.Error,
+			question = icons.diagnostics.Question,
      },
   },
   update_focused_file = {
@@ -143,7 +139,7 @@ nvim_tree.setup {
     relativenumber = true,
   },
   trash = {
-    cmd = "trash",
+    cmd = "mv",
     require_confirm = true,
   },
   quit_on_open = 0,

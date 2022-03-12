@@ -3,27 +3,26 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 08/03/2022 - 10:00
+-- Last Modified: 12/03/2022 - 17:28
 -------------------------------------
 
+local ok_cmp, cmp = pcall(require, "cmp")
+if not ok_cmp then return end
 
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then return end
+local ok_luasnip, luasnip = pcall(require, "luasnip")
+if not ok_luasnip then return end
 
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then return end
+local icons = require "user.icons"
+
 
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
-local icons = require "user.icons"
-
 -- Sources
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").load({ paths = { ("./lua/") } })
-
 
 
 -- Configuration
@@ -142,3 +141,12 @@ cmp.setup.cmdline(':', {
 		{ name = 'cmdline' }
 	})
 })
+
+-- this should avoid jump to
+-- previous aborted snippet after moving elsewhere
+luasnip.config.set_config {
+  history = true,
+  updateevents = "TextChanged,TextChangedI",
+  delete_check_events = "TextChanged", -- or maybe "InsertLeave"
+--  region_check_events = "CursorMoved", -- or maybe "InsertEnter"
+}
