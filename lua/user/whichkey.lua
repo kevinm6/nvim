@@ -4,13 +4,12 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 07/03/2022 - 13:03
+-- Last Modified: 11/03/2022 - 16:04
 -------------------------------------
 
-local status_ok, which_key = pcall(require, "which-key")
-if not status_ok then
-  return
-end
+local ok, which_key = pcall(require, "which-key")
+if not ok then return end
+
 
 local setup = {
   plugins = {
@@ -81,7 +80,7 @@ local nosilent_opts = {
 
 
 local leader_maps = {
-  w = { "<cmd>w!<CR>", "Save" },
+  w = { "<cmd>update!<CR>", "Save" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
 	z = { "<cmd>update<cr> | <cmd>Bdelete<cr>", "Save and Close Buffer" },
