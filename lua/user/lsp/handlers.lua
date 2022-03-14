@@ -3,7 +3,7 @@
 -- Description: Lsp handlers file, to manage various lsp behaviours config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 12/03/2022 - 18:28
+-- Last Modified: 14/03/2022 - 08:51
 -------------------------------------
 
 
@@ -57,8 +57,8 @@ end
 local function lsp_highlight_document(client)
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
-		local status_ok, illuminate = pcall(require, "illuminate")
-    if not status_ok then return end
+		local illuminate_ok, illuminate = pcall(require, "illuminate")
+    if not illuminate_ok then return end
     illuminate.on_attach(client)
   end
 end

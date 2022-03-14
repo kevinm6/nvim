@@ -48,7 +48,8 @@ local modules = {
 	"user.registers",
 	"user.alpha",
 	"user.symbol-outline",
-	"user.colorizer"
+	"user.colorizer",
+	"user.illuminate"
 }
 
 for _, module in ipairs(modules) do
