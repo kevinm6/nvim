@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 12/03/2022 - 17:28
+-- Last Modified: 14/03/2022 - 17:50
 -------------------------------------
 
 local ok_cmp, cmp = pcall(require, "cmp")
@@ -25,7 +25,15 @@ require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").load({ paths = { ("./lua/") } })
 
 
--- Configuration
+ -- Luasnip Configuration
+luasnip.config.set_config({
+	history = true,
+	updateevents = "TextChanged, TextChangedI",
+	delete_check_events = "TextChanged",
+})
+
+
+-- Cmp Configuration
 cmp.setup ({
 	snippet = {
 		expand = function(args)
@@ -49,10 +57,10 @@ cmp.setup ({
 		['<Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			elseif luasnip.expandable() then
-				luasnip.expand()
-			elseif luasnip.expand_or_jumpable() then
+			elseif luasnip.expand_or_locally_jumpable() then
 				luasnip.expand_or_jump()
+			elseif luasnip.has_words_before() then
+				cmp.complete()
 			elseif check_backspace() then
 				fallback()
 			else
@@ -76,15 +84,6 @@ cmp.setup ({
 		format = function(entry, vim_item)
 		-- Kind icons
 		vim_item.kind = string.format("%s", icons.kind[vim_item.kind])
-
-      if entry.source.name == "cmp_tabnine" then
-        -- if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-        -- menu = entry.completion_item.data.detail .. " " .. menu
-        -- end
-        vim_item.kind = icons.misc.Robot
-      end
-      -- vim_item.kind = string.format('%s %s', icons.kind[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      -- NOTE: order matters
 		vim_item.menu = ({
 			-- nvim_lsp = "[LSP]",
 			-- nvim_lua = "[Nvim]",
@@ -104,13 +103,11 @@ cmp.setup ({
 	end,
 	},
 	sources = {
-		{ name = 'nvim_lsp' },
-		{ name = 'luasnip' },
-		{ name = 'buffer' },
-		{ name = 'path' },
-		{ name = 'cmdline' },
-		-- { name = 'vim-snippets' }
-		-- { name = 'ultisnips' },
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+		{ name = "buffer" },
+		{ name = "path" },
+		{ name = "cmdline" },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
@@ -129,24 +126,16 @@ cmp.setup ({
 -- Use buffer source for `/`
 cmp.setup.cmdline('/', {
 	sources = {
-		{ name = 'buffer' }
+		{ name = "buffer" }
 	}
 })
 
 -- Use cmdline & path source for '/'
 cmp.setup.cmdline(':', {
 	sources = cmp.config.sources({
-		{ name = 'path' }
+		{ name = "path" }
 	}, {
-		{ name = 'cmdline' }
+		{ name = "cmdline" }
 	})
 })
 
--- this should avoid jump to
--- previous aborted snippet after moving elsewhere
-luasnip.config.set_config {
-  history = true,
-  updateevents = "TextChanged,TextChangedI",
-  delete_check_events = "TextChanged", -- or maybe "InsertLeave"
---  region_check_events = "CursorMoved", -- or maybe "InsertEnter"
-}
