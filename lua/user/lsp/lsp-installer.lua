@@ -33,7 +33,6 @@ lsp_installer.on_server_ready(function(server)
 	end
 
 	if server.name == "jdtls" then
-		require("notify")("  Starting jdtls server...  ", "Information")
 		return
 	end
 
