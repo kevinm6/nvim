@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 11/03/2022 - 16:04
+-- Last Modified: 14/03/2022 - 17:57
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -104,7 +104,8 @@ local leader_maps = {
 		name = "Markdown",
 		o = { "<cmd>MarkdownPreview <CR>", "Start MarkdownPreview" },
 		s = { "<cmd>MarkdownPreviewStop <CR>", "Stop MarkdownPreview" },
-		t = { "<cmd>MarkdownPreviewToggle <CR>", "Toggle MarkdownPreview" }
+		t = { "<cmd>MarkdownPreviewToggle <CR>", "Toggle MarkdownPreview" },
+		m = { "<cmd>Glow <CR>", "Floating Markdown Preview (Glow)" }
 	},
 
   -- Renamer
