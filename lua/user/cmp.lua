@@ -59,7 +59,7 @@ cmp.setup ({
 				cmp.select_next_item()
 			elseif luasnip.expand_or_locally_jumpable() then
 				luasnip.expand_or_jump()
-			elseif check_backspace() or luasnip.in_snippet() == nil then
+			elseif check_backspace() or not luasnip.in_snippet() then
 				fallback()
 			else
 				fallback()
