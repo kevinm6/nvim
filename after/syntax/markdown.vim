@@ -28,6 +28,7 @@ unlet! s:type
 
 syn sync minlines=10
 syn case ignore
+syn sync linebreaks=1
 
 syn match markdwnValid '[<>]\S\@!'
 syn match markdownValid '&\%(#\=\w*;\)\@!'

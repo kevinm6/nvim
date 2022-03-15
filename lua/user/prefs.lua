@@ -33,8 +33,8 @@
 		clipboard = "unnamedplus", -- allow neovim access to system clipboard
 		relativenumber = true, -- Show line numbers - relativenumber from current
 		showmode = true, -- show active mode in status line
-		scrolloff = 4, -- # of line leave above and below cursor
-		sidescrolloff = 4, -- # of columns on the sides
+		scrolloff = 6, -- # of line leave above and below cursor
+		sidescrolloff = 6, -- # of columns on the sides
 		mat = 2, -- tenths of second to blink during matching brackets
 		visualbell = false, -- disable visual sounds
 		cursorline = true, -- highlight cursor line
@@ -69,10 +69,12 @@
 		smartindent = true, -- enable smart indentation
 		tabstop = 2,
 		softtabstop = -1,
-		shiftwidth = 0, -- set tabs
+		expandtab = true, -- convert tabs to spaces
+		shiftwidth = 2, -- number of spaces for indentation
 
 	-- Section: FOLDING
-		wrap = true, -- Wrap long lines showing a linebreak
+		wrap = false, -- Wrap long lines showing a linebreak
+		numberwidth = 4,
 		foldenable = true, -- enable code folding
 		foldmethod = "syntax",
 		diffopt = { "internal", "filler", "closeoff", "vertical" },
