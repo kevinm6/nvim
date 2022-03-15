@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 07/03/2022 - 14:16
+ -- Last Modified: 15/03/2022 - 16:17
  -------------------------------------
 
 
@@ -46,13 +46,13 @@
 		splitbelow = true, -- split below in horizontal split
 		splitright = true, -- split right in vertical split
 		updatetime = 300, -- lower than default for faster completion
-		listchars = { tab = "⇥ ", eol = "↲", trail = "~" },
-		timeoutlen = 240,
+		listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_" },
+		timeoutlen = 100,
 		ttimeoutlen = 50,
 		lazyredraw = true,
 		completeopt = { "menu", "menuone", "noselect"},
 		matchpairs = vim.opt.matchpairs:append("<:>"),
-		wildignore = vim.opt.wildignore:append({
+		wildignore = {
 			"*.DS_Store",
 			"*.bak",
 			"*.gif",
@@ -62,7 +62,7 @@
 			"*.swp",
 			"*.zip",
 			"*/.git/*",
-		}),
+		},
 		shortmess = vim.opt.shortmess:append("c"), -- do not pass messages to ins-completion-menu
 
 	-- Section: INDENTATION
@@ -74,11 +74,11 @@
 
 	-- Section: FOLDING
 		wrap = false, -- Wrap long lines showing a linebreak
-		numberwidth = 4,
 		foldenable = true, -- enable code folding
 		foldmethod = "syntax",
 		diffopt = { "internal", "filler", "closeoff", "vertical" },
 		foldcolumn = "auto",	-- Add a bit extra margin to the Left
+    colorcolumn = "120",
 
 	-- Section: FILE MANAGEMENT
 		autowrite = true, -- write files
@@ -90,6 +90,10 @@
 
 	-- Section: SEARCH
 		smartcase = true, -- smart case for search
+    ignorecase = true,
+
+    whichwrap = vim.opt.whichwrap:append { "<",">","[","]","h","l" },
+    formatoptions = vim.opt.formatoptions:remove { "c","r","o" }
 	}
 
 	-- Sets all options to desired value
