@@ -3,7 +3,7 @@
 -- Description: Lsp-Installer config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/lua/user/lsp/lsp-installer.lua
--- Last Modified: 24/02/2022 - 11:15
+-- Last Modified: 15/03/2022 - 11:04
 -------------------------------------
 
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -33,6 +33,7 @@ lsp_installer.on_server_ready(function(server)
 	end
 
 	if server.name == "jdtls" then
+		require("notify")("  Starting jdtls server...  ", "Information")
 		return
 	end
 
