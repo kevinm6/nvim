@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 14/03/2022 - 17:50
+-- Last Modified: 15/03/2022 - 14:08
 -------------------------------------
 
 local ok_cmp, cmp = pcall(require, "cmp")
@@ -59,9 +59,7 @@ cmp.setup ({
 				cmp.select_next_item()
 			elseif luasnip.expand_or_locally_jumpable() then
 				luasnip.expand_or_jump()
-			elseif luasnip.has_words_before() then
-				cmp.complete()
-			elseif check_backspace() then
+			elseif check_backspace() or luasnip.in_snippet() == nil then
 				fallback()
 			else
 				fallback()
@@ -126,7 +124,11 @@ cmp.setup ({
 -- Use buffer source for `/`
 cmp.setup.cmdline('/', {
 	sources = {
-		{ name = "buffer" }
+		{
+			{ name = "buffer" }
+		}, {
+			{ name = "buffer" }
+		}
 	}
 })
 
