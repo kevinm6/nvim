@@ -92,7 +92,7 @@
 		smartcase = true, -- smart case for search
     ignorecase = true,
 
-    whichwrap = vim.opt.whichwrap:append { "<",">","[","]","h","l" },
+    whichwrap = vim.opt.whichwrap:append "<,>,[,],h,l",
     formatoptions = vim.opt.formatoptions:remove { "c","r","o" }
 	}
 

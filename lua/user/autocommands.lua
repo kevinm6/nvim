@@ -11,7 +11,7 @@ vim.cmd [[
 	augroup general_settings
 		autocmd!
 		autocmd FileType qf,help,man,lspinfo,git nnoremap <silent> <buffer> q :close<CR>
-    autocmd YankPost * silent! lua vim.highlight.on_yank()
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 
 	" Markdown
 		autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.md setlocal filetype=markdown 
