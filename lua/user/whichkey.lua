@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 15/03/2022 - 13:43
+-- Last Modified: 17/03/2022 - 09:57
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -327,8 +327,8 @@ local Zopts = {
 
 
 local Zmappings = {
-	Z = { "<cmd>update<cr> | <cmd>Bdelete<cr>", "Save and Close buffer" },
-	Q = { "<cmd>Bdelete<cr> | <cmd>bnext<cr>", "Close buffer and go to next" },
+	Z = { "<cmd>update<cr> | <cmd>Bdelete<cr> | <cmd>bnext<cr>", "Save and Close buffer" },
+	Q = { "<cmd>quit!<cr>", "Close buffer and go to next" },
 	A = { "<cmd>%bdelete<cr>", "Close all Buffers" },
 }
 
