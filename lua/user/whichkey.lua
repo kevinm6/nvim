@@ -329,7 +329,7 @@ local Zopts = {
 local Zmappings = {
 	Z = { "<cmd>update<cr> | <cmd>Bdelete<cr> | <cmd>bnext<cr>", "Save and Close buffer" },
 	Q = { "<cmd>quit!<cr>", "Close buffer and go to next" },
-	A = { "<cmd>%bdelete<cr>", "Close all Buffers" },
+	A = { "<cmd>%bdelete<cr> | <cmd>Alpha<cr>", "Close all Buffers" },
 }
 
 
