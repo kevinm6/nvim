@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 17/03/2022 - 09:57
+-- Last Modified: 17/03/2022 - 10:46
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -83,7 +83,7 @@ local leader_maps = {
   w = { "<cmd>update!<CR>", "Save" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-	z = { "<cmd>update<cr> | <cmd>Bdelete<cr>", "Save and Close Buffer" },
+	z = { ":update<cr>:Bdelete<cr>:bnext<cr>", "Save and Close Buffer" },
 	q = { "<cmd>quit<cr>", "Quit" },
 	a = { "<cmd>Alpha<cr>", "Alpha Dashboard"},
 
@@ -327,9 +327,9 @@ local Zopts = {
 
 
 local Zmappings = {
-	Z = { "<cmd>update<cr> | <cmd>Bdelete<cr> | <cmd>bnext<cr>", "Save and Close buffer" },
+	Z = { ":update<cr>:Bdelete<cr>:bnext<cr>", "Save and Close buffer" },
 	Q = { "<cmd>quit!<cr>", "Close buffer and go to next" },
-	A = { "<cmd>%bdelete<cr> | <cmd>Alpha<cr>", "Close all Buffers" },
+	A = { ":%bdelete<cr>:Alpha<CR>", "Close all Buffers" },
 }
 
 
