@@ -3,7 +3,7 @@
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 13/01/22 - 19:17
+" Last Modified: 18/03/2022 - 19:37
 " -------------------------------
 
 
@@ -15,7 +15,7 @@
 " Section: Modes
 	hi Normal guifg=#d0d0d0 guibg=#141414 ctermfg=252 ctermbg=233
 	hi Visual gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
-	" Selection Not Owne by vim
+	" Selection Not-Owned by Vim
 	hi VisualNOS gui=NONE guifg=#244E7A guibg=NONE cterm=NONE ctermfg=25 ctermbg=NONE
 
 	hi ModeMsg guifg=DeepSkyBlue3 guibg=NONE ctermfg=31 ctermbg=NONE
@@ -28,12 +28,12 @@
 
 " Section: Cursor
 	" set guicursor=n-v-i:blinkwait700-blinkon400-blinkoff250
-	hi Cursor gui=NONE guibg=fg guifg=bg cterm=NONE ctermbg=fg ctermfg=bg
+	hi Cursor gui=reverse guibg=NONE guifg=NONE cterm=reverse ctermbg=NONE ctermfg=NONE
 	hi LineNr guifg=#626262 guibg=#141414 ctermfg=241 ctermbg=232 
 	hi Cursorline gui=NONE guifg=NONE guibg=grey15 cterm=NONE ctermfg=NONE ctermbg=235
 	hi CursorLineNr guibg=NONE guifg=#36FF5A  gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
-	hi HighlightedyankRegion gui=reverse guibg=NONE cterm=reverse ctermbg=NONE
+	hi HighlightedyankRegion gui=reverse guibg=NONE guifg=NONE cterm=reverse ctermbg=NONE ctermfg=NONE
 
 " Section: Split
 	hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
@@ -129,7 +129,7 @@
 	hi WarningMsg guifg=#ff5f00 ctermfg=202
 	
 " Section: Popup Menu
-	hi Pmenu ctermfg=253 ctermbg=236 cterm=None guifg=#DCDCDC guibg=#303030
+	hi Pmenu ctermfg=253 ctermbg=236 cterm=NONE guifg=#DCDCDC guibg=#303030
 	hi PmenuSel gui=Bold guifg=#36FF5A guibg=#444444 cterm=bold ctermfg=42 ctermbg=238
 	hi PmenuSbar guibg=#ff0000 ctermbg=9
 	hi PmenuThumb guifg=#800080 ctermfg=5
@@ -140,9 +140,9 @@
 
 " Section: Lsp
 	hi FloatBorder guibg=grey15 ctermbg=235
-	hi LspReferenceText gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
-	hi LspReferenceWrite gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
-	hi LspReferenceRead gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
+	hi LspReferenceText gui=NONE guifg=NONE guibg=grey27 cterm=NONE ctermfg=NONE ctermbg=238
+	hi LspReferenceWrite gui=NONE guibg=grey42 cterm=NONE ctermbg=242
+	hi LspReferenceRead gui=NONE guibg=grey23 cterm=NONE ctermbg=237
 
 " Section: Lsp Diagnostic
 	hi DiagnosticError guifg=#f44747 ctermfg=203 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
