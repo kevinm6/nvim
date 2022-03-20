@@ -3,7 +3,7 @@
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 18/03/2022 - 19:37
+" Last Modified: 20/03/2022 - 09:49
 " -------------------------------
 
 
@@ -33,7 +33,7 @@
 	hi Cursorline gui=NONE guifg=NONE guibg=grey15 cterm=NONE ctermfg=NONE ctermbg=235
 	hi CursorLineNr guibg=NONE guifg=#36FF5A  gui=bold cterm=bold ctermbg=NONE ctermfg=42
 
-	hi HighlightedyankRegion gui=reverse guibg=NONE guifg=NONE cterm=reverse ctermbg=NONE ctermfg=NONE
+  hi TextYankPost gui=reverse guibg=NONE guifg=NONE cterm=reverse ctermbg=NONE ctermfg=NONE
 
 " Section: Split
 	hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
