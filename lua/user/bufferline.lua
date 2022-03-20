@@ -3,7 +3,7 @@
  -- Description: Bufferline config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/bufferline.lua
- -- Last Modified: 12/03/2022 - 16:18
+ -- Last Modified: 20/03/2022 - 08:32
  -------------------------------------
 
 
@@ -24,13 +24,13 @@ bufferline.setup {
     -- and so changing this is NOT recommended, this is intended
     -- as an escape hatch for people who canno bear it for whatever reason
     indicator_icon =  icons.ui.AltSlArrowRight,--  "▎",
-    buffer_close_icon = "",
+    buffer_close_icon = icons.bufferline.buffer_close_icon,
     -- buffer_close_icon = '',
-    modified_icon = "●",
-    close_icon = "",
+    modified = icons.bufferline.modified,
+    close = icons.bufferline.close,
     -- close_icon = '',
-    left_trunc_marker = "",
-    right_trunc_marker = "",
+    left_trunc_marker = icons.bufferline.left_trunc_marker,
+    right_trunc_marker = icons.bufferline.right_trunc_marker,
     --- name_formatter can be used to change the buffer's label in the bufferline.
     --- Please note some names can/will break the
     --- bufferline so use this at your discretion knowing that it has
