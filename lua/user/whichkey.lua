@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 17/03/2022 - 10:46
+-- Last Modified: 20/03/2022 - 09:05
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -80,6 +80,15 @@ local nosilent_opts = {
 
 
 local leader_maps = {
+  ["1"] = { "<cmd>BufferLineGoToBuffer 1<cr>", "Go to Buffer 1" },
+  ["2"] = { "<cmd>BufferLineGoToBuffer 2<cr>", "Go to Buffer 2" },
+  ["3"] = { "<cmd>BufferLineGoToBuffer 3<cr>", "Go to Buffer 3" },
+  ["4"] = { "<cmd>BufferLineGoToBuffer 4<cr>", "Go to Buffer 4" },
+  ["5"] = { "<cmd>BufferLineGoToBuffer 5<cr>", "Go to Buffer 5" },
+  ["6"] = { "<cmd>BufferLineGoToBuffer 6<cr>", "Go to Buffer 6" },
+  ["7"] = { "<cmd>BufferLineGoToBuffer 7<cr>", "Go to Buffer 7" },
+  ["8"] = { "<cmd>BufferLineGoToBuffer 8<cr>", "Go to Buffer 8" },
+  ["9"] = { "<cmd>BufferLineGoToBuffer 9<cr>", "Go to Buffer 9" },
   w = { "<cmd>update!<CR>", "Save" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
