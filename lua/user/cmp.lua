@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 21/03/2022 - 10:56
+-- Last Modified: 21/03/2022 - 11:18
 -------------------------------------
 
 local ok_cmp, cmp = pcall(require, "cmp")
@@ -76,15 +76,19 @@ cmp.setup ({
 			end
 		end, { "i", "s" }
 		),
-    ["<Up>"] = cmp.mapping(function()
+    ["<Up>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
+      else
+        fallback()
       end
     end, { "i", "c" }
     ),
-    ["<Down>"] = cmp.mapping(function()
+    ["<Down>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      else
+        fallback()
       end
     end, { "i", "c" }
     ),
