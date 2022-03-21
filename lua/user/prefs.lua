@@ -78,7 +78,7 @@
 		foldmethod = "syntax",
 		diffopt = { "internal", "filler", "closeoff", "vertical" },
 		foldcolumn = "auto",	-- Add a bit extra margin to the Left
-    colorcolumn = "120",
+    -- colorcolumn = "120",
 
 	-- Section: FILE MANAGEMENT
 		autowrite = true, -- write files
