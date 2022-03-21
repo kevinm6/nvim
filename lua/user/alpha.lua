@@ -3,7 +3,7 @@
 --	Description: alplha config for Neovim
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
---	Last Modified: 20/03/2022 - 08:16
+--	Last Modified: 21/03/2022 - 09:03
 -----------------------------------
 
 local ok, alpha = pcall(require, "alpha")
@@ -51,6 +51,5 @@ dashboard.section.buttons.opts.hl = "AlphaButtons"
 dashboard.section.footer.opts.hl = "AlphaFooter"
 
 dashboard.opts.opts.noautocmd = false
-vim.cmd [[ autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2 ]]
 
 alpha.setup(dashboard.opts)
