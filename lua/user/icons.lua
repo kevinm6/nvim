@@ -3,7 +3,7 @@
 --	Description: K Neovim all icons
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/icons.lua
---	Last Modified: 03/03/2022 - 21:22
+--	Last Modified: 21/03/2022 - 17:52
 -----------------------------------
 
 -- Font: SauceCodePro Nerd Font Mono
@@ -137,4 +137,12 @@ return {
     left_trunc_marker = "",
     right_trunc_marker = "",
   },
+  packer = {
+    working_sym = '⟳',
+		error_sym = '✗',
+		done_sym = '✓',
+		removed_sym = '-',
+		moved_sym = '→',
+		header_sym = '━',
+  }
 }
