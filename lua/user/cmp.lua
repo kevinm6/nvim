@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 15/03/2022 - 14:08
+-- Last Modified: 21/03/2022 - 10:56
 -------------------------------------
 
 local ok_cmp, cmp = pcall(require, "cmp")
@@ -41,32 +41,32 @@ cmp.setup ({
 		end,
 	},
 	mapping = {
-		['<C-k>'] = cmp.mapping.select_prev_item(),
-		['<C-j>'] = cmp.mapping.select_next_item(),
+		["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<C-j>"] = cmp.mapping.select_next_item(),
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
-		['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		["<C-e>"] = cmp.mapping {
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		},
-		['<CR>'] = cmp.mapping.confirm {
+		["<CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true
 		},
-		['<Tab>'] = cmp.mapping(function(fallback)
+		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			elseif luasnip.expand_or_locally_jumpable() then
 				luasnip.expand_or_jump()
-			elseif check_backspace() or not luasnip.in_snippet() then
+			elseif check_backspace() then
 				fallback()
 			else
 				fallback()
 			end
 		end, { "i", "s" }
 		),
-		['<S-Tab>'] = cmp.mapping(function(fallback)
+		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
 			elseif luasnip.jumpable(-1) then
@@ -76,6 +76,18 @@ cmp.setup ({
 			end
 		end, { "i", "s" }
 		),
+    ["<Up>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      end
+    end, { "i", "c" }
+    ),
+    ["<Down>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_next_item()
+      end
+    end, { "i", "c" }
+    ),
 	},
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
