@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 12/03/2022 - 17:24
+-- Last Modified: 21/03/2022 - 17:52
 -------------------------------------
 
 
@@ -26,6 +26,8 @@ end
 local ok, packer = pcall(require, "packer")
 if not ok then return end
 
+local icons = require "user.icons"
+
 packer.init({
 	package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
 	compile_path = require("packer.util").join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.lua'),
@@ -34,22 +36,16 @@ packer.init({
 		open_fn = function()
 			return require("packer.util").float { border = "rounded" }
 		end,
-		working_sym = '⟳',
-		error_sym = '✗',
-		done_sym = '✓',
-		removed_sym = '-',
-		moved_sym = '→',
-		header_sym = '━',
+		working_sym = icons.packer.working_sym,
+		error_sym = icons.packer.error_sym,
+		done_sym = icons.packer.done_sym,
+		removed_sym = icons.packer.removed_sym,
+		moved_sym = icons.packer.moved_sym,
+		header_sym = icons.packer.header_sym,
 	},
 })
 
 
-vim.cmd([[
-	augroup packer_user_config
-		autocmd!
-		autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-	augroup end
-]])
 
 return packer.startup(function(use)
 	-- Plugin/package manager
@@ -195,6 +191,8 @@ return packer.startup(function(use)
 		ft = "markdown",
 		cmd = { "MarkdownPreview" }
 	}
+
+  use { "dhruvasagar/vim-table-mode" }
 
 	-- pdf
 	use {
