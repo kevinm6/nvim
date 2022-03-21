@@ -3,7 +3,7 @@
  -- Description: Autocommands config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
- -- Last Modified: 21/03/2022 - 09:02
+ -- Last Modified: 21/03/2022 - 11:37
  -------------------------------------
 
 
@@ -32,6 +32,11 @@ vim.cmd [[
     autocmd!
     autocmd VimEnter * hi link illuminatedWord LspReferenceText
   augroup END
+
+	augroup _packer_user_config
+		autocmd!
+		autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+	augroup end
 
 	augroup auto_resize
     autocmd!
