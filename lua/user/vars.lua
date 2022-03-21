@@ -52,6 +52,8 @@ vim.g.markdown_folding = 1
 vim.g.rmd_include_html = 1
 
 vim.g.glow_binary_path = vim.env.HOME .. "/.local/bin"
+vim.g.glow_border = "shadow"
+vim.g.glow_style = "dark"
 
 
 -- Session
