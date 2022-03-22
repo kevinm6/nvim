@@ -4,7 +4,7 @@
 "								compatibility w/ tpope's syntax markdown.vim file)
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/ftplugin/markdown.vim
-" Last Modified: 15/03/2022 - 16:26
+" Last Modified: 22/03/2022 - 10:23
 " ------------------------------------------------
 
 
@@ -17,8 +17,8 @@ lua <<EOF
 	vim.opt_local.conceallevel = 2
 	vim.opt_local.shiftwidth = 2
 	vim.opt_local.expandtab = true
-  vim.opt_local.colorcolumn = "90"
   vim.opt_local.wrap = true
+  vim.opt_local.cindent = true
 
 	vim.opt.spell = false
   vim.opt.spellfile = '/Users/Kevin/.MacDotfiles/nvim/.config/nvim/spell/en.utf-8.add'
