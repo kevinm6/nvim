@@ -3,7 +3,7 @@
 --	Description: notify plugin configuration
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/notify.lua
---	Last Modified: 12/03/2022 - 17:20
+--	Last Modified: 22/03/2022 - 16:25
 -----------------------------------
 
 local ok, notify = pcall(require, "notify")
@@ -32,7 +32,7 @@ notify.setup {
   background_colour = "Normal",
 
   -- Minimum width for notification windows
-  minimum_width = 10,
+  minimum_width = 12,
 
   -- Icons for the different levels
   icons = {
