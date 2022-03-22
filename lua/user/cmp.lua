@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 21/03/2022 - 11:18
+-- Last Modified: 22/03/2022 - 10:19
 -------------------------------------
 
 local ok_cmp, cmp = pcall(require, "cmp")
@@ -120,8 +120,17 @@ cmp.setup ({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
-		{ name = "path" },
+    { name = "nvim_lsp_signature_help" },
+		{
+      name = "path",
+      option = { trailing_slash = true }
+    },
 		{ name = "cmdline" },
+    { name = "zsh" },
+    -- { name = "digraphs" },
+    { name = "calc" },
+    { name = "latex_symbols" },
+    { name = "emoji" },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
@@ -137,23 +146,22 @@ cmp.setup ({
 	},
 })
 
--- Use buffer source for `/`
-cmp.setup.cmdline('/', {
+-- Completion for command mode
+cmp.setup.cmdline(":", {
 	sources = {
-		{
-			{ name = "buffer" }
-		}, {
-			{ name = "buffer" }
-		}
+			{ name = "cmdline" }
+  }
+})
+
+-- Completion for / search based on current buffer
+cmp.setup.cmdline("/", {
+	sources = {
+		{ name = "buffer" }
 	}
 })
 
--- Use cmdline & path source for '/'
-cmp.setup.cmdline(':', {
-	sources = cmp.config.sources({
-		{ name = "path" }
-	}, {
-		{ name = "cmdline" }
-	})
-})
-
+-- cmp_zsh
+require"cmp_zsh".setup {
+  zshrc = true, -- Source the zshrc (adding all custom completions). default: false
+  filetypes = { "zsh" } -- Filetypes to enable cmp_zsh source. default: {"*"}
+}

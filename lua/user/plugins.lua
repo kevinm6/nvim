@@ -30,8 +30,8 @@ local icons = require "user.icons"
 
 packer.init({
 	package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
-	compile_path = require("packer.util").join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.lua'),
-	plugin_package = 'packer',
+	compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
+	plugin_package = "packer",
 	display = {
 		open_fn = function()
 			return require("packer.util").float { border = "rounded" }
@@ -90,7 +90,19 @@ return packer.startup(function(use)
 	use "hrsh7th/cmp-cmdline"
 	use "hrsh7th/nvim-cmp"
 	use "hrsh7th/cmp-nvim-lua"
+  use {
+    "hrsh7th/cmp-emoji",
+    opt = true,
+    ft = { "markdown", "md" }
+  }
+  use {
+    "kdheepak/cmp-latex-symbols",
+    ft = { "markdown", "md" }
+  }
 	use "saadparwaiz1/cmp_luasnip"
+  use { "dmitmel/cmp-digraphs", opt = true }
+  use "hrsh7th/cmp-nvim-lsp-signature-help"
+  use "tamago324/cmp-zsh"
 
 	-- snippets
 	use "L3MON4D3/LuaSnip"
