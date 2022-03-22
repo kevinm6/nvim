@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR autopairs config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autopairs.lua
--- Last Modified: 12/03/2022 - 16:18
+-- Last Modified: 22/03/2022 - 17:13
 -------------------------------------
 
 local ok, npairs = pcall(require, "nvim-autopairs")
@@ -16,9 +16,10 @@ npairs.setup {
 		javascript = { "string", "template_string" },
 		java = true,
 	},
+  enable_check_bracket_line = true,
 	disable_filetype = { "TelescopePrompt", "spectre_panel" },
   fast_wrap = {
-    map = "<M-e>",
+    map = "<C-e>",
     chars = { "{", "[", "(", '"', "'" },
     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
     offset = 0, -- Offset from pattern match
