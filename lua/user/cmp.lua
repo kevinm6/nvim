@@ -3,14 +3,14 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 23/03/2022 - 09:26
+-- Last Modified: 23/03/2022 - 20:37
 -------------------------------------
 
-local ok_cmp, cmp = pcall(require, "cmp")
-if not ok_cmp then return end
+local cmp_ok, cmp = pcall(require, "cmp")
+if not cmp_ok then return end
 
-local ok_luasnip, luasnip = pcall(require, "luasnip")
-if not ok_luasnip then return end
+local luasnip_ok, luasnip = pcall(require, "luasnip")
+if not luasnip_ok then return end
 
 local icons = require "user.icons"
 
@@ -22,8 +22,7 @@ end
 
 -- Sources
 require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").load({ paths = { ("./lua/") } })
-
+require("luasnip.loaders.from_vscode").load { paths = { ("./lua/") } }
 
  -- Luasnip Configuration
 luasnip.config.set_config({
@@ -34,15 +33,15 @@ luasnip.config.set_config({
 
 
 -- Cmp Configuration
-cmp.setup ({
+cmp.setup {
 	snippet = {
 		expand = function(args)
 			require'luasnip'.lsp_expand(args.body)
 		end,
 	},
 	mapping = {
-		["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
+		["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+		["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -82,16 +81,14 @@ cmp.setup ({
       else
         fallback()
       end
-    end, { "i", "c" }
-    ),
+    end, { "i" }),
     ["<Down>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
       end
-    end, { "i", "c" }
-    ),
+    end, { "i" }),
 	},
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
@@ -140,14 +137,14 @@ cmp.setup ({
 	},
 	-- documentation = false,
 	documentation = {
+    timeout = 800, delay = 800, -- figure out if this work to delay doc to show
 		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    timeout = 900, -- figure out if this work to delay doc to show
 	},
 	experimental = {
 		ghost_text = true,
-		native_menu = false,
+    native_menu = false,
 	},
-})
+}
 
 -- Completion for command mode
 cmp.setup.cmdline(":", {
@@ -164,7 +161,7 @@ cmp.setup.cmdline("/", {
 })
 
 -- cmp_zsh
-require"cmp_zsh".setup {
+require("cmp_zsh").setup {
   zshrc = true, -- Source the zshrc (adding all custom completions). default: false
   filetypes = { "zsh" } -- Filetypes to enable cmp_zsh source. default: {"*"}
 }
