@@ -48,6 +48,8 @@ local modules = {
 	"user.registers",
 	"user.alpha",
 	"user.symbol-outline",
+  "user.sniprun",
+  "user.hop",
 	"user.colorizer",
 	"user.illuminate"
 }
