@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 20/03/2022 - 09:05
+-- Last Modified: 23/03/2022 - 18:40
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -20,13 +20,14 @@ local setup = {
       suggestions = 26,
     },
     presets = {
-      operators = false,
+      operators = true,
       motions = true,
       text_objects = true,
       windows = true,
       nav = true,
       z = true,
-      g = true,
+      g = true
+      -- TODO: add <C-x> (ins-completion) if will be available
     },
   },
   icons = {
@@ -296,8 +297,9 @@ local nosilent_maps = {
 	},
 	[0] = {
     name = "Configuration File",
-    s = { ":source $NVIMDOTDIR/init.lua<cr>", "Source Neovim config file" },
-    e = { ":edit $NVIMDOTDIR/init.lua<cr>", "Edit Neovim config file" },
+    s = { "<cmd>source $NVIMDOTDIR/init.lua<cr>", "Source Neovim config file" },
+    e = { "<cmd>edit $NVIMDOTDIR/init.lua<cr>", "Edit Neovim config file" },
+    S = { "<cmd>source $NVIMDOTDIR/lua/user/cmp.lua<cr>", "Reload snippet file" },
   },
 }
 
