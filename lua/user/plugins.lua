@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 21/03/2022 - 17:52
+-- Last Modified: 23/03/2022 - 16:50
 -------------------------------------
 
 
@@ -25,6 +25,13 @@ end
 -- PLUGINS
 local ok, packer = pcall(require, "packer")
 if not ok then return end
+
+vim.cmd [[
+	augroup _packer_user_config
+		autocmd!
+		autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+	augroup end
+]]
 
 local icons = require "user.icons"
 
@@ -82,6 +89,7 @@ return packer.startup(function(use)
 	use "lewis6991/impatient.nvim"
 	use "goolord/alpha-nvim"
 	use "rcarriga/nvim-notify"
+  use "nvim-lualine/lualine.nvim"
 
 	-- autocompletion
 	use "hrsh7th/cmp-nvim-lsp"
@@ -116,6 +124,8 @@ return packer.startup(function(use)
 	}
 	use "br1anchen/nvim-colorizer.lua"
 	use "RRethy/vim-illuminate"
+  use "phaazon/hop.nvim"
+  use { "michaelb/sniprun", run = "bash ./install.sh" }
 
 	-- Treesitter
 	use {
