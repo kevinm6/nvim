@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 22/03/2022 - 10:19
+-- Last Modified: 23/03/2022 - 09:26
 -------------------------------------
 
 local ok_cmp, cmp = pcall(require, "cmp")
@@ -111,6 +111,8 @@ cmp.setup ({
 			luasnip = "",
 			buffer = "",
 			path = "",
+      calc = "",
+      latex_symbols = "",
 			emoji = "",
 		})[entry.source.name]
 		return vim_item
@@ -139,6 +141,7 @@ cmp.setup ({
 	-- documentation = false,
 	documentation = {
 		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    timeout = 900, -- figure out if this work to delay doc to show
 	},
 	experimental = {
 		ghost_text = true,
