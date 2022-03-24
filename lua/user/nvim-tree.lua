@@ -3,7 +3,7 @@
  -- Description: NvimTree config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
- -- Last Modified: 12/03/2022 - 17:23
+ -- Last Modified: 24/03/2022 - 15:11
  -------------------------------------
 
 
@@ -36,7 +36,6 @@ vim.g.nvim_tree_icons = {
 }
 
 vim.g.nvim_tree_special_files = {
-	[".gitignore"] = true,
 	["README.md"] = true
 }
 
@@ -103,7 +102,7 @@ nvim_tree.setup {
   },
   filters = {
     dotfiles = false,
-    custom = { ".git", ".cache", ".DS_Store" },
+    custom = { ".git", ".cache", ".DS_Store", "Icon" },
   },
   git = {
     enable = true,
