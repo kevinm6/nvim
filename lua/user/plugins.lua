@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 23/03/2022 - 16:50
+-- Last Modified: 24/03/2022 - 14:34
 -------------------------------------
 
 
@@ -35,10 +35,11 @@ vim.cmd [[
 
 local icons = require "user.icons"
 
-packer.init({
+packer.init {
 	package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
 	compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
 	plugin_package = "packer",
+  max_jobs = 12,
 	display = {
 		open_fn = function()
 			return require("packer.util").float { border = "rounded" }
@@ -50,8 +51,7 @@ packer.init({
 		moved_sym = icons.packer.moved_sym,
 		header_sym = icons.packer.header_sym,
 	},
-})
-
+}
 
 
 return packer.startup(function(use)
@@ -98,6 +98,7 @@ return packer.startup(function(use)
 	use "hrsh7th/cmp-cmdline"
 	use "hrsh7th/nvim-cmp"
 	use "hrsh7th/cmp-nvim-lua"
+  use "ray-x/cmp-treesitter"
   use {
     "hrsh7th/cmp-emoji",
     opt = true,
