@@ -3,7 +3,7 @@
  -- Description: Autocommands config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
- -- Last Modified: 24/03/2022 - 09:46
+ -- Last Modified: 24/03/2022 - 15:20
  -------------------------------------
 
 
@@ -26,10 +26,6 @@ vim.cmd [[
 	" SQL
 		autocmd BufNewFile, BufRead psql* setlocal filetype=sql
 	augroup end
-
-  augroup _alpha
- autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
- augroup end
 
   augroup illuminate_augroup
     autocmd!
