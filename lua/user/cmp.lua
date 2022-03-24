@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 23/03/2022 - 20:37
+-- Last Modified: 24/03/2022 - 13:26
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -96,21 +96,14 @@ cmp.setup {
 		-- Kind icons
 		vim_item.kind = string.format("%s", icons.kind[vim_item.kind])
 		vim_item.menu = ({
-			-- nvim_lsp = "[LSP]",
-			-- nvim_lua = "[Nvim]",
-			-- luasnip = "[Snippet]",
-			-- buffer = "[Buffer]",
-			-- path = "[Path]",
-			-- emoji = "[Emoji]",
-
-			nvim_lsp = "",
-			nvim_lua = "",
-			luasnip = "",
-			buffer = "",
-			path = "",
-      calc = "",
-      latex_symbols = "",
-			emoji = "",
+			nvim_lsp = icons.lsp.nvim_lsp,
+			nvim_lua = icons.lsp.nvim_lua,
+			luasnip = icons.lsp.luasnip,
+			buffer = icons.lsp.buffer,
+			path = icons.lsp.path,
+      calc = icons.lsp.calc,
+      latex_symbols = icons.lsp.latex_symbols,
+			emoji = icons.lsp.emoji,
 		})[entry.source.name]
 		return vim_item
 	end,
@@ -120,6 +113,7 @@ cmp.setup {
 		{ name = "luasnip" },
 		{ name = "buffer" },
     { name = "nvim_lsp_signature_help" },
+    { name = "treesitter" },
 		{
       name = "path",
       option = { trailing_slash = true }

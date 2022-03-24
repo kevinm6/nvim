@@ -96,7 +96,6 @@ return {
 		Note = "",
 		BookMark = "",
 		Pencil = "",
-		-- ChevronRight = "",
 		ChevronRight = "",
 		ChevronLeft = "",
 		BoldChevronRight = "",
@@ -144,5 +143,16 @@ return {
 		removed_sym = '-',
 		moved_sym = '→',
 		header_sym = '━',
+  },
+  lsp = {
+    nvim_lsp = "",
+    nvim_lua = "",
+    luasnip = "",
+    buffer = "",
+    path = "",
+    treesitter = "",
+    calc = "",
+    latex_symbols = "α",
+    emoji = "",
   }
 }
