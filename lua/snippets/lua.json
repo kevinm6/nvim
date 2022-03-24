@@ -1,0 +1,19 @@
+{
+  "Lua Table": {
+    "prefix": "table",
+    "body": [
+      "local ${1:name} = {\n${2:table_content}$0}"
+    ],
+    "description": "Lua local table"
+  },
+  "Local Require": {
+    "prefix": "local",
+    "body": [
+      "local ${1:name} = require(\"${2:module_name}\")\n",
+      "$0"
+    ],
+    "description": "Lua local import"
+  }
+}
+
+

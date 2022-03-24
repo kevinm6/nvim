@@ -12,6 +12,10 @@
       {
         "language": "markdown",
         "path": "./snippets/markdown.json"
+      },
+      {
+        "language": "lua",
+        "path": "./snippets/lua.json"
       }
 		]
 	}
