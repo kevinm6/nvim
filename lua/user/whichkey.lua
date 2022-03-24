@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 23/03/2022 - 18:40
+-- Last Modified: 24/03/2022 - 08:42
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -27,7 +27,6 @@ local setup = {
       nav = true,
       z = true,
       g = true
-      -- TODO: add <C-x> (ins-completion) if will be available
     },
   },
   icons = {
@@ -281,9 +280,9 @@ local leader_maps = {
 	},
 
   -- Deletion
-	d = { "\"*d", "Copy deletion into register \"" },
-	D = { "\"*D", "Copy deletion to end into register \"" },
-	y = { "\"*y", "Copy yank into register \"" },
+	d = { "\"+d", "Copy deletion into register \"" },
+	D = { "\"+D", "Copy deletion to end into register \"" },
+	y = { "\"+y", "Copy yank into register \"" },
 	x = { "\"*d", "Copy char deletion into register \"" },
 }
 
@@ -325,6 +324,10 @@ local vmappings = {
     q = { "<cmd>lua require('surround').toggle_quotes()<cr>", "Quotes" },
     b = { "<cmd>lua require('surround').toggle_brackets()<cr>", "Brackets" },
   },
+  d = { "\"+d", "Copy deletion into register \"" },
+	D = { "\"+D", "Copy deletion to end into register \"" },
+	y = { "\"+y", "Copy yank into register \"" },
+  ["<BS>"] = { "\"+d", "Copy deletion into register \"" },
 }
 
 local Zopts = {
@@ -344,8 +347,34 @@ local Zmappings = {
 }
 
 
+local i_opts = {
+  mode = "i",
+  prefix = "<C-x>",
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
+}
+
+local ins_mappings = {
+  ["<C-l>"] = { "<C-x><C-l>", "Whole lines" },
+  ["<C-n>"] = { "<C-x><C-n>", "Keywords in current file" },
+  ["<C-k>"] = { "<C-x><C-k>", "Keywords in dictionary" },
+  ["<C-t>"] = { "<C-x><C-t>", "Keywords in thesaurus" },
+  ["<C-i>"] = { "<C-x><C-i>", "Keywords in current and included files" },
+  ["<C-]>"] = { "<C-x><C-]>", "Tags" },
+  ["<C-f>"] = { "<C-x><C-f>", "File names" },
+  ["<C-d>"] = { "<C-x><C-d>", "Definitions or macros" },
+  ["<C-v>"] = { "<C-x><C-v>", "Vim command-line" },
+  ["<C-u>"] = { "<C-x><C-u>", "User defined completion" },
+  ["<C-o>"] = { "<C-x><C-o>", "Omni completion" },
+  s = { "<C-x>s", "Spelling suggestions" }
+}
+
+
 which_key.setup(setup)
 which_key.register(leader_maps, opts)
 which_key.register(nosilent_maps, nosilent_opts)
 which_key.register(vmappings, vopts)
 which_key.register(Zmappings, Zopts)
+which_key.register(ins_mappings, i_opts)
