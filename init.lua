@@ -3,7 +3,7 @@
 -- Description: NeoVim K configuration (Lua)
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
--- Last Modified: 12/03/2022 - 18:19
+-- Last Modified: 25/03/2022 - 14:51
 --------------------------------------
 
 
@@ -51,7 +51,9 @@ local modules = {
   "user.sniprun",
   "user.hop",
 	"user.colorizer",
-	"user.illuminate"
+	"user.illuminate",
+  "user.tabout",
+  "user.zen-mode"
 }
 
 for _, module in ipairs(modules) do

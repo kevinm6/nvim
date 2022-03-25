@@ -95,6 +95,7 @@ local leader_maps = {
 	z = { ":update<cr>:Bdelete<cr>:bnext<cr>", "Save and Close Buffer" },
 	q = { "<cmd>quit<cr>", "Quit" },
 	a = { "<cmd>Alpha<cr>", "Alpha Dashboard"},
+	Z = { "<cmd>ZenMode<cr>", "Zen"},
 
 	f = {
 		name = "Find (Telescope)",
