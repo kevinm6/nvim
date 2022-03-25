@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 24/03/2022 - 14:34
+-- Last Modified: 25/03/2022 - 14:39
 -------------------------------------
 
 
@@ -39,7 +39,7 @@ packer.init {
 	package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
 	compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
 	plugin_package = "packer",
-  max_jobs = 12,
+  max_jobs = 14,
 	display = {
 		open_fn = function()
 			return require("packer.util").float { border = "rounded" }
@@ -89,29 +89,26 @@ return packer.startup(function(use)
 	use "lewis6991/impatient.nvim"
 	use "goolord/alpha-nvim"
 	use "rcarriga/nvim-notify"
-  use "nvim-lualine/lualine.nvim"
+  use { "nvim-lualine/lualine.nvim", opt = true }
 
 	-- autocompletion
-	use "hrsh7th/cmp-nvim-lsp"
-	use "hrsh7th/cmp-buffer"
-	use "hrsh7th/cmp-path"
-	use "hrsh7th/cmp-cmdline"
-	use "hrsh7th/nvim-cmp"
-	use "hrsh7th/cmp-nvim-lua"
-  use "ray-x/cmp-treesitter"
   use {
-    "hrsh7th/cmp-emoji",
-    opt = true,
-    ft = { "markdown", "md" }
+    "hrsh7th/nvim-cmp",
+    requires = {
+      { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+      { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+      { "hrsh7th/cmp-path", after = "nvim-cmp"},
+      { "hrsh7th/cmp-cmdline", after = "nvim-cmp"},
+      { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp"},
+      { "ray-x/cmp-treesitter", after = "nvim-cmp" },
+      { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
+      { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
+      { "tamago324/cmp-zsh", after = "nvim-cmp" },
+      { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" },
+      { "dmitmel/cmp-digraphs", after = "nvim-cmp", opt = true },
+      { "hrsh7th/cmp-emoji", after = "nvim-cmp", opt = true },
+    }
   }
-  use {
-    "kdheepak/cmp-latex-symbols",
-    ft = { "markdown", "md" }
-  }
-	use "saadparwaiz1/cmp_luasnip"
-  use { "dmitmel/cmp-digraphs", opt = true }
-  use "hrsh7th/cmp-nvim-lsp-signature-help"
-  use "tamago324/cmp-zsh"
 
 	-- snippets
 	use "L3MON4D3/LuaSnip"
@@ -131,17 +128,20 @@ return packer.startup(function(use)
 	-- Treesitter
 	use {
 		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate"
+		run = ":TSUpdate",
+    requires = {
+      { "nvim-treesitter/playground", after = "nvim-treesitter" },
+      { "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" },
+      { "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
+      { "romgrk/nvim-treesitter-context", after = "nvim-treesitter" },
+      { "p00f/nvim-ts-rainbow", after = "nvim-treesitter" },
+      { "abecodes/tabout.nvim", after = "nvim-treesitter" }
+    },
 	}
-	use "nvim-treesitter/playground"
-	use "JoosepAlviste/nvim-ts-context-commentstring"
-	use "windwp/nvim-ts-autotag"
-	use "romgrk/nvim-treesitter-context"
 	use {
 		"SmiteshP/nvim-gps",
 		requires = "nvim-treesitter/nvim-treesitter"
 	}
-	use "p00f/nvim-ts-rainbow"
 
 
 	-- git
@@ -164,17 +164,18 @@ return packer.startup(function(use)
 	}
 
 	-- Telescope
-	use "nvim-telescope/telescope.nvim"
 	use {
-		"nvim-telescope/telescope-fzf-native.nvim",
-		run = "make"
-	}
-	use "nvim-telescope/telescope-media-files.nvim"
-	use "nvim-telescope/telescope-file-browser.nvim"
-	use "nvim-telescope/telescope-packer.nvim"
-	use "gbrlsnchs/telescope-lsp-handlers.nvim"
-	use "nvim-telescope/telescope-ui-select.nvim"
-	use "nvim-telescope/telescope-project.nvim"
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      { "nvim-telescope/telescope-media-files.nvim" },
+      { "nvim-telescope/telescope-file-browser.nvim" },
+      { "nvim-telescope/telescope-packer.nvim" },
+      { "gbrlsnchs/telescope-lsp-handlers.nvim" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
+      { "nvim-telescope/telescope-project.nvim" },
+      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+    }
+  }
 
 	-- database
 	use {
@@ -196,12 +197,13 @@ return packer.startup(function(use)
 	use { -- Render jupyter notebook (in alpha version)
 		"ahmedkhalf/jupyter-nvim",
 		run = ":UpdateRemotePlugins",
+    ft = { "ipynb", "py" },
 		config = function()
 			require("jupyter-nvim").setup {}
 		end
 	}
-	use { "jupyter-vim/jupyter-vim" } -- work with Python envs and render in QTconsole
-	use { "bfredl/nvim-ipy" }
+	use { "jupyter-vim/jupyter-vim", ft = "ipynb" } -- work with Python envs and render in QTconsole
+	use { "bfredl/nvim-ipy", ft = "py" }
 
 	-- markdown
 	use {
@@ -215,7 +217,7 @@ return packer.startup(function(use)
 		cmd = { "MarkdownPreview" }
 	}
 
-  use { "dhruvasagar/vim-table-mode" }
+  use { "dhruvasagar/vim-table-mode", ft = { "md", "markdown" } }
 
 	-- pdf
 	use {
