@@ -38,11 +38,10 @@ local icons = require "user.icons"
 packer.init {
 	package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
 	compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
-	plugin_package = "packer",
   max_jobs = 14,
 	display = {
 		open_fn = function()
-			return require("packer.util").float { border = "rounded" }
+			return require("packer.util").float { border = "shadow" }
 		end,
 		working_sym = icons.packer.working_sym,
 		error_sym = icons.packer.error_sym,
@@ -55,7 +54,7 @@ packer.init {
 
 
 return packer.startup(function(use)
-	-- Plugin/package manager
+	-- Plugin/package manager (set packer manage itself)
 	use "wbthomason/packer.nvim"
 
 	-- utility plugins
@@ -77,48 +76,44 @@ return packer.startup(function(use)
 		"akinsho/bufferline.nvim",
 		requires = "kyazdani42/nvim-web-devicons"
 	}
-	use "moll/vim-bbye"
 	use "akinsho/toggleterm.nvim"
+	use "moll/vim-bbye"
 	use {
 		"tweekmonster/startuptime.vim",
 		opt = true,
-		cmd = {
-			"StartupTime"
-		}
+		cmd = "StartupTime",
 	}
 	use "lewis6991/impatient.nvim"
 	use "goolord/alpha-nvim"
 	use "rcarriga/nvim-notify"
-  use { "nvim-lualine/lualine.nvim", opt = true }
+  use { "nvim-lualine/lualine.nvim", disable = true, opt = true }
 
 	-- autocompletion
   use {
     "hrsh7th/nvim-cmp",
-    requires = {
-      { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
-      { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
-      { "hrsh7th/cmp-path", after = "nvim-cmp"},
-      { "hrsh7th/cmp-cmdline", after = "nvim-cmp"},
-      { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp"},
-      { "ray-x/cmp-treesitter", after = "nvim-cmp" },
-      { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
-      { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
-      { "tamago324/cmp-zsh", after = "nvim-cmp" },
-      { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" },
-      { "dmitmel/cmp-digraphs", after = "nvim-cmp", opt = true },
-      { "hrsh7th/cmp-emoji", after = "nvim-cmp", opt = true },
-    }
-  }
+    "hrsh7th/cmp-nvim-lsp", 
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-nvim-lua",
+    "ray-x/cmp-treesitter",
+    "saadparwaiz1/cmp_luasnip",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "tamago324/cmp-zsh",
+    "kdheepak/cmp-latex-symbols",
+    "dmitmel/cmp-digraphs",
+    "hrsh7th/cmp-emoji",
 
-	-- snippets
-	use "L3MON4D3/LuaSnip"
-	use "rafamadriz/friendly-snippets"
+    -- snippets
+    "L3MON4D3/LuaSnip",
+    "rafamadriz/friendly-snippets",
+  }
 
 	-- coding helper
 	use "Mephistophiles/surround.nvim"
 	use {
-		"junegunn/goyo.vim",
-		run = ":Goyo"
+		"folke/zen-mode.nvim",
+    cmd = ":Goyo"
 	}
 	use "br1anchen/nvim-colorizer.lua"
 	use "RRethy/vim-illuminate"
@@ -129,15 +124,21 @@ return packer.startup(function(use)
 	use {
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
-    requires = {
-      { "nvim-treesitter/playground", after = "nvim-treesitter" },
-      { "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" },
-      { "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
-      { "romgrk/nvim-treesitter-context", after = "nvim-treesitter" },
-      { "p00f/nvim-ts-rainbow", after = "nvim-treesitter" },
-      { "abecodes/tabout.nvim", after = "nvim-treesitter" }
+    modules = {
+      { "nvim-treesitter/playground" },
+      { "JoosepAlviste/nvim-ts-context-commentstring" },
+      { "romgrk/nvim-treesitter-context" },
+      { "windwp/nvim-ts-autotag" },
+      { "p00f/nvim-ts-rainbow" },
     },
 	}
+
+  use {
+    "abecodes/tabout.nvim",
+    requires = { "nvim-treesitter" },
+    after = { "nvim-cmp" },
+  }
+
 	use {
 		"SmiteshP/nvim-gps",
 		requires = "nvim-treesitter/nvim-treesitter"
@@ -150,14 +151,26 @@ return packer.startup(function(use)
 
 
 	-- lsp
-	use "neovim/nvim-lspconfig"
-	use "williamboman/nvim-lsp-installer"
-	use "ray-x/lsp_signature.nvim"
-	use "mfussenegger/nvim-jdtls"
-	use "filipdutescu/renamer.nvim"
+	use { "neovim/nvim-lspconfig" }
+	use { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" }
+	use { "ray-x/lsp_signature.nvim", after = "nvim-lspconfig" }
+	use {
+    "mfussenegger/nvim-jdtls",
+    ft = "java",
+    module = "jdtls",
+  }
+
+	use {
+    "filipdutescu/renamer.nvim",
+    after = "plenary.nvim"
+  }
 	use "antoinemadec/FixCursorHold.nvim"
 	use "simrat39/symbols-outline.nvim"
-	use "b0o/SchemaStore.nvim"
+	use {
+    "b0o/SchemaStore.nvim",
+    ft = "json",
+    module = "schemastore"
+  }
 	use {
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
@@ -174,24 +187,15 @@ return packer.startup(function(use)
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-project.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-    }
+    },
+    event = "BufEnter"
   }
 
 	-- database
 	use {
-		"tpope/vim-dadbod",
-		ft = {
-			"sql"
-		},
-		cmd = ":DB"
-	}
-	use {
-		"kristijanhusak/vim-dadbod-ui",
-		ft = {
-			"sql"
-		},
-		cmd = ":DBUI"
-	}
+    { "tpope/vim-dadbod", ft = "sql", cmd = ":DB" },
+    { "kristijanhusak/vim-dadbod-ui", ft = "sql", cmd = ":DBUI" }
+  }
 
 	-- Python
 	use { -- Render jupyter notebook (in alpha version)
@@ -207,15 +211,14 @@ return packer.startup(function(use)
 
 	-- markdown
 	use {
-		"ellisonleao/glow.nvim",
-		ft = "markdown",
-	}
-	use {
-		"iamcco/markdown-preview.nvim",
-		run = "cd app && yarn install",
-		ft = "markdown",
-		cmd = { "MarkdownPreview" }
-	}
+		{ "ellisonleao/glow.nvim", ft = { "md", "markdown" } },
+    {
+      "iamcco/markdown-preview.nvim",
+      ft = { "md", "markdown" },
+      run = "cd app && yarn install",
+      cmd = "MarkdownPreview",
+    }
+  }
 
   use { "dhruvasagar/vim-table-mode", ft = { "md", "markdown" } }
 
