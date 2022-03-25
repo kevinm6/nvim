@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR cmp config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 24/03/2022 - 13:26
+-- Last Modified: 25/03/2022 - 10:43
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -13,7 +13,7 @@ local luasnip_ok, luasnip = pcall(require, "luasnip")
 if not luasnip_ok then return end
 
 local icons = require "user.icons"
-
+local kind = icons.kind
 
 local check_backspace = function()
   local col = vim.fn.col "." - 1
@@ -25,11 +25,11 @@ require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").load { paths = { ("./lua/") } }
 
  -- Luasnip Configuration
-luasnip.config.set_config({
+luasnip.config.set_config {
 	history = true,
 	updateevents = "TextChanged, TextChangedI",
 	delete_check_events = "TextChanged",
-})
+}
 
 
 -- Cmp Configuration
@@ -91,21 +91,22 @@ cmp.setup {
     end, { "i" }),
 	},
 	formatting = {
-		fields = { "kind", "abbr", "menu" },
+		fields = { "abbr", "kind", "menu" },
 		format = function(entry, vim_item)
-		-- Kind icons
-		vim_item.kind = string.format("%s", icons.kind[vim_item.kind])
-		vim_item.menu = ({
-			nvim_lsp = icons.lsp.nvim_lsp,
-			nvim_lua = icons.lsp.nvim_lua,
-			luasnip = icons.lsp.luasnip,
-			buffer = icons.lsp.buffer,
-			path = icons.lsp.path,
-      calc = icons.lsp.calc,
-      latex_symbols = icons.lsp.latex_symbols,
-			emoji = icons.lsp.emoji,
-		})[entry.source.name]
-		return vim_item
+      -- Kind icons
+      vim_item.kind = string.format(" %s ", kind[vim_item.kind])
+      vim_item.menu = ({
+        nvim_lsp = icons.lsp.nvim_lsp,
+        nvim_lua = icons.lsp.nvim_lua,
+        luasnip = icons.lsp.luasnip,
+        buffer = icons.lsp.buffer,
+        path = icons.lsp.path,
+        treesitter = icons.lsp.treesitter,
+        calc = icons.lsp.calc,
+        latex_symbols = icons.lsp.latex_symbols,
+        emoji = icons.lsp.emoji,
+      })[entry.source.name]
+    return vim_item
 	end,
 	},
 	sources = {
@@ -131,7 +132,7 @@ cmp.setup {
 	},
 	-- documentation = false,
 	documentation = {
-    timeout = 800, delay = 800, -- figure out if this work to delay doc to show
+    timeout = 800, delay = 800, -- figure out if this work to delay showing docs
 		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 	},
 	experimental = {
