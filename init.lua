@@ -52,7 +52,6 @@ local modules = {
   "user.hop",
 	"user.colorizer",
 	"user.illuminate",
-  "user.tabout",
   "user.zen-mode"
 }
 
