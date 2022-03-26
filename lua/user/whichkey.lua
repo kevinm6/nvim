@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 24/03/2022 - 08:42
+-- Last Modified: 26/03/2022 - 21:10
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -89,6 +89,7 @@ local leader_maps = {
   ["7"] = { "<cmd>BufferLineGoToBuffer 7<cr>", "Go to Buffer 7" },
   ["8"] = { "<cmd>BufferLineGoToBuffer 8<cr>", "Go to Buffer 8" },
   ["9"] = { "<cmd>BufferLineGoToBuffer 9<cr>", "Go to Buffer 9" },
+
   w = { "<cmd>update!<CR>", "Save" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
@@ -96,6 +97,7 @@ local leader_maps = {
 	q = { "<cmd>quit<cr>", "Quit" },
 	a = { "<cmd>Alpha<cr>", "Alpha Dashboard"},
 	Z = { "<cmd>ZenMode<cr>", "Zen"},
+  ["%"] = { "<cmd>source %", "Save current buffer" },
 
 	f = {
 		name = "Find (Telescope)",
