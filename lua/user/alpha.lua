@@ -13,13 +13,31 @@ local icons = require "user.icons"
 
 local dashboard = require "alpha.themes.dashboard"
 
+
+local nvim_version = function()
+  local v = vim.version()
+  local v_info = (
+    icons.ui.Version .. " v" ..
+    v.major .. "." .. v.minor ..
+    "." .. v.patch
+  )
+  return v_info
+end
+
 dashboard.section.header.val = {
-  [[                               __                ]],
-  [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
-  [[ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-  [[/\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-  [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-  [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+  [[               ]] .. os.date("  %d/%m/%Y   %H:%M"),
+  [[
+  ]],
+  "",
+  [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
+  [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
+  [[ ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║]],
+  [[ ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║]],
+  [[ ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║]],
+  [[ ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝]],
+  [[
+  ]],
+  [[                      ]] .. nvim_version()
 }
 
 dashboard.section.buttons.val = {
@@ -40,8 +58,21 @@ dashboard.section.buttons.val = {
   dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
 }
 
-local function footer()
-  return icons.ui.BoldChevronLeft .. " https://github.com/kevinm6/nvim " .. icons.ui.BoldChevronRight
+local footer = function()
+  local plugins_count = (
+    [[            ]] ..
+    icons.ui.Plugin .. " " ..
+    vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)).. " Plugins " ..
+    [[
+    ]]
+  )
+  local newline = [[
+
+  ]]
+
+  local myself = "\n\n" .. icons.ui.BoldChevronLeft .. " https://github.com/kevinm6/nvim " .. icons.ui.BoldChevronRight
+
+  return plugins_count .. newline .. myself
 end
 
 dashboard.section.footer.val = footer()
@@ -49,7 +80,5 @@ dashboard.section.footer.val = footer()
 dashboard.section.header.opts.hl = "AlphaHeader"
 dashboard.section.buttons.opts.hl = "AlphaButtons"
 dashboard.section.footer.opts.hl = "AlphaFooter"
-
-dashboard.opts.opts.noautocmd = false
 
 alpha.setup(dashboard.opts)
