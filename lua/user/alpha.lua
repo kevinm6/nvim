@@ -3,7 +3,7 @@
 --	Description: alplha config for Neovim
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
---	Last Modified: 21/03/2022 - 09:03
+--	Last Modified: 26/03/2022 - 21:23
 -----------------------------------
 
 local ok, alpha = pcall(require, "alpha")
@@ -25,10 +25,8 @@ local nvim_version = function()
 end
 
 dashboard.section.header.val = {
-  [[               ]] .. os.date("  %d/%m/%Y   %H:%M"),
-  [[
+  [[               ]] .. os.date("  %d/%m/%Y   %H:%M"), [[
   ]],
-  "",
   [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
   [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
   [[ ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║]],
@@ -36,8 +34,7 @@ dashboard.section.header.val = {
   [[ ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║]],
   [[ ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝]],
   [[
-  ]],
-  [[                      ]] .. nvim_version()
+  ]], [[                      ]] .. nvim_version()
 }
 
 dashboard.section.buttons.val = {
@@ -60,9 +57,8 @@ dashboard.section.buttons.val = {
 
 local footer = function()
   local plugins_count = (
-    [[            ]] ..
-    icons.ui.Plugin .. " " ..
-    vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)).. " Plugins " ..
+    [[            ]] .. icons.ui.Plugin .. " " ..
+    vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)).. " Plugins" ..
     [[
     ]]
   )
