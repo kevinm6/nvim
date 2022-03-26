@@ -3,7 +3,7 @@
 " Description: Kevin personal colorscheme for Vim/NeoVim/VimR
 " Author: Kevin
 " Source: https://github.com/kevinm6/nvim/blob/nvim/colors/k_theme.vim
-" Last Modified: 25/03/2022 - 11:06
+" Last Modified: 26/03/2022 - 10:18
 " -------------------------------
 
 
@@ -17,6 +17,10 @@ hi Normal guifg=#d0d0d0 guibg=#141414 ctermfg=252 ctermbg=233
 hi Visual gui=reverse guifg=NONE guibg=NONE cterm=reverse ctermfg=NONE ctermbg=NONE
 " Selection Not-Owned by Vim
 hi VisualNOS gui=NONE guifg=#244E7A guibg=NONE cterm=NONE ctermfg=25 ctermbg=NONE
+
+if v:version >= 700
+  hi WinSeparator guibg=NONE ctermbg=NONE
+endif
 
 hi ModeMsg guifg=DeepSkyBlue3 guibg=NONE ctermfg=31 ctermbg=NONE
 hi MoreMsg guifg=DeepSkyBlue3 ctermfg=32

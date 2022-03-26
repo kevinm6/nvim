@@ -108,6 +108,7 @@ return {
 		Health = "♥️",
 		Git = "",
 		AppleSym = "",
+    Version = "",
 	},
 	diagnostics = {
 		Error = "",

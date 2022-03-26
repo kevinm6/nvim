@@ -3,7 +3,7 @@
  -- Description: NeoVim & VimR preferences
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/prefs.lua
- -- Last Modified: 15/03/2022 - 16:17
+ -- Last Modified: 26/03/2022 - 10:27
  -------------------------------------
 
 
@@ -95,6 +95,10 @@
     whichwrap = vim.opt.whichwrap:append "<,>,[,],h,l",
     formatoptions = vim.opt.formatoptions:remove { "c","r","o" }
 	}
+
+  if vim.fn.has("nvim-0.7") == 1 then
+    vim.opt.laststatus = 3
+  end
 
 	-- Sets all options to desired value
 	for k, v in pairs(options) do
