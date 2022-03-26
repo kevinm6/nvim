@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 25/03/2022 - 14:39
+-- Last Modified: 26/03/2022 - 18:30
 -------------------------------------
 
 
@@ -91,7 +91,7 @@ return packer.startup(function(use)
 	-- autocompletion
   use {
     "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-nvim-lsp", 
+    "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
@@ -124,7 +124,7 @@ return packer.startup(function(use)
 	use {
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
-    modules = {
+    requires = {
       { "nvim-treesitter/playground" },
       { "JoosepAlviste/nvim-ts-context-commentstring" },
       { "romgrk/nvim-treesitter-context" },
@@ -132,12 +132,6 @@ return packer.startup(function(use)
       { "p00f/nvim-ts-rainbow" },
     },
 	}
-
-  use {
-    "abecodes/tabout.nvim",
-    requires = { "nvim-treesitter" },
-    after = { "nvim-cmp" },
-  }
 
 	use {
 		"SmiteshP/nvim-gps",
