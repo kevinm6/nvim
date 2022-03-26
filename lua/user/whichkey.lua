@@ -97,7 +97,7 @@ local leader_maps = {
 	q = { "<cmd>quit<cr>", "Quit" },
 	a = { "<cmd>Alpha<cr>", "Alpha Dashboard"},
 	Z = { "<cmd>ZenMode<cr>", "Zen"},
-  ["%"] = { "<cmd>source %", "Save current buffer" },
+  ["%"] = { "<cmd>source %<cr>", "Save current buffer" },
 
 	f = {
 		name = "Find (Telescope)",
