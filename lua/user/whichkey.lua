@@ -260,15 +260,15 @@ local leader_maps = {
   },
 
 	-- NVIMTREE
-	E = { "<cmd>NvimTreeToggle<cr>", "Nvim-Tree" },
+	E = { "<cmd>NeoTreeFocusToggle<cr>", "Neo-Tree" },
 	e = {
-		name = "Nvim-Tree",
-		r = { "<cmd>NvimTreeRefresh<cr>", "Refresh Nvim-Tree" },
-		o = { "<cmd>NvimTreeOpen<cr>", "Open Nvim-Tree window" },
-		t = { "<cmd>NvimTreeToggle<cr>", "Toggle Nvim-Tree" },
-		f = { "<cmd>NvimTreeFocus<cr>", "Focus file in Nvim-Tree" },
-		c = { "<cmd>NvimTreeClose<cr>", "Close Nvim-Tree window" },
-		C = { "<cmd>NvimTreeClipboard<cr>", "Show Nvim-Tree clipboard" },
+		name = "Neo-Tree",
+		r = { "<cmd>NeoTreeRefresh<cr>", "Refresh Neo-Tree" },
+		o = { "<cmd>NeoTreeOpen<cr>", "Open Neo-Tree window" },
+		t = { "<cmd>NeoTreeToggle<cr>", "Toggle Neo-Tree" },
+		f = { "<cmd>NeoTreeFloatToggle<cr>", "Toggle Neo-Tree floating" },
+		c = { "<cmd>NeoTreeClose<cr>", "Close Neo-Tree window" },
+    b = { "<cmd>Neotree buffers<cr>", "NeoTree show open buffers"},
 	},
 
 	-- Terminal

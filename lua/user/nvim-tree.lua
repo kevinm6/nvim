@@ -132,6 +132,7 @@ nvim_tree.setup {
 				{ key = "<C-p>", action = "parent_node" },
 				{ key = "?", action = "toggle_help" },
 				{ key = "<Esc>", action = "toggle_help" },
+        { key = "/", action = "search" },
       },
     },
     number = false,

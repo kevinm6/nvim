@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 26/03/2022 - 18:30
+-- Last Modified: 27/03/2022 - 11:51
 -------------------------------------
 
 
@@ -66,8 +66,20 @@ return packer.startup(function(use)
 		"kyazdani42/nvim-tree.lua",
 		requires = {
 			"kyazdani42/nvim-web-devicons"
-		}
+		},
+    disable = true,
 	}
+
+  use {
+  "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim"
+    }
+  }
+
 	use {
 		"folke/which-key.nvim",
 		run = "WhichKey"
