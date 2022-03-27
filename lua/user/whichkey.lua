@@ -260,15 +260,16 @@ local leader_maps = {
   },
 
 	-- NVIMTREE
-	E = { "<cmd>NeoTreeFocusToggle<cr>", "Neo-Tree" },
+	E = { "<cmd>Neotree toggle reveal_force_cwd<cr>", "Neo-Tree" },
 	e = {
-		name = "Neo-Tree",
-		r = { "<cmd>NeoTreeRefresh<cr>", "Refresh Neo-Tree" },
-		o = { "<cmd>NeoTreeOpen<cr>", "Open Neo-Tree window" },
-		t = { "<cmd>NeoTreeToggle<cr>", "Toggle Neo-Tree" },
-		f = { "<cmd>NeoTreeFloatToggle<cr>", "Toggle Neo-Tree floating" },
-		c = { "<cmd>NeoTreeClose<cr>", "Close Neo-Tree window" },
-    b = { "<cmd>Neotree buffers<cr>", "NeoTree show open buffers"},
+		name = "NeoTree",
+		r = { "<cmd>NeoTreeRefresh<cr>", "Refresh NeoTree" },
+		o = { "<cmd>Neotree show<cr>", "Open NeoTree window" },
+		t = { "<cmd>Neotree toggle show<cr>", "Toggle NeoTree" },
+		f = { "<cmd>Neotree toggle float reveal<cr>", "Toggle NeoTree floating" },
+		c = { "<cmd>Neotree close<cr>", "Close NeoTree window" },
+    b = { "<cmd>Neotree toggle buffers float<cr>", "NeoTree show open buffers"},
+    g = { "<cmd>Neotree toggle git_status float<cr>", "NeoTree git"},
 	},
 
 	-- Terminal

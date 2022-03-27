@@ -3,7 +3,7 @@
 -- Description: Lsp handlers file, to manage various lsp behaviours config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 14/03/2022 - 08:51
+-- Last Modified: 27/03/2022 - 15:08
 -------------------------------------
 
 
@@ -82,7 +82,7 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-  if client.name == "tsserver" then
+  if client.name == "tsserver" or client.name == "jtd.ls" then
     client.resolved_capabilities.document_formatting = false
   end
   lsp_keymaps(bufnr)

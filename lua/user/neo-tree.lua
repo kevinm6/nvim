@@ -12,9 +12,18 @@ if not ok then return end
 
 local icons = require "user.icons"
 
+vim.fn.sign_define("",
+    {text = " ", texthl = "LspDiagnosticsSignError"})
+vim.fn.sign_define("LspDiagnosticsSignWarning",
+    {text = " ", texthl = "LspDiagnosticsSignWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation",
+    {text = " ", texthl = "LspDiagnosticsSignInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint",
+    {text = "", texthl = "LspDiagnosticsSignHint"})
+
 
 neo_tree.setup {
-  close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+  close_if_last_window = false,
   popup_border_style = "rounded",
   enable_git_status = true,
   enable_diagnostics = true,
@@ -36,33 +45,27 @@ neo_tree.setup {
     git_status = {
       symbols = {
         -- Change type
-        added     = "✚",
-        modified  = "",
-        conflict  = "",
-        unstaged = icons.git.unstaged,
-        staged = icons.git.staged,
-        unmerged = icons.git.unmerged,
+        added = icons.git.Add,
+        modified  = icons.git.Mod,
         renamed = icons.git.renamed,
+        -- Status type
+        staged = icons.git.staged,
         untracked = icons.git.untracked,
         deleted = icons.git.deleted,
         ignored = icons.git.ignored,
-        -- deleted   = "✖",
-        -- renamed   = "",
-        -- Status type
-        -- untracked = "",
-        -- ignored   = "",
-        -- unstaged  = "",
-        -- staged    = "",
+        unstaged = icons.git.unstaged,
+        unmerged = icons.git.unmerged,
+        conflict = icons.git.conflict,
       }
     },
     icon = {
       folder_closed = icons.kind.Folder,
       folder_open = icons.documents.OpenFolder,
-      folder_empty = "ﰊ",
-      default = "*",
+      folder_empty = icons.documents.FolderEmpty,
+      -- default = icons.documents.default,
     },
     name = {
-      trailing_slash = true,
+      trailing_slash = false,
       use_git_status_colors = true,
     },
   },
@@ -77,10 +80,11 @@ neo_tree.setup {
       ["o"] = "open",
       ["s"] = "open_split",
       ["v"] = "open_vsplit",
-      ["C"] = "close_node",
+      ["h"] = "close_node",
       ["<bs>"] = "navigate_up",
       ["-"] = "navigate_up",
       ["."] = "set_root",
+      ["L"] = "set_root",
       ["H"] = "toggle_hidden",
       ["R"] = "refresh",
       ["/"] = "fuzzy_finder",
@@ -96,11 +100,21 @@ neo_tree.setup {
       ["c"] = "copy", -- takes text input for destination
       ["m"] = "move", -- takes text input for destination
       ["q"] = "close_window",
+      ["D"] = function (state)
+        local path = state.tree:get_node().path
+        vim.fn.system("mv " .. vim.fn.fnameescape(path) .. " ~/.Trash")
+        require("neo-tree.sources.manager").refresh(state.name)
+      end,
+      ["O"] = function(state)
+        local path = state.tree:get_node().path
+        vim.api.nvim_command("silent !open -g " .. path)
+      end,
     }
   },
   renderers = {
      directory = {
       { "indent" },
+      { "diagnostics", errors_only = true },
       { "icon" },
       { "current_filter" },
       { "name" },
@@ -109,7 +123,6 @@ neo_tree.setup {
       --   highlight = "NeoTreeSymbolicLinkTarget",
       -- },
       { "clipboard" },
-      { "diagnostics", errors_only = true },
       --{ "git_status" },
     },
     file = {
@@ -129,28 +142,21 @@ neo_tree.setup {
   filesystem = {
     filtered_items = {
       visible = false, -- when true, they will just be displayed differently than normal items
-      hide_dotfiles = false,
+      hide_dotfiles = true,
       hide_gitignored = true,
       hide_by_name = {
-        ".DS_Store",
         "thumbs.db",
-        "Icon"
         --"node_modules"
       },
       never_show = { -- remains hidden even if visible is toggled to true
-        --".DS_Store",
+        ".DS_Store",
+        "Icon"
         --"thumbs.db"
       },
     },
     follow_current_file = true, -- This will find and focus the file in the active buffer every
-    -- time the current file is changed while the tree is open.
     hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-    -- in whatever position is specified in window.position
-    -- "open_current",  -- netrw disabled, opening a directory opens within the
-    -- window like netrw would, regardless of window.position
-    -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
     use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
-    -- instead of relying on nvim autocmd events.
   },
   buffers = {
     show_unloaded = true,
@@ -177,5 +183,3 @@ neo_tree.setup {
   }
 }
 
-
-vim.api.nvim_set_keymap("n", "€", "<cmd>Neotree reveal <cr>", { silent = true, noremap = true })

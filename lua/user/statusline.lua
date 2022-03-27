@@ -132,11 +132,11 @@ end
 
 vim.api.nvim_exec([[
 	augroup Statusline
-	au!
-	au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()
-	au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline.inactive()
-	au WinEnter,BufEnter,FileType NvimTree* setlocal statusline=%!v:lua.Statusline.explorer()
-	au WinEnter,BufEnter,FileType alpha setlocal statusline=%!v:lua.Statusline.dashboard()
+    au!
+    au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()
+    au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline.inactive()
+    au FileType,BufEnter,WinEnter neo-tree setlocal statusline=%!v:lua.Statusline.explorer()
+    au FileType,BufEnter,WinEnter alpha setlocal statusline=%!v:lua.Statusline.dashboard()
 	augroup END
 ]], false)
 
