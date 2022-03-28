@@ -14,7 +14,7 @@
     "description": "file main info"
   },
 	"file-info_yaml": {
-		"prefix": "inf-yaml",
+		"prefix": "infYaml",
 		"body": [
 			"---",
 			"Title: ${1:TM_FILENAME}",
