@@ -162,7 +162,8 @@ cmp.setup {
     -- { name = "digraphs" },
     { name = "calc" },
     { name = "latex_symbols" },
-    { name = "emoji" },
+    { name = "emoji", option = { length = 2 } },
+    { name = "spell" },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
