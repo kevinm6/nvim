@@ -3,7 +3,7 @@
 --	Description: alplha config for Neovim
 --	Author: Kevin
 --	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
---	Last Modified: 26/03/2022 - 21:23
+--	Last Modified: 29/03/2022 - 13:20
 -----------------------------------
 
 local ok, alpha = pcall(require, "alpha")
@@ -13,6 +13,8 @@ local icons = require "user.icons"
 
 local dashboard = require "alpha.themes.dashboard"
 
+local newline = [[
+]]
 
 local nvim_version = function()
   local v = vim.version()
@@ -25,8 +27,8 @@ local nvim_version = function()
 end
 
 dashboard.section.header.val = {
-  [[               ]] .. os.date("  %d/%m/%Y   %H:%M"), [[
-  ]],
+  [[               ]] .. os.date("  %d/%m/%Y   %H:%M"),
+  newline,
   [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
   [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
   [[ ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║]],
@@ -45,12 +47,16 @@ dashboard.section.buttons.val = {
   dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
   dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
   dashboard.button("p", icons.ui.Packer .. " Packer", "<cmd>PackerSync <CR>"),
-  dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
+  dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration",
+    "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
+
   dashboard.button("L", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
   dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
   dashboard.button("l", icons.kind.Text .. " Live text grep", "<cmd>Telescope live_grep <CR>"),
   -- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
-  dashboard.button("c", icons.ui.Gear .. " Config", "<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"),
+  dashboard.button("c", icons.ui.Gear .. " Config",
+    "<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"),
+
   dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
   dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
 }
@@ -59,12 +65,8 @@ local footer = function()
   local plugins_count = (
     [[            ]] .. icons.ui.Plugin .. " " ..
     vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)).. " Plugins" ..
-    [[
-    ]]
+    newline
   )
-  local newline = [[
-
-  ]]
 
   local myself = "\n\n" .. icons.ui.BoldChevronLeft .. " https://github.com/kevinm6/nvim " .. icons.ui.BoldChevronRight
 

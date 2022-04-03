@@ -3,7 +3,7 @@
  -- Description: Bufferline config
  -- Author: Kevin
  -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/bufferline.lua
- -- Last Modified: 20/03/2022 - 08:32
+ -- Last Modified: 31/03/2022 - 10:23
  -------------------------------------
 
 
@@ -34,8 +34,8 @@ bufferline.setup {
     tab_size = 22,
     diagnostics = false,
     diagnostics_update_in_insert = false,
-    -- offsets = {{ filetype = "NvimTree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard", padding = 1, }},
-    offsets = {{ filetype = "neo-tree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard", padding = 1, }},
+    offsets = {{ filetype = "NvimTree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard", padding = 1, }},
+    -- offsets = {{ filetype = "neo-tree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard", padding = 1, }},
     show_buffer_icons = true,
     show_buffer_close_icons = true,
     show_close_icon = true,

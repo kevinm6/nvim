@@ -3,7 +3,7 @@
 -- Description: NvimTree config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
--- Last Modified: 24/03/2022 - 15:11
+-- Last Modified: 31/03/2022 - 13:55
 -------------------------------------
 
 
@@ -11,6 +11,8 @@ local ok, nvim_tree = pcall(require, "nvim-tree")
 if not ok then return end
 
 local icons = require "user.icons"
+local notify = require "notify"
+
 
 vim.g.nvim_tree_icons = {
   default = " ",
@@ -43,8 +45,23 @@ vim.g.nvim_tree_special_files = {
 local lib = require "nvim-tree.lib"
 local view = require "nvim-tree.view"
 
+
 local function collapse_all()
-  require("nvim-tree.actions.collapse-all").fn()
+  require("nvim-tree.actions").collapse_all.fn()
+end
+
+local function trash_file()
+  local path = lib.get_node_at_cursor().absolute_path
+  local name = lib.get_node_at_cursor().name
+
+  print("Trash < " .. name .. " > ? (y/n) ")
+  local ans = require("nvim-tree.utils").get_user_input_char()
+  require("nvim-tree.utils").clear_prompt()
+  if ans:match "^y" then
+    vim.fn.system("mv " .. vim.fn.fnameescape(path) .. " ~/.Trash")
+    vim.api.nvim_command("NvimTreeRefresh")
+    notify(" " .. name .. " moved to Bin!", "Warn")
+  end
 end
 
 local function vsplit_preview()
@@ -55,15 +72,11 @@ local function vsplit_preview()
   -- Just copy what's done normally with vsplit
   if node.link_to and not node.nodes then
     require("nvim-tree.actions.open-file").fn(action, node.link_to)
-
   elseif node.nodes ~= nil then
     lib.expand_or_collapse(node)
-
   else
     require("nvim-tree.actions.open-file").fn(action, node.absolute_path)
-
   end
-
   -- Finally refocus on tree if it was lost
   view.focus()
 end
@@ -122,36 +135,25 @@ nvim_tree.setup {
         { key = { "-", "<BS>"}, action = "dir_up" },
         { key = "h", action = "close_node" },
         { key = "L", action = "cd" },
-        { key = "]", action = "cd" },
+        { key = ".", action = "cd" },
         { key = "O", action = "system_open" },
         { key = "s", action = "split" },
         { key = "<C-h>", action = "collapse_all", action_cb = collapse_all },
         { key = "v", action = "vsplit" },
         { key = "V", action = "vsplit_preview", action_cb = vsplit_preview },
         { key = "p", action = "preview" },
-        { key = "<C-p>", action = "parent_node" },
-        { key = "?", action = "toggle_help" },
+        { key = "^", action = "parent_node" },
         { key = "<Esc>", action = "toggle_help" },
-      { key = "/", action = "search" },
-      { key = "D", action = {
-          function (state)
-            local path = state.tree:get_node().path
-            vim.fn.system("mv " .. vim.fn.fnameescape(path) .. " ~/.Trash")
-            require("neo-tree.sources.manager").refresh(state.name)
-          end,
-          ["O"] = function(state)
-            local path = state.tree:get_node().path
-            vim.api.nvim_command("silent !open -g " .. path)
-          end,
-
-        }}
-      },
+        { key = "/", action = "search" },
+        { key = "D", action = "trash", action_cb = trash_file },
+        { key = "?", action = "toggle_help" },
+        },
     },
     number = false,
     relativenumber = true,
   },
   trash = {
-    cmd = "mv",
+    cmd = "trash",
     require_confirm = true,
   },
   quit_on_open = 0,

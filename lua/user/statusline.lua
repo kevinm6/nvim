@@ -74,9 +74,9 @@ local function get_git_status()
 
 	return is_head_empty
 		and string.format(
-			"+%s ~%s -%s |  %s ",
+      "+%s ~%s -%s |  %s ",
 			signs.added, signs.changed, signs.removed, signs.head
-		) or ""
+		) .. '%1*' .. icons.ui.SlChevronRight .. " " or ""
 end
 
 
@@ -92,7 +92,7 @@ Statusline.active = function()
 	-- LeftSide
 	local bufN = '%1*%n' .. icons.ui.SlChevronRight
 	local git = '%2*'.. get_git_status()
-	local fname = '%1*' .. icons.ui.SlChevronRight .. ' ' .. get_filename() .. '%m '
+	local fname = '%1*' .. get_filename() .. '%m '
 	local endLeftSide =	'%4*' .. icons.ui.SlArrowRight
 	-- Center & separators
 	local sideSep = '%='
