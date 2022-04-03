@@ -3,13 +3,18 @@
 -- Description: Jsonls server config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/settings/jsonls.lua
--- Last Modified: 13/01/22 - 15:57
+-- Last Modified: 31/03/2022 - 14:03
 -------------------------------------
+
+local ok, schema = pcall(require, "schemastore")
+if not ok then return end
+
+
 
 return {
  settings = {
     json = {
-      schemas = require('schemastore').json.schemas(),
+      schemas = schema.json.schemas(),
     },
   },
   setup = {

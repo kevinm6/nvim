@@ -3,7 +3,7 @@
 -- Description: Lua K NeoVim & VimR plugins w/ packer
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 27/03/2022 - 11:51
+-- Last Modified: 01/04/2022 - 16:28
 -------------------------------------
 
 
@@ -67,8 +67,7 @@ return packer.startup(function(use)
 		"kyazdani42/nvim-tree.lua",
 		requires = {
 			"kyazdani42/nvim-web-devicons"
-		},
-    disable = true,
+		}
 	}
 
   use {
@@ -78,7 +77,8 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim",
       "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim"
-    }
+    },
+    disable = true,
   }
 
 	use {
@@ -100,6 +100,12 @@ return packer.startup(function(use)
 	use "goolord/alpha-nvim"
 	use "rcarriga/nvim-notify"
   use { "nvim-lualine/lualine.nvim", disable = true, opt = true }
+
+  -- DAP
+  use "mfussenegger/nvim-dap"
+  use "theHamsta/nvim-dap-virtual-text"
+  use "rcarriga/nvim-dap-ui"
+  use "Pocco81/DAPInstall.nvim"
 
 	-- autocompletion
   use {

@@ -3,7 +3,7 @@
 -- Description: Lsp handlers file, to manage various lsp behaviours config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 27/03/2022 - 15:08
+-- Last Modified: 01/04/2022 - 16:27
 -------------------------------------
 
 
@@ -85,6 +85,11 @@ M.on_attach = function(client, bufnr)
   if client.name == "tsserver" or client.name == "jtd.ls" then
     client.resolved_capabilities.document_formatting = false
   end
+  if client.name == "jdt.ls" then
+     require("jdtls").setup_dap { hotcodereplace = "auto" }
+     require("jdtls.dap").setup_dap_main_class_configs()
+  end
+
   lsp_keymaps(bufnr)
   lsp_highlight_document(client)
 end
