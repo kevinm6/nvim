@@ -16,6 +16,10 @@ local dashboard = require "alpha.themes.dashboard"
 local newline = [[
 ]]
 
+local date = function ()
+  return os.date("  %d/%m/%Y   %H:%M")
+end
+
 local nvim_version = function()
   local v = vim.version()
   local v_info = (
@@ -27,7 +31,7 @@ local nvim_version = function()
 end
 
 dashboard.section.header.val = {
-  [[               ]] .. os.date("  %d/%m/%Y   %H:%M"),
+  [[               ]] .. date() ..
   newline,
   [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
   [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
