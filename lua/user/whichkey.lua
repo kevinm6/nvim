@@ -10,6 +10,7 @@
 local ok, which_key = pcall(require, "which-key")
 if not ok then return end
 
+--TODO : FIX < ZA >
 
 local setup = {
   plugins = {
@@ -236,7 +237,7 @@ local leader_maps = {
     k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
     C = { "<cmd>Telescope commands<CR>", "Commands" },
 		p = { "<cmd>TSPlaygroundToggle<CR>", "TS Playground" },
-		h = { "<cmd>TSHighlightUnderCursor<CR>", "TS Highlight" },
+		h = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "TS Highlight" },
   },
 
   -- LSP
@@ -409,7 +410,7 @@ local Zopts = {
 local Zmappings = {
 	Z = { "<cmd>update<CR> <cmd>Bdelete<CR> <cmd>bnext<CR>", "Save and Close buffer" },
 	Q = { "<cmd>quit!<CR>", "Close buffer and go to next" },
-	A = { "<cmd>bdelete<CR> <cmd>Alpha<CR>", "Close all Buffers" },
+	A = { ":%bdelete | :Alpha<CR>", "Close all Buffers" },
 }
 
 
