@@ -3,7 +3,7 @@
 -- Description: Keymaps for NeoVim & VimR
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/keymaps.lua
--- Last Modified: 24/03/2022 - 10:17
+-- Last Modified: 04/04/2022 - 10:46
 -------------------------------------
 
 
@@ -66,7 +66,7 @@ keymap("i", ".", ".<C-g>u", opts) -- checkpoints for undo
 
 -- NORMAL MODE
 keymap("n", "<M-Left>", "b", opts)
-keymap("n", "<M-Right>", "w", opts)
+keymap("n", "<M-Right>", "E", opts)
 keymap("n", "<S-Left>", "vh", opts)
 keymap("n", "<S-Right>", "vl", opts)
 keymap("n", "<S-Up>", "vk", opts)
