@@ -132,7 +132,7 @@ return packer.startup(function(use)
 	use "Mephistophiles/surround.nvim"
 	use {
 		"folke/zen-mode.nvim",
-    cmd = ":Goyo"
+    cmd = "ZenMode"
 	}
 	use "br1anchen/nvim-colorizer.lua"
 	use "RRethy/vim-illuminate"
