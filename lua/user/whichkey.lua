@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 03/04/2022 - 10:51
+-- Last Modified: 05/04/2022 - 10:58
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -90,7 +90,7 @@ local noLeader_opts = {
 
 local nonLeader_maps = {
   ["<F8>"] = {
-        "<cmd>update<CR> <cmd>! gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR> <cmd>! ./%< <CR>",
+        "<cmd>cd %:p:h<CR> <cmd>update<CR> <cmd>!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR> :call Scratch() <bar> :r!./#< <CR>",
         "Save, Compile & Run"
       },
 }
@@ -105,6 +105,10 @@ local leader_maps = {
   ["7"] = { "<cmd>BufferLineGoToBuffer 7<CR>", "Go to Buffer 7" },
   ["8"] = { "<cmd>BufferLineGoToBuffer 8<CR>", "Go to Buffer 8" },
   ["9"] = { "<cmd>BufferLineGoToBuffer 9<CR>", "Go to Buffer 9" },
+  ["."] = {
+    "<cmd>cd %:p:h<CR> <bar> <cmd>lua require(\"notify\")(\" Change dir to \" .. vim.fn.expand(\"%:p:h\"), \"Info\", { timeout = 4})<CR>",
+    "Change dir to current buffer's parent"
+  },
 
   b = {
     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<CR>",
@@ -273,12 +277,12 @@ local leader_maps = {
     c = {
       name = "[ c ]",
       c = {
-        "<cmd>update<CR> <cmd>!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR>",
+        "<cmd>cd %:p:h<CR> <cmd>update<CR> <cmd>r!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR>",
         "Save & Compile"
       },
-      r = { "<cmd>! ./%< % <CR>", "Run program" },
+      r = { "<cmd>cd %:p:h<CR> :call Scratch() <bar> :r!./#< <CR>", "Run program" },
       C = {
-        "<cmd>update<CR> <cmd>!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR> <cmd>!./%< % <CR>",
+        "<cmd>cd %:p:h<CR> <cmd>update<CR> <cmd>!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR> :call Scratch() <bar> :r!./#< <CR>",
         "Compile & Run"
       },
     }
