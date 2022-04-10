@@ -150,13 +150,11 @@ cmp.setup {
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
+    { name = "nvim_lua" },
 		{ name = "buffer" },
     { name = "nvim_lsp_signature_help" },
     { name = "treesitter" },
-		{
-      name = "path",
-      option = { trailing_slash = true }
-    },
+		{ name = "path", option = { trailing_slash = true } },
 		{ name = "cmdline" },
     { name = "zsh" },
     -- { name = "digraphs" },
