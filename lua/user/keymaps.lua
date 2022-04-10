@@ -117,3 +117,13 @@ keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "ª", ":move '>+1<CR>gv-gv", opts) -- <A-j>
 keymap("x", "º", ":move '<-2<CR>gv-gv", opts) -- <A-k>
+
+keymap("n", "p", "<Plug>(YankyPutAfter)", {})
+keymap("n", "P", "<Plug>(YankyPutBefore)", {})
+keymap("x", "p", "<Plug>(YankyPutAfter)", {})
+keymap("x", "P", "<Plug>(YankyPutBefore)", {})
+keymap("n", "gp", "<Plug>(YankyGPutAfter)", {})
+keymap("n", "gP", "<Plug>(YankyGPutBefore)", {})
+keymap("x", "gp", "<Plug>(YankyGPutAfter)", {})
+keymap("x", "gP", "<Plug>(YankyGPutBefore)", {})
+
