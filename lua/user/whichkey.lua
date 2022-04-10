@@ -4,7 +4,7 @@
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 05/04/2022 - 10:58
+-- Last Modified: 06/04/2022 - 10:39
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -120,7 +120,7 @@ local leader_maps = {
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
 	z = { "<cmd>update<CR> <cmd>Bdelete<cr> <cmd>bnext<cr>", "Save and Close Buffer" },
 	q = { "<cmd>quit<CR>", "Quit" },
-	a = { "<cmd>Alpha<CR>", "Alpha Dashboard"},
+	a = { ":Alpha<CR>", "Alpha Dashboard"},
 	Z = { "<cmd>ZenMode<CR>", "Zen"},
 
 	f = {
