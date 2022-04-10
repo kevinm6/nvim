@@ -53,7 +53,8 @@ local modules = {
   "user.hop",
 	"user.colorizer",
 	"user.illuminate",
-  "user.zen-mode"
+  "user.zen-mode",
+  "user.yanky"
 }
 
 for _, module in ipairs(modules) do

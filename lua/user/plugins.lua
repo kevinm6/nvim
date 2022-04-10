@@ -85,10 +85,11 @@ return packer.startup(function(use)
 		"folke/which-key.nvim",
 		run = "WhichKey"
 	}
-	use {
-		"akinsho/bufferline.nvim",
-		requires = "kyazdani42/nvim-web-devicons"
-	}
+  use {
+    'akinsho/bufferline.nvim',
+    tag = "*",
+    requires = 'kyazdani42/nvim-web-devicons'
+  }
 	use "akinsho/toggleterm.nvim"
 	use "moll/vim-bbye"
 	use {
@@ -138,6 +139,7 @@ return packer.startup(function(use)
 	use "RRethy/vim-illuminate"
   use "phaazon/hop.nvim"
   use { "michaelb/sniprun", run = "bash ./install.sh" }
+  use "gbprod/yanky.nvim"
 
 	-- Treesitter
 	use {
