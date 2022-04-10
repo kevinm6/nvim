@@ -3,7 +3,7 @@
 -- Description: Telescope config
 -- Author: Kevin
 -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
--- Last Modified: 25/03/2022 - 11:43
+-- Last Modified: 10/04/2022 - 11:46
 -------------------------------------
 
 
@@ -30,27 +30,24 @@ telescope.setup {
 
     mappings = {
       i = {
-        ["<C-n>"] = actions.cycle_history_next,
-        ["<C-p>"] = actions.cycle_history_prev,
-
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
 
         ["<C-c>"] = actions.close,
         ["<esc>"] = actions.close,
-        ["<C-z>"] = { "<esc>", type = "command" },
+        ["<C-e>"] = { "<esc>", type = "command" },
 
         ["<Down>"] = actions.move_selection_next,
         ["<Up>"] = actions.move_selection_previous,
 
         ["<CR>"] = actions.select_default,
         ["<C-l>"] = actions.select_default,
-        ["<C-x>"] = actions.select_horizontal,
+        ["<C-h>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
         ["<C-t>"] = actions.select_tab,
 
-        ["<C-u>"] = actions.preview_scrolling_up,
-        ["<C-y>"] = actions.preview_scrolling_down,
+        ["<C-p>"] = actions.preview_scrolling_up,
+        ["<C-n>"] = actions.preview_scrolling_down,
 
         ["<PageUp>"] = actions.results_scrolling_up,
         ["<PageDown>"] = actions.results_scrolling_down,
@@ -66,7 +63,7 @@ telescope.setup {
       n = {
         ["<esc>"] = actions.close,
         ["<CR>"] = actions.select_default,
-        ["<C-x>"] = actions.select_horizontal,
+        ["<C-h>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
         ["<C-t>"] = actions.select_tab,
 
@@ -87,8 +84,8 @@ telescope.setup {
         ["gg"] = actions.move_to_top,
         ["G"] = actions.move_to_bottom,
 
-        ["<C-u>"] = actions.preview_scrolling_up,
-        ["<C-y>"] = actions.preview_scrolling_down,
+        ["<C-p>"] = actions.preview_scrolling_up,
+        ["<C-n>"] = actions.preview_scrolling_down,
 
         ["<PageUp>"] = actions.results_scrolling_up,
         ["<PageDown>"] = actions.results_scrolling_down,
