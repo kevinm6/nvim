@@ -162,6 +162,7 @@ cmp.setup {
     { name = "latex_symbols" },
     { name = "emoji", option = { length = 2 } },
     { name = "spell" },
+    { name = "luasnip-snippets" },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,

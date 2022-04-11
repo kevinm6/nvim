@@ -38,7 +38,7 @@ local icons = require "user.icons"
 packer.init {
 	package_root = require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack"),
 	compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
-  max_jobs = 14,
+  max_jobs = 20,
 	display = {
 		open_fn = function()
 			return require("packer.util").float { border = "shadow" }
@@ -126,8 +126,13 @@ return packer.startup(function(use)
     "hrsh7th/cmp-emoji",
 
     -- snippets
-    "L3MON4D3/LuaSnip",
-    "rafamadriz/friendly-snippets",
+    {
+      "L3MON4D3/LuaSnip",
+      requires = {
+        "rafamadriz/friendly-snippets",
+        -- "molleweide/LuaSnip-snippets.nvim",
+      }
+    },
   }
 
 	-- coding helper
@@ -203,6 +208,7 @@ return packer.startup(function(use)
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-project.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+      { "gfeiyou/command-center.nvim" },
     },
     event = "BufEnter"
   }

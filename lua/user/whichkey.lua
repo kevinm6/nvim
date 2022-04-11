@@ -123,7 +123,7 @@ local leader_maps = {
 		P = { "<cmd>Telescope projects<CR>", "Projects" },
     o = { "<cmd>Telescope<CR>", "Open Telescope" },
     b = { "<cmd>Telescope git_branches<CR>", "Checkout branch" },
-    c = { "<cmd>Telescope colorscheme<CR>", "Colorscheme" },
+    c = { "<cmd>Telescope command_center<CR>", "Commands" },
     H = { "<cmd>Telescope help_tags<CR>", "Help" },
     i = { "<cmd>Telescope media_files<CR>", "Media" },
     l = { "<cmd>Telescope resume<CR>", "Last Search" },
@@ -131,7 +131,7 @@ local leader_maps = {
     r = { "<cmd>Telescope oldfiles<CR>", "Recent File" },
     R = { "<cmd>Telescope registers<CR>", "Registers" },
     k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
-    C = { "<cmd>Telescope commands<CR>", "Commands" },
+    C = { "<cmd>Telescope colorscheme<CR>", "Colorscheme" },
 		p = { "<cmd>TSPlaygroundToggle<CR>", "TS Playground" },
 		h = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "TS Highlight" },
 
@@ -303,7 +303,7 @@ local leader_maps = {
     },
     e = { "<cmd>edit $NVIMDOTDIR/init.lua<CR>", "Edit Neovim config file" },
     S = {
-      "<cmd>source $NVIMDOTDIR/lua/snippets<CR> <bar> <cmd>lua require(\"notify\")(\" Snippets file sourced\", \"Info\")<cr>",
+      "<cmd>lua require(\"luasnip.loaders.from_vscode\").load { paths = { (\"./lua/\") } } <CR> <bar> <cmd>lua require(\"notify\")(\" Snippets file sourced\", \"Info\")<cr>",
       "Reload snippet file"
     },
     ["%"] = { "<cmd>source %<CR>", "Source current buffer" },

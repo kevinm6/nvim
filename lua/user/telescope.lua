@@ -21,6 +21,9 @@ telescope.load_extension "packer"
 telescope.load_extension "project"
 telescope.load_extension "ui-select"
 telescope.load_extension "file_browser"
+telescope.load_extension "command_center"
+
+local command_center = require("command_center")
 
 telescope.setup {
   defaults = {
@@ -147,6 +150,14 @@ telescope.setup {
 				prefix = '',
 			},
 		},
+    command_center = {
+      components = {
+        command_center.component.DESCRIPTION,
+        command_center.component.KEYBINDINGS,
+        -- command_center.component.COMMAND,
+      },
+      auto_replace_desc_with_cmd = false,
+    },
 	}
 }
 

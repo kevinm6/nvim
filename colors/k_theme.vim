@@ -95,10 +95,10 @@ hi Structure guifg=#5faf00 ctermfg=70
 hi Keyword guifg=#00ff87 ctermfg=48
 hi Exception guifg=#af0000 ctermfg=124
 hi Repeat guifg=#00ff87 ctermfg=48
-hi Underlined gui=underline guifg=#800080 cterm=underline ctermfg=5
+hi Underlined gui=underline guifg=#00a0d0 cterm=underline ctermfg=5
 hi Question guifg=#00875f ctermfg=29
 hi SpecialKey guifg=#ffafd7 ctermfg=218
-hi Special gui=italic guifg=#ffff87 cterm=italic ctermfg=228
+hi Special gui=bold guifg=#ffff87 cterm=bold ctermfg=228
 hi SpecialChar guifg=#FFF000 ctermfg=11
 hi Macro guifg=#870000 ctermfg=88
 hi PreProc guifg=#d75f00 ctermfg=166
