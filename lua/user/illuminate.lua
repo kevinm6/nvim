@@ -1,8 +1,8 @@
 -----------------------------------
---	File: illuminate.lua
---	Description: illuminate plugin config
---	Author: Kevin
---	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/illuminate.lua
+--	File         : illuminate.lua
+--	Description  : illuminate plugin config
+--	Author       : Kevin
+--	Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/illuminate.lua
 --	Last Modified: 18/03/2022 - 16:25
 -----------------------------------
 

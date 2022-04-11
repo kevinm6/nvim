@@ -1,5 +1,5 @@
 " -----------------------------------
-"	File: pseudo.vim
+"	File: pseudocode.vim
 "	Description: pseudocode syntax for Vim / NeoVim
 "	Author: Kevin
 "	Source: https://github.com/kevinm6/nvim/blob/nvim/after/syntax/pseudo.vim
@@ -7,7 +7,10 @@
 " -----------------------------------
 
 
-if exists('b:current_syntax') | finish | endif
+if exists('b:current_syntax')
+  finish
+endif
+
 syntax case ignore
 
 syn keyword pseudoStatement     function procedure class func class error nextgroup=pseudoFunction skipwhite

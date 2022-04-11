@@ -1,8 +1,8 @@
  -------------------------------------
- -- File: comment.lua
- -- Description: Comment config
- -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/comment.lua
+ -- File         : comment.lua
+ -- Description  : Comment config
+ -- Author       : Kevin
+ -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/comment.lua
  -- Last Modified: 12/03/2022 - 16:07
  -------------------------------------
 

@@ -1,8 +1,8 @@
 -------------------------------------
--- File: gitsigns.lua
--- Description: Lua K NeoVim & VimR gitsigns config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/gitsigns.lua
+-- File         : gitsigns.lua
+-- Description  : Lua K NeoVim & VimR gitsigns config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/gitsigns.lua
 -- Last Modified: 12/03/2022 - 16:23
 -------------------------------------
 

@@ -3,10 +3,10 @@
     "prefix": "inf",
     "body": [
 			"-----------------------------------",
-			"\tFile: ${TM_FILENAME}",
-			"\tDescription: ${2:Description}",
-			"\tAuthor: Kevin",
-			"\tSource: https://github.com/kevinm6/${1:Link}",
+			"\tFile         : ${TM_FILENAME}",
+			"\tDescription  : ${2:Description}",
+			"\tAuthor       : Kevin",
+			"\tSource       : https://github.com/kevinm6/${1:Link}",
 			"\tLast Modified: ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}",
 			"-----------------------------------\n",
 			"$0"
@@ -17,11 +17,11 @@
 		"prefix": "infYaml",
 		"body": [
 			"---",
-			"Title: ${1:TM_FILENAME}",
-			"Author: Kevin",
-			"Date: ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}",
-			"Abstract: ${2:types}",
-			"output:",
+			"Title         : ${1:TM_FILENAME}",
+			"Author        : Kevin",
+			"Date          : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+			"Abstract      : ${2:types}",
+			"output        : ",
 			"\tpdf_document: default",
 			"\thtml_notebook: default",
 			"---"

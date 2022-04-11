@@ -1,7 +1,7 @@
 " Vim syntax file
-" Language:     Markdown
-" Maintainer:   Tim Pope <vimNOSPAM@tpope.org>
-" Filenames:    *.markdown
+" Language     : Markdown
+" Author       : Kevin Manca (from Tpope source file)
+" Last Modified: 11/04/2022 - 11:27
 
 if exists("b:current_syntax")
   finish
@@ -15,7 +15,25 @@ runtime! syntax/html.vim
 unlet! b:current_syntax
 
 if !exists('g:markdown_fenced_languages')
-  let g:markdown_fenced_languages = []
+  let g:markdown_fenced_languages = [
+        \ 'html',
+	      \ 'python',
+	      \ 'zsh',
+	      \ 'java',
+	      \ 'c', 'C',
+	      \ 'bash=sh',
+	      \ 'json',
+	      \ 'xml',
+	      \ 'vim',
+	      \ 'help',
+	      \ 'javascript', 'js=javascript',
+	      \ 'css',
+	      \ 'changelog',
+	      \ 'cpp',
+	      \ 'pseudocode',
+	      \ 'php',
+	      \ 'sql',
+        \]
 endif
 for s:type in map(copy(g:markdown_fenced_languages),'matchstr(v:val,"[^=]*$")')
   if s:type =~ '\.'
@@ -95,7 +113,7 @@ endif
 syn match markdownEscape "\\[][\\`*_{}()#+.!-]"
 syn match markdownError "\w\@<=_\w\@="
 
-hi def link markdownH1                    htmlH1
+hi def link markdownH1                    Title
 hi def link markdownH2                    htmlH2
 hi def link markdownH3                    htmlH3
 hi def link markdownH4                    htmlH4
@@ -104,15 +122,15 @@ hi def link markdownH6                    htmlH6
 hi def link markdownHeadingRule           markdownRule
 hi def link markdownHeadingDelimiter      Delimiter
 hi def link markdownOrderedListMarker     markdownListMarker
-hi def link markdownListMarker            htmlTagName
-hi def link markdownBlockquote            Comment
+hi def link markdownListMarker            markdownListMarker
+hi def link markdownBlockquote            SpecialChar
 hi def link markdownRule                  PreProc
 
 hi def link markdownLinkText              htmlLink
 hi def link markdownIdDeclaration         Typedef
 hi def link markdownId                    Type
 hi def link markdownAutomaticLink         markdownUrl
-hi def link markdownUrl                   Float
+hi def link markdownUrl                   Function
 hi def link markdownUrlTitle              String
 hi def link markdownIdDelimiter           markdownLinkDelimiter
 hi def link markdownUrlDelimiter          htmlTag
@@ -121,11 +139,10 @@ hi def link markdownUrlTitleDelimiter     Delimiter
 hi def link markdownItalic                htmlItalic
 hi def link markdownBold                  htmlBold
 hi def link markdownBoldItalic            htmlBoldItalic
-hi def link markdownCodeDelimiter         Delimiter
+hi def link markdownCodeDelimiter         Tag
 
-hi def link markdownEscape                Special
 hi def link markdownError                 Error
+hi def link markdownEscape                Special
 
 let b:current_syntax = "markdown"
-
 " vim:set sw=2:o

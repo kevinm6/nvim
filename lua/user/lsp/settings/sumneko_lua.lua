@@ -1,8 +1,8 @@
 -------------------------------------
--- File: sumneko_lua.lua
--- Description:
--- Author: Kevin
--- Source: https://github.com/kevinm6/
+-- File         : sumneko_lua.lua
+-- Description  :
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/
 -- Last Modified: 21/12/21 - 20:28
 -------------------------------------
 

@@ -1,8 +1,8 @@
 --------------------------------------
--- File: init.lua
--- Description: NeoVim K configuration (Lua)
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/init.lua
+-- File         : init.lua
+-- Description  : NeoVim K configuration (Lua)
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/init.lua
 -- Last Modified: 31/03/2022 - 10:22
 --------------------------------------
 
@@ -37,6 +37,7 @@ local modules = {
 	"user.autopairs",
 	"user.comment",
 	"user.gitsigns",
+  "user.git-blame",
   "user.nvim-tree", -- "user.neo-tree",
 	"user.bufferline",
 	"user.toggleterm",

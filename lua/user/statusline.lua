@@ -1,8 +1,8 @@
  -------------------------------------
- -- File: statusline.lua
- -- Description: StatusLine config
- -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
+ -- File         : statusline.lua
+ -- Description  : StatusLine config
+ -- Author       : Kevin
+ -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
  -- Last Modified: 12/03/2022 - 17:34
  -------------------------------------
 
@@ -69,7 +69,9 @@ local function get_git_status()
 	local is_head_empty = signs.head ~= ""
 
 	if is_truncated(trunc_width.git_status) then
-		return is_head_empty and string.format(" %s ", signs.head or "") or ""
+		return is_head_empty and string.format(
+       " %s ", signs.head or ""
+     ) .. '%1*' .. icons.ui.SlChevronRight .. " " or ""
 	end
 
 	return is_head_empty
@@ -92,9 +94,10 @@ Statusline.active = function()
 	-- LeftSide
 	local bufN = '%1*%n' .. icons.ui.SlChevronRight
 	local git = '%2*'.. get_git_status()
-	local fname = '%1*' .. get_filename() .. '%m '
+	local fname = '%6*' .. get_filename() .. '%m '
 	local endLeftSide =	'%4*' .. icons.ui.SlArrowRight
 	-- Center & separators
+  local gps_out = '%5*' .. nvim_gps() .. '%m'
 	local sideSep = '%='
 	-- RightSide
 	local endRightSide = '%4*' .. icons.ui.SlArrowLeft
@@ -104,7 +107,7 @@ Statusline.active = function()
 
 	return table.concat({
 		-- Left Side
-		bufN, " ", git, fname, endLeftSide, " ", nvim_gps(),
+		bufN, " ", git, fname, endLeftSide, " ", gps_out,
 		-- Center & separators
 		sideSep,
 		get_lsp_diagnostic(), " ",

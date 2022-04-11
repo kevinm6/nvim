@@ -1,8 +1,8 @@
 -----------------------------------
--- File: yanky.lua
--- Description: yanky plugin config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/yanky.lua
+-- File         : yanky.lua
+-- Description  : yanky plugin config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/yanky.lua
 -- Last Modified: 10/04/2022 - 11:14
 -----------------------------------
 

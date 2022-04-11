@@ -1,8 +1,8 @@
 -----------------------------------
---	File: alpha.lua
---	Description: alplha config for Neovim
---	Author: Kevin
---	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
+--	File         : alpha.lua
+--	Description  : alpha config for Neovim
+--	Author       : Kevin
+--	Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
 --	Last Modified: 29/03/2022 - 13:20
 -----------------------------------
 
@@ -59,7 +59,7 @@ dashboard.section.buttons.val = {
   dashboard.button("l", icons.kind.Text .. " Live text grep", "<cmd>Telescope live_grep <CR>"),
   -- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
   dashboard.button("c", icons.ui.Gear .. " Config",
-    "<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"),
+    ":cd $NVIMDOTDIR | :e $NVIMDOTDIR/init.lua <CR>"),
 
   dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
   dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),

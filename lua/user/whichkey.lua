@@ -1,16 +1,15 @@
 -------------------------------------
--- File: whichkey.lua
--- Descriptions: WhichKey config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
--- Help-Source: https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
+-- File         : whichkey.lua
+-- Descriptions : WhichKey plugin config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
+-- Help-Source  : https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
 -- Last Modified: 06/04/2022 - 10:39
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
 if not ok then return end
 
---TODO : FIX < ZA >
 
 local setup = {
   plugins = {
@@ -70,15 +69,6 @@ local opts = {
   nowait = true,
 }
 
-local nosilent_opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil,
-  silent = false,
-  noremap = true,
-  nowait = true,
-}
-
 
 local noLeader_opts = {
   mode = "n", -- NORMAL mode
@@ -124,17 +114,27 @@ local leader_maps = {
 	Z = { "<cmd>ZenMode<CR>", "Zen"},
 
 	f = {
-		name = "Find (Telescope)",
+		name = "Find",
 		f = {
 			"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<CR>",
 			"Find files",
 		},
 		F = { "<cmd>Telescope live_grep theme=ivy<CR>", "Find Text (live grep)" },
 		P = { "<cmd>Telescope projects<CR>", "Projects" },
-		b = {
-			"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<CR>",
-			"Buffers",
-		},
+    o = { "<cmd>Telescope<CR>", "Open Telescope" },
+    b = { "<cmd>Telescope git_branches<CR>", "Checkout branch" },
+    c = { "<cmd>Telescope colorscheme<CR>", "Colorscheme" },
+    H = { "<cmd>Telescope help_tags<CR>", "Help" },
+    i = { "<cmd>Telescope media_files<CR>", "Media" },
+    l = { "<cmd>Telescope resume<CR>", "Last Search" },
+    M = { "<cmd>Telescope man_pages<CR>", "Man Pages" },
+    r = { "<cmd>Telescope oldfiles<CR>", "Recent File" },
+    R = { "<cmd>Telescope registers<CR>", "Registers" },
+    k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
+    C = { "<cmd>Telescope commands<CR>", "Commands" },
+		p = { "<cmd>TSPlaygroundToggle<CR>", "TS Playground" },
+		h = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "TS Highlight" },
+
 	},
 	m = {
 		name = "Markdown",
@@ -159,19 +159,8 @@ local leader_maps = {
   },
 
   -- Git
-	g =  {
-		name = "Git",
-		s = { "<cmd>Git status<CR>", "Git status in cmdline" },
-		g = { "<cmd>Git<CR>", "Git summary" },
-		A = { "<cmd>Git add .<CR>", "Git add folder" },
-		d = { "<cmd>Git df %<CR>", "Git diff current file" },
-		D = { "<cmd>Git df<CR>", "Git diff" },
-		p = { "<cmd>Git push<CR>", "Git push" },
-	},
-
-  -- Telescope & Gitsigns
-	G = {
-    name = "GitSigns & Telescope-git",
+	g = {
+    name = "Git",
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<CR>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<CR>", "Prev Hunk" },
     l = { "<cmd>GitBlameToggle<CR>", "Blame" },
@@ -190,55 +179,17 @@ local leader_maps = {
     d = { "<cmd>Gitsigns diffthis HEAD<CR>", "Diff", },
 	},
 
-  -- Skeletons
+  -- SnipRun
 	S = {
-    name = "Skeletons",
-		h = {
-			"<cmd>1-read $NVIMDOTDIR/snippets/skeleton.html<CR>3jf>a",
-			"Create Html skeleton"
-		},
-		c = {
-			":1-read $NVIMDOTDIR/snippets/skeleton.c<CR>4ja",
-			"Create C skeleton"
-		},
-		j = { ":1-read $NVIMDOTDIR/snippets/skeleton.java<CR>2jA<Left><Left><C-r>%<Esc>d2b2jo",
-			"Create java skeleton"
-		},
-		f = {
-      name = "Functions",
-			j = {
-        ":1-read $NVIMDOTDIR/snippets/method.java<CR>6jf(i",
-			  "Create java function skeleton"
-      },
-		},
-		i = {
-			":1-read $NVIMDOTDIR/snippets/skeleton.info<CR>v}gc<Esc>gg<Esc>jA<C-r>%<Esc>4jA<F2><Esc>3kA",
-			"Create info skeleton"
-		},
-		m = {
-			":1-read $NVIMDOTDIR/snippets/skeleton.md<CR>A<Space><C-r>%<Esc>Go",
-			"Create markdown skeleton"
-		},
+    name = "SnipRun",
+    c = { "<cmd>SnipClose<cr>", "Close" },
+    f = { "<cmd>%SnipRun<cr>", "Run File" },
+    i = { "<cmd>SnipInfo<cr>", "Info" },
+    m = { "<cmd>SnipReplMemoryClean<cr>", "Mem Clean" },
+    r = { "<cmd>SnipReset<cr>", "Reset" },
+    t = { "<cmd>SnipRunToggle<cr>", "Toggle" },
+    x = { "<cmd>SnipTerminate<cr>", "Terminate" },
 	},
-
-  -- Telescope
-  t = {
-    name = "Telescope",
-		o = { "<cmd>Telescope<CR>", "Open Telescope" },
-    b = { "<cmd>Telescope git_branches<CR>", "Checkout branch" },
-    c = { "<cmd>Telescope colorscheme<CR>", "Colorscheme" },
-    f = { "<cmd>Telescope find_files<CR>", "Find File" },
-    H = { "<cmd>Telescope help_tags<CR>", "Help" },
-    i = { "<cmd>Telescope media_files<CR>", "Media" },
-    l = { "<cmd>Telescope resume<CR>", "Last Search" },
-    M = { "<cmd>Telescope man_pages<CR>", "Man Pages" },
-    r = { "<cmd>Telescope oldfiles<CR>", "Recent File" },
-    R = { "<cmd>Telescope registers<CR>", "Registers" },
-    k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
-    C = { "<cmd>Telescope commands<CR>", "Commands" },
-		p = { "<cmd>TSPlaygroundToggle<CR>", "TS Playground" },
-		h = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "TS Highlight" },
-  },
 
   -- LSP
   l = {
@@ -314,7 +265,7 @@ local leader_maps = {
  	},
 
 	-- Terminal
-	T = {
+	t = {
 		name = "Terminal",
     ["1"] = { "<cmd>1ToggleTerm<CR>", "1" },
     ["2"] = { "<cmd>2ToggleTerm<CR>", "2" },
@@ -357,16 +308,6 @@ local leader_maps = {
     },
     ["%"] = { "<cmd>source %<CR>", "Source current buffer" },
   }
-}
-
-local nosilent_maps = {
-	g = {
-		c = { ":Git commit -m \"\"<Left>", "Git commit" },
-		C = {
-      ":Git add % <bar> Git commit -m \"\"<Left>",
-      "Git add current file and commit"
-    },
-	},
 }
 
 local vopts = {
@@ -442,7 +383,7 @@ local ins_mappings = {
 which_key.setup(setup)
 which_key.register(leader_maps, opts)
 which_key.register(nonLeader_maps, noLeader_opts)
-which_key.register(nosilent_maps, nosilent_opts)
 which_key.register(vmappings, vopts)
 which_key.register(Zmappings, Zopts)
 which_key.register(ins_mappings, i_opts)
+

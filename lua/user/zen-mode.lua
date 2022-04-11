@@ -1,8 +1,8 @@
 -----------------------------------
---  File: zen-mode.lua
---  Description: zen_mode plugin conf
---  Author: Kevin
---  Source: https://github.com/kevinm6/nvim/lua/nvim/lua/user/zen-mode.lua
+--  File         : zen-mode.lua
+--  Description  : zen_mode plugin conf
+--  Author       : Kevin
+--  Source       : https://github.com/kevinm6/nvim/lua/nvim/lua/user/zen-mode.lua
 --  Last Modified: 26/03/2022 - 21:00
 -----------------------------------
 

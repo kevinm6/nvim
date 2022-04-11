@@ -1,8 +1,8 @@
 -------------------------------------
--- File: telescope.lua
--- Description: Telescope config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
+-- File         : telescope.lua
+-- Description  : Telescope config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/telescope.lua
 -- Last Modified: 10/04/2022 - 11:46
 -------------------------------------
 

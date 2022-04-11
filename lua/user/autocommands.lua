@@ -1,8 +1,8 @@
  -------------------------------------
- -- File: autocommands.lua
- -- Description: Autocommands config
- -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
+ -- File         : autocommands.lua
+ -- Description  : Autocommands config
+ -- Author       : Kevin
+ -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
  -- Last Modified: 24/03/2022 - 15:20
  -------------------------------------
 
@@ -12,7 +12,7 @@
 vim.cmd [[
 	augroup _general_settings
 		autocmd!
-		autocmd FileType qf,help,man,lspinfo,git,fugitive,Scratch nnoremap <silent> <buffer> q :close<CR>
+		autocmd FileType qf,help,man,lspinfo,git,Scratch nnoremap <silent> <buffer> q :close<CR>
 		autocmd FileType qf,help,man,lspinfo,git,fugitive nnoremap <silent> <buffer> <Esc> :close<CR>
     autocmd TextYankPost * silent! lua vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 200 })
   augroup end

@@ -1,8 +1,8 @@
 -----------------------------------
--- File: lsp-installer.lua
--- Description: Lsp-Installer config
--- Author: Kevin
--- Source: https://github.com/kevinm6/lua/user/lsp/lsp-installer.lua
+-- File         : lsp-installer.lua
+-- Description  : Lsp-Installer config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/lua/user/lsp/lsp-installer.lua
 -- Last Modified: 15/03/2022 - 11:04
 -------------------------------------
 

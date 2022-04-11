@@ -1,8 +1,8 @@
 -------------------------------------
--- File: nvimtree.lua
--- Description: NvimTree config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
+-- File         : nvimtree.lua
+-- Description  : NvimTree config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
 -- Last Modified: 31/03/2022 - 13:55
 -------------------------------------
 
@@ -15,8 +15,8 @@ local notify = require "notify"
 
 
 vim.g.nvim_tree_icons = {
-  default = " ",
-  symlink = " ",
+  default = "",
+  symlink = "",
   git = {
     unstaged = icons.git.unstaged,
     staged = icons.git.staged,
@@ -27,13 +27,14 @@ vim.g.nvim_tree_icons = {
     ignored = icons.git.ignored,
   },
   folder = {
-    -- arrow_open = " ",
-    -- arrow_close = " ",
+    arrow_open = " ",
+    arrow_close = " ",
     default = icons.kind.Folder,
     open = icons.documents.OpenFolder,
     empty = " ",
     empty_open = " ",
     symlink = " ",
+    symlink_open = " ",
   },
 }
 
@@ -45,10 +46,6 @@ vim.g.nvim_tree_special_files = {
 local lib = require "nvim-tree.lib"
 local view = require "nvim-tree.view"
 
-
-local function collapse_all()
-  require("nvim-tree.actions").collapse_all.fn()
-end
 
 local function trash_file()
   local path = lib.get_node_at_cursor().absolute_path
@@ -82,46 +79,18 @@ local function vsplit_preview()
 end
 
 nvim_tree.setup {
+  auto_reload_on_write = true,
+  hide_root_folder = false,
+  hijack_unnamed_buffer_when_opening = false,
+  ignore_buffer_on_setup = false,
+  open_on_setup_file = false,
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = true,
-  ignore_ft_on_setup = { "alpha" },
   auto_close = false,
   open_on_tab = false,
   hijack_cursor = true,
   update_cwd = true,
-  update_to_buf_dir = {
-    enable = true,
-    auto_open = true,
-  },
-  diagnostics = {
-    enable = true,
-    icons = {
-      hint = icons.diagnostics.Hint,
-      info = icons.diagnostics.Information,
-      warning = icons.diagnostics.Warning,
-      error = icons.diagnostics.Error,
-      question = icons.diagnostics.Question,
-    },
-  },
-  update_focused_file = {
-    enable = true,
-    update_cwd = true,
-    ignore_list = {},
-  },
-  system_open = {
-    cmd = nil,
-    args = {},
-  },
-  filters = {
-    dotfiles = false,
-    custom = { ".git", ".cache", ".DS_Store", "Icon" },
-  },
-  git = {
-    enable = true,
-    ignore = false,
-    timeout = 500,
-  },
   view = {
     width = 30,
     height = 30,
@@ -130,7 +99,7 @@ nvim_tree.setup {
     auto_resize = true,
     mappings = {
       custom_only = false,
-      list = {
+      list = { -- custom mappings
         { key = { "l", "<CR>", "o" }, action = "edit" },
         { key = { "-", "<BS>"}, action = "dir_up" },
         { key = "h", action = "close_node" },
@@ -138,7 +107,7 @@ nvim_tree.setup {
         { key = ".", action = "cd" },
         { key = "O", action = "system_open" },
         { key = "s", action = "split" },
-        { key = "<C-h>", action = "collapse_all", action_cb = collapse_all },
+        { key = "<C-h>", action = "collapse_all" },
         { key = "v", action = "vsplit" },
         { key = "V", action = "vsplit_preview", action_cb = vsplit_preview },
         { key = "p", action = "preview" },
@@ -152,19 +121,74 @@ nvim_tree.setup {
     number = false,
     relativenumber = true,
   },
+  renderer = {
+    indent_markers = {
+      enable = true,
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        none = "  ",
+      },
+    },
+  },
+  hijack_directories = {
+    enable = true,
+    auto_open = true,
+  },
+  update_to_buf_dir = {
+    enable = true,
+    auto_open = true,
+  },
+  update_focused_file = {
+    enable = true,
+    update_cwd = true,
+    ignore_list = {},
+  },
+  ignore_ft_on_setup = { "alpha" },
+  system_open = {
+    cmd = nil,
+    args = {},
+  },
+  diagnostics = {
+    enable = true,
+    icons = {
+      hint = icons.diagnostics.Hint,
+      info = icons.diagnostics.Information,
+      warning = icons.diagnostics.Warning,
+      error = icons.diagnostics.Error,
+      question = icons.diagnostics.Question,
+    },
+  },
+  filters = {
+    dotfiles = false,
+    custom = { ".git", ".cache", ".DS_Store", "Icon" },
+  },
+  git = {
+    enable = true,
+    ignore = false,
+    timeout = 500,
+  },
+  actions = {
+    use_system_clipboard = true,
+    change_dir = {
+      enable = true,
+      global = false,
+    },
+    open_file = {
+      quit_on_open = false,
+      resize_window = false,
+      window_picker = {
+        enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = { "notify", "packer", "qf", "diff" },
+          buftype = { "nofile", "terminal", "help" },
+        },
+      },
+    },
+  },
   trash = {
     cmd = "trash",
     require_confirm = true,
-  },
-  quit_on_open = 0,
-  git_hl = 1,
-  disable_window_picker = 0,
-  root_folder_modifier = ":t",
-  show_icons = {
-    git = 1,
-    folders = 1,
-    files = 1,
-    folder_arrows = 1,
-    tree_width = 30,
   },
 }

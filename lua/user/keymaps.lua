@@ -1,8 +1,8 @@
 -------------------------------------
--- File: keymaps.lua
--- Description: Keymaps for NeoVim & VimR
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/keymaps.lua
+-- File         : keymaps.lua
+-- Description  : Keymaps for NeoVim & VimR
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/keymaps.lua
 -- Last Modified: 04/04/2022 - 10:46
 -------------------------------------
 

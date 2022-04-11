@@ -1,9 +1,9 @@
 -----------------------------------
---  File: dap.lua
---  Description: dap plugin config
---  Author: Kevin
---  Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/dap.lua
---  Last Modified: 03/04/2022 - 10:36
+--  File         : dap.lua
+--  Description  : dap plugin config
+--  Author       : Kevin
+--  Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/dap.lua
+--  Last Modified: 10/04/2022 - 14:09
 -----------------------------------
 
 local dap_status_ok, dap = pcall(require, "dap")
@@ -77,17 +77,23 @@ dap.adapters.lldb = {
   name = "lldb"
 }
 
-dap.configurations.cpp = {
-  {
-    name = "Launch",
-    type = "lldb",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-    args = {},
+local dap_install = require("dap-install")
+
+dap_install.setup({
+	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+})
+
+-- dap.configurations.cpp = {
+--   {
+--     name = "Launch",
+--     type = "lldb",
+--     request = "launch",
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+--     cwd = '${workspaceFolder}',
+--     stopOnEntry = false,
+--     args = {},
 
     -- 💀
     -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
@@ -101,18 +107,18 @@ dap.configurations.cpp = {
     -- But you should be aware of the implications:
     -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
 
-    runInTerminal = false,
+--     runInTerminal = false,
+--
+--     -- 💀
+--     -- If you use `runInTerminal = true` and resize the terminal window,
+--     -- lldb-vscode will receive a `SIGWINCH` signal which can cause problems
+--     -- To avoid that uncomment the following option
+--     -- See https://github.com/mfussenegger/nvim-dap/issues/236#issuecomment-1066306073
+--     postRunCommands = {'process handle -p true -s false -n false SIGWINCH'}
+--   },
+-- }
 
-    -- 💀
-    -- If you use `runInTerminal = true` and resize the terminal window,
-    -- lldb-vscode will receive a `SIGWINCH` signal which can cause problems
-    -- To avoid that uncomment the following option
-    -- See https://github.com/mfussenegger/nvim-dap/issues/236#issuecomment-1066306073
-    postRunCommands = {'process handle -p true -s false -n false SIGWINCH'}
-  },
-}
-
-dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
+-- dap.configurations.c = dap.configurations.cpp
+-- dap.configurations.rust = dap.configurations.cpp
 
 -- TODO: add other config for useful filetypes

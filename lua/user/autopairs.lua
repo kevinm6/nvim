@@ -1,8 +1,8 @@
 -------------------------------------
--- File: autopairs.lua
--- Description: Lua K NeoVim & VimR autopairs config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/autopairs.lua
+-- File         : autopairs.lua
+-- Description  : Lua K NeoVim & VimR autopairs config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/autopairs.lua
 -- Last Modified: 22/03/2022 - 17:13
 -------------------------------------
 

@@ -1,19 +1,14 @@
 " ------------------------------------------------
-" File: markdown.vim
-" Description: Filetype markdown specific settings in lua (the file is vim for
-"								compatibility w/ tpope's syntax markdown.vim file)
-" Author: Kevin
-" Source: https://github.com/kevinm6/nvim/blob/nvim/ftplugin/markdown.vim
+" File         : markdown.vim
+" Description  : Filetype markdown specific settings in lua (the file is vim for
+"	       							compatibility w/ tpope's syntax markdown.vim file)
+" Author       : Kevin
+" Source       : https://github.com/kevinm6/nvim/blob/nvim/ftplugin/markdown.vim
 " Last Modified: 22/03/2022 - 13:43
 " ------------------------------------------------
 
 
 lua <<EOF
-	if vim.fn.exists("b:ftplugin_markdown") == 1 then
-			return
-	end
-	vim.b.ftplugin_markdown = 1
-
 	vim.opt_local.conceallevel = 2
 	vim.opt_local.shiftwidth = 2
 	vim.opt_local.expandtab = true

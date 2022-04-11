@@ -1,8 +1,8 @@
 --------------------------------------
--- File: surround.lua
--- Description: Surround config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/surround.lua
+-- File         : surround.lua
+-- Description  : Surround config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/surround.lua
 -- Last Modified: 12/03/2022 - 18:02
 --------------------------------------
 

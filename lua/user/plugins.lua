@@ -1,8 +1,8 @@
 -------------------------------------
--- File: plugins.lua
--- Description: Lua K NeoVim & VimR plugins w/ packer
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
+-- File         : plugins.lua
+-- Description  : Lua K NeoVim & VimR plugins w/ packer
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
 -- Last Modified: 01/04/2022 - 16:28
 -------------------------------------
 
@@ -61,6 +61,7 @@ return packer.startup(function(use)
 	use "nvim-lua/plenary.nvim"
 	use "nvim-lua/popup.nvim"
 	use "windwp/nvim-autopairs"
+  use "folke/todo-comments.nvim"
 	use "numToStr/Comment.nvim"
   use "kyazdani42/nvim-web-devicons"
 	use {
@@ -161,8 +162,8 @@ return packer.startup(function(use)
 
 
 	-- git
-	use "tpope/vim-fugitive"
 	use "lewis6991/gitsigns.nvim"
+  use "f-person/git-blame.nvim"
 
 
 	-- lsp

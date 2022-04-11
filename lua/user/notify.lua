@@ -1,8 +1,8 @@
 -----------------------------------
---	File: notify.lua
---	Description: notify plugin configuration
---	Author: Kevin
---	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/notify.lua
+--	File         : notify.lua
+--	Description  : notify plugin configuration
+--	Author       : Kevin
+--	Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/notify.lua
 --	Last Modified: 22/03/2022 - 16:25
 -----------------------------------
 

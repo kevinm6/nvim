@@ -1,8 +1,8 @@
  -------------------------------------
- -- File: vars.lua
- -- Description: NeoVim & VimR global vars
- -- Author: Kevin
- -- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
+ -- File         : vars.lua
+ -- Description  : NeoVim & VimR global vars
+ -- Author       : Kevin
+ -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
  -- Last Modified: 18/03/2022 - 16:21
  -------------------------------------
 
@@ -48,7 +48,7 @@ vim.g.markdown_fenced_languages = {
 	"sql"
 }
 
-vim.g.markdown_folding = 1
+vim.g.markdown_folding = 0
 vim.g.rmd_include_html = 1
 
 vim.g.glow_binary_path = vim.env.HOME .. "/.local/bin"

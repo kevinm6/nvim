@@ -1,8 +1,8 @@
 -----------------------------------
---  File: hop.lua
---  Description: hop plugin configuration
---  Author: Kevin
---  Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/hop.lua
+--  File         : hop.lua
+--  Description  : hop plugin configuration
+--  Author       : Kevin
+--  Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/hop.lua
 --  Last Modified: 23/03/2022 - 17:01
 -----------------------------------
 

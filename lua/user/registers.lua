@@ -1,8 +1,8 @@
 -------------------------------------
--- File: registers.lua
--- Description: Registers config
--- Author: Kevin
--- Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/registers.lua
+-- File         : registers.lua
+-- Description  : Registers config
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/registers.lua
 -- Last Modified: 22/12/21 - 08:44
 -------------------------------------
 
