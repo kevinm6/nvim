@@ -161,7 +161,7 @@ nvim_tree.setup {
   },
   filters = {
     dotfiles = false,
-    custom = { ".git", ".cache", ".DS_Store", "Icon" },
+    custom = { ".git", ".cache", ".DS_Store" },
   },
   git = {
     enable = true,

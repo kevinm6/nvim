@@ -10,13 +10,14 @@
 
 return {
   kind = {
-    Text = "",
+    Text = "",
+    AltText = "",
     AltMethod = "",
-    AltFunction = "",
-    AltConstructor = "",
+    Function = "",
+    Constructor = "",
     Method = "",
-    Function = "",
-    Constructor = "",
+    AltFunction = "",
+    AltConstructor = "",
     Field = "",
     Variable = "",
     Class = "",
@@ -156,7 +157,7 @@ return {
     luasnip = "[  ]",
     buffer = "[  ]",
     path = "[  ]",
-    Treesitter = "[  ]",
+    treesitter = "[  ]",
     latex_symbols = "[ α ]",
     emoji = "[  ]",
     calc = "[  ]",

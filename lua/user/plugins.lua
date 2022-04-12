@@ -1,4 +1,4 @@
--------------------------------------
+------------------------------------u
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
@@ -113,15 +113,16 @@ return packer.startup(function(use)
   use {
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
+    "saadparwaiz1/cmp_luasnip",
+    "ray-x/cmp-treesitter",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-nvim-lsp-document-symbol",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-nvim-lua",
-    "ray-x/cmp-treesitter",
-    "saadparwaiz1/cmp_luasnip",
-    "hrsh7th/cmp-nvim-lsp-signature-help",
     "tamago324/cmp-zsh",
     "kdheepak/cmp-latex-symbols",
+    "hrsh7th/cmp-calc",
     "dmitmel/cmp-digraphs",
     "hrsh7th/cmp-emoji",
 
@@ -252,7 +253,7 @@ return packer.startup(function(use)
 
 	-- themes
 	use {
-		"morhetz/gruvbox",
+		"ellisonleao/gruvbox.nvim",
 		opt = true,
 		cmd = { "colorscheme" }
 	}

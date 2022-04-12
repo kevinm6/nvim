@@ -3,12 +3,14 @@
 -- Description  : TreeSitter config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/treesitter.lua
--- Last Modified: 25/03/2022 - 19:20
+-- Last Modified: 12/04/2022 - 11:51
 -------------------------------------
 
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")
 if not ok then return end
+
+require("nvim-treesitter.install").prefer_git = true
 
 configs.setup {
 	ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -16,12 +18,21 @@ configs.setup {
 	ignore_install = {},
 	highlight = {
 		enable = true, -- false will disable the whole extension
-		disable = { "markdown" }, -- list of language that will be disabled
+		disable = {}, -- list of language that will be disabled
 		additional_vim_regex_highlighting = true,
 	},
 	autopairs = {
 		enable = true,
 	},
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
 	indent = {
 		enable = true,
 		disable = {
@@ -32,7 +43,7 @@ configs.setup {
 	},
 	context_commentstring = {
 		enable = true,
-		enable_autocmd = true,
+		enable_autocmd = false,
 	},
 	autotag = {
 		enable = true,
@@ -55,3 +66,25 @@ configs.setup {
 	},
 }
 
+require'treesitter-context'.setup {
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    throttle = true, -- Throttles plugin updates (may improve performance)
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+        -- For all filetypes
+        -- Note that setting an entry here replaces all other patterns for this entry.
+        -- By setting the 'default' entry below, you can control which nodes you want to
+        -- appear in the context window.
+        default = {
+            'class',
+            'function',
+            'method',
+            'for',
+            'if',
+            'while',
+            -- 'switch',
+            -- 'case',
+        },
+    },
+    exact_patterns = {},
+}

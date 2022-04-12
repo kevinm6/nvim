@@ -1,7 +1,7 @@
-" Vim syntax file
+" Markdown syntax file [ VimL ]
 " Language     : Markdown
 " Author       : Kevin Manca (from Tpope source file)
-" Last Modified: 11/04/2022 - 11:27
+" Last Modified: 12/04/2022 - 12:27
 
 if exists("b:current_syntax")
   finish

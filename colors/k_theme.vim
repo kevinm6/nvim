@@ -41,7 +41,7 @@ hi TextYankPost gui=reverse guibg=NONE guifg=NONE cterm=reverse ctermbg=NONE cte
 hi VertSplit guibg=bg guifg=fg ctermbg=fg ctermfg=bg
 
 " Section: Folding
-hi Folded guibg=black guifg=Grey40 ctermfg=230 ctermbg=240
+hi Folded guibg=grey19 guifg=Grey40 ctermfg=230 ctermbg=236
 hi FoldColumn guibg=NONE guifg=fg ctermbg=NONE ctermfg=fg
 
 " Section: Search
@@ -55,22 +55,20 @@ hi Debug guifg=#ff0000 ctermfg=9
 " Section: Status Line
 hi StatusLine guifg=#606060 guibg=#303030 ctermfg=236 ctermbg=236
 hi StatusLineNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
-if !has('nvim')
-  hi StatusLineTerm guifg=#606060 guibg=#303030 ctermbg=234 ctermfg=236 hi StatusLineTermNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
-endif
+hi StatusLineTerm guifg=#606060 guibg=#303030 ctermbg=234 ctermfg=236
+hi StatusLineTermNC guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
 
 " Section: TabLine
 hi TabLineSel guifg=#606060 guibg=#303030 ctermfg=236 ctermbg=236
 hi TabLine guifg=#A9A9A9 guibg=#606060 ctermfg=7 ctermbg=244
 
-
 " Section: Users (StatusLine)
-hi User1 guifg=#158C8A guibg=grey15 ctermfg=30 ctermbg=235
-hi User2 guifg=#af8700 guibg=grey15 ctermfg=136 ctermbg=235
-hi User3 guifg=#86868B guibg=grey15 ctermfg=102 ctermbg=235
-hi User4 guifg=grey15 guibg=grey11 ctermfg=235 ctermbg=234
+hi User1 guifg=#158C8A guibg=grey19 ctermfg=30 ctermbg=236
+hi User2 guifg=#af8700 guibg=grey19 ctermfg=136 ctermbg=236
+hi User3 guifg=#86868B guibg=grey19 ctermfg=102 ctermbg=236
+hi User4 guifg=grey19 guibg=grey11 ctermfg=236 ctermbg=234
 hi User5 guifg=grey23 guibg=grey11 ctermfg=237 ctermbg=234
-hi User6 guifg=#36FF5A guibg=grey15 ctermfg=42 ctermbg=235
+hi User6 guifg=#36FF5A guibg=grey19 ctermfg=42 ctermbg=236
 
 " Section: Syntax
 hi Title gui=bold,italic guifg=Gold1 cterm=bold,italic ctermfg=220
@@ -100,7 +98,7 @@ hi Question guifg=#00875f ctermfg=29
 hi SpecialKey guifg=#ffafd7 ctermfg=218
 hi Special gui=bold guifg=#ffff87 cterm=bold ctermfg=228
 hi SpecialChar guifg=#FFF000 ctermfg=11
-hi Macro guifg=#870000 ctermfg=88
+hi Macro guifg=#ff54ad ctermfg=88
 hi PreProc guifg=#d75f00 ctermfg=166
 hi PreCondit guifg=#875f5f ctermfg=95
 hi Tag guifg=#ff00ff ctermfg=13
@@ -157,8 +155,10 @@ hi! link NvimTreeIndentMarker Comment
 
 " Section: Cmp
 hi CmpItemAbbr guifg=#DCDCDC guibg=NONE ctermfg=253 ctermbg=NONE
-hi! link CmpItemKind Function
+hi! link CmpItemKind Type
+hi! link CmpItemKindMethod Function
 hi CmpItemAbbrMatch guifg=#00af87 guibg=NONE ctermfg=36 ctermbg=NONE
+hi! link CmpItemMenu Special
 
 " Section: Lsp
 hi FloatBorder guibg=grey15 ctermbg=235

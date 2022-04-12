@@ -3,7 +3,7 @@
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 28/03/2022 - 19:41
+-- Last Modified: 12/04/2022 - 09:42
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -132,7 +132,7 @@ cmp.setup {
 		fields = { "abbr", "kind", "menu" },
 		format = function(entry, vim_item)
       -- Kind icons
-      vim_item.kind = string.format(" %s ", kind[vim_item.kind])
+      vim_item.kind = string.format("%s", kind[vim_item.kind])
       vim_item.menu = ({
         nvim_lsp = icons.lsp.nvim_lsp,
         nvim_lua = icons.lsp.nvim_lua,
@@ -148,21 +148,16 @@ cmp.setup {
 	end,
 	},
 	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-    { name = "nvim_lua" },
-		{ name = "buffer" },
-    { name = "nvim_lsp_signature_help" },
-    { name = "treesitter" },
+		{ name = "nvim_lsp", priority = 100 },
+		{ name = "luasnip", priority = 150 },
+    { name = "treesitter", priority = 200 },
+		{ name = "buffer", option = { keyword_length = 3 }, priority = 125 },
 		{ name = "path", option = { trailing_slash = true } },
-		{ name = "cmdline" },
-    { name = "zsh" },
-    -- { name = "digraphs" },
+    { name = "nvim_lsp_signature_help" },
+    { name = "latex_symbols", keyword_length = 2, priority = 2 },
     { name = "calc" },
-    { name = "latex_symbols" },
-    { name = "emoji", option = { length = 2 } },
-    { name = "spell" },
-    { name = "luasnip-snippets" },
+    { name = "emoji", keyword_length = 3, option = { keyword_length = 2 }, priority = 1 },
+    -- { name = "digraphs" },
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
@@ -188,9 +183,11 @@ cmp.setup.cmdline(":", {
 
 -- Completion for / search based on current buffer
 cmp.setup.cmdline("/", {
-	sources = {
+	sources = cmp.config.sources({
+    name = "nvim_lsp_document_symbol",
+  },{
 		{ name = "buffer" }
-	}
+	})
 })
 
 -- cmp_zsh
@@ -198,3 +195,4 @@ require("cmp_zsh").setup {
   zshrc = true, -- Source the zshrc (adding all custom completions). default: false
   filetypes = { "zsh" } -- Filetypes to enable cmp_zsh source. default: {"*"}
 }
+
