@@ -55,7 +55,7 @@ dashboard.section.buttons.val = {
     "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
 
   dashboard.button("L", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
-  dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
+  dashboard.button("g", icons.ui.Git .. " Git", "<cmd>lua _LAZYGIT_TOGGLE()<CR>"),
   dashboard.button("l", icons.kind.Text .. " Live text grep", "<cmd>Telescope live_grep <CR>"),
   -- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
   dashboard.button("c", icons.ui.Gear .. " Config",
