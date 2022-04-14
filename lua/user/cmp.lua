@@ -3,7 +3,7 @@
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 12/04/2022 - 09:42
+-- Last Modified: 14/04/2022 - 10:39
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -148,10 +148,10 @@ cmp.setup {
 	end,
 	},
 	sources = {
-		{ name = "nvim_lsp", priority = 100 },
-		{ name = "luasnip", priority = 150 },
-    { name = "treesitter", priority = 200 },
-		{ name = "buffer", option = { keyword_length = 3 }, priority = 125 },
+		{ name = "nvim_lsp", priority = 10 },
+		{ name = "luasnip", priority = 9 },
+		{ name = "buffer", option = { keyword_length = 3 }, priority = 8 },
+    { name = "treesitter", priority = 7 },
 		{ name = "path", option = { trailing_slash = true } },
     { name = "nvim_lsp_signature_help" },
     { name = "latex_symbols", keyword_length = 2, priority = 2 },
@@ -164,12 +164,15 @@ cmp.setup {
 		select = false,
 	},
 	-- documentation = false,
-	documentation = {
-    timeout = 800, delay = 800, -- figure out if this work to delay showing docs
-		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-	},
-	experimental = {
-		ghost_text = true,
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  experimental = {
+		ghost_text = {
+      enable = true,
+      hl_group = "Comment",
+    },
     native_menu = false,
 	},
 }
@@ -189,6 +192,14 @@ cmp.setup.cmdline("/", {
 		{ name = "buffer" }
 	})
 })
+
+-- per-filetype window config
+cmp.setup.filetype({ "markdown", "help" }, {
+  window = {
+    documentation = cmp.config.disable
+  }
+})
+
 
 -- cmp_zsh
 require("cmp_zsh").setup {
