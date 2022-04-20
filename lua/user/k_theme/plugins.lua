@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 20/04/2022 - 11:56
+--  Last Modified: 20/04/2022 - 16:05
 -------------------------------------
 
 local base = require("user.k_theme.base")
@@ -18,8 +18,8 @@ local plugins = {
   NvimTreeFolderName = { link = "Normal" },
   NvimTreeRootFolder = { link = "Type" },
   NvimTreeFolderIcon = { fg = "#00afd7" },
-  -- hi NvimTreeFileIcon
-  -- NvimTreeEmptyFolderName
+  NvimTreeFileIcon = { link = "Type" },
+  NvimTreeEmptyFolderName = { link = "Comment" },
   NvimTreeOpenedFolderName = { link = "Directory" },
   NvimTreeExecFile = { link = "Underlined" },
   NvimTreeOpenedFile = { bold = true, underline = true },
