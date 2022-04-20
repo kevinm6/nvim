@@ -97,7 +97,7 @@ local leader_maps = {
   ["8"] = { "<cmd>BufferLineGoToBuffer 8<CR>", "Go to Buffer 8" },
   ["9"] = { "<cmd>BufferLineGoToBuffer 9<CR>", "Go to Buffer 9" },
   ["."] = {
-    "<cmd>cd %:p:h<CR> <bar> <cmd>lua require(\"notify\")(\" Change dir to \" .. vim.fn.expand(\"%:p:h\"), \"Info\", { timeout = 4})<CR>",
+    "<cmd>cd %:p:h<CR> <bar> <cmd>lua vim.notify(\" Change dir to \" .. vim.fn.expand(\"%:p:h\"), \"Info\", { timeout = 4})<CR>",
     "Change dir to current buffer's parent"
   },
 

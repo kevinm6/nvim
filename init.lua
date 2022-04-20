@@ -55,16 +55,18 @@ local modules = {
 	"user.colorizer",
 	"user.illuminate",
   "user.zen-mode",
-  "user.yanky"
+  "user.yanky",
+  -- "user.k_theme",
+  "user.colorscheme",
 }
 
 for _, module in ipairs(modules) do
 	local ok, err = pcall(require, module)
 	if not ok then
-		require("notify")(
+    vim.notify(
 			"Error loading module < " .. module .. " >\n" .. err,
 			"Error",
-			{ timeout = 4600 }
+			{ timeout = 4600, title = "INIT ERROR" }
 		)
 	end
 end

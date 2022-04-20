@@ -1,14 +1,16 @@
- -------------------------------------
- -- File         : vars.lua
- -- Description  : NeoVim & VimR global vars
- -- Author       : Kevin
- -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
- -- Last Modified: 18/03/2022 - 16:21
- -------------------------------------
+-------------------------------------
+-- File         : vars.lua
+-- Description  : NeoVim & VimR global vars
+-- Author       : Kevin
+-- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
+-- Last Modified: 16/04/2022 - 18:33
+-------------------------------------
 
+-- embedded script highlighting
+vim.g.vimsyn_embed = "lP"
 
 -- Python
-	vim.g.python3_host_prog = "/usr/local/bin/python3.9"
+vim.g.python3_host_prog = "/usr/local/bin/python3.9"
 -- }
 
 
@@ -17,35 +19,35 @@ vim.g.sql_type_default = "postgresql"
 vim.g.omni_sql_no_default_maps = 1
 
 vim.g.dbs = {
-	imdb = "postgres://:@localhost/imdb",
-	lezione = "postgres://:@localhost/lezione"
+  imdb = "postgres://:@localhost/imdb",
+  lezione = "postgres://:@localhost/lezione"
 }
 vim.g.LanguageClient_serverCommands = {
-	["sql"] = {
-		 "sql-language-server", "up", "--method", "stdio"
-	},
+  ["sql"] = {
+    "sql-language-server", "up", "--method", "stdio"
+  },
 }
 
 
 -- Markdown
 vim.g.markdown_fenced_languages = {
-	"html",
-	"python",
-	"zsh",
-	"java",
-	"c", "C",
-	"bash=sh",
-	"json",
-	"xml",
-	"vim",
-	"help",
-	"javascript", "js=javascript",
-	"css",
-	"changelog",
-	"cpp",
-	"pseudocode",
-	"php",
-	"sql"
+  "html",
+  "python",
+  "zsh",
+  "java",
+  "c", "C",
+  "bash=sh",
+  "json",
+  "xml",
+  "vim",
+  "help",
+  "javascript", "js=javascript",
+  "css",
+  "changelog",
+  "cpp",
+  "pseudocode",
+  "php",
+  "sql"
 }
 
 vim.g.markdown_folding = 0

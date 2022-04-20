@@ -1,10 +1,10 @@
------------------------------------
+--------------------------------------
 -- File         : handlers.lua
 -- Description  : Lsp handlers file, to manage various lsp behaviours config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/handlers.lua
--- Last Modified: 01/04/2022 - 16:27
--------------------------------------
+-- Last Modified: 19/04/2022 - 16:35
+--------------------------------------
 
 
 local M = {}
@@ -104,12 +104,16 @@ if not status_ok then return end
 M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 function M.enable_format_on_save()
-  vim.cmd [[
-    augroup format_on_save
-      autocmd! 
-      autocmd BufWritePre * lua vim.lsp.buf.formatting()
-    augroup end
-  ]]
+  local _format_on_save = vim.api.nvim_create_augroup("_format_on_save", {
+    clear = true,
+  })
+
+  vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    group = _format_on_save,
+    pattern = "*",
+    callback = vim.lsp.buf.formatting(),
+    -- command = "lua vim.lsp.buf.formatting()",
+  })
   vim.notify "Enabled format on save"
 end
 
@@ -127,9 +131,7 @@ function M.toggle_format_on_save()
 end
 
 function M.remove_augroup(name)
-  if vim.fn.exists("#" .. name) == 1 then
-    vim.cmd("au! " .. name)
-  end
+  vim.api.nvim_clear_autocmds({ group = name })
 end
 
 vim.cmd [[ command! LspToggleAutoFormat execute 'lua require("user.lsp.handlers").toggle_format_on_save()' ]]

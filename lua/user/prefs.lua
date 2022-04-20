@@ -15,12 +15,6 @@
 	}
 -- }
 
-
--- Section: Colorscheme
-	vim.api.nvim_exec('colorscheme k_theme', true)
--- }
-
-
 	local options = {
 		shell="/bin/bash",
 	-- Section: MOUSE
@@ -29,6 +23,7 @@
 
 	-- Section: GRAPHIC
 		termguicolors = true,
+    laststatus = 3,
 		guifont = "Sauce Code Pro Nerd Font Complete Mono:h13", -- font for gui-apps
 		clipboard = "unnamedplus", -- allow neovim access to system clipboard
 		relativenumber = true, -- Show line numbers - relativenumber from current
@@ -95,10 +90,6 @@
     whichwrap = vim.opt.whichwrap:append "<,>,[,],h,l",
     formatoptions = vim.opt.formatoptions:remove { "c","r","o" }
 	}
-
-  if vim.fn.has("nvim-0.7") == 1 then
-    vim.opt.laststatus = 3
-  end
 
 	-- Sets all options to desired value
 	for k, v in pairs(options) do

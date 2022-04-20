@@ -101,7 +101,11 @@ return packer.startup(function(use)
 	use "lewis6991/impatient.nvim"
 	use "goolord/alpha-nvim"
 	use "rcarriga/nvim-notify"
-  use { "nvim-lualine/lualine.nvim", disable = true, opt = true }
+  use {
+    "nvim-lualine/lualine.nvim",
+    requires = { 'kyazdani42/nvim-web-devicons' }
+  }
+  use "jose-elias-alvarez/null-ls.nvim"
 
   -- DAP
   use "mfussenegger/nvim-dap"
@@ -254,11 +258,6 @@ return packer.startup(function(use)
 	-- themes
 	use {
 		"ellisonleao/gruvbox.nvim",
-		opt = true,
-		cmd = { "colorscheme" }
-	}
-	use {
-		"ChristianChiarulli/nvcode-color-schemes.vim",
 		opt = true,
 		cmd = { "colorscheme" }
 	}

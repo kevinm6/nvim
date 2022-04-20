@@ -148,7 +148,7 @@ cmp.setup {
 	end,
 	},
 	sources = {
-		{ name = "nvim_lsp", priority = 10 },
+		-- { name = "nvim_lsp", priority = 10 },
 		{ name = "luasnip", priority = 9 },
 		{ name = "buffer", option = { keyword_length = 3 }, priority = 8 },
     { name = "treesitter", priority = 7 },

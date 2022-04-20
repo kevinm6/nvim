@@ -9,7 +9,7 @@
 
 local ok, jdtls = pcall(require, "jdtls")
 if not ok then
-	require("notify")(
+	vim.notify(
 		"  Error jdtls plugin config  ",
 		"Error",
 		{ timeout = 4600}

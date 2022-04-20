@@ -11,7 +11,6 @@ local ok, nvim_tree = pcall(require, "nvim-tree")
 if not ok then return end
 
 local icons = require "user.icons"
-local notify = require "notify"
 
 
 vim.g.nvim_tree_icons = {
@@ -57,7 +56,7 @@ local function trash_file()
   if ans:match "^y" then
     vim.fn.system("mv " .. vim.fn.fnameescape(path) .. " ~/.Trash")
     vim.api.nvim_command("NvimTreeRefresh")
-    notify(" " .. name .. " moved to Bin!", "Warn")
+    vim.notify(" " .. name .. " moved to Bin!", "Warn")
   end
 end
 
@@ -85,7 +84,7 @@ nvim_tree.setup {
   ignore_buffer_on_setup = false,
   open_on_setup_file = false,
   disable_netrw = true,
-  hijack_netrw = true,
+  hijack_netrw = false,
   open_on_setup = true,
   auto_close = false,
   open_on_tab = false,
