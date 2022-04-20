@@ -6,10 +6,9 @@
 -- Last Modified: 31/03/2022 - 10:22
 --------------------------------------
 
-
 -- check if NeoVim or Vim
-if not(vim.fn.has("nvim")) == 1 then
-	vim.cmd	"source ~/.config/vim/vimrc"
+if not (vim.fn.has("nvim")) == 1 then
+	vim.cmd("source ~/.config/vim/vimrc")
 	return
 end
 
@@ -37,33 +36,32 @@ local modules = {
 	"user.autopairs",
 	"user.comment",
 	"user.gitsigns",
-  "user.git-blame",
-  "user.nvim-tree", -- "user.neo-tree",
+	"user.git-blame",
+	"user.nvim-tree",
 	"user.bufferline",
 	"user.toggleterm",
 	"user.whichkey",
 	"user.autocommands",
 	"user.statusline",
 	"user.surround",
-	"user.renamer",
+	-- "user.renamer",
 	"user.registers",
 	"user.alpha",
 	"user.symbol-outline",
-  "user.sniprun",
-  "user.dap",
-  "user.hop",
+	"user.sniprun",
+	"user.dap",
+	"user.hop",
 	"user.colorizer",
 	"user.illuminate",
-  "user.zen-mode",
-  "user.yanky",
-  -- "user.k_theme",
-  "user.colorscheme",
+	"user.zen-mode",
+	"user.yanky",
+	"user.colorscheme",
 }
 
 for _, module in ipairs(modules) do
 	local ok, err = pcall(require, module)
 	if not ok then
-    vim.notify(
+		vim.notify(
 			"Error loading module < " .. module .. " >\n" .. err,
 			"Error",
 			{ timeout = 4600, title = "INIT ERROR" }

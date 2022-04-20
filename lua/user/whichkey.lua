@@ -4,7 +4,7 @@
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
 -- Help-Source  : https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
--- Last Modified: 06/04/2022 - 10:39
+-- Last Modified: 20/04/2022 - 13:23
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -145,7 +145,7 @@ local leader_maps = {
 	},
 
   -- Renamer
-	r = { '<cmd>lua require("renamer").rename()<CR>', "Renamer" },
+	r = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Renamer" },
 
   -- Packer
   p = {

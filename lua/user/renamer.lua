@@ -6,17 +6,19 @@
 -- Last Modified: 12/03/2022 - 17:31
 -------------------------------------
 
+-- BUG : Broken after updating NeoVim to 0.7 -> using lsp built-in for now
+
 local ok, renamer = pcall(require, "renamer")
 if not ok then return end
 
-vim.api.nvim_set_keymap(
+vim.keymap.set(
 	"i",
 	"<F4>",
 	'<cmd>lua require("renamer").rename({empty = true})<cr>',
 	{ noremap = true, silent = true }
 )
 
-vim.api.nvim_set_keymap(
+vim.keymap.set(
 	"n",
 	"<F4>",
 	'<cmd>lua require("renamer").rename({empty = true})<cr>',
