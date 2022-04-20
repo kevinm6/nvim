@@ -3,7 +3,7 @@
 -- Description  : StatusLine config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/statusline.lua
--- Last Modified: 19/04/2022 - 19:07
+-- Last Modified: 20/04/2022 - 15:57
 -------------------------------------
 
 local ok, gps = pcall(require, "nvim-gps")
@@ -88,12 +88,12 @@ end
 
 _G.active = function()
 	-- LeftSide
-	local bufN = "%#User1#%n" .. icons.ui.SlChevronRight
+	local bufN = "%#User1#%n%m" .. icons.ui.SlChevronRight
 	local git = "%#User2#" .. get_git_status()
-	local fname = "%#User6#" .. get_filename() .. "%m "
+	local fname = "%#User6#" .. get_filename()
 	local endLeftSide = "%#User4#" .. icons.ui.SlArrowRight
 	-- Center & separators
-	local gps_out = "%#User5#" .. nvim_gps() .. "%m"
+	local gps_out = "%#User5#" .. nvim_gps()
 	local sideSep = "%="
   local lsp_diag =  get_lsp_diagnostic()
 	-- RightSide
