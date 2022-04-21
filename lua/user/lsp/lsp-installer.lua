@@ -33,7 +33,8 @@ lsp_installer.on_server_ready(function(server)
 	end
 
 	if server.name == "jdtls" then
-		return
+		local jtdls_opts = require("user.lsp.settings.jdtls")
+		opts = vim.tbl_deep_extend("force", jtdls_opts, opts)
 	end
 
 	if server.name == "ltex" then

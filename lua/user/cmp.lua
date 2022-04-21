@@ -3,7 +3,7 @@
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
--- Last Modified: 14/04/2022 - 10:39
+-- Last Modified: 21/04/2022 - 09:25
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -34,7 +34,7 @@ cmp.setup {
 			require'luasnip'.lsp_expand(args.body)
 		end,
 	},
-	mapping = {
+	mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
 
 		["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
@@ -126,7 +126,7 @@ cmp.setup {
         fallback()
       end
     end, { "i" }),
-	},
+	}),
 
 	formatting = {
 		fields = { "abbr", "kind", "menu" },
@@ -173,12 +173,12 @@ cmp.setup {
       enable = true,
       hl_group = "Comment",
     },
-    native_menu = false,
 	},
 }
 
 -- Completion for command mode
 cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 			{ name = "cmdline" }
   }
@@ -186,6 +186,7 @@ cmp.setup.cmdline(":", {
 
 -- Completion for / search based on current buffer
 cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
     name = "nvim_lsp_document_symbol",
   },{

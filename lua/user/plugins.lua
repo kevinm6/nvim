@@ -3,7 +3,7 @@
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
--- Last Modified: 01/04/2022 - 16:28
+-- Last Modified: 21/04/2022 - 09:28
 -------------------------------------
 
 
@@ -177,7 +177,7 @@ return packer.startup(function(use)
 
 
 	-- lsp
-	use { "neovim/nvim-lspconfig" }
+	use "neovim/nvim-lspconfig"
 	use { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" }
 	use { "ray-x/lsp_signature.nvim", after = "nvim-lspconfig" }
 	use {
