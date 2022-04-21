@@ -188,7 +188,8 @@ return packer.startup(function(use)
 
 	use {
     "filipdutescu/renamer.nvim",
-    after = "plenary.nvim"
+    after = "plenary.nvim",
+    disable = true,
   }
 	use "antoinemadec/FixCursorHold.nvim"
 	use "simrat39/symbols-outline.nvim"
