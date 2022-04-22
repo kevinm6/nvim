@@ -3,7 +3,7 @@
 -- Description  : Lsp-Installer config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/lua/user/lsp/lsp-installer.lua
--- Last Modified: 15/03/2022 - 11:04
+-- Last Modified: 22/04/2022 - 10:09
 -------------------------------------
 
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -32,10 +32,7 @@ lsp_installer.on_server_ready(function(server)
 		opts = vim.tbl_deep_extend("force", pyright_opts, opts)
 	end
 
-	if server.name == "jdtls" then
-		local jtdls_opts = require("user.lsp.settings.jdtls")
-		opts = vim.tbl_deep_extend("force", jtdls_opts, opts)
-	end
+	if server.name == "jdtls" then return end
 
 	if server.name == "ltex" then
 		local ltex_opts = require("user.lsp.settings.ltex")
