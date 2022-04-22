@@ -182,8 +182,7 @@ return packer.startup(function(use)
 	use { "ray-x/lsp_signature.nvim", after = "nvim-lspconfig" }
 	use {
     "mfussenegger/nvim-jdtls",
-    ft = "java",
-    module = "jdtls",
+    require = { "Microsoft/java-debug" },
   }
 
 	use {

@@ -13,7 +13,7 @@ local luasnip_ok, luasnip = pcall(require, "luasnip")
 if not luasnip_ok then return end
 
 local icons = require "user.icons"
-local kind = icons.kind
+local icons_kind = icons.kind
 
 -- Sources
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -132,7 +132,7 @@ cmp.setup {
 		fields = { "abbr", "kind", "menu" },
 		format = function(entry, vim_item)
       -- Kind icons
-      vim_item.kind = string.format("%s", kind[vim_item.kind])
+      vim_item.kind = string.format("%s", icons_kind[vim_item.kind])
       vim_item.menu = ({
         nvim_lsp = icons.lsp.nvim_lsp,
         nvim_lua = icons.lsp.nvim_lua,
@@ -148,7 +148,7 @@ cmp.setup {
 	end,
 	},
 	sources = {
-		-- { name = "nvim_lsp", priority = 10 },
+		{ name = "nvim_lsp", priority = 10 },
 		{ name = "luasnip", priority = 9 },
 		{ name = "buffer", option = { keyword_length = 3 }, priority = 8 },
     { name = "treesitter", priority = 7 },
@@ -163,9 +163,7 @@ cmp.setup {
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,
 	},
-	-- documentation = false,
   window = {
-    -- completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
   experimental = {

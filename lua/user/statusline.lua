@@ -6,6 +6,8 @@
 -- Last Modified: 20/04/2022 - 15:57
 -------------------------------------
 
+local Statusline = {}
+
 local ok, gps = pcall(require, "nvim-gps")
 if not ok then
 	return
@@ -68,8 +70,7 @@ local get_git_status = function()
 	local is_head_empty = signs.head ~= ""
 
 	if is_truncated(max_width.git_status) then
-		return is_head_empty
-				and string.format(" %s ", signs.head or "") .. "%1*" .. icons.ui.SlChevronRight .. " "
+		return is_head_empty and string.format(" %s ", signs.head or "") .. "%1*" .. icons.ui.SlChevronRight .. " "
 			or ""
 	end
 
@@ -86,7 +87,7 @@ local nvim_gps = function()
 	end
 end
 
-_G.active = function()
+function Statusline.active()
 	-- LeftSide
 	local bufN = "%#User1#%n%m" .. icons.ui.SlChevronRight
 	local git = "%#User2#" .. get_git_status()
@@ -95,12 +96,13 @@ _G.active = function()
 	-- Center & separators
 	local gps_out = "%#User5#" .. nvim_gps()
 	local sideSep = "%="
-  local lsp_diag =  get_lsp_diagnostic()
+	local lsp_diag = get_lsp_diagnostic()
 	-- RightSide
 	local endRightSide = "%#User4#" .. icons.ui.SlArrowLeft
 	local fencoding = "%#User3# %{&fileencoding?&fileencoding:&encoding}"
 	local ftype = "%#User1# %y"
 	local fformat = "%#User3# " .. icons.ui.SlChevronLeft .. " %{&ff}"
+	local location = icons.ui.SlChevronLeft .. get_line_onTot()
 
 	return table.concat({
 		-- Left Side
@@ -121,14 +123,26 @@ _G.active = function()
 		ftype,
 		fformat,
 		" ",
-		icons.ui.SlChevronLeft .. get_line_onTot(),
+		location,
 	})
 end
 
-_G.explorer = function()
+function Statusline.explorer()
 	return "%= File Explorer %="
 end
 
-_G.dashboard = function()
+function Statusline.dashboard()
 	return "%= Dashboard %="
 end
+
+function Statusline.set(name)
+	if name == "Explorer" then
+    vim.api.nvim_set_option_value("statusline", Statusline.explorer(), { scope = 'global' })
+	elseif name == "Dashboard" then
+    vim.api.nvim_set_option_value("statusline", Statusline.explorer(), { scope = 'global' })
+	else
+    vim.api.nvim_set_option_value("statusline", Statusline.active(), { scope = 'global' })
+	end
+end
+
+return Statusline

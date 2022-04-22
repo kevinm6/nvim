@@ -37,22 +37,25 @@ local aug_sl = augroup("Statusline", {
 autocmd({ "BufWinEnter", "BufEnter" }, {
 	group = aug_sl,
 	pattern = "*",
-	-- callback = _G.active,
-	command = "set statusline=%!v:lua.active()",
+  callback = function()
+    require('user.statusline').set('Active')
+  end
 })
 
 autocmd({ "FileType", "BufEnter", "WinEnter" }, {
 	group = aug_sl,
 	pattern = "alpha",
-	-- callback = _G.dashboard,
-	command = "set statusline=%!v:lua.dashboard()",
+  callback = function()
+    require('user.statusline').set('Dashboard')
+  end
 })
 
 autocmd({ "FileType", "BufEnter", "WinEnter" }, {
 	group = aug_sl,
 	pattern = "NvimTree*",
-	-- callback = _G.explorer,
-	command = "set statusline=%!v:lua.explorer()",
+  callback = function()
+    require('user.statusline').set('Explorer')
+  end
 })
 
 

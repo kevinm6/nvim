@@ -13,23 +13,26 @@ if not ok then
 end
 
 local home = os.getenv("HOME")
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = home .. "/.cache/workspace/" .. project_name
+
+-- Find root of project
+local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
+local root_dir = require("jdtls.setup").find_root(root_markers)
+if root_dir == "" then
+  return
+end
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
-local root_dir = function()
-	local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
-	return (require("jdtls.setup").find_root(root_markers) or vim.fn.getcwd())
-end
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+local workspace_dir = home .. "/.cache/workspace/" .. project_name
 
 local bundles = {
 	vim.fn.glob(
-		home .. "/.config/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar"
+		home .. "/.local/share/nvim/lsp_servers/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar"
 	),
 }
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.config/nvim/vscode-java-test/server/*.jar"), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share//nvim/vscode-java-test/server/*.jar"), "\n"))
 
 local config = {
 	cmd = {
@@ -62,7 +65,7 @@ local config = {
 	},
 	on_attach = require("user.lsp.handlers").on_attach,
 	capabilities = require("user.lsp.handlers").capabilities,
-	root_dir = root_dir(),
+	root_dir = root_dir,
 
 	single_file_support = true,
 	settings = {

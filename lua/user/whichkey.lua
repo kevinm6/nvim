@@ -205,11 +205,11 @@ local leader_maps = {
     i = { "<cmd>LspInfo<CR>", "Info" },
     I = { "<cmd>LspInstallInfo<CR>", "Installer Info" },
     j = {
-      "<cmd>lua vim.diagnostic.goto_next({buffer=0)<CR>",
+      "<cmd>lua vim.diagnostic.goto_next({buffer=0})<CR>",
       "Next Diagnostic",
     },
     k = {
-      "<cmd>lua vim.diagnostic.goto_prev({buffer=0)<CR>",
+      "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<CR>",
       "Prev Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<CR>", "CodeLens Action" },
