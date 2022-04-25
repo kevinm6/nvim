@@ -101,10 +101,6 @@ return packer.startup(function(use)
 	use "lewis6991/impatient.nvim"
 	use "goolord/alpha-nvim"
 	use "rcarriga/nvim-notify"
-  use {
-    "nvim-lualine/lualine.nvim",
-    requires = { 'kyazdani42/nvim-web-devicons' }
-  }
   use "jose-elias-alvarez/null-ls.nvim"
 
   -- DAP
@@ -150,7 +146,6 @@ return packer.startup(function(use)
 	use "RRethy/vim-illuminate"
   use "phaazon/hop.nvim"
   use { "michaelb/sniprun", run = "bash ./install.sh" }
-  use "gbprod/yanky.nvim"
 
 	-- Treesitter
 	use {

@@ -6,6 +6,7 @@
 -- Last Modified: 20/04/2022 - 13:16
 -------------------------------------
 
+
 -- Function to make easy mapping in Lua
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
@@ -115,13 +116,3 @@ set_keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 set_keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 set_keymap("x", "ª", ":move '>+1<CR>gv-gv", opts) -- <A-j>
 set_keymap("x", "º", ":move '<-2<CR>gv-gv", opts) -- <A-k>
-
-set_keymap("n", "p", "<Plug>(YankyPutAfter)", {})
-set_keymap("n", "P", "<Plug>(YankyPutBefore)", {})
-set_keymap("x", "p", "<Plug>(YankyPutAfter)", {})
-set_keymap("x", "P", "<Plug>(YankyPutBefore)", {})
-set_keymap("n", "gp", "<Plug>(YankyGPutAfter)", {})
-set_keymap("n", "gP", "<Plug>(YankyGPutBefore)", {})
-set_keymap("x", "gp", "<Plug>(YankyGPutAfter)", {})
-set_keymap("x", "gP", "<Plug>(YankyGPutBefore)", {})
-
