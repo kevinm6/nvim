@@ -54,7 +54,6 @@ local modules = {
 	"user.colorizer",
 	"user.illuminate",
 	"user.zen-mode",
-	"user.yanky",
 	"user.colorscheme",
 }
 
