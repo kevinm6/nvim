@@ -6,11 +6,9 @@
 -- Last Modified: 19/04/2022 - 20:38
 -------------------------------------
 
-
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local command = vim.api.nvim_create_user_command
-
 
 -- General
 local _general_settings = augroup("_general_settings", {
@@ -26,38 +24,64 @@ autocmd({ "FileType" }, {
 autocmd({ "TextYankPost" }, {
   group = _general_settings,
   pattern = "*",
-  command = "silent! lua vim.highlight.on_yank({ higroup = 'TextYankPost', timeout = 200 })",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 200, on_macro = true })
+  end,
 })
 
 -- Autocommand for Statusline
-local aug_sl = augroup("Statusline", {
-	clear = true,
+local statusLine = augroup("Statusline", {
+  clear = true,
 })
 
+-- vim.wo.statusline = "%!v:lua.Disabled('Dashboard')"
 autocmd({ "BufWinEnter", "BufEnter" }, {
-	group = aug_sl,
-	pattern = "*",
+  group = statusLine,
+  pattern = "*",
   callback = function()
-    require('user.statusline').set('Active')
-  end
+    vim.wo.statusline = "%!v:lua.require('user.statusline').active()"
+  end,
 })
 
 autocmd({ "FileType", "BufEnter", "WinEnter" }, {
-	group = aug_sl,
-	pattern = "alpha",
+  group = statusLine,
+  pattern = "alpha",
   callback = function()
-    require('user.statusline').set('Dashboard')
-  end
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Dashboard')"
+  end,
 })
 
 autocmd({ "FileType", "BufEnter", "WinEnter" }, {
-	group = aug_sl,
-	pattern = "NvimTree*",
+  group = statusLine,
+  pattern = "NvimTree*",
   callback = function()
-    require('user.statusline').set('Explorer')
-  end
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('File Explorer')"
+  end,
 })
 
+autocmd({ "FileType", "BufEnter", "WinEnter" }, {
+  group = statusLine,
+  pattern = "packer",
+  callback = function()
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Package Manager')"
+  end,
+})
+
+autocmd({ "FileType", "BufEnter", "WinEnter" }, {
+  group = statusLine,
+  pattern = { "lsp-installer", "lsp-info" },
+  callback = function()
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('LSP')"
+  end,
+})
+
+autocmd({ "FileType", "BufEnter", "WinEnter" }, {
+  group = statusLine,
+  pattern = "Telescope*",
+  callback = function()
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Telescope')"
+  end,
+})
 
 -- Markdown
 local _markdown = augroup("_markdown", {
@@ -70,7 +94,6 @@ autocmd({ "BufNewFile", "BufRead" }, {
   command = "lua vim.opt_local.filetype = 'markdown'",
 })
 
-
 -- SQL
 local _sql = augroup("_sql", {
   clear = true,
@@ -78,22 +101,24 @@ local _sql = augroup("_sql", {
 
 autocmd({ "BufNewFile", "BufRead" }, {
   group = _sql,
-  pattern = "*.psql*" ,
-  command = "lua vim.opt_local.filetype = 'sql'",
+  pattern = "*.psql*",
+  callback = function()
+    vim.opt_local.filetype = "sql"
+  end,
 })
-
 
 -- illuminate
 local _illuminate = augroup("_illuminate", {
-  clear = true,
+  clear = false,
 })
 
 autocmd({ "VimEnter" }, {
   group = _illuminate,
   pattern = "*",
-  command = "lua vim.api.nvim_command([[ hi def link illuminatedWord LspReferenceText ]])",
+  callback = function()
+    vim.api.nvim_set_hl(0, "illuminatedWord", { link = "LspReferenceText" })
+  end,
 })
-
 
 -- auto_resize
 local _auto_resize = augroup("_auto_resize", {
@@ -105,7 +130,6 @@ autocmd({ "VimResized" }, {
   pattern = "*",
   command = "tabdo wincmd",
 })
-
 
 -- Scratch
 local Scratch = function()
@@ -119,7 +143,6 @@ end
 
 command("Scratch", Scratch, { desc = "Create a Scratch buffer" })
 
-
 -- Note
 local Note = function()
   vim.api.nvim_command("new")
@@ -131,4 +154,3 @@ local Note = function()
 end
 
 command("Note", Note, { desc = "Create a Note buffer" })
-

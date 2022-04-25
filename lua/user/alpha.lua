@@ -1,8 +1,8 @@
 -----------------------------------
---	File         : alpha.lua
---	Description  : alpha config for Neovim
---	Author       : Kevin
---	Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
+--	File: alpha.lua
+--	Description: alplha config for Neovim
+--	Author: Kevin
+--	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
 --	Last Modified: 29/03/2022 - 13:20
 -----------------------------------
 
@@ -55,11 +55,11 @@ dashboard.section.buttons.val = {
     "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
 
   dashboard.button("L", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),
-  dashboard.button("g", icons.ui.Git .. " Git", "<cmd>lua _LAZYGIT_TOGGLE()<CR>"),
+  dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
   dashboard.button("l", icons.kind.Text .. " Live text grep", "<cmd>Telescope live_grep <CR>"),
   -- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
   dashboard.button("c", icons.ui.Gear .. " Config",
-    ":cd $NVIMDOTDIR | :e $NVIMDOTDIR/init.lua <CR>"),
+    "<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"),
 
   dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
   dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
@@ -67,9 +67,10 @@ dashboard.section.buttons.val = {
 
 local footer = function()
   local plugins_count = (
-    [[            ]] .. icons.ui.Plugin .. " " ..
-    vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)).. " Plugins" ..
-    newline
+    [[    ]] .. icons.ui.Plugin .. " " ..
+    vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)) .. " Plugins, (" ..
+      vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/opt", "*", 0, 1)) .. " inactive)" ..
+        newline
   )
 
   local myself = "\n\n" .. icons.ui.BoldChevronLeft .. " https://github.com/kevinm6/nvim " .. icons.ui.BoldChevronRight
@@ -82,5 +83,7 @@ dashboard.section.footer.val = footer()
 dashboard.section.header.opts.hl = "AlphaHeader"
 dashboard.section.buttons.opts.hl = "AlphaButtons"
 dashboard.section.footer.opts.hl = "AlphaFooter"
+
+-- dashboard.config.opts.noautocmd = true
 
 alpha.setup(dashboard.opts)
