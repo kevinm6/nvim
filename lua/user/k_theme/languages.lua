@@ -2,7 +2,7 @@
 --  File         : languages.lua
 --  Description  : language specific palette
 --  Author       : Kevin
---  Last Modified: 20/04/2022 - 11:56
+--  Last Modified: 23/04/2022 - 13:39
 -------------------------------------
 
 local base = require("user.k_theme.base")
@@ -78,8 +78,8 @@ local markdown = {
   markdownBold = { fg = base.fg3, bold = true },
   markdownBoldItalic = {
     fg = base.fg3,
-    bold = vim.g.k_theme_bold,
-    italic = vim.g.k_theme_italic,
+    bold = true,
+    italic = true,
   },
   markdownH1 = base.GreenBold,
   markdownH2 = { link = "markdownH1" },

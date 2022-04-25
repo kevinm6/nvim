@@ -137,13 +137,14 @@ local base_group = {
   TabLineSel = { fg = "#606060", bg = "#303030" },
   TabLine = { fg = "#A9A9A9", bg = "#606060" },
 
-  -- Users (StatusLine)
-  User1 = { fg = "#158C8A", bg = "grey19" },
-  User2 = { fg = "#af8700", bg = "grey19" },
-  User3 = { fg = "#86868B", bg = "grey19" },
-  User4 = { fg = "grey19", bg = "#1c1c1c" },
-  User5 = { fg = "grey23", bg = "#1c1c1c" },
-  User6 = { fg = "#36FF5A", bg = "grey19" },
+  -- StatusLine
+  SlineMode = { fg = "#158C8A", bg = "grey19" },
+  SlineGit = { fg = "#af8700", bg = "grey19" },
+  SlineFileName = { fg = "#36FF5A", bg = "grey19" },
+  SlineFFormatEncoding = { fg = "#86868B", bg = "grey19" },
+  SLineEmptyspace = { fg = "grey19", bg = "#1c1c1c" },
+  SlineGpsDiagnostic = { fg = "grey23", bg = "#1c1c1c" },
+  SlineFileType = { fg = "#158C8A", bg = "grey19" },
 
   Title = { fg = 'Gold1' },
   Statement = { fg = '#00afff' },
@@ -183,8 +184,8 @@ local base_group = {
   StorageClass = { link = "k_themeOrange" },
   Typedef = { link = "k_themeYellow" },
 
-  Bold = { bold = vim.g.k_theme_bold },
-  Italic = { italic = vim.g.k_theme_italic },
+  Bold = { bold = true },
+  Italic = { italic = true },
 
   -- End of buffer and non text
   NonText = {  fg = "#626262", bg = bg0 },

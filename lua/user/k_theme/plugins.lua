@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 20/04/2022 - 16:05
+--  Last Modified: 20/04/2022 - 11:56
 -------------------------------------
 
 local base = require("user.k_theme.base")
