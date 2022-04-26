@@ -2,7 +2,6 @@
 -- File         : vars.lua
 -- Description  : NeoVim & VimR global vars
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/vars.lua
 -- Last Modified: 16/04/2022 - 18:33
 -------------------------------------
 

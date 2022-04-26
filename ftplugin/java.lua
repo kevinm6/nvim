@@ -2,7 +2,6 @@
 -- File         : java.lua
 -- Description  : java language server configuration
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/ftplugin/java.lua
 -- Last Modified: 22/04/2022 - 09:18
 -------------------------------------
 

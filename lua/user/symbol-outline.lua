@@ -2,7 +2,6 @@
 -- File         : symbol-outline.lua
 -- Description  : Lua NeoVim & VimR symbol-outline config
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/symbol-outline.lua
 -- Last Modified: 11/03/2022 - 15:59
 -------------------------------------
 

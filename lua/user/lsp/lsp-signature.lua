@@ -2,7 +2,6 @@
 -- File         : init.lua
 -- Description  : lsp function signature configuration
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/lsp/lsp-signature.lua
 -- Last Modified: 12/03/2022 - 18:27
 -------------------------------------
 

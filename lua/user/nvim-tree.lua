@@ -2,7 +2,6 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/nvimtree.lua
 -- Last Modified: 31/03/2022 - 13:55
 -------------------------------------
 

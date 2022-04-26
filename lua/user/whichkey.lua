@@ -2,8 +2,6 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/whichkey.lua
--- Help-Source  : https://github.com/ChristianChiarulli/nvim/lua/user/which_key.lua
 -- Last Modified: 20/04/2022 - 13:23
 -------------------------------------
 

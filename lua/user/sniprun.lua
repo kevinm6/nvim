@@ -2,7 +2,6 @@
 --  File         : sniprun.lua
 --  Description  : sniprun plugin configuration
 --  Author       : Kevin
---  Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/sniprun.lua
 --  Last Modified: 23/03/2022 - 17:01
 -----------------------------------
 

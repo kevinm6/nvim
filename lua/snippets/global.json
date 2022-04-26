@@ -4,9 +4,8 @@
     "body": [
 			"-----------------------------------",
 			"\tFile         : ${TM_FILENAME}",
-			"\tDescription  : ${2:Description}",
+			"\tDescription  : ${1:Description}",
 			"\tAuthor       : Kevin",
-			"\tSource       : https://github.com/kevinm6/${1:Link}",
 			"\tLast Modified: ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}",
 			"-----------------------------------\n",
 			"$0"

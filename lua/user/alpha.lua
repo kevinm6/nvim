@@ -2,7 +2,6 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/alpha.lua
 --	Last Modified: 29/03/2022 - 13:20
 -----------------------------------
 

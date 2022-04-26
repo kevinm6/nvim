@@ -2,7 +2,6 @@
 -- File         : todo-comments.lua
 -- Description  : todo-comments plugin config
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/todo-comments.lua
 -- Last Modified: 10/04/2022 - 14:24
 -----------------------------------
 

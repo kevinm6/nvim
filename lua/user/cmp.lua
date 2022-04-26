@@ -2,7 +2,6 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/cmp.lua
 -- Last Modified: 21/04/2022 - 09:25
 -------------------------------------
 

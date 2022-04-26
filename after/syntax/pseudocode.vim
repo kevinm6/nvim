@@ -2,7 +2,6 @@
 "	File: pseudocode.vim
 "	Description: pseudocode syntax for Vim / NeoVim
 "	Author: Kevin
-"	Source: https://github.com/kevinm6/nvim/blob/nvim/after/syntax/pseudo.vim
 "	Last Modified: 18/02/2022 - 12:12
 " -----------------------------------
 

@@ -2,8 +2,6 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/toggleterm.lua
--- Help-Source  : https://github.com/ChristianChiarulli/nvim/lua/user/toggleterm.lua
 -- Last Modified: 12/03/2022 - 17:37
 -------------------------------------
 

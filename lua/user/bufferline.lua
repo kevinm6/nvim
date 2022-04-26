@@ -2,7 +2,6 @@
  -- File         : bufferline.lua
  -- Description  : Bufferline config
  -- Author       : Kevin
- -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/bufferline.lua
  -- Last Modified: 31/03/2022 - 10:23
  -------------------------------------
 

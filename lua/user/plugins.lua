@@ -2,7 +2,6 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/plugins.lua
 -- Last Modified: 21/04/2022 - 09:28
 -------------------------------------
 

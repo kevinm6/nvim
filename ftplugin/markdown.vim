@@ -3,7 +3,6 @@
 " Description  : Filetype markdown specific settings in lua (the file is vim for
 "	       							compatibility w/ tpope's syntax markdown.vim file)
 " Author       : Kevin
-" Source       : https://github.com/kevinm6/nvim/blob/nvim/ftplugin/markdown.vim
 " Last Modified: 22/03/2022 - 13:43
 " ------------------------------------------------
 

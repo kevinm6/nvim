@@ -2,7 +2,6 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Source: https://github.com/kevinm6/nvim/blob/nvim/lua/user/icons.lua
 --	Last Modified: 21/03/2022 - 17:52
 -----------------------------------
 

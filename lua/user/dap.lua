@@ -2,7 +2,6 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/dap.lua
 --  Last Modified: 10/04/2022 - 14:09
 -----------------------------------
 
