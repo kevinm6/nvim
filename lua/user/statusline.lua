@@ -2,10 +2,8 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 25/04/2022 - 14:32
+-- Last Modified: 26/04/2022 - 09:45
 -------------------------------------
-
--- TODO: better management of colors instead of using "User#"
 
 local S = {}
 
@@ -14,7 +12,7 @@ if not ok then
 	return
 end
 
-local icons = require("user.icons")
+local icons = require "user.icons"
 
 local max_width = setmetatable({
 	filename = 120,
@@ -28,70 +26,78 @@ local max_width = setmetatable({
 	end,
 })
 
+local colors = {
+  mode = "%#StatusLineMode#",
+  git = "%#StatusLineGit#",
+  gps = "%#StatusLineGpsDiagnostic#",
+  diag = "%#StatusLineGpsDiagnostic#",
+  ftype = "%#StatusLineFileType#",
+  empty = "%#StatusLineEmptyspace#",
+  name = "%#StatusLineFileName#",
+  encoding = "%#StatusLineFFormatEncoding#",
+  fformat = "%#StatusLineFFormatEncoding#",
+  Nmode = "%#Nmode#",
+  Vmode = "%#Vmode#",
+  Imode = "%#Imode#",
+  Cmode = "%#Cmode#",
+  Tmode = "%#Tmode#",
+  ShellMode = "%#Tmode#",
+}
 
 local map = {
-  ['n']      = '%#User1#NORMAL',
-  ['no']     = 'O-PENDING',
-  ['nov']    = 'O-PENDING',
-  ['noV']    = 'O-PENDING',
-  ['no\22'] = 'O-PENDING',
-  ['niI']    = 'NORMAL',
-  ['niR']    = 'NORMAL',
-  ['niV']    = 'NORMAL',
-  ['nt']     = 'NORMAL',
-  ['v']      = '%#Todo#VISUAL',
-  ['vs']     = 'VISUAL',
-  ['V']      = 'V-LINE',
-  ['Vs']     = 'V-LINE',
-  ['\22']   = 'V-BLOCK',
-  ['\22s']  = 'V-BLOCK',
-  ['s']      = 'SELECT',
-  ['S']      = 'S-LINE',
-  ['\19']   = 'S-BLOCK',
-  ['i']      = 'INSERT',
-  ['ic']     = 'INSERT',
-  ['ix']     = 'INSERT',
-  ['R']      = 'REPLACE',
-  ['Rc']     = 'REPLACE',
-  ['Rx']     = 'REPLACE',
-  ['Rv']     = 'V-REPLACE',
-  ['Rvc']    = 'V-REPLACE',
-  ['Rvx']    = 'V-REPLACE',
-  ['c']      = 'COMMAND',
-  ['cv']     = 'EX',
-  ['ce']     = 'EX',
-  ['r']      = 'REPLACE',
-  ['rm']     = 'MORE',
-  ['r?']     = 'CONFIRM',
-  ['!']      = 'SHELL',
-  ['t']      = 'TERMINAL',
+	["n"] = colors.Nmode .. "NORMAL",
+	["no"] = colors.Nmode .. "O-PENDING",
+	["nov"] = colors.Nmode .. "O-PENDING",
+	["noV"] = colors.Nmode .. "O-PENDING",
+	["no\22"] = colors.Nmode .. "O-PENDING",
+	["niI"] = colors.Nmode .. "NORMAL",
+	["niR"] = colors.Nmode .. "NORMAL",
+	["niV"] = colors.Nmode .. "NORMAL",
+	["nt"] = colors.Nmode .. "NORMAL",
+	["v"] = colors.Vmode .. "VISUAL",
+	["vs"] = colors.Vmode .. "VISUAL",
+	["V"] = colors.Vmode ..  "V-LINE",
+	["Vs"] = colors.Vmode .. "V-LINE",
+	["\22"] = colors.Vmode .. "V-BLOCK",
+	["\22s"] = colors.Vmode .. "V-BLOCK",
+	["s"] = colors.Vmode .. "SELECT",
+	["S"] = colors.Vmode .. "S-LINE",
+	["\19"] = colors.Vmode .. "S-BLOCK",
+	["i"] = colors.Imode .. "INSERT",
+	["ic"] = colors.Imode .. "INSERT",
+	["ix"] = colors.Imode .. "INSERT",
+	["R"] = colors.Tmode .. "REPLACE",
+	["Rc"] = colors.Tmode .. "REPLACE",
+	["Rx"] = colors.Tmode .. "REPLACE",
+	["Rv"] = colors.Tmode .. "V-REPLACE",
+	["Rvc"] = colors.Tmode .. "V-REPLACE",
+	["Rvx"] = colors.Tmode .. "V-REPLACE",
+	["c"] = colors.Cmode .. "COMMAND",
+	["cv"] = colors.Cmode .. "EX",
+	["ce"] = colors.Cmode .. "EX",
+	["r"] = colors.Tmode .. "REPLACE",
+	["rm"] = colors.Nmode .. "MORE",
+	["r?"] = colors.Nmode .. "CONFIRM",
+	["!"] = colors.ShellMode .. "SHELL",
+	["t"] = colors.Tmode .. "TERMINAL",
 }
 
 local function get_mode()
-  local mode_code = vim.api.nvim_get_mode().mode
-  if map[mode_code] == nil then
-    return mode_code
-  end
-  return map[mode_code]
+	local mode_code = vim.api.nvim_get_mode().mode
+	return (map[mode_code] == nil) and mode_code or map[mode_code]
 end
-
 
 local function is_truncated(width)
 	return vim.api.nvim_win_get_width(0) < width
 end
 
 local function get_filename()
-	if is_truncated(max_width.filename) then
-		return "%t"
-	end
-	return "%<%t"
+	return is_truncated(max_width.filename) and " %t " or " %<%f "
 end
 
 local function get_line_onTot()
-	if is_truncated(max_width.row_onTot) then
-		return " %2*%l%3*÷%L "
-	end
-	return " row %2*%l%3*÷%L "
+	return is_truncated(max_width.row_onTot) and " %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
+		or " row %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
 end
 
 local function get_lsp_diagnostic()
@@ -119,53 +125,44 @@ local function get_git_status()
 	local is_head_empty = signs.head ~= ""
 
 	if is_truncated(max_width.git_status) then
-		return is_head_empty and string.format(" %s ", signs.head or "") .. "%1*"
-			or ""
+		return is_head_empty and string.format(" %s ", signs.head or "") .. "%1*" or ""
 	end
 
 	return is_head_empty
-			and string.format("+%s ~%s -%s |  %s ", signs.added, signs.changed, signs.removed, signs.head)
+			and string.format(" +%s ~%s -%s |  %s ", signs.added, signs.changed, signs.removed, signs.head)
 		or ""
 end
 
-
 local function get_filetype()
-  local file_name, file_ext = vim.fn.expand("%:t"), vim.fn.expand("%:e")
-  local icon = require("nvim-web-devicons").get_icon(file_name, file_ext)
-  local file_type = vim.bo.filetype
+	local file_name, file_ext = vim.fn.expand("%:t"), vim.fn.expand("%:e")
+	local icon = require("nvim-web-devicons").get_icon(file_name, file_ext)
+	local file_type = vim.bo.filetype
 
-  if file_type == nil then return end
-  if icon == nil then
-    return string.format("%s", file_type)
-  else
-    return string.format("%s %s", icon, file_type)
-  end
-
+	if file_type == nil then
+		return
+	end
+	return icon == nil and string.format(" %s ", file_type) or string.format(" %s %s ", icon, file_type)
 end
 
 local function nvim_gps()
-	if gps.is_available() and not is_truncated(max_width.gps_loc) then
-		return gps.get_location()
-  else
-    return ""
-	end
+	return gps.is_available() and (not is_truncated(max_width.gps_loc)) and " " .. gps.get_location() or ""
 end
 
 S.active = function()
 	-- LeftSide
-	local currMode = "%#User1#%m%r" .. get_mode() .. icons.ui.SlChevronRight
-	local git = "%#User2# " .. get_git_status()
-	local fname = "%#User6# " .. get_filename()
-	local endLeftSide = " %#User4#" .. icons.ui.SlArrowRight
+	local currMode = colors.mode .. "%m%r" .. get_mode() .. icons.ui.SlChevronRight
+	local git = colors.git .. get_git_status()
+	local fname = colors.name .. get_filename()
+	local endLeftSide = colors.empty .. icons.ui.SlArrowRight
 	-- Center & separators
-	local gps_out = "%#User5# " .. nvim_gps()
+	local gps_out = colors.gps .. nvim_gps()
 	local sideSep = "%="
 	local lsp_diag = get_lsp_diagnostic()
 	-- RightSide
-	local endRightSide = " " .. "%#User4#" .. icons.ui.SlArrowLeft
-	local fencoding = "%#User3# %{&fileencoding?&fileencoding:&encoding} "
-	local ftype = "%#User1# " .. get_filetype()
-	local fformat = "%#User3#  %{&ff} "
+	local endRightSide = " " .. colors.empty .. icons.ui.SlArrowLeft
+	local fencoding = colors.encoding .. " %{&fileencoding?&fileencoding:&encoding} "
+	local ftype = colors.ftype .. get_filetype()
+	local fformat = colors.fformat .. " %{&ff} "
 	local location = get_line_onTot()
 
 	return table.concat({
@@ -190,7 +187,8 @@ S.active = function()
 end
 
 S.disabled = function(name)
-  return "%= " .. name .. " %="
+  return name == nil and ("%= " .. get_filetype() .. " %=") or
+    ("%= " .. name .. " %=")
 end
 
 return S

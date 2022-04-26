@@ -2,8 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/autocommands.lua
--- Last Modified: 19/04/2022 - 20:38
+-- Last Modified: 26/04/2022 - 09:50
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -34,7 +33,6 @@ local statusLine = augroup("Statusline", {
   clear = true,
 })
 
--- vim.wo.statusline = "%!v:lua.Disabled('Dashboard')"
 autocmd({ "BufWinEnter", "BufEnter" }, {
   group = statusLine,
   pattern = "*",
@@ -71,7 +69,7 @@ autocmd({ "FileType", "BufEnter", "WinEnter" }, {
   group = statusLine,
   pattern = { "lsp-installer", "lsp-info" },
   callback = function()
-    vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('LSP')"
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Language Server Protocol')"
   end,
 })
 
@@ -91,7 +89,18 @@ local _markdown = augroup("_markdown", {
 autocmd({ "BufNewFile", "BufRead" }, {
   group = _markdown,
   pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.md" },
-  command = "lua vim.opt_local.filetype = 'markdown'",
+  callback = function()
+   vim.opt_local.filetype = "markdown"
+  end
+})
+
+
+-- Java
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+   pattern = { "*.java" },
+   callback = function()
+     vim.lsp.codelens.refresh()
+   end,
 })
 
 -- SQL
