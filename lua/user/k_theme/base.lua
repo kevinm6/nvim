@@ -5,16 +5,14 @@
 --  Last Modified: 20/04/2022 - 11:56
 -------------------------------------
 
-
 local colors = require("user.k_theme.colors")
 -- local utils = require("user.k_theme.utils")
 
 -- reset colors
 vim.cmd("hi clear")
 if vim.fn.exists("syntax_on") then
-  vim.cmd("syntax reset")
+	vim.cmd("syntax reset")
 end
-
 
 -- options (dark mode by default)
 local bg0 = colors.dark0
@@ -40,8 +38,8 @@ local gray = colors.gray
 
 local bg = vim.opt.background:get()
 if bg == nil then
-  bg = "dark"
-  vim.o.background = bg
+	bg = "dark"
+	vim.o.background = bg
 end
 
 -- extending colors table with basic names for easy customization in g:k_theme_* options
@@ -62,7 +60,6 @@ colors.blue = blue
 colors.purple = purple
 colors.aqua = aqua
 colors.orange = orange
-
 
 -- neovim terminal mode colors
 vim.g.terminal_color_0 = bg0
@@ -86,166 +83,171 @@ vim.g.colors_name = "k_theme"
 
 local base_group = {
 
-  -- Modes
-  Normal = { fg = '#D0D0D0', bg = bg0 },
-  Visual = { reverse = true },
-  -- Selection Not-Owned by Vim
-  VisualNOS = { fg = '#244E7A' },
+	-- Modes
+	Normal = { fg = "#D0D0D0", bg = bg0 },
+	Visual = { reverse = true },
+	-- Selection Not-Owned by Vim
+	VisualNOS = { fg = "#244E7A" },
 
-  WinSeparator = {},
+	WinSeparator = {},
 
-  ModeMsg = { fg = 'DeepSkyBlue3' },
-  MoreMsg = { fg = 'DeepSkyBlue3' },
+	ModeMsg = {},
+	MoreMsg = {},
 
-  colorColumn =  { bg = bg0 },
+	colorColumn = { bg = bg0 },
 
-  -- Cursor
-  Cursor = { reverse = true },
-  LineNr = { fg = '#626262', bg = bg0 },
-  Cursorline = { bg = 'grey15' },
-  CursorLineNr = { fg = green,  bold = true },
-  lCursor = { link = "Cursor" },
-  iCursor = { link = "Cursor" },
-  vCursor = { link = "Cursor" },
-  CursorIM = { link = "Cursor" },
-  CursorColumn = { link = "CursorLine" },
+	-- Cursor
+	Cursor = { reverse = true },
+	LineNr = { fg = "#626262", bg = bg0 },
+	Cursorline = { bg = "grey15" },
+	CursorLineNr = { fg = green, bold = true },
+	lCursor = { fg = red },
+	iCursor = { fg = aqua },
+	vCursor = { link = "Cursor" },
+	CursorIM = { link = "Cursor" },
+	CursorColumn = { link = "CursorLine" },
 
-  TextYankPost = { reverse = true },
+	TextYankPost = { reverse = true },
 
-  -- Split
-  VertSplit = { bg = bg0, fg = fg0 },
+	-- Split
+	VertSplit = { bg = bg0, fg = fg0 },
 
-  -- Folding
-  Folded = { bg = 'grey19', fg = 'Grey40' },
-  FoldColumn = { fg = fg0 },
+	-- Folding
+	Folded = { bg = "grey19", fg = "Grey40" },
+	FoldColumn = { fg = fg0 },
 
-  -- Search
-  IncSearch = { fg = '#3a3a3a', bg = green, bold = true },
-  Search = { reverse = true },
-  QuickFixLine = { reverse = true },
+	-- Search
+	IncSearch = { fg = "#3a3a3a", bg = green, bold = true },
+	Search = { reverse = true },
+	QuickFixLine = { reverse = true },
 
-  -- Debugging
-  Debug = { fg = red },
+	-- Debugging
+	Debug = { fg = red },
 
-  -- Status Line
-  StatusLine = { fg = '#606060', bg = '#303030' },
-  StatusLineNC = { fg = '#A9A9A9', bg = '#606060' },
-  StatusLineTerm = { fg = '#606060', bg = '#303030' },
-  StatusLineTermNC = { fg = '#A9A9A9', bg = '#606060' },
+	-- Status Line
+	StatusLine = { fg = "#606060", bg = "#303030" },
+	StatusLineNC = { fg = "#A9A9A9", bg = "#606060" },
+	StatusLineTerm = { fg = "#606060", bg = "#303030" },
+	StatusLineTermNC = { fg = "#A9A9A9", bg = "#606060" },
+	StatusLineMode = { fg = "#158C8A", bg = "grey19" },
+	StatusLineGit = { fg = "#af8700", bg = "grey19" },
+	StatusLineFileName = { fg = "#36FF5A", bg = "grey19" },
+	StatusLineFFormatEncoding = { fg = "#86868B", bg = "grey19" },
+	StatusLineEmptyspace = { fg = "grey19", bg = "#1c1c1c" },
+	StatusLineGpsDiagnostic = { fg = "grey23", bg = "#1c1c1c" },
+	StatusLineFileType = { fg = "#158C8A", bg = "grey19" },
 
-  -- TabLine
-  TabLineSel = { fg = "#606060", bg = "#303030" },
-  TabLine = { fg = "#A9A9A9", bg = "#606060" },
+	Nmode = { fg = "#158C8A" },
+	Vmode = { fg = "Gold1" },
+	Imode = { fg = "#00afff" },
+	Cmode = { fg = "#af0000" },
+	Tmode = { fg = "#FF5573" },
+	ShellMode = { fg = "#ffff87" },
 
-  -- StatusLine
-  SlineMode = { fg = "#158C8A", bg = "grey19" },
-  SlineGit = { fg = "#af8700", bg = "grey19" },
-  SlineFileName = { fg = "#36FF5A", bg = "grey19" },
-  SlineFFormatEncoding = { fg = "#86868B", bg = "grey19" },
-  SLineEmptyspace = { fg = "grey19", bg = "#1c1c1c" },
-  SlineGpsDiagnostic = { fg = "grey23", bg = "#1c1c1c" },
-  SlineFileType = { fg = "#158C8A", bg = "grey19" },
+	-- TabLine
+	TabLineSel = { fg = "#606060", bg = "#303030" },
+	TabLine = { fg = "#A9A9A9", bg = "#606060" },
 
-  Title = { fg = 'Gold1' },
-  Statement = { fg = '#00afff' },
-  Directory = { fg = '#00af87' },
+	Title = { fg = "Gold1" },
+	Statement = { fg = "#00afff" },
+	Directory = { fg = "#00af87" },
 
-  String = { fg = '#FF7E80' },
-  Number = { fg = '#00fff2' },
-  Comment = { fg = '#626262' },
-  Constant = { fg = '#D4FB79' },
-  Boolean = { fg = '#FF5573' },
-  Label = { fg = '#FF8AD8' },
-  Conditional = { fg = '#00ff87' },
-  Identifier = { fg = '#af5f5f' },
-  Include = { fg = '#ff0000' },
-  Operator = { fg = '#00ff87' },
-  Define = { fg = '#afaf00' },
-  Type = { fg = '#008080' },
-  Function = { fg = '#00afd7' },
-  Structure = { fg = '#5faf00' },
-  Keyword = { fg = '#00ff87' },
-  Exception = { fg = '#af0000' },
-  Repeat = { fg = '#00ff87' },
-  Underlined = { fg = '#00a0d0' },
-  Question = { fg = '#00875f' },
-  SpecialKey = { fg = '#ffafd7' },
-  Special = { fg = '#ffff87' },
-  SpecialChar = { fg = '#FFF000' },
-  Macro = { fg = '#ff54ad' },
-  PreProc = { fg = '#d75f00' },
-  PreCondit = { fg = '#875f5f' },
-  Tag = { fg = '#ff00ff' },
-  Delimiter = { fg = '#d7d787' },
-  SpecialComment = { fg = '#6C7986' },
-  Todo = { bg = '#d7ff00', fg = '#ff5f00' },
-  Character = { link = "k_themePurple" },
-  Float = { link = "k_themePurple" },
-  StorageClass = { link = "k_themeOrange" },
-  Typedef = { link = "k_themeYellow" },
+	String = { fg = "#FF7E80" },
+	Number = { fg = "#00fff2" },
+	Comment = { fg = "#626262" },
+	Constant = { fg = "#D4FB79" },
+	Boolean = { fg = "#FF5573" },
+	Label = { fg = "#FF8AD8" },
+	Conditional = { fg = "#00ff87" },
+	Identifier = { fg = "#af5f5f" },
+	Include = { fg = "#ff0000" },
+	Operator = { fg = "#00ff87" },
+	Define = { fg = "#afaf00" },
+	Type = { fg = "#008080" },
+	Function = { fg = "#00afd7" },
+	Structure = { fg = "#5faf00" },
+	Keyword = { fg = "#00ff87" },
+	Exception = { fg = "#af0000" },
+	Repeat = { fg = "#00ff87" },
+	Underlined = { fg = "#00a0d0" },
+	Question = { fg = "#00875f" },
+	SpecialKey = { fg = "#ffafd7" },
+	Special = { fg = "#ffff87" },
+	SpecialChar = { fg = "#FFF000" },
+	Macro = { fg = "#ff54ad" },
+	PreProc = { fg = "#d75f00" },
+	PreCondit = { fg = "#875f5f" },
+	Tag = { fg = "#ff00ff" },
+	Delimiter = { fg = "#d7d787" },
+	SpecialComment = { fg = "#6C7986" },
+	Todo = { bg = "#d7ff00", fg = "#ff5f00" },
+	Character = { link = "k_themePurple" },
+	Float = { link = "k_themePurple" },
+	StorageClass = { link = "k_themeOrange" },
+	Typedef = { link = "k_themeYellow" },
 
-  Bold = { bold = true },
-  Italic = { italic = true },
+	Bold = { bold = true },
+	Italic = { italic = true },
 
-  -- End of buffer and non text
-  NonText = {  fg = "#626262", bg = bg0 },
-  EndOfBuffer = { fg = bg0, bg = bg0 },
+	-- End of buffer and non text
+	NonText = { fg = "#626262", bg = bg0 },
+	EndOfBuffer = { fg = bg0, bg = bg0 },
 
-  Ignore = { fg = "#5f5faf", bold = true },
+	Ignore = { fg = "#5f5faf", bold = true },
 
-  -- Menu
-  WildMenu = { fg = "#161616", bg = "#808000" },
+	-- Menu
+	WildMenu = { fg = "#161616", bg = "#808000" },
 
-  -- Diff
-  MatchParen = { fg = "#ff00ff", bold = true },
+	-- Diff
+	MatchParen = { fg = "#ff00ff", bold = true },
 
-  DiffAdd = { fg = "#005fff" },
-  DiffChange = { fg = "#808000" },
-  DiffDelete = { fg = "#d70000" },
-  DiffText = { fg = "#ff00ff" },
-  SignColumn = { fg = "#626262", bg = bg0 },
+	DiffAdd = { fg = "#005fff" },
+	DiffChange = { fg = "#808000" },
+	DiffDelete = { fg = "#d70000" },
+	DiffText = { fg = "#ff00ff" },
+	SignColumn = { fg = "#626262", bg = bg0 },
 
-  -- Errors
-  Error = { bg = "#ffffff", fg = "#ff0000", bold = true, },
-  ErrorMsg = { bg = "#ff0000", fg = "#ffffff" },
-  SpellErrors = { fg = "#ff005f" },
-  WarningMsg = { fg = "#ff5f00" },
+	-- Errors
+	Error = { bg = "#ffffff", fg = "#ff0000", bold = true },
+	ErrorMsg = { bg = "#ff0000", fg = "#ffffff" },
+	SpellErrors = { fg = "#ff005f" },
+	WarningMsg = { fg = "#ff5f00" },
 
-  -- Popup Menu
-  Pmenu = { fg = "#DCDCDC", bg = "#303030" },
-  PmenuSel = { fg = "#36FF5A", bg = "#444444", bold = true },
-  PmenuSbar = { bg = "#262626" },
-  PmenuThumb = { bg = "#585858" },
+	-- Popup Menu
+	Pmenu = { fg = "#DCDCDC", bg = "#303030" },
+	PmenuSel = { fg = "#36FF5A", bg = "#444444", bold = true },
+	PmenuSbar = { bg = "#262626" },
+	PmenuThumb = { bg = "#585858" },
 
-  Conceal = { fg = blue },
-  SpellRare = { link = "k_themePurpleUnderline" },
-  SpellBad = { link = "k_themeRedUnderline" },
-  SpellLocal = { link = "k_themeAquaUnderline" },
-  SpellCap = vim.g.k_theme_improved_warnings and {
-    fg = green,
-    bold = vim.g.k_theme_bold,
-    italic = vim.g.k_theme_italic,
-  } or { link = "k_themeBlueUnderline" },
-  TabLineFill = { fg = bg4, bg = bg1, reverse = vim.g.k_theme_invert_tabline },
-  diffAdded = { link = "k_themeGreen" },
-  diffRemoved = { link = "k_themeRed" },
-  diffChanged = { link = "k_themeAqua" },
-  diffFile = { link = "k_themeOrange" },
-  diffNewFile = { link = "k_themeYellow" },
-  diffLine = { link = "k_themeBlue" },
+	Conceal = { fg = blue },
+	SpellRare = { link = "k_themePurpleUnderline" },
+	SpellBad = { link = "k_themeRedUnderline" },
+	SpellLocal = { link = "k_themeAquaUnderline" },
+	SpellCap = vim.g.k_theme_improved_warnings and {
+		fg = green,
+		bold = vim.g.k_theme_bold,
+		italic = vim.g.k_theme_italic,
+	} or { link = "k_themeBlueUnderline" },
+	TabLineFill = { fg = bg4, bg = bg1, reverse = vim.g.k_theme_invert_tabline },
+	diffAdded = { link = "k_themeGreen" },
+	diffRemoved = { link = "k_themeRed" },
+	diffChanged = { link = "k_themeAqua" },
+	diffFile = { link = "k_themeOrange" },
+	diffNewFile = { link = "k_themeYellow" },
+	diffLine = { link = "k_themeBlue" },
 
-  -- signature
-  SignatureMarkText = { link = "k_themeBlueSign" },
-  SignatureMarkerText = { link = "k_themePurpleSign" },
+	-- signature
+	SignatureMarkText = { link = "k_themeBlueSign" },
+	SignatureMarkerText = { link = "k_themePurpleSign" },
 
-  -- gitcommit
-  gitcommitSelectedFile = { link = "k_themeGreen" },
-  gitcommitDiscardedFile = { link = "k_themeRed" },
+	-- gitcommit
+	gitcommitSelectedFile = { link = "k_themeGreen" },
+	gitcommitDiscardedFile = { link = "k_themeRed" },
 
-  -- checkhealth
-  healthError = { fg = bg0, bg = red },
-  healthSuccess = { fg = bg0, bg = green },
-  healthWarning = { fg = bg0, bg = yellow },
+	-- checkhealth
+	healthError = { fg = bg0, bg = red },
+	healthSuccess = { fg = bg0, bg = green },
+	healthWarning = { fg = bg0, bg = yellow },
 }
 
 return base_group
