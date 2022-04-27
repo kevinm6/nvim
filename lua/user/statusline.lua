@@ -125,7 +125,7 @@ local function get_git_status()
 	local is_head_empty = signs.head ~= ""
 
 	if is_truncated(max_width.git_status) then
-		return is_head_empty and string.format(" %s ", signs.head or "") .. "%1*" or ""
+		return is_head_empty and string.format("  %s ", signs.head or "") .. "%1*" or ""
 	end
 
 	return is_head_empty
@@ -187,8 +187,8 @@ S.active = function()
 end
 
 S.disabled = function(name)
-  return name == nil and ("%= " .. get_filetype() .. " %=") or
-    ("%= " .. name .. " %=")
+  return name == nil and (get_mode() .. colors.ftype .. "%= " .. get_filetype() .. " %=") or
+    (get_mode() .. colors.mode .. "%= " .. name .. " %=")
 end
 
 return S
