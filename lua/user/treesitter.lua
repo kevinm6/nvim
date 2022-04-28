@@ -12,11 +12,11 @@ end
 
 require("nvim-treesitter.install").prefer_git = true
 
-local parser_to_install = function ()
+local parser_to_install = function()
   if vim.fn.has "mac" == 1 then
-    return "all"
+     return "all"
   else
-    return "{}" -- do not install parser for now in Manjaro-Linux
+    return {} -- do not install parser for now in Manjaro-Linux
   end
 end
 
