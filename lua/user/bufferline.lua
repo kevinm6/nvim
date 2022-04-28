@@ -2,7 +2,7 @@
  -- File         : bufferline.lua
  -- Description  : Bufferline config
  -- Author       : Kevin
- -- Last Modified: 31/03/2022 - 10:23
+ -- Last Modified: 28/04/2022 - 14:00
  -------------------------------------
 
 
@@ -22,18 +22,18 @@ bufferline.setup {
     -- NOTE: this plugin is designed with this icon in mind,
     -- and so changing this is NOT recommended, this is intended
     -- as an escape hatch for people who canno bear it for whatever reason
-    indicator_icon =  icons.ui.AltSlArrowRight,--  "▎",
+    indicator_icon = icons.ui.AltSlArrowRight,--  "▎",
     buffer_close_icon = icons.bufferline.buffer_close_icon,
     modified = icons.bufferline.modified,
     close = icons.bufferline.close,
     left_trunc_marker = icons.bufferline.left_trunc_marker,
     right_trunc_marker = icons.bufferline.right_trunc_marker,
-    max_name_length = 30,
-    max_prefix_length = 30,
+    max_name_length = 20,
+    max_prefix_length = 20,
     tab_size = 22,
     diagnostics = false,
     diagnostics_update_in_insert = false,
-    offsets = {{ filetype = "NvimTree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard", padding = 1, }},
+    offsets = {{ filetype = "NvimTree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard" }},
     -- offsets = {{ filetype = "neo-tree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard", padding = 1, }},
     show_buffer_icons = true,
     show_buffer_close_icons = true,
@@ -112,12 +112,10 @@ bufferline.setup {
       guibg = { attribute = "bg", highlight = "TabLine" },
     },
     modified_selected = {
-      guifg = { attribute = "fg", highlight = "Normal" },
-      guibg = { attribute = "bg", highlight = "Normal" },
+      guifg = { attribute = "fg", highlight = "TabLine_modified_visible" },
     },
     modified_visible = {
-      guifg = { attribute = "fg", highlight = "TabLine" },
-      guibg = { attribute = "bg", highlight = "TabLine" },
+      guifg = { attribute = "fg", highlight = "TabLine_modified_visible" },
     },
 
     separator = {
@@ -126,7 +124,6 @@ bufferline.setup {
     },
     separator_selected = {
       guifg = { attribute = "bg", highlight = "Normal" },
-      guibg = { attribute = "bg", highlight = "Normal" },
     },
     -- separator_visible = {
     --   guifg = {attribute='bg',highlight='TabLine'},
@@ -134,7 +131,6 @@ bufferline.setup {
     --   },
     indicator_selected = {
       guifg = { attribute = "fg", highlight = "CursorLineNr" },
-      guibg = { attribute = "bg", highlight = "CursorLineNr" },
     },
   },
 }

@@ -187,8 +187,8 @@ S.active = function()
 end
 
 S.disabled = function(name)
-  return name == nil and (get_mode() .. colors.ftype .. "%= " .. get_filetype() .. " %=") or
-    (get_mode() .. colors.mode .. "%= " .. name .. " %=")
+  return name == nil and (get_mode() .. colors.fformat .. "%= " .. get_filetype() .. " %=") or
+    (get_mode() .. colors.fformat .. "%= " .. name .. " %=")
 end
 
 return S

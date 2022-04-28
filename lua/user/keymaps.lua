@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim & VimR
 -- Author       : Kevin
--- Last Modified: 20/04/2022 - 13:16
+-- Last Modified: 28/04/2022 - 13:39
 -------------------------------------
 
 
@@ -111,7 +111,7 @@ set_keymap("v", ">", ">gv", opts)
 set_keymap("v", "p", "_dP", opts)
 
 -- mov.sete selected text
-set_keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-set_keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-set_keymap("x", "ª", ":move '>+1<CR>gv-gv", opts) -- <A-j>
-set_keymap("x", "º", ":move '<-2<CR>gv-gv", opts) -- <A-k>
+set_keymap("x", "J", [[:move '>+1<CR>gv-gv]], opts)
+set_keymap("x", "K", [[:move '<-2<CR>gv-gv]], opts)
+set_keymap("x", "ª", [[:move '>+1<CR>gv-gv]], opts) -- <A-j>
+set_keymap("x", "º", [[:move '<-2<CR>gv-gv]], opts) -- <A-k>

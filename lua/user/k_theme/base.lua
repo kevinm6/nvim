@@ -147,6 +147,9 @@ local base_group = {
 	-- TabLine
 	TabLineSel = { fg = "#606060", bg = "#303030" },
 	TabLine = { fg = "#A9A9A9", bg = "#606060" },
+	TabLine_modified_visible = { fg = "#00afff", bg = "#303030" },
+	TabLine_modified_selected = { fg = "#A9A9A9", bg = "#303030" },
+	TabLine_indicator_selected = { fg = "#A9A9A9", bg = "#303030" },
 
 	Title = { fg = "Gold1" },
 	Statement = { fg = "#00afff" },
