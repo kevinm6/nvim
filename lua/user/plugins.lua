@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 21/04/2022 - 09:28
+-- Last Modified: 27/04/2022 - 16:51
 -------------------------------------
 
 
@@ -70,17 +70,6 @@ return packer.startup(function(use)
 		}
 	}
 
-  use {
-  "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim"
-    },
-    disable = true,
-  }
-
 	use {
 		"folke/which-key.nvim",
 		run = "WhichKey"
@@ -94,7 +83,7 @@ return packer.startup(function(use)
 	use "moll/vim-bbye"
 	use {
 		"tweekmonster/startuptime.vim",
-		opt = true,
+		cond = false,
 		cmd = "StartupTime",
 	}
 	use "lewis6991/impatient.nvim"
@@ -123,7 +112,7 @@ return packer.startup(function(use)
     "kdheepak/cmp-latex-symbols",
     "hrsh7th/cmp-calc",
     "dmitmel/cmp-digraphs",
-    "hrsh7th/cmp-emoji",
+    { "hrsh7th/cmp-emoji", opt = true },
 
     -- snippets
     {
@@ -179,11 +168,6 @@ return packer.startup(function(use)
     require = { "Microsoft/java-debug" },
   }
 
-	use {
-    "filipdutescu/renamer.nvim",
-    after = "plenary.nvim",
-    disable = true,
-  }
 	use "antoinemadec/FixCursorHold.nvim"
 	use "simrat39/symbols-outline.nvim"
 	use {
@@ -214,8 +198,13 @@ return packer.startup(function(use)
 
 	-- database
 	use {
-    { "tpope/vim-dadbod", ft = "sql", cmd = ":DB" },
-    { "kristijanhusak/vim-dadbod-ui", ft = "sql", cmd = ":DBUI" }
+    "tpope/vim-dadbod",
+    cond = false,
+    ft = "sql",
+    cmd = ":DB",
+    requires = {
+      "kristijanhusak/vim-dadbod-ui", ft = "sql", cmd = ":DBUI"
+    },
   }
 
 	-- Python
@@ -227,8 +216,8 @@ return packer.startup(function(use)
 			require("jupyter-nvim").setup {}
 		end
 	}
-	use { "jupyter-vim/jupyter-vim", ft = "ipynb" } -- work with Python envs and render in QTconsole
-	use { "bfredl/nvim-ipy", ft = "py" }
+	use { "jupyter-vim/jupyter-vim", cond = false, ft = "ipynb" } -- work with Python envs and render in QTconsole
+	use { "bfredl/nvim-ipy", cond = false, ft = "py" }
 
 	-- markdown
 	use {
@@ -252,13 +241,11 @@ return packer.startup(function(use)
 	-- themes
 	use {
 		"ellisonleao/gruvbox.nvim",
-		opt = true,
-		cmd = { "colorscheme" }
+    cond = false,
 	}
 	use {
 		"Shatur/neovim-ayu",
-		opt = true,
-		cmd = { "colorscheme" }
+    cond = false,
 	}
 
 	if PACKER_BOOTSTRAP then

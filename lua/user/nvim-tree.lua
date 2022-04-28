@@ -78,28 +78,30 @@ end
 
 nvim_tree.setup {
   auto_reload_on_write = true,
-  hide_root_folder = false,
+  disable_netrw = true,
+  hijack_cursor = true,
+  hijack_netrw = false, -- overriden if 'disable_netrw = true'
   hijack_unnamed_buffer_when_opening = false,
   ignore_buffer_on_setup = false,
-  open_on_setup_file = false,
-  disable_netrw = true,
-  hijack_netrw = false,
   open_on_setup = true,
-  auto_close = false,
+  open_on_setup_file = false,
   open_on_tab = false,
-  hijack_cursor = true,
   update_cwd = true,
   view = {
     width = 30,
     height = 30,
     hide_root_folder = false,
     side = "left",
-    auto_resize = true,
+    preserve_window_proportions = false,
+    number = false,
+    relativenumber = true,
+    signcolumn = "yes",
     mappings = {
       custom_only = false,
       list = { -- custom mappings
         { key = { "l", "<CR>", "o" }, action = "edit" },
         { key = { "-", "<BS>"}, action = "dir_up" },
+        { key = { "<Esc>", "q" }, action = "close" },
         { key = "h", action = "close_node" },
         { key = "L", action = "cd" },
         { key = ".", action = "cd" },
@@ -110,14 +112,11 @@ nvim_tree.setup {
         { key = "V", action = "vsplit_preview", action_cb = vsplit_preview },
         { key = "p", action = "preview" },
         { key = "^", action = "parent_node" },
-        { key = "<Esc>", action = "toggle_help" },
         { key = "/", action = "search" },
         { key = "D", action = "trash", action_cb = trash_file },
         { key = "?", action = "toggle_help" },
         },
     },
-    number = false,
-    relativenumber = true,
   },
   renderer = {
     indent_markers = {
@@ -128,12 +127,11 @@ nvim_tree.setup {
         none = "  ",
       },
     },
+    icons = {
+      webdev_colors = true,
+    }
   },
   hijack_directories = {
-    enable = true,
-    auto_open = true,
-  },
-  update_to_buf_dir = {
     enable = true,
     auto_open = true,
   },
@@ -154,17 +152,17 @@ nvim_tree.setup {
       info = icons.diagnostics.Information,
       warning = icons.diagnostics.Warning,
       error = icons.diagnostics.Error,
-      question = icons.diagnostics.Question,
     },
   },
   filters = {
     dotfiles = false,
     custom = { ".git", ".cache", ".DS_Store" },
+    exclude = {},
   },
   git = {
     enable = true,
     ignore = false,
-    timeout = 500,
+    timeout = 400,
   },
   actions = {
     use_system_clipboard = true,
@@ -189,4 +187,15 @@ nvim_tree.setup {
     cmd = "trash",
     require_confirm = true,
   },
+  log = {
+    enable = false,
+    types = {
+      all = false,
+      config = false,
+      copy_paste = false,
+      diagnostics = false,
+      git = false,
+      profile = false,
+    },
+  }
 }
