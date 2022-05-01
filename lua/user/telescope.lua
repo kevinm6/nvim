@@ -5,7 +5,6 @@
 -- Last Modified: 10/04/2022 - 11:46
 -------------------------------------
 
-
 local ok, telescope = pcall(require, "telescope")
 if not ok then return end
 

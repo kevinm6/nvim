@@ -5,7 +5,6 @@
 -- Last Modified: 31/03/2022 - 13:55
 -------------------------------------
 
-
 local ok, nvim_tree = pcall(require, "nvim-tree")
 if not ok then return end
 

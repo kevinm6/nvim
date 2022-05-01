@@ -5,7 +5,6 @@
 -- Last Modified: 10/04/2022 - 14:24
 -----------------------------------
 
-
 local ok, todo_comments = pcall(require, "todo-comments")
 if not ok then return end
 

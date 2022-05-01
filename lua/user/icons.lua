@@ -5,7 +5,7 @@
 --	Last Modified: 21/03/2022 - 17:52
 -----------------------------------
 
--- Font: SauceCodePro Nerd Font Mono
+-- Font: SauceCodePro Nerd Font Mono:13, v|i 92, n/n 90
 
 return {
   kind = {

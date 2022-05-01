@@ -5,7 +5,6 @@
  -- Last Modified: 30/04/2022 - 18:08
  -------------------------------------
 
-
 -- Section: CURSOR {
 	vim.opt.guicursor = { -- cursor shape mode-based
 		"n-v-c:block",

@@ -5,7 +5,6 @@
 -- Last Modified: 28/04/2022 - 13:39
 -------------------------------------
 
-
 -- Function to make easy mapping in Lua
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }

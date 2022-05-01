@@ -5,8 +5,6 @@
 --  Last Modified: 23/03/2022 - 17:01
 -----------------------------------
 
-
-
 local ok, sniprun = pcall(require, "sniprun")
 if not ok then return end
 

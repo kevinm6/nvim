@@ -45,6 +45,7 @@ local modules = {
   "user.statusline",
   "user.surround",
   -- "user.renamer",
+  "user.todo-comments",
   "user.registers",
   "user.alpha",
   "user.symbol-outline",

@@ -10,7 +10,6 @@ if not ok then return end
 
 local icons = require "user.icons"
 
-
 -- Customized config
 gps.setup {
 

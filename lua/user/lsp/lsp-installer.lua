@@ -8,7 +8,6 @@
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 if not ok then return end
 
-
 -- NEW CONFIGURATION OF NVIM-LSP-INSTALLER
 lsp_installer.setup {
   ensure_installed = {

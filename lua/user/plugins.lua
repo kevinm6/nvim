@@ -25,12 +25,13 @@ end
 local ok, packer = pcall(require, "packer")
 if not ok then return end
 
-vim.cmd [[
-	augroup _packer_user_config
-		autocmd!
-		autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-	augroup end
-]]
+local augroup_packer = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = augroup_packer,
+  pattern = "plugins.lua",
+  command = "source <afile> | PackerCompile"
+})
+
 
 local icons = require "user.icons"
 

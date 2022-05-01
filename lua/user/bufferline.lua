@@ -5,7 +5,6 @@
  -- Last Modified: 28/04/2022 - 14:00
  -------------------------------------
 
-
 local ok, bufferline = pcall(require, "bufferline")
 if not ok then return end
 
