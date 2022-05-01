@@ -2,7 +2,7 @@
  -- File         : prefs.lua
  -- Description  : NeoVim & VimR preferences
  -- Author       : Kevin
- -- Last Modified: 26/03/2022 - 10:27
+ -- Last Modified: 30/04/2022 - 18:08
  -------------------------------------
 
 
@@ -26,7 +26,7 @@
 		guifont = "Sauce Code Pro Nerd Font Complete Mono:h13", -- font for gui-apps
 		clipboard = "unnamedplus", -- allow neovim access to system clipboard
 		relativenumber = true, -- Show line numbers - relativenumber from current
-		showmode = true, -- show active mode in status line
+		showmode = false, -- show active mode in status line
 		scrolloff = 6, -- # of line leave above and below cursor
 		sidescrolloff = 6, -- # of columns on the sides
 		mat = 2, -- tenths of second to blink during matching brackets
