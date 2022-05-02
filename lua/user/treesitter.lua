@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 28/04/2022 - 12:27
+-- Last Modified: 02/05/2022 - 09:57
 -------------------------------------
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -14,7 +14,7 @@ require("nvim-treesitter.install").prefer_git = true
 
 local parser_to_install = function()
   if vim.fn.has "mac" == 1 then
-     return "all"
+    return "all"
   else
     return {} -- do not install parser for now in Manjaro-Linux
   end
@@ -87,9 +87,9 @@ require("treesitter-context").setup({
       "class",
       "function",
       "method",
-      "for",
-      "if",
-      "while",
+      -- "for",
+      -- "if",
+      -- "while",
       -- 'switch',
       -- 'case',
     },

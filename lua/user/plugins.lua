@@ -143,7 +143,7 @@ return packer.startup(function(use)
     requires = {
       { "nvim-treesitter/playground" },
       { "JoosepAlviste/nvim-ts-context-commentstring" },
-      { "romgrk/nvim-treesitter-context" },
+      { "lewis6991/nvim-treesitter-context" },
       { "windwp/nvim-ts-autotag" },
       { "p00f/nvim-ts-rainbow" },
     },
