@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 01/05/2022 - 14:40
+-- Last Modified: 02/05/2022 - 10:29
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -15,8 +15,8 @@ local lspconfig_util = require "lspconfig.util"
 require("user.lsp.lsp-signature")
 require("user.lsp.lsp-installer")
 require("user.lsp.handlers").setup()
+require("user.lsp.null-ls") -- formatting
 require("user.lsp.codelens")
-
 
 local function lsp_highlight_document(client)
   -- Set autocommands conditional on server_capabilities
@@ -36,7 +36,6 @@ local function lsp_keymaps(bufnr)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.keymap.set("n", "<leader>ll", "<cmd>lua require('user.lsp.codelens').run<CR>", opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
@@ -52,7 +51,7 @@ local function lsp_keymaps(bufnr)
 end
 
 local filetype_attach = setmetatable({
-  go = function(client)
+  go = function()
     local lspbufformat = vim.api.nvim_create_augroup("lsp_buf_format", { clear = true })
 
     vim.api.nvim_create_autocmd("BufWritePre", {
@@ -172,11 +171,6 @@ for server, config in pairs(servers) do
   setup_server(server, config)
 end
 
--- Set up null-ls
-local use_null = false
-if use_null then
-  require("user.lsp.null-ls")
-end
 
 return {
   on_init = custom_init,

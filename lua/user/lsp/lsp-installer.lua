@@ -8,6 +8,8 @@
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 if not ok then return end
 
+local icons = require("user.icons")
+
 -- NEW CONFIGURATION OF NVIM-LSP-INSTALLER
 lsp_installer.setup {
   ensure_installed = {
@@ -20,11 +22,11 @@ lsp_installer.setup {
   ui = {
       icons = {
           -- The list icon to use for installed servers.
-          server_installed = "◍",
+          server_installed = icons.packer.done_sym,
           -- The list icon to use for servers that are pending installation.
-          server_pending = "◍",
+          server_pending = icons.packer.working_sym,
           -- The list icon to use for servers that are not installed.
-          server_uninstalled = "◍",
+          server_uninstalled = icons.packer.removed_sym,
       },
       keymaps = {
           -- Keymap to expand a server in the UI
@@ -43,7 +45,7 @@ lsp_installer.setup {
           uninstall_server = "X",
       },
   },
-  -- install_root_dir = path.concat { vim.fn.stdpath "data", "lsp_servers" },
+  install_root_dir = vim.fn.stdpath("data") .. "lsp_servers",
 
   log_level = vim.log.levels.INFO,
 
