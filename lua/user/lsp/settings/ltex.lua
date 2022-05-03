@@ -12,12 +12,13 @@ return {
       completionEnabled = false,
       dictionary = {
         ["en"] = {":/Users/Kevin/.MacDotfiles/nvim/.config/nvim/spell/en.utf-8.add"},
+        ["it"] = {":/Users/Kevin/.MacDotfiles/nvim/.config/nvim/spell/it.utf-8.add"},
       },
       additionalRules = {
         motherTongue = "it",
       },
       java = {
-        path = "$JAVA_HOME",
+        path = "/usr/local/opt/openjdk/bin",
       },
     },
   }
