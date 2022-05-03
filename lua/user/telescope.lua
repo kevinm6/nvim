@@ -20,6 +20,7 @@ telescope.load_extension "project"
 telescope.load_extension "ui-select"
 telescope.load_extension "file_browser"
 telescope.load_extension "command_center"
+telescope.load_extension "notify"
 
 local command_center = require("command_center")
 
