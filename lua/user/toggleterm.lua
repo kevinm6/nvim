@@ -2,7 +2,7 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 12/03/2022 - 17:37
+-- Last Modified: 03/05/2022 - 09:36
 -------------------------------------
 
 local ok, toggleterm = pcall(require, "toggleterm")
@@ -54,13 +54,26 @@ local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 function _LAZYGIT_TOGGLE()
 	lazygit:toggle()
 end
+vim.api.nvim_create_user_command("Git", _LAZYGIT_TOGGLE, {
+  desc = "Open lazygit inside NeoVim",
+  force = true
+})
 
 local htop = Terminal:new({ cmd = "htop", hidden = true })
 function _HTOP_TOGGLE()
 	htop:toggle()
 end
+vim.api.nvim_create_user_command("Htop", _HTOP_TOGGLE, {
+  desc = "Open HTOP inside NeoVim",
+  force = true
+})
 
 local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
 function _NCDU_TOGGLE()
 	ncdu:toggle()
 end
+vim.api.nvim_create_user_command("Ncdu", _NCDU_TOGGLE, {
+  desc = "Open NCDU inside NeoVim",
+  force = true
+})
+
