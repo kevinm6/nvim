@@ -76,6 +76,7 @@ return packer.startup(function(use)
 			"kyazdani42/nvim-web-devicons",
 		},
 	})
+  use "edluffy/hologram.nvim"
 
 	use({
 		"folke/which-key.nvim",
@@ -254,6 +255,7 @@ return packer.startup(function(use)
 		"Shatur/neovim-ayu",
 		cond = false,
 	})
+  use "fladson/vim-kitty"
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

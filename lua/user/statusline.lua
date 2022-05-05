@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 26/04/2022 - 09:45
+-- Last Modified: 05/05/2022 - 17:02
 -------------------------------------
 
 local S = {}
@@ -14,10 +14,11 @@ end
 
 local icons = require "user.icons"
 
-local max_width = setmetatable({
+local preset_width = setmetatable({
 	filename = 120,
-	git_status = 90,
-	diagnostic = 90,
+	git_branch = 60,
+	git_status_full = 110,
+	diagnostic = 136,
 	row_onTot = 100,
 	gps_loc = 80,
 }, {
@@ -87,21 +88,25 @@ local function get_mode()
 	return (map[mode_code] == nil) and mode_code or map[mode_code]
 end
 
-local function is_truncated(width)
+local function win_is_smaller(width, width2)
+  if width2 ~= nil then
+    return vim.api.nvim_win_get_width(0) >= width and
+      vim.api.nvim_win_get_width(0) <= width2
+  end
 	return vim.api.nvim_win_get_width(0) < width
 end
 
 local function get_filename()
-	return is_truncated(max_width.filename) and " %t " or " %<%f "
+	return win_is_smaller(preset_width.filename) and " %t " or " %<%f "
 end
 
 local function get_line_onTot()
-	return is_truncated(max_width.row_onTot) and " %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
+	return win_is_smaller(preset_width.row_onTot) and " %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
 		or " row %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
 end
 
 local function get_lsp_diagnostic()
-	if is_truncated(max_width.diagnostic) then
+	if win_is_smaller(preset_width.diagnostic) then
 		return ""
 	end
 
@@ -124,13 +129,15 @@ local function get_git_status()
 	local signs = vim.b.gitsigns_status_dict or { head = "", added = 0, changed = 0, removed = 0 }
 	local is_head_empty = signs.head ~= ""
 
-	if is_truncated(max_width.git_status) then
+	if win_is_smaller(preset_width.git_branch) then
+    return ""
+  elseif win_is_smaller(preset_width.git_branch, preset_width.git_status_full) then
 		return is_head_empty and string.format("  %s ", signs.head or "") .. "%1*" or ""
-	end
-
-	return is_head_empty
+  else
+    return is_head_empty
 			and string.format(" +%s ~%s -%s |  %s ", signs.added, signs.changed, signs.removed, signs.head)
 		or ""
+	end
 end
 
 local function get_filetype()
@@ -145,7 +152,7 @@ local function get_filetype()
 end
 
 local function nvim_gps()
-	return gps.is_available() and (not is_truncated(max_width.gps_loc)) and " " .. gps.get_location() or ""
+	return gps.is_available() and (not win_is_smaller(preset_width.gps_loc)) and " " .. gps.get_location() or ""
 end
 
 S.active = function()
