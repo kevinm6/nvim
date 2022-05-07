@@ -2,15 +2,10 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 05/05/2022 - 17:02
+-- Last Modified: 07/05/2022 - 18:27
 -------------------------------------
 
 local S = {}
-
-local ok, gps = pcall(require, "nvim-gps")
-if not ok then
-	return
-end
 
 local icons = require "user.icons"
 
@@ -18,7 +13,7 @@ local preset_width = setmetatable({
 	filename = 120,
 	git_branch = 60,
 	git_status_full = 110,
-	diagnostic = 136,
+	diagnostic = 128,
 	row_onTot = 100,
 	gps_loc = 80,
 }, {
@@ -88,6 +83,10 @@ local function get_mode()
 	return (map[mode_code] == nil) and mode_code or map[mode_code]
 end
 
+
+-- Helper function to check window size
+-- if 2 values are passed as args, returns true
+--  if win_size is between them
 local function win_is_smaller(width, width2)
   if width2 ~= nil then
     return vim.api.nvim_win_get_width(0) >= width and
@@ -96,65 +95,94 @@ local function win_is_smaller(width, width2)
 	return vim.api.nvim_win_get_width(0) < width
 end
 
+-- filename (tail) for statusline
 local function get_filename()
-	return win_is_smaller(preset_width.filename) and " %t " or " %<%f "
+	return " %t "
 end
 
+-- location function (current row on total rows)
 local function get_line_onTot()
 	return win_is_smaller(preset_width.row_onTot) and " %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
 		or " row %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
 end
 
-local function get_lsp_diagnostic()
-	if win_is_smaller(preset_width.diagnostic) then
-		return ""
-	end
-
-	local diagnostics = vim.diagnostic.get(0)
-	local count = { 0, 0, 0, 0 }
-
-	for _, diagnostic in ipairs(diagnostics) do
-		count[diagnostic.severity] = count[diagnostic.severity] + 1
-	end
-
-	local errors = icons.diagnostics.Error .. ":" .. (count[vim.diagnostic.severity.ERROR] or 0)
-	local warnings = icons.diagnostics.Warning .. ":" .. (count[vim.diagnostic.severity.WARN] or 0)
-	local infos = icons.diagnostics.Information .. ":" .. (count[vim.diagnostic.severity.INFO] or 0)
-	local hints = icons.diagnostics.Hint .. ":" .. (count[vim.diagnostic.severity.HINT] or 0)
-
-	return string.format("%s %s %s %s", errors, warnings, infos, hints)
+-- check availability of nvim-gps plugin
+local ok, gps = pcall(require, "nvim-gps")
+if not ok then
+  vim.notify(" Error loading nvim_gps", "Error", { title = "Statusline", timeout = 1400 })
+  return
 end
 
+-- get value from nvim-gps if available and window size is big enough
+local function nvim_gps()
+	return gps.is_available() and
+    (not win_is_smaller(preset_width.gps_loc)) and
+      " " .. gps.get_location() or ""
+end
+
+-- function lsp diagnostic
+-- display diagnostic if enough space is available
+-- based on win_size gps is empty
+local function get_lsp_diagnostic()
+	if (win_is_smaller(preset_width.diagnostic) and nvim_gps() ~= "") then
+		return "..."
+	end
+
+	local diagnostics = vim.diagnostic
+  -- assign to relative vars the count of diagnostic
+	local errors = #(diagnostics.get(0, { severity = diagnostics.severity.ERROR }))
+	local warnings = #(diagnostics.get(0, { severity = diagnostics.severity.WARN }))
+	local infos = #(diagnostics.get(0, { severity = diagnostics.severity.INFO }))
+	local hints = #(diagnostics.get(0, { severity = diagnostics.severity.HINT }))
+
+  local status_ok = function()
+    return (errors == 0) and
+      (warnings == 0) and (infos == 0)
+        and (hints == 0) or false
+  end
+
+  -- display values only if there are any
+  return status_ok() and
+    icons.diagnostics.status_ok or
+      string.format(
+        "%s:%d %s:%d %s:%d %s:%d",
+        icons.diagnostics.Error, errors,
+        icons.diagnostics.Warning, warnings,
+        icons.diagnostics.Information, infos,
+        icons.diagnostics.Error, hints
+      )
+end
+
+-- Function of git status with gitsigns
 local function get_git_status()
 	local signs = vim.b.gitsigns_status_dict or { head = "", added = 0, changed = 0, removed = 0 }
 	local is_head_empty = signs.head ~= ""
 
+  -- display based on sie of window
 	if win_is_smaller(preset_width.git_branch) then
     return ""
   elseif win_is_smaller(preset_width.git_branch, preset_width.git_status_full) then
 		return is_head_empty and string.format("  %s ", signs.head or "") .. "%1*" or ""
   else
     return is_head_empty
-			and string.format(" +%s ~%s -%s |  %s ", signs.added, signs.changed, signs.removed, signs.head)
+			and  string.format(" +%s ~%s -%s |  %s ", signs.added, signs.changed, signs.removed, signs.head)
 		or ""
 	end
 end
 
+-- Function return filetype with icon if available
 local function get_filetype()
 	local file_name, file_ext = vim.fn.expand("%:t"), vim.fn.expand("%:e")
 	local icon = require("nvim-web-devicons").get_icon(file_name, file_ext)
 	local file_type = vim.bo.filetype
 
-	if file_type == nil then
-		return
-	end
-	return icon == nil and string.format(" %s ", file_type) or string.format(" %s %s ", icon, file_type)
+	return file_type == nil and icons.diagnostics.Error or
+	 icon == nil and string.format(" %s ", file_type) or
+    string.format(" %s %s ", icon, file_type)
 end
 
-local function nvim_gps()
-	return gps.is_available() and (not win_is_smaller(preset_width.gps_loc)) and " " .. gps.get_location() or ""
-end
 
+-- Statusline enabled
 S.active = function()
 	-- LeftSide
 	local currMode = colors.mode .. "%m%r" .. get_mode() .. icons.ui.SlChevronRight
@@ -193,6 +221,8 @@ S.active = function()
 	})
 end
 
+-- Statusline disabled
+-- display only filetype and current mode
 S.disabled = function(name)
   return name == nil and (get_mode() .. colors.fformat .. "%= " .. get_filetype() .. " %=") or
     (get_mode() .. colors.fformat .. "%= " .. name .. " %=")

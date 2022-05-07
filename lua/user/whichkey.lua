@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 20/04/2022 - 13:23
+-- Last Modified: 07/05/2022 - 18:17
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -142,7 +142,7 @@ local leader_maps = {
 	},
 
   -- Renamer
-	r = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Renamer" },
+	r = { '<cmd>lua require("renamer").rename({empty = false})<CR>', "Renamer" },
 
   -- Packer
   p = {

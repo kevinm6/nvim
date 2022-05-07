@@ -5,7 +5,7 @@
 -- Last Modified: 28/04/2022 - 13:39
 -------------------------------------
 
--- Function to make easy mapping in Lua
+-- Function to make easier mapping in Lua
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 local set_keymap = vim.keymap.set
@@ -14,7 +14,8 @@ vim.g.maplocalleader = ","
 
 
 -- GUI
-if vim.fn.has("gui_vimr") == 1 then -- VimR keymaps (command key and others)
+-- VimR keymaps (command key and others)
+if vim.fn.has "gui_vimr" == 1 then
 	-- NORMAL-MODE
 	set_keymap("n", "<D-Right>", "$", opts)
 	set_keymap("n", "<D-Left>", "0", opts)

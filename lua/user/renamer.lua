@@ -40,9 +40,18 @@ renamer.setup({
 	-- The characters which make up the border
 	border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 	-- Whether or not to highlight the current word references through LSP
-	show_refs = true,
-	-- The keymaps available while in the `renamer` buffer. The example below
-	-- overrides the default values, but you can add others as well.
+  show_refs = true,
+  -- Whether or not to add resulting changes to the quickfix list
+  with_qf_list = true,
+  -- Whether or not to enter the new name through the UI or Neovim's `input`
+  -- prompt
+  with_popup = true,
+  -- The keymaps available while in the `renamer` buffer. The example below
+  -- overrides the default values, but you can add others as well.
+   -- The minimum width of the popup
+    min_width = 14,
+    -- The maximum width of the popup
+    max_width = 46,
 	mappings = {
 		["<c-i>"] = mappings_utils.set_cursor_to_start,
 		["<c-a>"] = mappings_utils.set_cursor_to_end,
@@ -52,4 +61,5 @@ renamer.setup({
 		["<c-u>"] = mappings_utils.undo,
 		["<c-r>"] = mappings_utils.redo,
 	},
+  handler = nil,
 })

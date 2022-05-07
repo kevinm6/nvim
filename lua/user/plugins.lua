@@ -77,7 +77,7 @@ return packer.startup(function(use)
 		},
 	})
   use "edluffy/hologram.nvim"
-
+  use "NishanthSpShetty/renamer.nvim"
 	use({
 		"folke/which-key.nvim",
 		run = "WhichKey",

@@ -7,16 +7,16 @@
 --------------------------------------
 
 -- check if NeoVim or Vim
-if not (vim.fn.has("nvim")) == 1 then
-  vim.cmd("source ~/.config/vim/vimrc")
+if not vim.fn.has "nvim" == 1 then
+  vim.cmd "source ~/.config/vim/vimrc"
   return
 end
 
 -- Use other Shadafile for Gui (VimR)
-if vim.fn.has("gui_vimr") == 1 then
-  vim.opt.shadafile = vim.fn.expand("~/.cache/nvim/shada/gmain.shada")
+if vim.fn.has "gui_vimr" == 1 then
+  vim.opt.shadafile = vim.fn.expand "~/.cache/nvim/shada/gmain.shada"
 else
-  vim.opt.shadafile = vim.fn.expand("~/.cache/nvim/shada/main.shada")
+  vim.opt.shadafile = vim.fn.expand "~/.cache/nvim/shada/main.shada"
 end
 
 -- Config Files to source
@@ -44,7 +44,7 @@ local modules = {
   "user.autocommands",
   "user.statusline",
   "user.surround",
-  -- "user.renamer",
+  "user.renamer",
   "user.todo-comments",
   "user.registers",
   "user.alpha",
@@ -71,4 +71,5 @@ for index, module in ipairs(modules) do
     nModules = index
   end
 end
-print(" ✔ " .. nModules .. " modules loaded")
+
+print("✔ " .. nModules .. " modules loaded")
