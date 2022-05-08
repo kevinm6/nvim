@@ -1,4 +1,3 @@
---
 --------------------------------------
 -- File         : init.lua
 -- Description  : K NeoVim & gui VimR configuration
