@@ -8,7 +8,6 @@
 local ok, schema = pcall(require, "schemastore")
 if not ok then return end
 
-
 return {
  settings = {
     json = {

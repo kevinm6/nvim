@@ -60,14 +60,16 @@ function M.enable_format_on_save()
   vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = _format_on_save,
     pattern = "*",
-    command = "lua vim.lsp.buf.formatting()",
+    callback = function()
+      vim.lsp.buf.formatting()
+    end,
   })
-  vim.notify "Enabled format on save"
+  vim.notify(" Enabled format on save", "Info", { title = "LSP" })
 end
 
 function M.disable_format_on_save()
   vim.api.nvim_clear_autocmds({ group = "_format_on_save" })
-  vim.notify "Disabled format on save"
+  vim.notify(" Disabled format on save", "Info", { title = "LSP" })
 end
 
 function M.toggle_format_on_save()
@@ -78,7 +80,9 @@ function M.toggle_format_on_save()
   end
 end
 
-vim.cmd [[ command! LspToggleAutoFormat execute 'lua require("user.lsp.handlers").toggle_format_on_save()' ]]
+vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
+  require("user.lsp.handlers").toggle_format_on_save()
+end, {})
 
 local lsp_util = vim.lsp.util
 
@@ -96,7 +100,9 @@ end
 
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   pattern = "*",
-  command = "lua require('user.lsp.handlers').code_action_listener()",
+  callback = function()
+    require("user.lsp.handlers").code_action_listener()
+  end,
 })
 
 return M

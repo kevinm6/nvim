@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 07/05/2022 - 18:17
+-- Last Modified: 09/05/2022 - 09:27
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -94,7 +94,7 @@ local leader_maps = {
   ["8"] = { "<cmd>BufferLineGoToBuffer 8<CR>", "Go to Buffer 8" },
   ["9"] = { "<cmd>BufferLineGoToBuffer 9<CR>", "Go to Buffer 9" },
   ["."] = {
-    "<cmd>cd %:p:h<CR> <bar> <cmd>lua vim.notify(\" Change dir to \" .. vim.fn.expand(\"%:p:h\"), \"Info\", { timeout = 4})<CR>",
+    [[<cmd>cd %:p:h<CR> <bar> <cmd>lua vim.notify(" Change dir to " .. vim.fn.expand("%:p:h"), "Info", { timeout = 4})<CR>]],
     "Change dir to current buffer's parent"
   },
 
@@ -295,15 +295,15 @@ local leader_maps = {
 	[0] = {
     name = "Configuration Files",
     s = {
-      "<cmd>source $NVIMDOTDIR/init.lua<CR> <bar> <cmd>lua require(\"notify\")(\" Config file sourced\", \"Info\")<cr>",
+      [[<cmd>source $NVIMDOTDIR/init.lua<CR> <bar> <cmd>lua require("notify")(" Config file sourced", "Info")<cr> ]],
       "Source Neovim config file"
     },
     e = { "<cmd>edit $NVIMDOTDIR/init.lua<CR>", "Edit Neovim config file" },
     S = {
-      "<cmd>lua require(\"luasnip.loaders.from_vscode\").load { paths = { (\"./lua/\") } } <CR> <bar> <cmd>lua require(\"notify\")(\" Snippets file sourced\", \"Info\")<cr>",
+      [[<cmd>lua require("luasnip.loaders.from_vscode").load { paths = { ("./lua/") } } <CR> <bar> <cmd>lua require("notify")(" Snippets file sourced", "Info")<cr> ]],
       "Reload snippet file"
     },
-    ["%"] = { "<cmd>source %<CR>", "Source current buffer" },
+    ["."] = { "<cmd>source %<CR>", "Source current buffer" },
   }
 }
 
@@ -317,7 +317,7 @@ local vopts = {
 }
 
 local vmappings = {
-  ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
+  ["/"] = { [[<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>]], "Comment" },
 
 	-- SURROUND
 	s = {
@@ -329,10 +329,10 @@ local vmappings = {
     q = { "<cmd>lua require('surround').toggle_quotes()<CR>", "Quotes" },
     b = { "<cmd>lua require('surround').toggle_brackets()<CR>", "Brackets" },
   },
-  d = { "\"+d", "Copy deletion into register \"" },
-	D = { "\"+D", "Copy deletion to end into register \"" },
-	y = { "\"+y", "Copy yank into register \"" },
-  ["<BS>"] = { "\"+d", "Copy deletion into register \"" },
+  d = { [["+d]], "Copy deletion into register \"" },
+	D = { [["+D]], "Copy deletion to end into register \"" },
+	y = { [["+y]], "Copy yank into register \"" },
+  ["<BS>"] = { [["+d]], "Copy deletion into register \"" },
 }
 
 local Zopts = {

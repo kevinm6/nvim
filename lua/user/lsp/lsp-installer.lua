@@ -8,7 +8,7 @@
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 if not ok then return end
 
-local icons = require("user.icons")
+local icons = require "user.icons"
 
 -- NEW CONFIGURATION OF NVIM-LSP-INSTALLER
 lsp_installer.setup {

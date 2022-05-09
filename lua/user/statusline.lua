@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 08/05/2022 - 13:07
+-- Last Modified: 09/05/2022 - 17:42
 -------------------------------------
 
 local S = {}
@@ -22,6 +22,8 @@ local preset_width = setmetatable({
 	end,
 })
 
+local space = " "
+
 local colors = {
 	mode = "%#StatusLineMode#",
 	git = "%#StatusLineGit#",
@@ -30,8 +32,9 @@ local colors = {
 	ftype = "%#StatusLineFileType#",
 	empty = "%#StatusLineEmptyspace#",
 	name = "%#StatusLineFileName#",
-	encoding = "%#StatusLineFFormatEncoding#",
-	fformat = "%#StatusLineFFormatEncoding#",
+	encoding = "%#StatusLineFileEncoding#",
+	fformat = "%#StatusLineFileFormat#",
+  location = "%#StatusLineLocation#",
 	Nmode = "%#Nmode#",
 	Vmode = "%#Vmode#",
 	Imode = "%#Imode#",
@@ -80,17 +83,17 @@ local map = {
 
 local function get_mode()
 	local mode_code = vim.api.nvim_get_mode().mode
-	return (map[mode_code] == nil) and mode_code or map[mode_code]
+	return map[mode_code]
+    or mode_code
 end
 
 -- Helper function to check window size
 -- if 2 values are passed as args, returns true
 --  if win_size is between or equal to one of the limits
-local function win_is_smaller(width, width2)
-	if width2 ~= nil then
-		return vim.api.nvim_win_get_width(0) >= width and vim.api.nvim_win_get_width(0) <= width2
-	end
-	return vim.api.nvim_win_get_width(0) < width
+-- (in lua, only nil and false are "FALSY", 0 and '' are true)
+local function win_is_smaller(lower, upper)
+	local win_size = vim.api.nvim_win_get_width(0)
+	return upper and (win_size >= lower and win_size <= upper) or win_size < lower
 end
 
 -- filename (tail) for statusline
@@ -100,8 +103,8 @@ end
 
 -- location function (current row on total rows)
 local function get_line_onTot()
-	return win_is_smaller(preset_width.row_onTot) and " %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
-		or " row %#StatusLineGit#%l%#StatusLineFFormatEncoding#÷%L "
+	return win_is_smaller(preset_width.row_onTot) and " " .. colors.git ..  "%l" ..  colors.location .. "÷%L "
+		or colors.location .. " row " .. colors.git .. "%l" .. colors.location .. "÷%L "
 end
 
 -- check availability of nvim-gps plugin
@@ -132,30 +135,36 @@ local function get_lsp_diagnostic()
 	local status_ok = (errors == 0) and (warnings == 0) and (infos == 0) and (hints == 0) or false
 
 	-- display values only if there are any
-  return status_ok and icons.diagnostics.status_ok or
-    do_not_show_diag and icons.diagnostics.status_not_ok or string.format(
+	return status_ok and icons.diagnostics.status_ok
+		or do_not_show_diag and icons.diagnostics.status_not_ok
+		or string.format(
 			"%s:%d %s:%d %s:%d %s:%d",
-			icons.diagnostics.Error, errors,
-			icons.diagnostics.Warning, warnings,
-			icons.diagnostics.Information, infos,
-			icons.diagnostics.Hint, hints
+			icons.diagnostics.Error,
+			errors,
+			icons.diagnostics.Warning,
+			warnings,
+			icons.diagnostics.Information,
+			infos,
+			icons.diagnostics.Hint,
+			hints
 		)
 end
 
 -- Function of git status with gitsigns
 local function get_git_status()
 	local signs = vim.b.gitsigns_status_dict or { head = "", added = 0, changed = 0, removed = 0 }
-	local is_head_empty = signs.head ~= ""
 
-	-- display based on sie of window
+	local no_changes = (signs.added == 0) and (signs.changed == 0) and (signs.removed == 0)
+
+	-- display based on size of window
+	--  if no changes, display only head (if available)
 	if win_is_smaller(preset_width.git_branch) then
 		return ""
 	elseif win_is_smaller(preset_width.git_branch, preset_width.git_status_full) then
-		return is_head_empty and string.format("  %s ", signs.head or "") .. "%1*" or ""
+		return signs.head and string.format("  %s ", signs.head) or ""
 	else
-		return is_head_empty
-				and string.format(" +%s ~%s -%s |  %s ", signs.added, signs.changed, signs.removed, signs.head)
-			or ""
+    return signs.head and no_changes and string.format("  %s ", signs.head)
+			or signs.head and string.format(" +%s ~%s -%s |  %s ", signs.added, signs.changed, signs.removed, signs.head)
 	end
 end
 
@@ -165,16 +174,25 @@ local function get_filetype()
 	local icon = require("nvim-web-devicons").get_icon(file_name, file_ext)
 	local file_type = vim.bo.filetype
 
-	return file_type == nil and icons.diagnostics.Error
-		or icon == nil and string.format(" %s ", file_type)
-		or string.format(" %s %s ", icon, file_type)
+	return file_type and icon and string.format(" %s %s ", icon, file_type)
+		or string.format(" %s ", file_type)
+		or icons.diagnostics.Error
 end
+
+
+-- Statusline disabled
+-- display only filetype and current mode
+S.disabled = function(name)
+	return name and (get_mode() .. colors.fformat .. "%= " .. name .. " %=")
+		or (get_mode() .. colors.fformat .. "%= " .. get_filetype() .. " %=")
+end
+
 
 -- Statusline enabled
 S.active = function()
 	-- LeftSide
-  local space = " "
-  local currMode = colors.mode .. "%m%r" .. get_mode() .. icons.ui.SlChevronRight
+	local currMode = colors.mode .. "%m%r" .. get_mode()
+  local startLeftSide = colors.empty .. ""
 	local git = colors.git .. get_git_status()
 	local fname = colors.name .. get_filename()
 	local endLeftSide = colors.empty .. icons.ui.SlArrowRight
@@ -188,33 +206,30 @@ S.active = function()
 	local ftype = colors.ftype .. get_filetype()
 	local fformat = colors.fformat .. " %{&ff} "
 	local location = get_line_onTot()
+  local startRightSide = colors.empty .. ""
 
-	return table.concat({
-		-- Left Side
-		currMode,
-		git,
-		fname,
-		endLeftSide,
-		gps_out,
+  return table.concat({
+    -- Left Side
+    currMode,
+    startLeftSide,
+    git,
+    fname,
+    endLeftSide,
+    gps_out,
 
-		-- Center & separators
-		sideSep,
-		lsp_diag,
+    -- Center & separators
+    sideSep,
+    lsp_diag,
 
-		-- Right Side
-		endRightSide,
-		fencoding,
-		ftype,
-		fformat,
-		location,
-	})
+    -- Right Side
+    endRightSide,
+    fencoding,
+    ftype,
+    fformat,
+    location,
+    startRightSide,
+  })
 end
 
--- Statusline disabled
--- display only filetype and current mode
-S.disabled = function(name)
-	return name == nil and (get_mode() .. colors.fformat .. "%= " .. get_filetype() .. " %=")
-		or (get_mode() .. colors.fformat .. "%= " .. name .. " %=")
-end
 
 return S

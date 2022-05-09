@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 21/04/2022 - 09:25
+-- Last Modified: 09/05/2022 - 10:05
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -33,7 +33,7 @@ luasnip.config.set_config({
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
+			luasnip.lsp_expand(args.body)
 		end,
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -181,7 +181,7 @@ cmp.setup.cmdline(":", {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 		{ name = "cmdline", priority = 10 },
-    { name = "path", priority = 5 },
+		{ name = "path", priority = 5 },
 		{ name = "buffer", priority = 1 },
 	},
 })
@@ -193,7 +193,7 @@ cmp.setup.cmdline("/", {
 		name = "nvim_lsp_document_symbol",
 	}, {
 		{ name = "buffer", priority = 10 },
-    { name = "treesitter", priority = 5 },
+		{ name = "treesitter", priority = 5 },
 	}),
 })
 

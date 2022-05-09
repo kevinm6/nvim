@@ -6,9 +6,7 @@
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
-  return
-end
+if not ok then return end
 
 local lspconfig_util = require "lspconfig.util"
 
@@ -119,7 +117,6 @@ local servers = {
       clangdFileStatus = true,
     },
   },
-
   gopls = {
     root_dir = function(fname)
       local Path = require("plenary.path")
@@ -133,13 +130,11 @@ local servers = {
 
       return lspconfig_util.root_pattern("go.mod", ".git")(fname)
     end,
-
     settings = {
       gopls = {
         codelenses = { test = true },
       },
     },
-
     flags = {
       debounce_text_changes = 200,
     },
@@ -147,9 +142,7 @@ local servers = {
 }
 
 local setup_server = function(server, config)
-  if not config then
-    return
-  end
+  if not config then return end
 
   if type(config) ~= "table" then
     config = {}
