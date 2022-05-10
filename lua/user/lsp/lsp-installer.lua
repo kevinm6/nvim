@@ -16,7 +16,7 @@ lsp_installer.setup {
     "sumneko_lua", "vimls", "emmet_ls",
     "ltex", "pyright", "jsonls", "gopls",
     "html", "asm_lsp", "bashls", "clangd",
-    "jdtls", "intelephense"
+    "jdtls", "intelephense", "grammarly"
   },
   automatic_installation = false,
   ui = {
@@ -45,7 +45,7 @@ lsp_installer.setup {
           uninstall_server = "X",
       },
   },
-  install_root_dir = vim.fn.stdpath("data") .. "lsp_servers",
+  install_root_dir = vim.fn.stdpath("data") .. "/lsp_servers",
 
   log_level = vim.log.levels.INFO,
 

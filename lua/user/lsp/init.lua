@@ -8,7 +8,7 @@
 local ok, lspconfig = pcall(require, "lspconfig")
 if not ok then return end
 
-local lspconfig_util = require "lspconfig.util"
+local util = require "lspconfig.util"
 
 require("user.lsp.lsp-signature")
 require("user.lsp.lsp-installer")
@@ -104,6 +104,12 @@ local servers = {
   jsonls = require("user.lsp.settings.jsonls"),
   emmet_ls = require("user.lsp.settings.emmet_ls"),
   ltex = require("user.lsp.settings.ltex"),
+  grammarly = {
+    filetypes = { "markdown" },
+    single_file_support = true,
+    autostart = false,
+    root_dir =  util.find_git_ancestor
+  },
   clangd = {
     cmd = {
       "clangd",
@@ -128,7 +134,7 @@ local servers = {
         return absolute_cwd
       end
 
-      return lspconfig_util.root_pattern("go.mod", ".git")(fname)
+      return util.root_pattern("go.mod", ".git")(fname)
     end,
     settings = {
       gopls = {

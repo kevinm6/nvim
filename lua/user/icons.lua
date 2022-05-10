@@ -112,6 +112,8 @@ return {
 		AltSlArrowLeft = "",
     SlCircleRight = "",
     SlCircleLeft = "",
+    SlEndLeft = "",
+    SlEndRight = "",
 		Table = "",
 		Calendar = "",
 		Download = "",

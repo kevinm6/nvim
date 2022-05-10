@@ -192,7 +192,7 @@ end
 S.active = function()
 	-- LeftSide
 	local currMode = colors.mode .. "%m%r" .. get_mode()
-  local startLeftSide = colors.empty .. ""
+  local startLeftSide = colors.empty .. icons.ui.SlEndLeft
 	local git = colors.git .. get_git_status()
 	local fname = colors.name .. get_filename()
 	local endLeftSide = colors.empty .. icons.ui.SlArrowRight
@@ -206,7 +206,7 @@ S.active = function()
 	local ftype = colors.ftype .. get_filetype()
 	local fformat = colors.fformat .. " %{&ff} "
 	local location = get_line_onTot()
-  local startRightSide = colors.empty .. ""
+  local startRightSide = colors.empty .. icons.ui.SlEndRight
 
   return table.concat({
     -- Left Side

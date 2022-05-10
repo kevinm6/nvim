@@ -71,4 +71,4 @@ for index, module in ipairs(modules) do
   end
 end
 
-print("✔ " .. nModules .. " modules loaded")
+print(require("user.icons").ui.Check .. " " .. nModules .. " modules loaded")

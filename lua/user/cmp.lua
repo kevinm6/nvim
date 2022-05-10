@@ -18,6 +18,7 @@ end
 local icons = require("user.icons")
 local icons_kind = icons.kind
 
+
 -- Sources
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").load({ paths = { "./lua/" } })
@@ -47,6 +48,13 @@ cmp.setup({
 
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 
+    ['<C-l>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        return cmp.complete_common_string()
+      end
+      fallback()
+    end, { 'i', 'c' }),
+
 		["<C-e>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
@@ -62,8 +70,8 @@ cmp.setup({
 				if cmp.visible() then
 					cmp.select_next_item()
 				elseif luasnip.expand_or_locally_jumpable() then
-					luasnip.expand_or_jump()
-				else
+					return luasnip.expand_or_jump() or fallback()
+        else
 					fallback()
 				end
 			end,
@@ -90,7 +98,7 @@ cmp.setup({
 				if cmp.visible() then
 					cmp.select_prev_item()
 				elseif luasnip.expand_or_locally_jumpable() then
-					luasnip.expand_or_jump()
+					return luasnip.expand_or_jump() or fallback()
 				else
 					fallback()
 				end
@@ -108,7 +116,7 @@ cmp.setup({
 				if cmp.visible() then
 					cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 				else
-					cmp.complete()
+					cmp.complete({ reason = cmp.ContexReason, config = cmp.ConfigSchema })
 				end
 			end,
 		}),
@@ -150,9 +158,9 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp", priority = 10 },
+		{ name = "nvim_lsp", priority = 9 },
 		{ name = "luasnip", priority = 9 },
-		{ name = "buffer", option = { keyword_length = 3 }, priority = 8 },
+		{ name = "buffer", option = { keyword_length = 3, keyword_pattern = [[\k\+]] }, priority = 8 },
 		{ name = "treesitter", priority = 7 },
 		{ name = "path", option = { trailing_slash = true } },
 		{ name = "nvim_lsp_signature_help" },
@@ -182,7 +190,6 @@ cmp.setup.cmdline(":", {
 	sources = {
 		{ name = "cmdline", priority = 10 },
 		{ name = "path", priority = 5 },
-		{ name = "buffer", priority = 1 },
 	},
 })
 
@@ -192,7 +199,6 @@ cmp.setup.cmdline("/", {
 	sources = cmp.config.sources({
 		name = "nvim_lsp_document_symbol",
 	}, {
-		{ name = "buffer", priority = 10 },
 		{ name = "treesitter", priority = 5 },
 	}),
 })
