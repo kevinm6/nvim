@@ -54,7 +54,6 @@ local filetype_attach = setmetatable({
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = lspbufformat,
-      buflocal = true,
       callback = function()
         vim.lsp.buf.formatting_sync()
       end
@@ -104,6 +103,7 @@ local servers = {
   jsonls = require("user.lsp.settings.jsonls"),
   emmet_ls = require("user.lsp.settings.emmet_ls"),
   ltex = require("user.lsp.settings.ltex"),
+  sqls = require("user.lsp.settings.sqls"),
   grammarly = {
     filetypes = { "markdown" },
     single_file_support = true,

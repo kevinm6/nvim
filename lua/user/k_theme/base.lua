@@ -192,7 +192,7 @@ local base_group = {
 	Typedef = { link = "k_themeYellow" },
 
 	Bold = { bold = true },
-	Italic = { italic = true },
+	Italic = { italic = true, bold = false },
 
 	-- End of buffer and non text
 	NonText = { fg = "#626262", bg = bg0 },

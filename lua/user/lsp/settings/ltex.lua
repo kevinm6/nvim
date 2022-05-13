@@ -2,11 +2,14 @@
 -- File         : ltex.lua
 -- Description  : ltex-ls server config
 -- Author       : Kevin
--- Last Modified: 25/02/2022 - 11:22
+-- Last Modified: 13/05/2022 - 09:51
 -------------------------------------
 
+local ltex_root_path = vim.fn.stdpath "data".."/ltex"
+local ltex_binary = ltex_root_path.."/ltex-ls/bin"
+
 return {
-  cmd = { "ltex-ls" },
+  cmd = { ltex_binary },
 	autostart = false,
 	language = "en",
 	completionEnabled = false,

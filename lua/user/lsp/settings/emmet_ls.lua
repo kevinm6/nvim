@@ -2,11 +2,14 @@
 -- File         : emmet_ls.lua
 -- Description  : emmet_ls server config
 -- Author       : Kevin
--- Last Modified: 19/02/2022 - 13:48
+-- Last Modified: 13/05/2022 - 10:07
 -------------------------------------
 
+local emmet_root_path = vim.fn.stdpath "data".."/lsp_servers/emmet_ls"
+local emmet_binary = emmet_root_path.."/node_modules/.bin/emmet-ls"
+
 return {
-	cmd = { "emmet-ls", "--stdio" },
+	cmd = { emmet_binary, "--stdio" },
   filetypes = {
     "html",
     "css",

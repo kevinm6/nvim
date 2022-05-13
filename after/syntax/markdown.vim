@@ -136,9 +136,9 @@ hi def link markdownIdDelimiter           markdownLinkDelimiter
 hi def link markdownUrlDelimiter          htmlTag
 hi def link markdownUrlTitleDelimiter     Delimiter
 
-hi def link markdownItalic                htmlItalic
-hi def link markdownBold                  htmlBold
-hi def link markdownBoldItalic            htmlBoldItalic
+hi def link markdownItalic                Italic
+hi def link markdownBold                  Bold
+hi def link markdownBoldItalic            BoldItalic
 hi def link markdownCodeDelimiter         Tag
 
 hi def link markdownError                 Error

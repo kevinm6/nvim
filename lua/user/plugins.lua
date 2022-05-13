@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 03/05/2022 - 09:19
+-- Last Modified: 13/05/2022 - 09:21
 --------------------------------------
 
 -- install packer if not found
@@ -98,6 +98,10 @@ return packer.startup(function(use)
 	use("goolord/alpha-nvim")
 	use("rcarriga/nvim-notify")
 	use("jose-elias-alvarez/null-ls.nvim")
+  use({
+    "MunifTanjim/nui.nvim",
+    cmd = "require",
+  })
 
 	-- DAP
 	use("mfussenegger/nvim-dap")
@@ -203,17 +207,7 @@ return packer.startup(function(use)
 	})
 
 	-- database
-	use({
-		"tpope/vim-dadbod",
-		cond = false,
-		ft = "sql",
-		cmd = ":DB",
-		requires = {
-			"kristijanhusak/vim-dadbod-ui",
-			ft = "sql",
-			cmd = ":DBUI",
-		},
-	})
+  use "nanotee/sqls.nvim"
 
 	-- Python
 	use({ -- Render jupyter notebook (in alpha version)

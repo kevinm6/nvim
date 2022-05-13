@@ -16,7 +16,7 @@ local _general_settings = augroup("_general_settings", {
 
 autocmd({ "FileType" }, {
 	group = _general_settings,
-	pattern = { "qf", "help", "man", "git", "lspinfo", "Scratch", "checkhealth" },
+	pattern = { "qf", "help", "man", "git", "lspinfo", "Scratch", "checkhealth", "sqls_output" },
 	command = "lua vim.keymap.set('n', 'q', ':close<CR>', { buffer = true, silent = true } )",
 })
 

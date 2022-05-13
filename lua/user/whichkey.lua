@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 09/05/2022 - 09:27
+-- Last Modified: 07/05/2022 - 18:17
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -94,7 +94,7 @@ local leader_maps = {
   ["8"] = { "<cmd>BufferLineGoToBuffer 8<CR>", "Go to Buffer 8" },
   ["9"] = { "<cmd>BufferLineGoToBuffer 9<CR>", "Go to Buffer 9" },
   ["."] = {
-    [[<cmd>cd %:p:h<CR> <bar> <cmd>lua vim.notify(" Change dir to " .. vim.fn.expand("%:p:h"), "Info", { timeout = 4})<CR>]],
+    [[<cmd>cd %:p:h<CR> <bar> <cmd>lua vim.notify(" Change dir to " .. vim.fn.expand("%:p:h"), "Info", { timeout = 4 })<CR>]],
     "Change dir to current buffer's parent"
   },
 
@@ -210,6 +210,7 @@ local leader_maps = {
       "Prev Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<CR>", "CodeLens Action" },
+    L = { "<cmd>tabe $HOME/.cache/nvim/lsp.log<CR>", "Open LSP Log File" },
     o = { "<cmd>SymbolsOutline<CR>", "Outline" },
     q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Quickfix" },
     r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
@@ -303,7 +304,7 @@ local leader_maps = {
       [[<cmd>lua require("luasnip.loaders.from_vscode").load { paths = { ("./lua/") } } <CR> <bar> <cmd>lua require("notify")(" Snippets file sourced", "Info")<cr> ]],
       "Reload snippet file"
     },
-    ["."] = { "<cmd>source %<CR>", "Source current buffer" },
+    ["%"] = { "<cmd>source %<CR>", "Source current buffer" },
   }
 }
 
