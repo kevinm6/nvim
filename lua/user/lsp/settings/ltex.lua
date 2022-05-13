@@ -5,11 +5,8 @@
 -- Last Modified: 13/05/2022 - 09:51
 -------------------------------------
 
-local ltex_root_path = vim.fn.stdpath "data".."/ltex"
-local ltex_binary = ltex_root_path.."/ltex-ls/bin"
-
 return {
-  cmd = { ltex_binary },
+  cmd = { "ltex-ls" },
 	autostart = false,
 	language = "en",
 	completionEnabled = false,

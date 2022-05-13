@@ -5,13 +5,10 @@
 -- Last Modified: 13/05/2022 - 10:03
 -------------------------------------
 
-local sqls_binary = vim.fn.stdpath "data".."/lsp_servers/sqls/sqls"
-
 return {
-  cmd = { sqls_binary },
+  cmd = { "sqls" },
   filetypes = { "sql", "mysql" },
   single_file_support = true,
-  -- root_dir = require("lspconfig.util").find_git_ancestor,
 	settings = {
 		sqls = {
 			connections = {

@@ -6,9 +6,7 @@
 -------------------------------------
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")
-if not ok then
-  return
-end
+if not ok then return end
 
 require("nvim-treesitter.install").prefer_git = true
 
@@ -20,7 +18,7 @@ local parser_to_install = function()
   end
 end
 
-configs.setup({
+configs.setup {
   ensure_installed = parser_to_install(),
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {},
@@ -72,7 +70,7 @@ configs.setup({
   playground = {
     enable = true,
   },
-})
+}
 
 require("treesitter-context").setup({
   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)

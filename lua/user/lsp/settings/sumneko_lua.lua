@@ -9,11 +9,10 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-local sumneko_root_path = vim.fn.stdpath "data" .. "/lsp_servers/sumneko_lua"
-local sumneko_binary = sumneko_root_path .."/extension/server/bin/lua-language-server"
+local main_path = vim.fn.stdpath("data").."/lsp_servers/sumneko_lua/extension/server/bin/main.lua"
 
 return {
-  cmd = { sumneko_binary, "-E", sumneko_root_path.."/extension/server/main.lua" };
+  cmd = { "lua-language-server", "-E", main_path };
 	settings = {
 		Lua = {
       runtime = {

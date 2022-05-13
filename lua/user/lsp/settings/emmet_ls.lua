@@ -5,11 +5,8 @@
 -- Last Modified: 13/05/2022 - 10:07
 -------------------------------------
 
-local emmet_root_path = vim.fn.stdpath "data".."/lsp_servers/emmet_ls"
-local emmet_binary = emmet_root_path.."/node_modules/.bin/emmet-ls"
-
 return {
-	cmd = { emmet_binary, "--stdio" },
+	cmd = { "emmet-ls", "--stdio" },
   filetypes = {
     "html",
     "css",
