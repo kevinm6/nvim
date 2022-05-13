@@ -5,16 +5,6 @@
 -- Last Modified: 12/05/2022 - 08:55
 -------------------------------------
 
-local home = vim.env.HOME
-local sep = ":"
-
--- add lsp_servers to PATH
-vim.env.PATH = vim.env.PATH .. (sep..
-	home .. "/.local/share/nvim/lsp_servers/sqls"..sep..
-	home .. "/.local/share/nvim/lsp_servers/asm_lsp/bin"..sep..
-	home .. "/.local/share/nv)im/lsp_servers/grammarly/node_modules/.bin"
-)
-
 -- CURSOR {
 vim.opt.guicursor = { -- cursor shape mode-based
 	"n-v-c:block",

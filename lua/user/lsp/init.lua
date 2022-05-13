@@ -100,6 +100,7 @@ local servers = {
   emmet_ls = require("user.lsp.settings.emmet_ls"),
   ltex = require("user.lsp.settings.ltex"),
   sqls = require("user.lsp.settings.sqls"),
+  asm_lsp = require("user.lsp.settings.asm_lsp"),
   grammarly = {
     filetypes = { "markdown" },
     single_file_support = true,
