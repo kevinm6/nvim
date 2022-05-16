@@ -74,7 +74,7 @@ local elixir = {
 }
 
 local markdown = {
-  markdownItalic = { fg = base.fg3, bold = true },
+  markdownItalic = { fg = base.fg3, italic = true },
   markdownBold = { fg = base.fg3, bold = true },
   markdownBoldItalic = {
     fg = base.fg3,
@@ -176,7 +176,7 @@ local html = {
   htmlItalic = { fg = colors.fg0, bg = colors.bg0, bold = vim.g.k_theme_italic },
 }
 
-local langs = utils.merge({
+local langs = utils.merge {
   xml,
   purescript,
   coffeescript,
@@ -186,6 +186,6 @@ local langs = utils.merge({
   markdown,
   haskell,
   html,
-})
+}
 
 return langs

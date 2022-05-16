@@ -13,9 +13,9 @@ end
 
 -- Use other Shadafile for Gui (VimR)
 if vim.fn.has "gui_vimr" == 1 then
-  vim.opt.shadafile = vim.fn.expand "~/.cache/nvim/shada/gmain.shada"
+  vim.opt.shadafile = vim.fn.stdpath("data").."/shada/gmain.shada"
 else
-  vim.opt.shadafile = vim.fn.expand "~/.cache/nvim/shada/main.shada"
+  vim.opt.shadafile = vim.fn.stdpath("data").."/shada/main.shada"
 end
 
 -- Config Files to source

@@ -1,4 +1,10 @@
-;; Personal query for Markdown
+;;-----------------------------------
+;;  File         : highlights.scm
+;;  Description  : Personal query for Markdown
+;;  Author       : Kevin
+;;  Last Modified: 16/05/2022 - 12:11
+;;-----------------------------------
+
 (atx_heading (heading_content) @text.title)
 (setext_heading (heading_content) @text.title)
 
@@ -13,10 +19,7 @@
   (setext_h2_underline)
 ] @punctuation.special
 
-[
-  (code_span)
-  (link_title)
-] @text.literal
+(link_title) @text.literal
 
 [
   (emphasis_delimiter)
@@ -24,16 +27,22 @@
   (fenced_code_block_delimiter)
 ] @punctuation.delimiter
 
+
+(info_string) @TSType
+
 [
-  (indented_code_block)
-  (fenced_code_block)
-  (code_fence_content)
-] @markdownCodeBlock
+ (language)
+ (fenced_code_block)
+ (code_fence_content)
+] @none
 
+(code_span) @TSCodeSpan
 
-(emphasis) @text.emphasis
+;; Italic
+;; (emphasis) @TSEmphasis
 
-(strong_emphasis) @text.strong
+;; Bold
+;; (strong_emphasis) @TSStrong
 
 [
   (link_destination)
@@ -45,7 +54,6 @@
   (link_text)
   (image_description)
 ] @text.reference
-
 
 [
   (list_marker_plus)
@@ -78,3 +86,20 @@
 ; (inline_link ")" @punctuation.delimiter)
 
 (shortcut_link "[" @punctuation.delimiter)
+(shortcut_link "]" @punctuation.delimiter)
+
+([
+  (info_string)
+  (fenced_code_block_delimiter)
+  (code_span_delimiter)
+  (emphasis_delimiter)
+] @conceal
+(#set! conceal ""))
+
+(inline_link 
+  ["]"] @conceal
+  (#set! conceal " "))
+
+(inline_link 
+  "["  @conceal
+  (#set! conceal ""))

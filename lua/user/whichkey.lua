@@ -222,23 +222,6 @@ local leader_maps = {
     },
 	},
 
-  F = {
-    name = "Filetypes ops",
-    c = {
-      name = "[ c ]",
-      c = {
-        "<cmd>cd %:p:h<CR> <cmd>update<CR> <cmd>r!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR>",
-        "Save & Compile"
-      },
-      r = { "<cmd>cd %:p:h<CR> :call Scratch() <bar> :r!./#< <CR>", "Run program" },
-      C = {
-        "<cmd>cd %:p:h<CR> <cmd>update<CR> <cmd>!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR> :call Scratch() <bar> :r!./#< <CR>",
-        "Compile & Run"
-      },
-    }
-  },
-
-
 	-- SURROUND
 	s = {
     name = "Surround",

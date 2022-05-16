@@ -2,16 +2,15 @@
 --  File         : base.lua
 --  Description  : base colors palette
 --  Author       : Kevin
---  Last Modified: 20/04/2022 - 11:56
+--  Last Modified: 13/05/2022 - 23:31
 -------------------------------------
 
-local colors = require("user.k_theme.colors")
--- local utils = require("user.k_theme.utils")
+local colors = require "user.k_theme.colors"
 
 -- reset colors
-vim.cmd("hi clear")
-if vim.fn.exists("syntax_on") then
-	vim.cmd("syntax reset")
+vim.api.nvim_command "hi clear"
+if vim.fn.exists "syntax_on" then
+	vim.api.nvim_command "syntax reset"
 end
 
 -- options (dark mode by default)
@@ -192,7 +191,7 @@ local base_group = {
 	Typedef = { link = "k_themeYellow" },
 
 	Bold = { bold = true },
-	Italic = { italic = true, bold = false },
+	Italic = { italic = true },
 
 	-- End of buffer and non text
 	NonText = { fg = "#626262", bg = bg0 },

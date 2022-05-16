@@ -2,10 +2,10 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 20/04/2022 - 11:56
+--  Last Modified: 16/05/2022 - 13:08
 -------------------------------------
 
-local base = require("user.k_theme.base")
+local base = require "user.k_theme.base"
 -- local colors = require("user.k_theme.colors")
 
 local plugins = {
@@ -78,6 +78,8 @@ local plugins = {
   TSStructure = base.k_themeOrange,
   TSTag = base.k_themeOrange,
   TSTagDelimiter = base.k_themeGreen,
+  TSCodeSpan = { bg = "#3c3c3c", fg = "#DCDCDC"},
+  TSCodeBlock = {},
 
   -- telescope.nvim
   TelescopeSelection = base.k_themeOrangeBold,
