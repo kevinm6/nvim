@@ -126,13 +126,14 @@ return packer.startup(function(use)
     "kdheepak/cmp-latex-symbols",
     "hrsh7th/cmp-calc",
     "dmitmel/cmp-digraphs",
+    "rcarriga/cmp-dap",
     { "hrsh7th/cmp-emoji", opt = true },
 
     -- snippets
     {
       "L3MON4D3/LuaSnip",
       requires = {
-        "rafamadriz/friendly-snippets",
+        "kevinm6/my_snippets",
         -- "molleweide/LuaSnip-snippets.nvim",
       },
     },
@@ -159,6 +160,7 @@ return packer.startup(function(use)
       { "lewis6991/nvim-treesitter-context" },
       { "windwp/nvim-ts-autotag" },
       { "p00f/nvim-ts-rainbow" },
+      { "nvim-treesitter/nvim-treesitter-refactor" },
     },
   }
 
