@@ -2,12 +2,12 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 09/05/2022 - 17:42
+-- Last Modified: 20/05/2022 - 10:52
 -------------------------------------
 
 local S = {}
 
-local icons = require("user.icons")
+local icons = require "user.icons"
 
 local preset_width = setmetatable({
 	filename = 120,
@@ -183,8 +183,25 @@ end
 -- Statusline disabled
 -- display only filetype and current mode
 S.disabled = function(name)
+  local ftype = get_filetype()
+
+  if ftype == " alpha " then
+    ftype = icons.ui.Plugin.." Dashboard"
+  elseif ftype == " NvimTree " then
+    ftype = icons.documents.OpenFolder.." File Explorer"
+  elseif ftype == " packer " then
+   ftype = icons.ui.Packer.." Package Manager"
+  elseif ftype == " lspinfo " then
+    ftype =  icons.ui.Health .. " LSP Status"
+  elseif ftype == " lsp-installer " then
+    ftype = icons.ui.List.." LSP Manager"
+  elseif ftype == " TelescopePrompt " then
+    ftype = icons.ui.Telescope.." Telescope"
+  end
+
+
 	return name and (get_mode() .. colors.fformat .. "%= " .. name .. " %=")
-		or (get_mode() .. colors.fformat .. "%= " .. get_filetype() .. " %=")
+		or (get_mode() .. colors.fformat .. "%= " .. ftype .. " %=")
 end
 
 
@@ -208,7 +225,7 @@ S.active = function()
 	local location = get_line_onTot()
   local startRightSide = colors.empty .. icons.ui.SlEndRight
 
-  return table.concat({
+  return table.concat {
     -- Left Side
     currMode,
     startLeftSide,
@@ -228,8 +245,7 @@ S.active = function()
     fformat,
     location,
     startRightSide,
-  })
+  }
 end
-
 
 return S

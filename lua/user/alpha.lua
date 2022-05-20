@@ -10,9 +10,9 @@ if not ok then
 	return
 end
 
-local icons = require("user.icons")
+local icons = require "user.icons"
 
-local dashboard = require("alpha.themes.dashboard")
+local dashboard = require "alpha.themes.dashboard"
 
 local newline = [[
 ]]
@@ -63,23 +63,20 @@ dashboard.section.buttons.val = {
 }
 
 local footer = function()
-	local plugins_count = (
-		[[    ]]
-		.. icons.ui.Plugin
-		.. " "
-		.. vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1))
-		.. " Plugins, ("
-		.. vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/opt", "*", 0, 1))
-		.. " inactive)"
-		.. newline
+  local enabledPlugins = #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1))
+  local disabledPlugins = #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/opt", "*", 0, 1))
+	local plugins_count = string.format(
+    "    %s %d Plugins, (%d inactive) \n\n",
+    icons.ui.Plugin, enabledPlugins, disabledPlugins
 	)
 
-	local myself = "\n\n"
-		.. icons.ui.BoldChevronLeft
-		.. " https://github.com/kevinm6/nvim "
-		.. icons.ui.BoldChevronRight
+  local my_url =  "https://github.com/kevinm6/nvim"
+	local myself = string.format(
+    "%s %s %s",
+    icons.ui.BoldChevronLeft, my_url, icons.ui.BoldChevronRight
+  )
 
-	return plugins_count .. newline .. myself
+	return plugins_count..newline..newline..myself
 end
 
 dashboard.section.footer.val = footer()

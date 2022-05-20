@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 local Terminal = require("toggleterm.terminal").Terminal
 
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
 function _LAZYGIT_TOGGLE()
 	lazygit:toggle()
 end
@@ -59,7 +59,7 @@ vim.api.nvim_create_user_command("Git", _LAZYGIT_TOGGLE, {
   force = true
 })
 
-local htop = Terminal:new({ cmd = "htop", hidden = true })
+local htop = Terminal:new { cmd = "htop", hidden = true }
 function _HTOP_TOGGLE()
 	htop:toggle()
 end
@@ -68,7 +68,7 @@ vim.api.nvim_create_user_command("Htop", _HTOP_TOGGLE, {
   force = true
 })
 
-local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
+local ncdu = Terminal:new { cmd = "ncdu", hidden = true }
 function _NCDU_TOGGLE()
 	ncdu:toggle()
 end

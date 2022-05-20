@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 16/05/2022 - 13:08
+--  Last Modified: 18/05/2022 - 13:20
 -------------------------------------
 
 local base = require "user.k_theme.base"
@@ -120,10 +120,10 @@ local plugins = {
   CmpItemKindVariable = base.k_themeBlue,
   -- LSP
   LspCodeLens = base.k_themeGray,
-  FloatBorder = { bg = "grey15" },
-  LspReferenceText = { bg = "grey27" },
-  LspReferenceWrite = { bg = "grey42" },
-  LspReferenceRead = { bg = "grey23" },
+  LspReferenceText = { fg = "#AAAAAA" , bg = "#3c3c3c" },
+  LspReferenceWrite = { fg = "#F1F1F1", bg = "#015A60" },
+  LspReferenceRead = { bg = "#3a3a3a" },
+  FloatBorder = { fg = "#3D3D40", bg = "#2c2c2c" },
   -- Diagnostic
   DiagnosticError = { fg = "#f44747" },
   DiagnosticsWarning = { fg = "#ff8800" },

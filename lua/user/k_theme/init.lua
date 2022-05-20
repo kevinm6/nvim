@@ -6,10 +6,10 @@
 -- Last Modified: 20/04/2022 - 09:30
 -------------------------------------
 
-local base = require("user.k_theme.base")
-local plugins = require("user.k_theme.plugins")
-local langs = require("user.k_theme.languages")
-local utils = require("user.k_theme.utils")
+local base = require "user.k_theme.base"
+local plugins = require "user.k_theme.plugins"
+local langs = require "user.k_theme.languages"
+local utils = require "user.k_theme.utils"
 
 local specs = { base, plugins, langs }
 local spec = utils.merge(specs)
@@ -26,9 +26,9 @@ function M.load()
 		return
 	end
 
-	vim.api.nvim_command("hi clear")
-	if vim.fn.exists("syntax_on") then
-		vim.api.nvim_command("syntax reset")
+	vim.api.nvim_command "hi clear"
+	if vim.fn.exists "syntax_on" then
+		vim.api.nvim_command "syntax reset"
 	end
 
 	-- Main Option

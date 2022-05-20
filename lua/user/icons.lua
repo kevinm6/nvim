@@ -2,7 +2,7 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 08/05/2022 - 13:00
+--	Last Modified: 17/05/2022 - 10:02
 -----------------------------------
 
 -- Font: SauceCodePro Nerd Font Mono:13, v|i 92, n/n 90
@@ -120,10 +120,11 @@ return {
 		Plugin = "",
 		Packer = "﬘",
 		Uni = "",
-		Health = "♥",-- "♥️",
+		Health = "♥",
 		Git = "",
 		AppleSym = "",
 		Version = "",
+    Plus = "",
 	},
 	diagnostics = {
 		Error = "",

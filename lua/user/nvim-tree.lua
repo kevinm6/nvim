@@ -53,7 +53,7 @@ local function trash_file()
   require("nvim-tree.utils").clear_prompt()
   if ans:match "^y" then
     vim.fn.system("mv " .. vim.fn.fnameescape(path) .. " ~/.Trash")
-    vim.api.nvim_command("NvimTreeRefresh")
+    vim.cmd "NvimTreeRefresh"
     vim.notify(" " .. name .. " moved to Bin!", "Warn")
   end
 end
@@ -156,7 +156,7 @@ nvim_tree.setup {
   },
   filters = {
     dotfiles = false,
-    custom = { ".git", ".cache", ".DS_Store" },
+    custom = { ".git/", ".cache", ".DS_Store" },
     exclude = {},
   },
   git = {

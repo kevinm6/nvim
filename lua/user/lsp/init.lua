@@ -2,24 +2,23 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 13/05/2022 - 10:19
+-- Last Modified: 18/05/2022 - 11:00
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
-	return
-end
+if not ok then return end
 
-local util = require("lspconfig.util")
+local util = require "lspconfig.util"
 
-require("user.lsp.lsp-signature")
-require("user.lsp.lsp-installer")
+require "user.lsp.lsp-signature"
+require "user.lsp.lsp-installer"
 require("user.lsp.handlers").setup()
-require("user.lsp.null-ls") -- formatting
-require("user.lsp.codelens")
+require "user.lsp.null-ls" -- formatting
+require "user.lsp.codelens"
 
+-- Lsp highlights managed by
+--   `illuminate` plugin
 local function lsp_highlight_document(client)
-	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
 		local illuminate_ok, illuminate = pcall(require, "illuminate")
 		if not illuminate_ok then
@@ -29,22 +28,25 @@ local function lsp_highlight_document(client)
 	end
 end
 
+-- Create custom keymaps for useful
+--   lsp functions
+-- The missing functions are most covered whith which-key mappings
+-- the `hover()` -> covers even signature_help on functions/methods
 local function lsp_keymaps(bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
-	-- The missing functions are most covered whith which-key mappings
-	-- *.hover() -> covers even signature_help on functions/methods
-	vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-	vim.keymap.set("n", "gq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+	vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
+	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+	vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
+	vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
+	vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, opts)
+	vim.keymap.set("n", "gq", function() vim.diagnostic.setloclist() end, opts)
 	vim.api.nvim_buf_create_user_command(0, "Format", function()
 		vim.lsp.buf.formatting()
 	end, { force = true })
 end
 
+-- Default lsp config for filetypes
 local filetype_attach = setmetatable({
 	go = function()
 		local lspbufformat = vim.api.nvim_create_augroup("lsp_buf_format", { clear = true })
@@ -71,6 +73,7 @@ local filetype_attach = setmetatable({
 	end,
 })
 
+
 local custom_attach = function(client, bufnr)
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	filetype_attach[filetype](client)
@@ -79,6 +82,7 @@ local custom_attach = function(client, bufnr)
 	lsp_highlight_document(client)
 end
 
+-- Update capabilities with extended
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -88,9 +92,9 @@ local custom_init = function(client)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
 
+-- Manage server with custom setup
 local servers = {
 	sumneko_lua = require("user.lsp.settings.sumneko_lua"),
 	pyright = require("user.lsp.settings.pyright"),
@@ -157,8 +161,14 @@ local servers = {
 	},
 }
 
+-- LSP: Servers Configuration
 local setup_server = function(server, config)
 	if not config then
+    vim.notify(
+      " No configuration passed to server < "..server.." >",
+      "Warn",
+      { title = "LSP: Servers Configuration" }
+    )
 		return
 	end
 

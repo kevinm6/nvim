@@ -2,11 +2,11 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 13/05/2022 - 11:53
+-- Last Modified: 17/05/2022 - 17:41
 --------------------------------------
 
 -- install packer if not found
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = vim.fn.system({
@@ -23,34 +23,49 @@ local icons = require("user.icons")
 
 -- PLUGINS
 local ok, packer = pcall(require, "packer")
-if not ok then
-  return
-end
+if not ok then return end
 
-local p_util = require("packer.util")
+local p_util = require "packer.util"
+
+local wk = require "which-key"
+
+wk.register({
+  p = {
+    name = "Packer",
+    l = { ":PackerLoad ", "Load plugin" }
+  }
+}, {
+  mode = "n", -- NORMAL mode
+  prefix = "<leader>",
+  buffer = nil,
+  silent = false,
+  noremap = true,
+  nowait = true,
+})
+
 
 local augroup_packer = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = augroup_packer,
   pattern = "plugins.lua",
   callback = function()
-    vim.cmd([[ source <afile> ]])
+    vim.cmd "source <afile>"
     packer.compile()
 
-    local notification = " Plugins file update & compiled !"
-    vim.notify(notification, "info", {
-      title = icons.ui.Packer .. " Packer",
+    vim.notify(
+       " Plugins file update & compiled !", "Info", {
+      title = "Packer",
     })
   end,
 })
 
-packer.init({
+packer.init {
   package_root = p_util.join_paths(vim.fn.stdpath("data"), "site", "pack"),
   compile_path = p_util.join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
   max_jobs = 20,
   display = {
     open_fn = function()
-      return require("packer.util").float({ border = "shadow" })
+      return require("packer.util").float { border = "rounded" }
     end,
     working_sym = icons.packer.working_sym,
     error_sym = icons.packer.error_sym,
@@ -59,7 +74,7 @@ packer.init({
     moved_sym = icons.packer.moved_sym,
     header_sym = icons.packer.header_sym,
   },
-})
+}
 
 return packer.startup(function(use)
   -- Plugin/package manager (set packer manage itself)
@@ -171,7 +186,6 @@ return packer.startup(function(use)
 
   -- git
   use "lewis6991/gitsigns.nvim"
-  use "f-person/git-blame.nvim"
 
   -- lsp
   use "neovim/nvim-lspconfig"
@@ -246,14 +260,23 @@ return packer.startup(function(use)
 
   -- themes
   use {
-    "ellisonleao/gruvbox.nvim",
-    "Shatur/neovim-ayu",
-    cond = false,
+    {
+      "ellisonleao/gruvbox.nvim",
+      opt = true,
+    },
+    {
+      "Shatur/neovim-ayu",
+      opt = true,
+    },
   }
 
-  use "fladson/vim-kitty"
+  use {
+    "fladson/vim-kitty",
+    ft = "kitty"
+  }
 
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
 end)
+

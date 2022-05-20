@@ -2,40 +2,32 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 16/05/22 - 13:18
+-- Last Modified: 20/05/2022 - 11:06
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
-if not cmp_ok then
-	return
-end
-
 local luasnip_ok, luasnip = pcall(require, "luasnip")
-if not luasnip_ok then
-	return
-end
-
 local cmd_dap_ok, cmp_dap = pcall(require, "cmp_dap")
-if not cmd_dap_ok then
-  return
-end
 
-local icons = require("user.icons")
+if (not cmp_ok) or
+  (not luasnip_ok) or
+  (not cmd_dap_ok) then return end
+
+local icons = require "user.icons"
 local icons_kind = icons.kind
 
-
--- Sources
+-- Sources for snippets
 require("luasnip.loaders.from_vscode").lazy_load()
 
 -- Luasnip Configuration
-luasnip.config.set_config({
+luasnip.config.set_config {
 	history = true,
 	updateevents = "TextChanged, TextChangedI",
 	delete_check_events = "TextChanged",
-})
+}
 
 -- Cmp Configuration
-cmp.setup({
+cmp.setup {
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
@@ -46,7 +38,7 @@ cmp.setup({
     return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or cmp_dap.is_dap_buffer()
   end,
 
-	mapping = cmp.mapping.preset.insert({
+	mapping = cmp.mapping.preset.insert {
 		["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
 
 		["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
@@ -64,17 +56,18 @@ cmp.setup({
       fallback()
     end, { 'i', 'c' }),
 
-		["<C-e>"] = cmp.mapping({
+		["<C-e>"] = cmp.mapping {
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
-		}),
+		},
 
-		["<CR>"] = cmp.mapping.confirm({
+		["<CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true,
-		}),
+		},
+    ["<M-CR>"] = cmp.mapping(cmp.mapping.abort(), { "i" }),
 
-		["<Tab>"] = cmp.mapping({
+		["<Tab>"] = cmp.mapping {
 			i = function(fallback) -- InsertMode
 				if cmp.visible() then
 					cmp.select_next_item()
@@ -100,9 +93,9 @@ cmp.setup({
 					cmp.complete()
 				end
 			end,
-		}),
+		},
 
-		["<S-Tab>"] = cmp.mapping({
+		["<S-Tab>"] = cmp.mapping {
 			i = function(fallback) -- InsertMode
 				if cmp.visible() then
 					cmp.select_prev_item()
@@ -128,7 +121,7 @@ cmp.setup({
 					cmp.complete({ reason = cmp.ContexReason, config = cmp.ConfigSchema })
 				end
 			end,
-		}),
+		},
 
 		["<Up>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
@@ -145,7 +138,7 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i" }),
-	}),
+	},
 
 	formatting = {
 		fields = { "abbr", "kind", "menu" },
@@ -193,7 +186,7 @@ cmp.setup({
 			hl_group = "Comment",
 		},
 	},
-})
+}
 
 -- Completion for command mode
 cmp.setup.cmdline(":", {
@@ -222,7 +215,7 @@ cmp.setup.filetype({ "markdown", "help" }, {
 })
 
 -- cmp_zsh
-require("cmp_zsh").setup({
+require("cmp_zsh").setup {
 	zshrc = true, -- Source the zshrc (adding all custom completions). default: false
 	filetypes = { "zsh" }, -- Filetypes to enable cmp_zsh source. default: {"*"}
-})
+}

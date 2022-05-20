@@ -17,7 +17,9 @@ local _general_settings = augroup("_general_settings", {
 autocmd({ "FileType" }, {
 	group = _general_settings,
 	pattern = { "qf", "help", "man", "git", "lspinfo", "Scratch", "checkhealth", "sqls_output" },
-	command = "lua vim.keymap.set('n', 'q', ':close<CR>', { buffer = true, silent = true } )",
+	callback = function ()
+    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
+	end
 })
 
 autocmd({ "TextYankPost" }, {
@@ -37,52 +39,19 @@ autocmd({ "BufWinEnter", "BufEnter" }, {
 	group = statusLine,
 	pattern = "*",
 	callback = function()
-		vim.wo.statusline = "%!v:lua.require('user.statusline').active()"
+		vim.wo.statusline = "%!v:lua.require'user.statusline'.active()"
 	end,
 })
 
 autocmd({ "FileType", "BufEnter", "WinEnter" }, {
 	group = statusLine,
-	pattern = "alpha",
+	pattern = { "alpha", "NvimTree*", "packer", "lsp-installer", "lspinfo", "Telescope*" },
 	callback = function()
-		vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Dashboard')"
-	end,
-})
-
-autocmd({ "FileType", "BufEnter", "WinEnter" }, {
-	group = statusLine,
-	pattern = "NvimTree*",
-	callback = function()
-		vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('File Explorer')"
-	end,
-})
-
-autocmd({ "FileType", "BufEnter", "WinEnter" }, {
-	group = statusLine,
-	pattern = "packer",
-	callback = function()
-		vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Package Manager')"
-	end,
-})
-
-autocmd({ "FileType", "BufEnter", "WinEnter" }, {
-	group = statusLine,
-	pattern = { "lsp-installer", "lsp-info" },
-	callback = function()
-		vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Language Server Protocol')"
-	end,
-})
-
-autocmd({ "FileType", "BufEnter", "WinEnter" }, {
-	group = statusLine,
-	pattern = "Telescope*",
-	callback = function()
-		vim.wo.statusline = "%!v:lua.require'user.statusline'.disabled('Telescope')"
+		vim.wo.statusline = require("user.statusline").disabled()
 	end,
 })
 
 -- Markdown
-
 autocmd({ "BufNewFile", "BufRead" }, {
 	group = augroup("_markdown", { clear = true }),
 	pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.md" },
@@ -100,7 +69,6 @@ autocmd({ "BufWritePost" }, {
 })
 
 -- SQL
-
 autocmd({ "BufNewFile", "BufRead" }, {
 	group = augroup("_sql", { clear = true }),
 	pattern = "*.psql*",
@@ -109,18 +77,7 @@ autocmd({ "BufNewFile", "BufRead" }, {
 	end,
 })
 
--- illuminate
-
-autocmd({ "VimEnter" }, {
-	group = augroup("_illuminate", { clear = false }),
-	pattern = "*",
-	callback = function()
-		vim.api.nvim_set_hl(0, "illuminatedWord", { link = "LspReferenceText" })
-	end,
-})
-
 -- auto_resize
-
 autocmd({ "VimResized" }, {
 	group = augroup("_auto_resize", { clear = true }),
 	pattern = "*",

@@ -35,7 +35,6 @@ local modules = {
   "user.autopairs",
   "user.comment",
   "user.gitsigns",
-  "user.git-blame",
   "user.nvim-tree",
   "user.bufferline",
   "user.toggleterm",
@@ -71,4 +70,4 @@ for index, module in ipairs(modules) do
   end
 end
 
-print(require("user.icons").ui.Check .. " " .. nModules .. " modules loaded")
+print(require("user.icons").ui.Check, nModules, "modules loaded")

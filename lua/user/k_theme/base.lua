@@ -2,7 +2,7 @@
 --  File         : base.lua
 --  Description  : base colors palette
 --  Author       : Kevin
---  Last Modified: 13/05/2022 - 23:31
+--  Last Modified: 18/05/2022 - 09:47
 -------------------------------------
 
 local colors = require "user.k_theme.colors"
@@ -88,7 +88,7 @@ local base_group = {
 	-- Selection Not-Owned by Vim
 	VisualNOS = { fg = "#244E7A" },
 
-	WinSeparator = {},
+	WinSeparator = { fg = "#3D3D40" },
 
 	ModeMsg = {},
 	MoreMsg = {},
