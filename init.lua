@@ -42,7 +42,6 @@ local modules = {
   "user.autocommands",
   "user.statusline",
   "user.surround",
-  "user.renamer",
   "user.todo-comments",
   "user.registers",
   "user.alpha",
@@ -54,6 +53,8 @@ local modules = {
   "user.illuminate",
   "user.zen-mode",
   "user.colorscheme",
+  "user.cybu",
+  -- "user.winbar", -- TODO: uncomment when in Nvim 0.8
 }
 
 local nModules = 0

@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 12/05/2022 - 08:55
+-- Last Modified: 21/05/2022 - 09:56
 -------------------------------------
 
 -- CURSOR {
@@ -31,6 +31,7 @@ local options = {
 	mat = 2, -- tenths of second to blink during matching brackets
 	visualbell = false, -- disable visual sounds
 	cursorline = true, -- highlight cursor line
+  showtabline = 1, -- show tabs if more than 1
 	showmatch = true, -- Show matching brackets when over
 	signcolumn = "yes", -- always show signcolumns
 	cmdheight = 2, -- #lines for vim for commands/logs

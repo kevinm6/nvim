@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 06/05/2022 - 09:12
+-- Last Modified: 22/05/2022 - 12:06
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -30,7 +30,7 @@ autocmd({ "TextYankPost" }, {
 	end,
 })
 
--- Autocommand for Statusline
+-- Autocommand for Statusline & WinBar
 local statusLine = augroup("Statusline", {
 	clear = true,
 })
@@ -51,7 +51,31 @@ autocmd({ "FileType", "BufEnter", "WinEnter" }, {
 	end,
 })
 
--- Markdown
+-- TODO: Enable on NeoVim 0.8
+-- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
+--    callback = function()
+--      local winbar_filetype_exclude = {
+--        "help",
+--        "dashboard",
+--        "packer",
+--        "neogitstatus",
+--        "NvimTree",
+--        "Trouble",
+--        "alpha",
+--        "Outline",
+--        "toggleterm",
+--      }
+--
+--      if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+--        vim.opt_local.winbar = nil
+--        return
+--      end
+--
+--      vim.opt_local.winbar = require("user.winbar").gps() or require("user.winbar").filename() or nil
+--
+--    end,
+--  })
+
 autocmd({ "BufNewFile", "BufRead" }, {
 	group = augroup("_markdown", { clear = true }),
 	pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.md" },
@@ -86,7 +110,7 @@ autocmd({ "VimResized" }, {
 
 -- Scratch
 local Scratch = function()
-	vim.api.nvim_command("new")
+	vim.api.nvim_command "new"
 	vim.opt_local.buftype = "nofile"
 	vim.opt_local.bufhidden = "wipe"
 	vim.opt_local.buflisted = false
@@ -98,7 +122,7 @@ command("Scratch", Scratch, { desc = "Create a Scratch buffer" })
 
 -- Note
 local Note = function()
-	vim.api.nvim_command("new")
+	vim.api.nvim_command "new"
 	vim.opt_local.buftype = "nofile"
 	vim.opt_local.bufhidden = "hide"
 	vim.opt_local.buflisted = false

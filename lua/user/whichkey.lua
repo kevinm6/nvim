@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 20/05/2022 - 10:45
+-- Last Modified: 22/05/2022 - 12:18
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -38,11 +38,11 @@ local setup = {
     scroll_up = "<c-u>",
   },
   window = {
-    border = "shadow",
+    border = "rounded",
     position = "bottom",
     margin = { 1, 1, 1, 1 },
     padding = { 2, 2, 2, 2 },
-    winblend = 20,
+    winblend = 6,
   },
   layout = {
     height = { min = 4, max = 24 },
@@ -124,6 +124,11 @@ local leader_maps = {
   q = { "<cmd>quit<CR>", "Quit" },
   a = { ":Alpha<CR>", "Alpha Dashboard" },
   Z = { "<cmd>ZenMode<CR>", "Zen" },
+  W = {
+    name = "Window",
+    s = { '<cmd>split<cr>', "HSplit" },
+    v = { '<cmd>vsplit<cr>', "VSplit" },
+  },
 
   f = {
     name = "Find",
@@ -216,7 +221,7 @@ local leader_maps = {
 
   -- Renamer
   r = {
-    function() require("renamer").rename({ empty = false }) end,
+    function() vim.lsp.buf.rename() end,
     "Renamer",
   },
 
@@ -538,13 +543,19 @@ local leader_maps = {
       "Last"
     },
     u = {
-      function() require("dapui").toggle() end,
+      function() require("dapui").toggle {} end,
       "UI"
 },
     x = {
       function() require("dap").terminate() end,
       "Exit"
     },
+  },
+
+  T = {
+    name = "Treesitter",
+    h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight" },
+    p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" },
   },
 
   -- Config file

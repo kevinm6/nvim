@@ -178,7 +178,10 @@ cmp.setup {
 		select = false,
 	},
 	window = {
-		documentation = cmp.config.window.bordered(),
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+    },
 	},
 	experimental = {
 		ghost_text = {

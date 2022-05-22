@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 20/05/2022 - 10:52
+-- Last Modified: 21/05/2022 - 13:33
 -------------------------------------
 
 local S = {}
@@ -198,7 +198,6 @@ S.disabled = function(name)
   elseif ftype == " TelescopePrompt " then
     ftype = icons.ui.Telescope.." Telescope"
   end
-
 
 	return name and (get_mode() .. colors.fformat .. "%= " .. name .. " %=")
 		or (get_mode() .. colors.fformat .. "%= " .. ftype .. " %=")

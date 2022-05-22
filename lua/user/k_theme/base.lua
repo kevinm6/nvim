@@ -203,8 +203,7 @@ local base_group = {
 	WildMenu = { fg = "#161616", bg = "#808000" },
 
 	-- Diff
-	MatchParen = { fg = "#ff00ff", bold = true },
-
+	MatchParen = { fg = "#09ddd0" },
 	DiffAdd = { fg = "#005fff" },
 	DiffChange = { fg = "#808000" },
 	DiffDelete = { fg = "#d70000" },
@@ -212,41 +211,41 @@ local base_group = {
 	SignColumn = { fg = "#626262", bg = bg0 },
 
 	-- Errors
-	Error = { bg = "#ffffff", fg = "#ff0000", bold = true },
-	ErrorMsg = { bg = "#ff0000", fg = "#ffffff" },
-	SpellErrors = { fg = "#ff005f" },
+	Error = { fg = "#ff000c", underline = true },
+	ErrorMsg = { fg = "#FF2839" },
+	SpellErrors = { fg = "#ff005f", undercurl = true },
 	WarningMsg = { fg = "#ff5f00" },
 
 	-- Popup Menu
-	Pmenu = { fg = "#DCDCDC", bg = "#303030" },
-	PmenuSel = { fg = "#36FF5A", bg = "#444444", bold = true },
+	Pmenu = { fg = "#A1A1A1", bg = "#303030" },
+	PmenuSel = { fg = "#F1F1F1", bg = "#015A60" },
 	PmenuSbar = { bg = "#262626" },
-	PmenuThumb = { bg = "#585858" },
+	PmenuThumb = { bg = "#3D3D40" },
 
 	Conceal = { fg = blue },
-	SpellRare = { link = "k_themePurpleUnderline" },
-	SpellBad = { link = "k_themeRedUnderline" },
-	SpellLocal = { link = "k_themeAquaUnderline" },
+	SpellRare = { fg = purple, underline = true },
+	SpellBad = { fg = red, underline = true },
+	SpellLocal = { fg = aqua, underline = true },
 	SpellCap = vim.g.k_theme_improved_warnings and {
 		fg = green,
-		bold = vim.g.k_theme_bold,
-		italic = vim.g.k_theme_italic,
-	} or { link = "k_themeBlueUnderline" },
+		bold = true,
+		italic = true,
+	} or { fg = blue, underline = true },
 	TabLineFill = { fg = bg4, bg = bg1, reverse = vim.g.k_theme_invert_tabline },
-	diffAdded = { link = "k_themeGreen" },
-	diffRemoved = { link = "k_themeRed" },
-	diffChanged = { link = "k_themeAqua" },
-	diffFile = { link = "k_themeOrange" },
-	diffNewFile = { link = "k_themeYellow" },
-	diffLine = { link = "k_themeBlue" },
+	diffAdded = { fg = green },
+	diffRemoved = { fg = red },
+	diffChanged = { fg = aqua },
+	diffFile = { fg = orange },
+	diffNewFile = { fg = yellow },
+	diffLine = { fg = blue },
 
 	-- signature
 	SignatureMarkText = { link = "k_themeBlueSign" },
 	SignatureMarkerText = { link = "k_themePurpleSign" },
 
 	-- gitcommit
-	gitcommitSelectedFile = { link = "k_themeGreen" },
-	gitcommitDiscardedFile = { link = "k_themeRed" },
+	gitcommitSelectedFile = { fg = green },
+	gitcommitDiscardedFile = { fg = red },
 
 	-- checkhealth
 	healthError = { fg = bg0, bg = red },

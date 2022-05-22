@@ -101,10 +101,10 @@ local plugins = {
   -- nvim-cmp
   CmpItemAbbr = { fg = "#DCDCDC" },
   CmpItemKind = { link = "Type" },
-  CmpItemAbbrMatch = { fg = "#00af87" },
+  CmpItemAbbrMatch = { fg = "#40CC7C" },
   CmpItemMenu = { link = "Special" },
   CmpItemAbbrDeprecated = base.k_themeFg0,
-  CmpItemAbbrMatchFuzzy = { underline = true, fg = base.acqua },
+  CmpItemAbbrMatchFuzzy = { fg = base.aqua },
   CmpItemKindClass = base.k_themeGreen,
   CmpItemKindConstructor = base.k_themeGreen,
   CmpItemKindField = base.k_themeAqua,
@@ -156,6 +156,13 @@ local plugins = {
   DiagnosticVirtualTextWarn = base.k_themeYellow,
   DiagnosticVirtualTextInfo = base.k_themeBlue,
   DiagnosticVirtualTextHint = base.k_themeAqua,
+  -- WhichKey
+  WhichKey = { link = "Function" },
+  WhichKeyGroup = { link = "Type" },
+  WhichKeySeparator = { link = "DiffAdded" },
+  WhichKeyDesc = { link = "Identifier" },
+  WhichKeyFloat = { bg = "#2c2c2c" },
+  WhichKeyValue = { link = "Comment" },
 }
 
 return plugins

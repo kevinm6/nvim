@@ -5,7 +5,8 @@
 -- Last Modified: 17/05/2022 - 17:41
 --------------------------------------
 
--- install packer if not found
+-- install packer if not found in
+--  default location
 local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -94,7 +95,6 @@ return packer.startup(function(use)
     },
   }
   use "edluffy/hologram.nvim"
-  use "NishanthSpShetty/renamer.nvim"
   use {
     "folke/which-key.nvim",
     run = "WhichKey",
@@ -119,6 +119,7 @@ return packer.startup(function(use)
     "MunifTanjim/nui.nvim",
     cmd = "require",
   }
+  use "ghillb/cybu.nvim"
 
   -- DAP
   use "mfussenegger/nvim-dap"
@@ -148,7 +149,7 @@ return packer.startup(function(use)
     {
       "L3MON4D3/LuaSnip",
       requires = {
-        "kevinm6/my_snippets",
+        "kevinm6/the_snippets",
         -- "molleweide/LuaSnip-snippets.nvim",
       },
     },
