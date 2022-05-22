@@ -16,12 +16,12 @@ local setup = {
     registers = true,
     spelling = {
       enabled = true,
-      suggestions = 26,
+      suggestions = 20,
     },
     presets = {
-      operators = true,
-      motions = true,
-      text_objects = true,
+      operators = false,
+      motions = false,
+      text_objects = false,
       windows = true,
       nav = true,
       z = true,
@@ -372,11 +372,11 @@ local leader_maps = {
       "Workspace Diagnostics",
     },
     f = {
-      function() vim.lsp.buf.formatting() end,
+      function() vim.lsp.buf.format { async = true } end,
       "Format",
     },
     F = {
-      function() vim.cmd "LspToggleAutoFormat" end,
+      function() require("user.lsp.handlers").toggle_format_on_save() end,
       "Toggle Autoformat"
     },
     i = {

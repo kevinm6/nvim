@@ -181,7 +181,7 @@ return packer.startup(function(use)
   }
 
   use {
-    "SmiteshP/nvim-gps",
+    "kevinm6/nvim-gps",
     requires = "nvim-treesitter/nvim-treesitter",
   }
 
