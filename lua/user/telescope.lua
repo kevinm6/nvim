@@ -14,7 +14,7 @@ local actions = require "telescope.actions"
 
 telescope.load_extension "fzf"
 telescope.load_extension "media_files"
-telescope.load_extension "lsp_handlers"
+-- telescope.load_extension "lsp_handlers"
 telescope.load_extension "packer"
 telescope.load_extension "project"
 telescope.load_extension "ui-select"
@@ -22,7 +22,7 @@ telescope.load_extension "file_browser"
 telescope.load_extension "command_center"
 telescope.load_extension "notify"
 
-local command_center = require("command_center")
+local command_center = require "command_center"
 
 telescope.setup {
   defaults = {
@@ -129,26 +129,26 @@ telescope.setup {
 				height = .5
 			}
 		},
-		lsp_handlers = {
-			disable = {},
-			location = {
-				telescope = {},
-				no_results_message = 'No references found',
-			},
-			symbol = {
-				telescope = {},
-				no_results_message = 'No symbols found',
-			},
-			call_hierarchy = {
-				telescope = {},
-				no_results_message = 'No calls found',
-			},
-			code_action = {
-				telescope = require('telescope.themes').get_dropdown({}),
-				no_results_message = 'No code actions available',
-				prefix = '',
-			},
-		},
+		-- lsp_handlers = {
+		-- 	disable = {},
+		-- 	location = {
+		-- 		telescope = {},
+		-- 		no_results_message = 'No references found',
+		-- 	},
+		-- 	symbol = {
+		-- 		telescope = {},
+		-- 		no_results_message = 'No symbols found',
+		-- 	},
+		-- 	call_hierarchy = {
+		-- 		telescope = {},
+		-- 		no_results_message = 'No calls found',
+		-- 	},
+		-- 	code_action = {
+		-- 		telescope = require('telescope.themes').get_dropdown({}),
+		-- 		no_results_message = 'No code actions available',
+		-- 		prefix = '',
+		-- 	},
+		-- },
     command_center = {
       components = {
         command_center.component.DESCRIPTION,

@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 22/05/2022 - 12:18
+-- Last Modified: 22/05/2022 - 15:40
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -59,6 +59,14 @@ local setup = {
   },
 }
 
+-- Local import modules
+local tele_builtin = require "telescope.builtin"
+local packer = require "packer"
+local gitsigns = require "gitsigns"
+local surround = require "surround"
+local dap = require "dap"
+local nvim_tree = require "nvim-tree"
+
 -- Options for leader key mappings
 local opts = {
   mode = "n", -- NORMAL mode
@@ -113,7 +121,7 @@ local leader_maps = {
 
   b = {
     function()
-      require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({ previewer = false }))
+      tele_builtin.buffers(require("telescope.themes").get_dropdown { previewer = false })
     end,
     "Buffers",
   },
@@ -134,60 +142,60 @@ local leader_maps = {
     name = "Find",
     f = {
       function()
-        require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))
+        tele_builtin.find_files(require("telescope.themes").get_dropdown { previewer = false })
       end,
       "Find files",
     },
     F = {
-      function() require("telescope.builtin").live_grep { theme = "ivy" } end,
+      function() tele_builtin.live_grep { theme = "ivy" } end,
         "Find Text (live grep)"
 },
 --     P = {
---       function() require("telescope.builtin").projects end,
+--       function() tele_builtin.projects end,
 --           "Projects"
 -- },
     o = {
-      function() require("telescope.builtin").builtin() end,
+      function() tele_builtin.builtin() end,
           "Open Telescope"
     },
     b = {
-      function() require("telescope.builtin").git_branches() end,
+      function() tele_builtin.git_branches() end,
           "Checkout branch"
     },
     c = {
-      function() require("telescope.builtin").command_center() end,
+      function() tele_builtin.command_center() end,
           "Commands"
     },
     H = {
-      function() require("telescope.builtin").help_tags() end,
+      function() tele_builtin.help_tags() end,
           "Help"
     },
     i = {
-      function() require("telescope.builtin").media_files() end,
+      function() tele_builtin.media_files() end,
           "Media"
     },
     l = {
-      function() require("telescope.builtin").resume() end,
+      function() tele_builtin.resume() end,
           "Last Search"
     },
     M = {
-      function() require("telescope.builtin").man_pages() end,
+      function() tele_builtin.man_pages() end,
           "Man Pages"
     },
     r = {
-      function() require("telescope.builtin").oldfiles() end,
+      function() tele_builtin.oldfiles() end,
           "Recent File"
     },
     R = {
-      function() require("telescope.builtin").registers() end,
+      function() tele_builtin.registers() end,
           "Registers"
     },
     k = {
-      function() require("telescope.builtin").keymaps() end,
+      function() tele_builtin.keymaps() end,
       "Keymaps"
     },
     C = {
-      function() require("telescope.builtin").colorscheme() end,
+      function() tele_builtin.colorscheme() end,
           "Colorscheme"
     },
     p = {
@@ -229,27 +237,27 @@ local leader_maps = {
   p = {
     name = "Packer",
     C = {
-      function() require("packer").compile() end,
+      function() packer.compile() end,
       "Compile"
     },
     c = {
-      function() require("packer").clean() end,
+      function() packer.clean() end,
       "Clean"
     },
     i = {
-      function() require("packer").install() end,
+      function() packer.install() end,
       "Install"
     },
     S = {
-      function() require("packer").sync() end,
+      function() packer.sync() end,
       "Sync"
     },
     s = {
-      function() require("packer").status() end,
+      function() packer.status() end,
       "Status"
     },
     u = {
-      function() require("packer").update() end,
+      function() packer.update() end,
       "Update"
     },
   },
@@ -258,15 +266,15 @@ local leader_maps = {
   g = {
     name = "Git",
     j = {
-      function() require("gitsigns").next_hunk() end,
+      function() gitsigns.next_hunk() end,
       "Next Hunk",
     },
     k = {
-      function() require("gitsigns").prev_hunk() end,
+      function() gitsigns.prev_hunk() end,
       "Prev Hunk",
     },
     l = {
-      function() require("gitsigns").blame_line() end,
+      function() gitsigns.blame_line() end,
       "Blame"
     },
     g = {
@@ -274,43 +282,43 @@ local leader_maps = {
       "Lazygit"
     },
     p = {
-      function() require("gitsigns").preview_hunk() end,
+      function() gitsigns.preview_hunk() end,
       "Preview Hunk",
     },
     r = {
-      function() require("gitsigns").reset_hunk() end,
+      function() gitsigns.reset_hunk() end,
       "Reset Hunk",
     },
     R = {
-      function() require("gitsigns").reset_buffer() end,
+      function() gitsigns.reset_buffer() end,
       "Reset Buffer",
     },
     s = {
-      function() require("gitsigns").stage_hunk() end,
+      function() gitsigns.stage_hunk() end,
       "Stage Hunk",
     },
     u = {
-      function() require("gitsigns").undo_stage_hunk() end,
+      function() gitsigns.undo_stage_hunk() end,
       "Undo Stage Hunk",
     },
     o = {
-      function() require("telescope.builtin").git_status() end,
+      function() tele_builtin.git_status() end,
       "Open changed file"
     },
     b = {
-      function() require("telescope.builtin").git_branches() end,
+      function() tele_builtin.git_branches() end,
       "Checkout branch"
     },
     c = {
-      function() require("telescope.builtin").git_commits() end,
+      function() tele_builtin.git_commits() end,
       "Checkout commit"
     },
     d = {
-      function() require("gitsigns").diffthis() end,
+      function() gitsigns.diffthis() end,
       "Diff"
     },
     t = {
-      function() require("gitsigns").toggle_current_line_blame() end,
+      function() gitsigns.toggle_current_line_blame() end,
       "Diff"
     },
   },
@@ -360,7 +368,7 @@ local leader_maps = {
       "Diagnostics"
     },
     w = {
-      function() require("telescope.builtin").lsp_workspace_diagnostics() end,
+      function() tele_builtin.lsp_workspace_diagnostics() end,
       "Workspace Diagnostics",
     },
     f = {
@@ -391,9 +399,6 @@ local leader_maps = {
       function() vim.lsp.codelens.run() end,
       "CodeLens Action",
     },
-    L = {
-      function() vim.cmd "tabe $HOME/.cache/nvim/lsp.log" end,
-      "Open LSP Log File" },
     o = {
       function() require('symbols-outline').toggle_outline() end,
       "Symbols Outline"
@@ -411,11 +416,11 @@ local leader_maps = {
       "References"
     },
     s = {
-      function() require('telescope.builtin').lsp_document_symbols() end,
+      function() tele_builtin.lsp_document_symbols() end,
       "Document Symbols"
     },
     S = {
-      function() require('telescope.builtin').lsp_dynamic_workspace_symbols() end,
+      function() tele_builtin.lsp_dynamic_workspace_symbols() end,
       "Workspace Symbols",
     },
   },
@@ -424,34 +429,34 @@ local leader_maps = {
   s = {
     name = "Surround",
     ["."] = {
-      function() require("surround").repeat_last() end,
+      function() surround.repeat_last() end,
       "Repeat",
     },
     a = {
-      function() require("surround").surround_add(true) end,
+      function() surround.surround_add(true) end,
       "Add",
     },
     d = {
-      function() require("surround").surround_delete() end,
+      function() surround.surround_delete() end,
       "Delete",
     },
     r = {
-      function() require("surround").surround_replace() end,
+      function() surround.surround_replace() end,
       "Replace",
     },
     q = {
-      function() require("surround").toggle_quotes() end,
+      function() surround.toggle_quotes() end,
       "Quotes",
     },
     b = {
-      function() require("surround").toggle_brackets() end,
+      function() surround.toggle_brackets() end,
       "Brackets",
     },
   },
 
   -- NVIMTREE
   E = {
-    function() require("nvim-tree").toggle() end,
+    function() nvim_tree.toggle() end,
     "Toggle Nvim-Tree"
   },
   e = {
@@ -461,11 +466,11 @@ local leader_maps = {
       "Refresh Nvim-Tree"
     },
     o = {
-      function() require("nvim-tree").open() end,
+      function() nvim_tree.open() end,
       "Open Nvim-Tree window"
     },
     f = {
-      function() require("nvim-tree").focus() end,
+      function() nvim_tree.focus() end,
       "Focus file in Nvim-Tree"
     },
     c = {
@@ -515,47 +520,53 @@ local leader_maps = {
   d = {
     name = "Debug",
     b = {
-      function() require("dap").toggle_breakpoint() end,
+      function() dap.toggle_breakpoint() end,
       "Breakpoint"
     },
     c = {
-      function() require("dap").continue() end,
+      function() dap.continue() end,
       "Continue"
 },
     i = {
-      function() require("dap").step_into() end,
+      function() dap.step_into() end,
       "Into"
     },
     o = {
-      function() require("dap").step_over() end,
+      function() dap.step_over() end,
       "Over"
 },
     O = {
-      function() require("dap").step_out() end,
+      function() dap.step_out() end,
       "Out"
     },
     r = {
-      function() require("dap").repl.toggle() end,
+      function() dap.repl.toggle() end,
       "Repl"
 },
     l = {
-      function() require("dap").run_last() end,
+      function() dap.run_last() end,
       "Last"
     },
     u = {
-      function() require("dapui").toggle {} end,
+      function() dap.toggle {} end,
       "UI"
 },
     x = {
-      function() require("dap").terminate() end,
+      function() dap.terminate() end,
       "Exit"
     },
   },
 
   T = {
     name = "Treesitter",
-    h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight" },
-    p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" },
+    p = {
+      function() vim.cmd "TSPlaygroundToggle" end,
+      "Playground"
+    },
+    h = {
+      function() vim.cmd "TSHighlightCapturesUnderCursor" end,
+      "Highlight"
+    },
   },
 
   -- Config file
@@ -594,27 +605,27 @@ local vmappings = {
   s = {
     name = "Surround",
     ["."] = {
-      function() require('surround').repeat_last() end,
+      function() surround.repeat_last() end,
       "Repeat"
     },
     a = {
-      function() require('surround').surround_add(true) end,
+      function() surround.surround_add(true) end,
       "Add"
     },
     d = {
-      function() require('surround').surround_delete() end,
+      function() surround.surround_delete() end,
       "Delete"
     },
     r = {
-      function() require('surround').surround_replace() end,
+      function() surround.surround_replace() end,
       "Replace"
     },
     q = {
-      function() require('surround').toggle_quotes() end,
+      function() surround.toggle_quotes() end,
       "Quotes"
     },
     b = {
-      function() require('surround').toggle_brackets() end,
+      function() surround.toggle_brackets() end,
       "Brackets"
     },
   },

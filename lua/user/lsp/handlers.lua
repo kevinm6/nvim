@@ -2,7 +2,7 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file, to manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 18/05/2022 - 09:50
+-- Last Modified: 22/05/2022 - 14:14
 --------------------------------------
 
 local M = {}
@@ -83,7 +83,53 @@ M.setup = function()
     dynamicRegistration = false
   })
 
+  -- Jump directly to the first available definition every time.
+  vim.lsp.handlers["textDocument/definition"] = function(_, result)
+  if not result or vim.tbl_isempty(result) then
+    vim.notify("[LSP] Could not find definition", "Info")
+    return
+  end
+
+  if vim.tbl_islist(result) then
+      vim.lsp.util.jump_to_location(result[1], "utf-8")
+    else
+      vim.lsp.util.jump_to_location(result, "utf-8")
+    end
+  end
+
+ vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(vim.lsp.handlers.workspaceFolders, {
+  library = {
+    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+  },
+})
+
+
 end
+
+M.implementation = function()
+  local params = vim.lsp.util.make_position_params()
+
+  vim.lsp.buf_request(0, "textDocument/implementation", params, function(err, result, ctx, config)
+    local bufnr = ctx.bufnr
+    local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+
+    -- In go code, I do not like to see any mocks for impls
+    if ft == "go" then
+      local new_result = vim.tbl_filter(function(v)
+        return not string.find(v.uri, "mock_")
+      end, result)
+
+      if #new_result > 0 then
+        result = new_result
+      end
+    end
+
+    vim.lsp.handlers["textDocument/implementation"](err, result, ctx, config)
+    vim.cmd [[normal! zz]]
+  end)
+end
+
 
 function M.enable_format_on_save()
   vim.api.nvim_create_autocmd({ "BufWritePre" }, {

@@ -17,7 +17,7 @@ local cfg = {
 
   bind = true, -- This is mandatory, otherwise border config won't get registered.
   -- If you want to hook lspsaga or other signature handler, pls set to false
-  doc_lines = 0, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
+  doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
   -- set to 0 if you DO NOT want any API comments be shown
   -- This setting only take effect in insert mode, it does not affect signature help in normal
   -- mode, 10 by default
@@ -27,9 +27,9 @@ local cfg = {
   floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
   -- will set to true when fully tested, set to false will use whichever side has more space
   -- this setting will be helpful if you do not want the PUM and floating win overlap
-  fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
+  fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
   hint_enable = true, -- virtual hint enable
-  hint_prefix = icons.misc.Squirrel .. "  ", -- Panda for parameter
+  hint_prefix = icons.lsp.nvim_lsp .. "  ", -- Panda for parameter
   hint_scheme = "Comment",
   use_lspsaga = false, -- set to true if you want to use lspsaga popup
   hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
@@ -37,7 +37,7 @@ local cfg = {
   -- to view the hiding contents
   max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
   handler_opts = {
-    border = "shadow", -- double, rounded, single, shadow, none
+    border = "rounded", -- double, rounded, single, shadow, none
   },
 
   always_trigger = false, -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58

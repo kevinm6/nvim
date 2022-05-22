@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 18/05/2022 - 11:00
+-- Last Modified: 22/05/2022 - 14:12
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -10,7 +10,7 @@ if not ok then return end
 
 local util = require "lspconfig.util"
 
-require "user.lsp.lsp-signature"
+-- require "user.lsp.lsp-signature" -- Disable for now, using cmp-nvim-lsp-signature-help
 require "user.lsp.lsp-installer"
 require("user.lsp.handlers").setup()
 require "user.lsp.null-ls" -- formatting
@@ -34,13 +34,12 @@ end
 -- the `hover()` -> covers even signature_help on functions/methods
 local function lsp_keymaps(bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
-	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
+  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-	vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
+	vim.keymap.set("n", "gI", function() vim.lsp.buf.implementation() end, opts)
 	vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
 	vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, opts)
-	vim.keymap.set("n", "gq", function() vim.diagnostic.setloclist() end, opts)
 	vim.api.nvim_buf_create_user_command(0, "Format", function()
 		vim.lsp.buf.formatting()
 	end, { force = true })
@@ -191,6 +190,7 @@ end
 for server, config in pairs(servers) do
 	setup_server(server, config)
 end
+
 
 return {
 	on_init = custom_init,

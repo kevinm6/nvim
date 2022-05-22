@@ -20,7 +20,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   })
 end
 
-local icons = require("user.icons")
+local icons = require "user.icons"
 
 -- PLUGINS
 local ok, packer = pcall(require, "packer")
@@ -191,7 +191,7 @@ return packer.startup(function(use)
   -- lsp
   use "neovim/nvim-lspconfig"
   use { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" }
-  use { "ray-x/lsp_signature.nvim", after = "nvim-lspconfig" }
+  use { "ray-x/lsp_signature.nvim", after = "nvim-lspconfig", disable = true }
   use {
     "mfussenegger/nvim-jdtls",
     require = { "Microsoft/java-debug" },
@@ -216,7 +216,7 @@ return packer.startup(function(use)
       { "nvim-telescope/telescope-media-files.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim" },
       { "nvim-telescope/telescope-packer.nvim" },
-      { "gbrlsnchs/telescope-lsp-handlers.nvim" },
+      -- { "gbrlsnchs/telescope-lsp-handlers.nvim" },
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-project.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
@@ -234,7 +234,7 @@ return packer.startup(function(use)
     run = ":UpdateRemotePlugins",
     ft = { "ipynb", "py" },
     config = function()
-      require("jupyter-nvim").setup({})
+      require("jupyter-nvim").setup {}
     end,
   }
   use { "jupyter-vim/jupyter-vim", cond = false, ft = "ipynb" } -- work with Python envs and render in QTconsole
