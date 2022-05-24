@@ -211,8 +211,8 @@ local base_group = {
 	SignColumn = { fg = "#626262", bg = bg0 },
 
 	-- Errors
-	Error = { fg = "#ff000c", underline = true },
-	ErrorMsg = { fg = "#FF2839" },
+	Error = { fg = "#DC2626", underline = true },
+	ErrorMsg = { fg = "#DC2626" },
 	SpellErrors = { fg = "#ff005f", undercurl = true },
 	WarningMsg = { fg = "#ff5f00" },
 

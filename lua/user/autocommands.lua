@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 22/05/2022 - 12:06
+-- Last Modified: 24/05/2022 - 21:49
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -35,38 +35,46 @@ local statusLine = augroup("Statusline", {
 	clear = true,
 })
 
-autocmd({ "BufWinEnter", "BufEnter" }, {
+local sl = require("user.statusline")
+
+-- Using CursorMoved to nvim-gps
+autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
 	group = statusLine,
 	pattern = "*",
 	callback = function()
-		vim.wo.statusline = "%!v:lua.require'user.statusline'.active()"
+    local special_ft = {
+      ['alpha'] = true,
+      ['NvimTree'] = true,
+      ['packer'] = true,
+      ['lsp-installer'] = true,
+      ['lspinfo'] = true,
+      ['Telescope'] = true,
+      ['Trouble'] = true,
+    }
+    if special_ft[vim.bo.filetype] then
+      vim.wo.statusline = sl.disabled()
+      return
+    end
+		vim.wo.statusline = sl.active()
 	end,
 })
 
-autocmd({ "FileType", "BufEnter", "WinEnter" }, {
-	group = statusLine,
-	pattern = { "alpha", "NvimTree*", "packer", "lsp-installer", "lspinfo", "Telescope*" },
-	callback = function()
-		vim.wo.statusline = require("user.statusline").disabled()
-	end,
-})
 
 -- TODO: Enable on NeoVim 0.8
 -- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
 --    callback = function()
 --      local winbar_filetype_exclude = {
---        "help",
---        "dashboard",
---        "packer",
---        "neogitstatus",
---        "NvimTree",
---        "Trouble",
---        "alpha",
---        "Outline",
---        "toggleterm",
+--        ['help'] = true,
+--        ['dashboard'] = true,
+--        ['packer'] = true,
+--        ['NvimTree'] = true,
+--        ['Trouble'] = true,
+--        ['alpha'] = true,
+--        ['Outline'] = true,
+--        ['toggleterm'] = true,
 --      }
 --
---      if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+--      if winbar_filetype_exclude[vim.bo.filetype] then
 --        vim.opt_local.winbar = nil
 --        return
 --      end

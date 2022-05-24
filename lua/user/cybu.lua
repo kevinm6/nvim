@@ -2,7 +2,7 @@
 --  File         : cybu.lua
 --  Description  : cybu plugin config
 --  Author       : Kevin
---  Last Modified: 21/05/2022, 13:15
+--  Last Modified: 24/05/2022 - 09:19
 -------------------------------------
 
 local ok, cybu = pcall(require, "cybu")
@@ -24,6 +24,7 @@ cybu.setup {
     separator = " ", -- string used as separator
     prefix = "…", -- string used as prefix for truncated paths
     padding = 2, -- left & right padding in number of spaces
+    hide_buffer_id = true,
     devicons = {
       enabled = true, -- enable or disable web dev icons
       colored = true, -- enable color for web dev icons

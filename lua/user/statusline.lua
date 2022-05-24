@@ -2,12 +2,15 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 21/05/2022 - 13:33
+-- Last Modified: 24/05/2022 - 19:03
 -------------------------------------
 
 local S = {}
 
 local icons = require "user.icons"
+
+local gps_cached_loc = ""
+local diag_cached = ""
 
 local preset_width = setmetatable({
 	filename = 120,
@@ -21,8 +24,6 @@ local preset_width = setmetatable({
 		return 80
 	end,
 })
-
-local space = " "
 
 local colors = {
 	mode = "%#StatusLineMode#",
@@ -114,16 +115,24 @@ if not ok then
 	return
 end
 
+
+-- TODO: this will be moved to winbar with Nvim 0.8
 -- get value from nvim-gps if available and window size is big enough
 local function nvim_gps()
-	return gps.is_available() and (not win_is_smaller(preset_width.gps_loc)) and gps.get_location() or ""
+  local gps_loc = gps.is_available() and gps.get_location() or ""
+  if gps_cached_loc ~= gps_loc then
+    gps_cached_loc = gps_loc
+  end
+
+  return (not win_is_smaller(preset_width.gps_loc)) and gps_cached_loc
 end
+
 
 -- function lsp diagnostic
 -- display diagnostic if enough space is available
 -- based on win_size gps is empty
 local function get_lsp_diagnostic()
-	local do_not_show_diag = win_is_smaller(preset_width.diagnostic) and nvim_gps() ~= "" or win_is_smaller(90)
+	local do_not_show_diag = win_is_smaller(preset_width.diagnostic) and gps_cached_loc ~= "" or win_is_smaller(90)
 
 	local diagnostics = vim.diagnostic
 	-- assign to relative vars the count of diagnostic
@@ -134,10 +143,7 @@ local function get_lsp_diagnostic()
 
 	local status_ok = (errors == 0) and (warnings == 0) and (infos == 0) and (hints == 0) or false
 
-	-- display values only if there are any
-	return status_ok and icons.diagnostics.status_ok
-		or do_not_show_diag and icons.diagnostics.status_not_ok
-		or string.format(
+  local diag = string.format(
 			"%s:%d %s:%d %s:%d %s:%d",
 			icons.diagnostics.Error,
 			errors,
@@ -147,7 +153,16 @@ local function get_lsp_diagnostic()
 			infos,
 			icons.diagnostics.Hint,
 			hints
-		)
+	)
+
+  if diag ~= diag_cached then
+    diag_cached = diag
+  end
+
+	-- display values only if there are any
+	return status_ok and icons.diagnostics.status_ok
+		or do_not_show_diag and icons.diagnostics.status_not_ok
+    or diag_cached
 end
 
 -- Function of git status with gitsigns
@@ -179,6 +194,9 @@ local function get_filetype()
 		or icons.diagnostics.Error
 end
 
+	local function get_fencoding()
+    return " %{&fileencoding?&fileencoding:&encoding}"
+	end
 
 -- Statusline disabled
 -- display only filetype and current mode
@@ -199,52 +217,48 @@ S.disabled = function(name)
     ftype = icons.ui.Telescope.." Telescope"
   end
 
-	return name and (get_mode() .. colors.fformat .. "%= " .. name .. " %=")
-		or (get_mode() .. colors.fformat .. "%= " .. ftype .. " %=")
+	return name and string.format("%s%s %%= %s%%=", get_mode(), colors.fformat, name)
+		or string.format("%s%s %%= %s %%=", get_mode(), colors.fformat, ftype)
 end
 
 
 -- Statusline enabled
 S.active = function()
 	-- LeftSide
-	local currMode = colors.mode .. "%m%r" .. get_mode()
-  local startLeftSide = colors.empty .. icons.ui.SlEndLeft
-	local git = colors.git .. get_git_status()
-	local fname = colors.name .. get_filename()
-	local endLeftSide = colors.empty .. icons.ui.SlArrowRight
-	-- Center & separators
-	local gps_out = colors.gps .. space .. nvim_gps()
+	local currMode = "%m%r"
+  local leftSide = string.format(
+    "%s%s%s%s%s%s%s %s%s%s%s",
+    colors.mode, currMode, get_mode(),
+    colors.empty, icons.ui.SlEndLeft,
+    colors.git, get_git_status(),
+    colors.name, get_filename(),
+    colors.empty, icons.ui.SlArrowRight
+  )
+
+  -- Middle
 	local sideSep = "%="
-	local lsp_diag = get_lsp_diagnostic()
-	-- RightSide
-	local endRightSide = space .. colors.empty .. icons.ui.SlArrowLeft
-	local fencoding = colors.encoding .. " %{&fileencoding?&fileencoding:&encoding} "
-	local ftype = colors.ftype .. get_filetype()
-	local fformat = colors.fformat .. " %{&ff} "
-	local location = get_line_onTot()
-  local startRightSide = colors.empty .. icons.ui.SlEndRight
-
-  return table.concat {
-    -- Left Side
-    currMode,
-    startLeftSide,
-    git,
-    fname,
-    endLeftSide,
-    gps_out,
-
-    -- Center & separators
+  local centerSide = string.format(
+    " %s%s %s %s ",
+    colors.gps, nvim_gps(),
     sideSep,
-    lsp_diag,
+    get_lsp_diagnostic()
+  )
+
+	-- RightSide
+	local fformat = "%{&ff}"
 
     -- Right Side
-    endRightSide,
-    fencoding,
-    ftype,
-    fformat,
-    location,
-    startRightSide,
-  }
+  local rightSide = string.format(
+    "%s%s%s%s %s%s %s%s %s%s%s",
+    colors.empty, icons.ui.SlArrowLeft,
+    colors.encoding, get_fencoding(),
+    colors.ftype, get_filetype(),
+    colors.fformat, fformat,
+    get_line_onTot(),
+    colors.empty, icons.ui.SlEndRight
+  )
+
+  return string.format("%s%s%s", leftSide, centerSide, rightSide)
 end
 
 return S

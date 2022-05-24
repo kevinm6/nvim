@@ -2,7 +2,7 @@
 -- File         : sumneko_lua.lua
 -- Description  : lua lsp config
 -- Author       : Kevin
--- Last Modified: 22/05/2022 - 13:46
+-- Last Modified: 23/05/2022 - 12:10
 -------------------------------------
 
 local runtime_path = vim.split(package.path, ';')
@@ -22,17 +22,20 @@ return {
 			diagnostics = {
 				globals = { "vim" },
 			},
+      completion = {
+        keywordSnippet = "Replace",
+        callSnippet = "Replace",
+      },
 			workspace = {
 				library = {
           [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
           [vim.fn.stdpath "config" .. "/lua"] = true,
 				},
 			},
       telemetry = {
         enable = false,
       },
-      -- single_file_support = true,
+      single_file_support = true,
 		},
 	},
 }

@@ -37,7 +37,7 @@ M.filename = function()
       file_icon_color = default_file_icon_color
     end
 
-    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#LineNr#" .. filename .. "%*"
+    return string.format(" %%#%s#%s%* %s%s%*", hl_group, file_icon, "%#LineNr#", filename)
   end
 end
 
@@ -58,11 +58,9 @@ M.gps = function()
   if gps_location == "error" then
     return ""
   else
-    if not isempty(gps_location) then
-      return retval .. " " .. icons.ui.ChevronRight .. " " .. gps_location
-    else
-      return retval
-    end
+    return not isempty(gps_location) and
+      string.format("%s %s %s", retval, icons.ui.ChevronRight, gps_location) or
+      retval
   end
 end
 

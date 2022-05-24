@@ -220,7 +220,6 @@ return packer.startup(function(use)
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-project.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-      { "gfeiyou/command-center.nvim" },
     },
     event = "BufEnter",
   }
