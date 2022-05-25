@@ -50,6 +50,7 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
       ['lspinfo'] = true,
       ['Telescope'] = true,
       ['Trouble'] = true,
+      ['qf'] = true,
     }
     if special_ft[vim.bo.filetype] then
       vim.wo.statusline = sl.disabled()

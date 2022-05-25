@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 20/05/2022 - 11:06
+-- Last Modified: 25/05/2022 - 09:08
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -25,6 +25,12 @@ luasnip.config.set_config {
 	updateevents = "TextChanged, TextChangedI",
 	delete_check_events = "TextChanged",
 }
+
+local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 
 -- Cmp Configuration
 cmp.setup {
@@ -72,7 +78,9 @@ cmp.setup {
 				if cmp.visible() then
 					cmp.select_next_item()
 				elseif luasnip.expand_or_locally_jumpable() then
-					return luasnip.expand_or_jump() or fallback()
+					return luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
         else
 					fallback()
 				end
@@ -82,6 +90,8 @@ cmp.setup {
 					cmp.select_next_item()
 				elseif luasnip.expand_or_locally_jumpable() then
 					luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
 				else
 					fallback()
 				end
@@ -89,7 +99,7 @@ cmp.setup {
 			c = function() -- CmdlineMode
 				if cmp.visible() then
 					cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-				else
+				elseif has_words_before() then
 					cmp.complete()
 				end
 			end,

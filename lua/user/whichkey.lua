@@ -400,7 +400,7 @@ local leader_maps = {
       "CodeLens Action",
     },
     o = {
-      function() require('symbols-outline').toggle_outline() end,
+      function() require("symbols-outline").toggle_outline() end,
       "Symbols Outline"
     },
     q = {
@@ -423,6 +423,14 @@ local leader_maps = {
       function() tele_builtin.lsp_dynamic_workspace_symbols() end,
       "Workspace Symbols",
     },
+    t = {
+      function() vim.cmd "TodoLocList" end,
+      "Todo in LocList",
+    },
+    T = {
+      function() vim.cmd "TodoTroble" end,
+      "TodoTrouble"
+    }
   },
 
   -- SURROUND

@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 17/05/2022 - 17:41
+-- Last Modified: 25/05/2022 - 12:33
 --------------------------------------
 
 -- install packer if not found in
@@ -10,14 +10,14 @@
 local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = vim.fn.system({
+  PACKER_BOOTSTRAP = vim.fn.system {
     "git",
     "clone",
     "--depth",
     "1",
     "https://github.com/wbthomason/packer.nvim",
     install_path,
-  })
+  }
 end
 
 local icons = require "user.icons"
@@ -81,53 +81,50 @@ return packer.startup(function(use)
   -- Plugin/package manager (set packer manage itself)
   use "wbthomason/packer.nvim"
 
-  -- utility plugins
-  use "nvim-lua/plenary.nvim"
-  use "nvim-lua/popup.nvim"
-  use "windwp/nvim-autopairs"
-  use "folke/todo-comments.nvim"
-  use "numToStr/Comment.nvim"
-  use "kyazdani42/nvim-web-devicons"
+  -- Utils plugins
+  use {
+    "nvim-lua/plenary.nvim",
+    "lewis6991/impatient.nvim",
+    "nvim-lua/popup.nvim",
+    "moll/vim-bbye",
+    {
+      "tweekmonster/startuptime.vim",
+      opt = true,
+      cmd = "StartupTime",
+    },
+    {
+      "MunifTanjim/nui.nvim",
+      cmd = "require",
+    },
+    "RRethy/vim-illuminate",
+    "kyazdani42/nvim-web-devicons",
+    {
+      "folke/zen-mode.nvim",
+      cmd = "ZenMode",
+    },
+    "br1anchen/nvim-colorizer.lua",
+    "antoinemadec/FixCursorHold.nvim",
+  }
+
+   -- Core plugins
   use {
     "kyazdani42/nvim-tree.lua",
-    requires = {
-      "kyazdani42/nvim-web-devicons",
+    {
+      "folke/which-key.nvim",
+      run = "WhichKey",
     },
+    "ghillb/cybu.nvim",
+    {
+      "akinsho/bufferline.nvim",
+      tag = "*",
+      requires = "kyazdani42/nvim-web-devicons",
+    },
+    "akinsho/toggleterm.nvim",
+    "goolord/alpha-nvim",
+    "rcarriga/nvim-notify",
   }
-  use "edluffy/hologram.nvim"
-  use {
-    "folke/which-key.nvim",
-    run = "WhichKey",
-  }
-  use {
-    "akinsho/bufferline.nvim",
-    tag = "*",
-    requires = "kyazdani42/nvim-web-devicons",
-  }
-  use "akinsho/toggleterm.nvim"
-  use ("moll/vim-bbye")
-  use {
-    "tweekmonster/startuptime.vim",
-    cond = false,
-    cmd = "StartupTime",
-  }
-  use "lewis6991/impatient.nvim"
-  use "goolord/alpha-nvim"
-  use "rcarriga/nvim-notify"
-  use "jose-elias-alvarez/null-ls.nvim"
-  use {
-    "MunifTanjim/nui.nvim",
-    cmd = "require",
-  }
-  use "ghillb/cybu.nvim"
 
-  -- DAP
-  use "mfussenegger/nvim-dap"
-  use "theHamsta/nvim-dap-virtual-text"
-  use "rcarriga/nvim-dap-ui"
-  use "Pocco81/DAPInstall.nvim"
-
-  -- autocompletion
+  -- Autocompletion & Snippets
   use {
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
@@ -144,88 +141,95 @@ return packer.startup(function(use)
     "dmitmel/cmp-digraphs",
     "rcarriga/cmp-dap",
     { "hrsh7th/cmp-emoji", opt = true },
-
-    -- snippets
+    -- snippets engine and source
     {
       "L3MON4D3/LuaSnip",
-      requires = {
-        "kevinm6/the_snippets",
-        -- "molleweide/LuaSnip-snippets.nvim",
-      },
+      requires = "kevinm6/the_snippets",
     },
   }
 
-  -- coding helper
-  use "Mephistophiles/surround.nvim"
+
+  -- Coding Helper
   use {
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
+    "windwp/nvim-autopairs",
+    "Mephistophiles/surround.nvim",
+    "folke/todo-comments.nvim",
+    "numToStr/Comment.nvim",
+    "phaazon/hop.nvim",
+    "kevinm6/nvim-gps",
+    { "michaelb/sniprun", run = "bash ./install.sh" },
+    {
+      "simrat39/symbols-outline.nvim",
+      requires = "nvim-treesitter/nvim-treesitter",
+    },
+    {
+      "folke/trouble.nvim",
+      cmd = "TroubleToggle",
+    },
+    "jose-elias-alvarez/null-ls.nvim",
   }
-  use "br1anchen/nvim-colorizer.lua"
-  use "RRethy/vim-illuminate"
-  use "phaazon/hop.nvim"
-  use { "michaelb/sniprun", run = "bash ./install.sh" }
+
 
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     requires = {
-      { "nvim-treesitter/playground" },
-      { "JoosepAlviste/nvim-ts-context-commentstring" },
-      { "lewis6991/nvim-treesitter-context" },
-      { "windwp/nvim-ts-autotag" },
-      { "p00f/nvim-ts-rainbow" },
-      { "nvim-treesitter/nvim-treesitter-refactor" },
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      "lewis6991/nvim-treesitter-context",
+      "windwp/nvim-ts-autotag",
+      "p00f/nvim-ts-rainbow",
+      "nvim-treesitter/nvim-treesitter-refactor",
+      "nvim-treesitter/playground",
     },
   }
 
-  use {
-    "kevinm6/nvim-gps",
-    requires = "nvim-treesitter/nvim-treesitter",
-  }
 
-  -- git
+  -- Git
   use "lewis6991/gitsigns.nvim"
 
-  -- lsp
-  use "neovim/nvim-lspconfig"
-  use { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" }
-  use { "ray-x/lsp_signature.nvim", after = "nvim-lspconfig", disable = true }
-  use {
-    "mfussenegger/nvim-jdtls",
-    require = { "Microsoft/java-debug" },
-  }
-
-  use "antoinemadec/FixCursorHold.nvim"
-  use "simrat39/symbols-outline.nvim"
-  use {
-    "b0o/SchemaStore.nvim",
-    ft = "json",
-    module = "schemastore",
-  }
-  use {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle",
-  }
 
   -- Telescope
   use {
     "nvim-telescope/telescope.nvim",
     requires = {
-      { "nvim-telescope/telescope-media-files.nvim" },
-      { "nvim-telescope/telescope-file-browser.nvim" },
-      { "nvim-telescope/telescope-packer.nvim" },
-      -- { "gbrlsnchs/telescope-lsp-handlers.nvim" },
-      { "nvim-telescope/telescope-ui-select.nvim" },
-      { "nvim-telescope/telescope-project.nvim" },
+      "nvim-telescope/telescope-media-files.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-packer.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
+      "nvim-telescope/telescope-project.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
     },
     event = "BufEnter",
   }
 
-  -- database
-  use "nanotee/sqls.nvim"
+  -- DAP (Debugging)
+  use {
+    "mfussenegger/nvim-dap",
+    "theHamsta/nvim-dap-virtual-text",
+    "rcarriga/nvim-dap-ui",
+    "Pocco81/DAPInstall.nvim",
+  }
+
+  -- LSP
+  use {
+    "neovim/nvim-lspconfig",
+    { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" },
+    { -- Java
+      "mfussenegger/nvim-jdtls",
+      require = { "Microsoft/java-debug" },
+    },
+
+    -- database
+    "nanotee/sqls.nvim",
+
+    -- Json
+    {
+      "b0o/SchemaStore.nvim",
+      ft = "json",
+      module = "schemastore",
+    },
+  }
 
   -- Python
   use { -- Render jupyter notebook (in alpha version)
@@ -235,9 +239,16 @@ return packer.startup(function(use)
     config = function()
       require("jupyter-nvim").setup {}
     end,
+    {
+      "jupyter-vim/jupyter-vim",
+      cond = false, ft = "ipynb"
+    }, -- work with Python envs and render in QTconsole
+    {
+      "bfredl/nvim-ipy",
+      cond = false, ft = "py"
+    },
   }
-  use { "jupyter-vim/jupyter-vim", cond = false, ft = "ipynb" } -- work with Python envs and render in QTconsole
-  use { "bfredl/nvim-ipy", cond = false, ft = "py" }
+
 
   -- markdown
   use {
@@ -248,9 +259,11 @@ return packer.startup(function(use)
       run = "cd app && yarn install",
       cmd = "MarkdownPreview",
     },
+    {
+      "dhruvasagar/vim-table-mode",
+      ft = { "md", "markdown" }
+    },
   }
-
-  use { "dhruvasagar/vim-table-mode", ft = { "md", "markdown" } }
 
   -- pdf
   use {
@@ -268,12 +281,12 @@ return packer.startup(function(use)
       "Shatur/neovim-ayu",
       opt = true,
     },
+    {
+      "fladson/vim-kitty",
+      ft = "kitty"
+    },
   }
 
-  use {
-    "fladson/vim-kitty",
-    ft = "kitty"
-  }
 
   if PACKER_BOOTSTRAP then
     require("packer").sync()
