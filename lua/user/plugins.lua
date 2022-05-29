@@ -143,7 +143,7 @@ return packer.startup(function(use)
     },
     {
       "br1anchen/nvim-colorizer.lua",
-      event = "BufWinEnter",
+      event = "VimEnter",
       config = { 'require "user.colorizer"' },
     },
     {
@@ -174,7 +174,7 @@ return packer.startup(function(use)
     {
       "akinsho/bufferline.nvim",
       tag = "*",
-      event = "BufWinEnter",
+      event = "VimEnter",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = { 'require "user.bufferline"' },
     },
@@ -196,10 +196,10 @@ return packer.startup(function(use)
 
   -- Autocompletion & Snippets
   use { -- snippets engine and source
-    "hrsh7th/cmp-nvim-lsp",
+    { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
     { "kevinm6/the-snippets", event = "BufRead" },
-    { "L3MON4D3/LuaSnip", event = "BufRead" },
-    { "saadparwaiz1/cmp_luasnip", event = "BufWinEnter" },
+    { "L3MON4D3/LuaSnip", module = "luasnip" },
+    { "saadparwaiz1/cmp_luasnip", event = "BufRead" },
     { "hrsh7th/cmp-buffer", event = "BufWinEnter" },
     { "ray-x/cmp-treesitter", event = "BufWinEnter" },
     { "hrsh7th/cmp-nvim-lsp-signature-help", event = "BufWinEnter" },

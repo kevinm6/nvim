@@ -90,11 +90,11 @@ M.setup = function()
     return
   end
 
-  if vim.tbl_islist(result) then
-      vim.lsp.util.jump_to_location(result[1], "utf-8")
-    else
-      vim.lsp.util.jump_to_location(result, "utf-8")
-    end
+  -- if vim.tbl_islist(result) then
+  --     vim.lsp.util.jump_to_location(result[1], "utf-8")
+  --   else
+  --     vim.lsp.util.jump_to_location(result, "utf-8")
+  --   end
   end
 
  vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(vim.lsp.handlers.workspaceFolders, {
