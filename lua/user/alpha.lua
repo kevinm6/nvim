@@ -54,11 +54,12 @@ dashboard.section.buttons.val = {
 	dashboard.button("l", icons.kind.Text .. " Live text grep", "<cmd>Telescope live_grep <CR>"),
 	-- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
 	dashboard.button(
-		"c",
+		"C",
 		icons.ui.Gear .. " Config",
 		"<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"
 	),
 	dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
+	dashboard.button("c", icons.documents.Files .. " Close", "<cmd>Alpha<CR>"),
 	dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
 }
 

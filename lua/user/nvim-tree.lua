@@ -11,33 +11,7 @@ if not ok then return end
 local icons = require "user.icons"
 
 
-vim.g.nvim_tree_icons = {
-  default = "",
-  symlink = "",
-  git = {
-    unstaged = icons.git.unstaged,
-    staged = icons.git.staged,
-    unmerged = icons.git.unmerged,
-    renamed = icons.git.renamed,
-    untracked = icons.git.untracked,
-    deleted = icons.git.deleted,
-    ignored = icons.git.ignored,
-  },
-  folder = {
-    arrow_open = " ",
-    arrow_close = " ",
-    default = icons.kind.Folder,
-    open = icons.documents.OpenFolder,
-    empty = " ",
-    empty_open = " ",
-    symlink = " ",
-    symlink_open = " ",
-  },
-}
 
-vim.g.nvim_tree_special_files = {
-  ["README.md"] = true
-}
 
 
 local lib = require "nvim-tree.lib"
@@ -118,6 +92,11 @@ nvim_tree.setup {
     },
   },
   renderer = {
+    add_trailing = false,
+    group_empty = false,
+    highlight_git = false,
+    highlight_opened_files = "none",
+    root_folder_modifier = ":~",
     indent_markers = {
       enable = true,
       icons = {
@@ -129,7 +108,33 @@ nvim_tree.setup {
     icons = {
       webdev_colors = true,
       git_placement = "after",
-    }
+      glyphs = {
+        default = "",
+        symlink = "",
+        git = {
+          unstaged = icons.git.unstaged,
+          staged = icons.git.staged,
+          unmerged = icons.git.unmerged,
+          renamed = icons.git.renamed,
+          untracked = icons.git.untracked,
+          deleted = icons.git.deleted,
+          ignored = icons.git.ignored,
+        },
+        folder = {
+          arrow_open = " ",
+          arrow_closed = " ",
+          default = icons.kind.Folder,
+          open = icons.documents.OpenFolder,
+          empty = " ",
+          empty_open = " ",
+          symlink = " ",
+          symlink_open = " ",
+        },
+      },
+    },
+    special_files = {
+      ["README.md"] = true
+    },
   },
   hijack_directories = {
     enable = true,

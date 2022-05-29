@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 24/05/2022 - 19:03
+-- Last Modified: 29/05/2022 - 10:37
 -------------------------------------
 
 local S = {}
@@ -108,23 +108,22 @@ local function get_line_onTot()
 		or colors.location .. " row " .. colors.git .. "%l" .. colors.location .. "÷%L "
 end
 
--- check availability of nvim-gps plugin
-local ok, gps = pcall(require, "nvim-gps")
-if not ok then
-	vim.notify(" Error loading nvim_gps", "Error", { title = "Statusline", timeout = 1400 })
-	return
-end
-
+local gps_ok, gps = pcall(require, "nvim-gps")
 
 -- TODO: this will be moved to winbar with Nvim 0.8
 -- get value from nvim-gps if available and window size is big enough
 local function nvim_gps()
-  local gps_loc = gps.is_available() and gps.get_location() or ""
+  if not gps_ok then
+    -- Recall import of nvim-gps if is not already loaded as Plugin
+    gps_ok, gps = pcall(require, "nvim-gps")
+  end
+
+  local gps_loc = not gps_ok and icons.ui.Error or gps.is_available() and gps.get_location() or ""
   if gps_cached_loc ~= gps_loc then
     gps_cached_loc = gps_loc
   end
 
-  return (not win_is_smaller(preset_width.gps_loc)) and gps_cached_loc
+  return (not win_is_smaller(preset_width.gps_loc)) and gps_cached_loc or ""
 end
 
 
@@ -136,10 +135,10 @@ local function get_lsp_diagnostic()
 
 	local diagnostics = vim.diagnostic
 	-- assign to relative vars the count of diagnostic
-	local errors = #(diagnostics.get(0, { severity = diagnostics.severity.ERROR }))
-	local warnings = #(diagnostics.get(0, { severity = diagnostics.severity.WARN }))
-	local infos = #(diagnostics.get(0, { severity = diagnostics.severity.INFO }))
-	local hints = #(diagnostics.get(0, { severity = diagnostics.severity.HINT }))
+	local errors = #diagnostics.get(0, { severity = diagnostics.severity.ERROR })
+	local warnings = #diagnostics.get(0, { severity = diagnostics.severity.WARN })
+	local infos = #diagnostics.get(0, { severity = diagnostics.severity.INFO })
+	local hints = #diagnostics.get(0, { severity = diagnostics.severity.HINT })
 
 	local status_ok = (errors == 0) and (warnings == 0) and (infos == 0) and (hints == 0) or false
 
@@ -203,19 +202,18 @@ end
 S.disabled = function(name)
   local ftype = get_filetype()
 
-  if ftype == " alpha " then
-    ftype = icons.ui.Plugin.." Dashboard"
-  elseif ftype == " NvimTree " then
-    ftype = icons.documents.OpenFolder.." File Explorer"
-  elseif ftype == " packer " then
-   ftype = icons.ui.Packer.." Package Manager"
-  elseif ftype == " lspinfo " then
-    ftype =  icons.ui.Health .. " LSP Status"
-  elseif ftype == " lsp-installer " then
-    ftype = icons.ui.List.." LSP Manager"
-  elseif ftype == " TelescopePrompt " then
-    ftype = icons.ui.Telescope.." Telescope"
-  end
+  local special_filetypes = {
+    [" alpha "] = icons.ui.Plugin.." Dashboard",
+    [" NvimTree "] = icons.documents.OpenFolder.." File Explorer",
+    [" Packer "] = icons.ui.Packer.." Package Manager",
+    [" lspinfo "] = icons.ui.Health .. " LSP Status",
+    [" lsp-installer "] = icons.ui.List.." LSP Manager",
+    [" TelescopePrompt "] = icons.ui.Telescope.." Telescope",
+    [" qf "] = icons.ui.Gear.." QuickFix",
+    [" toggleterm "] = icons.misc.Robot.." Terminal",
+    [" Outline "] = icons.ui.List.." SymbolsOutline",
+  }
+  ftype = special_filetypes[get_filetype()]
 
 	return name and string.format("%s%s %%= %s%%=", get_mode(), colors.fformat, name)
 		or string.format("%s%s %%= %s %%=", get_mode(), colors.fformat, ftype)

@@ -6,3 +6,5 @@ pack/*
 plugin/*
 packer_compiled.lua
 .git/*
+
+colors/.DS_Store

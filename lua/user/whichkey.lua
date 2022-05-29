@@ -60,6 +60,7 @@ local setup = {
 }
 
 -- Local import modules
+local tele = require "telescope"
 local tele_builtin = require "telescope.builtin"
 local packer = require "packer"
 local gitsigns = require "gitsigns"

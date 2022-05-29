@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 24/05/2022 - 21:49
+-- Last Modified: 29/05/2022 - 10:37
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -31,32 +31,27 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- Autocommand for Statusline & WinBar
-local statusLine = augroup("Statusline", {
-	clear = true,
-})
-
-local sl = require("user.statusline")
-
 -- Using CursorMoved to nvim-gps
 autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
-	group = statusLine,
+	group = augroup("Statusline", { clear = true, }),
 	pattern = "*",
 	callback = function()
     local special_ft = {
-      ['alpha'] = true,
-      ['NvimTree'] = true,
-      ['packer'] = true,
-      ['lsp-installer'] = true,
-      ['lspinfo'] = true,
-      ['Telescope'] = true,
-      ['Trouble'] = true,
-      ['qf'] = true,
+      ["alpha"] = true,
+      ["NvimTree"] = true,
+      ["packer"] = true,
+      ["lsp-installer"] = true,
+      ["lspinfo"] = true,
+      ["Telescope"] = true,
+      ["Trouble"] = true,
+      ["qf"] = true,
+      ["toggleterm"] = true,
     }
     if special_ft[vim.bo.filetype] then
-      vim.wo.statusline = sl.disabled()
+      vim.wo.statusline = require("user.statusline").disabled()
       return
     end
-		vim.wo.statusline = sl.active()
+		vim.wo.statusline = require("user.statusline").active()
 	end,
 })
 
@@ -65,14 +60,14 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
 -- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
 --    callback = function()
 --      local winbar_filetype_exclude = {
---        ['help'] = true,
---        ['dashboard'] = true,
---        ['packer'] = true,
---        ['NvimTree'] = true,
---        ['Trouble'] = true,
---        ['alpha'] = true,
---        ['Outline'] = true,
---        ['toggleterm'] = true,
+--        ["help"] = true,
+--        ["dashboard"] = true,
+--        ["packer"] = true,
+--        ["NvimTree"] = true,
+--        ["Trouble"] = true,
+--        ["alpha"] = true,
+--        ["Outline"] = true,
+--        ["toggleterm"] = true,
 --      }
 --
 --      if winbar_filetype_exclude[vim.bo.filetype] then

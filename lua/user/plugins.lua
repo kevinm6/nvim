@@ -2,12 +2,12 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 25/05/2022 - 12:33
+-- Last Modified: 29/05/2022 - 11:03
 --------------------------------------
 
 -- install packer if not found in
 --  default location
-local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = vim.fn.system {
@@ -27,43 +27,35 @@ local ok, packer = pcall(require, "packer")
 if not ok then return end
 
 local p_util = require "packer.util"
+local compile_path = p_util.join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua")
 
-local wk = require "which-key"
-
-wk.register({
-  p = {
-    name = "Packer",
-    l = { ":PackerLoad ", "Load plugin" }
-  }
-}, {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil,
-  silent = false,
-  noremap = true,
-  nowait = true,
-})
-
-
-local augroup_packer = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
-  group = augroup_packer,
-  pattern = "plugins.lua",
-  callback = function()
-    vim.cmd "source <afile>"
-    packer.compile()
+ group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
+ pattern = "user/plugins.lua",
+ callback = function()
+   vim.cmd("source <afile>")
+   packer.compile(compile_path)
 
-    vim.notify(
-       " Plugins file update & compiled !", "Info", {
-      title = "Packer",
-    })
-  end,
+   vim.notify(
+   " Plugins file update & compiled !", "Info", {
+     title = "Packer",
+   })
+ end,
 })
 
 packer.init {
   package_root = p_util.join_paths(vim.fn.stdpath("data"), "site", "pack"),
-  compile_path = p_util.join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
+  compile_path = compile_path,
   max_jobs = 20,
+  ensure_dependecies = true,
+  plugin_package = "packer",
+  auto_reload_compiled = true,
+  auto_clean = true, -- During sync(), remove unused plugins
+  compile_on_sync = true, -- During sync(), run packer.compile()
+  disable_commands = false, -- Disable creating commands
+  opt_default = false, -- Default to using opt (as opposed to start) plugins
+  transitive_opt = true, -- Make dependencies of opt plugins also opt by default
+  transitive_disable = true, -- Automatically disable dependencies of disabled plugins
   display = {
     open_fn = function()
       return require("packer.util").float { border = "rounded" }
@@ -75,7 +67,48 @@ packer.init {
     moved_sym = icons.packer.moved_sym,
     header_sym = icons.packer.header_sym,
   },
+   git = {
+    cmd = 'git', -- The base command for git operations
+    subcommands = { -- Format strings for git subcommands
+      update         = 'pull --ff-only --progress --rebase=false',
+      install        = 'clone --depth %i --no-single-branch --progress',
+      fetch          = 'fetch --depth 999999 --progress',
+      checkout       = 'checkout %s --',
+      update_branch  = 'merge --ff-only @{u}',
+      current_branch = 'branch --show-current',
+      diff           = 'log --color=never --pretty=format:FMT --no-show-signature HEAD@{1}...HEAD',
+      diff_fmt       = '%%h %%s (%%cr)',
+      get_rev        = 'rev-parse --short HEAD',
+      get_msg        = 'log --color=never --pretty=format:FMT --no-show-signature HEAD -n 1',
+      submodules     = 'submodule update --init --recursive --progress'
+    },
+    depth = 1, -- Git clone depth
+    clone_timeout = 60, -- Timeout, in seconds, for git clones
+    default_url_format = 'https://github.com/%s' -- Lua format string used for "aaa/bbb" style plugins
+  },
+  profile = {
+    enable = false,
+    threshold = 1, -- integer in milliseconds, plugins which load faster than this won't be shown in profile output
+  },
+  autoremove = false, -- Remove disabled or unused plugins without prompting the user
 }
+
+--
+-- local wk = require "which-key"
+--
+-- wk.register({
+--  p = {
+--    name = "Packer",
+--    l = { ":PackerLoad ", "Load plugin" }
+--  }
+-- }, {
+--  mode = "n", -- NORMAL mode
+--  prefix = "<leader>",
+--  buffer = nil,
+--  silent = false,
+--  noremap = true,
+--  nowait = true,
+-- })
 
 return packer.startup(function(use)
   -- Plugin/package manager (set packer manage itself)
@@ -84,175 +117,297 @@ return packer.startup(function(use)
   -- Utils plugins
   use {
     "nvim-lua/plenary.nvim",
-    "lewis6991/impatient.nvim",
+    {
+      "lewis6991/impatient.nvim",
+      config = { 'require "user.impatient"' },
+    },
     "nvim-lua/popup.nvim",
-    "moll/vim-bbye",
+    { "moll/vim-bbye", event = "BufWinEnter" },
     {
       "tweekmonster/startuptime.vim",
-      opt = true,
       cmd = "StartupTime",
     },
     {
       "MunifTanjim/nui.nvim",
       cmd = "require",
     },
-    "RRethy/vim-illuminate",
-    "kyazdani42/nvim-web-devicons",
+    {
+      "RRethy/vim-illuminate",
+      module = "illuminate",
+      config = { 'require "user.illuminate"' },
+    },
+    { "kyazdani42/nvim-web-devicons", module = "nvim-web-devicons" },
     {
       "folke/zen-mode.nvim",
       cmd = "ZenMode",
     },
-    "br1anchen/nvim-colorizer.lua",
-    "antoinemadec/FixCursorHold.nvim",
+    {
+      "br1anchen/nvim-colorizer.lua",
+      event = "BufWinEnter",
+      config = { 'require "user.colorizer"' },
+    },
+    {
+      "antoinemadec/FixCursorHold.nvim",
+      event = "BufWinEnter",
+    },
   }
 
-   -- Core plugins
+  -- Core plugins
   use {
-    "kyazdani42/nvim-tree.lua",
+    {
+      "kyazdani42/nvim-tree.lua",
+      module = "nvim-tree",
+      config = { 'require "user.nvim-tree"' },
+      event = "BufWinEnter",
+    },
     {
       "folke/which-key.nvim",
       run = "WhichKey",
+      config = { 'require "user.whichkey"' },
+      event = "BufWinEnter",
     },
-    "ghillb/cybu.nvim",
+    {
+      "ghillb/cybu.nvim",
+      event = "BufWinEnter",
+      config = { 'require "user.cybu"' },
+    },
     {
       "akinsho/bufferline.nvim",
       tag = "*",
-      requires = "kyazdani42/nvim-web-devicons",
+      event = "BufWinEnter",
+      requires = { "kyazdani42/nvim-web-devicons" },
+      config = { 'require "user.bufferline"' },
     },
-    "akinsho/toggleterm.nvim",
-    "goolord/alpha-nvim",
-    "rcarriga/nvim-notify",
+    {
+      "akinsho/toggleterm.nvim",
+      cmd = { "ToggleTerm", "Git", "_LAZYGIT_TOGGLE", "_NCDU_TOGGLE", "_HTOP_TOGGLE" },
+      module = "toggleterm",
+      config = { 'require "user.toggleterm"' },
+    },
+    {
+      "goolord/alpha-nvim",
+      config = { 'require "user.alpha"' },
+    },
+    {
+      "rcarriga/nvim-notify",
+      config = { 'require "user.notify"' },
+    },
   }
 
   -- Autocompletion & Snippets
-  use {
-    "hrsh7th/nvim-cmp",
+  use { -- snippets engine and source
     "hrsh7th/cmp-nvim-lsp",
-    "saadparwaiz1/cmp_luasnip",
-    "ray-x/cmp-treesitter",
-    "hrsh7th/cmp-nvim-lsp-signature-help",
-    "hrsh7th/cmp-nvim-lsp-document-symbol",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "tamago324/cmp-zsh",
-    "kdheepak/cmp-latex-symbols",
-    "hrsh7th/cmp-calc",
-    "dmitmel/cmp-digraphs",
-    "rcarriga/cmp-dap",
-    { "hrsh7th/cmp-emoji", opt = true },
-    -- snippets engine and source
+    { "kevinm6/the-snippets", event = "BufRead" },
+    { "L3MON4D3/LuaSnip", event = "BufRead" },
+    { "saadparwaiz1/cmp_luasnip", event = "BufWinEnter" },
+    { "hrsh7th/cmp-buffer", event = "BufWinEnter" },
+    { "ray-x/cmp-treesitter", event = "BufWinEnter" },
+    { "hrsh7th/cmp-nvim-lsp-signature-help", event = "BufWinEnter" },
+    { "hrsh7th/cmp-nvim-lsp-document-symbol", event = "BufWinEnter" },
+    { "rcarriga/cmp-dap", event = "BufWinEnter" },
+    { "hrsh7th/cmp-path", event = "BufWinEnter" },
+    { "hrsh7th/cmp-cmdline", event = "BufWinEnter" },
+    { "tamago324/cmp-zsh", event = "BufWinEnter" },
+    { "hrsh7th/cmp-calc", event = "BufWinEnter" },
+    { "kdheepak/cmp-latex-symbols", ft = "markdown" },
+    { "hrsh7th/cmp-emoji", opt = true  },
+    { "dmitmel/cmp-digraphs", opt = true },
     {
-      "L3MON4D3/LuaSnip",
-      requires = "kevinm6/the_snippets",
-    },
+      "hrsh7th/nvim-cmp",
+      event = "BufWinEnter",
+      config = { 'require "user.cmp"' },
+    }
   }
-
 
   -- Coding Helper
   use {
-    "windwp/nvim-autopairs",
-    "Mephistophiles/surround.nvim",
-    "folke/todo-comments.nvim",
-    "numToStr/Comment.nvim",
-    "phaazon/hop.nvim",
-    "kevinm6/nvim-gps",
-    { "michaelb/sniprun", run = "bash ./install.sh" },
+    {
+      "kevinm6/nvim-gps",
+      module = "nvim-gps",
+      event = "BufWinEnter",
+      config = { 'require "user.gps"' },
+    },
+    {
+      "windwp/nvim-autopairs",
+      event = "BufWinEnter",
+      config = { 'require "user.autopairs"' },
+    },
+    {
+      "Mephistophiles/surround.nvim",
+      event = "BufWinEnter",
+      config = { 'require "user.surround"' },
+    },
+    {
+      "folke/todo-comments.nvim",
+      event = "BufWinEnter",
+      config = { 'require "user.todo-comments"' },
+    },
+    {
+      "numToStr/Comment.nvim",
+      event = "BufWinEnter",
+      config = { 'require "user.comment"' },
+    },
+    {
+      "phaazon/hop.nvim",
+      event = "BufReadPost",
+      config = { 'require "user.hop"' },
+    },
+    {
+      "michaelb/sniprun",
+      run = "bash ./install.sh",
+      event = "InsertLeave",
+      config = { 'require "user.sniprun"' },
+    },
     {
       "simrat39/symbols-outline.nvim",
-      requires = "nvim-treesitter/nvim-treesitter",
+      event = "InsertLeave",
+      cmd = "SymbolsOutline",
+      requires = { "nvim-treesitter/nvim-treesitter" },
+      config = { 'require "user.symbol-outline"' },
     },
     {
       "folke/trouble.nvim",
       cmd = "TroubleToggle",
     },
-    "jose-elias-alvarez/null-ls.nvim",
+    {
+      "jose-elias-alvarez/null-ls.nvim",
+      module = "null-ls",
+      cmd = "Format",
+    },
   }
 
 
   -- Treesitter
   use {
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-    requires = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      "lewis6991/nvim-treesitter-context",
-      "windwp/nvim-ts-autotag",
-      "p00f/nvim-ts-rainbow",
-      "nvim-treesitter/nvim-treesitter-refactor",
-      "nvim-treesitter/playground",
+    { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufWinEnter" },
+    { "lewis6991/nvim-treesitter-context", event = "VimEnter" },
+    { "windwp/nvim-ts-autotag", event = "BufWinEnter" },
+    { "p00f/nvim-ts-rainbow", event = "BufWinEnter" },
+    { "nvim-treesitter/nvim-treesitter-refactor", event = "BufWinEnter" },
+    { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
+    {
+      "nvim-treesitter/nvim-treesitter",
+      event = "BufReadPre",
+      module = "treesitter",
+      run = "TSUpdate",
+      config = { 'require "user.treesitter"' },
     },
   }
 
 
   -- Git
-  use "lewis6991/gitsigns.nvim"
+  use {
+    "lewis6991/gitsigns.nvim",
+    module = "gitsigns",
+    config = { 'require "user.gitsigns"' },
+  }
 
 
   -- Telescope
   use {
-    "nvim-telescope/telescope.nvim",
-    requires = {
-      "nvim-telescope/telescope-media-files.nvim",
-      "nvim-telescope/telescope-file-browser.nvim",
-      "nvim-telescope/telescope-packer.nvim",
-      "nvim-telescope/telescope-ui-select.nvim",
-      "nvim-telescope/telescope-project.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-    },
-    event = "BufEnter",
+    { "nvim-telescope/telescope-media-files.nvim", event = "BufWinEnter" },
+    "nvim-telescope/telescope-file-browser.nvim",
+    { "nvim-telescope/telescope-packer.nvim", event = "BufWinEnter" },
+    "nvim-telescope/telescope-ui-select.nvim",
+    { "nvim-telescope/telescope-project.nvim", event = "BufWinEnter" },
+    { "nvim-telescope/telescope-fzf-native.nvim", run = "make", event = "BufReadPre" },
+    {
+      "nvim-telescope/telescope.nvim",
+      module = "telescope",
+      event = "BufReadPost",
+      requires = { "nvim-lua/plenary.nvim" },
+      config = { 'require "user.telescope"' },
+    }
   }
 
-  -- DAP (Debugging)
-  use {
-    "mfussenegger/nvim-dap",
-    "theHamsta/nvim-dap-virtual-text",
-    "rcarriga/nvim-dap-ui",
-    "Pocco81/DAPInstall.nvim",
-  }
 
   -- LSP
   use {
-    "neovim/nvim-lspconfig",
-    { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" },
+    {
+      "neovim/nvim-lspconfig",
+      event = "BufWinEnter",
+      module = "lsp",
+      config = { 'require "user.lsp"' },
+    },
+    {
+      "williamboman/nvim-lsp-installer",
+      event = "BufWinEnter",
+      module = "lsp-lspinstaller",
+    },
     { -- Java
       "mfussenegger/nvim-jdtls",
-      require = { "Microsoft/java-debug" },
+      ft = "java",
+      requires = {
+        { "Microsoft/java-debug", ft = "java" },
+      },
     },
 
     -- database
-    "nanotee/sqls.nvim",
+    {
+      "nanotee/sqls.nvim",
+      -- module = "sqls",
+      ft = { "sql", "mysql", "psql" },
+      config = { 'require "user.lsp.settings.sqls"' },
+    },
 
     -- Json
     {
       "b0o/SchemaStore.nvim",
-      ft = "json",
+      -- ft = "json",
       module = "schemastore",
     },
   }
 
+
+  -- DAP (Debugging)
+  use {
+    {
+      "mfussenegger/nvim-dap",
+      module = "dap",
+      event = "BufReadPost",
+    },
+    {
+      "theHamsta/nvim-dap-virtual-text",
+      after = "nvim-dap",
+    },
+    {
+      "rcarriga/nvim-dap-ui",
+      after = "nvim-dap",
+    },
+    {
+      "Pocco81/DAPInstall.nvim",
+      after = "nvim-dap",
+    },
+  }
+
+
   -- Python
   use { -- Render jupyter notebook (in alpha version)
-    "ahmedkhalf/jupyter-nvim",
-    run = ":UpdateRemotePlugins",
-    ft = { "ipynb", "py" },
-    config = function()
-      require("jupyter-nvim").setup {}
-    end,
+    {
+      "ahmedkhalf/jupyter-nvim",
+      run = ":UpdateRemotePlugins",
+      ft = "ipynb",
+      config = { 'require ("jupyter-nvim").setup({})' },
+    },
     {
       "jupyter-vim/jupyter-vim",
-      cond = false, ft = "ipynb"
+      ft = "ipynb"
     }, -- work with Python envs and render in QTconsole
     {
       "bfredl/nvim-ipy",
-      cond = false, ft = "py"
+      ft = "ipy",
+      opt = true,
     },
   }
 
 
   -- markdown
   use {
-    { "ellisonleao/glow.nvim", ft = { "md", "markdown" } },
+    "ellisonleao/glow.nvim",
+    ft = { "md", "markdown" },
+    cmd = "Glow",
+  }
+  use {
     {
       "iamcco/markdown-preview.nvim",
       ft = { "md", "markdown" },
@@ -261,7 +416,12 @@ return packer.startup(function(use)
     },
     {
       "dhruvasagar/vim-table-mode",
-      ft = { "md", "markdown" }
+      ft = { "md", "markdown" },
+      cmd = "TableModeToggle"
+    },
+    {
+      "mbpowers/nvimager",
+      cmd = "NvimagerToggle",
     },
   }
 
@@ -276,10 +436,12 @@ return packer.startup(function(use)
     {
       "ellisonleao/gruvbox.nvim",
       opt = true,
+      cmd = "colorscheme",
     },
     {
       "Shatur/neovim-ayu",
       opt = true,
+      cmd = "colorscheme",
     },
     {
       "fladson/vim-kitty",
@@ -287,9 +449,8 @@ return packer.startup(function(use)
     },
   }
 
-
   if PACKER_BOOTSTRAP then
-    require("packer").sync()
+    require ("packer").sync()
   end
-end)
 
+end)
