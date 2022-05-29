@@ -199,7 +199,7 @@ return packer.startup(function(use)
     { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
     { "kevinm6/the-snippets", event = "BufRead" },
     { "L3MON4D3/LuaSnip", module = "luasnip" },
-    { "saadparwaiz1/cmp_luasnip", event = "BufRead" },
+    { "saadparwaiz1/cmp_luasnip", event = "BufWinEnter" },
     { "hrsh7th/cmp-buffer", event = "BufWinEnter" },
     { "ray-x/cmp-treesitter", event = "BufWinEnter" },
     { "hrsh7th/cmp-nvim-lsp-signature-help", event = "BufWinEnter" },
@@ -223,8 +223,8 @@ return packer.startup(function(use)
   use {
     {
       "kevinm6/nvim-gps",
-      module = "nvim-gps",
-      event = "BufWinEnter",
+      -- module = "nvim-gps",
+      event = "VimEnter",
       config = { 'require "user.gps"' },
     },
     {
@@ -314,7 +314,7 @@ return packer.startup(function(use)
     {
       "nvim-telescope/telescope.nvim",
       module = "telescope",
-      event = "BufReadPost",
+      event = "BufWinEnter",
       requires = { "nvim-lua/plenary.nvim" },
       config = { 'require "user.telescope"' },
     }
