@@ -1,150 +1,139 @@
+Total Time:   83.839 -- Flawless Victory
 
-Total Time:   97.251 -- Flawless Victory
+/* TODO: Improve LuaSnip */
 
-/* TODO: Improve nvim-gps since I've forked it */
-
-Slowest 10 plugins (out of 24)~
-        [vimrc]	48.528  
-       nvim-gps	17.501  
-      [runtime]	15.156  
-      [unknown]	11.475  
-       nvim-cmp	0.605   
- nvim-lspconfig	0.580   
- telescope.nvim	0.517   
-nvim-ts-autotag	0.453   
-        LuaSnip	0.390   
-       hop.nvim	0.256   
+Slowest 10 plugins (out of 22)~
+        [vimrc]	48.071  
+      [runtime]	15.826  
+      [unknown]	11.642  
+        LuaSnip	3.344   
+ nvim-lspconfig	1.416   
+       nvim-cmp	0.700   
+nvim-ts-autotag	0.495   
+ telescope.nvim	0.333   
+        matchit	0.246   
+       hop.nvim	0.223   
 
 Phase Detail:~
 
-init default autocommands (14.057)~
-13.906    [vimrc] >
-	10.216    /Users/Kevin/.config/nvim/init.lua
-	3.689     /Users/Kevin/.config/nvim/colors/k_theme.lua
+init default autocommands (14.265)~
+14.118    [vimrc] >
+	10.272    /Users/Kevin/.config/nvim/init.lua
+	3.846     /Users/Kevin/.config/nvim/colors/k_theme.lua
 <
-0.151     [runtime] >
-	0.099     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-	0.052     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+0.147     [runtime] >
+	0.098     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+	0.049     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
 <
 
-sourcing vimrc file(s) (46.826)~
-34.622    [vimrc] >
-	34.622    /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+sourcing vimrc file(s) (46.772)~
+33.953    [vimrc] >
+	33.953    /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
 <
-11.828    [runtime] >
-	7.451     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-	1.552     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-	0.488     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-	0.434     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-	0.310     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-	0.254     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-	0.238     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-	0.210     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-	0.206     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-	0.142     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-	0.117     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-	0.114     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-	0.108     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+12.446    [runtime] >
+	8.097     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+	1.497     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+	0.456     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+	0.446     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+	0.340     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+	0.262     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+	0.232     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+	0.217     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+	0.185     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+	0.162     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+	0.128     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+	0.123     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+	0.107     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
 	0.077     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-	0.051     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-	0.046     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-	0.029     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+	0.049     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+	0.039     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+	0.030     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
 <
-0.249     matchit >
-	0.249     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+0.246     matchit >
+	0.246     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
 <
-0.127     [unknown] >
-	0.107     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-	0.020     /Users/Kevin/.local/share/nvim/rplugin.vim
-<
-
-loading rtp plugins (0.058)~
-0.058     [unknown] >
-	0.058     /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+0.128     [unknown] >
+	0.104     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+	0.023     /Users/Kevin/.local/share/nvim/rplugin.vim
 <
 
-loading packages (0.351)~
-0.351     [unknown] >
-	0.351     /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+loading rtp plugins (0.053)~
+0.053     [unknown] >
+	0.053     /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
 <
 
-clearing screen (35.958)~
-17.501    nvim-gps >
-	17.501    /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
+clearing screen (22.749)~
+11.461    [unknown] >
+	4.795     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+	1.720     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+	1.240     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+	0.590     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+	0.555     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+	0.506     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+	0.504     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+	0.456     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+	0.345     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+	0.301     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+	0.233     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+	0.218     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
 <
-10.939    [unknown] >
-	3.997     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-	3.879     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-	0.618     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-	0.554     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-	0.315     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-	0.309     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-	0.302     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-	0.282     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-	0.246     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-	0.232     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-	0.206     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+3.344     LuaSnip >
+	3.297     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+	0.047     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
 <
-3.176     [runtime] >
-	3.176     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+3.233     [runtime] >
+	3.233     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
 <
-0.605     nvim-cmp >
-	0.605     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+1.416     nvim-lspconfig >
+	1.416     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
 <
-0.580     nvim-lspconfig >
-	0.580     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+0.700     nvim-cmp >
+	0.700     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
 <
-0.517     telescope.nvim >
-	0.517     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+0.495     nvim-ts-autotag >
+	0.495     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
 <
-0.453     nvim-ts-autotag >
-	0.453     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+0.333     telescope.nvim >
+	0.333     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
 <
-0.390     LuaSnip >
-	0.345     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-	0.044     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+0.223     hop.nvim >
+	0.223     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
 <
-0.256     hop.nvim >
-	0.256     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+0.188     nvim-ts-context-commentstring >
+	0.188     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
 <
-0.179     nvim-treesitter-refactor >
-	0.179     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+0.185     nvim-treesitter-refactor >
+	0.185     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
 <
-0.174     nvim-lsp-installer >
-	0.174     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+0.167     nvim-ts-rainbow >
+	0.167     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
 <
-0.158     cybu.nvim >
-	0.158     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+0.160     FixCursorHold.nvim >
+	0.160     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
 <
-0.156     nvim-ts-rainbow >
-	0.156     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+0.156     nvim-lsp-installer >
+	0.156     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
 <
-0.153     nvim-ts-context-commentstring >
-	0.153     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+0.139     cybu.nvim >
+	0.139     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
 <
-0.133     FixCursorHold.nvim >
-	0.133     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+0.130     DAPInstall.nvim >
+	0.130     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
 <
-0.128     DAPInstall.nvim >
-	0.128     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+0.127     vim-bbye >
+	0.127     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
 <
-0.119     vim-bbye >
-	0.119     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+0.125     nvim-dap >
+	0.125     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
 <
-0.107     nvim-dap >
-	0.107     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+0.069     todo-comments.nvim >
+	0.069     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
 <
-0.071     nvim-colorizer.lua >
-	0.071     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
+0.063     nvim-web-devicons >
+	0.063     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
 <
-0.065     nvim-web-devicons >
-	0.065     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-<
-0.051     todo-comments.nvim >
-	0.051     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-<
-0.046     which-key.nvim >
-	0.046     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+0.035     which-key.nvim >
+	0.035     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
 <
 
 
@@ -155,90 +144,88 @@ Log 1/10 >
    clock   self+sourced   self:  sourced script
    clock   elapsed:              other lines
   
-  000.006  000.006: --- NVIM STARTING ---
-  000.806  000.800: locale set
-  001.296  000.490: inits 1
-  001.330  000.034: window checked
-  001.346  000.015: parsing arguments
-  005.850  004.504: expanding arguments
-  005.939  000.089: inits 2
-  006.458  000.518: init highlight
-  006.487  000.030: init default mappings
-  006.555  000.067: init default autocommands
-  008.042  000.098  000.098: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  008.300  000.050  000.050: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  020.310  003.614  003.614: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  021.884  013.489  009.874: sourcing /Users/Kevin/.config/nvim/init.lua
-  021.898  001.706: sourcing vimrc file(s)
-  022.326  000.150  000.150: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  029.808  007.355  007.355: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  030.389  000.113  000.113: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  030.574  000.580  000.467: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  033.231  000.228  000.228: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  033.359  000.027  000.027: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  033.520  000.067  000.067: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  034.991  000.247  000.247: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  035.322  001.708  001.461: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  035.626  000.204  000.204: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  036.157  000.420  000.420: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  036.603  000.021  000.021: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  036.615  000.331  000.310: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  036.824  000.105  000.105: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  037.012  000.047  000.047: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  037.276  000.156  000.156: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  037.592  000.204  000.204: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  038.076  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  038.506  000.250  000.250: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  073.614  000.106  000.106: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  073.629  034.747  034.641: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  074.583  005.996: loading rtp plugins
-  076.356  000.098  000.098: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  077.466  002.785: loading packages
-  078.306  000.350  000.350: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  078.390  000.574: loading after plugins
-  078.405  000.015: inits 3
-  084.642  006.237: reading ShaDa
-  084.660  000.018: clearing screen
-  099.391  000.065  000.065: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  104.670  017.330  017.265: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  108.852  000.195  000.195: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  110.264  000.420  000.420: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  112.103  000.323  000.323: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  118.982  004.773  004.773: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  119.957  000.168  000.168: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  121.534  000.288  000.288: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  123.460  000.104  000.104: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  125.746  000.133  000.133: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  126.829  004.463  004.226: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  127.934  000.283  000.283: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  131.162  000.305  000.305: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  132.115  000.149  000.149: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  134.252  000.337  000.337: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  136.121  000.294  000.294: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  138.405  000.061  000.061: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  140.713  000.459  000.459: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  142.895  000.126  000.126: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  148.030  000.158  000.158: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  149.986  000.713  000.713: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  160.984  000.080  000.080: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  166.952  000.048  000.048: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  169.667  000.653  000.653: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  219.527  000.662  000.662: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  221.448  000.321  000.321: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  221.851  000.042  000.042: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  225.553  000.628  000.628: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  226.732  000.242  000.242: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  231.889  000.579  000.579: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  233.687  000.595  000.595: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  248.149  000.518  000.518: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  249.467  000.181  000.181: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  251.250  000.590  000.590: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  252.291  000.241  000.241: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  253.553  000.566  000.566: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  276.956  000.577  000.577: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  277.981  155.950: opening buffers
-  278.508  000.527: BufEnter autocommands
-  278.520  000.011: editing files in windows
+  000.007  000.007: --- NVIM STARTING ---
+  000.762  000.755: locale set
+  001.338  000.577: inits 1
+  001.378  000.039: window checked
+  001.390  000.013: parsing arguments
+  005.919  004.528: expanding arguments
+  006.004  000.085: inits 2
+  006.515  000.510: init highlight
+  006.542  000.028: init default mappings
+  006.601  000.059: init default autocommands
+  008.014  000.093  000.093: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  008.255  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  022.144  004.192  004.192: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  023.313  014.968  010.776: sourcing /Users/Kevin/.config/nvim/init.lua
+  023.327  001.616: sourcing vimrc file(s)
+  023.704  000.094  000.094: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  033.586  009.756  009.756: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  034.200  000.182  000.182: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  034.476  000.705  000.523: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  037.810  000.446  000.446: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  038.063  000.057  000.057: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  038.373  000.134  000.134: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  040.168  000.269  000.269: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  040.519  001.967  001.698: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  040.884  000.252  000.252: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  041.582  000.571  000.571: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  042.433  000.049  000.049: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  042.461  000.696  000.647: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  043.009  000.260  000.260: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  043.276  000.067  000.067: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  043.605  000.197  000.197: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  044.083  000.189  000.189: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  044.282  000.047  000.047: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  044.710  000.307  000.307: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  082.906  000.101  000.101: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  082.920  037.703  037.602: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  083.909  007.135: loading rtp plugins
+  085.069  000.054  000.054: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  085.829  001.866: loading packages
+  085.929  000.101: loading after plugins
+  085.944  000.015: inits 3
+  092.157  006.213: reading ShaDa
+  092.177  000.019: clearing screen
+  106.028  000.062  000.062: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  116.904  000.297  000.297: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  117.044  004.963  004.665: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  118.072  000.213  000.213: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  121.340  000.298  000.298: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  123.987  001.900  001.900: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  124.751  000.034  000.034: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  127.335  000.310  000.310: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  168.214  000.792  000.792: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  172.162  000.610  000.610: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  173.277  000.227  000.227: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  175.711  000.132  000.132: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  176.660  000.122  000.122: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  181.278  000.559  000.559: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  199.228  000.087  000.087: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  204.393  000.376  000.376: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  207.856  000.120  000.120: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  209.459  000.465  000.465: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  210.833  000.588  000.588: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  213.774  001.752  001.752: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  216.143  000.172  000.172: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  219.797  002.598  002.598: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  242.669  000.553  000.553: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  243.616  000.120  000.120: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  245.703  000.500  000.500: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  249.151  000.129  000.129: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  250.814  000.504  000.504: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  252.048  000.170  000.170: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  253.814  000.596  000.596: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  258.183  003.337  003.337: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  258.646  000.048  000.048: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  262.239  000.635  000.635: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  268.153  000.203  000.203: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  269.572  000.253  000.253: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  270.465  000.191  000.191: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  274.954  000.627  000.627: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  276.221  159.799: opening buffers
+  276.430  000.209: BufEnter autocommands
+  276.439  000.009: editing files in windows
 <
 Log 2/10 >
   times in msec
@@ -246,89 +233,87 @@ Log 2/10 >
    clock   elapsed:              other lines
   
   000.007  000.007: --- NVIM STARTING ---
-  000.770  000.763: locale set
-  001.338  000.568: inits 1
-  001.377  000.038: window checked
-  001.390  000.013: parsing arguments
-  005.173  003.783: expanding arguments
-  005.267  000.093: inits 2
-  005.786  000.520: init highlight
-  005.819  000.032: init default mappings
-  005.887  000.068: init default autocommands
-  007.409  000.100  000.100: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.668  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  020.785  003.801  003.801: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  022.294  014.530  010.729: sourcing /Users/Kevin/.config/nvim/init.lua
-  022.308  001.742: sourcing vimrc file(s)
-  022.720  000.119  000.119: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  030.303  007.456  007.456: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  030.881  000.113  000.113: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  031.067  000.583  000.470: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  033.745  000.231  000.231: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  033.872  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  034.036  000.066  000.066: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  035.517  000.242  000.242: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  035.857  001.726  001.484: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  036.156  000.198  000.198: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  036.705  000.438  000.438: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  037.145  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  037.157  000.326  000.307: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  037.379  000.106  000.106: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  037.533  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  037.796  000.157  000.157: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  038.023  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  038.220  000.039  000.039: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  038.538  000.214  000.214: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  074.180  000.110  000.110: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  074.195  035.294  035.184: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  075.184  005.733: loading rtp plugins
-  076.480  000.055  000.055: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  077.249  002.011: loading packages
-  078.119  000.329  000.329: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  078.203  000.624: loading after plugins
-  078.217  000.015: inits 3
-  084.163  005.946: reading ShaDa
-  084.176  000.013: clearing screen
-  098.659  000.061  000.061: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  103.873  016.999  016.937: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  107.842  000.171  000.171: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  109.303  000.450  000.450: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  110.456  000.129  000.129: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  115.704  003.900  003.900: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  116.544  000.149  000.149: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  117.877  000.228  000.228: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  119.685  000.101  000.101: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  121.869  000.129  000.129: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  122.847  004.216  003.986: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  123.818  000.195  000.195: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  126.969  000.277  000.277: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  128.048  000.181  000.181: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  130.248  000.322  000.322: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  131.841  000.202  000.202: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  133.848  000.046  000.046: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  135.726  000.361  000.361: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  137.613  000.120  000.120: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  142.013  000.140  000.140: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  143.804  000.588  000.588: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  152.768  000.073  000.073: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  159.325  000.045  000.045: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  162.013  000.499  000.499: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  210.589  000.676  000.676: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  212.704  000.319  000.319: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  213.142  000.049  000.049: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  216.968  000.639  000.639: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  218.074  000.237  000.237: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  223.310  000.570  000.570: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  225.112  000.599  000.599: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  238.950  000.521  000.521: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  240.132  000.167  000.167: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  241.888  000.592  000.592: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  242.972  000.269  000.269: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  244.240  000.560  000.560: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  267.579  000.571  000.571: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  268.838  149.604: opening buffers
-  269.249  000.411: BufEnter autocommands
-  269.259  000.010: editing files in windows
+  000.892  000.885: locale set
+  001.397  000.505: inits 1
+  001.434  000.037: window checked
+  001.447  000.013: parsing arguments
+  005.089  003.642: expanding arguments
+  005.176  000.087: inits 2
+  005.690  000.514: init highlight
+  005.721  000.031: init default mappings
+  005.786  000.065: init default autocommands
+  007.212  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.465  000.050  000.050: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.291  003.466  003.466: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  020.757  013.203  009.737: sourcing /Users/Kevin/.config/nvim/init.lua
+  020.770  001.621: sourcing vimrc file(s)
+  021.172  000.136  000.136: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  028.548  007.257  007.257: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  029.087  000.157  000.157: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  029.270  000.559  000.402: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  031.977  000.236  000.236: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  032.103  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  032.262  000.067  000.067: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  033.719  000.242  000.242: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  034.030  001.676  001.434: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  034.345  000.216  000.216: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  034.893  000.429  000.429: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  035.338  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  035.350  000.325  000.305: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  035.563  000.104  000.104: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  035.728  000.050  000.050: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  035.988  000.151  000.151: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  036.213  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  036.353  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  036.658  000.204  000.204: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  070.841  000.118  000.118: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  070.858  033.837  033.719: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  071.888  005.690: loading rtp plugins
+  073.077  000.052  000.052: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  073.853  001.913: loading packages
+  073.956  000.103: loading after plugins
+  073.971  000.015: inits 3
+  079.886  005.915: reading ShaDa
+  079.898  000.012: clearing screen
+  093.020  000.061  000.061: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  104.057  000.289  000.289: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  104.208  004.871  004.582: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  105.167  000.203  000.203: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  108.295  000.291  000.291: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  110.633  001.590  001.590: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  111.426  000.032  000.032: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  114.007  000.337  000.337: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  154.368  000.696  000.696: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  158.265  000.617  000.617: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  159.360  000.214  000.214: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  161.769  000.124  000.124: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  162.822  000.133  000.133: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  167.550  000.566  000.566: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  182.806  000.058  000.058: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  186.333  000.368  000.368: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  189.272  000.124  000.124: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  190.957  000.536  000.536: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  192.259  000.475  000.475: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  194.154  001.065  001.065: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  195.045  000.145  000.145: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  197.589  001.526  001.526: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  218.327  000.515  000.515: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  219.289  000.123  000.123: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  221.184  000.429  000.429: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  224.512  000.139  000.139: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  226.010  000.473  000.473: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  227.228  000.172  000.172: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  228.990  000.600  000.600: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  233.318  003.196  003.196: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  233.762  000.043  000.043: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  237.336  000.631  000.631: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  243.051  000.184  000.184: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  244.460  000.237  000.237: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  245.329  000.165  000.165: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  249.871  000.628  000.628: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  250.921  149.455: opening buffers
+  251.211  000.290: BufEnter autocommands
+  251.220  000.009: editing files in windows
 <
 Log 3/10 >
   times in msec
@@ -336,449 +321,439 @@ Log 3/10 >
    clock   elapsed:              other lines
   
   000.006  000.006: --- NVIM STARTING ---
-  000.774  000.768: locale set
-  001.370  000.596: inits 1
-  001.408  000.038: window checked
-  001.422  000.013: parsing arguments
-  005.284  003.862: expanding arguments
-  005.372  000.088: inits 2
-  005.913  000.542: init highlight
-  005.941  000.028: init default mappings
-  006.009  000.068: init default autocommands
-  007.505  000.095  000.095: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.764  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  019.760  003.636  003.636: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  020.900  013.040  009.405: sourcing /Users/Kevin/.config/nvim/init.lua
-  020.913  001.719: sourcing vimrc file(s)
-  021.278  000.091  000.091: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  028.722  007.325  007.325: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  029.351  000.114  000.114: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  029.533  000.639  000.526: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  032.193  000.222  000.222: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  032.323  000.029  000.029: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  032.481  000.067  000.067: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  033.944  000.239  000.239: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  034.275  001.700  001.462: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  034.578  000.203  000.203: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  035.112  000.422  000.422: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  035.548  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  035.559  000.322  000.302: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  035.777  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  035.941  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  036.205  000.153  000.153: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  036.435  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  036.633  000.040  000.040: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  036.948  000.212  000.212: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  071.824  000.100  000.100: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  071.838  034.541  034.441: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  072.824  005.673: loading rtp plugins
-  074.117  000.050  000.050: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  074.892  002.018: loading packages
-  075.669  000.309  000.309: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  075.752  000.551: loading after plugins
-  075.767  000.015: inits 3
-  081.819  006.052: reading ShaDa
-  081.837  000.018: clearing screen
-  096.294  000.078  000.078: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  101.697  017.147  017.070: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  105.633  000.175  000.175: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  107.070  000.441  000.441: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  108.200  000.132  000.132: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  113.188  003.849  003.849: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  114.055  000.152  000.152: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  115.415  000.252  000.252: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  117.173  000.097  000.097: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  119.327  000.131  000.131: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  120.249  004.095  003.867: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  121.233  000.200  000.200: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  124.418  000.324  000.324: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  125.394  000.159  000.159: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  127.724  000.307  000.307: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  129.422  000.239  000.239: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  131.398  000.046  000.046: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  133.083  000.186  000.186: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  134.790  000.113  000.113: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  138.502  000.128  000.128: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  140.274  000.607  000.607: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  149.625  000.066  000.066: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  154.890  000.047  000.047: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  157.889  000.606  000.606: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  205.579  000.687  000.687: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  207.474  000.323  000.323: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  207.885  000.040  000.040: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  211.601  000.642  000.642: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  212.847  000.245  000.245: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  217.893  000.567  000.567: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  219.707  000.598  000.598: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  234.601  000.639  000.639: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  235.670  000.179  000.179: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  237.533  000.674  000.674: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  238.711  000.309  000.309: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  240.107  000.640  000.640: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  263.638  000.569  000.569: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  264.738  147.517: opening buffers
-  265.148  000.409: BufEnter autocommands
-  265.157  000.009: editing files in windows
+  000.768  000.762: locale set
+  001.278  000.510: inits 1
+  001.313  000.035: window checked
+  001.326  000.013: parsing arguments
+  005.744  004.418: expanding arguments
+  005.936  000.192: inits 2
+  006.585  000.649: init highlight
+  006.620  000.034: init default mappings
+  006.685  000.065: init default autocommands
+  008.273  000.098  000.098: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  008.519  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  022.724  005.219  005.219: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  024.054  015.446  010.228: sourcing /Users/Kevin/.config/nvim/init.lua
+  024.068  001.790: sourcing vimrc file(s)
+  024.470  000.095  000.095: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  033.501  008.898  008.898: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  034.128  000.190  000.190: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  034.343  000.658  000.468: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  037.305  000.265  000.265: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  037.442  000.028  000.028: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  037.617  000.077  000.077: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  039.172  000.241  000.241: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  039.456  001.738  001.497: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  039.810  000.254  000.254: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  040.350  000.428  000.428: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  040.786  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  040.798  000.323  000.303: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  041.016  000.105  000.105: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  041.176  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  041.438  000.158  000.158: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  041.667  000.119  000.119: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  041.811  000.038  000.038: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  042.129  000.215  000.215: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  076.613  000.099  000.099: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  076.628  034.130  034.031: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  077.573  005.931: loading rtp plugins
+  078.734  000.050  000.050: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  079.498  001.875: loading packages
+  079.596  000.099: loading after plugins
+  079.610  000.014: inits 3
+  085.535  005.924: reading ShaDa
+  085.547  000.013: clearing screen
+  099.538  000.062  000.062: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  110.502  000.290  000.290: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  110.640  004.772  004.482: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  111.660  000.225  000.225: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  114.864  000.318  000.318: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  117.137  001.525  001.525: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  117.927  000.036  000.036: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  120.704  000.451  000.451: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  160.328  000.658  000.658: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  164.205  000.619  000.619: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  165.322  000.224  000.224: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  167.682  000.121  000.121: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  168.640  000.125  000.125: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  173.456  000.563  000.563: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  189.562  000.058  000.058: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  192.926  000.453  000.453: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  195.615  000.126  000.126: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  197.189  000.416  000.416: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  198.438  000.433  000.433: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  200.502  001.252  001.252: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  201.367  000.153  000.153: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  203.159  000.766  000.766: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  224.200  000.502  000.502: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  225.161  000.123  000.123: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  227.212  000.443  000.443: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  230.746  000.133  000.133: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  232.253  000.467  000.467: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  233.478  000.172  000.172: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  235.277  000.632  000.632: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  239.596  003.273  003.273: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  240.073  000.049  000.049: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  243.678  000.632  000.632: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  248.978  000.179  000.179: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  250.362  000.218  000.218: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  251.225  000.165  000.165: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  255.801  000.636  000.636: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  256.998  150.471: opening buffers
+  257.267  000.268: BufEnter autocommands
+  257.276  000.009: editing files in windows
 <
 Log 4/10 >
   times in msec
    clock   self+sourced   self:  sourced script
    clock   elapsed:              other lines
   
-  000.007  000.007: --- NVIM STARTING ---
-  000.805  000.798: locale set
-  001.296  000.491: inits 1
-  001.331  000.035: window checked
-  001.346  000.015: parsing arguments
-  004.880  003.535: expanding arguments
-  004.964  000.083: inits 2
-  005.466  000.502: init highlight
-  005.495  000.029: init default mappings
-  005.566  000.070: init default autocommands
-  007.145  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.408  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  019.757  003.585  003.585: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  021.300  013.795  010.210: sourcing /Users/Kevin/.config/nvim/init.lua
-  021.314  001.795: sourcing vimrc file(s)
-  021.714  000.125  000.125: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  029.445  007.611  007.611: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  030.015  000.114  000.114: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  030.199  000.575  000.460: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  032.941  000.244  000.244: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  033.072  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  033.241  000.074  000.074: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  034.711  000.241  000.241: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  035.041  001.703  001.462: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  035.343  000.202  000.202: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  035.892  000.437  000.437: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  036.323  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  036.335  000.319  000.299: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  036.554  000.108  000.108: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  036.707  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  036.979  000.163  000.163: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  037.206  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  037.402  000.040  000.040: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  037.718  000.213  000.213: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  072.262  000.109  000.109: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  072.277  034.213  034.104: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  073.422  005.891: loading rtp plugins
-  074.877  000.067  000.067: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  075.676  002.187: loading packages
-  076.558  000.415  000.415: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  076.630  000.539: loading after plugins
-  076.646  000.016: inits 3
-  084.890  008.244: reading ShaDa
-  084.913  000.023: clearing screen
-  102.309  000.067  000.067: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  108.630  020.825  020.757: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  112.940  000.186  000.186: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  114.652  000.592  000.592: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  116.223  000.174  000.174: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  121.002  003.591  003.591: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  121.928  000.161  000.161: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  123.523  000.296  000.296: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  125.454  000.105  000.105: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  127.580  000.124  000.124: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  128.526  004.179  003.949: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  129.504  000.200  000.200: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  132.886  000.316  000.316: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  133.851  000.147  000.147: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  135.970  000.291  000.291: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  137.554  000.212  000.212: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  139.504  000.048  000.048: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  141.406  000.305  000.305: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  143.162  000.127  000.127: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  146.959  000.121  000.121: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  148.706  000.592  000.592: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  157.353  000.069  000.069: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  162.947  000.046  000.046: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  165.556  000.473  000.473: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  214.180  000.689  000.689: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  216.193  000.321  000.321: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  216.599  000.045  000.045: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  222.133  000.719  000.719: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  223.396  000.276  000.276: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  229.237  000.616  000.616: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  231.191  000.630  000.630: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  245.522  000.542  000.542: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  246.732  000.184  000.184: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  248.681  000.704  000.704: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  249.818  000.303  000.303: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  251.055  000.495  000.495: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  274.748  000.866  000.866: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  276.223  151.972: opening buffers
-  276.715  000.492: BufEnter autocommands
-  276.725  000.011: editing files in windows
+  000.006  000.006: --- NVIM STARTING ---
+  000.778  000.772: locale set
+  001.277  000.499: inits 1
+  001.313  000.036: window checked
+  001.329  000.016: parsing arguments
+  005.309  003.980: expanding arguments
+  005.392  000.083: inits 2
+  005.889  000.497: init highlight
+  005.918  000.029: init default mappings
+  005.984  000.067: init default autocommands
+  007.427  000.101  000.101: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.670  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  020.652  003.476  003.476: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  022.065  014.305  010.830: sourcing /Users/Kevin/.config/nvim/init.lua
+  022.080  001.641: sourcing vimrc file(s)
+  022.473  000.133  000.133: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  030.164  007.572  007.572: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  030.716  000.163  000.163: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  030.898  000.564  000.401: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  033.462  000.225  000.225: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  033.586  000.025  000.025: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  033.743  000.066  000.066: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  035.190  000.242  000.242: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  035.507  001.671  001.429: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  035.826  000.219  000.219: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  036.362  000.425  000.425: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  036.799  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  036.811  000.322  000.303: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  037.029  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  037.194  000.047  000.047: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  037.478  000.175  000.175: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  037.714  000.121  000.121: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  037.856  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  038.164  000.206  000.206: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  071.849  000.095  000.095: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  071.863  033.330  033.235: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  072.781  005.454: loading rtp plugins
+  073.992  000.051  000.051: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  074.764  001.932: loading packages
+  074.835  000.071: loading after plugins
+  074.850  000.015: inits 3
+  080.820  005.970: reading ShaDa
+  080.834  000.014: clearing screen
+  094.704  000.067  000.067: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  105.631  000.290  000.290: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  105.768  004.832  004.542: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  106.719  000.213  000.213: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  110.572  000.600  000.600: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  113.370  001.794  001.794: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  114.186  000.036  000.036: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  116.687  000.312  000.312: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  156.747  000.677  000.677: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  160.663  000.613  000.613: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  161.761  000.213  000.213: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  164.029  000.117  000.117: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  164.987  000.132  000.132: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  169.786  000.559  000.559: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  184.061  000.054  000.054: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  187.419  000.348  000.348: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  190.137  000.131  000.131: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  191.824  000.579  000.579: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  193.168  000.568  000.568: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  195.234  001.244  001.244: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  196.133  000.158  000.158: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  199.133  001.870  001.870: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  220.932  000.534  000.534: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  221.893  000.126  000.126: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  223.791  000.432  000.432: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  227.166  000.136  000.136: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  228.733  000.527  000.527: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  229.979  000.166  000.166: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  231.841  000.698  000.698: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  235.999  003.112  003.112: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  236.458  000.048  000.048: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  240.060  000.625  000.625: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  245.558  000.187  000.187: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  246.960  000.233  000.233: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  247.826  000.166  000.166: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  252.295  000.625  000.625: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  253.590  150.025: opening buffers
+  253.827  000.237: BufEnter autocommands
+  253.837  000.010: editing files in windows
 <
 Log 5/10 >
   times in msec
    clock   self+sourced   self:  sourced script
    clock   elapsed:              other lines
   
-  000.007  000.007: --- NVIM STARTING ---
-  000.871  000.863: locale set
-  001.375  000.504: inits 1
-  001.411  000.036: window checked
-  001.427  000.016: parsing arguments
-  005.034  003.607: expanding arguments
-  005.122  000.087: inits 2
-  005.635  000.513: init highlight
-  005.666  000.031: init default mappings
-  005.738  000.072: init default autocommands
-  007.251  000.094  000.094: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.508  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  019.989  003.482  003.482: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  021.428  013.824  010.342: sourcing /Users/Kevin/.config/nvim/init.lua
-  021.441  001.737: sourcing vimrc file(s)
-  021.830  000.110  000.110: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  029.349  007.398  007.398: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  029.930  000.111  000.111: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  030.117  000.584  000.473: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  032.795  000.234  000.234: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  032.922  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  033.086  000.071  000.071: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  034.562  000.242  000.242: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  034.897  001.716  001.474: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  035.200  000.202  000.202: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  035.733  000.421  000.421: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  036.168  000.022  000.022: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  036.180  000.324  000.301: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  036.388  000.104  000.104: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  036.546  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  037.335  000.679  000.679: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  037.847  000.241  000.241: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  038.228  000.080  000.080: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  038.813  000.436  000.436: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  074.008  000.100  000.100: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  074.022  034.762  034.663: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  075.039  006.166: loading rtp plugins
-  076.332  000.051  000.051: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  077.103  002.013: loading packages
-  077.898  000.329  000.329: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  077.982  000.550: loading after plugins
-  077.996  000.014: inits 3
-  084.040  006.043: reading ShaDa
-  084.060  000.020: clearing screen
-  099.403  000.063  000.063: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  104.889  017.983  017.919: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  108.970  000.180  000.180: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  110.418  000.451  000.451: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  111.567  000.131  000.131: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  116.366  003.659  003.659: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  117.220  000.153  000.153: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  118.539  000.233  000.233: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  120.546  000.180  000.180: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  122.941  000.137  000.137: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  123.960  004.680  004.363: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  124.947  000.201  000.201: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  128.211  000.294  000.294: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  129.184  000.169  000.169: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  131.472  000.307  000.307: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  133.119  000.231  000.231: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  135.090  000.054  000.054: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  136.922  000.279  000.279: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  138.773  000.112  000.112: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  142.697  000.132  000.132: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  144.553  000.638  000.638: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  153.398  000.074  000.074: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  159.439  000.046  000.046: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  162.058  000.595  000.595: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  210.597  000.680  000.680: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  212.422  000.300  000.300: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  212.811  000.036  000.036: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  216.463  000.625  000.625: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  217.557  000.237  000.237: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  222.702  000.570  000.570: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  224.495  000.592  000.592: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  239.628  000.589  000.589: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  240.665  000.167  000.167: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  242.592  000.656  000.656: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  243.742  000.292  000.292: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  245.004  000.519  000.519: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  268.864  000.574  000.574: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  269.893  149.395: opening buffers
-  270.310  000.416: BufEnter autocommands
-  270.318  000.009: editing files in windows
+  000.008  000.008: --- NVIM STARTING ---
+  000.768  000.760: locale set
+  001.260  000.493: inits 1
+  001.295  000.035: window checked
+  001.310  000.015: parsing arguments
+  005.155  003.844: expanding arguments
+  005.239  000.084: inits 2
+  005.744  000.505: init highlight
+  005.775  000.031: init default mappings
+  005.837  000.062: init default autocommands
+  007.256  000.092  000.092: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.496  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  022.227  003.699  003.699: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  023.364  015.753  012.055: sourcing /Users/Kevin/.config/nvim/init.lua
+  023.376  001.646: sourcing vimrc file(s)
+  023.721  000.085  000.085: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  031.522  007.684  007.684: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  032.087  000.175  000.175: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  032.272  000.580  000.405: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  034.815  000.223  000.223: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  034.944  000.029  000.029: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  035.107  000.070  000.070: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  036.573  000.240  000.240: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  036.894  001.692  001.452: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  037.213  000.220  000.220: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  037.745  000.419  000.419: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  038.177  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  038.188  000.321  000.302: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  038.399  000.104  000.104: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  038.554  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  038.821  000.160  000.160: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  039.048  000.119  000.119: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  039.189  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  039.491  000.200  000.200: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  072.518  000.102  000.102: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  072.531  032.672  032.571: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  073.529  005.492: loading rtp plugins
+  074.673  000.051  000.051: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  075.422  001.843: loading packages
+  075.522  000.099: loading after plugins
+  075.537  000.016: inits 3
+  081.403  005.866: reading ShaDa
+  081.415  000.012: clearing screen
+  095.405  000.060  000.060: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  108.891  000.339  000.339: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  109.079  006.821  006.482: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  110.182  000.278  000.278: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  113.554  000.328  000.328: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  116.117  001.789  001.789: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  116.999  000.037  000.037: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  119.713  000.339  000.339: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  159.356  000.677  000.677: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  163.165  000.608  000.608: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  164.257  000.214  000.214: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  166.554  000.121  000.121: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  167.503  000.126  000.126: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  172.084  000.562  000.562: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  188.047  000.070  000.070: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  191.148  000.408  000.408: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  194.070  000.122  000.122: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  195.524  000.375  000.375: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  196.785  000.493  000.493: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  198.555  001.005  001.005: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  199.423  000.148  000.148: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  201.283  000.844  000.844: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  221.276  000.529  000.529: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  222.249  000.147  000.147: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  224.313  000.435  000.435: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  227.637  000.118  000.118: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  229.095  000.449  000.449: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  230.322  000.184  000.184: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  232.198  000.718  000.718: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  236.399  003.156  003.156: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  236.849  000.042  000.042: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  240.463  000.696  000.696: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  245.571  000.180  000.180: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  246.932  000.225  000.225: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  247.770  000.148  000.148: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  252.227  000.629  000.629: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  253.482  148.986: opening buffers
+  253.624  000.142: BufEnter autocommands
+  253.633  000.009: editing files in windows
 <
 Log 6/10 >
   times in msec
    clock   self+sourced   self:  sourced script
    clock   elapsed:              other lines
   
-  000.007  000.007: --- NVIM STARTING ---
-  000.759  000.752: locale set
-  001.270  000.512: inits 1
-  001.307  000.036: window checked
-  001.320  000.014: parsing arguments
-  005.098  003.778: expanding arguments
-  005.190  000.092: inits 2
-  005.715  000.525: init highlight
-  005.745  000.030: init default mappings
-  005.805  000.060: init default autocommands
-  007.338  000.098  000.098: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.602  000.055  000.055: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  020.341  003.531  003.531: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  021.942  014.242  010.712: sourcing /Users/Kevin/.config/nvim/init.lua
-  021.955  001.754: sourcing vimrc file(s)
-  022.336  000.102  000.102: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  030.027  007.572  007.572: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  030.608  000.112  000.112: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  030.793  000.577  000.465: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  034.972  000.450  000.450: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  035.228  000.051  000.051: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  035.547  000.137  000.137: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  037.616  000.285  000.285: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  037.996  002.264  001.979: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  038.347  000.236  000.236: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  038.967  000.492  000.492: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  039.486  000.022  000.022: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  039.500  000.392  000.369: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  039.749  000.123  000.123: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  039.925  000.051  000.051: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  040.219  000.176  000.176: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  040.488  000.146  000.146: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  040.709  000.046  000.046: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  041.068  000.240  000.240: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  076.116  000.107  000.107: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  076.130  034.670  034.564: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  077.189  007.509: loading rtp plugins
-  078.497  000.055  000.055: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  079.290  002.047: loading packages
-  080.121  000.361  000.361: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  080.208  000.556: loading after plugins
-  080.222  000.014: inits 3
-  086.281  006.060: reading ShaDa
-  086.299  000.018: clearing screen
-  101.342  000.065  000.065: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  106.752  017.549  017.484: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  111.033  000.206  000.206: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  112.486  000.437  000.437: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  113.619  000.130  000.130: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  118.590  003.823  003.823: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  119.484  000.170  000.170: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  120.830  000.237  000.237: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  122.627  000.099  000.099: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  124.809  000.128  000.128: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  125.731  004.146  003.919: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  126.817  000.207  000.207: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  129.996  000.300  000.300: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  130.945  000.144  000.144: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  133.233  000.313  000.313: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  134.908  000.261  000.261: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  136.910  000.050  000.050: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  138.757  000.286  000.286: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  140.622  000.122  000.122: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  144.488  000.132  000.132: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  146.258  000.571  000.571: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  155.605  000.071  000.071: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  161.849  000.045  000.045: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  164.375  000.466  000.466: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  213.989  000.698  000.698: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  215.871  000.307  000.307: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  216.270  000.040  000.040: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  220.058  000.640  000.640: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  221.180  000.240  000.240: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  226.596  000.597  000.597: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  228.468  000.607  000.607: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  243.137  000.554  000.554: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  244.266  000.182  000.182: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  246.121  000.644  000.644: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  247.272  000.304  000.304: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  248.595  000.612  000.612: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  271.884  000.589  000.589: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  272.861  150.884: opening buffers
-  273.289  000.427: BufEnter autocommands
-  273.297  000.009: editing files in windows
+  000.006  000.006: --- NVIM STARTING ---
+  000.777  000.771: locale set
+  001.259  000.482: inits 1
+  001.292  000.033: window checked
+  001.308  000.015: parsing arguments
+  004.966  003.658: expanding arguments
+  005.043  000.078: inits 2
+  005.540  000.496: init highlight
+  005.569  000.029: init default mappings
+  005.630  000.061: init default autocommands
+  007.052  000.093  000.093: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.292  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.899  003.445  003.445: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  021.357  013.978  010.533: sourcing /Users/Kevin/.config/nvim/init.lua
+  021.372  001.622: sourcing vimrc file(s)
+  021.763  000.123  000.123: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  029.402  007.521  007.521: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  029.987  000.170  000.170: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  030.186  000.602  000.432: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  032.841  000.247  000.247: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  032.971  000.028  000.028: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  033.130  000.066  000.066: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  034.575  000.238  000.238: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  034.897  001.674  001.435: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  035.217  000.220  000.220: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  035.755  000.425  000.425: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  036.182  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  036.193  000.316  000.297: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  036.409  000.104  000.104: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  036.565  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  036.823  000.152  000.152: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  037.048  000.117  000.117: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  037.189  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  037.489  000.199  000.199: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  072.093  000.116  000.116: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  072.107  034.257  034.140: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  073.080  005.572: loading rtp plugins
+  074.367  000.052  000.052: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  075.139  002.006: loading packages
+  075.239  000.100: loading after plugins
+  075.253  000.014: inits 3
+  081.205  005.952: reading ShaDa
+  081.217  000.012: clearing screen
+  095.604  000.073  000.073: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  107.501  000.290  000.290: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  107.671  005.142  004.852: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  108.746  000.230  000.230: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  111.918  000.304  000.304: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  114.277  001.612  001.612: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  115.072  000.034  000.034: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  117.471  000.312  000.312: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  156.897  000.689  000.689: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  160.874  000.618  000.618: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  162.103  000.226  000.226: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  164.617  000.127  000.127: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  165.592  000.131  000.131: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  170.282  000.557  000.557: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  188.895  000.090  000.090: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  192.630  000.669  000.669: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  197.979  000.126  000.126: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  199.581  000.455  000.455: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  200.879  000.469  000.469: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  203.261  001.492  001.492: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  204.571  000.166  000.166: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  206.957  001.317  001.317: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  230.472  000.577  000.577: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  231.435  000.119  000.119: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  233.490  000.464  000.464: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  236.938  000.133  000.133: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  238.415  000.457  000.457: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  239.631  000.176  000.176: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  241.626  000.839  000.839: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  246.153  003.333  003.333: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  246.634  000.045  000.045: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  250.267  000.634  000.634: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  255.866  000.179  000.179: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  257.272  000.230  000.230: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  258.232  000.170  000.170: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  262.698  000.623  000.623: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  263.725  159.689: opening buffers
+  263.946  000.221: BufEnter autocommands
+  263.956  000.010: editing files in windows
 <
 Log 7/10 >
   times in msec
    clock   self+sourced   self:  sourced script
    clock   elapsed:              other lines
   
-  000.007  000.007: --- NVIM STARTING ---
-  000.775  000.768: locale set
-  001.260  000.485: inits 1
-  001.294  000.034: window checked
-  001.309  000.015: parsing arguments
-  004.873  003.565: expanding arguments
-  004.956  000.083: inits 2
-  005.624  000.668: init highlight
-  005.663  000.039: init default mappings
-  005.740  000.076: init default autocommands
-  007.344  000.103  000.103: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.607  000.051  000.051: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  020.315  003.616  003.616: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  021.748  014.042  010.426: sourcing /Users/Kevin/.config/nvim/init.lua
-  021.761  001.825: sourcing vimrc file(s)
-  022.171  000.130  000.130: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  029.535  007.244  007.244: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  030.167  000.113  000.113: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  030.350  000.642  000.529: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  032.982  000.225  000.225: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  033.108  000.025  000.025: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  033.267  000.068  000.068: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  034.735  000.240  000.240: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  035.074  001.713  001.473: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  035.376  000.202  000.202: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  035.917  000.431  000.431: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  036.346  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  036.357  000.316  000.296: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  036.572  000.105  000.105: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  036.728  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  036.984  000.153  000.153: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  037.211  000.119  000.119: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  037.407  000.040  000.040: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  037.718  000.206  000.206: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  072.652  000.111  000.111: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  072.666  034.602  034.491: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  073.632  005.604: loading rtp plugins
-  074.901  000.051  000.051: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  075.661  001.978: loading packages
-  076.487  000.364  000.364: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  076.573  000.548: loading after plugins
-  076.588  000.015: inits 3
-  082.644  006.056: reading ShaDa
-  082.663  000.019: clearing screen
-  096.667  000.062  000.062: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  101.964  016.638  016.575: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  106.145  000.173  000.173: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  107.597  000.451  000.451: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  108.737  000.131  000.131: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  113.507  003.604  003.604: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  114.472  000.167  000.167: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  115.808  000.235  000.235: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  117.585  000.095  000.095: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  119.719  000.122  000.122: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  120.668  004.126  003.908: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  121.638  000.191  000.191: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  124.802  000.357  000.357: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  125.750  000.150  000.150: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  127.959  000.311  000.311: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  129.579  000.211  000.211: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  131.622  000.054  000.054: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  133.429  000.295  000.295: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  135.238  000.120  000.120: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  139.172  000.127  000.127: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  140.992  000.653  000.653: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  150.095  000.067  000.067: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  155.474  000.045  000.045: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  157.977  000.427  000.427: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  205.740  000.690  000.690: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  208.230  000.668  000.668: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  208.941  000.081  000.081: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  214.163  000.754  000.754: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  215.617  000.379  000.379: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  221.576  000.604  000.604: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  223.554  000.636  000.636: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  237.778  000.537  000.537: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  238.932  000.167  000.167: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  240.634  000.565  000.565: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  241.688  000.249  000.249: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  243.009  000.618  000.618: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  270.094  000.583  000.583: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  271.261  153.533: opening buffers
-  271.585  000.324: BufEnter autocommands
-  271.593  000.008: editing files in windows
+  000.006  000.006: --- NVIM STARTING ---
+  000.788  000.782: locale set
+  001.277  000.489: inits 1
+  001.313  000.036: window checked
+  001.328  000.015: parsing arguments
+  005.730  004.403: expanding arguments
+  005.822  000.092: inits 2
+  006.669  000.847: init highlight
+  006.728  000.059: init default mappings
+  006.840  000.112: init default autocommands
+  008.460  000.108  000.108: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  008.710  000.050  000.050: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  020.377  003.796  003.796: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  022.030  013.229  009.433: sourcing /Users/Kevin/.config/nvim/init.lua
+  022.045  001.818: sourcing vimrc file(s)
+  022.431  000.115  000.115: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  032.367  009.816  009.816: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  033.118  000.320  000.320: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  033.571  001.023  000.703: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  037.949  000.250  000.250: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  038.092  000.029  000.029: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  038.271  000.075  000.075: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  039.913  000.273  000.273: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  040.256  001.879  001.605: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  040.640  000.271  000.271: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  041.235  000.467  000.467: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  041.723  000.022  000.022: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  041.736  000.360  000.338: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  041.971  000.113  000.113: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  042.150  000.050  000.050: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  042.445  000.171  000.171: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  042.704  000.137  000.137: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  042.865  000.043  000.043: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  043.198  000.217  000.217: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  077.793  000.099  000.099: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  077.808  034.215  034.117: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  078.735  007.459: loading rtp plugins
+  079.878  000.055  000.055: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  080.635  001.846: loading packages
+  080.737  000.101: loading after plugins
+  080.751  000.014: inits 3
+  086.664  005.913: reading ShaDa
+  086.679  000.015: clearing screen
+  099.790  000.060  000.060: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  111.024  000.330  000.330: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  111.182  005.149  004.819: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  112.133  000.203  000.203: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  115.210  000.302  000.302: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  117.663  001.717  001.717: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  118.634  000.038  000.038: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  121.238  000.314  000.314: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  161.077  000.682  000.682: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  164.906  000.613  000.613: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  166.001  000.212  000.212: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  168.289  000.117  000.117: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  169.322  000.131  000.131: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  173.969  000.560  000.560: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  188.716  000.057  000.057: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  192.187  000.896  000.896: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  195.054  000.136  000.136: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  196.543  000.411  000.411: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  197.829  000.496  000.496: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  199.688  001.079  001.079: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  200.540  000.142  000.142: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  203.376  001.807  001.807: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  225.258  000.659  000.659: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  226.643  000.181  000.181: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  228.900  000.526  000.526: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  232.865  000.434  000.434: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  234.755  000.647  000.647: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  236.234  000.201  000.201: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  238.746  000.871  000.871: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  243.060  003.145  003.145: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  243.538  000.042  000.042: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  247.216  000.764  000.764: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  253.006  000.207  000.207: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  254.411  000.230  000.230: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  255.286  000.162  000.162: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  259.737  000.656  000.656: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  260.752  150.228: opening buffers
+  260.956  000.203: BufEnter autocommands
+  260.965  000.009: editing files in windows
 <
 Log 8/10 >
   times in msec
@@ -786,89 +761,87 @@ Log 8/10 >
    clock   elapsed:              other lines
   
   000.007  000.007: --- NVIM STARTING ---
-  000.784  000.777: locale set
-  001.273  000.489: inits 1
-  001.307  000.034: window checked
-  001.322  000.015: parsing arguments
-  005.130  003.808: expanding arguments
-  005.216  000.086: inits 2
-  005.726  000.510: init highlight
-  005.756  000.030: init default mappings
-  005.827  000.071: init default autocommands
-  007.348  000.100  000.100: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.604  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  019.481  003.428  003.428: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  020.918  013.218  009.791: sourcing /Users/Kevin/.config/nvim/init.lua
-  020.931  001.736: sourcing vimrc file(s)
-  021.334  000.124  000.124: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  029.013  007.557  007.557: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  029.645  000.122  000.122: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  029.839  000.644  000.522: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  032.618  000.240  000.240: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  032.762  000.028  000.028: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  032.942  000.074  000.074: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  034.494  000.242  000.242: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  034.826  001.776  001.533: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  035.132  000.206  000.206: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  035.676  000.427  000.427: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  036.117  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  036.130  000.326  000.306: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  036.340  000.101  000.101: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  036.497  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  036.760  000.153  000.153: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  036.987  000.120  000.120: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  037.185  000.040  000.040: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  037.483  000.193  000.193: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  071.878  000.113  000.113: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  071.893  034.060  033.948: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  072.887  005.844: loading rtp plugins
-  074.165  000.050  000.050: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  074.938  002.001: loading packages
-  075.807  000.401  000.401: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  075.892  000.553: loading after plugins
-  075.908  000.016: inits 3
-  081.949  006.041: reading ShaDa
-  081.964  000.015: clearing screen
-  096.032  000.063  000.063: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  101.325  016.737  016.675: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  105.314  000.167  000.167: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  106.737  000.427  000.427: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  107.861  000.128  000.128: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  112.923  003.918  003.918: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  113.782  000.148  000.148: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  115.090  000.222  000.222: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  116.849  000.098  000.098: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  119.043  000.124  000.124: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  119.979  004.160  003.939: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  120.951  000.194  000.194: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  124.081  000.267  000.267: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  125.046  000.153  000.153: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  127.394  000.335  000.335: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  128.988  000.204  000.204: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  130.967  000.047  000.047: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  132.774  000.269  000.269: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  134.506  000.119  000.119: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  138.578  000.138  000.138: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  140.391  000.576  000.576: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  149.370  000.070  000.070: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  154.815  000.047  000.047: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  157.245  000.465  000.465: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  204.324  000.682  000.682: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  206.163  000.296  000.296: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  206.556  000.038  000.038: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  210.300  000.689  000.689: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  211.409  000.236  000.236: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  216.415  000.558  000.558: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  218.140  000.588  000.588: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  231.819  000.485  000.485: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  232.872  000.160  000.160: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  234.503  000.518  000.518: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  235.541  000.251  000.251: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  236.842  000.503  000.503: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  260.794  000.679  000.679: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  262.107  145.671: opening buffers
-  262.421  000.314: BufEnter autocommands
-  262.429  000.008: editing files in windows
+  000.825  000.818: locale set
+  001.326  000.502: inits 1
+  001.364  000.038: window checked
+  001.378  000.013: parsing arguments
+  007.155  005.778: expanding arguments
+  007.250  000.094: inits 2
+  007.752  000.503: init highlight
+  007.779  000.027: init default mappings
+  007.845  000.066: init default autocommands
+  009.253  000.094  000.094: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  009.495  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  022.062  003.848  003.848: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  023.275  013.691  009.843: sourcing /Users/Kevin/.config/nvim/init.lua
+  023.287  001.609: sourcing vimrc file(s)
+  023.642  000.086  000.086: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  031.034  007.274  007.274: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  031.575  000.160  000.160: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  031.764  000.563  000.403: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  034.510  000.241  000.241: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  034.641  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  034.801  000.067  000.067: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  036.248  000.234  000.234: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  036.562  001.666  001.433: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  036.882  000.220  000.220: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  037.424  000.430  000.430: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  037.858  000.022  000.022: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  037.870  000.323  000.301: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  038.087  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  038.240  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  038.493  000.146  000.146: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  038.721  000.121  000.121: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  038.863  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  039.170  000.206  000.206: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  072.604  000.095  000.095: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  072.618  033.085  032.990: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  073.542  005.610: loading rtp plugins
+  074.687  000.050  000.050: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  075.438  001.846: loading packages
+  075.537  000.099: loading after plugins
+  075.552  000.015: inits 3
+  081.431  005.879: reading ShaDa
+  081.445  000.014: clearing screen
+  094.792  000.063  000.063: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  105.664  000.292  000.292: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  105.800  004.797  004.505: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  106.732  000.206  000.206: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  109.808  000.321  000.321: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  112.213  001.669  001.669: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  112.997  000.032  000.032: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  115.438  000.322  000.322: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  155.493  000.681  000.681: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  159.514  000.680  000.680: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  160.694  000.236  000.236: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  163.192  000.149  000.149: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  164.185  000.129  000.129: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  169.178  000.580  000.580: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  184.025  000.100  000.100: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  187.453  000.440  000.440: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  190.074  000.122  000.122: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  191.550  000.388  000.388: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  192.816  000.484  000.484: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  194.694  001.105  001.105: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  195.591  000.159  000.159: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  197.692  001.089  001.089: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  218.401  000.517  000.517: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  219.353  000.127  000.127: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  221.395  000.428  000.428: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  224.721  000.119  000.119: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  226.195  000.466  000.466: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  227.401  000.167  000.167: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  229.151  000.610  000.610: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  233.470  003.288  003.288: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  234.005  000.045  000.045: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  237.547  000.632  000.632: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  242.844  000.177  000.177: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  244.202  000.219  000.219: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  245.033  000.149  000.149: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  249.435  000.628  000.628: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  250.473  147.705: opening buffers
+  250.831  000.358: BufEnter autocommands
+  250.840  000.008: editing files in windows
 <
 Log 9/10 >
   times in msec
@@ -876,89 +849,87 @@ Log 9/10 >
    clock   elapsed:              other lines
   
   000.006  000.006: --- NVIM STARTING ---
-  000.795  000.789: locale set
-  001.284  000.489: inits 1
-  001.318  000.035: window checked
-  001.331  000.013: parsing arguments
-  005.906  004.575: expanding arguments
-  005.991  000.086: inits 2
-  006.505  000.513: init highlight
-  006.535  000.030: init default mappings
-  006.598  000.063: init default autocommands
-  008.089  000.092  000.092: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  008.345  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  022.090  004.321  004.321: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  023.746  015.299  010.977: sourcing /Users/Kevin/.config/nvim/init.lua
-  023.760  001.721: sourcing vimrc file(s)
-  024.166  000.112  000.112: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  031.649  007.356  007.356: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  032.233  000.115  000.115: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  032.420  000.584  000.469: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  035.117  000.220  000.220: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  035.244  000.025  000.025: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  035.406  000.070  000.070: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  037.127  000.268  000.268: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  037.491  001.989  001.722: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  037.820  000.209  000.209: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  038.358  000.424  000.424: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  038.794  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  038.806  000.328  000.308: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  039.021  000.110  000.110: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  039.180  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  039.448  000.155  000.155: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  039.678  000.119  000.119: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  039.875  000.040  000.040: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  040.186  000.206  000.206: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  075.270  000.106  000.106: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  075.284  034.620  034.513: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  076.250  005.872: loading rtp plugins
-  077.539  000.050  000.050: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  078.308  002.008: loading packages
-  079.210  000.338  000.338: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  079.292  000.647: loading after plugins
-  079.307  000.015: inits 3
-  085.364  006.058: reading ShaDa
-  085.378  000.014: clearing screen
-  100.058  000.066  000.066: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  105.472  017.353  017.287: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  109.348  000.163  000.163: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  110.757  000.421  000.421: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  111.878  000.126  000.126: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  116.795  003.770  003.770: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  117.646  000.145  000.145: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  119.060  000.240  000.240: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  120.823  000.097  000.097: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  122.966  000.129  000.129: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  123.938  004.141  003.914: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  124.907  000.192  000.192: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  128.115  000.284  000.284: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  129.100  000.177  000.177: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  131.286  000.327  000.327: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  132.924  000.248  000.248: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  135.258  000.053  000.053: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  137.124  000.301  000.301: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  138.906  000.117  000.117: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  142.737  000.121  000.121: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  144.452  000.542  000.542: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  153.451  000.072  000.072: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  158.893  000.046  000.046: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  161.411  000.488  000.488: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  208.659  000.670  000.670: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  210.481  000.289  000.289: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  210.873  000.036  000.036: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  214.610  000.636  000.636: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  215.707  000.228  000.228: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  220.954  000.590  000.590: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  222.809  000.597  000.597: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  236.873  000.573  000.573: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  238.112  000.177  000.177: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  239.925  000.619  000.619: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  241.132  000.324  000.324: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  242.904  000.690  000.690: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  271.520  000.700  000.700: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  272.718  151.886: opening buffers
-  273.225  000.506: BufEnter autocommands
-  273.234  000.009: editing files in windows
+  000.770  000.764: locale set
+  001.264  000.494: inits 1
+  001.299  000.034: window checked
+  001.314  000.016: parsing arguments
+  005.045  003.731: expanding arguments
+  005.134  000.089: inits 2
+  005.643  000.509: init highlight
+  005.672  000.029: init default mappings
+  005.746  000.073: init default autocommands
+  007.273  000.096  000.096: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.522  000.050  000.050: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  020.273  003.668  003.668: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  021.373  013.759  010.091: sourcing /Users/Kevin/.config/nvim/init.lua
+  021.386  001.736: sourcing vimrc file(s)
+  021.733  000.086  000.086: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  029.901  008.048  008.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  030.477  000.172  000.172: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  030.670  000.594  000.422: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  033.802  000.262  000.262: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  033.944  000.028  000.028: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  034.120  000.077  000.077: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  035.626  000.241  000.241: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  035.940  001.711  001.470: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  036.265  000.225  000.225: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  036.814  000.436  000.436: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  037.244  000.022  000.022: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  037.255  000.318  000.296: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  037.474  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  037.639  000.046  000.046: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  037.901  000.151  000.151: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  038.131  000.122  000.122: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  038.272  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  038.589  000.216  000.216: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  072.090  000.105  000.105: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  072.106  033.153  033.048: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  073.122  006.119: loading rtp plugins
+  074.279  000.052  000.052: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  075.041  001.866: loading packages
+  075.140  000.099: loading after plugins
+  075.155  000.016: inits 3
+  081.022  005.867: reading ShaDa
+  081.036  000.014: clearing screen
+  094.856  000.061  000.061: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  105.837  000.302  000.302: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  105.974  004.781  004.479: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  106.988  000.208  000.208: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  110.139  000.296  000.296: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  112.681  001.808  001.808: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  113.469  000.034  000.034: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  116.065  000.321  000.321: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  155.220  000.672  000.672: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  159.150  000.614  000.614: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  160.255  000.220  000.220: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  162.597  000.121  000.121: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  163.553  000.128  000.128: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  168.185  000.563  000.563: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  183.415  000.054  000.054: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  186.777  000.797  000.797: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  189.678  000.143  000.143: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  191.382  000.491  000.491: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  192.847  000.554  000.554: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  194.870  001.181  001.181: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  195.773  000.161  000.161: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  198.157  001.333  001.333: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  222.561  000.650  000.650: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  223.612  000.135  000.135: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  227.882  000.962  000.962: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  231.655  000.130  000.130: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  233.212  000.497  000.497: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  234.583  000.283  000.283: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  237.163  000.826  000.826: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  242.703  003.858  003.858: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  243.551  000.071  000.071: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  247.356  000.631  000.631: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  252.998  000.201  000.201: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  254.373  000.225  000.225: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  255.232  000.164  000.164: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  260.534  000.727  000.727: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  261.769  156.832: opening buffers
+  262.117  000.347: BufEnter autocommands
+  262.125  000.009: editing files in windows
 <
 Log 10/10 >
   times in msec
@@ -966,87 +937,86 @@ Log 10/10 >
    clock   elapsed:              other lines
   
   000.007  000.007: --- NVIM STARTING ---
-  000.751  000.745: locale set
-  001.256  000.505: inits 1
-  001.290  000.034: window checked
-  001.303  000.013: parsing arguments
-  004.951  003.648: expanding arguments
-  005.031  000.081: inits 2
-  005.535  000.503: init highlight
-  005.562  000.028: init default mappings
-  005.621  000.059: init default autocommands
-  007.142  000.102  000.102: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
-  007.431  000.073  000.073: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
-  019.976  003.881  003.881: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
-  021.116  013.578  009.697: sourcing /Users/Kevin/.config/nvim/init.lua
-  021.128  001.754: sourcing vimrc file(s)
-  021.605  000.106  000.106: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
-  029.364  007.637  007.637: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
-  029.994  000.117  000.117: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
-  030.185  000.620  000.503: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
-  033.004  000.243  000.243: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
-  033.139  000.029  000.029: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
-  033.306  000.073  000.073: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
-  034.788  000.244  000.244: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
-  035.120  001.719  001.475: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
-  035.421  000.201  000.201: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
-  035.963  000.429  000.429: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
-  036.400  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
-  036.412  000.318  000.299: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
-  036.628  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
-  036.781  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
-  037.044  000.155  000.155: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
-  037.269  000.117  000.117: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
-  037.464  000.039  000.039: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
-  037.776  000.208  000.208: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
-  073.886  000.105  000.105: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
-  073.901  035.777  035.672: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
-  074.859  005.906: loading rtp plugins
-  076.125  000.057  000.057: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
-  076.885  001.969: loading packages
-  077.658  000.311  000.311: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
-  077.739  000.542: loading after plugins
-  077.754  000.016: inits 3
-  084.226  006.472: reading ShaDa
-  084.240  000.014: clearing screen
-  098.627  000.063  000.063: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
-  104.092  017.109  017.045: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-gps/plugin/nvim-gps.lua
-  108.140  000.179  000.179: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
-  109.590  000.444  000.444: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
-  110.718  000.130  000.130: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
-  115.769  003.899  003.899: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
-  116.646  000.150  000.150: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
-  117.991  000.226  000.226: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
-  119.757  000.098  000.098: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
-  121.890  000.125  000.125: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
-  122.848  004.122  003.899: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
-  123.818  000.197  000.197: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
-  127.068  000.297  000.297: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
-  128.031  000.150  000.150: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
-  130.301  000.301  000.301: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
-  132.006  000.221  000.221: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
-  133.962  000.048  000.048: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
-  135.821  000.346  000.346: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
-  137.607  000.118  000.118: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
-  141.359  000.131  000.131: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
-  143.087  000.566  000.566: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
-  152.449  000.069  000.069: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua/plugin/colorizer.vim
-  157.963  000.048  000.048: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
-  160.522  000.493  000.493: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
-  209.466  000.679  000.679: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  211.308  000.308  000.308: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
-  211.698  000.036  000.036: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
-  215.526  000.677  000.677: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  216.639  000.235  000.235: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
-  221.837  000.725  000.725: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  223.717  000.598  000.598: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  238.296  000.581  000.581: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
-  239.419  000.174  000.174: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
-  241.224  000.617  000.617: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
-  242.328  000.277  000.277: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
-  243.629  000.595  000.595: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
-  266.933  000.577  000.577: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
-  268.032  148.468: opening buffers
-  268.393  000.361: BufEnter autocommands
-  268.402  000.009: editing files in windows
+  000.905  000.898: locale set
+  001.389  000.484: inits 1
+  001.429  000.040: window checked
+  001.442  000.013: parsing arguments
+  006.252  004.810: expanding arguments
+  006.338  000.085: inits 2
+  006.981  000.644: init highlight
+  007.013  000.031: init default mappings
+  007.083  000.070: init default autocommands
+  008.524  000.095  000.095: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  008.767  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  020.288  003.649  003.649: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  021.704  012.847  009.198: sourcing /Users/Kevin/.config/nvim/init.lua
+  021.716  001.643: sourcing vimrc file(s)
+  022.098  000.115  000.115: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  029.363  007.147  007.147: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  029.911  000.165  000.165: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  030.096  000.566  000.401: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  032.646  000.226  000.226: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  032.771  000.025  000.025: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  032.936  000.072  000.072: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  034.465  000.238  000.238: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  034.783  001.752  001.514: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  035.102  000.219  000.219: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  035.648  000.431  000.431: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  036.090  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  036.102  000.324  000.305: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  036.319  000.109  000.109: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  036.472  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  036.734  000.157  000.157: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  036.961  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  037.102  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  037.404  000.201  000.201: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  071.939  000.114  000.114: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  071.953  034.186  034.072: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  072.880  005.432: loading rtp plugins
+  074.045  000.058  000.058: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+  074.811  001.873: loading packages
+  074.910  000.099: loading after plugins
+  074.924  000.015: inits 3
+  080.851  005.926: reading ShaDa
+  080.863  000.013: clearing screen
+  094.420  000.062  000.062: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  105.325  000.294  000.294: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+  105.463  004.842  004.547: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua
+  106.404  000.198  000.198: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua
+  109.473  000.389  000.389: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-zsh/after/plugin/cmp_zsh.lua
+  112.030  001.794  001.794: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua
+  112.815  000.032  000.032: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  115.228  000.309  000.309: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/telescope.nvim/plugin/telescope.lua
+  156.697  001.246  001.246: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  162.286  000.715  000.715: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  163.560  000.247  000.247: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/hop.nvim/plugin/hop.vim
+  166.188  000.125  000.125: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-dap/plugin/dap.lua
+  167.208  000.142  000.142: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/DAPInstall.nvim/plugin/dap-buddy.vim
+  172.085  000.561  000.561: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  187.889  000.058  000.058: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/todo-comments.nvim/plugin/todo.vim
+  191.676  001.144  001.144: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/Comment.nvim/after/plugin/Comment.lua
+  194.309  000.118  000.118: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-bbye/plugin/bbye.vim
+  195.840  000.440  000.440: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-calc/after/plugin/cmp_calc.lua
+  197.130  000.477  000.477: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua
+  199.130  001.220  001.220: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-dap/after/plugin/cmp_dap.lua
+  200.194  000.153  000.153: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+  202.222  001.012  001.012: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig/plugin/lspconfig.vim
+  222.957  000.515  000.515: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-treesitter/after/plugin/cmp_treesitter.lua
+  223.987  000.193  000.193: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cybu.nvim/plugin/cybu.lua
+  225.930  000.437  000.437: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua
+  229.344  000.130  000.130: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+  230.840  000.464  000.464: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag/plugin/nvim-ts-autotag.vim
+  232.048  000.161  000.161: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-refactor/plugin/nvim-treesitter-refactor.vim
+  234.018  000.613  000.613: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-cmp/plugin/cmp.lua
+  238.338  003.269  003.269: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/plugin/luasnip.vim
+  238.787  000.041  000.041: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/LuaSnip/ftdetect/snippets.vim
+  242.361  000.637  000.637: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  247.964  000.180  000.180: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring/plugin/ts_context_commentstring.vim
+  249.382  000.260  000.260: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-document-symbol/after/plugin/cmp_nvim_lsp_document_symbol.lua
+  250.426  000.186  000.186: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-ts-rainbow/plugin/rainbow.vim
+  254.912  000.630  000.630: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/scripts.vim
+  256.095  152.232: opening buffers
+  256.294  000.199: BufEnter autocommands
+  256.303  000.009: editing files in windows
 <
+
