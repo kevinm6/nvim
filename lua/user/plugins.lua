@@ -196,10 +196,10 @@ return packer.startup(function(use)
 
   -- Autocompletion & Snippets
   use { -- snippets engine and source
-    { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
+    { "hrsh7th/cmp-nvim-lsp", event = "BufWinEnter", module = "cmp_nvim_lsp" },
     { "kevinm6/the-snippets", event = "BufWinEnter" },
-    { "L3MON4D3/LuaSnip", event = "BufWinEnter", module = "luasnip" },
-    { "saadparwaiz1/cmp_luasnip", event = "BufWinEnter" },
+    { "L3MON4D3/LuaSnip", event = "VimEnter" },
+    { "saadparwaiz1/cmp_luasnip", module = "luasnip" },
     { "hrsh7th/cmp-buffer", event = "VimEnter" },
     { "ray-x/cmp-treesitter", event = "VimEnter" },
     { "hrsh7th/cmp-nvim-lsp-signature-help", event = "VimEnter" },
@@ -214,7 +214,7 @@ return packer.startup(function(use)
     { "dmitmel/cmp-digraphs", opt = true },
     {
       "hrsh7th/nvim-cmp",
-      event = "BufWinEnter",
+      event = "VimEnter",
       config = { 'require "user.cmp"' },
     }
   }
