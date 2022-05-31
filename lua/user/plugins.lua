@@ -5,8 +5,7 @@
 -- Last Modified: 29/05/2022 - 11:03
 --------------------------------------
 
--- install packer if not found in
---  default location
+-- install packer if not found in default location
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -122,7 +121,7 @@ return packer.startup(function(use)
       config = { 'require "user.impatient"' },
     },
     "nvim-lua/popup.nvim",
-    { "moll/vim-bbye", event = "BufWinEnter" },
+    { "moll/vim-bbye", event = "VimEnter" },
     {
       "tweekmonster/startuptime.vim",
       cmd = "StartupTime",
@@ -143,12 +142,13 @@ return packer.startup(function(use)
     },
     {
       "br1anchen/nvim-colorizer.lua",
-      event = "VimEnter",
+      event = "BufAdd",
+      cmd = "ColorizerToggle",
       config = { 'require "user.colorizer"' },
     },
     {
       "antoinemadec/FixCursorHold.nvim",
-      event = "BufWinEnter",
+      event = "BufAdd",
     },
   }
 
@@ -158,23 +158,23 @@ return packer.startup(function(use)
       "kyazdani42/nvim-tree.lua",
       module = "nvim-tree",
       config = { 'require "user.nvim-tree"' },
-      event = "BufWinEnter",
+      event = "VimEnter",
     },
     {
       "folke/which-key.nvim",
       run = "WhichKey",
       config = { 'require "user.whichkey"' },
-      event = "BufWinEnter",
+      event = "VimEnter",
     },
     {
       "ghillb/cybu.nvim",
-      event = "BufWinEnter",
+      event = "BufAdd",
       config = { 'require "user.cybu"' },
     },
     {
       "akinsho/bufferline.nvim",
       tag = "*",
-      event = "VimEnter",
+      event = "BufAdd",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = { 'require "user.bufferline"' },
     },
@@ -325,8 +325,9 @@ return packer.startup(function(use)
   use {
     {
       "neovim/nvim-lspconfig",
-      event = "BufWinEnter",
+      event = "BufAdd",
       module = "lsp",
+      cmd = "LspInfo",
       config = { 'require "user.lsp"' },
     },
     {
@@ -429,6 +430,18 @@ return packer.startup(function(use)
   use {
     "makerj/vim-pdf",
     ft = "pdf",
+  }
+
+  -- Xcode Integration
+  use {
+    "tami5/xbase",
+      run = "make install",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+      },
+    opt = true,
+    config = { 'require "user.xbase"' },
   }
 
   -- themes
