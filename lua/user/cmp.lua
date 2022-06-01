@@ -174,7 +174,7 @@ cmp.setup {
 		{ name = "nvim_lsp", priority = 9 },
 		{ name = "luasnip", priority = 9 },
 		{ name = "buffer", option = { keyword_length = 3, keyword_pattern = [[\k\+]] }, priority = 8 },
-		{ name = "treesitter", priority = 7 },
+		{ name = "treesitter", priority = 6 },
 		{ name = "path", option = { trailing_slash = true } },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "latex_symbols", keyword_length = 2, priority = 2 },

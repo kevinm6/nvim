@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 22/05/2022 - 14:12
+-- Last Modified: 01/06/2022 - 21:28
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -10,10 +10,7 @@ if not ok then return end
 
 local util = require "lspconfig.util"
 
--- require "user.lsp.lsp-signature" -- Disable for now, using cmp-nvim-lsp-signature-help
-require "user.lsp.lsp-installer"
 require("user.lsp.handlers").setup()
-require "user.lsp.null-ls" -- formatting
 require "user.lsp.codelens"
 
 -- Lsp highlights managed by

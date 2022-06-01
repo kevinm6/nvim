@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 29/05/2022 - 11:03
+-- Last Modified: 01/06/2022 - 21:29
 --------------------------------------
 
 -- install packer if not found in default location
@@ -118,7 +118,7 @@ return packer.startup(function(use)
     "nvim-lua/plenary.nvim",
     {
       "lewis6991/impatient.nvim",
-      config = { 'require "user.impatient"' },
+      config = function() require "user.impatient" end,
     },
     "nvim-lua/popup.nvim",
     { "moll/vim-bbye", event = "VimEnter" },
@@ -133,7 +133,7 @@ return packer.startup(function(use)
     {
       "RRethy/vim-illuminate",
       module = "illuminate",
-      config = { 'require "user.illuminate"' },
+      config = function() require "user.illuminate" end,
     },
     { "kyazdani42/nvim-web-devicons", module = "nvim-web-devicons" },
     {
@@ -144,7 +144,7 @@ return packer.startup(function(use)
       "br1anchen/nvim-colorizer.lua",
       event = "BufAdd",
       cmd = "ColorizerToggle",
-      config = { 'require "user.colorizer"' },
+      config = function() require "user.colorizer" end,
     },
     {
       "antoinemadec/FixCursorHold.nvim",
@@ -157,65 +157,65 @@ return packer.startup(function(use)
     {
       "kyazdani42/nvim-tree.lua",
       module = "nvim-tree",
-      config = { 'require "user.nvim-tree"' },
+      config = function() require "user.nvim-tree" end,
       event = "VimEnter",
     },
     {
       "folke/which-key.nvim",
       run = "WhichKey",
-      config = { 'require "user.whichkey"' },
+      config = function() require "user.whichkey" end,
       event = "VimEnter",
     },
     {
       "ghillb/cybu.nvim",
       event = "BufAdd",
-      config = { 'require "user.cybu"' },
+      config = function() require "user.cybu" end,
     },
     {
       "akinsho/bufferline.nvim",
       tag = "*",
       event = "BufAdd",
       requires = { "kyazdani42/nvim-web-devicons" },
-      config = { 'require "user.bufferline"' },
+      config = function() require "user.bufferline" end,
     },
     {
       "akinsho/toggleterm.nvim",
       cmd = { "ToggleTerm", "Git", "_LAZYGIT_TOGGLE", "_NCDU_TOGGLE", "_HTOP_TOGGLE" },
       module = "toggleterm",
-      config = { 'require "user.toggleterm"' },
+      config = function() require "user.toggleterm" end,
     },
     {
       "goolord/alpha-nvim",
-      config = { 'require "user.alpha"' },
+      config = function() require "user.alpha" end,
     },
     {
       "rcarriga/nvim-notify",
-      config = { 'require "user.notify"' },
+      config = function() require "user.notify" end,
     },
   }
 
   -- Autocompletion & Snippets
   use { -- snippets engine and source
-    { "hrsh7th/cmp-nvim-lsp", event = "BufWinEnter", module = "cmp_nvim_lsp" },
-    { "kevinm6/the-snippets", event = "BufWinEnter" },
-    { "L3MON4D3/LuaSnip", event = "VimEnter" },
+    { "hrsh7th/cmp-nvim-lsp", event = "VimEnter", module = "cmp_nvim_lsp" },
+    { "kevinm6/the-snippets", event = "VimEnter" },
+    { "L3MON4D3/LuaSnip", event = "BufAdd" },
     { "saadparwaiz1/cmp_luasnip", module = "luasnip" },
-    { "hrsh7th/cmp-buffer", event = "VimEnter" },
-    { "ray-x/cmp-treesitter", event = "VimEnter" },
-    { "hrsh7th/cmp-nvim-lsp-signature-help", event = "VimEnter" },
-    { "hrsh7th/cmp-nvim-lsp-document-symbol", event = "VimEnter" },
-    { "rcarriga/cmp-dap", event = "VimEnter" },
-    { "hrsh7th/cmp-path", event = "VimEnter" },
-    { "hrsh7th/cmp-cmdline", event = "VimEnter" },
-    { "tamago324/cmp-zsh", event = "VimEnter" },
-    { "hrsh7th/cmp-calc", event = "VimEnter" },
+    { "hrsh7th/cmp-buffer", event = "BufAdd" },
+    { "ray-x/cmp-treesitter", event = "BufAdd" },
+    { "hrsh7th/cmp-nvim-lsp-signature-help", event = "BufAdd" },
+    { "hrsh7th/cmp-nvim-lsp-document-symbol", event = "BufAdd" },
+    { "rcarriga/cmp-dap", event = "BufAdd" },
+    { "hrsh7th/cmp-path", event = "BufAdd" },
+    { "hrsh7th/cmp-cmdline", event = "BufAdd" },
+    { "tamago324/cmp-zsh", event = "BufAdd" },
+    { "hrsh7th/cmp-calc", event = "BufAdd" },
     { "kdheepak/cmp-latex-symbols", ft = "markdown" },
     { "hrsh7th/cmp-emoji", opt = true  },
     { "dmitmel/cmp-digraphs", opt = true },
     {
       "hrsh7th/nvim-cmp",
       event = "VimEnter",
-      config = { 'require "user.cmp"' },
+      config = function() require "user.cmp" end,
     }
   }
 
@@ -224,46 +224,46 @@ return packer.startup(function(use)
     {
       "kevinm6/nvim-gps",
       -- module = "nvim-gps",
-      event = "VimEnter",
-      config = { 'require "user.gps"' },
+      event = "BufAdd",
+      config = function() require "user.gps" end,
     },
     {
       "windwp/nvim-autopairs",
-      event = "BufWinEnter",
-      config = { 'require "user.autopairs"' },
+      event = "BufAdd",
+      config = function() require "user.autopairs" end,
     },
     {
       "Mephistophiles/surround.nvim",
-      event = "BufWinEnter",
-      config = { 'require "user.surround"' },
+      event = "BufAdd",
+      config = function() require "user.surround" end,
     },
     {
       "folke/todo-comments.nvim",
-      event = "BufWinEnter",
-      config = { 'require "user.todo-comments"' },
+      event = "BufAdd",
+      config = function() require "user.todo-comments" end,
     },
     {
       "numToStr/Comment.nvim",
-      event = "BufWinEnter",
-      config = { 'require "user.comment"' },
+      event = "BufAdd",
+      config = function() require "user.comment" end,
     },
     {
       "phaazon/hop.nvim",
-      event = "BufReadPost",
-      config = { 'require "user.hop"' },
+      event = "BufAdd",
+      config = function() require "user.hop" end,
     },
     {
       "michaelb/sniprun",
       run = "bash ./install.sh",
       event = "InsertLeave",
-      config = { 'require "user.sniprun"' },
+      config = function() require "user.sniprun" end,
     },
     {
       "simrat39/symbols-outline.nvim",
       event = "InsertLeave",
       cmd = "SymbolsOutline",
       requires = { "nvim-treesitter/nvim-treesitter" },
-      config = { 'require "user.symbol-outline"' },
+      config = function() require "user.symbol-outline" end,
     },
     {
       "folke/trouble.nvim",
@@ -290,7 +290,7 @@ return packer.startup(function(use)
       event = "BufReadPre",
       module = "treesitter",
       run = "TSUpdate",
-      config = { 'require "user.treesitter"' },
+      config = function() require "user.treesitter" end,
     },
   }
 
@@ -299,7 +299,7 @@ return packer.startup(function(use)
   use {
     "lewis6991/gitsigns.nvim",
     module = "gitsigns",
-    config = { 'require "user.gitsigns"' },
+    config = function() require "user.gitsigns" end,
   }
 
 
@@ -316,7 +316,7 @@ return packer.startup(function(use)
       module = "telescope",
       event = "BufWinEnter",
       requires = { "nvim-lua/plenary.nvim" },
-      config = { 'require "user.telescope"' },
+      config = function() require "user.telescope" end,
     }
   }
 
@@ -325,15 +325,18 @@ return packer.startup(function(use)
   use {
     {
       "neovim/nvim-lspconfig",
-      event = "BufAdd",
-      module = "lsp",
-      cmd = "LspInfo",
-      config = { 'require "user.lsp"' },
+      event = "VimEnter",
+      module = { "lsp", "lspconfig" },
+      cmd = { "LspInfo", "LspStart" },
+      config = function ()
+        require "user.lsp.lsp-installer"
+        require "user.lsp.init"
+      end
     },
     {
       "williamboman/nvim-lsp-installer",
-      event = "BufWinEnter",
-      module = "lsp-lspinstaller",
+      module = "nvim-lsp-installer",
+      -- event = "BufWinEnter",
     },
     { -- Java
       "mfussenegger/nvim-jdtls",
@@ -348,7 +351,7 @@ return packer.startup(function(use)
       "nanotee/sqls.nvim",
       -- module = "sqls",
       ft = { "sql", "mysql", "psql" },
-      config = { 'require "user.lsp.settings.sqls"' },
+      config = function() require "user.lsp.settings.sqls" end,
     },
 
     -- Json
@@ -388,7 +391,7 @@ return packer.startup(function(use)
       "ahmedkhalf/jupyter-nvim",
       run = ":UpdateRemotePlugins",
       ft = "ipynb",
-      config = { 'require ("jupyter-nvim").setup({})' },
+      config = function() require ("jupyter-nvim").setup({}) end,
     },
     {
       "jupyter-vim/jupyter-vim",
@@ -441,7 +444,7 @@ return packer.startup(function(use)
         "nvim-telescope/telescope.nvim"
       },
     opt = true,
-    config = { 'require "user.xbase"' },
+    config = function() require "user.xbase" end,
   }
 
   -- themes
