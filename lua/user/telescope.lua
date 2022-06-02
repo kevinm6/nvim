@@ -13,13 +13,13 @@ local icons = require "user.icons"
 
 local actions = require "telescope.actions"
 
-telescope.load_extension "fzf"
-telescope.load_extension "media_files"
-telescope.load_extension "packer"
-telescope.load_extension "project"
-telescope.load_extension "ui-select"
-telescope.load_extension "file_browser"
-telescope.load_extension "notify"
+-- telescope.load_extension "fzf"
+-- telescope.load_extension "media_files"
+-- telescope.load_extension "packer"
+-- telescope.load_extension "project"
+-- telescope.load_extension "ui-select"
+-- telescope.load_extension "file_browser"
+-- telescope.load_extension "notify"
 
 telescope.setup {
   defaults = {
@@ -127,6 +127,6 @@ telescope.setup {
 			}
 		},
       auto_replace_desc_with_cmd = false,
-    },
+  },
 }
 

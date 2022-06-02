@@ -64,11 +64,11 @@ dashboard.section.buttons.val = {
 }
 
 local footer = function()
-  local enabledPlugins = #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1))
-  local disabledPlugins = #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/opt", "*", 0, 1))
+  local plugins = #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)) +
+  #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/opt", "*", 0, 1))
 	local plugins_count = string.format(
-    "    %s %d Plugins, (%d inactive) \n\n",
-    icons.ui.Plugin, enabledPlugins, disabledPlugins
+    "           %s %d Plugins  \n\n",
+    icons.ui.Plugin, plugins
 	)
 
   local my_url =  "https://github.com/kevinm6/nvim"

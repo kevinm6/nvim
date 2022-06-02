@@ -30,7 +30,7 @@ local compile_path = p_util.join_paths(vim.fn.stdpath("config"), "plugin", "pack
 
 vim.api.nvim_create_autocmd("BufWritePost", {
  group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
- pattern = "user/plugins.lua",
+ pattern = "plugins.lua",
  callback = function()
    vim.cmd("source <afile>")
    packer.compile(compile_path)
@@ -92,36 +92,46 @@ packer.init {
   autoremove = false, -- Remove disabled or unused plugins without prompting the user
 }
 
---
--- local wk = require "which-key"
---
--- wk.register({
---  p = {
---    name = "Packer",
---    l = { ":PackerLoad ", "Load plugin" }
---  }
--- }, {
---  mode = "n", -- NORMAL mode
---  prefix = "<leader>",
---  buffer = nil,
---  silent = false,
---  noremap = true,
---  nowait = true,
--- })
 
 return packer.startup(function(use)
   -- Plugin/package manager (set packer manage itself)
-  use "wbthomason/packer.nvim"
+  use {
+    "wbthomason/packer.nvim",
+    config = function()
+      local custom_keymaps = {
+        -- Packer
+        p = {
+          name = "Packer",
+          C = { function() require("packer").compile() end, "Compile" },
+          c = { function() require("packer").clean() end, "Clean" },
+          i = { function() require("packer").install() end, "Install" },
+          S = { function() require("packer").sync() end, "Sync" },
+          s = { function() require("packer").status() end, "Status" },
+          u = { function() require("packer").update() end, "Update" },
+          l = { ":PackerLoad ", "Load"},
+        },
+      }
+      require("which-key").register(custom_keymaps, { prefix = "<leader>", silent = false })
+    end
+  }
 
   -- Utils plugins
   use {
-    "nvim-lua/plenary.nvim",
+    {
+      "nvim-lua/plenary.nvim",
+      module = "plenary"
+    },
     {
       "lewis6991/impatient.nvim",
       config = function() require "user.impatient" end,
     },
-    "nvim-lua/popup.nvim",
-    { "moll/vim-bbye", event = "VimEnter" },
+    {
+      "nvim-lua/popup.nvim",
+      module = "popup",
+      cmd = "require",
+    },
+
+    { "moll/vim-bbye", event = "BufAdd" },
     {
       "tweekmonster/startuptime.vim",
       cmd = "StartupTime",
@@ -163,6 +173,7 @@ return packer.startup(function(use)
     {
       "folke/which-key.nvim",
       run = "WhichKey",
+      module = "which-key",
       config = function() require "user.whichkey" end,
       event = "VimEnter",
     },
@@ -186,20 +197,28 @@ return packer.startup(function(use)
     },
     {
       "goolord/alpha-nvim",
+      event = "BufWinEnter",
       config = function() require "user.alpha" end,
     },
     {
       "rcarriga/nvim-notify",
+      module = { "nvim-notify", "telescope._extensions.notify" },
+      event = "BufWinEnter",
       config = function() require "user.notify" end,
     },
+    {
+      "AckslD/nvim-neoclip.lua",
+      event = "BufAdd",
+      config = function() require "user.neoclip" end,
+    }
   }
 
   -- Autocompletion & Snippets
   use { -- snippets engine and source
     { "hrsh7th/cmp-nvim-lsp", event = "VimEnter", module = "cmp_nvim_lsp" },
     { "kevinm6/the-snippets", event = "VimEnter" },
-    { "L3MON4D3/LuaSnip", event = "BufAdd" },
-    { "saadparwaiz1/cmp_luasnip", module = "luasnip" },
+    { "L3MON4D3/LuaSnip", event = "VimEnter" },
+    { "saadparwaiz1/cmp_luasnip", module = "luasnip", event = "BufAdd" },
     { "hrsh7th/cmp-buffer", event = "BufAdd" },
     { "ray-x/cmp-treesitter", event = "BufAdd" },
     { "hrsh7th/cmp-nvim-lsp-signature-help", event = "BufAdd" },
@@ -214,7 +233,7 @@ return packer.startup(function(use)
     { "dmitmel/cmp-digraphs", opt = true },
     {
       "hrsh7th/nvim-cmp",
-      event = "VimEnter",
+      event = "InsertEnter",
       config = function() require "user.cmp" end,
     }
   }
@@ -229,12 +248,13 @@ return packer.startup(function(use)
     },
     {
       "windwp/nvim-autopairs",
-      event = "BufAdd",
+      event = "InsertEnter",
       config = function() require "user.autopairs" end,
     },
     {
       "Mephistophiles/surround.nvim",
       event = "BufAdd",
+      module = "surround",
       config = function() require "user.surround" end,
     },
     {
@@ -267,27 +287,27 @@ return packer.startup(function(use)
     },
     {
       "folke/trouble.nvim",
+      module = "trouble",
       cmd = "TroubleToggle",
     },
     {
       "jose-elias-alvarez/null-ls.nvim",
       module = "null-ls",
-      cmd = "Format",
     },
   }
 
 
   -- Treesitter
   use {
-    { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufWinEnter" },
-    { "lewis6991/nvim-treesitter-context", event = "VimEnter" },
-    { "windwp/nvim-ts-autotag", event = "BufWinEnter" },
-    { "p00f/nvim-ts-rainbow", event = "BufWinEnter" },
-    { "nvim-treesitter/nvim-treesitter-refactor", event = "BufWinEnter" },
+    { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufAdd" },
+    { "lewis6991/nvim-treesitter-context", event = "BufAdd" },
+    { "windwp/nvim-ts-autotag", event = "BufAdd" },
+    { "p00f/nvim-ts-rainbow", event = "BufAdd" },
+    { "nvim-treesitter/nvim-treesitter-refactor", event = "BufAdd" },
     { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
     {
       "nvim-treesitter/nvim-treesitter",
-      event = "BufReadPre",
+      event = "VimEnter",
       module = "treesitter",
       run = "TSUpdate",
       config = function() require "user.treesitter" end,
@@ -299,22 +319,42 @@ return packer.startup(function(use)
   use {
     "lewis6991/gitsigns.nvim",
     module = "gitsigns",
+    event = "BufAdd",
     config = function() require "user.gitsigns" end,
   }
 
 
   -- Telescope
   use {
-    { "nvim-telescope/telescope-media-files.nvim", event = "BufWinEnter" },
-    "nvim-telescope/telescope-file-browser.nvim",
-    { "nvim-telescope/telescope-packer.nvim", event = "BufWinEnter" },
-    "nvim-telescope/telescope-ui-select.nvim",
-    { "nvim-telescope/telescope-project.nvim", event = "BufWinEnter" },
-    { "nvim-telescope/telescope-fzf-native.nvim", run = "make", event = "BufReadPre" },
+    {
+      "nvim-telescope/telescope-media-files.nvim",
+      cmd = "Telescope media_files",
+      module = "telescope._extensions.media_files",
+    },
+    {
+      "nvim-telescope/telescope-file-browser.nvim",
+      cmd = "Telescope file_browser",
+      module = "telescope._extensions.file_browser",
+    },
+    {
+      "nvim-telescope/telescope-packer.nvim",
+      cmd = "Telescope packer",
+      module = "telescope._extensions.packer",
+    },
+    {
+      "nvim-telescope/telescope-ui-select.nvim",
+      cmd = "Telescope ui-select",
+      module = "telescope._extensions.ui-select",
+    },
+    {
+      "nvim-telescope/telescope-project.nvim",
+      cmd = "Telescope project",
+      module = "telescope._extensions.project",
+    },
     {
       "nvim-telescope/telescope.nvim",
       module = "telescope",
-      event = "BufWinEnter",
+      cmd = "Telescope",
       requires = { "nvim-lua/plenary.nvim" },
       config = function() require "user.telescope" end,
     }
@@ -358,7 +398,8 @@ return packer.startup(function(use)
     {
       "b0o/SchemaStore.nvim",
       -- ft = "json",
-      module = "schemastore",
+      -- module = "schemastore",
+      ft = "json"
     },
   }
 
@@ -368,7 +409,7 @@ return packer.startup(function(use)
     {
       "mfussenegger/nvim-dap",
       module = "dap",
-      event = "BufReadPost",
+      event = "BufAdd",
     },
     {
       "theHamsta/nvim-dap-virtual-text",
