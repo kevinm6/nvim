@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 01/06/2022 - 21:29
+-- Last Modified: 02/06/2022 - 18:36
 --------------------------------------
 
 -- install packer if not found in default location
@@ -215,9 +215,9 @@ return packer.startup(function(use)
 
   -- Autocompletion & Snippets
   use { -- snippets engine and source
-    { "hrsh7th/cmp-nvim-lsp", event = "VimEnter", module = "cmp_nvim_lsp" },
+    { "hrsh7th/cmp-nvim-lsp", event = "BufAdd", module = "cmp_nvim_lsp" },
     { "kevinm6/the-snippets", event = "VimEnter" },
-    { "L3MON4D3/LuaSnip", event = "VimEnter" },
+    { "L3MON4D3/LuaSnip", event = "BufAdd" },
     { "saadparwaiz1/cmp_luasnip", module = "luasnip", event = "BufAdd" },
     { "hrsh7th/cmp-buffer", event = "BufAdd" },
     { "ray-x/cmp-treesitter", event = "BufAdd" },
@@ -365,9 +365,9 @@ return packer.startup(function(use)
   use {
     {
       "neovim/nvim-lspconfig",
-      event = "VimEnter",
+      event = "BufAdd",
       module = { "lsp", "lspconfig" },
-      cmd = { "LspInfo", "LspStart" },
+      cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
       config = function ()
         require "user.lsp.lsp-installer"
         require "user.lsp.init"
@@ -376,7 +376,6 @@ return packer.startup(function(use)
     {
       "williamboman/nvim-lsp-installer",
       module = "nvim-lsp-installer",
-      -- event = "BufWinEnter",
     },
     { -- Java
       "mfussenegger/nvim-jdtls",
