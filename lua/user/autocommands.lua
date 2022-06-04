@@ -135,3 +135,5 @@ local Note = function()
 end
 
 command("Note", Note, { desc = "Create a Note buffer" })
+
+command("RemoveTrailingSpaces", [[%s/\s\+$//e]], { desc = "Remove extra trailing white spaces" })

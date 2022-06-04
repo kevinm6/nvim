@@ -1,0 +1,595 @@
+Total Time:   55.510 -- Flawless Victory
+
+
+Slowest 6 plugins (out of 6)~
+          [vimrc]	43.308  
+        [runtime]	11.733  
+          matchit	0.261   
+        [unknown]	0.115   
+nvim-web-devicons	0.063   
+   which-key.nvim	0.031   
+
+Phase Detail:~
+
+init default autocommands (13.097)~
+12.952    [vimrc] >
+	9.207     /Users/Kevin/.config/nvim/init.lua
+	3.745     /Users/Kevin/.config/nvim/colors/k_theme.lua
+<
+0.146     [runtime] >
+	0.097     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+	0.049     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+<
+
+sourcing vimrc file(s) (42.350)~
+30.356    [vimrc] >
+	30.356    /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+<
+11.587    [runtime] >
+	7.416     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+	1.582     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+	0.448     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+	0.372     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+	0.300     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+	0.240     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+	0.222     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+	0.208     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+	0.161     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+	0.123     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+	0.112     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+	0.112     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+	0.110     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+	0.071     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+	0.046     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+	0.037     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+	0.027     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+<
+0.261     matchit >
+	0.261     /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+<
+0.115     [unknown] >
+	0.095     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+	0.020     /Users/Kevin/.local/share/nvim/rplugin.vim
+<
+0.031     which-key.nvim >
+	0.031     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+<
+
+clearing screen (0.063)~
+0.063     nvim-web-devicons >
+	0.063     /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+<
+
+
+================================== FULL LOGS ==================================
+
+Log 1/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.007  000.007: --- NVIM STARTING ---
+  000.766  000.759: locale set
+  001.286  000.520: inits 1
+  001.323  000.037: window checked
+  001.339  000.016: parsing arguments
+  005.650  004.311: expanding arguments
+  005.731  000.081: inits 2
+  006.230  000.499: init highlight
+  006.257  000.027: init default mappings
+  006.318  000.061: init default autocommands
+  007.508  000.091  000.091: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.711  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.620  003.850  003.850: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  020.567  012.767  008.917: sourcing /Users/Kevin/.config/nvim/init.lua
+  020.578  001.354: sourcing vimrc file(s)
+  020.846  000.086  000.086: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  028.057  007.094  007.094: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  028.514  000.108  000.108: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  028.693  000.467  000.359: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  031.072  000.219  000.219: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  031.196  000.025  000.025: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  031.357  000.070  000.070: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  032.804  000.246  000.246: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  033.138  001.688  001.442: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  033.432  000.195  000.195: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  033.959  000.426  000.426: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  034.384  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  034.395  000.316  000.296: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  034.608  000.105  000.105: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  034.759  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  035.012  000.153  000.153: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  035.234  000.117  000.117: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  035.370  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  035.731  000.207  000.207: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  063.713  000.031  000.031: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  066.056  000.099  000.099: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  066.070  030.020  029.890: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  067.010  005.166: loading rtp plugins
+  067.665  000.654: loading packages
+  068.758  001.093: loading after plugins
+  068.773  000.015: inits 3
+  075.170  006.397: reading ShaDa
+  075.185  000.015: clearing screen
+  090.040  000.061  000.061: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  100.937  025.690: opening buffers
+  101.285  000.348: BufEnter autocommands
+  101.293  000.008: editing files in windows
+<
+Log 2/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.006  000.006: --- NVIM STARTING ---
+  000.768  000.761: locale set
+  001.262  000.494: inits 1
+  001.296  000.035: window checked
+  001.312  000.016: parsing arguments
+  005.778  004.466: expanding arguments
+  005.863  000.085: inits 2
+  006.374  000.511: init highlight
+  006.404  000.030: init default mappings
+  006.469  000.066: init default autocommands
+  007.688  000.097  000.097: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.893  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.396  003.745  003.745: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  020.524  012.542  008.798: sourcing /Users/Kevin/.config/nvim/init.lua
+  020.536  001.378: sourcing vimrc file(s)
+  020.820  000.087  000.087: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  028.098  007.160  007.160: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  028.565  000.112  000.112: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  028.751  000.480  000.368: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  031.313  000.245  000.245: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  031.447  000.027  000.027: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  031.615  000.071  000.071: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  033.157  000.259  000.259: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  033.502  001.787  001.529: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  033.841  000.235  000.235: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  034.435  000.477  000.477: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  034.909  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  034.921  000.322  000.303: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  035.141  000.117  000.117: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  035.300  000.046  000.046: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  035.564  000.156  000.156: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  035.790  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  035.932  000.038  000.038: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  036.295  000.210  000.210: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  064.903  000.031  000.031: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  067.407  000.096  000.096: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  067.420  030.756  030.629: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  068.350  005.482: loading rtp plugins
+  069.007  000.658: loading packages
+  070.105  001.098: loading after plugins
+  070.120  000.015: inits 3
+  076.477  006.357: reading ShaDa
+  076.491  000.014: clearing screen
+  091.423  000.062  000.062: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  102.331  025.778: opening buffers
+  102.481  000.150: BufEnter autocommands
+  102.489  000.008: editing files in windows
+<
+Log 3/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.008  000.008: --- NVIM STARTING ---
+  000.772  000.764: locale set
+  001.262  000.490: inits 1
+  001.296  000.034: window checked
+  001.310  000.015: parsing arguments
+  004.863  003.552: expanding arguments
+  004.953  000.090: inits 2
+  005.691  000.738: init highlight
+  005.761  000.070: init default mappings
+  005.906  000.145: init default autocommands
+  007.508  000.104  000.104: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.712  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.057  003.454  003.454: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  020.957  013.158  009.704: sourcing /Users/Kevin/.config/nvim/init.lua
+  020.981  001.765: sourcing vimrc file(s)
+  021.425  000.130  000.130: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  029.379  007.731  007.731: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  029.956  000.121  000.121: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  030.150  000.561  000.439: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  032.870  000.272  000.272: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  033.015  000.030  000.030: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  033.194  000.076  000.076: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  034.837  000.276  000.276: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  035.154  001.854  001.578: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  035.557  000.300  000.300: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  036.329  000.481  000.481: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  036.795  000.024  000.024: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  036.808  000.340  000.316: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  037.028  000.107  000.107: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  037.192  000.047  000.047: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  037.458  000.157  000.157: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  037.696  000.125  000.125: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  037.843  000.039  000.039: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  038.212  000.207  000.207: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  066.224  000.030  000.030: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  068.596  000.093  000.093: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  068.610  030.051  029.927: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  069.532  006.046: loading rtp plugins
+  070.185  000.654: loading packages
+  071.273  001.088: loading after plugins
+  071.289  000.016: inits 3
+  077.665  006.376: reading ShaDa
+  077.678  000.013: clearing screen
+  092.116  000.061  000.061: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  103.208  025.469: opening buffers
+  103.414  000.206: BufEnter autocommands
+  103.423  000.009: editing files in windows
+<
+Log 4/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.007  000.007: --- NVIM STARTING ---
+  000.765  000.758: locale set
+  001.257  000.493: inits 1
+  001.291  000.034: window checked
+  001.305  000.015: parsing arguments
+  005.552  004.246: expanding arguments
+  005.631  000.079: inits 2
+  006.133  000.501: init highlight
+  006.163  000.030: init default mappings
+  006.228  000.065: init default autocommands
+  007.448  000.095  000.095: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.655  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.560  003.599  003.599: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  020.998  013.255  009.656: sourcing /Users/Kevin/.config/nvim/init.lua
+  021.010  001.384: sourcing vimrc file(s)
+  021.330  000.127  000.127: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  030.745  009.296  009.296: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  031.258  000.123  000.123: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  031.467  000.531  000.407: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  034.128  000.266  000.266: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  034.278  000.028  000.028: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  034.454  000.078  000.078: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  036.003  000.250  000.250: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  036.347  001.792  001.542: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  036.668  000.216  000.216: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  037.216  000.442  000.442: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  037.655  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  037.667  000.321  000.300: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  037.886  000.112  000.112: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  038.048  000.046  000.046: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  038.335  000.170  000.170: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  038.560  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  038.697  000.036  000.036: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  039.058  000.208  000.208: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  067.555  000.031  000.031: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  069.950  000.092  000.092: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  069.964  030.553  030.429: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  070.897  005.547: loading rtp plugins
+  071.550  000.653: loading packages
+  072.643  001.093: loading after plugins
+  072.658  000.014: inits 3
+  079.188  006.530: reading ShaDa
+  079.206  000.018: clearing screen
+  094.305  000.063  000.063: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  105.255  025.986: opening buffers
+  105.426  000.172: BufEnter autocommands
+  105.433  000.007: editing files in windows
+<
+Log 5/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.007  000.007: --- NVIM STARTING ---
+  000.766  000.759: locale set
+  001.281  000.515: inits 1
+  001.319  000.038: window checked
+  001.334  000.016: parsing arguments
+  005.678  004.343: expanding arguments
+  005.758  000.080: inits 2
+  006.261  000.504: init highlight
+  006.291  000.029: init default mappings
+  006.355  000.064: init default autocommands
+  007.577  000.095  000.095: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.780  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  020.166  004.325  004.325: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  021.436  013.567  009.243: sourcing /Users/Kevin/.config/nvim/init.lua
+  021.451  001.386: sourcing vimrc file(s)
+  021.759  000.096  000.096: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  029.340  007.458  007.458: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  029.799  000.113  000.113: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  029.981  000.470  000.357: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  032.742  000.247  000.247: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  032.874  000.027  000.027: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  033.034  000.068  000.068: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  035.575  000.364  000.364: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  035.962  002.836  002.473: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  036.342  000.269  000.269: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  037.036  000.540  000.540: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  037.511  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  037.522  000.355  000.335: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  037.832  000.139  000.139: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  038.030  000.053  000.053: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  038.351  000.213  000.213: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  038.641  000.165  000.165: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  038.796  000.041  000.041: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  039.170  000.222  000.222: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  067.733  000.030  000.030: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  070.132  000.096  000.096: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  070.144  030.645  030.519: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  071.070  005.776: loading rtp plugins
+  071.727  000.656: loading packages
+  072.823  001.097: loading after plugins
+  072.837  000.014: inits 3
+  079.273  006.435: reading ShaDa
+  079.288  000.015: clearing screen
+  094.333  000.061  000.061: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  105.317  025.968: opening buffers
+  105.459  000.141: BufEnter autocommands
+  105.465  000.007: editing files in windows
+<
+Log 6/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.008  000.008: --- NVIM STARTING ---
+  000.798  000.790: locale set
+  001.306  000.507: inits 1
+  001.340  000.034: window checked
+  001.353  000.013: parsing arguments
+  005.043  003.691: expanding arguments
+  005.124  000.080: inits 2
+  005.616  000.492: init highlight
+  005.645  000.030: init default mappings
+  005.712  000.067: init default autocommands
+  007.013  000.097  000.097: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.217  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  018.778  003.693  003.693: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  019.750  012.445  008.752: sourcing /Users/Kevin/.config/nvim/init.lua
+  019.761  001.458: sourcing vimrc file(s)
+  020.027  000.086  000.086: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  027.094  006.952  006.952: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  027.551  000.111  000.111: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  027.732  000.465  000.355: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  030.254  000.235  000.235: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  030.382  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  030.542  000.070  000.070: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  031.995  000.241  000.241: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  032.328  001.693  001.452: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  032.622  000.195  000.195: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  033.147  000.423  000.423: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  033.563  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  033.574  000.309  000.289: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  033.780  000.104  000.104: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  033.934  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  034.188  000.148  000.148: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  034.415  000.119  000.119: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  034.553  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  034.913  000.209  000.209: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  063.502  000.031  000.031: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  066.000  000.093  000.093: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  066.026  030.796  030.672: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  066.959  005.286: loading rtp plugins
+  067.615  000.656: loading packages
+  068.703  001.089: loading after plugins
+  068.718  000.014: inits 3
+  075.251  006.533: reading ShaDa
+  075.269  000.018: clearing screen
+  090.460  000.066  000.066: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  101.364  026.029: opening buffers
+  101.495  000.131: BufEnter autocommands
+  101.502  000.007: editing files in windows
+<
+Log 7/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.007  000.007: --- NVIM STARTING ---
+  001.411  001.404: locale set
+  001.953  000.543: inits 1
+  001.995  000.041: window checked
+  002.009  000.014: parsing arguments
+  006.002  003.993: expanding arguments
+  006.085  000.083: inits 2
+  006.595  000.510: init highlight
+  006.624  000.028: init default mappings
+  006.694  000.070: init default autocommands
+  007.911  000.094  000.094: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  008.112  000.048  000.048: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.573  003.456  003.456: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  021.005  012.806  009.350: sourcing /Users/Kevin/.config/nvim/init.lua
+  021.018  001.377: sourcing vimrc file(s)
+  021.293  000.091  000.091: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  028.553  007.143  007.143: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  029.008  000.111  000.111: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  029.190  000.468  000.357: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  031.565  000.223  000.223: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  031.690  000.025  000.025: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  031.850  000.070  000.070: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  033.299  000.251  000.251: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  033.633  001.689  001.438: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  033.933  000.201  000.201: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  034.459  000.427  000.427: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  034.872  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  034.884  000.304  000.285: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  035.088  000.103  000.103: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  035.243  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  035.499  000.150  000.150: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  035.725  000.117  000.117: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  035.863  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  036.220  000.205  000.205: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  064.513  000.033  000.033: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  067.147  000.094  000.094: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  067.160  030.623  030.496: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  068.080  005.141: loading rtp plugins
+  068.736  000.656: loading packages
+  069.838  001.103: loading after plugins
+  069.852  000.014: inits 3
+  076.389  006.537: reading ShaDa
+  076.403  000.014: clearing screen
+  091.802  000.063  000.063: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  103.067  026.601: opening buffers
+  103.200  000.132: BufEnter autocommands
+  103.206  000.007: editing files in windows
+<
+Log 8/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.007  000.007: --- NVIM STARTING ---
+  000.771  000.764: locale set
+  001.314  000.543: inits 1
+  001.408  000.094: window checked
+  001.447  000.039: parsing arguments
+  006.367  004.921: expanding arguments
+  006.447  000.079: inits 2
+  006.942  000.495: init highlight
+  006.972  000.030: init default mappings
+  007.037  000.065: init default autocommands
+  008.242  000.096  000.096: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  008.446  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  020.991  003.665  003.665: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  022.337  013.802  010.136: sourcing /Users/Kevin/.config/nvim/init.lua
+  022.348  001.364: sourcing vimrc file(s)
+  022.663  000.132  000.132: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  029.812  007.031  007.031: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  030.267  000.107  000.107: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  030.451  000.466  000.359: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  032.991  000.238  000.238: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  033.120  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  033.278  000.067  000.067: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  034.748  000.243  000.243: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  035.093  001.721  001.478: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  035.394  000.202  000.202: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  035.915  000.418  000.418: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  036.338  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  036.349  000.310  000.291: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  036.561  000.106  000.106: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  036.718  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  036.980  000.156  000.156: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  037.205  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  037.346  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  037.705  000.205  000.205: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  066.209  000.031  000.031: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  068.405  000.097  000.097: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  068.418  030.392  030.264: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  069.348  005.331: loading rtp plugins
+  070.000  000.652: loading packages
+  071.088  001.089: loading after plugins
+  071.103  000.014: inits 3
+  077.541  006.438: reading ShaDa
+  077.555  000.014: clearing screen
+  092.689  000.063  000.063: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  103.701  026.083: opening buffers
+  103.834  000.133: BufEnter autocommands
+  103.842  000.007: editing files in windows
+<
+Log 9/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.007  000.007: --- NVIM STARTING ---
+  000.763  000.756: locale set
+  001.299  000.536: inits 1
+  001.338  000.038: window checked
+  001.354  000.016: parsing arguments
+  005.490  004.136: expanding arguments
+  005.569  000.079: inits 2
+  006.075  000.506: init highlight
+  006.103  000.028: init default mappings
+  006.165  000.062: init default autocommands
+  007.351  000.093  000.093: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.553  000.049  000.049: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.641  003.967  003.967: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  020.593  012.949  008.981: sourcing /Users/Kevin/.config/nvim/init.lua
+  020.604  001.348: sourcing vimrc file(s)
+  020.870  000.084  000.084: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  028.182  007.197  007.197: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  028.634  000.106  000.106: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  028.817  000.467  000.360: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  031.196  000.229  000.229: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  031.320  000.025  000.025: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  031.480  000.070  000.070: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  032.927  000.239  000.239: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  033.260  001.685  001.446: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  033.557  000.197  000.197: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  034.084  000.425  000.425: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  034.511  000.019  000.019: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  034.523  000.318  000.298: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  034.733  000.103  000.103: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  034.887  000.044  000.044: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  035.149  000.153  000.153: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  035.373  000.118  000.118: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  035.511  000.036  000.036: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  035.870  000.203  000.203: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  064.369  000.032  000.032: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  066.571  000.096  000.096: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  066.584  030.396  030.268: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  067.506  005.152: loading rtp plugins
+  068.160  000.654: loading packages
+  069.254  001.094: loading after plugins
+  069.268  000.014: inits 3
+  075.676  006.408: reading ShaDa
+  075.690  000.014: clearing screen
+  090.468  000.062  000.062: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  101.355  025.602: opening buffers
+  101.507  000.153: BufEnter autocommands
+  101.514  000.007: editing files in windows
+<
+Log 10/10 >
+  times in msec
+   clock   self+sourced   self:  sourced script
+   clock   elapsed:              other lines
+  
+  000.007  000.007: --- NVIM STARTING ---
+  000.770  000.763: locale set
+  001.267  000.498: inits 1
+  001.302  000.035: window checked
+  001.318  000.015: parsing arguments
+  004.971  003.653: expanding arguments
+  005.063  000.092: inits 2
+  005.801  000.738: init highlight
+  005.863  000.062: init default mappings
+  005.972  000.109: init default autocommands
+  007.551  000.106  000.106: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/ftplugin.vim
+  007.764  000.051  000.051: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/indent.vim
+  019.109  003.692  003.692: sourcing /Users/Kevin/.config/nvim/colors/k_theme.lua
+  020.085  012.223  008.532: sourcing /Users/Kevin/.config/nvim/init.lua
+  020.097  001.744: sourcing vimrc file(s)
+  020.518  000.200  000.200: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.lua
+  027.751  007.102  007.102: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/filetype.vim
+  028.189  000.105  000.105: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/synload.vim
+  028.370  000.462  000.357: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/syntax/syntax.vim
+  030.838  000.228  000.228: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/gzip.vim
+  030.971  000.026  000.026: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/health.vim
+  031.142  000.073  000.073: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/man.vim
+  032.594  000.242  000.242: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+  032.921  001.682  001.440: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchit.vim
+  033.225  000.206  000.206: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/matchparen.vim
+  033.747  000.419  000.419: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/netrwPlugin.vim
+  034.160  000.020  000.020: sourcing /Users/Kevin/.local/share/nvim/rplugin.vim
+  034.171  000.307  000.287: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/rplugin.vim
+  034.385  000.106  000.106: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/shada.vim
+  034.540  000.047  000.047: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/spellfile.vim
+  034.805  000.156  000.156: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tarPlugin.vim
+  035.030  000.119  000.119: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tohtml.vim
+  035.170  000.037  000.037: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/tutor.vim
+  035.527  000.203  000.203: sourcing /usr/local/Cellar/neovim/0.7.0/share/nvim/runtime/plugin/zipPlugin.vim
+  064.154  000.030  000.030: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/which-key.nvim/plugin/which-key.vim
+  066.538  000.092  000.092: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/vim-kitty/ftdetect/kitty.vim
+  066.552  030.589  030.467: sourcing /Users/Kevin/.config/nvim/plugin/packer_compiled.lua
+  067.479  005.420: loading rtp plugins
+  068.134  000.656: loading packages
+  069.250  001.116: loading after plugins
+  069.267  000.017: inits 3
+  075.689  006.422: reading ShaDa
+  075.704  000.015: clearing screen
+  090.797  000.064  000.064: sourcing /Users/Kevin/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons/plugin/nvim-web-devicons.vim
+  101.772  026.005: opening buffers
+  101.946  000.174: BufEnter autocommands
+  101.953  000.007: editing files in windows
+<

@@ -307,7 +307,7 @@ return packer.startup(function(use)
     { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
     {
       "nvim-treesitter/nvim-treesitter",
-      event = "VimEnter",
+      event = "BufAdd",
       module = "treesitter",
       run = "TSUpdate",
       config = function() require "user.treesitter" end,
