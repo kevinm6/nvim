@@ -245,7 +245,7 @@ local leader_maps = {
       "Blame"
     },
     g = {
-      function() _LAZYGIT_TOGGLE() end,
+      function() vim.cmd "Git" end,
       "Lazygit"
     },
     p = {

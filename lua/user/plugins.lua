@@ -191,7 +191,7 @@ return packer.startup(function(use)
     },
     {
       "akinsho/toggleterm.nvim",
-      cmd = { "ToggleTerm", "Git", "_LAZYGIT_TOGGLE", "_NCDU_TOGGLE", "_HTOP_TOGGLE" },
+      cmd = { "ToggleTerm", "Git" },
       module = "toggleterm",
       config = function() require "user.toggleterm" end,
     },
