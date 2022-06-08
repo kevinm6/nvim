@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 02/06/2022 - 18:36
+-- Last Modified: 08 Jun 2022, 08:48
 --------------------------------------
 
 -- install packer if not found in default location
@@ -308,7 +308,7 @@ return packer.startup(function(use)
     {
       "nvim-treesitter/nvim-treesitter",
       event = "BufAdd",
-      module = "treesitter",
+      module = { "treesitter", "lspconfig" },
       run = "TSUpdate",
       config = function() require "user.treesitter" end,
     },

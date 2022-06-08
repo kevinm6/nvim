@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 29/05/2022 - 10:37
+-- Last Modified: 07 Jun 2022, 10:49
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -29,6 +29,33 @@ autocmd({ "TextYankPost" }, {
 		vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 200, on_macro = true })
 	end,
 })
+
+-- If buffer modified, update any 'Last modified: ' in the first 10 lines.
+-- Restores cursor and window position using save_cursor variable.
+autocmd({ "BufWritePre" }, {
+  group = _general_settings,
+  pattern = "*",
+  callback = function()
+    if vim.opt_local.modified._value == true then
+      local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+      vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
+      vim.fn.histdel('search', -1)
+      vim.api.nvim_win_set_cursor(0, cursor_pos)
+    end
+  end,
+})
+
+local UpdateTimestamp = function()
+  if vim.opt_local.modified._value == true then
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+    vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
+    vim.fn.histdel('search', -1)
+    vim.api.nvim_win_set_cursor(0, cursor_pos)
+  end
+end
+command("UpdateTimestamp", UpdateTimestamp, { desc = "Update timestamp in file information" })
 
 -- Autocommand for Statusline & WinBar
 -- Using CursorMoved to nvim-gps
