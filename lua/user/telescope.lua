@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 24/05/2022, 09:11
+-- Last Modified: 12 Jun 2022, 13:41
 -------------------------------------
 
 
@@ -126,7 +126,7 @@ telescope.setup {
 				height = .5
 			}
 		},
-      auto_replace_desc_with_cmd = false,
+    auto_replace_desc_with_cmd = false,
   },
 }
 

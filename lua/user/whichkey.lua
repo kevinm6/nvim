@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 02/06/22, 10:26
+-- Last Modified: 10 Jun 2022, 13:21
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -556,6 +556,10 @@ local leader_maps = {
     },
     e = { "<cmd>edit $NVIMDOTDIR/init.lua<CR>", "Edit Neovim config file" },
     ["%"] = { "<cmd>source %<CR>", "Source current buffer" },
+    S = {
+      "<cmd>source ~/.config/nvim/lua/user/luasnip.lua<CR>",
+      "Reload custom snippets"
+    }
   },
 }
 

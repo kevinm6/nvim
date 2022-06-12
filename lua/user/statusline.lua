@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 29/05/2022 - 10:37
+-- Last Modified: 12 Jun 2022, 13:46
 -------------------------------------
 
 local S = {}
@@ -116,6 +116,7 @@ local function nvim_gps()
   if not gps_ok then
     -- Recall import of nvim-gps if is not already loaded as Plugin
     gps_ok, gps = pcall(require, "nvim-gps")
+    return ""
   end
 
   local gps_loc = not gps_ok and icons.ui.Error or gps.is_available() and gps.get_location() or ""

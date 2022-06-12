@@ -2,7 +2,7 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file, to manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 22/05/2022 - 14:14
+-- Last Modified: 12 Jun 2022, 15:10
 --------------------------------------
 
 local M = {}
@@ -37,6 +37,7 @@ M.setup = function()
       prefix = icons.lsp.nvim_lsp.." ",
     },
   }
+
 
   vim.diagnostic.open_float = (function(orig)
     return function(bufnr, opts)

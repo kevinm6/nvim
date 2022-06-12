@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 21/05/2022 - 09:56
+-- Last Modified: 08 Jun 2022, 09:05
 -------------------------------------
 
 -- CURSOR {
@@ -80,7 +80,7 @@ local options = {
 	undofile = true, -- enable undo
 	backup = false, -- disable backups
 	swapfile = false, -- disable swaps
-	undodir = vim.fn.expand "~/.cache/nvim/tmp/undo",
+	undodir = vim.fn.expand "~/.cache/nvim/nvim_tmp/undo",
 
 	-- SEARCH
 	smartcase = true, -- smart case for search

@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 08 Jun 2022, 08:48
+-- Last Modified: 12 Jun 2022, 16:11
 --------------------------------------
 
 -- install packer if not found in default location
@@ -19,28 +19,15 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   }
 end
 
-local icons = require "user.icons"
-
 -- PLUGINS
 local ok, packer = pcall(require, "packer")
 if not ok then return end
 
 local p_util = require "packer.util"
-local compile_path = p_util.join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua")
+local compile_path = p_util.join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua")
 
-vim.api.nvim_create_autocmd("BufWritePost", {
- group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
- pattern = "plugins.lua",
- callback = function()
-   vim.cmd("source <afile>")
-   packer.compile(compile_path)
+local icons = require "user.icons"
 
-   vim.notify(
-   " Plugins file update & compiled !", "Info", {
-     title = "Packer",
-   })
- end,
-})
 
 packer.init {
   package_root = p_util.join_paths(vim.fn.stdpath("data"), "site", "pack"),
@@ -118,12 +105,12 @@ return packer.startup(function(use)
   -- Utils plugins
   use {
     {
-      "nvim-lua/plenary.nvim",
-      module = "plenary"
-    },
-    {
       "lewis6991/impatient.nvim",
       config = function() require "user.impatient" end,
+    },
+    {
+      "nvim-lua/plenary.nvim",
+      module = "plenary"
     },
     {
       "nvim-lua/popup.nvim",
@@ -131,7 +118,7 @@ return packer.startup(function(use)
       cmd = "require",
     },
 
-    { "moll/vim-bbye", event = "BufAdd" },
+    { "moll/vim-bbye", event = "BufUnload", cmd = { "Bdelete", "Bwipeout" } },
     {
       "tweekmonster/startuptime.vim",
       cmd = "StartupTime",
@@ -217,7 +204,12 @@ return packer.startup(function(use)
   use { -- snippets engine and source
     { "hrsh7th/cmp-nvim-lsp", event = "BufAdd", module = "cmp_nvim_lsp" },
     { "kevinm6/the-snippets", event = "VimEnter" },
-    { "L3MON4D3/LuaSnip", event = "BufAdd" },
+    {
+      "L3MON4D3/LuaSnip",
+      event = "BufAdd",
+      module = "luasnip",
+      config = function () require "user.luasnip" end,
+    },
     { "saadparwaiz1/cmp_luasnip", module = "luasnip", event = "BufAdd" },
     { "hrsh7th/cmp-buffer", event = "BufAdd" },
     { "ray-x/cmp-treesitter", event = "BufAdd" },
@@ -242,7 +234,7 @@ return packer.startup(function(use)
   use {
     {
       "kevinm6/nvim-gps",
-      -- module = "nvim-gps",
+      module = "nvim-gps",
       event = "BufAdd",
       config = function() require "user.gps" end,
     },
@@ -299,19 +291,19 @@ return packer.startup(function(use)
 
   -- Treesitter
   use {
-    { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufAdd" },
-    { "lewis6991/nvim-treesitter-context", event = "BufAdd" },
-    { "windwp/nvim-ts-autotag", event = "BufAdd" },
-    { "p00f/nvim-ts-rainbow", event = "BufAdd" },
-    { "nvim-treesitter/nvim-treesitter-refactor", event = "BufAdd" },
-    { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
+    { "JoosepAlviste/nvim-ts-context-commentstring", module = "user.treesitter" },
+    { "lewis6991/nvim-treesitter-context", module = { "treesitter-context", "user.treesitter" } },
+    { "windwp/nvim-ts-autotag", module = "user.treesitter" },
+    { "p00f/nvim-ts-rainbow", module = "user.treesitter" },
+    { "nvim-treesitter/nvim-treesitter-refactor", module = "user.treesitter" },
     {
       "nvim-treesitter/nvim-treesitter",
-      event = "BufAdd",
-      module = { "treesitter", "lspconfig" },
+      event = "BufWinEnter",
+      module = { "treesitter", "telescope", "lsp" },
       run = "TSUpdate",
       config = function() require "user.treesitter" end,
     },
+    { "nvim-treesitter/playground", cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" } },
   }
 
 

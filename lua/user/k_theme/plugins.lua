@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 18/05/2022 - 13:20
+--  Last Modified: 12 Jun 2022, 16:05
 -------------------------------------
 
 local base = require "user.k_theme.base"
@@ -118,6 +118,8 @@ local plugins = {
   CmpItemKindText = base.k_themeFg0,
   CmpItemKindValue = base.k_themeOrange,
   CmpItemKindVariable = base.k_themeBlue,
+  LuasnipChoiceNode = { fg = "#ff8800", bg = "grey15" },
+  LuasnipInsertNode = { fg = "#4fc1ff", bg = "grey15" },
   -- LSP
   LspCodeLens = base.k_themeGray,
   LspReferenceText = { fg = "#AAAAAA" , bg = "#3c3c3c" },

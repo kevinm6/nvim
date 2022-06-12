@@ -2,8 +2,19 @@
 -- File         : vars.lua
 -- Description  : NeoVim & VimR global vars
 -- Author       : Kevin
--- Last Modified: 16/04/2022 - 18:33
+-- Last Modified: 12 Jun 2022, 13:30
 -------------------------------------
+
+_G.__luacache_config = {
+  chunks = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/impatient/luacache_chunks',
+  },
+  modpaths = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/impatient/luacache_modpaths',
+  }
+}
 
 -- embedded script highlighting
 vim.g.vimsyn_embed = "lP"
@@ -12,6 +23,11 @@ vim.g.vimsyn_embed = "lP"
 vim.g.python3_host_prog = "/usr/local/bin/python3.9"
 -- }
 
+-- Ruby (disable the provider)
+vim.g.loaded_ruby_provider = 0
+
+-- Perl (disable the provider)
+vim.g.loaded_perl_provider = 0
 
 -- Database
 vim.g.sql_type_default = "postgresql"

@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 07 Jun 2022, 10:49
+-- Last Modified: 12 Jun 2022, 16:04
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -106,6 +106,20 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
 --
 --    end,
 --  })
+
+autocmd("BufWritePost", {
+ group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
+ pattern = "*/nvim/lua/user/plugins.lua",
+ callback = function()
+   vim.cmd "source <afile>"
+   require("packer").compile()
+
+   vim.notify(
+   " Plugins file update & compiled !", "Info", {
+     title = "Packer",
+   })
+ end,
+})
 
 autocmd({ "BufNewFile", "BufRead" }, {
 	group = augroup("_markdown", { clear = true }),

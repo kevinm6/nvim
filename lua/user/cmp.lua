@@ -2,41 +2,23 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 25/05/2022 - 09:08
+-- Last Modified: 12 Jun 2022, 15:19
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
-local luasnip_ok, luasnip = pcall(require, "luasnip")
 local cmd_dap_ok, cmp_dap = pcall(require, "cmp_dap")
+local ls_ok, ls = pcall(require, "luasnip")
 
-if (not cmp_ok) or
-  (not luasnip_ok) or
-  (not cmd_dap_ok) then return end
+if (not cmp_ok) or (not cmd_dap_ok) or (not ls_ok) then return end
 
 local icons = require "user.icons"
 local icons_kind = icons.kind
-
--- Sources for snippets
-require("luasnip.loaders.from_vscode").lazy_load()
-
--- Luasnip Configuration
-luasnip.config.set_config {
-	history = true,
-	updateevents = "TextChanged, TextChangedI",
-	delete_check_events = "TextChanged",
-}
-
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 
 -- Cmp Configuration
 cmp.setup {
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body)
+			ls.lsp_expand(args.body)
 		end,
 	},
 
@@ -49,91 +31,79 @@ cmp.setup {
 
 		["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
 
+		["<C-n>"] = cmp.mapping(function()
+      if ls.choice_active() then
+        ls.change_choice(-1)
+      end
+		end, { "i", "s" }),
+
+		["<C-p>"] = cmp.mapping(function()
+      if ls.choice_active() then
+        ls.change_choice(-1)
+      end
+		end, { "i", "s" }),
+
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
 
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
 
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 
-    ['<C-l>'] = cmp.mapping(function(fallback)
+    ["<C-l>"] = cmp.mapping(function()
       if cmp.visible() then
-        return cmp.complete_common_string()
+        cmp.complete_common_string()
+      elseif ls.expand_or_jumpable() then
+        ls.expand_or_jump()
       end
-      fallback()
-    end, { 'i', 'c' }),
+    end, { "i", "c" }),
 
 		["<C-e>"] = cmp.mapping {
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		},
 
-		["<CR>"] = cmp.mapping.confirm {
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		},
-    ["<M-CR>"] = cmp.mapping(cmp.mapping.abort(), { "i" }),
+    ["<CR>"] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ["<M-CR>"] = cmp.mapping(cmp.mapping.abort(), { "i", "c" }),
 
-		["<Tab>"] = cmp.mapping {
+		["<Tab>"] = cmp.mapping{
 			i = function(fallback) -- InsertMode
-				if cmp.visible() then
-					cmp.select_next_item()
-				elseif luasnip.expand_or_locally_jumpable() then
-					return luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
-        else
-					fallback()
-				end
+				return ls.expand_or_jumpable() and
+					ls.expand_or_jump() or fallback()
 			end,
 			s = function(fallback) -- SelectMode
-				if cmp.visible() then
-					cmp.select_next_item()
-				elseif luasnip.expand_or_locally_jumpable() then
-					luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
-				else
-					fallback()
-				end
+				return ls.expand_or_jumpable() and
+					ls.expand_or_jump() or fallback()
 			end,
-			c = function() -- CmdlineMode
+			c = function(fallback) -- CmdlineMode
 				if cmp.visible() then
-					cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-				elseif has_words_before() then
-					cmp.complete()
+					cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
+				else
+          fallback()
 				end
 			end,
 		},
-
 		["<S-Tab>"] = cmp.mapping {
-			i = function(fallback) -- InsertMode
-				if cmp.visible() then
-					cmp.select_prev_item()
-				elseif luasnip.expand_or_locally_jumpable() then
-					return luasnip.expand_or_jump() or fallback()
-				else
-					fallback()
-				end
+      i = function(fallback) -- InsertMode
+				return ls.expand_or_jumpable() and
+					ls.expand_or_jump() or fallback()
 			end,
 			s = function(fallback) -- SelectMode
-				if cmp.visible() then
-					cmp.select_prev_item()
-				elseif luasnip.expand_or_locally_jumpable() then
-					luasnip.expand_or_jump()
-				else
-					fallback()
-				end
+				return ls.expand_or_jumpable() and
+					ls.expand_or_jump() or fallback()
 			end,
 			c = function() -- CmdlineMode
 				if cmp.visible() then
-					cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+					cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
 				else
-					cmp.complete({ reason = cmp.ContexReason, config = cmp.ConfigSchema })
+					cmp.complete { reason = cmp.ContexReason, config = cmp.ConfigSchema }
 				end
 			end,
-		},
+    },
 
-		["<Up>"] = cmp.mapping(function(fallback)
+    ["<Up>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
 			else
