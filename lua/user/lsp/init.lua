@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 01/06/2022 - 21:28
+-- Last Modified: 13 Jun 2022, 09:43
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -69,6 +69,7 @@ local filetype_attach = setmetatable({
 	end,
 })
 
+local navic_ok, navic = pcall(require, "nvim-navic")
 
 local custom_attach = function(client, bufnr)
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
@@ -76,6 +77,9 @@ local custom_attach = function(client, bufnr)
 
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
+  if navic_ok then
+    navic.attach(client, bufnr)
+  end
 end
 
 -- Update capabilities with extended

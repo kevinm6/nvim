@@ -6,5 +6,6 @@ pack/*
 plugin/*
 packer_compiled.lua
 .git/*
+startup_time*
 
 colors/.DS_Store

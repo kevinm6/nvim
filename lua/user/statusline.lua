@@ -2,14 +2,14 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 12 Jun 2022, 13:46
+-- Last Modified: 13 Jun 2022, 09:53
 -------------------------------------
 
 local S = {}
 
 local icons = require "user.icons"
 
-local gps_cached_loc = ""
+local navic_cached_loc = ""
 local diag_cached = ""
 
 local preset_width = setmetatable({
@@ -108,23 +108,18 @@ local function get_line_onTot()
 		or colors.location .. " row " .. colors.git .. "%l" .. colors.location .. "÷%L "
 end
 
-local gps_ok, gps = pcall(require, "nvim-gps")
 
 -- TODO: this will be moved to winbar with Nvim 0.8
 -- get value from nvim-gps if available and window size is big enough
-local function nvim_gps()
-  if not gps_ok then
-    -- Recall import of nvim-gps if is not already loaded as Plugin
-    gps_ok, gps = pcall(require, "nvim-gps")
-    return ""
+local function nvim_navic()
+  local navic_ok, navic = pcall(require, "nvim-navic")
+  if navic_ok and navic.is_available() then
+    local navic_loc = not navic_ok and icons.ui.Error or navic.is_available() and navic.get_location() or ""
+    if navic_cached_loc ~= navic_loc then
+      navic_cached_loc = navic_loc
+    end
   end
-
-  local gps_loc = not gps_ok and icons.ui.Error or gps.is_available() and gps.get_location() or ""
-  if gps_cached_loc ~= gps_loc then
-    gps_cached_loc = gps_loc
-  end
-
-  return (not win_is_smaller(preset_width.gps_loc)) and gps_cached_loc or ""
+  return win_is_smaller(preset_width.gps_loc) and  "" or navic_cached_loc
 end
 
 
@@ -132,7 +127,7 @@ end
 -- display diagnostic if enough space is available
 -- based on win_size gps is empty
 local function get_lsp_diagnostic()
-	local do_not_show_diag = win_is_smaller(preset_width.diagnostic) and gps_cached_loc ~= "" or win_is_smaller(90)
+	local do_not_show_diag = win_is_smaller(preset_width.diagnostic) and navic_cached_loc ~= "" or win_is_smaller(90)
 
 	local diagnostics = vim.diagnostic
 	-- assign to relative vars the count of diagnostic
@@ -238,7 +233,7 @@ S.active = function()
 	local sideSep = "%="
   local centerSide = string.format(
     " %s%s %s %s ",
-    colors.gps, nvim_gps(),
+    colors.gps, nvim_navic(),
     sideSep,
     get_lsp_diagnostic()
   )

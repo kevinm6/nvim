@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 12 Jun 2022, 16:05
+--  Last Modified: 13 Jun 2022, 10:15
 -------------------------------------
 
 local base = require "user.k_theme.base"
@@ -165,6 +165,35 @@ local plugins = {
   WhichKeyDesc = { link = "Identifier" },
   WhichKeyFloat = { bg = "#2c2c2c" },
   WhichKeyValue = { link = "Comment" },
+  -- Navic
+  NavicIconsFile = { link = "CmpItemKindFile" },
+  NavicIconsModule = { link = "CmpItemKindClass" },
+  NavicIconsNamespace = { link = "CmpItemKindClass" },
+  NavicIconsPackage = { link = "CmpItemKindProperty" },
+  NavicIconsClass = { link = "CmpItemKindClass" },
+  NavicIconsMethod = { link = "CmpItemKindMethod" },
+  NavicIconsProperty = { link = "CmpItemKindProperty" },
+  NavicIconsField = { link = "CmpItemKindField" },
+  NavicIconsConstructor = { link = "CmpItemKindConstructor" },
+  NavicIconsEnum = { link = "CmpItemKindValue" },
+  NavicIconsInterface = { link = "CmpItemKindInterface" },
+  NavicIconsFunction = { link = "CmpItemKindFunction" },
+  NavicIconsVariable = { default = true, link = "CmpItemKindVariable" },
+  NavicIconsConstant = { link = "CmpItemKindVariable" },
+  NavicIconsString = { link = "CmpItemKindText" },
+  NavicIconsNumber = { link = "CmpItemKindValue" },
+  NavicIconsBoolean = { link = "CmpItemKindValue" },
+  NavicIconsArray = { link = "CmpItemKindVariable" },
+  NavicIconsObject = { link = "CmpItemKindVariable" },
+  NavicIconsKey = { link = "CmpItemKindKeyword" },
+  NavicIconsNull = { link = "TSNone" },
+  NavicIconsEnumMember = { link = "CmpItemKindVariable" },
+  NavicIconsStruct = { link = "CmpItemKindStruct" },
+  NavicIconsEvent = { link = "CmpItemKindEvent" },
+  NavicIconsOperator = { link = "CmpItemKindOperator" },
+  NavicIconsTypeParameter = { link = "CmpItemKindTypeParameter" },
+  NavicIconsText = { link = "CmpItemKindText" },
+  NavicIconsSeparator = { link = "Comment" },
 }
 
 return plugins

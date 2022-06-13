@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 12 Jun 2022, 16:11
+-- Last Modified: 13 Jun 2022, 10:21
 --------------------------------------
 
 -- install packer if not found in default location
@@ -233,10 +233,10 @@ return packer.startup(function(use)
   -- Coding Helper
   use {
     {
-      "kevinm6/nvim-gps",
-      module = "nvim-gps",
-      event = "BufAdd",
-      config = function() require "user.gps" end,
+      "SmiteshP/nvim-navic",
+      module = "nvim-navic",
+      requires = "neovim/nvim-lspconfig",
+      config = function() require "user.navic" end,
     },
     {
       "windwp/nvim-autopairs",
@@ -298,8 +298,8 @@ return packer.startup(function(use)
     { "nvim-treesitter/nvim-treesitter-refactor", module = "user.treesitter" },
     {
       "nvim-treesitter/nvim-treesitter",
-      event = "BufWinEnter",
-      module = { "treesitter", "telescope", "lsp" },
+      event = "VimEnter",
+      module = { "treesitter", "telescope" },
       run = "TSUpdate",
       config = function() require "user.treesitter" end,
     },
