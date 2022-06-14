@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 13 Jun 2022, 10:21
+-- Last Modified: 14 Jun 2022, 09:38
 --------------------------------------
 
 -- install packer if not found in default location
@@ -89,7 +89,13 @@ return packer.startup(function(use)
         -- Packer
         p = {
           name = "Packer",
-          C = { function() require("packer").compile() end, "Compile" },
+          C = {
+            function()
+              require("packer").compile()
+              vim.notify("File compiled", "Info", { title = "Packer", timeout = 2000 })
+            end,
+            "Compile"
+          },
           c = { function() require("packer").clean() end, "Clean" },
           i = { function() require("packer").install() end, "Install" },
           S = { function() require("packer").sync() end, "Sync" },
@@ -118,7 +124,7 @@ return packer.startup(function(use)
       cmd = "require",
     },
 
-    { "moll/vim-bbye", event = "BufUnload", cmd = { "Bdelete", "Bwipeout" } },
+    { "moll/vim-bbye", event = "BufAdd", cmd = { "Bdelete", "Bwipeout" } },
     {
       "tweekmonster/startuptime.vim",
       cmd = "StartupTime",
@@ -203,14 +209,14 @@ return packer.startup(function(use)
   -- Autocompletion & Snippets
   use { -- snippets engine and source
     { "hrsh7th/cmp-nvim-lsp", event = "BufAdd", module = "cmp_nvim_lsp" },
-    { "kevinm6/the-snippets", event = "VimEnter" },
+    { "kevinm6/the-snippets", module = "user.luasnip" },
     {
       "L3MON4D3/LuaSnip",
       event = "BufAdd",
       module = "luasnip",
       config = function () require "user.luasnip" end,
     },
-    { "saadparwaiz1/cmp_luasnip", module = "luasnip", event = "BufAdd" },
+    { "saadparwaiz1/cmp_luasnip", module = { "luasnip", "user.cmp" }, event = "BufAdd" },
     { "hrsh7th/cmp-buffer", event = "BufAdd" },
     { "ray-x/cmp-treesitter", event = "BufAdd" },
     { "hrsh7th/cmp-nvim-lsp-signature-help", event = "BufAdd" },
@@ -234,7 +240,7 @@ return packer.startup(function(use)
   use {
     {
       "SmiteshP/nvim-navic",
-      module = "nvim-navic",
+      module = "user.lsp",
       requires = "neovim/nvim-lspconfig",
       config = function() require "user.navic" end,
     },
@@ -291,11 +297,11 @@ return packer.startup(function(use)
 
   -- Treesitter
   use {
-    { "JoosepAlviste/nvim-ts-context-commentstring", module = "user.treesitter" },
-    { "lewis6991/nvim-treesitter-context", module = { "treesitter-context", "user.treesitter" } },
-    { "windwp/nvim-ts-autotag", module = "user.treesitter" },
-    { "p00f/nvim-ts-rainbow", module = "user.treesitter" },
-    { "nvim-treesitter/nvim-treesitter-refactor", module = "user.treesitter" },
+    { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufAdd" },
+    { "lewis6991/nvim-treesitter-context", event = "BufAdd" },
+    { "windwp/nvim-ts-autotag", ft = { "html", "php", "xml" } },
+    { "p00f/nvim-ts-rainbow", event = "BufAdd" },
+    { "nvim-treesitter/nvim-treesitter-refactor", event = "BufAdd" },
     {
       "nvim-treesitter/nvim-treesitter",
       event = "VimEnter",

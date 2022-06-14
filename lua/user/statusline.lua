@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 13 Jun 2022, 09:53
+-- Last Modified: 14 Jun 2022, 09:23
 -------------------------------------
 
 local S = {}
@@ -201,7 +201,7 @@ S.disabled = function(name)
   local special_filetypes = {
     [" alpha "] = icons.ui.Plugin.." Dashboard",
     [" NvimTree "] = icons.documents.OpenFolder.." File Explorer",
-    [" Packer "] = icons.ui.Packer.." Package Manager",
+    [" packer "] = icons.ui.Packer.." Package Manager",
     [" lspinfo "] = icons.ui.Health .. " LSP Status",
     [" lsp-installer "] = icons.ui.List.." LSP Manager",
     [" TelescopePrompt "] = icons.ui.Telescope.." Telescope",

@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 02/05/2022 - 09:57
+-- Last Modified: 14 Jun 2022, 08:54
 -------------------------------------
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -53,6 +53,12 @@ configs.setup {
   },
   autotag = {
     enable = true,
+    filetypes = {
+        'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'rescript',
+        'xml',
+        'php',
+        'glimmer','handlebars','hbs'
+    },
     disable = { "xml" },
   },
   rainbow = {

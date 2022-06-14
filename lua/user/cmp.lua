@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 12 Jun 2022, 15:19
+-- Last Modified: 14 Jun 2022, 09:33
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
