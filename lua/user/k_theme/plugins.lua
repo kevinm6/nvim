@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 13 Jun 2022, 10:15
+--  Last Modified: 17 Jun 2022, 14:07
 -------------------------------------
 
 local base = require "user.k_theme.base"
@@ -166,6 +166,7 @@ local plugins = {
   WhichKeyFloat = { bg = "#2c2c2c" },
   WhichKeyValue = { link = "Comment" },
   -- Navic
+  NavicText = { link = "Comment" },
   NavicIconsFile = { link = "CmpItemKindFile" },
   NavicIconsModule = { link = "CmpItemKindClass" },
   NavicIconsNamespace = { link = "CmpItemKindClass" },

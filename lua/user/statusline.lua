@@ -2,14 +2,13 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 14 Jun 2022, 09:23
+-- Last Modified: 17 Jun 2022, 13:55
 -------------------------------------
 
 local S = {}
 
 local icons = require "user.icons"
 
-local navic_cached_loc = ""
 local diag_cached = ""
 
 local preset_width = setmetatable({
@@ -109,25 +108,11 @@ local function get_line_onTot()
 end
 
 
--- TODO: this will be moved to winbar with Nvim 0.8
--- get value from nvim-gps if available and window size is big enough
-local function nvim_navic()
-  local navic_ok, navic = pcall(require, "nvim-navic")
-  if navic_ok and navic.is_available() then
-    local navic_loc = not navic_ok and icons.ui.Error or navic.is_available() and navic.get_location() or ""
-    if navic_cached_loc ~= navic_loc then
-      navic_cached_loc = navic_loc
-    end
-  end
-  return win_is_smaller(preset_width.gps_loc) and  "" or navic_cached_loc
-end
-
-
 -- function lsp diagnostic
 -- display diagnostic if enough space is available
 -- based on win_size gps is empty
 local function get_lsp_diagnostic()
-	local do_not_show_diag = win_is_smaller(preset_width.diagnostic) and navic_cached_loc ~= "" or win_is_smaller(90)
+	local do_not_show_diag = win_is_smaller(preset_width.diagnostic) or win_is_smaller(60)
 
 	local diagnostics = vim.diagnostic
 	-- assign to relative vars the count of diagnostic
@@ -232,8 +217,7 @@ S.active = function()
   -- Middle
 	local sideSep = "%="
   local centerSide = string.format(
-    " %s%s %s %s ",
-    colors.gps, nvim_navic(),
+    " %s %s ",
     sideSep,
     get_lsp_diagnostic()
   )

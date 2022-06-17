@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : K NeoVim & gui VimR configuration
 -- Author       : Kevin
--- Last Modified: 13 Jun 2022, 16:03
+-- Last Modified: 17 Jun 2022, 11:36
 --------------------------------------
 
 -- check if NeoVim or Vim
@@ -27,7 +27,7 @@ local modules = {
   "user.colorscheme",
   "user.autocommands",
   "user.statusline",
-  -- "user.winbar", -- TODO: uncomment when in Nvim 0.8
+  "user.winbar", -- TODO: uncomment when in Nvim 0.8
 }
 
 local nModules = 0
@@ -44,4 +44,4 @@ for index, module in ipairs(modules) do
   end
 end
 
-print(require("user.icons").ui.Check, nModules, "modules loaded")
+-- print(require("user.icons").ui.Check, nModules, "modules loaded")

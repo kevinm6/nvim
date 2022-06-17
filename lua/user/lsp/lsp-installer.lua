@@ -2,7 +2,7 @@
 -- File         : lsp-installer.lua
 -- Description  : Lsp-Installer config
 -- Author       : Kevin
--- Last Modified: 22/04/2022 - 10:09
+-- Last Modified: 16 Jun 2022, 09:53
 -------------------------------------
 
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -16,7 +16,8 @@ lsp_installer.setup {
     "sumneko_lua", "vimls", "emmet_ls",
     "ltex", "pyright", "jsonls", "gopls",
     "html", "asm_lsp", "bashls", "clangd",
-    "jdtls", "intelephense", "grammarly"
+    "jdtls", "intelephense", "grammarly",
+    "cmake"
   },
   automatic_installation = false,
   ui = {

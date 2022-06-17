@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 12 Jun 2022, 16:04
+-- Last Modified: 17 Jun 2022, 16:06
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -84,28 +84,26 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
 
 
 -- TODO: Enable on NeoVim 0.8
--- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
---    callback = function()
---      local winbar_filetype_exclude = {
---        ["help"] = true,
---        ["dashboard"] = true,
---        ["packer"] = true,
---        ["NvimTree"] = true,
---        ["Trouble"] = true,
---        ["alpha"] = true,
---        ["Outline"] = true,
---        ["toggleterm"] = true,
---      }
---
---      if winbar_filetype_exclude[vim.bo.filetype] then
---        vim.opt_local.winbar = nil
---        return
---      end
---
---      vim.opt_local.winbar = require("user.winbar").gps() or require("user.winbar").filename() or nil
---
---    end,
---  })
+autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
+   callback = function()
+     local winbar_filetype_exclude = {
+       ["help"] = true,
+       ["dashboard"] = true,
+       ["packer"] = true,
+       ["NvimTree"] = true,
+       ["Trouble"] = true,
+       ["alpha"] = true,
+       ["Outline"] = true,
+       ["toggleterm"] = true,
+     }
+
+     if winbar_filetype_exclude[vim.bo.filetype] then
+       vim.opt_local.winbar = nil
+       return
+     end
+     vim.opt_local.winbar = require("user.winbar").show()
+   end,
+ })
 
 autocmd("BufWritePost", {
  group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
@@ -178,3 +176,4 @@ end
 command("Note", Note, { desc = "Create a Note buffer" })
 
 command("RemoveTrailingSpaces", [[%s/\s\+$//e]], { desc = "Remove extra trailing white spaces" })
+

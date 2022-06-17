@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 13 Jun 2022, 09:43
+-- Last Modified: 17 Jun 2022, 13:27
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -16,7 +16,7 @@ require "user.lsp.codelens"
 -- Lsp highlights managed by
 --   `illuminate` plugin
 local function lsp_highlight_document(client)
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.document_highlight then
 		local illuminate_ok, illuminate = pcall(require, "illuminate")
 		if not illuminate_ok then
 			return
@@ -159,6 +159,13 @@ local servers = {
 			debounce_text_changes = 200,
 		},
 	},
+  cmake = {
+    cmd = { "cmake-language-server" },
+    filetypes = { "cmake" },
+    buildDirectory = "build",
+    root_pattern = util.root_pattern(".git", "compile_commands.json", "build"),
+    single_file_support = true,
+  },
 }
 
 -- LSP: Servers Configuration

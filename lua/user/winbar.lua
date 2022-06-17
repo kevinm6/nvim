@@ -1,23 +1,22 @@
-local M = {}
+local W = {}
 
-local status_gps_ok, gps = pcall(require, "nvim-gps")
-if not status_gps_ok then
-  return
-end
+local navic_cached_loc = ""
 
 local function isempty(s)
   return s == nil or s == ""
 end
 
-M.filename = function()
-  local filename = vim.fn.expand "%:t"
+local icons = require "user.icons"
+
+local filename = function()
+  local fname = vim.fn.expand "%:t"
   local extension = ""
   local file_icon = ""
   local file_icon_color = ""
   local default_file_icon = ""
   local default_file_icon_color = ""
 
-  if not isempty(filename) then
+  if not isempty(fname) then
     extension = vim.fn.expand "%:e"
 
     local default = false
@@ -27,7 +26,7 @@ M.filename = function()
       default = true
     end
 
-    file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = default })
+    file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(fname, extension, { default = default })
 
     local hl_group = "FileIconColor" .. extension
 
@@ -37,31 +36,29 @@ M.filename = function()
       file_icon_color = default_file_icon_color
     end
 
-    return string.format(" %%#%s#%s%* %s%s%*", hl_group, file_icon, "%#LineNr#", filename)
+    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#StatuslineFileName#" .. fname .. "%*"
   end
 end
 
-M.gps = function()
-  local status_ok, gps_location = pcall(gps.get_location, {})
-  if not status_ok then
-    return
+-- TODO: this will be moved to winbar with Nvim 0.8
+-- get value from nvim-gps if available and window size is big enough
+local function nvim_navic()
+  local navic_ok, navic = pcall(require, "nvim-navic")
+  if navic_ok and navic.is_available() then
+    local navic_loc = not navic_ok and icons.ui.Error or navic.is_available() and navic.get_location() or ""
+    if navic_cached_loc ~= navic_loc then
+      navic_cached_loc = navic_loc
+    end
   end
 
-  local icons = require "user.icons"
+  local retval = filename()
 
-  if not gps.is_available() then -- Returns boolean value indicating whether a output can be provided
-    return
-  end
-
-  local retval = M.filename()
-
-  if gps_location == "error" then
-    return ""
-  else
-    return not isempty(gps_location) and
-      string.format("%s %s %s", retval, icons.ui.ChevronRight, gps_location) or
-      retval
-  end
+  return (not isempty(navic_cached_loc) and string.format("%s %s %s", retval, icons.ui.ChevronRight, navic_cached_loc)) or
+    retval
 end
 
-return M
+W.show = function()
+  return nvim_navic()
+end
+
+return W

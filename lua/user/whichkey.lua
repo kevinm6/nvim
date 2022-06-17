@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 10 Jun 2022, 13:21
+-- Last Modified: 17 Jun 2022, 16:05
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")

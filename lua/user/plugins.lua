@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 14 Jun 2022, 09:38
+-- Last Modified: 17 Jun 2022, 13:57
 --------------------------------------
 
 -- install packer if not found in default location
@@ -181,6 +181,7 @@ return packer.startup(function(use)
       event = "BufAdd",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = function() require "user.bufferline" end,
+      disable = true,
     },
     {
       "akinsho/toggleterm.nvim",
