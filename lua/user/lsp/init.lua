@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 13 Jun 2022, 09:43
+-- Last Modified: 20 Jun 2022, 17:18
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")

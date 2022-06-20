@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 14 Jun 2022, 09:38
+-- Last Modified: 20 Jun 2022, 13:59
 --------------------------------------
 
 -- install packer if not found in default location
@@ -100,7 +100,7 @@ return packer.startup(function(use)
           i = { function() require("packer").install() end, "Install" },
           S = { function() require("packer").sync() end, "Sync" },
           s = { function() require("packer").status() end, "Status" },
-          u = { function() require("packer").update() end, "Update" },
+          u = { ":PackerUpdate ", "Update" },
           l = { ":PackerLoad ", "Load"},
         },
       }
@@ -475,13 +475,13 @@ return packer.startup(function(use)
 
   -- Xcode Integration
   use {
-    "tami5/xbase",
-      run = "make install",
-      requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim"
-      },
-    opt = true,
+  "tami5/xbase",
+    run = "make install",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    },
+    ft = "xcodeproj",
     config = function() require "user.xbase" end,
   }
 

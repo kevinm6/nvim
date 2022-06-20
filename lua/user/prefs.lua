@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 08 Jun 2022, 09:05
+-- Last Modified: 19 Jun 2022, 10:44
 -------------------------------------
 
 -- CURSOR {
@@ -34,7 +34,7 @@ local options = {
   showtabline = 1, -- show tabs if more than 1
 	showmatch = true, -- Show matching brackets when over
 	signcolumn = "yes", -- always show signcolumns
-	cmdheight = 2, -- #lines for vim for commands/logs
+	cmdheight = 1, -- #lines for vim for commands/logs
 	pumheight = 16, -- popup menu height
 	pumblend = 8, -- popup menu transparency {0..100}
 	splitbelow = true, -- split below in horizontal split
