@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 14 Jun 2022, 09:33
+-- Last Modified: 20 Jun 2022, 19:23
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -197,8 +197,7 @@ cmp.setup.filetype({ "markdown", "help" }, {
 	},
 })
 
--- cmp_zsh
-require("cmp_zsh").setup {
-	zshrc = true, -- Source the zshrc (adding all custom completions). default: false
-	filetypes = { "zsh" }, -- Filetypes to enable cmp_zsh source. default: {"*"}
-}
+cmp.setup.filetype({ "zsh" }, {
+  sources = { "zsh" }
+})
+

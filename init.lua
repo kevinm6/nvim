@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : K NeoVim & gui VimR configuration
 -- Author       : Kevin
--- Last Modified: 13 Jun 2022, 16:03
+-- Last Modified: 20 Jun 2022, 19:25
 --------------------------------------
 
 -- check if NeoVim or Vim
@@ -21,17 +21,9 @@ end
 -- Config Files to source
 local modules = {
   "user.plugins",
-  "user.prefs",
-  "user.keymaps",
-  "user.vars",
-  "user.colorscheme",
-  "user.autocommands",
-  "user.statusline",
-  -- "user.winbar", -- TODO: uncomment when in Nvim 0.8
 }
 
-local nModules = 0
-for index, module in ipairs(modules) do
+for _, module in ipairs(modules) do
   local ok, err = pcall(require, module)
   if not ok then
     vim.notify(
@@ -39,9 +31,5 @@ for index, module in ipairs(modules) do
       "Error",
       { timeout = 4600, title = "INIT ERROR" }
     )
-  else
-    nModules = index
   end
 end
-
-print(require("user.icons").ui.Check, nModules, "modules loaded")

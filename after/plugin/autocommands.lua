@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 12 Jun 2022, 16:04
+-- Last Modified: 20 Jun 2022, 19:17
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -102,7 +102,7 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
 --        return
 --      end
 --
---      vim.opt_local.winbar = require("user.winbar").gps() or require("user.winbar").filename() or nil
+--      vim.opt_local.winbar = require("after.plugin.winbar").gps() or require("after.plugin.winbar").filename() or nil
 --
 --    end,
 --  })

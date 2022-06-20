@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 20 Jun 2022, 13:59
+-- Last Modified: 20 Jun 2022, 19:24
 --------------------------------------
 
 -- install packer if not found in default location
@@ -224,7 +224,7 @@ return packer.startup(function(use)
     { "rcarriga/cmp-dap", event = "BufAdd" },
     { "hrsh7th/cmp-path", event = "BufAdd" },
     { "hrsh7th/cmp-cmdline", event = "BufAdd" },
-    { "tamago324/cmp-zsh", event = "BufAdd" },
+    { "tamago324/cmp-zsh", ft = "zsh" },
     { "hrsh7th/cmp-calc", event = "BufAdd" },
     { "kdheepak/cmp-latex-symbols", ft = "markdown" },
     { "hrsh7th/cmp-emoji", opt = true  },
@@ -298,7 +298,7 @@ return packer.startup(function(use)
   -- Treesitter
   use {
     { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufAdd" },
-    { "lewis6991/nvim-treesitter-context", event = "BufAdd" },
+    { "lewis6991/nvim-treesitter-context", event = "BufAdd", module = "treesitter" },
     { "windwp/nvim-ts-autotag", ft = { "html", "php", "xml" } },
     { "p00f/nvim-ts-rainbow", event = "BufAdd" },
     { "nvim-treesitter/nvim-treesitter-refactor", event = "BufAdd" },
