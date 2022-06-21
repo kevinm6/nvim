@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 13 Jun 2022, 10:15
+--  Last Modified: 21 Jun 2022, 09:37
 -------------------------------------
 
 local base = require "user.k_theme.base"
@@ -194,6 +194,8 @@ local plugins = {
   NavicIconsTypeParameter = { link = "CmpItemKindTypeParameter" },
   NavicIconsText = { link = "CmpItemKindText" },
   NavicIconsSeparator = { link = "Comment" },
+  -- Fidget
+  FidgetTitle = { link = "Title" },
 }
 
 return plugins

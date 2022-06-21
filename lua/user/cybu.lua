@@ -2,7 +2,7 @@
 --  File         : cybu.lua
 --  Description  : cybu plugin config
 --  Author       : Kevin
---  Last Modified: 24/05/2022 - 09:19
+--  Last Modified: 21 Jun 2022, 10:26
 -------------------------------------
 
 local ok, cybu = pcall(require, "cybu")
@@ -33,6 +33,7 @@ cybu.setup {
       current_buffer = "LspReferenceWrite",    -- used for the current buffer
       adjacent_buffers =  "LspReferenceRead", -- used for buffers not in focus
       background = "WhichKeyFloat",        -- used for the window background
+      border = "WinSeparator",
     },
   },
   exclude = {                     -- filetypes, cybu will not be active

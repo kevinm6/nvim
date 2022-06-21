@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 20 Jun 2022, 19:24
+-- Last Modified: 21 Jun 2022, 09:01
 --------------------------------------
 
 -- install packer if not found in default location
@@ -203,7 +203,13 @@ return packer.startup(function(use)
       "AckslD/nvim-neoclip.lua",
       event = "BufAdd",
       config = function() require "user.neoclip" end,
+    },
+    {
+      "j-hui/fidget.nvim",
+      event = "BufAdd",
+      config = function() require "user.fidget" end,
     }
+
   }
 
   -- Autocompletion & Snippets
