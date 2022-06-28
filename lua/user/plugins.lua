@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 28 Jun 2022, 16:42
+-- Last Modified: 28 Jun 2022, 18:21
 --------------------------------------
 
 -- install packer if not found in default location
@@ -146,7 +146,6 @@ return packer.startup(function(use)
     },
     {
       "br1anchen/nvim-colorizer.lua",
-      event = "BufAdd",
       cmd = "ColorizerToggle",
       config = function() require "user.colorizer" end,
     },
@@ -154,6 +153,11 @@ return packer.startup(function(use)
       "antoinemadec/FixCursorHold.nvim",
       event = "BufAdd",
     },
+    {
+      "ziontee113/color-picker.nvim",
+      cmd = { "PickColor", "PickColorInsert" },
+      config = function() require "user.color_picker" end,
+    }
   }
 
   -- Core plugins
@@ -444,7 +448,6 @@ return packer.startup(function(use)
     {
       "bfredl/nvim-ipy",
       ft = "ipy",
-      opt = true,
     },
   }
 
@@ -496,12 +499,10 @@ return packer.startup(function(use)
   use {
     {
       "ellisonleao/gruvbox.nvim",
-      opt = true,
       cmd = "colorscheme",
     },
     {
       "Shatur/neovim-ayu",
-      opt = true,
       cmd = "colorscheme",
     },
     {
