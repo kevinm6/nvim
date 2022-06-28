@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 28 Jun 2022, 09:34
+-- Last Modified: 28 Jun 2022, 16:53
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -16,13 +16,9 @@ require "user.lsp.codelens"
 -- Lsp highlights managed by
 --   `illuminate` plugin
 local function lsp_highlight_document(client)
-	if client.server_capabilities.document_highlight then
-		local illuminate_ok, illuminate = pcall(require, "illuminate")
-		if not illuminate_ok then
-			return
-		end
-		illuminate.on_attach(client)
-	end
+  local illuminate_ok, illuminate = pcall(require, "illuminate")
+  if not illuminate_ok then return end
+  illuminate.on_attach(client)
 end
 
 

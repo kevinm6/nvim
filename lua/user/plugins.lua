@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 28 Jun 2022, 13:02
+-- Last Modified: 28 Jun 2022, 16:42
 --------------------------------------
 
 -- install packer if not found in default location
@@ -135,6 +135,7 @@ return packer.startup(function(use)
     },
     {
       "RRethy/vim-illuminate",
+      event = "BufAdd",
       module = "illuminate",
       config = function() require "user.illuminate" end,
     },
@@ -165,7 +166,6 @@ return packer.startup(function(use)
     },
     {
       "folke/which-key.nvim",
-      run = "WhichKey",
       module = "which-key",
       config = function() require "user.whichkey" end,
       event = "VimEnter",
@@ -312,7 +312,7 @@ return packer.startup(function(use)
       "nvim-treesitter/nvim-treesitter",
       event = "VimEnter",
       module = { "treesitter", "telescope" },
-      run = "TSUpdate",
+      run = ":TSUpdate",
       config = function() require "user.treesitter" end,
     },
     { "nvim-treesitter/playground", cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" } },

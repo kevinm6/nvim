@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 28 Jun 2022, 11:48
+-- Last Modified: 28 Jun 2022, 16:46
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -13,8 +13,6 @@ if (not cmp_ok) or (not cmd_dap_ok) or (not ls_ok) then return end
 
 local icons = require "user.icons"
 local icons_kind = icons.kind
-
-
 
 -- Cmp Configuration
 cmp.setup {
@@ -68,6 +66,8 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
+    ["<Right>"] = cmp.mapping.confirm { select = true },
+
     ["<M-CR>"] = cmp.mapping(cmp.mapping.abort(), { "i", "c" }),
 
 		["<Tab>"] = cmp.mapping{
