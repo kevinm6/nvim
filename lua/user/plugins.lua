@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 21 Jun 2022, 09:01
+-- Last Modified: 28 Jun 2022, 13:02
 --------------------------------------
 
 -- install packer if not found in default location
@@ -214,27 +214,27 @@ return packer.startup(function(use)
 
   -- Autocompletion & Snippets
   use { -- snippets engine and source
-    { "hrsh7th/cmp-nvim-lsp", event = "BufAdd", module = "cmp_nvim_lsp" },
-    { "kevinm6/the-snippets", module = "user.luasnip" },
+    { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp", after = "nvim-cmp" },
+    { "kevinm6/the-snippets", module = "user.luasnip", after = "nvim-cmp" },
     {
       "L3MON4D3/LuaSnip",
-      event = "BufAdd",
+      after = "nvim-cmp",
       module = "luasnip",
       config = function () require "user.luasnip" end,
     },
-    { "saadparwaiz1/cmp_luasnip", module = { "luasnip", "user.cmp" }, event = "BufAdd" },
-    { "hrsh7th/cmp-buffer", event = "BufAdd" },
-    { "ray-x/cmp-treesitter", event = "BufAdd" },
-    { "hrsh7th/cmp-nvim-lsp-signature-help", event = "BufAdd" },
-    { "hrsh7th/cmp-nvim-lsp-document-symbol", event = "BufAdd" },
-    { "rcarriga/cmp-dap", event = "BufAdd" },
-    { "hrsh7th/cmp-path", event = "BufAdd" },
-    { "hrsh7th/cmp-cmdline", event = "BufAdd" },
-    { "tamago324/cmp-zsh", ft = "zsh" },
-    { "hrsh7th/cmp-calc", event = "BufAdd" },
-    { "kdheepak/cmp-latex-symbols", ft = "markdown" },
-    { "hrsh7th/cmp-emoji", opt = true  },
-    { "dmitmel/cmp-digraphs", opt = true },
+    { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
+    { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+    { "ray-x/cmp-treesitter", after = { "nvim-cmp", "nvim-treesitter" } },
+    { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
+    { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" },
+    { "rcarriga/cmp-dap", after = "nvim-cmp" },
+    { "hrsh7th/cmp-path", after = "nvim-cmp" },
+    { "hrsh7th/cmp-cmdline", after = "nvim-cmp" },
+    { "tamago324/cmp-zsh", after = "nvim-cmp", disable = true },
+    { "hrsh7th/cmp-calc", after = "nvim-cmp" },
+    { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", ft = "markdown" },
+    { "hrsh7th/cmp-emoji", after = "nvim-cmp", opt = true },
+    { "dmitmel/cmp-digraphs", after = "nvim-cmp", opt = true },
     {
       "hrsh7th/nvim-cmp",
       event = "InsertEnter",
@@ -488,6 +488,7 @@ return packer.startup(function(use)
       "nvim-telescope/telescope.nvim"
     },
     ft = "xcodeproj",
+    disable = true,
     config = function() require "user.xbase" end,
   }
 

@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 20 Jun 2022, 19:23
+-- Last Modified: 28 Jun 2022, 11:48
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -13,6 +13,8 @@ if (not cmp_ok) or (not cmd_dap_ok) or (not ls_ok) then return end
 
 local icons = require "user.icons"
 local icons_kind = icons.kind
+
+
 
 -- Cmp Configuration
 cmp.setup {
@@ -26,7 +28,7 @@ cmp.setup {
     return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or cmp_dap.is_dap_buffer()
   end,
 
-	mapping = cmp.mapping.preset.insert {
+  mapping = cmp.mapping.preset.insert {
 		["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
 
 		["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
@@ -149,7 +151,6 @@ cmp.setup {
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "latex_symbols", keyword_length = 2, priority = 2 },
 		{ name = "calc" },
-		{ name = "emoji", keyword_length = 3, option = { keyword_length = 2 }, priority = 1 },
     { name = "dap" },
 		-- { name = "digraphs" },
 	},
@@ -191,13 +192,9 @@ cmp.setup.cmdline("/", {
 })
 
 -- per-filetype window config
-cmp.setup.filetype({ "markdown", "help" }, {
+cmp.setup.filetype("help", {
 	window = {
 		documentation = cmp.config.disable,
 	},
-})
-
-cmp.setup.filetype({ "zsh" }, {
-  sources = { "zsh" }
 })
 

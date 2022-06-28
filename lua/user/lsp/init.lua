@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 20 Jun 2022, 17:18
+-- Last Modified: 28 Jun 2022, 09:34
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -16,7 +16,7 @@ require "user.lsp.codelens"
 -- Lsp highlights managed by
 --   `illuminate` plugin
 local function lsp_highlight_document(client)
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.document_highlight then
 		local illuminate_ok, illuminate = pcall(require, "illuminate")
 		if not illuminate_ok then
 			return
@@ -24,6 +24,7 @@ local function lsp_highlight_document(client)
 		illuminate.on_attach(client)
 	end
 end
+
 
 -- Create custom keymaps for useful
 --   lsp functions
@@ -56,7 +57,7 @@ local filetype_attach = setmetatable({
 	end,
 	java = function(client)
 		if client.name == "jdt.ls" then
-			client.resolved_capabilities.document_formatting = false
+			client.server_capabilities.document_formatting = false
 
 			require("jdtls").setup_dap({ hotcodereplace = "auto" })
 			require("jdtls.dap").setup_dap_main_class_configs()
@@ -85,14 +86,12 @@ end
 -- Update capabilities with extended
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 local custom_init = function(client)
 	client.config.flags = client.config.flags or {}
 	client.config.flags.allow_incremental_sync = true
 end
-
-local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
 
 -- Manage server with custom setup
 local servers = {
@@ -179,7 +178,7 @@ local setup_server = function(server, config)
 	config = vim.tbl_deep_extend("force", {
 		on_init = custom_init,
 		on_attach = custom_attach,
-		capabilities = updated_capabilities,
+		capabilities = capabilities,
 		flags = {
 			debounce_text_changes = nil,
 		},
@@ -196,5 +195,5 @@ end
 return {
 	on_init = custom_init,
 	on_attach = custom_attach,
-	capabilities = updated_capabilities,
+	capabilities = capabilities,
 }

@@ -2,7 +2,7 @@
 -- File         : ltex.lua
 -- Description  : ltex-ls server config
 -- Author       : Kevin
--- Last Modified: 13/05/2022 - 09:51
+-- Last Modified: 28 Jun 2022, 13:14
 -------------------------------------
 
 return {
@@ -20,4 +20,5 @@ return {
 	java = {
 		path = "/usr/local/opt/openjdk/bin",
 	},
+  single_file_support = true,
 }

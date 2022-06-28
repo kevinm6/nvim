@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 20 Jun 2022, 19:17
+-- Last Modified: 26 Jun 2022, 12:30
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -32,7 +32,7 @@ autocmd({ "TextYankPost" }, {
 
 -- If buffer modified, update any 'Last modified: ' in the first 10 lines.
 -- Restores cursor and window position using save_cursor variable.
-autocmd({ "BufWritePre" }, {
+local updateTimeStampID = autocmd({ "BufWritePre" }, {
   group = _general_settings,
   pattern = "*",
   callback = function()
@@ -56,6 +56,8 @@ local UpdateTimestamp = function()
   end
 end
 command("UpdateTimestamp", UpdateTimestamp, { desc = "Update timestamp in file information" })
+
+command("DisableUpdateTimeStamp", function() vim.api.nvim_del_autocmd(updateTimeStampID) end, { desc = "Disable timestamp updates in this session" })
 
 -- Autocommand for Statusline & WinBar
 -- Using CursorMoved to nvim-gps
@@ -150,7 +152,7 @@ autocmd({ "BufNewFile", "BufRead" }, {
 autocmd({ "VimResized" }, {
 	group = augroup("_auto_resize", { clear = true }),
 	pattern = "*",
-	command = "tabdo wincmd",
+	callback = function() vim.cmd "tabdo wincmd" end,
 })
 
 -- Scratch
