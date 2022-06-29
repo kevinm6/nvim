@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 28 Jun 2022, 18:21
+-- Last Modified: 29 Jun 2022, 09:48
 --------------------------------------
 
 -- install packer if not found in default location
@@ -157,6 +157,12 @@ return packer.startup(function(use)
       "ziontee113/color-picker.nvim",
       cmd = { "PickColor", "PickColorInsert" },
       config = function() require "user.color_picker" end,
+    },
+    {
+      "kevinhwang91/nvim-ufo",
+      requires = { "kevinhwang91/promise-async" },
+      event = "BufAdd",
+      config = function() require "user.ufo" end,
     }
   }
 
