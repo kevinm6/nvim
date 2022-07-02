@@ -2,16 +2,19 @@
 -- File         : xbase.lua
 -- Description  : Xbase plugin configuration (Xcode integration)
 -- Author       : Kevin
--- Last Modified: 30/05/2022 - 22:10
+-- Last Modified: 02 Jul 2022, 10:04
 -------------------------------------
 
-local xbase = pcall(require, "xbase")
+local ok, xbase = pcall(require, "xbase")
+if not ok then return end
 
 local defaults = {
   --- Log level. Set to error to ignore everything: { "trace", "debug", "info", "warn", "error" }
   log_level = "debug",
   --- Default log buffer direction: { "horizontal", "vertical", "float" }
-  default_log_buffer_direction = "horizontal",
+  log_buffer = {
+    default_direction = "horizontal",
+  },
   --- Statusline provider configurations
   statusline = {
     running = { icon = "⚙", color = "#e0af68" },

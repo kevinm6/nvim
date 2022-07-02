@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 12 Jun 2022, 12:33
+--	Last Modified: 02 Jul 2022, 10:50
 -----------------------------------
 
 local ok, alpha = pcall(require, "alpha")
@@ -47,6 +47,7 @@ dashboard.section.buttons.val = {
 	dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
 	dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
 	dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
+	dashboard.button("d", icons.ui.Dev .. " Developer", "<cmd>e ~/Documents/Developer <CR>"),
 	dashboard.button("p", icons.ui.Packer .. " Packer", "<cmd> PackerSync <CR>"),
 	dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration", "<cmd>e $NVIMDOTDIR/lua/user/plugins.lua<CR>"),
 	dashboard.button("L", icons.ui.List .. " LspInstaller", "<cmd>LspInstallInfo <CR>"),

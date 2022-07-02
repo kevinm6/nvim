@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 26 Jun 2022, 12:30
+-- Last Modified: 01 Jul 2022, 09:08
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -16,7 +16,10 @@ local _general_settings = augroup("_general_settings", {
 
 autocmd({ "FileType" }, {
 	group = _general_settings,
-	pattern = { "qf", "help", "man", "git", "lspinfo", "Scratch", "checkhealth", "sqls_output" },
+	pattern = {
+    "qf", "help", "man", "git", "lspinfo",
+    "Scratch", "checkhealth", "sqls_output", "DressingSelect"
+  },
 	callback = function ()
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
 	end
@@ -75,6 +78,7 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
       ["Trouble"] = true,
       ["qf"] = true,
       ["toggleterm"] = true,
+      ["DressingSelect"] = true,
     }
     if special_ft[vim.bo.filetype] then
       vim.wo.statusline = require("user.statusline").disabled()
@@ -97,6 +101,7 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
 --        ["alpha"] = true,
 --        ["Outline"] = true,
 --        ["toggleterm"] = true,
+--        ["DressingSelect"] = true,
 --      }
 --
 --      if winbar_filetype_exclude[vim.bo.filetype] then

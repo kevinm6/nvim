@@ -2,17 +2,13 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 31/03/2022 - 13:55
+-- Last Modified: 01 Jul 2022, 08:47
 -------------------------------------
 
 local ok, nvim_tree = pcall(require, "nvim-tree")
 if not ok then return end
 
 local icons = require "user.icons"
-
-
-
-
 
 local lib = require "nvim-tree.lib"
 local view = require "nvim-tree.view"
@@ -51,15 +47,16 @@ end
 
 nvim_tree.setup {
   auto_reload_on_write = true,
-  disable_netrw = false,
+  disable_netrw = true,
   hijack_cursor = true,
   hijack_netrw = true, -- overriden if 'disable_netrw = true'
   hijack_unnamed_buffer_when_opening = false,
   ignore_buffer_on_setup = false,
   open_on_setup = true,
-  open_on_setup_file = false,
-  open_on_tab = false,
+  open_on_setup_file = true,
+  open_on_tab = true,
   update_cwd = true,
+  sort_by = "case_sensitive",
   view = {
     width = 30,
     height = 30,
@@ -138,7 +135,7 @@ nvim_tree.setup {
   },
   hijack_directories = {
     enable = true,
-    auto_open = true,
+    auto_open = false,
   },
   update_focused_file = {
     enable = true,
