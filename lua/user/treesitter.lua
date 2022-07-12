@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 27 Jun 2022, 10:01
+-- Last Modified: 05 Jul 2022, 09:48
 -------------------------------------
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -21,7 +21,7 @@ end
 configs.setup {
   ensure_installed = parser_to_install(),
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-  ignore_install = { "markdown", "markdown_inline" },
+  ignore_install = {},
   highlight = {
     enable = true, -- false will disable the whole extension
     disable = {}, -- list of language that will be disabled

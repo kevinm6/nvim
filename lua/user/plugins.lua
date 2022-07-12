@@ -2,7 +2,7 @@
 -- File         : plugins.lua
 -- Description  : Lua K NeoVim & VimR plugins w/ packer
 -- Author       : Kevin
--- Last Modified: 02 Jul 2022, 10:03
+-- Last Modified: 12 Jul 2022, 11:26
 --------------------------------------
 
 -- install packer if not found in default location
@@ -19,7 +19,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   }
 end
 
--- PLUGINS
 local ok, packer = pcall(require, "packer")
 if not ok then return end
 
@@ -43,9 +42,7 @@ packer.init {
   transitive_opt = true, -- Make dependencies of opt plugins also opt by default
   transitive_disable = true, -- Automatically disable dependencies of disabled plugins
   display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
+    open_fn = function() return require("packer.util").float { border = "rounded" } end,
     working_sym = icons.packer.working_sym,
     error_sym = icons.packer.error_sym,
     done_sym = icons.packer.done_sym,
@@ -56,7 +53,7 @@ packer.init {
    git = {
     cmd = 'git', -- The base command for git operations
     subcommands = { -- Format strings for git subcommands
-      update         = 'pull --ff-only --progress --rebase=false',
+      update         = 'pull --ff-only --progress --no-rebase',
       install        = 'clone --depth %i --no-single-branch --progress',
       fetch          = 'fetch --depth 999999 --progress',
       checkout       = 'checkout %s --',
@@ -65,7 +62,7 @@ packer.init {
       diff           = 'log --color=never --pretty=format:FMT --no-show-signature HEAD@{1}...HEAD',
       diff_fmt       = '%%h %%s (%%cr)',
       get_rev        = 'rev-parse --short HEAD',
-      get_msg        = 'log --color=never --pretty=format:FMT --no-show-signature HEAD -n 1',
+      get_msg        = 'log --color=auto --pretty=format:FMT --no-show-signature HEAD -n 1',
       submodules     = 'submodule update --init --recursive --progress'
     },
     depth = 1, -- Git clone depth
@@ -163,6 +160,11 @@ return packer.startup(function(use)
       requires = { "kevinhwang91/promise-async" },
       event = "BufAdd",
       config = function() require "user.ufo" end,
+    },
+    {
+      "is0n/jaq-nvim",
+      event = "BufAdd",
+      config = function() require "user.jaq" end,
     }
   }
 
@@ -228,7 +230,20 @@ return packer.startup(function(use)
       "lewis6991/spellsitter.nvim",
       opt = true,
       config = function () require "user.spellsitter" end,
+    },
+    {
+      "lalitmee/browse.nvim",
+      module = "browse",
+      cmd = { "Browse" },
+      requires = { "nvim-telescope/telescope.nvim" },
+      config = function() require("user.browse") end,
+    },
+    {
+      "rmagatti/auto-session",
+      cmd = "",
+      config = function() require "user.auto-session" end,
     }
+
   }
 
   -- Autocompletion & Snippets
@@ -277,7 +292,6 @@ return packer.startup(function(use)
     {
       "Mephistophiles/surround.nvim",
       event = "BufAdd",
-      module = "surround",
       config = function() require "user.surround" end,
     },
     {

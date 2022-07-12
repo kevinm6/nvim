@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : K NeoVim & gui VimR configuration
 -- Author       : Kevin
--- Last Modified: 20 Jun 2022, 19:25
+-- Last Modified: 10 Jul 2022, 14:17
 --------------------------------------
 
 -- check if NeoVim or Vim
@@ -18,18 +18,11 @@ else
   vim.opt.shadafile = vim.fn.stdpath "cache" .. "/shada/main.shada"
 end
 
--- Config Files to source
-local modules = {
-  "user.plugins",
-}
-
-for _, module in ipairs(modules) do
-  local ok, err = pcall(require, module)
-  if not ok then
-    vim.notify(
-      " Error loading module < " .. module .. " >\n" .. err,
-      "Error",
-      { timeout = 4600, title = "INIT ERROR" }
-    )
-  end
+local ok, err = pcall(require, "user.plugins")
+if not ok then
+  vim.notify(
+    " Error loading module < user.plugins >\n" .. err,
+    "Error",
+    { timeout = 4600, title = "INIT ERROR" }
+  )
 end

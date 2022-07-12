@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 01 Jul 2022, 21:03
+-- Last Modified: 07 Jul 2022, 16:14
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -139,7 +139,7 @@ local servers = {
 	},
   sourcekit = {
     cmd = { "sourcekit-lsp" },
-    filetypes = { "swift", "c", "cpp", "objective-c", "objective-cpp" },
+    filetypes = { "swift" },
     root_dir = util.root_pattern("Package.swift", ".git"),
   },
 	gopls = {

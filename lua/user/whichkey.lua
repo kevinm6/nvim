@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 10 Jun 2022, 13:21
+-- Last Modified: 12 Jul 2022, 17:10
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -70,21 +70,14 @@ local opts = {
 }
 
 -- Options for other mappings
-local noLeader_opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "",
-  buffer = nil,
-  silent = false,
-  noremap = true,
-  nowait = true,
-}
-
-local nonLeader_maps = {
-  ["<F8>"] = {
-    "<cmd>cd %:p:h<CR> <cmd>update<CR> <cmd>!gcc % -o %< <CR> <cmd>NvimTreeRefresh<CR> :call Scratch() <bar> :r!./#< <CR>",
-    "Save, Compile & Run",
-  },
-}
+-- local noLeader_opts = {
+--   mode = "n", -- NORMAL mode
+--   prefix = "",
+--   buffer = nil,
+--   silent = false,
+--   noremap = true,
+--   nowait = true,
+-- }
 
 local leader_maps = {
   ["1"] = { "<cmd>BufferLineGoToBuffer 1<CR>", "Go to Buffer 1" },
@@ -429,6 +422,36 @@ local leader_maps = {
     },
   },
 
+  j = {
+    name = "Run Code (Jaq)",
+    f = {
+      function() vim.cmd [[Jaq float]] end,
+      "Run in Float",
+    },
+    q = {
+      function() vim.cmd [[Jaq quickfix]] end,
+      "Run in Qf",
+    },
+    t = {
+      function()
+        require "toggleterm"
+        vim.cmd [[Jaq toggleterm]]
+      end,
+      "Run in ToggleTerm",
+    },
+    b = {
+      function() vim.cmd [[Jaq bang]] end,
+      "Run with shell window",
+    },
+    v = {
+      function()
+        vim.cmd [[Jaq internal]]
+      end,
+      "Run Vim command",
+    }
+  },
+
+
   -- NVIMTREE
   E = {
     function() require("nvim-tree").toggle() end,
@@ -655,7 +678,6 @@ local ins_mappings = {
 
 which_key.setup(setup)
 which_key.register(leader_maps, opts)
-which_key.register(nonLeader_maps, noLeader_opts)
 which_key.register(vmappings, vopts)
 which_key.register(Zmappings, Zopts)
 which_key.register(ins_mappings, i_opts)

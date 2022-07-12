@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 14 Jun 2022, 09:23
+-- Last Modified: 12 Jul 2022, 17:06
 -------------------------------------
 
 local S = {}
@@ -208,6 +208,7 @@ S.disabled = function(name)
     [" qf "] = icons.ui.Gear.." QuickFix",
     [" toggleterm "] = icons.misc.Robot.." Terminal",
     [" Outline "] = icons.ui.List.." SymbolsOutline",
+    [" Jaq "] = icons.ui.BoldChevronRight .." Quick Run Code (Jaq) " .. icons.ui.BoldChevronLeft,
   }
   ftype = special_filetypes[get_filetype()]
 
