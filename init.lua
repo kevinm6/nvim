@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : K NeoVim & gui VimR configuration
 -- Author       : Kevin
--- Last Modified: 10 Jul 2022, 14:17
+-- Last Modified: 14 Jul 2022, 09:40
 --------------------------------------
 
 -- check if NeoVim or Vim

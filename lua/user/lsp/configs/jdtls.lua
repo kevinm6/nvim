@@ -1,24 +1,17 @@
 -------------------------------------
--- File         : java.lua
+-- File         : jdtls.lua
 -- Description  : java language server configuration
 -- Author       : Kevin
--- Last Modified: 21 Jun 2022, 09:48
+-- Last Modified: 14 Jul 2022, 11:00
 -------------------------------------
 
 local ok, jdtls = pcall(require, "jdtls")
 if not ok then
-  vim.notify("  Error jdtls plugin config  ", "Error")
+  vim.notify("  Error on starting jdtls ", "Error")
   return
 end
 
 local home = os.getenv("HOME")
-
--- Find root of project
-local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
-local root_dir = require("jdtls.setup").find_root(root_markers)
-if root_dir == "" then
-  return
-end
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
@@ -32,7 +25,7 @@ local bundles = {
     "/.local/share/nvim/lsp_servers/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar"
   ),
 }
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share//nvim/vscode-java-test/server/*.jar"), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/vscode-java-test/server/*.jar"), "\n"))
 
 local config = {
   cmd = {
@@ -54,7 +47,7 @@ local config = {
     "-jar",
     vim.fn.glob(
       home
-      .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar"
+      .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"
     ),
 
     "-configuration",
@@ -65,19 +58,38 @@ local config = {
   },
   on_attach = require("user.lsp.handlers").on_attach,
   capabilities = require("user.lsp.handlers").capabilities,
-  root_dir = root_dir,
+  root_dir = require("jdtls.setup").find_root({ ".git", "gradlew", "pom.xml" }),
 
   single_file_support = true,
   settings = {
     java = {
-      eclipse = {
-        downloadSources = true,
+      signatureHelp = { enabled = true },
+      contentProvider = { preferred = "fernflower" },
+      saveActions = {
+        organizeImports = true
+      },
+      sources = {
+        organizeImports = {
+          starThreshold = 9999,
+          staticStarThreshold = 9999,
+        }
       },
       configuration = {
         updateBuildConfiguration = "interactive",
-      },
-      maven = {
-        downloadSources = true,
+        -- runtimes = {
+        --   {
+        --     name = "JavaSE-11",
+        --     path = home .. "/.sdkman/candidates/java/11.0.10-open/",
+        --   },
+        --   {
+        --     name = "JavaSE-14",
+        --     path = home .. "/.sdkman/candidates/java/14.0.2-open/",
+        --   },
+        --   {
+        --     name = "JavaSE-15",
+        --     path = home .. "/.sdkman/candidates/java/15.0.1-open/",
+        --   },
+        -- }
       },
       implementationsCodeLens = {
         enabled = true,
@@ -92,8 +104,8 @@ local config = {
         enabled = true,
       },
     },
-    signatureHelp = { enabled = true },
     completion = {
+      maxResults = 20,
       favoriteStaticMembers = {
         "org.hamcrest.MatcherAssert.assertThat",
         "org.hamcrest.Matchers.*",
@@ -101,24 +113,19 @@ local config = {
         "org.junit.jupiter.api.Assertions.*",
         "java.util.Objects.requireNonNull",
         "java.util.Objects.requireNonNullElse",
+        "org.mockito.Mockito.*",
       },
     },
-    sources = {
-      organizeImports = {
-        starThreshold = 9999,
-        staticStarThreshold = 9999,
-      },
-    },
-    contentProvider = { preferred = "fernflower" },
     extendedClientCapabilities = extendedClientCapabilities,
     codeGeneration = {
       generateComments = true,
       toString = {
-        template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+        template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}"
       },
       useBlocks = true,
     },
     flags = {
+      debounce_text_changes = 150,
       allow_incremental_sync = true,
     },
     init_options = {
@@ -127,7 +134,40 @@ local config = {
   },
 }
 
-require("jdtls").start_or_attach(config)
+-- UI
+local finders = require'telescope.finders'
+local sorters = require'telescope.sorters'
+local actions = require'telescope.actions'
+local pickers = require'telescope.pickers'
+require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
+  local opts = {}
+  pickers.new(opts, {
+    prompt_title = prompt,
+    finder    = finders.new_table {
+      results = items,
+      entry_maker = function(entry)
+        return {
+          value = entry,
+          display = label_fn(entry),
+          ordinal = label_fn(entry),
+        }
+      end,
+    },
+    sorter = sorters.get_generic_fuzzy_sorter(),
+    attach_mappings = function(prompt_bufnr)
+      actions.goto_file_selection_edit:replace(function()
+        local selection = actions.get_selected_entry(prompt_bufnr)
+        actions.close(prompt_bufnr)
+
+        cb(selection.value)
+      end)
+
+      return true
+    end,
+  }):find()
+end
+
+-- require("jdtls").start_or_attach(config)
 
 vim.cmd(
   "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
@@ -183,3 +223,5 @@ local vmappings = {
 
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
+
+return config

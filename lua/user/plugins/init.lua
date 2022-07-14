@@ -1,8 +1,8 @@
 --------------------------------------
--- File         : plugins.lua
--- Description  : Lua K NeoVim & VimR plugins w/ packer
+-- File         : init.lua
+-- Description  : Package Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 12 Jul 2022, 11:26
+-- Last Modified: 14 Jul 2022, 10:43
 --------------------------------------
 
 -- install packer if not found in default location
@@ -109,7 +109,7 @@ return packer.startup(function(use)
   use {
     {
       "lewis6991/impatient.nvim",
-      config = function() require "user.impatient" end,
+      config = function() require "user.plugins.config.impatient" end,
     },
     {
       "nvim-lua/plenary.nvim",
@@ -134,7 +134,7 @@ return packer.startup(function(use)
       "RRethy/vim-illuminate",
       event = "BufAdd",
       module = "illuminate",
-      config = function() require "user.illuminate" end,
+      config = function() require "user.plugins.config.illuminate" end,
     },
     { "kyazdani42/nvim-web-devicons", module = "nvim-web-devicons" },
     {
@@ -144,7 +144,7 @@ return packer.startup(function(use)
     {
       "br1anchen/nvim-colorizer.lua",
       cmd = "ColorizerToggle",
-      config = function() require "user.colorizer" end,
+      config = function() require "user.plugins.config.colorizer" end,
     },
     {
       "antoinemadec/FixCursorHold.nvim",
@@ -153,18 +153,18 @@ return packer.startup(function(use)
     {
       "ziontee113/color-picker.nvim",
       cmd = { "PickColor", "PickColorInsert" },
-      config = function() require "user.color_picker" end,
+      config = function() require "user.plugins.config.color_picker" end,
     },
     {
       "kevinhwang91/nvim-ufo",
       requires = { "kevinhwang91/promise-async" },
       event = "BufAdd",
-      config = function() require "user.ufo" end,
+      config = function() require "user.plugins.config.ufo" end,
     },
     {
       "is0n/jaq-nvim",
       event = "BufAdd",
-      config = function() require "user.jaq" end,
+      config = function() require "user.plugins.config.jaq" end,
     }
   }
 
@@ -173,63 +173,63 @@ return packer.startup(function(use)
     {
       "kyazdani42/nvim-tree.lua",
       module = "nvim-tree",
-      config = function() require "user.nvim-tree" end,
+      config = function() require "user.plugins.config.nvim-tree" end,
       event = "VimEnter",
     },
     {
       "folke/which-key.nvim",
       module = "which-key",
-      config = function() require "user.whichkey" end,
+      config = function() require "user.plugins.config.whichkey" end,
       event = "VimEnter",
     },
     {
       "ghillb/cybu.nvim",
       event = "BufAdd",
-      config = function() require "user.cybu" end,
+      config = function() require "user.plugins.config.cybu" end,
     },
     {
       "akinsho/bufferline.nvim",
       tag = "*",
       event = "BufAdd",
       requires = { "kyazdani42/nvim-web-devicons" },
-      config = function() require "user.bufferline" end,
+      config = function() require "user.plugins.config.bufferline" end,
     },
     {
       "akinsho/toggleterm.nvim",
       cmd = { "ToggleTerm", "Git" },
       module = "toggleterm",
-      config = function() require "user.toggleterm" end,
+      config = function() require "user.plugins.config.toggleterm" end,
     },
     {
       "goolord/alpha-nvim",
       event = "BufWinEnter",
-      config = function() require "user.alpha" end,
+      config = function() require "user.plugins.config.alpha" end,
     },
     {
       "rcarriga/nvim-notify",
       module = { "nvim-notify", "telescope._extensions.notify" },
       event = "BufWinEnter",
-      config = function() require "user.notify" end,
+      config = function() require "user.plugins.config.notify" end,
     },
     {
       "AckslD/nvim-neoclip.lua",
       event = "BufAdd",
-      config = function() require "user.neoclip" end,
+      config = function() require "user.plugins.config.neoclip" end,
     },
     {
       "j-hui/fidget.nvim",
       event = "BufAdd",
-      config = function() require "user.fidget" end,
+      config = function() require "user.plugins.config.fidget" end,
     },
     {
       "stevearc/dressing.nvim",
       event = "VimEnter",
-      config = function() require "user.dressing" end,
+      config = function() require "user.plugins.config.dressing" end,
     },
     {
       "lewis6991/spellsitter.nvim",
       opt = true,
-      config = function () require "user.spellsitter" end,
+      config = function () require "user.plugins.config.spellsitter" end,
     },
     {
       "lalitmee/browse.nvim",
@@ -241,7 +241,7 @@ return packer.startup(function(use)
     {
       "rmagatti/auto-session",
       cmd = "",
-      config = function() require "user.auto-session" end,
+      config = function() require "user.plugins.config.auto-session" end,
     }
 
   }
@@ -254,7 +254,7 @@ return packer.startup(function(use)
       "L3MON4D3/LuaSnip",
       after = "nvim-cmp",
       module = "luasnip",
-      config = function () require "user.luasnip" end,
+      config = function () require "user.plugins.config.luasnip" end,
     },
     { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
@@ -272,7 +272,7 @@ return packer.startup(function(use)
     {
       "hrsh7th/nvim-cmp",
       event = "InsertEnter",
-      config = function() require "user.cmp" end,
+      config = function() require "user.plugins.config.cmp" end,
     }
   }
 
@@ -282,45 +282,45 @@ return packer.startup(function(use)
       "SmiteshP/nvim-navic",
       module = "user.lsp",
       requires = "neovim/nvim-lspconfig",
-      config = function() require "user.navic" end,
+      config = function() require "user.plugins.config.navic" end,
     },
     {
       "windwp/nvim-autopairs",
       event = "InsertEnter",
-      config = function() require "user.autopairs" end,
+      config = function() require "user.plugins.config.autopairs" end,
     },
     {
       "Mephistophiles/surround.nvim",
       event = "BufAdd",
-      config = function() require "user.surround" end,
+      config = function() require "user.plugins.config.surround" end,
     },
     {
       "folke/todo-comments.nvim",
       event = "BufAdd",
-      config = function() require "user.todo-comments" end,
+      config = function() require "user.plugins.config.todo-comments" end,
     },
     {
       "numToStr/Comment.nvim",
       event = "BufAdd",
-      config = function() require "user.comment" end,
+      config = function() require "user.plugins.config.comment" end,
     },
     {
       "phaazon/hop.nvim",
       event = "BufAdd",
-      config = function() require "user.hop" end,
+      config = function() require "user.plugins.config.hop" end,
     },
     {
       "michaelb/sniprun",
       run = "bash ./install.sh",
       event = "InsertLeave",
-      config = function() require "user.sniprun" end,
+      config = function() require "user.plugins.config.sniprun" end,
     },
     {
       "simrat39/symbols-outline.nvim",
       event = "InsertLeave",
       cmd = "SymbolsOutline",
       requires = { "nvim-treesitter/nvim-treesitter" },
-      config = function() require "user.symbol-outline" end,
+      config = function() require "user.plugins.config.symbol-outline" end,
     },
     {
       "folke/trouble.nvim",
@@ -346,7 +346,7 @@ return packer.startup(function(use)
       event = "VimEnter",
       module = { "treesitter", "telescope" },
       run = ":TSUpdate",
-      config = function() require "user.treesitter" end,
+      config = function() require "user.plugins.config.treesitter" end,
     },
     { "nvim-treesitter/playground", cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" } },
   }
@@ -357,7 +357,7 @@ return packer.startup(function(use)
     "lewis6991/gitsigns.nvim",
     module = "gitsigns",
     event = "BufAdd",
-    config = function() require "user.gitsigns" end,
+    config = function() require "user.plugins.config.gitsigns" end,
   }
 
 
@@ -393,7 +393,7 @@ return packer.startup(function(use)
       module = "telescope",
       cmd = "Telescope",
       requires = { "nvim-lua/plenary.nvim" },
-      config = function() require "user.telescope" end,
+      config = function() require "user.plugins.config.telescope" end,
     }
   }
 
@@ -417,17 +417,16 @@ return packer.startup(function(use)
     { -- Java
       "mfussenegger/nvim-jdtls",
       ft = "java",
-      requires = {
-        { "Microsoft/java-debug", ft = "java" },
-      },
+      requires = "Microsoft/java-debug",
+      config = function() require "user.lsp.configs.jdtls" end,
     },
 
     -- database
     {
       "nanotee/sqls.nvim",
-      -- module = "sqls",
       ft = { "sql", "mysql", "psql" },
-      config = function() require "user.lsp.settings.sqls" end,
+      -- module = "sqls",
+      -- config = function() require "user.lsp.configs.sqls" end,
     },
 
     -- Json
@@ -521,7 +520,7 @@ return packer.startup(function(use)
       "neovim/nvim-lspconfig",
     },
     ft = { "xcodeproj", "swift", "cpp", "objective-c" },
-    config = function() require "user.xbase" end,
+    config = function() require "user.plugins.config.xbase" end,
   }
 
   -- themes

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 07 Jul 2022, 16:14
+-- Last Modified: 14 Jul 2022, 09:44
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -56,7 +56,10 @@ local filetype_attach = setmetatable({
 			client.server_capabilities.document_formatting = false
 
 			require("jdtls").setup_dap({ hotcodereplace = "auto" })
-			require("jdtls.dap").setup_dap_main_class_configs()
+      require("jdtls").setup.add_commands()
+			require("jdtls.dap").setup_dap_main_class_configs({config_overrides = {
+            vmArgs = "-Dspring.profiles.active=local",
+        }})
 			vim.lsp.codelens.refresh()
 		end
 	end,
@@ -96,14 +99,15 @@ end
 
 -- Manage server with custom setup
 local servers = {
-	sumneko_lua = require("user.lsp.settings.sumneko_lua"),
-	pyright = require("user.lsp.settings.pyright"),
-	jsonls = require("user.lsp.settings.jsonls"),
-	emmet_ls = require("user.lsp.settings.emmet_ls"),
-	ltex = require("user.lsp.settings.ltex"),
-	sqls = require("user.lsp.settings.sqls"),
-	asm_lsp = require("user.lsp.settings.asm_lsp"),
-	vimls = require("user.lsp.settings.vimls"),
+	sumneko_lua = require("user.lsp.configs.sumneko_lua"),
+	pyright = require("user.lsp.configs.pyright"),
+  emmet_ls = require("user.lsp.configs.emmet_ls"),
+  jdtls = require("user.lsp.configs.jdtls"),
+	jsonls = require("user.lsp.configs.jsonls"),
+	ltex = require("user.lsp.configs.ltex"),
+	sqls = require("user.lsp.configs.sqls"),
+	asm_lsp = require("user.lsp.configs.asm_lsp"),
+	vimls = require("user.lsp.configs.vimls"),
 	bashls = {
 		cmd = { "bash-language-server", "start" },
 		cmd_env = {
