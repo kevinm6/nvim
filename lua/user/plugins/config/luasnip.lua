@@ -2,7 +2,7 @@
 --  File         : luasnip.lua
 --  Description  : luasnip configuration
 --  Author       : Kevin
---  Last Modified: 12 Jun 2022, 12:08
+--  Last Modified: 17 Jul 2022, 10:35
 -------------------------------------
 
 local ok, ls = pcall(require, "luasnip")

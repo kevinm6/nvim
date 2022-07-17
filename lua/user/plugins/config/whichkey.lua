@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 12 Jul 2022, 17:10
+-- Last Modified: 16 Jul 2022, 12:03
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -103,6 +103,7 @@ local leader_maps = {
     end,
     "Change dir to current buffer's parent",
   },
+  h = { ":help ", "Help (Docs)" },
 
   b = {
     function()
@@ -111,9 +112,9 @@ local leader_maps = {
     "Buffers",
   },
   w = { "<cmd>update!<CR>", "Save" },
-  h = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-  z = { "<cmd>update<CR> <cmd>Bdelete<cr> <cmd>bnext<cr>", "Save and Close Buffer" },
+  H = { "<cmd>nohlsearch<CR>", "No Highlight" },
+  c = { "<cmd>DeleteCurrentBuffer<CR>", "Close Buffer" },
+  z = { "<cmd>DeleteCurrentBuffer<CR>", "Save and Close Buffer" },
   q = { "<cmd>quit<CR>", "Quit" },
   a = { ":Alpha<CR>", "Alpha Dashboard" },
   Z = { "<cmd>ZenMode<CR>", "Zen" },
@@ -121,6 +122,11 @@ local leader_maps = {
     name = "Window",
     s = { '<cmd>split<cr>', "HSplit" },
     v = { '<cmd>vsplit<cr>', "VSplit" },
+  },
+  n = {
+    name = "Notifications",
+    n = { "<cmd>Notification<CR>", "Notifications" },
+    m = { "<cmd>messages<CR>", "Messages" }
   },
 
   f = {
@@ -647,7 +653,7 @@ local Zopts = {
 }
 
 local Zmappings = {
-  Z = { "<cmd>update<CR> <cmd>Bdelete<CR> <cmd>bnext<CR>", "Save and Close buffer" },
+  Z = { "<cmd>update<CR> <cmd>DeleteCurrentBuffer<CR>", "Save and Close buffer" },
   Q = { "<cmd>quit!<CR>", "Close buffer and go to next" },
   A = { ":%bdelete | :Alpha<CR>", "Close all Buffers" },
 }

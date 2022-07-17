@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 14 Jul 2022, 09:44
+-- Last Modified: 17 Jul 2022, 11:22
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -13,12 +13,21 @@ local util = require "lspconfig.util"
 require("user.lsp.handlers").setup()
 require "user.lsp.codelens"
 
--- Lsp highlights managed by
---   `illuminate` plugin
+-- Lsp highlights
 local function lsp_highlight_document(client)
-  local illuminate_ok, illuminate = pcall(require, "illuminate")
-  if not illuminate_ok then return end
-  illuminate.on_attach(client)
+ if client.server_capabilities.documentHighlightProvider then
+    local lsp_hi_doc_group = vim.api.nvim_create_augroup("lsp_document_highlight", {})
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = lsp_hi_doc_group,
+      pattern = "*",
+      callback = function() vim.lsp.buf.document_highlight() end
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      group = lsp_hi_doc_group,
+      pattern = "*",
+      callback = function() vim.lsp.buf.clear_references() end
+    })
+  end
 end
 
 
@@ -58,8 +67,8 @@ local filetype_attach = setmetatable({
 			require("jdtls").setup_dap({ hotcodereplace = "auto" })
       require("jdtls").setup.add_commands()
 			require("jdtls.dap").setup_dap_main_class_configs({config_overrides = {
-            vmArgs = "-Dspring.profiles.active=local",
-        }})
+        vmArgs = "-Dspring.profiles.active=local",
+      }})
 			vim.lsp.codelens.refresh()
 		end
 	end,
@@ -73,13 +82,16 @@ local navic_ok, navic = pcall(require, "nvim-navic")
 
 local custom_attach = function(client, bufnr)
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-	filetype_attach[filetype](client)
+
+  -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
   if navic_ok then
     navic.attach(client, bufnr)
   end
+
+  filetype_attach[filetype](client)
 end
 
 -- Update capabilities with extended
@@ -102,7 +114,6 @@ local servers = {
 	sumneko_lua = require("user.lsp.configs.sumneko_lua"),
 	pyright = require("user.lsp.configs.pyright"),
   emmet_ls = require("user.lsp.configs.emmet_ls"),
-  jdtls = require("user.lsp.configs.jdtls"),
 	jsonls = require("user.lsp.configs.jsonls"),
 	ltex = require("user.lsp.configs.ltex"),
 	sqls = require("user.lsp.configs.sqls"),

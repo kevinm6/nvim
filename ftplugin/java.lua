@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : jdtls.lua
--- Description  : java language server configuration
+-- File         : java.lua
+-- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 14 Jul 2022, 11:00
+-- Last Modified: 17 Jul 2022, 12:44
 -------------------------------------
 
 local ok, jdtls = pcall(require, "jdtls")
@@ -11,13 +11,13 @@ if not ok then
   return
 end
 
-local home = os.getenv("HOME")
+local home = os.getenv "HOME"
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = home .. "/.cache/workspace/" .. project_name
+local workspace_dir = vim.fn.expand "~/.cache/java/workspace/" .. project_name
 
 local bundles = {
   vim.fn.glob(
@@ -46,20 +46,16 @@ local config = {
 
     "-jar",
     vim.fn.glob(
-      home
-      .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"
+      home .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"
     ),
 
-    "-configuration",
-    vim.fn.glob(home .. "/.local/share/nvim/lsp_servers/jdtls/config_mac"),
+    "-configuration", vim.fn.expand "~/.local/share/nvim/lsp_servers/jdtls/config_mac",
 
-    "-data",
-    workspace_dir,
+    "-data", workspace_dir,
   },
   on_attach = require("user.lsp.handlers").on_attach,
   capabilities = require("user.lsp.handlers").capabilities,
-  root_dir = require("jdtls.setup").find_root({ ".git", "gradlew", "pom.xml" }),
-
+  root_dir =  require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}) or vim.fn.getcwd(),
   single_file_support = true,
   settings = {
     java = {
@@ -76,20 +72,16 @@ local config = {
       },
       configuration = {
         updateBuildConfiguration = "interactive",
-        -- runtimes = {
-        --   {
-        --     name = "JavaSE-11",
-        --     path = home .. "/.sdkman/candidates/java/11.0.10-open/",
-        --   },
-        --   {
-        --     name = "JavaSE-14",
-        --     path = home .. "/.sdkman/candidates/java/14.0.2-open/",
-        --   },
-        --   {
-        --     name = "JavaSE-15",
-        --     path = home .. "/.sdkman/candidates/java/15.0.1-open/",
-        --   },
-        -- }
+        runtimes = {
+          {
+            name = "JavaSE-18",
+            path = "/usr/local/opt/java/libexec/openjdk.jdk/"
+          },
+          {
+            name = "JavaSE-11",
+            path = "/usr/local/opt/java11/libexec/openjdk.jdk/"
+          },
+        }
       },
       implementationsCodeLens = {
         enabled = true,
@@ -129,8 +121,13 @@ local config = {
       allow_incremental_sync = true,
     },
     init_options = {
+      jvm_args = "-javaagent:" .. home .."/.local/share/nvim/lsp_servers/jdtls/lombok.jar",
+      workspace = workspace_dir .. project_name,
       bundles = bundles,
     },
+    on_init = function(client)
+      client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+    end
   },
 }
 
@@ -167,8 +164,6 @@ require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
   }):find()
 end
 
--- require("jdtls").start_or_attach(config)
-
 vim.cmd(
   "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
 )
@@ -180,48 +175,56 @@ vim.cmd("command! -buffer JdtUpdateConfig lua require('jdtls').update_project_co
 vim.cmd("command! -buffer JdtBytecode lua require('jdtls').javap()")
 -- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
 
+require('jdtls').start_or_attach(config)
+
 local which_key_ok, which_key = pcall(require, "which-key")
-if not which_key_ok then
-  return
-end
+if not which_key_ok then return end
 
 local opts = {
-  mode = "n", -- NORMAL mode
+  mode = "n",
   prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
 }
 
 local vopts = {
-  mode = "v", -- VISUAL mode
+  mode = "v",
   prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
 }
 
 local mappings = {
-  j = {
+  J = {
     name = "Java",
-    o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", "Organize Imports" },
-    v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
-    c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", "Extract Constant" },
+    o = { function() require("jdtls").organize_imports() end, "Organize Imports" },
+    v = { function() require("jdtls").extract_variable() end, "Extract Variable" },
+    c = { function() require("jdtls").extract_constant() end, "Extract Constant" },
+    t = {
+      name = "Test (DAP)",
+      c = { function() require("jdtls").test_class() end, "Class" },
+      m = { function() require("jdtls").test_nearest_method() end, "Nearest Method" },
+    }
   },
 }
 
 local vmappings = {
-  j = {
+  J = {
     name = "Java",
-    v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", "Extract Variable" },
-    c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", "Extract Constant" },
-    m = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", "Extract Method" },
+    v = { function() require("jdtls").extract_variable(true) end, "Extract Variable" },
+    c = { function() require("jdtls").extract_constant(true) end, "Extract Constant" },
+    m = { function() require("jdtls").extract_method(true) end, "Extract Method" },
+    t = {
+      name = "Test (DAP)",
+      c = { function() require("jdtls").test_class() end, "Class" },
+      m = { function() require("jdtls").test_nearest_method() end, "Nearest Method" },
+    },
   },
 }
 
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
-
-return config

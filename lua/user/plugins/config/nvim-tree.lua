@@ -2,7 +2,7 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 05 Jul 2022, 17:39
+-- Last Modified: 17 Jul 2022, 10:06
 -------------------------------------
 
 local ok, nvim_tree = pcall(require, "nvim-tree")
@@ -50,15 +50,22 @@ nvim_tree.setup {
   disable_netrw = true,
   hijack_cursor = true,
   -- hijack_netrw = true, -- overriden if 'disable_netrw = true'
-  hijack_unnamed_buffer_when_opening = false,
+  hijack_unnamed_buffer_when_opening = true,
   ignore_buffer_on_setup = false,
   open_on_setup = true,
-  open_on_setup_file = true,
+  open_on_setup_file = false,
   open_on_tab = true,
-  update_cwd = true,
+  sync_root_with_cwd = true,
+  reload_on_bufenter = true,
+  respect_buf_cwd = true,
   sort_by = "case_sensitive",
+  filesystem_watchers = {
+    enable = true,
+    interval = 1000,
+    debounce_delay = 100,
+  },
   view = {
-    width = 30,
+    width = 34,
     height = 30,
     hide_root_folder = false,
     side = "left",
@@ -89,17 +96,17 @@ nvim_tree.setup {
     },
   },
   renderer = {
-    add_trailing = false,
+    add_trailing = true,
     group_empty = false,
-    highlight_git = false,
-    highlight_opened_files = "none",
-    root_folder_modifier = ":~",
+    highlight_git = true,
+    highlight_opened_files = "name",
+    root_folder_modifier = ":t",
     indent_markers = {
       enable = true,
       icons = {
-        corner = "└ ",
-        edge = "│ ",
-        none = "  ",
+        corner = "└",
+        edge = "│",
+        none = " ",
       },
     },
     icons = {
@@ -139,7 +146,7 @@ nvim_tree.setup {
   },
   update_focused_file = {
     enable = true,
-    update_cwd = true,
+    update_root = false,
     ignore_list = {},
   },
   ignore_ft_on_setup = { "alpha" },
@@ -174,12 +181,12 @@ nvim_tree.setup {
     },
     open_file = {
       quit_on_open = false,
-      resize_window = false,
+      resize_window = true,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         exclude = {
-          filetype = { "notify", "packer", "qf", "diff" },
+          filetype = { "notify", "packer", "qf", "diff", "help" },
           buftype = { "nofile", "terminal", "help" },
         },
       },

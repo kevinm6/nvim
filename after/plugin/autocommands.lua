@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 12 Jul 2022, 16:58
+-- Last Modified: 16 Jul 2022, 11:45
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -186,3 +186,24 @@ end
 command("Note", Note, { desc = "Create a Note buffer" })
 
 command("RemoveTrailingSpaces", [[%s/\s\+$//e]], { desc = "Remove extra trailing white spaces" })
+
+local DeleteCurrentBuffer = function()
+  local cBuf = vim.api.nvim_get_current_buf()
+  local bufs = vim.fn.getbufinfo({buflisted = true})
+  if #bufs == 0 then return end
+
+  for idx, b in ipairs(bufs) do
+    if b.bufnr == cBuf then
+      if idx == #bufs then
+        vim.cmd "bprevious"
+      else
+        vim.cmd "bnext"
+      end
+      break
+    end
+  end
+  vim.cmd("bdelete "..cBuf)
+end
+
+command("DeleteCurrentBuffer", DeleteCurrentBuffer, { desc = "Close current buffer and go to next" })
+

@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 21 Jun 2022, 09:37
+--  Last Modified: 16 Jul 2022, 14:56
 -------------------------------------
 
 local base = require "user.k_theme.base"
@@ -122,9 +122,9 @@ local plugins = {
   LuasnipInsertNode = { fg = "#4fc1ff", bg = "grey15" },
   -- LSP
   LspCodeLens = base.k_themeGray,
-  LspReferenceText = { fg = "#AAAAAA" , bg = "#3c3c3c" },
+  LspReferenceText = { bg = "#3c3c3c" },
   LspReferenceWrite = { fg = "#F1F1F1", bg = "#015A60" },
-  LspReferenceRead = { bg = "#3a3a3a" },
+  LspReferenceRead = { bg = "#3c3c3c" },
   FloatBorder = { fg = "#3D3D40", bg = "#2c2c2c" },
   -- Diagnostic
   DiagnosticError = { fg = "#f44747" },

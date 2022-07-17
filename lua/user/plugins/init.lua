@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : Package Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 14 Jul 2022, 10:43
+-- Last Modified: 17 Jul 2022, 12:15
 --------------------------------------
 
 -- install packer if not found in default location
@@ -121,7 +121,6 @@ return packer.startup(function(use)
       cmd = "require",
     },
 
-    { "moll/vim-bbye", event = "BufAdd", cmd = { "Bdelete", "Bwipeout" } },
     {
       "tweekmonster/startuptime.vim",
       cmd = "StartupTime",
@@ -129,12 +128,6 @@ return packer.startup(function(use)
     {
       "MunifTanjim/nui.nvim",
       cmd = "require",
-    },
-    {
-      "RRethy/vim-illuminate",
-      event = "BufAdd",
-      module = "illuminate",
-      config = function() require "user.plugins.config.illuminate" end,
     },
     { "kyazdani42/nvim-web-devicons", module = "nvim-web-devicons" },
     {
@@ -164,8 +157,9 @@ return packer.startup(function(use)
     {
       "is0n/jaq-nvim",
       event = "BufAdd",
+      cmd = "Jaq*",
       config = function() require "user.plugins.config.jaq" end,
-    }
+    },
   }
 
   -- Core plugins
@@ -173,14 +167,14 @@ return packer.startup(function(use)
     {
       "kyazdani42/nvim-tree.lua",
       module = "nvim-tree",
-      config = function() require "user.plugins.config.nvim-tree" end,
       event = "VimEnter",
+      config = function() require "user.plugins.config.nvim-tree" end,
     },
     {
       "folke/which-key.nvim",
+      event = "VimEnter",
       module = "which-key",
       config = function() require "user.plugins.config.whichkey" end,
-      event = "VimEnter",
     },
     {
       "ghillb/cybu.nvim",
@@ -249,7 +243,7 @@ return packer.startup(function(use)
   -- Autocompletion & Snippets
   use { -- snippets engine and source
     { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp", after = "nvim-cmp" },
-    { "kevinm6/the-snippets", module = "user.luasnip", after = "nvim-cmp" },
+    { "kevinm6/the-snippets", module = "user.plugins.config.luasnip", after = "nvim-cmp" },
     {
       "L3MON4D3/LuaSnip",
       after = "nvim-cmp",
@@ -418,7 +412,7 @@ return packer.startup(function(use)
       "mfussenegger/nvim-jdtls",
       ft = "java",
       requires = "Microsoft/java-debug",
-      config = function() require "user.lsp.configs.jdtls" end,
+      -- config = function() require "" end,
     },
 
     -- database

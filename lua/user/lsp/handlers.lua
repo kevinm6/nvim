@@ -2,7 +2,7 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file, to manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 12 Jun 2022, 15:10
+-- Last Modified: 16 Jul 2022, 15:08
 --------------------------------------
 
 local M = {}
@@ -37,7 +37,6 @@ M.setup = function()
       prefix = icons.lsp.nvim_lsp.." ",
     },
   }
-
 
   vim.diagnostic.open_float = (function(orig)
     return function(bufnr, opts)
@@ -91,20 +90,30 @@ M.setup = function()
     return
   end
 
-  -- if vim.tbl_islist(result) then
-  --     vim.lsp.util.jump_to_location(result[1], "utf-8")
-  --   else
-  --     vim.lsp.util.jump_to_location(result, "utf-8")
-  --   end
+  if vim.tbl_islist(result) then
+      vim.lsp.util.jump_to_location(result[1], "utf-8")
+    else
+      vim.lsp.util.jump_to_location(result, "utf-8")
+    end
   end
 
- vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(vim.lsp.handlers.workspaceFolders, {
-  library = {
-    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-  },
-})
+  vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(vim.lsp.handlers.workspaceFolders, {
+    library = {
+      [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+      [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+    },
+  })
 
+  vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
+      signs = {
+        severity_limit = "Error",
+      },
+      underline = {
+        severity_limit = "Warning",
+      },
+      virtual_text = true,
+    })
 
 end
 

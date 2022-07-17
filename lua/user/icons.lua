@@ -2,7 +2,7 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 02 Jul 2022, 10:30
+--	Last Modified: 16 Jul 2022, 11:24
 -----------------------------------
 
 -- Font: SauceCodePro Nerd Font Mono:13, v|i 92, n/n 90
