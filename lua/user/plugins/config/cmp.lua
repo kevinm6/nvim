@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 17 Jul 2022, 10:35
+-- Last Modified: 18 Jul 2022, 09:42
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -152,6 +152,7 @@ cmp.setup {
 		{ name = "latex_symbols", keyword_length = 2, priority = 2 },
 		{ name = "calc" },
     { name = "dap" },
+    { name = "orgmode" },
 		-- { name = "digraphs" },
 	},
 	confirm_opts = {

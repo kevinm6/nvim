@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : Package Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 17 Jul 2022, 12:15
+-- Last Modified: 18 Jul 2022, 12:53
 --------------------------------------
 
 -- install packer if not found in default location
@@ -160,6 +160,11 @@ return packer.startup(function(use)
       cmd = "Jaq*",
       config = function() require "user.plugins.config.jaq" end,
     },
+    {
+      "nvim-orgmode/orgmode",
+      after = "nvim-treesitter",
+      config = function() require "user.plugins.config.orgmode" end,
+    }
   }
 
   -- Core plugins

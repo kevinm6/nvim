@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 05 Jul 2022, 09:48
+-- Last Modified: 18 Jul 2022, 12:52
 -------------------------------------
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")

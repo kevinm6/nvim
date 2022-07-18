@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 14 Jul 2022, 09:40
+--	Last Modified: 18 Jul 2022, 09:59
 -----------------------------------
 
 local ok, alpha = pcall(require, "alpha")
@@ -42,6 +42,7 @@ dashboard.section.header.val = {
 
 dashboard.section.buttons.val = {
 	dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>ene <BAR> startinsert <CR>"),
+	dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>e ~/Documents/Notes/notes.org <BAR> startinsert <CR>"),
 	dashboard.button("t", icons.ui.Telescope .. " Open Telescope", "<cmd>Telescope <CR>"),
 	dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>Telescope find_files <CR>"),
 	dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),

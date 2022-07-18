@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 17 Jul 2022, 12:44
+-- Last Modified: 17 Jul 2022, 12:51
 -------------------------------------
 
 local ok, jdtls = pcall(require, "jdtls")
@@ -17,7 +17,7 @@ local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = vim.fn.expand "~/.cache/java/workspace/" .. project_name
+local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_name
 
 local bundles = {
   vim.fn.glob(
