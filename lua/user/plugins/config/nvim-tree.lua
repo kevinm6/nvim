@@ -2,7 +2,7 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 17 Jul 2022, 10:06
+-- Last Modified: 21 Jul 2022, 16:16
 -------------------------------------
 
 local ok, nvim_tree = pcall(require, "nvim-tree")
@@ -10,25 +10,32 @@ if not ok then return end
 
 local icons = require "user.icons"
 
-local lib = require "nvim-tree.lib"
-local view = require "nvim-tree.view"
-
-
 local function trash_file()
-  local path = lib.get_node_at_cursor().absolute_path
-  local name = lib.get_node_at_cursor().name
+  local lib = require "nvim-tree.lib"
+  local node = lib.get_node_at_cursor()
 
-  print("Trash < " .. name .. " > ? (y/n) ")
-  local ans = require("nvim-tree.utils").get_user_input_char()
-  require("nvim-tree.utils").clear_prompt()
-  if ans:match "^y" then
-    vim.fn.system("mv " .. vim.fn.fnameescape(path) .. " ~/.Trash")
-    vim.cmd "NvimTreeRefresh"
-    vim.notify(" " .. name .. " moved to Bin!", "Warn")
+  local function get_user_input_char()
+    local c = vim.fn.getchar()
+    return vim.fn.nr2char(c)
   end
+
+  print("Trash < " .. node.name .. " > ? (y/n) ")
+
+  if node and (get_user_input_char():match("^y")) then
+    vim.fn.jobstart("mv " .. vim.fn.fnameescape(node.absolute_path) .. " ~/.Trash", {
+      detach = true,
+      on_exit = function(job_id, data, event)
+        vim.notify(" " .. node.name .. " moved to Bin!", "Warn")
+        lib.refresh_tree()
+      end,
+    })
+  end
+  vim.api.nvim_command "normal :esc<CR>"
 end
 
 local function vsplit_preview()
+  local lib = require "nvim-tree.lib"
+  local view = require "nvim-tree.view"
   -- open as vsplit on current node
   local action = "vsplit"
   local node = lib.get_node_at_cursor()
@@ -61,7 +68,6 @@ nvim_tree.setup {
   sort_by = "case_sensitive",
   filesystem_watchers = {
     enable = true,
-    interval = 1000,
     debounce_delay = 100,
   },
   view = {

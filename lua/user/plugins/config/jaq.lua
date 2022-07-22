@@ -2,7 +2,7 @@
 --  File         : jaq.lua
 --  Description  : jaq plugin conf
 --  Author       : Kevin
---  Last Modified: 16 Jul 2022, 11:51
+--  Last Modified: 21 Jul 2022, 13:04
 -------------------------------------
 
 local ok, jaq = pcall(require, "jaq-nvim")
@@ -37,7 +37,7 @@ jaq.setup {
       c = "gcc % -o $fileBase && ./$fileBase",
       go = "go run %",
       sh = "sh %",
-      markdown = "glow %",
+      markdown = [[glow '%']],
       python = "python3 %",
       typescript = "deno run %",
       javascript = "node %",

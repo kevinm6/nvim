@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : Package Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 18 Jul 2022, 12:53
+-- Last Modified: 21 Jul 2022, 12:52
 --------------------------------------
 
 -- install packer if not found in default location
@@ -172,7 +172,7 @@ return packer.startup(function(use)
     {
       "kyazdani42/nvim-tree.lua",
       module = "nvim-tree",
-      event = "VimEnter",
+      event = "BufReadPre",
       config = function() require "user.plugins.config.nvim-tree" end,
     },
     {
@@ -483,7 +483,8 @@ return packer.startup(function(use)
   use {
     "ellisonleao/glow.nvim",
     ft = { "md", "markdown" },
-    cmd = "Glow",
+    cmd = "Glow*",
+    config = function() require("user.plugins.config.glow") end,
   }
   use {
     {

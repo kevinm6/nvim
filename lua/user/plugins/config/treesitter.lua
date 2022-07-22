@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 18 Jul 2022, 12:52
+-- Last Modified: 19 Jul 2022, 10:44
 -------------------------------------
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -64,11 +64,13 @@ configs.setup {
   rainbow = {
     enable = true,
     colors = {
+      "#c7aA6D",
+      "LawnGreen",
       "Gold",
-      "Orchid",
       "DodgerBlue",
+      "#68a0b0",
+      "Orchid",
       "Cornsilk",
-      -- "LawnGreen",
       -- "Salmon",
     },
     disable = { "html" },
