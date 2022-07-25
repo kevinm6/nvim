@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : Package Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 11:12
+-- Last Modified: 25 Jul 2022, 12:47
 --------------------------------------
 
 -- install packer if not found in default location
@@ -411,6 +411,7 @@ return packer.startup(function(use)
     },
     {
       "williamboman/mason.nvim",
+      cmd = "Mason",
       module = { "mason.nvim", "mason" },
       config = function() require "user.plugins.config.mason" end,
     },

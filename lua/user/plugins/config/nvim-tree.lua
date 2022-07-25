@@ -2,17 +2,18 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 21 Jul 2022, 16:16
+-- Last Modified: 25 Jul 2022, 13:49
 -------------------------------------
 
 local ok, nvim_tree = pcall(require, "nvim-tree")
 if not ok then return end
 
+local api = require "nvim-tree.api"
 local icons = require "user.icons"
 
+-- custom trash-file function
 local function trash_file()
-  local lib = require "nvim-tree.lib"
-  local node = lib.get_node_at_cursor()
+  local node = api.tree.get_node_under_cursor()
 
   local function get_user_input_char()
     local c = vim.fn.getchar()
@@ -24,32 +25,27 @@ local function trash_file()
   if node and (get_user_input_char():match("^y")) then
     vim.fn.jobstart("mv " .. vim.fn.fnameescape(node.absolute_path) .. " ~/.Trash", {
       detach = true,
-      on_exit = function(job_id, data, event)
+      on_exit = function()
         vim.notify(" " .. node.name .. " moved to Bin!", "Warn")
-        lib.refresh_tree()
+        api.tree.reload()
       end,
     })
   end
   vim.api.nvim_command "normal :esc<CR>"
 end
 
+-- open as vsplit on current node
 local function vsplit_preview()
-  local lib = require "nvim-tree.lib"
-  local view = require "nvim-tree.view"
-  -- open as vsplit on current node
-  local action = "vsplit"
-  local node = lib.get_node_at_cursor()
+  local node = api.tree.get_node_under_cursor()
 
-  -- Just copy what's done normally with vsplit
   if node.link_to and not node.nodes then
-    require("nvim-tree.actions.open-file").fn(action, node.link_to)
+    api.tree.open(node.link_to)
   elseif node.nodes ~= nil then
-    lib.expand_or_collapse(node)
+    api.node.edit() -- expand or collaps if on folder
   else
-    require("nvim-tree.actions.open-file").fn(action, node.absolute_path)
+    api.node.open.vertical()
   end
-  -- Finally refocus on tree if it was lost
-  view.focus()
+  api.tree.focus()
 end
 
 nvim_tree.setup {
