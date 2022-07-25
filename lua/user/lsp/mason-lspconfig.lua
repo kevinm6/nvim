@@ -1,19 +1,19 @@
 -----------------------------------
--- File         : lsp-installer.lua
--- Description  : Lsp-Installer config
+-- File         : mason-lspconfig.lua
+-- Description  : mason-lspconfig setup
 -- Author       : Kevin
--- Last Modified: 18 Jul 2022, 16:32
+-- Last Modified: 25 Jul 2022, 11:34
 -------------------------------------
 
-local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+local ok, mason_lsp = pcall(require, "mason-lspconfig")
 if not ok then return end
 
 local icons = require "user.icons"
 
 -- NEW CONFIGURATION OF NVIM-LSP-INSTALLER
-lsp_installer.setup {
+mason_lsp.setup {
   ensure_installed = {
-    "sumneko_lua", "vimls", "emmet_ls",
+    "lua-language-server", "vimls", "emmet_ls",
     "ltex", "pyright", "jsonls", "gopls",
     "html", "asm_lsp", "bashls", "clangd",
     "jdtls", "intelephense", "grammarly"

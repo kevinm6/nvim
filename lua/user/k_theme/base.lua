@@ -2,7 +2,7 @@
 --  File         : base.lua
 --  Description  : base colors palette
 --  Author       : Kevin
---  Last Modified: 18/05/2022 - 09:47
+--  Last Modified: 24 Jul 2022, 10:55
 -------------------------------------
 
 local colors = require "user.k_theme.colors"
@@ -112,8 +112,8 @@ local base_group = {
 	VertSplit = { bg = bg0, fg = fg0 },
 
 	-- Folding
-	Folded = { bg = "grey19", fg = "Grey40" },
-	FoldColumn = { fg = fg0 },
+	Folded = { bg = "grey13", fg = "Grey40" },
+	FoldColumn = { link = "Comment" },
 
 	-- Search
 	IncSearch = { fg = "#3a3a3a", bg = green, bold = true },

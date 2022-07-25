@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 16 Jul 2022, 12:03
+-- Last Modified: 25 Jul 2022, 11:41
 -------------------------------------
 
 local ok, which_key = pcall(require, "which-key")
@@ -347,11 +347,15 @@ local leader_maps = {
     },
     i = {
       function() vim.cmd "LspInfo" end,
+      "Lsp Info"
+    },
+    m = {
+      function() vim.cmd "Mason" end,
       "Info"
     },
-    I = {
-      function() vim.cmd "LspInstallInfo" end,
-      "Installer Info"
+    L = {
+      function() vim.cmd "LspLog" end,
+      "Info"
     },
     j = {
       function() vim.diagnostic.goto_next { buffer = 0 } end,

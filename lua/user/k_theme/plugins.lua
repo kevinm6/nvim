@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 16 Jul 2022, 14:56
+--  Last Modified: 24 Jul 2022, 10:53
 -------------------------------------
 
 local base = require "user.k_theme.base"
@@ -80,8 +80,7 @@ local plugins = {
   TSTagDelimiter = base.k_themeGreen,
   TSCodeSpan = { bg = "#3c3c3c", fg = "#DCDCDC"},
   TSCodeBlock = {},
-
-  -- telescope.nvim
+  -- Telescope.nvim
   TelescopeSelection = base.k_themeOrangeBold,
   TelescopeSlectionCaret = base.k_themeRed,
   TelescopeMultiSelection = base.k_themeGray,
@@ -194,6 +193,10 @@ local plugins = {
   NavicIconsTypeParameter = { link = "CmpItemKindTypeParameter" },
   NavicIconsText = { link = "CmpItemKindText" },
   NavicIconsSeparator = { link = "Comment" },
+  -- Ufo (Folding)
+  UfoPreviewSbar = { link = "PmenuSbar" },
+  UfoPreviewThumb = { link = "PmenuThumb" },
+  UfoFoldedEllipsis = { link = "Comment" },
   -- Fidget
   FidgetTitle = { link = "Title" },
 }

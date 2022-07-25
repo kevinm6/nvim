@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : Package Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 21 Jul 2022, 12:52
+-- Last Modified: 25 Jul 2022, 11:12
 --------------------------------------
 
 -- install packer if not found in default location
@@ -152,6 +152,7 @@ return packer.startup(function(use)
       "kevinhwang91/nvim-ufo",
       requires = { "kevinhwang91/promise-async" },
       event = "BufAdd",
+      after = "nvim-treesitter",
       config = function() require "user.plugins.config.ufo" end,
     },
     {
@@ -396,7 +397,6 @@ return packer.startup(function(use)
     }
   }
 
-
   -- LSP
   use {
     {
@@ -405,13 +405,21 @@ return packer.startup(function(use)
       module = { "lsp", "lspconfig" },
       cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
       config = function ()
-        require "user.lsp.lsp-installer"
+        require "user.lsp.mason-lspconfig"
         require "user.lsp.init"
       end
     },
     {
-      "williamboman/nvim-lsp-installer",
-      module = "nvim-lsp-installer",
+      "williamboman/mason.nvim",
+      module = { "mason.nvim", "mason" },
+      config = function() require "user.plugins.config.mason" end,
+    },
+    {
+      "williamboman/mason-lspconfig.nvim",
+      requires = "mason.nvim",
+      after = "mason.nvim",
+      module = { "mason-lspconfig.nvim", "mason-lspconfig" },
+      -- config = function() require "user.lsp.mason-lspconfig" end,
     },
     { -- Java
       "mfussenegger/nvim-jdtls",

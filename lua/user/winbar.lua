@@ -1,6 +1,6 @@
 local M = {}
 
-local status_gps_ok, gps = pcall(require, "nvim-gps")
+local status_gps_ok, navic = pcall(require, "nvim-navic")
 if not status_gps_ok then
   return
 end
@@ -37,29 +37,29 @@ M.filename = function()
       file_icon_color = default_file_icon_color
     end
 
-    return string.format(" %%#%s#%s%* %s%s%*", hl_group, file_icon, "%#LineNr#", filename)
+    return string.format(" %%#%s#%s %s%s", hl_group, file_icon .. "%*", "%#LineNr#", filename .. "%*")
   end
 end
 
 M.gps = function()
-  local status_ok, gps_location = pcall(gps.get_location, {})
+  local status_ok, location = pcall(navic.get_location, {})
   if not status_ok then
     return
   end
 
   local icons = require "user.icons"
 
-  if not gps.is_available() then -- Returns boolean value indicating whether a output can be provided
+  if not navic.is_available() then -- Returns boolean value indicating whether a output can be provided
     return
   end
 
   local retval = M.filename()
 
-  if gps_location == "error" then
+  if location == "error" then
     return ""
   else
-    return not isempty(gps_location) and
-      string.format("%s %s %s", retval, icons.ui.ChevronRight, gps_location) or
+    return not isempty(location) and
+      string.format("%s %s %s", retval, icons.ui.ChevronRight, location) or
       retval
   end
 end

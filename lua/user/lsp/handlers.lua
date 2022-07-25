@@ -2,7 +2,7 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file, to manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 16 Jul 2022, 15:08
+-- Last Modified: 25 Jul 2022, 12:04
 --------------------------------------
 
 local M = {}
@@ -115,6 +115,13 @@ M.setup = function()
       virtual_text = true,
     })
 
+  vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
+    vim.lsp.handlers["textDocument/references"], {
+      -- Use location list instead of quickfix list
+      loclist = true,
+    }
+  )
+
 end
 
 M.implementation = function()
@@ -174,7 +181,7 @@ function M.code_action_listener()
   local params = vim.lsp.util.make_range_params()
   params.context = context
   -- vim.lsp.buf_request(0, 'textDocument/codeAction', params, function(err, _, result)
-  --   if re ~= "" then
+  --   if err ~= "" then
   --     print(err)
   --   end
   -- end)

@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 16 Jul 2022, 11:45
+-- Last Modified: 25 Jul 2022, 10:35
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -90,34 +90,36 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
 })
 
 
--- TODO: Enable on NeoVim 0.8
--- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
---    callback = function()
---      local winbar_filetype_exclude = {
---        ["help"] = true,
---        ["dashboard"] = true,
---        ["packer"] = true,
---        ["NvimTree"] = true,
---        ["Trouble"] = true,
---        ["alpha"] = true,
---        ["Outline"] = true,
---        ["toggleterm"] = true,
---        ["DressingSelect"] = true,
---      }
---
---      if winbar_filetype_exclude[vim.bo.filetype] then
---        vim.opt_local.winbar = nil
---        return
---      end
---
---      vim.opt_local.winbar = require("after.plugin.winbar").gps() or require("after.plugin.winbar").filename() or nil
---
---    end,
---  })
+-- TODO: Remove condition on NeoVim 0.8
+if vim.fn.has "nvim-0.8" == 1 then
+  autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
+     callback = function()
+       local winbar_filetype_exclude = {
+         ["help"] = true,
+         ["dashboard"] = true,
+         ["packer"] = true,
+         ["NvimTree"] = true,
+         ["Trouble"] = true,
+         ["alpha"] = true,
+         ["Outline"] = true,
+         ["toggleterm"] = true,
+         ["DressingSelect"] = true,
+         ["Jaq"] = true,
+       }
+
+       if winbar_filetype_exclude[vim.bo.filetype] then
+         vim.opt_local.winbar = nil
+         return
+       end
+
+       vim.opt_local.winbar = require("user.winbar").gps() or nil
+     end,
+   })
+end
 
 autocmd("BufWritePost", {
  group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
- pattern = "*/nvim/lua/user/plugins.lua",
+ pattern = "*/nvim/lua/user/plugins/init.lua",
  callback = function()
    vim.cmd "source <afile>"
    require("packer").compile()

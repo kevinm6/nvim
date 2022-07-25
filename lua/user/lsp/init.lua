@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 17 Jul 2022, 11:22
+-- Last Modified: 25 Jul 2022, 11:44
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -99,10 +99,10 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true
-}
+-- capabilities.textDocument.foldingRange = {
+--   dynamicRegistration = false,
+--   lineFoldingOnly = true
+-- }
 
 local custom_init = function(client)
 	client.config.flags = client.config.flags or {}
@@ -124,7 +124,7 @@ local servers = {
 		cmd_env = {
 			GLOB_PATTERN = "*@(.sh|.inc|.bash|.command)",
 		},
-		filetypes = { "sh" },
+		filetypes = { "sh", "bash" },
 		root_dir = util.find_git_ancestor,
 		single_file_support = true,
 	},

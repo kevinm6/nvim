@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 12 Jul 2022, 17:06
+-- Last Modified: 24 Jul 2022, 13:25
 -------------------------------------
 
 local S = {}
@@ -109,8 +109,8 @@ local function get_line_onTot()
 end
 
 
--- TODO: this will be moved to winbar with Nvim 0.8
--- get value from nvim-gps if available and window size is big enough
+-- TODO: remove condition on Nvim 0.8
+-- get value from nvim-navic if available and window size is enough
 local function nvim_navic()
   local navic_ok, navic = pcall(require, "nvim-navic")
   if navic_ok and navic.is_available() then
@@ -130,7 +130,7 @@ local function get_lsp_diagnostic()
 	local do_not_show_diag = win_is_smaller(preset_width.diagnostic) and navic_cached_loc ~= "" or win_is_smaller(90)
 
 	local diagnostics = vim.diagnostic
-	-- assign to relative vars the count of diagnostic
+	-- assign to relative vars the count of diagnostics
 	local errors = #diagnostics.get(0, { severity = diagnostics.severity.ERROR })
 	local warnings = #diagnostics.get(0, { severity = diagnostics.severity.WARN })
 	local infos = #diagnostics.get(0, { severity = diagnostics.severity.INFO })
@@ -162,9 +162,8 @@ end
 
 -- Function of git status with gitsigns
 local function get_git_status()
-	local signs = vim.b.gitsigns_status_dict or { head = "", added = 0, changed = 0, removed = 0 }
-
-	local no_changes = (signs.added == 0) and (signs.changed == 0) and (signs.removed == 0)
+	local signs = vim.b.gitsigns_status_dict or { head = "", added = nil, changed = nil, removed = nil }
+	local no_changes = (not signs.added) and (not signs.changed) and (not signs.removed)
 
 	-- display based on size of window
 	--  if no changes, display only head (if available)
@@ -189,9 +188,9 @@ local function get_filetype()
 		or icons.diagnostics.Error
 end
 
-	local function get_fencoding()
-    return " %{&fileencoding?&fileencoding:&encoding}"
-	end
+local function get_fencoding()
+  return " %{&fileencoding?&fileencoding:&encoding}"
+end
 
 -- Statusline disabled
 -- display only filetype and current mode
@@ -212,8 +211,8 @@ S.disabled = function(name)
   }
   ftype = special_filetypes[get_filetype()]
 
-	return name and string.format("%s%s %%= %s%%=", get_mode(), colors.fformat, name)
-		or string.format("%s%s %%= %s %%=", get_mode(), colors.fformat, ftype)
+	return name and ("%s%s %%= %s%%="):format(get_mode(), colors.fformat, name)
+		or ("%s%s %%= %s %%="):format(get_mode(), colors.fformat, ftype)
 end
 
 
@@ -221,8 +220,7 @@ end
 S.active = function()
 	-- LeftSide
 	local currMode = "%m%r"
-  local leftSide = string.format(
-    "%s%s%s%s%s%s%s %s%s%s%s",
+  local leftSide = ("%s%s%s%s%s%s%s %s%s%s%s"):format(
     colors.mode, currMode, get_mode(),
     colors.empty, icons.ui.SlEndLeft,
     colors.git, get_git_status(),
@@ -232,19 +230,24 @@ S.active = function()
 
   -- Middle
 	local sideSep = "%="
-  local centerSide = string.format(
-    " %s%s %s %s ",
-    colors.gps, nvim_navic(),
-    sideSep,
-    get_lsp_diagnostic()
-  )
+  local center = function()
+    if vim.fn.has "nvim-0.8" == 1 then
+      return (" %s %s "):format(
+        sideSep, get_lsp_diagnostic()
+      )
+    end
+    return (" %s%s %s %s "):format(
+      colors.gps, nvim_navic(),
+      sideSep,
+      get_lsp_diagnostic()
+    )
+  end
 
 	-- RightSide
 	local fformat = "%{&ff}"
 
     -- Right Side
-  local rightSide = string.format(
-    "%s%s%s%s %s%s %s%s %s%s%s",
+  local rightSide = ("%s%s%s%s %s%s %s%s %s%s%s"):format(
     colors.empty, icons.ui.SlArrowLeft,
     colors.encoding, get_fencoding(),
     colors.ftype, get_filetype(),
@@ -253,7 +256,7 @@ S.active = function()
     colors.empty, icons.ui.SlEndRight
   )
 
-  return string.format("%s%s%s", leftSide, centerSide, rightSide)
+  return ("%s%s%s"):format(leftSide, center(), rightSide)
 end
 
 return S
