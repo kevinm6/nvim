@@ -2,12 +2,12 @@
 --  File         : languages.lua
 --  Description  : language specific palette
 --  Author       : Kevin
---  Last Modified: 23/04/2022 - 13:39
+--  Last Modified: 26 Jul 2022, 13:27
 -------------------------------------
 
-local base = require("user.k_theme.base")
-local utils = require("user.k_theme.utils")
-local colors = require("user.k_theme.colors")
+local base = require("colors.knvim.base")
+local utils = require("colors.knvim.utils")
+local colors = require("colors.knvim.colors")
 
 -- xml
 local xml = {

@@ -3,13 +3,13 @@
 -- Description  : k_theme lua init config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/k_theme/init.lua
--- Last Modified: 20/04/2022 - 09:30
+-- Last Modified: 26 Jul 2022, 13:27
 -------------------------------------
 
-local base = require "user.k_theme.base"
-local plugins = require "user.k_theme.plugins"
-local langs = require "user.k_theme.languages"
-local utils = require "user.k_theme.utils"
+local base = require "colors.knvim.base"
+local plugins = require "colors.knvim.plugins"
+local langs = require "colors.knvim.languages"
+local utils = require "colors.knvim.utils"
 
 local specs = { base, plugins, langs }
 local spec = utils.merge(specs)
@@ -32,7 +32,7 @@ function M.load()
 	end
 
 	-- Main Option
-	vim.g.colors_name = "k_theme"
+	vim.g.colors_name = "knvim"
 	vim.opt.termguicolors = true
 
   utils.set_highlights(spec)

@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 10:35
+-- Last Modified: 25 Jul 2022, 21:24
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -119,7 +119,7 @@ end
 
 autocmd("BufWritePost", {
  group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
- pattern = "*/nvim/lua/user/plugins/init.lua",
+ pattern = "*/packer.lua",
  callback = function()
    vim.cmd "source <afile>"
    require("packer").compile()

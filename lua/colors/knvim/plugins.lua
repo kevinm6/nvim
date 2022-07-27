@@ -2,11 +2,11 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 24 Jul 2022, 10:53
+--  Last Modified: 26 Jul 2022, 13:27
 -------------------------------------
 
-local base = require "user.k_theme.base"
--- local colors = require("user.k_theme.colors")
+local base = require "colors.knvim.base"
+-- local colors = require("user.knvim.colors")
 
 local plugins = {
   -- Alpha

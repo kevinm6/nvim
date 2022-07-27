@@ -1,13 +1,12 @@
 --------------------------------------
--- File         : init.lua
--- Description  : Package Manager (Packer) config
+-- File         : packer.lua
+-- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 12:47
+-- Last Modified: 25 Jul 2022, 22:03
 --------------------------------------
 
 -- install packer if not found in default location
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = vim.fn.system {
     "git",
@@ -20,7 +19,14 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 local ok, packer = pcall(require, "packer")
-if not ok then return end
+if not ok then
+  vim.notify(
+    (" %s\n (%s)"):format("Error loading Packer config ", packer)
+    "Error",
+    { timeout = 4600, title = "INIT ERROR" }
+  )
+  return
+end
 
 local p_util = require "packer.util"
 local compile_path = p_util.join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua")
@@ -553,3 +559,5 @@ return packer.startup(function(use)
   end
 
 end)
+
+

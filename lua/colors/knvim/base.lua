@@ -2,10 +2,10 @@
 --  File         : base.lua
 --  Description  : base colors palette
 --  Author       : Kevin
---  Last Modified: 24 Jul 2022, 10:55
+--  Last Modified: 26 Jul 2022, 13:29
 -------------------------------------
 
-local colors = require "user.k_theme.colors"
+local colors = require "colors.knvim.colors"
 
 -- reset colors
 vim.api.nvim_command "hi clear"
