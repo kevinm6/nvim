@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 11:44
+-- Last Modified: 10 Aug 2022, 19:40
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -10,8 +10,7 @@ if not ok then return end
 
 local util = require "lspconfig.util"
 
-require("user.lsp.handlers").setup()
-require "user.lsp.codelens"
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Lsp highlights
 local function lsp_highlight_document(client)
@@ -30,9 +29,7 @@ local function lsp_highlight_document(client)
   end
 end
 
-
--- Create custom keymaps for useful
---   lsp functions
+-- Create custom keymaps for useful lsp functions
 -- The missing functions are most covered whith which-key mappings
 -- the `hover()` -> covers even signature_help on functions/methods
 local function lsp_keymaps(bufnr)
@@ -61,17 +58,8 @@ local filetype_attach = setmetatable({
 		})
 	end,
 	java = function(client)
-		if client.name == "jdt.ls" then
-			client.server_capabilities.document_formatting = false
-
-			require("jdtls").setup_dap({ hotcodereplace = "auto" })
-      require("jdtls").setup.add_commands()
-			require("jdtls.dap").setup_dap_main_class_configs({config_overrides = {
-        vmArgs = "-Dspring.profiles.active=local",
-      }})
-			vim.lsp.codelens.refresh()
-		end
-	end,
+		if client.name == "jdt.ls" then return end
+  end,
 }, {
 	__index = function()
 		return function() end
@@ -81,10 +69,13 @@ local filetype_attach = setmetatable({
 local navic_ok, navic = pcall(require, "nvim-navic")
 
 local custom_attach = function(client, bufnr)
+  -- Update capabilities with extended
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
   -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
   if navic_ok then
@@ -92,22 +83,15 @@ local custom_attach = function(client, bufnr)
   end
 
   filetype_attach[filetype](client)
+  require("user.lsp.handlers").setup()
+  require("user.lsp.codelens").run()
 end
-
--- Update capabilities with extended
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
--- capabilities.textDocument.foldingRange = {
---   dynamicRegistration = false,
---   lineFoldingOnly = true
--- }
 
 local custom_init = function(client)
 	client.config.flags = client.config.flags or {}
 	client.config.flags.allow_incremental_sync = true
 end
+
 
 -- Manage server with custom setup
 local servers = {
@@ -129,7 +113,7 @@ local servers = {
 		single_file_support = true,
 	},
 	grammarly = {
-		filetypes = { "markdown" },
+		filetypes = { "markdown", "txt", "text" },
 		single_file_support = true,
 		autostart = false,
 		root_dir = util.find_git_ancestor,

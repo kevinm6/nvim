@@ -2,7 +2,7 @@
 -- File         : mason.lua
 -- Description  : mason configuration
 -- Author       : Kevin
--- Last Modified: 27 Jul 2022, 10:17
+-- Last Modified: 29 Jul 2022, 09:48
 -------------------------------------
 
 local ok, mason = pcall(require, "mason")
@@ -43,7 +43,7 @@ mason.setup {
     },
   },
 
-  install_root_dir = vim.fn.stdpath "data".."/packages",
+  install_root_dir = vim.fn.stdpath "data".."/mason",
 
   pip = {
     install_args = {},

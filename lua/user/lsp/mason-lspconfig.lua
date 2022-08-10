@@ -2,7 +2,7 @@
 -- File         : mason-lspconfig.lua
 -- Description  : mason-lspconfig setup
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 11:34
+-- Last Modified: 29 Jul 2022, 09:50
 -------------------------------------
 
 local ok, mason_lsp = pcall(require, "mason-lspconfig")
@@ -18,7 +18,7 @@ mason_lsp.setup {
     "html", "asm_lsp", "bashls", "clangd",
     "jdtls", "intelephense", "grammarly"
   },
-  automatic_installation = false,
+  automatic_installation = true,
   ui = {
     border = "rounded",
     icons = {
@@ -57,7 +57,6 @@ mason_lsp.setup {
   pip = {
     install_args = {},
   },
-  install_root_dir = vim.fn.stdpath("data") .. "/lsp_servers",
 
   log_level = vim.log.levels.INFO,
 

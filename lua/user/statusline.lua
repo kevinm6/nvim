@@ -162,7 +162,7 @@ end
 
 -- Function of git status with gitsigns
 local function get_git_status()
-	local signs = vim.b.gitsigns_status_dict or { head = "", added = nil, changed = nil, removed = nil }
+	local signs = vim.b.gitsigns_status_dict or { head = "", added = 0, changed = 0, removed = 0 }
 	local no_changes = (not signs.added) and (not signs.changed) and (not signs.removed)
 
 	-- display based on size of window

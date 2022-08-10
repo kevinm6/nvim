@@ -2,13 +2,11 @@
 --  File         : auto-session.lua
 --  Description  : auto-session plugin config
 --  Author       : Kevin
---  Last Modified: 10 Jul 2022, 11:55
+--  Last Modified: 29 Jul 2022, 10:23
 -------------------------------------
 
 local status_ok, auto_session = pcall(require, "auto-session")
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 local opts = {
   log_level = "info",
@@ -16,7 +14,7 @@ local opts = {
   auto_session_root_dir = vim.fn.stdpath "data" .. "/sessions/",
   auto_session_enabled = true,
   auto_save_enabled = nil,
-  auto_restore_enabled = nil,
+  auto_restore_enabled = true,
   auto_session_suppress_dirs = nil,
   auto_session_use_git_branch = nil,
   -- the configs below are lua only
@@ -24,3 +22,23 @@ local opts = {
 }
 
 auto_session.setup(opts)
+
+local autosession_keymaps = {
+  A = {
+    name = "Auto-Session",
+    s = {
+      function() vim.cmd "SaveSession " end,  "Save"
+    }, 
+    r = {
+      function() vim.cmd "RestoreSession " end,  "Restore"
+    }, 
+    d = {
+      function() vim.cmd "DeleteSession " end,  "Delete"
+    }, 
+    a = {
+      function() vim.cmd "Autosession " end, "Autosession {search|delete}"
+    }
+  }
+}
+
+require("which-key").register(autosession_keymaps, { prefix = "<leader>", silent = false })

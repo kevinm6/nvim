@@ -2,28 +2,27 @@
 --  File         : jaq.lua
 --  Description  : jaq plugin conf
 --  Author       : Kevin
---  Last Modified: 21 Jul 2022, 13:04
+--  Last Modified: 06 Aug 2022, 09:23
 -------------------------------------
 
 local ok, jaq = pcall(require, "jaq-nvim")
 if not ok then return end
 
 jaq.setup {
-	-- Commands used with 'Jaq'
-	cmds = {
-      -- Default UI used (see `Usage` for options)
-     behavior = {
+  -- Commands used with 'Jaq'
+  cmds = { -- Default UI used (see `Usage` for options)
+    behavior = {
       -- Default type
-      default     = "float",
+      default = "float",
 
       -- Start in insert mode
       startinsert = false,
 
       -- Use `wincmd p` on startup
-      wincmd      = false,
+      wincmd = false,
 
       -- Auto-save files
-      autosave    = false
+      autosave = false
     },
     -- Uses internal commands such as 'source' and 'luafile'
     internal = {
@@ -37,32 +36,33 @@ jaq.setup {
       c = "gcc % -o $fileBase && ./$fileBase",
       go = "go run %",
       sh = "sh %",
-      markdown = [[glow '%']],
+      markdown = "glow %",
       python = "python3 %",
       typescript = "deno run %",
       javascript = "node %",
       rust = "rustc % && ./$fileBase && rm $fileBase",
+      java = "javac % && java %"
     },
-	},
+  },
 
-	-- UI settings
+  -- UI settings
   ui = {
     float = {
       -- See ':h nvim_open_win'
-      border    = "rounded",
+      border = "rounded",
 
       -- See ':h winhl'
-      winhl     = "Normal",
-      borderhl  = "FloatBorder",
+      winhl = "Normal",
+      borderhl = "FloatBorder",
 
       -- See ':h winblend'
-      winblend  = 6,
+      winblend = 6,
 
       -- Num from `0-1` for measurements
-      height    = 0.8,
-      width     = 0.8,
-      x         = 0.5,
-      y         = 0.5
+      height = 0.8,
+      width = 0.8,
+      x = 0.5,
+      y = 0.5,
     },
 
     terminal = {
@@ -70,10 +70,10 @@ jaq.setup {
       position = "bot",
 
       -- Window size
-      size     = 10,
+      size = 10,
 
       -- Disable line numbers
-      line_no  = false
+      line_no = false
     },
 
     quickfix = {
@@ -81,8 +81,76 @@ jaq.setup {
       position = "bot",
 
       -- Window size
-      size     = 10
+      size = 10
     }
   }
 }
 
+local ok, wk = pcall(require, "which-key")
+if not ok then return end
+
+local wk_mappings = {
+  j = {
+    name = "Run Code (Jaq)",
+    j = {
+      function()
+        vim.cmd [[Jaq bang]]
+      end,
+      "Run"
+    },
+    f = {
+      function() vim.cmd [[Jaq float]] end,
+      "Run in Float",
+    },
+    q = {
+      function() vim.cmd [[Jaq quickfix]] end,
+      "Run in Qf",
+    },
+    t = {
+      function()
+        require "toggleterm"
+        vim.cmd [[Jaq toggleterm]]
+      end,
+      "Run in ToggleTerm",
+    },
+    b = {
+      function() vim.cmd [[Jaq bang]] end,
+      "Run with shell window",
+    },
+    v = {
+      function()
+        vim.cmd [[Jaq internal]]
+      end,
+      "Run Vim command",
+    }
+  },
+}
+
+local opts = {
+  mode = "n", -- NORMAL mode
+  prefix = "<leader>",
+  buffer = 0,
+  silent = false,
+  noremap = true,
+  nowait = true,
+}
+
+local ft_patterns = {
+  "*.lua",
+  "*.vim",
+  "*.cpp",
+  "*.c",
+  "*.go",
+  "*.sh",
+  "*.md",
+  "*.py",
+  "*.java",
+  "*.rs",
+  "*.js", "*.ts"
+}
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	group = vim.api.nvim_create_augroup("_jaq_wk_maps", { clear = true }),
+	pattern = ft_patterns,
+	callback = function() wk.register(wk_mappings, opts) end,
+})

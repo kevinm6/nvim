@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 22:03
+-- Last Modified: 06 Aug 2022, 17:27
 --------------------------------------
 
 -- install packer if not found in default location
@@ -105,6 +105,11 @@ return packer.startup(function(use)
           s = { function() require("packer").status() end, "Status" },
           u = { ":PackerUpdate ", "Update" },
           l = { ":PackerLoad ", "Load"},
+          e = { function()
+            local packer_file = vim.fn.stdpath "config".. "/after/plugin/packer.lua"
+            print(packer_file)
+            vim.cmd(":e " .. packer_file)
+          end, "Edit Plugins" },
         },
       }
       require("which-key").register(custom_keymaps, { prefix = "<leader>", silent = false })
@@ -155,10 +160,15 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.color_picker" end,
     },
     {
+      "kevinhwang91/promise-async",
+      event = "BufAdd",
+      module = "nvim-treesitter",
+    },
+    {
       "kevinhwang91/nvim-ufo",
       requires = { "kevinhwang91/promise-async" },
       event = "BufAdd",
-      after = "nvim-treesitter",
+      after = { "nvim-treesitter" },
       config = function() require "user.plugins.config.ufo" end,
     },
     {
@@ -246,7 +256,8 @@ return packer.startup(function(use)
     },
     {
       "rmagatti/auto-session",
-      cmd = "",
+      event = "InsertLeave",
+      cmd = { "SaveSession", "RestoreSession", "DeleteSession", "AutoSession", "RestoreSessionFromFile" },
       config = function() require "user.plugins.config.auto-session" end,
     }
 
@@ -428,11 +439,15 @@ return packer.startup(function(use)
       module = { "mason-lspconfig.nvim", "mason-lspconfig" },
       -- config = function() require "user.lsp.mason-lspconfig" end,
     },
-    { -- Java
+    {
+      -- Java
       "mfussenegger/nvim-jdtls",
       ft = "java",
       requires = "Microsoft/java-debug",
-      -- config = function() require "" end,
+    },
+    {
+      "Microsoft/java-debug",
+      ft = "java",
     },
 
     -- database
@@ -457,8 +472,9 @@ return packer.startup(function(use)
   use {
     {
       "mfussenegger/nvim-dap",
-      module = "dap",
+      module = { "dap", "dapui" },
       event = "BufAdd",
+      config = function() require "user.plugins.config.dap" end
     },
     {
       "theHamsta/nvim-dap-virtual-text",
@@ -466,11 +482,8 @@ return packer.startup(function(use)
     },
     {
       "rcarriga/nvim-dap-ui",
-      after = "nvim-dap",
-    },
-    {
-      "Pocco81/DAPInstall.nvim",
-      after = "nvim-dap",
+      module = { "dap", "dapui" },
+      requires = { "mfussenegger/nvim-dap" },
     },
   }
 
@@ -545,17 +558,13 @@ return packer.startup(function(use)
       cmd = "colorscheme",
     },
     {
-      "Shatur/neovim-ayu",
-      cmd = "colorscheme",
-    },
-    {
       "fladson/vim-kitty",
       ft = "kitty"
     },
   }
 
   if PACKER_BOOTSTRAP then
-    require ("packer").sync()
+    require("packer").sync()
   end
 
 end)

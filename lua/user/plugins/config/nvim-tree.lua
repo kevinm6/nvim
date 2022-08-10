@@ -2,7 +2,7 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 13:49
+-- Last Modified: 08 Aug 2022, 16:03
 -------------------------------------
 
 local ok, nvim_tree = pcall(require, "nvim-tree")
@@ -79,7 +79,7 @@ nvim_tree.setup {
       custom_only = false,
       list = { -- custom mappings
         { key = { "l", "<CR>", "o" }, action = "edit" },
-        { key = { "-", "<BS>"}, action = "dir_up" },
+        { key = { "-", "<BS>" }, action = "dir_up" },
         { key = { "<Esc>", "q" }, action = "close" },
         { key = "h", action = "close_node" },
         { key = "L", action = "cd" },
@@ -94,13 +94,13 @@ nvim_tree.setup {
         { key = "/", action = "search" },
         { key = "D", action = "trash", action_cb = trash_file },
         { key = "?", action = "toggle_help" },
-        },
+      },
     },
   },
   renderer = {
     add_trailing = true,
     group_empty = false,
-    highlight_git = true,
+    highlight_git = false,
     highlight_opened_files = "name",
     root_folder_modifier = ":t",
     indent_markers = {
@@ -148,7 +148,7 @@ nvim_tree.setup {
   },
   update_focused_file = {
     enable = true,
-    update_root = false,
+    update_root = true,
     ignore_list = {},
   },
   ignore_ft_on_setup = { "alpha" },

@@ -1,8 +1,8 @@
 -----------------------------------
---	File: alpha.lua
---	Description: alplha config for Neovim
+--	File: fidget.lua
+--	Description: fidget plugin config (lsp init progress)
 --	Author: Kevin
---	Last Modified: 21 Jun 2022, 09:46
+--	Last Modified: 09 Aug 2022, 09:55
 -----------------------------------
 
 local ok, fidget = pcall(require, "fidget")

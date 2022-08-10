@@ -2,10 +2,10 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 11:41
+-- Last Modified: 07 Aug 2022, 11:01
 -------------------------------------
 
-local ok, which_key = pcall(require, "which-key")
+local ok, wk = pcall(require, "which-key")
 if not ok then return end
 
 local icons = require "user.icons"
@@ -40,7 +40,7 @@ local setup = {
   window = {
     border = "rounded",
     position = "bottom",
-    margin = { 1, 1, 1, 1 },
+    margin = { 2, 10, 2, 10 },
     padding = { 2, 2, 2, 2 },
     winblend = 6,
   },
@@ -80,15 +80,11 @@ local opts = {
 -- }
 
 local leader_maps = {
-  ["1"] = { "<cmd>BufferLineGoToBuffer 1<CR>", "Go to Buffer 1" },
-  ["2"] = { "<cmd>BufferLineGoToBuffer 2<CR>", "Go to Buffer 2" },
-  ["3"] = { "<cmd>BufferLineGoToBuffer 3<CR>", "Go to Buffer 3" },
-  ["4"] = { "<cmd>BufferLineGoToBuffer 4<CR>", "Go to Buffer 4" },
-  ["5"] = { "<cmd>BufferLineGoToBuffer 5<CR>", "Go to Buffer 5" },
-  ["6"] = { "<cmd>BufferLineGoToBuffer 6<CR>", "Go to Buffer 6" },
-  ["7"] = { "<cmd>BufferLineGoToBuffer 7<CR>", "Go to Buffer 7" },
-  ["8"] = { "<cmd>BufferLineGoToBuffer 8<CR>", "Go to Buffer 8" },
-  ["9"] = { "<cmd>BufferLineGoToBuffer 9<CR>", "Go to Buffer 9" },
+  -- Switch Buffers
+  ["1"] = { "<cmd>BufferLineGoToBuffer 1<CR>", "which_key_ignore" },
+  ["2"] = { "<cmd>BufferLineGoToBuffer 2<CR>", "which_key_ignore" },
+  ["3"] = { "<cmd>BufferLineGoToBuffer 3<CR>", "which_key_ignore" },
+  ["4"] = { "<cmd>BufferLineGoToBuffer 4<CR>", "which_key_ignore" },
   ["."] = {
     function()
       vim.cmd "cd %:h"
@@ -115,7 +111,7 @@ local leader_maps = {
   H = { "<cmd>nohlsearch<CR>", "No Highlight" },
   c = { "<cmd>DeleteCurrentBuffer<CR>", "Close Buffer" },
   z = { "<cmd>DeleteCurrentBuffer<CR>", "Save and Close Buffer" },
-  q = { "<cmd>quit<CR>", "Quit" },
+  q = { "<cmd>bdelete<CR>", "Quit" },
   a = { ":Alpha<CR>", "Alpha Dashboard" },
   Z = { "<cmd>ZenMode<CR>", "Zen" },
   W = {
@@ -141,9 +137,9 @@ local leader_maps = {
       function() require("telescope.builtin").live_grep { theme = "ivy" } end,
       "Find Text (live grep)"
     },
-    --     P = {
-    --       function() require("telescope.builtin").projects end,
-    --           "Projects"
+    -- P = {
+    --   function() require("telescope.builtin").projects end,
+    --   "Projects"
     -- },
     o = {
       function() require("telescope.builtin").builtin() end,
@@ -200,25 +196,6 @@ local leader_maps = {
     h = {
       function() vim.cmd "TSHighlightCapturesUnderCursor" end,
       "TS Highlight"
-    },
-  },
-  m = {
-    name = "Markdown",
-    o = {
-      function() vim.cmd "MarkdownPreview" end,
-      "Start MarkdownPreview"
-    },
-    s = {
-      function() vim.cmd "MarkdownPreviewStop" end,
-      "Stop MarkdownPreview"
-    },
-    t = {
-      function() vim.cmd "MarkdownPreviewToggle" end,
-      "Toggle MarkdownPreview"
-    },
-    m = {
-      function() vim.cmd "Glow" end,
-      "Floating Markdown Preview (Glow)"
     },
   },
 
@@ -398,12 +375,12 @@ local leader_maps = {
       "Todo in LocList",
     },
     T = {
-      function() vim.cmd "TodoTroble" end,
+      function() vim.cmd "TodoTrouble" end,
       "TodoTrouble"
     }
   },
 
-  -- require("surround")
+  -- Surround ("Pairings")
   s = {
     name = "Surround",
     ["."] = {
@@ -431,36 +408,6 @@ local leader_maps = {
       "Brackets",
     },
   },
-
-  j = {
-    name = "Run Code (Jaq)",
-    f = {
-      function() vim.cmd [[Jaq float]] end,
-      "Run in Float",
-    },
-    q = {
-      function() vim.cmd [[Jaq quickfix]] end,
-      "Run in Qf",
-    },
-    t = {
-      function()
-        require "toggleterm"
-        vim.cmd [[Jaq toggleterm]]
-      end,
-      "Run in ToggleTerm",
-    },
-    b = {
-      function() vim.cmd [[Jaq bang]] end,
-      "Run with shell window",
-    },
-    v = {
-      function()
-        vim.cmd [[Jaq internal]]
-      end,
-      "Run Vim command",
-    }
-  },
-
 
   -- NVIMTREE
   E = {
@@ -686,8 +633,8 @@ local ins_mappings = {
   s = "Spelling suggestions",
 }
 
-which_key.setup(setup)
-which_key.register(leader_maps, opts)
-which_key.register(vmappings, vopts)
-which_key.register(Zmappings, Zopts)
-which_key.register(ins_mappings, i_opts)
+wk.setup(setup)
+wk.register(leader_maps, opts)
+wk.register(vmappings, vopts)
+wk.register(Zmappings, Zopts)
+wk.register(ins_mappings, i_opts)

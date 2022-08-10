@@ -2,8 +2,10 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 17 Jul 2022, 12:51
+-- Last Modified: 08 Aug 2022, 09:59
 -------------------------------------
+
+if LOADED_JDTLS then return end
 
 local ok, jdtls = pcall(require, "jdtls")
 if not ok then
@@ -13,52 +15,63 @@ end
 
 local home = os.getenv "HOME"
 
+local root_dir = require("jdtls.setup").find_root({".git", "gradlew"})
+if root_dir == "" then
+ root_dir = vim.fn.getcwd()
+end
+
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+extendedClientCapabilities.document_formatting = false
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_name
 
-local bundles = {
-  vim.fn.glob(
-    home ..
-    "/.local/share/nvim/lsp_servers/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar"
-  ),
+local ext_bundles = {
+  vim.fn.glob(home .. "/.local/share/nvim/site/pack/packer/opt/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
 }
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/vscode-java-test/server/*.jar"), "\n"))
+
+vim.list_extend(ext_bundles,
+  vim.split(
+    vim.fn.glob(
+      home .. "~/.local/share/nvim/dap/vscode-java-test/server/*.jar"
+    ), "\n"
+  )
+)
 
 local config = {
   cmd = {
     "java",
-
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
     "-Dlog.protocol=true",
     "-Dlog.level=ALL",
-    "-javaagent:" .. home .. "/.local/share/nvim/lsp_servers/jdtls/lombok.jar",
     "-Xms1g",
     "--add-modules=ALL-SYSTEM",
-    "--add-opens",
-    "java.base/java.util=ALL-UNNAMED",
-    "--add-opens",
-    "java.base/java.lang=ALL-UNNAMED",
+    "--add-opens", "java.base/java.util=ALL-UNNAMED",
+    "--add-opens", "java.base/java.lang=ALL-UNNAMED",
 
     "-jar",
     vim.fn.glob(
-      home .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"
+      home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"
     ),
 
-    "-configuration", vim.fn.expand "~/.local/share/nvim/lsp_servers/jdtls/config_mac",
+    "-configuration", vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/config_mac",
 
     "-data", workspace_dir,
   },
-  on_attach = require("user.lsp.handlers").on_attach,
-  capabilities = require("user.lsp.handlers").capabilities,
-  root_dir =  require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}) or vim.fn.getcwd(),
+  capabilities = extendedClientCapabilities,
+  root_dir = root_dir,
   single_file_support = true,
   settings = {
     java = {
+      eclipse = {
+        downloadSources = true,
+      },
+      maven = {
+        downloadSources = true,
+      },
       signatureHelp = { enabled = true },
       contentProvider = { preferred = "fernflower" },
       saveActions = {
@@ -92,6 +105,11 @@ local config = {
       references = {
         includeDecompiledSources = true,
       },
+      inlayHints = {
+        parameterNames = {
+          enabled = "all",
+        },
+      },
       format = {
         enabled = true,
       },
@@ -108,7 +126,6 @@ local config = {
         "org.mockito.Mockito.*",
       },
     },
-    extendedClientCapabilities = extendedClientCapabilities,
     codeGeneration = {
       generateComments = true,
       toString = {
@@ -121,48 +138,58 @@ local config = {
       allow_incremental_sync = true,
     },
     init_options = {
-      jvm_args = "-javaagent:" .. home .."/.local/share/nvim/lsp_servers/jdtls/lombok.jar",
-      workspace = workspace_dir .. project_name,
-      bundles = bundles,
+      -- jvm_args = "-javaagent:" .. home .."/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+      -- workspace = workspace_dir .. project_name,
+      bundles = ext_bundles,
+      extendedClientCapabilities = extendedClientCapabilities,
     },
+    handlers = {
+      ["language/status"] = function() end,
+    },
+    on_attach = function()
+      require("jdtls.setup").add_commands()
+      jdtls.setup_dap { hotcodereplace = "auto" }
+      require("jdtls.dap").setup_dap_main_class_configs()
+    end,
     on_init = function(client)
       client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+      ext_bundles = ext_bundles
     end
   },
 }
 
--- UI
-local finders = require'telescope.finders'
-local sorters = require'telescope.sorters'
-local actions = require'telescope.actions'
-local pickers = require'telescope.pickers'
-require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
-  local opts = {}
-  pickers.new(opts, {
-    prompt_title = prompt,
-    finder    = finders.new_table {
-      results = items,
-      entry_maker = function(entry)
-        return {
-          value = entry,
-          display = label_fn(entry),
-          ordinal = label_fn(entry),
-        }
-      end,
-    },
-    sorter = sorters.get_generic_fuzzy_sorter(),
-    attach_mappings = function(prompt_bufnr)
-      actions.goto_file_selection_edit:replace(function()
-        local selection = actions.get_selected_entry(prompt_bufnr)
-        actions.close(prompt_bufnr)
+-- -- UI
+-- local finders = require'telescope.finders'
+-- local sorters = require'telescope.sorters'
+-- local actions = require'telescope.actions'
+-- local pickers = require'telescope.pickers'
+-- require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
+--   local opts = {}
+--   pickers.new(opts, {
+--     prompt_title = prompt,
+--     finder    = finders.new_table {
+--       results = items,
+--       entry_maker = function(entry)
+--         return {
+--           value = entry,
+--           display = label_fn(entry),
+--           ordinal = label_fn(entry),
+--         }
+--       end,
+--     },
+--     sorter = sorters.get_generic_fuzzy_sorter(),
+--     attach_mappings = function(prompt_bufnr)
+--       actions.goto_file_selection_edit:replace(function()
+--         local selection = actions.get_selected_entry(prompt_bufnr)
+--         actions.close(prompt_bufnr)
 
-        cb(selection.value)
-      end)
+--         cb(selection.value)
+--       end)
 
-      return true
-    end,
-  }):find()
-end
+--       return true
+--     end,
+--   }):find()
+-- end
 
 vim.cmd(
   "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
@@ -175,8 +202,10 @@ vim.cmd("command! -buffer JdtUpdateConfig lua require('jdtls').update_project_co
 vim.cmd("command! -buffer JdtBytecode lua require('jdtls').javap()")
 -- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
 
-require('jdtls').start_or_attach(config)
+jdtls.start_or_attach(config)
 
+
+-- Custom keymaps for Java
 local which_key_ok, which_key = pcall(require, "which-key")
 if not which_key_ok then return end
 
@@ -228,3 +257,5 @@ local vmappings = {
 
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
+
+LOADED_JDTLS = true

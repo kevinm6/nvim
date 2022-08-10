@@ -2,7 +2,7 @@
 --  File         : codelens.lua
 --  Description  : lsp codelens config
 --  Author       : Kevin
---  Last Modified: 01/05/2022 - 11:44
+--  Last Modified: 08 Aug 2022, 16:36
 ---------------------------------------
 
 local M = {}
@@ -26,14 +26,15 @@ M.run = function()
   end)
 
   local _, lens = next(lenses)
-
-  local client_id = next(vim.lsp.buf_get_clients(bufnr))
-  local client = vim.lsp.get_client_by_id(client_id)
-  client.request("workspace/executeCommand", lens.command, function(...)
-    local result = vim.lsp.handlers["workspace/executeCommand"](...)
-    vim.lsp.codelens.refresh()
-    return result
-  end, bufnr)
+  if lens ~= nil then
+    local client_id = next(vim.lsp.buf_get_clients(bufnr))
+    local client = vim.lsp.get_client_by_id(client_id)
+    client.request("workspace/executeCommand", lens.command, function(...)
+      local result = vim.lsp.handlers["workspace/executeCommand"](...)
+      vim.lsp.codelens.refresh()
+      return result
+    end, bufnr)
+  end
 end
 
 return M

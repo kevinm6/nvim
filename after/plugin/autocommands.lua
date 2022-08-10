@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 21:24
+-- Last Modified: 07 Aug 2022, 10:24
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -32,6 +32,7 @@ autocmd({ "TextYankPost" }, {
 		vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 200, on_macro = true })
 	end,
 })
+
 
 -- If buffer modified, update any 'Last modified: ' in the first 10 lines.
 -- Restores cursor and window position using save_cursor variable.
@@ -118,7 +119,7 @@ if vim.fn.has "nvim-0.8" == 1 then
 end
 
 autocmd("BufWritePost", {
- group = vim.api.nvim_create_augroup("packer_user_config", { clear = true }),
+ group = vim.api.nvim_create_augroup("_packer_user_config", { clear = true }),
  pattern = "*/packer.lua",
  callback = function()
    vim.cmd "source <afile>"
