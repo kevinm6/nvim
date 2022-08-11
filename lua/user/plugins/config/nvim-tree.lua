@@ -2,7 +2,7 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 08 Aug 2022, 16:03
+-- Last Modified: 11 Aug 2022, 19:33
 -------------------------------------
 
 local ok, nvim_tree = pcall(require, "nvim-tree")
@@ -52,7 +52,7 @@ nvim_tree.setup {
   auto_reload_on_write = true,
   disable_netrw = true,
   hijack_cursor = true,
-  -- hijack_netrw = true, -- overriden if 'disable_netrw = true'
+  hijack_netrw = true, -- overriden if 'disable_netrw = true'
   hijack_unnamed_buffer_when_opening = true,
   ignore_buffer_on_setup = false,
   open_on_setup = true,

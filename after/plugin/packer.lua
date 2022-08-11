@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 11 Aug 2022, 14:06
+-- Last Modified: 11 Aug 2022, 19:38
 --------------------------------------
 
 -- install packer if not found in default location
@@ -191,7 +191,7 @@ return packer.startup(function(use)
     {
       "kyazdani42/nvim-tree.lua",
       module = "nvim-tree",
-      event = "BufReadPre",
+      event = "BufWinEnter",
       config = function() require "user.plugins.config.nvim-tree" end,
     },
     {
