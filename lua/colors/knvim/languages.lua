@@ -1,8 +1,8 @@
 -------------------------------------
 --  File         : languages.lua
---  Description  : language specific palette
+--  Description  : language specific palette for knvim colorscheme
 --  Author       : Kevin
---  Last Modified: 26 Jul 2022, 13:27
+--  Last Modified: 11 Aug 2022, 10:35
 -------------------------------------
 
 local base = require("colors.knvim.base")

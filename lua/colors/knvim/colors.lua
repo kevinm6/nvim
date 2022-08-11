@@ -1,8 +1,8 @@
 -------------------------------------
 --  File         : palette.lua
---  Description  : k_theme palette
+--  Description  : knvim colorscheme palette 
 --  Author       : Kevin
---  Last Modified: 20/04/2022 - 09:39
+--  Last Modified: 11 Aug 2022, 10:35
 -------------------------------------
 
 return {

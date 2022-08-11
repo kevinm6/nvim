@@ -1,9 +1,9 @@
 -------------------------------------
 -- File         : init.lua
--- Description  : k_theme lua init config
+-- Description  : knvim lua init config
 -- Author       : Kevin
 -- Source       : https://github.com/kevinm6/nvim/blob/nvim/lua/user/k_theme/init.lua
--- Last Modified: 26 Jul 2022, 13:27
+-- Last Modified: 11 Aug 2022, 10:35
 -------------------------------------
 
 local base = require "colors.knvim.base"
@@ -19,16 +19,17 @@ local M = {}
 function M.load()
 	if vim.version().minor < 7 then
 		vim.notify(
-      "Neovim 0.7+ required < k_theme >",
+      "Neovim 0.7+ required for < knvim > theme",
       "Error",
-      { title = "K_theme colorscheme" }
+      { title = "knvim colorscheme" }
     )
 		return
 	end
 
-	vim.api.nvim_command "hi clear"
+  -- resetting colors
+	vim.cmd "hi clear"
 	if vim.fn.exists "syntax_on" then
-		vim.api.nvim_command "syntax reset"
+		vim.cmd "syntax reset"
 	end
 
 	-- Main Option

@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 25 Jul 2022, 21:22
+--	Last Modified: 11 Aug 2022, 12:52
 -----------------------------------
 
 local ok, alpha = pcall(require, "alpha")
@@ -41,19 +41,19 @@ dashboard.section.header.val = {
 }
 
 dashboard.section.buttons.val = {
-	dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>ene <BAR> startinsert <CR>"),
+	dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>ene <BAR> startinsert<CR>"),
 	dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>e ~/Documents/Notes/notes.org <BAR> startinsert <CR>"),
-	dashboard.button("t", icons.ui.Telescope .. " Open Telescope", "<cmd>Telescope <CR>"),
-	dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>Telescope find_files <CR>"),
-	dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>Telescope oldfiles <CR>"),
-	dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>Telescope project <CR>"),
+	dashboard.button("t", icons.ui.Telescope .. " Open Telescope", "<cmd>lua require 'telescope.builtin'.builtin()<CR>"),
+	dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>lua require 'telescope.builtin'.find_files()<CR>"),
+	dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>lua require 'telescope.builtin'.oldfiles()<CR>"),
+	dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>lua require 'telescope'.extensions.project.project{}<CR>"),
 	dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
 	dashboard.button("d", icons.ui.Dev .. " Developer", "<cmd>e ~/Documents/Developer <CR>"),
 	dashboard.button("p", icons.ui.Packer .. " Plugin Manager", "<cmd> PackerSync <CR>"),
 	dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration", "<cmd>e $NVIMDOTDIR/after/plugin/packer.lua<CR>"),
 	dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
 	dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
-	dashboard.button("l", icons.kind.Text .. " Live text grep", "<cmd>Telescope live_grep <CR>"),
+	dashboard.button("l", icons.kind.Text .. " Live text grep", "<cmd>lua require 'telescope.builtin'.live_grep {theme='ivy'}<CR>"),
 	-- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
 	dashboard.button("C",
 		icons.ui.Gear .. " Config",
@@ -65,8 +65,7 @@ dashboard.section.buttons.val = {
 }
 
 local footer = function()
-  local plugins = #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)) +
-  #(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/opt", "*", 0, 1))
+  local plugins = #vim.tbl_keys(packer_plugins)
 	local plugins_count = string.format(
     "           %s %d Plugins  \n\n",
     icons.ui.Plugin, plugins

@@ -1,17 +1,11 @@
 -------------------------------------
 --  File         : base.lua
---  Description  : base colors palette
+--  Description  : base colors palette for knvim colorscheme
 --  Author       : Kevin
---  Last Modified: 26 Jul 2022, 13:29
+--  Last Modified: 11 Aug 2022, 10:35
 -------------------------------------
 
 local colors = require "colors.knvim.colors"
-
--- reset colors
-vim.api.nvim_command "hi clear"
-if vim.fn.exists "syntax_on" then
-	vim.api.nvim_command "syntax reset"
-end
 
 -- options (dark mode by default)
 local bg0 = colors.dark0

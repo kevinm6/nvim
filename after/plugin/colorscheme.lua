@@ -1,17 +1,14 @@
 -------------------------------------
 -- File         : colorscheme.lua
--- Description  : K specific variables
+-- Description  : initialize and set colorscheme
 -- Author       : Kevin
--- Last Modified: 26 Jul 2022, 13:32
+-- Last Modified: 11 Aug 2022, 10:33
 -------------------------------------
 
-local theme = "knvim"
+-- Unloading if packages are already loaded
+package.loaded["colors.knvim"] = nil
+package.loaded["colors.knvim.palette"] = nil
+package.loaded["colors.knvim.config"] = nil
 
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. theme)
-if not status_ok then
-  vim.notify("  Colorscheme " .. theme .. " not found!  ",
-    "Error",
-    { title = "Colorscheme" }
-  )
-  return
-end
+-- initialization
+require "colors.knvim".load()

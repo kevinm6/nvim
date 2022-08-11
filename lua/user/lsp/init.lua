@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 10 Aug 2022, 19:40
+-- Last Modified: 10 Aug 2022, 23:34
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -15,13 +15,13 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Lsp highlights
 local function lsp_highlight_document(client)
  if client.server_capabilities.documentHighlightProvider then
-    local lsp_hi_doc_group = vim.api.nvim_create_augroup("lsp_document_highlight", {})
+    local lsp_hi_doc_group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       group = lsp_hi_doc_group,
       pattern = "*",
       callback = function() vim.lsp.buf.document_highlight() end
     })
-    vim.api.nvim_create_autocmd("CursorMoved", {
+    vim.api.nvim_create_autocmd({ "CursorMoved" }, {
       group = lsp_hi_doc_group,
       pattern = "*",
       callback = function() vim.lsp.buf.clear_references() end
@@ -66,7 +66,6 @@ local filetype_attach = setmetatable({
 	end,
 })
 
-local navic_ok, navic = pcall(require, "nvim-navic")
 
 local custom_attach = function(client, bufnr)
   -- Update capabilities with extended
@@ -78,8 +77,12 @@ local custom_attach = function(client, bufnr)
   -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
+
+  local navic_ok, navic = pcall(require, "nvim-navic")
   if navic_ok then
     navic.attach(client, bufnr)
+  else
+    vim.notify("Error attaching navic to LSP: "..navic, "Error", { title = "LSP" })
   end
 
   filetype_attach[filetype](client)
@@ -176,9 +179,7 @@ local setup_server = function(server, config)
 		return
 	end
 
-	if type(config) ~= "table" then
-		config = {}
-	end
+	if type(config) ~= "table" then config = {} end
 
 	config = vim.tbl_deep_extend("force", {
 		on_init = custom_init,

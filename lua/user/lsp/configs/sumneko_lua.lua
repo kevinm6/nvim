@@ -2,7 +2,7 @@
 -- File         : sumneko_lua.lua
 -- Description  : lua lsp config
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 11:42
+-- Last Modified: 11 Aug 2022, 12:27
 -------------------------------------
 
 local runtime_path = vim.split(package.path, ';')
@@ -19,7 +19,7 @@ return {
         path = runtime_path,
       },
 			diagnostics = {
-				globals = { "vim" },
+				globals = { "vim", "packer_plugins" },
 			},
       completion = {
         keywordSnippet = "Replace",

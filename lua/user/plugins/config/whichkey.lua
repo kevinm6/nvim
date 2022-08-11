@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 07 Aug 2022, 11:01
+-- Last Modified: 11 Aug 2022, 14:12
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -137,29 +137,29 @@ local leader_maps = {
       function() require("telescope.builtin").live_grep { theme = "ivy" } end,
       "Find Text (live grep)"
     },
-    -- P = {
-    --   function() require("telescope.builtin").projects end,
-    --   "Projects"
-    -- },
     o = {
       function() require("telescope.builtin").builtin() end,
       "Open Telescope"
     },
     b = {
-      function() require("telescope.builtin").git_branches() end,
-      "Checkout branch"
+      function() require("telescope").extensions.file_browser.file_browser() end,
+      "File Browser"
     },
     H = {
       function() require("telescope.builtin").help_tags() end,
       "Help"
     },
     i = {
-      function() require("telescope").extensions.media_files.media_files() end,
+      function() require("telescope").extensions.media_files.media_files {} end,
       "Media"
     },
     p = {
       function() require("telescope").extensions.project.project {} end,
       "Projects"
+    },
+    P = {
+      function() require("telescope").extensions.packer.packer {} end,
+      "Packer"
     },
     l = {
       function() require("telescope.builtin").resume() end,
@@ -189,14 +189,34 @@ local leader_maps = {
       function() require("telescope").extensions.neoclip.default() end,
       "Yank History",
     },
-    P = {
-      function() vim.cmd "TSPlaygroundToggle" end,
-      "TS Playground"
+    L = {
+      function() require'telescope'.extensions.luasnip.luasnip{} end,
+      "Luasnip",
     },
-    h = {
-      function() vim.cmd "TSHighlightCapturesUnderCursor" end,
-      "TS Highlight"
-    },
+    d = {
+      name = "Dap",
+      c = {
+        function() require 'telescope'.extensions.dap.commands {} end,
+        "Commands"
+      },
+      C = {
+        function() require 'telescope'.extensions.dap.configurations {} end,
+        "Configuration"
+      },
+      b = {
+        function() require 'telescope'.extensions.dap.list_breakpoints {} end,
+        "Commands"
+      },
+      v = {
+        function() require 'telescope'.extensions.dap.variables {} end,
+        "Variables"
+      },
+      f = {
+        function() require 'telescope'.extensions.dap.frames {} end,
+        "Frames"
+      },
+
+    }
   },
 
   -- Renamer

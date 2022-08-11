@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 12 Jun 2022, 13:41
+-- Last Modified: 11 Aug 2022, 14:15
 -------------------------------------
 
 
@@ -12,14 +12,6 @@ if not ok then return end
 local icons = require "user.icons"
 
 local actions = require "telescope.actions"
-
--- telescope.load_extension "fzf"
--- telescope.load_extension "media_files"
--- telescope.load_extension "packer"
--- telescope.load_extension "project"
--- telescope.load_extension "ui-select"
--- telescope.load_extension "file_browser"
--- telescope.load_extension "notify"
 
 telescope.setup {
   defaults = {
@@ -61,6 +53,7 @@ telescope.setup {
 
       n = {
         ["<esc>"] = actions.close,
+        ["q"] = actions.close,
         ["<CR>"] = actions.select_default,
         ["<C-h>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
@@ -103,30 +96,44 @@ telescope.setup {
     -- builtin picker
   },
   extensions = {
+    file_browser = {
+      theme = "ivy",
+      hijack_netrw = true,
+      -- mappings = {
+      --   ["i"] = {
+      --     -- your custom insert mode mappings
+      --   },
+      --   ["n"] = {
+      --     -- your custom normal mode mappings
+      --   },
+      -- },
+    },
     media_files = {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
       filetypes = { "png", "mp4", "pdf", "webp", "jpg", "jpeg" },
       find_cmd = "rg", -- find command (defaults to `fd`)
     },
-		fzf = {
-			fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true,  -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-		},
-		["ui-select"] = {
+    packer = {
+      theme = "ivy",
+      layout_config = {
+        height = .5
+      }
+    },
+    ["ui-select"] = {
       require("telescope.themes").get_dropdown {
         -- even more opts
       }
     },
-		packer = {
-			theme = "k_theme",
-			layout_config = {
-				height = .5
-			}
-		},
-    auto_replace_desc_with_cmd = false,
-  },
+    project = {
+      base_dirs = {
+        "~/Documents/Developer",
+        "~/Informatica/2°Anno/1°Semestre/Programmazione II",
+      },
+      hidden_files = true, -- default: false
+      theme = "dropdown"
+    },
+    dap = {}
+  }
 }
 

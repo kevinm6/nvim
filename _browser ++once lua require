@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 11 Aug 2022, 14:06
+-- Last Modified: 11 Aug 2022, 11:45
 --------------------------------------
 
 -- install packer if not found in default location
@@ -105,10 +105,9 @@ return packer.startup(function(use)
           s = { function() require("packer").status() end, "Status" },
           u = { ":PackerUpdate ", "Update" },
           l = { ":PackerLoad ", "Load"},
-          e = {
-            function()
+          e = { function()
             local packer_file = vim.fn.stdpath "config".. "/after/plugin/packer.lua"
-            vim.notify("Editing Plugin configuration", "Info", { title = "Packer" })
+            print(packer_file)
             vim.cmd(":e " .. packer_file)
           end, "Edit Plugins" },
         },
@@ -384,37 +383,49 @@ return packer.startup(function(use)
   use {
     {
       "nvim-telescope/telescope-media-files.nvim",
+      cmd = "Telescope media_files",
       module = "telescope._extensions.media_files",
     },
     {
       "nvim-telescope/telescope-file-browser.nvim",
+      cmd = "Telescope file_browser",
       module = "telescope._extensions.file_browser",
     },
     {
       "nvim-telescope/telescope-packer.nvim",
+      cmd = "Telescope packer",
       module = "telescope._extensions.packer",
     },
     {
-      "nvim-telescope/telescope-project.nvim",
-      module = "telescope._extensions.project",
-    },
-    {
-      "nvim-telescope/telescope-dap.nvim",
-      module = "telescope._extensions.dap",
-    },
-    {
-      "benfowler/telescope-luasnip.nvim",
-      module = "telescope._extensions.luasnip",
-    },
-    {
       "nvim-telescope/telescope-ui-select.nvim",
-      module = "telescope",
-      config = function() require "telescope".load_extension "ui-select" end,
+      cmd = "Telescope ui-select",
+      module = "telescope._extensions.ui-select",
+    },
+    {
+      "nvim-telescope/telescope-project.nvim",
+      cmd = { "Telescope" },
+      config = {
+        function()
+          require("telescope").load_extension "project"
+          require("telescope").setup {
+            extensions = {
+                project = {
+                base_dirs = {
+                  '~/Documents/Developer',
+                  '~/Informatica/2°Anno/1°Semestre/Programmazione II',
+                },
+                hidden_files = true, -- default: false
+                theme = "dropdown"
+              }
+            }
+          }
+        end
+      }
     },
     {
       "nvim-telescope/telescope.nvim",
       module = "telescope",
-      cmd = { "Telescope" },
+      cmd = "Telescope",
       requires = { "nvim-lua/plenary.nvim" },
       config = function() require "user.plugins.config.telescope" end,
     }
