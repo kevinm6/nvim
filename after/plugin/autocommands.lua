@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 07 Aug 2022, 10:24
+-- Last Modified: 13 Aug 2022, 14:27
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -34,9 +34,22 @@ autocmd({ "TextYankPost" }, {
 })
 
 
+-- Autoreload modules
+-- autocmd({ "BufWritePost" }, {
+--   group = _general_settings,
+--   pattern = { "*.lua" },
+--   callback = function()
+--     -- local file = vim.fn.expand "<afile>"
+--     local fname = vim.fn.expand "%:r"
+
+--     vim.notify(fname .. " reloaded! ", "Info", { title = "Modules" })
+--   end
+-- })
+
+
 -- If buffer modified, update any 'Last modified: ' in the first 10 lines.
 -- Restores cursor and window position using save_cursor variable.
-local updateTimeStampID = autocmd({ "BufWritePre" }, {
+local updateTimeStamp = autocmd({ "BufWritePre" }, {
   group = _general_settings,
   pattern = "*",
   callback = function()
@@ -47,21 +60,43 @@ local updateTimeStampID = autocmd({ "BufWritePre" }, {
       vim.fn.histdel('search', -1)
       vim.api.nvim_win_set_cursor(0, cursor_pos)
     end
-  end,
+  end
 })
 
-local UpdateTimestamp = function()
-  if vim.opt_local.modified._value == true then
-    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+local autoTimeStampID = updateTimeStamp
 
-    vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
-    vim.fn.histdel('search', -1)
-    vim.api.nvim_win_set_cursor(0, cursor_pos)
-  end
-end
-command("UpdateTimestamp", UpdateTimestamp, { desc = "Update timestamp in file information" })
+command("ToggleTimeStamp",
+  function()
+    local au = vim.api.nvim_get_autocmds({ group = _general_settings, event = "BufWritePre", pattern = "*" })
+    if (autoTimeStampID ~= nil and au[1] ~= nil) then
+      -- remove autocmd if exists and match w/ the one created
+      --[[ print(au[1].id == toggleUpdateTimeStamp) ]]
+      if au[1].id == autoTimeStampID then
+        vim.api.nvim_del_autocmd(autoTimeStampID)
+        autoTimeStampID = nil
+        vim.notify("❌ TimeStamp update on save disabled.", "Info", { title = "Update file INFO" })
+      end
+    else
+      autoTimeStampID = autocmd({ "BufWritePre" }, {
+        group = _general_settings,
+        pattern = "*",
+        callback = function()
+          if vim.opt_local.modified._value == true then
+            local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-command("DisableUpdateTimeStamp", function() vim.api.nvim_del_autocmd(updateTimeStampID) end, { desc = "Disable timestamp updates in this session" })
+            vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
+            vim.fn.histdel('search', -1)
+            vim.api.nvim_win_set_cursor(0, cursor_pos)
+          end
+        end
+      })
+
+      vim.notify("✅ TimeStamp update on save enabled.", "Info", { title = "Update file INFO" })
+    end
+  end,
+  { desc = "Update TimeStamp on save" }
+)
+
 
 -- Autocommand for Statusline & WinBar
 -- Using CursorMoved to nvim-gps

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : K NeoVim & gui VimR configuration
 -- Author       : Kevin
--- Last Modified: 25 Jul 2022, 21:33
+-- Last Modified: 13 Aug 2022, 14:28
 --------------------------------------
 
 -- check if NeoVim or Vim
@@ -13,7 +13,7 @@ end
 
 -- Use other Shadafile for Gui (VimR)
 if vim.fn.has "gui_vimr" == 1 then
-  vim.opt.shadafile = vim.fn.stdpath "cache" .."/shada/gmain.shada"
+  vim.opt.shadafile = vim.fn.stdpath "cache" .. "/shada/gmain.shada"
 else
   vim.opt.shadafile = vim.fn.stdpath "cache" .. "/shada/main.shada"
 end

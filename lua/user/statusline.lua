@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : StatusLine config
 -- Author       : Kevin Manca
--- Last Modified: 24 Jul 2022, 13:25
+-- Last Modified: 13 Aug 2022, 19:26
 -------------------------------------
 
 local S = {}
@@ -114,7 +114,7 @@ end
 local function nvim_navic()
   local navic_ok, navic = pcall(require, "nvim-navic")
   if navic_ok and navic.is_available() then
-    local navic_loc = not navic_ok and icons.ui.Error or navic.is_available() and navic.get_location() or ""
+    local navic_loc = navic.is_available() and navic.get_location() or ""
     if navic_cached_loc ~= navic_loc then
       navic_cached_loc = navic_loc
     end
@@ -132,27 +132,25 @@ local function get_lsp_diagnostic()
 	local diagnostics = vim.diagnostic
 	-- assign to relative vars the count of diagnostics
 	local errors = #diagnostics.get(0, { severity = diagnostics.severity.ERROR })
-	local warnings = #diagnostics.get(0, { severity = diagnostics.severity.WARN })
+	local warns = #diagnostics.get(0, { severity = diagnostics.severity.WARN })
 	local infos = #diagnostics.get(0, { severity = diagnostics.severity.INFO })
 	local hints = #diagnostics.get(0, { severity = diagnostics.severity.HINT })
 
-	local status_ok = (errors == 0) and (warnings == 0) and (infos == 0) and (hints == 0) or false
+	local status_ok = (errors == 0) and (warns == 0) and (infos == 0) and (hints == 0) or false
 
   local diag = string.format(
 			"%s:%d %s:%d %s:%d %s:%d",
 			icons.diagnostics.Error,
 			errors,
 			icons.diagnostics.Warning,
-			warnings,
+			warns,
 			icons.diagnostics.Information,
 			infos,
 			icons.diagnostics.Hint,
 			hints
 	)
 
-  if diag ~= diag_cached then
-    diag_cached = diag
-  end
+  if diag_cached ~= diag then diag_cached = diag end
 
 	-- display values only if there are any
 	return status_ok and icons.diagnostics.status_ok

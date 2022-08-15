@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 11 Aug 2022, 14:12
+-- Last Modified: 12 Aug 2022, 12:31
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -99,7 +99,14 @@ local leader_maps = {
     end,
     "Change dir to current buffer's parent",
   },
-  h = { ":help ", "Help (Docs)" },
+
+  h = {
+    function()
+      local word = vim.fn.expand "<cword>"
+      vim.cmd (":h " .. word )
+    end,
+    "Help <cword>"
+  },
 
   b = {
     function()
@@ -555,7 +562,7 @@ local leader_maps = {
       "Source Neovim config file",
     },
     e = { "<cmd>edit $NVIMDOTDIR/init.lua<CR>", "Edit Neovim config file" },
-    ["%"] = { "<cmd>source %<CR>", "Source current buffer" },
+    r = { "<cmd>luafile %<CR>", "Reload current buffer" },
     S = {
       "<cmd>source ~/.config/nvim/lua/user/luasnip.lua<CR>",
       "Reload custom snippets"
@@ -652,6 +659,7 @@ local ins_mappings = {
   ["<C-o>"] = "Omni completion",
   s = "Spelling suggestions",
 }
+
 
 wk.setup(setup)
 wk.register(leader_maps, opts)
