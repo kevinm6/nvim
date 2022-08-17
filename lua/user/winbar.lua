@@ -1,9 +1,7 @@
 local M = {}
 
 local status_gps_ok, navic = pcall(require, "nvim-navic")
-if not status_gps_ok then
-  return
-end
+if not status_gps_ok then return end
 
 local function isempty(s)
   return s == nil or s == ""
@@ -30,14 +28,14 @@ M.filename = function()
     file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = default })
 
     local hl_group = "FileIconColor" .. extension
-
     vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
+
     if file_icon == nil then
       file_icon = default_file_icon
       file_icon_color = default_file_icon_color
     end
 
-    return string.format(" %%#%s#%s %s%s", hl_group, file_icon .. "%*", "%#LineNr#", filename .. "%*")
+    return string.format(" %%#%s#%s %s", hl_group, file_icon .. "%*", filename)
   end
 end
 
@@ -55,12 +53,12 @@ M.gps = function()
 
   local retval = M.filename()
 
-  if location == "error" then
-    return ""
-  else
+  if location ~= "error" then
     return not isempty(location) and
-      string.format("%s %s %s", retval, icons.ui.ChevronRight, location) or
+      string.format("%s %s %s", retval, "%#NavicSeparator#"..icons.ui.ChevronRight.."%*", location) or
       retval
+  else
+    return ""
   end
 end
 

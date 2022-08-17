@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 11 Aug 2022, 10:35
+--  Last Modified: 15 Aug 2022, 11:24
 -------------------------------------
 
 local base = require "colors.knvim.base"
@@ -164,6 +164,9 @@ local plugins = {
   WhichKeyFloat = { bg = "#2c2c2c" },
   WhichKeyValue = { link = "Comment" },
   -- Navic
+  NavicText = { link = "Comment" },
+  NavicSeparator = { link = "Comment" },
+  -- Navic-icons
   NavicIconsFile = { link = "CmpItemKindFile" },
   NavicIconsModule = { link = "CmpItemKindClass" },
   NavicIconsNamespace = { link = "CmpItemKindClass" },
@@ -191,7 +194,6 @@ local plugins = {
   NavicIconsOperator = { link = "CmpItemKindOperator" },
   NavicIconsTypeParameter = { link = "CmpItemKindTypeParameter" },
   NavicIconsText = { link = "CmpItemKindText" },
-  NavicIconsSeparator = { link = "Comment" },
   -- Ufo (Folding)
   UfoPreviewSbar = { link = "PmenuSbar" },
   UfoPreviewThumb = { link = "PmenuThumb" },

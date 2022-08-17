@@ -1,9 +1,9 @@
--------------------------------------
+-----------------------------------------
 -- File         : statusline.lua
--- Description  : StatusLine config
+-- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 13 Aug 2022, 19:26
--------------------------------------
+-- Last Modified: 17 Aug 2022, 17:37
+-----------------------------------------
 
 local S = {}
 
@@ -140,14 +140,10 @@ local function get_lsp_diagnostic()
 
   local diag = string.format(
 			"%s:%d %s:%d %s:%d %s:%d",
-			icons.diagnostics.Error,
-			errors,
-			icons.diagnostics.Warning,
-			warns,
-			icons.diagnostics.Information,
-			infos,
-			icons.diagnostics.Hint,
-			hints
+			icons.diagnostics.Error, errors,
+			icons.diagnostics.Warning, warns,
+			icons.diagnostics.Information, infos,
+			icons.diagnostics.Hint, hints
 	)
 
   if diag_cached ~= diag then diag_cached = diag end
@@ -233,12 +229,13 @@ S.active = function()
       return (" %s %s "):format(
         sideSep, get_lsp_diagnostic()
       )
+    else
+      return (" %s%s %s %s "):format(
+        colors.gps, nvim_navic(),
+        sideSep,
+        get_lsp_diagnostic()
+      )
     end
-    return (" %s%s %s %s "):format(
-      colors.gps, nvim_navic(),
-      sideSep,
-      get_lsp_diagnostic()
-    )
   end
 
 	-- RightSide
