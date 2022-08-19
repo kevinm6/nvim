@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 12 Aug 2022, 12:17
+-- Last Modified: 19 Aug 2022, 12:14
 -------------------------------------
 
 -- CURSOR {
@@ -19,7 +19,7 @@ local options = {
 	shell = "/bin/bash",
 
 	-- MOUSE:
-	mouse = "a",
+	mouse = "vnc",
 	fileencoding = "utf-8",
 
 	-- GRAPHIC:

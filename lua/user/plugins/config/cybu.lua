@@ -2,7 +2,7 @@
 --  File         : cybu.lua
 --  Description  : cybu plugin config
 --  Author       : Kevin
---  Last Modified: 21 Jun 2022, 10:26
+--  Last Modified: 19 Aug 2022, 17:32
 -------------------------------------
 
 local ok, cybu = pcall(require, "cybu")
@@ -40,6 +40,8 @@ cybu.setup {
     "NvimTree",
     "qf",
     "alpha",
+    "packer",
+    "telescope",
   },
   fallback = function() end,
 }

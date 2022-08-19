@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 15 Aug 2022, 09:16
+-- Last Modified: 19 Aug 2022, 18:12
 --------------------------------------
 
 -- install packer if not found in default location
@@ -208,7 +208,6 @@ return packer.startup(function(use)
     {
       "akinsho/bufferline.nvim",
       tag = "*",
-      disable = true,
       event = "BufAdd",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = function() require "user.plugins.config.bufferline" end,
@@ -310,11 +309,6 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.autopairs" end,
     },
     {
-      "Mephistophiles/surround.nvim",
-      event = "BufAdd",
-      config = function() require "user.plugins.config.surround" end,
-    },
-    {
       "folke/todo-comments.nvim",
       event = "BufAdd",
       config = function() require "user.plugins.config.todo-comments" end,
@@ -327,6 +321,7 @@ return packer.startup(function(use)
     {
       "phaazon/hop.nvim",
       event = "BufAdd",
+      disable = true,
       config = function() require "user.plugins.config.hop" end,
     },
     {
@@ -468,7 +463,6 @@ return packer.startup(function(use)
     -- Json
     {
       "b0o/SchemaStore.nvim",
-      -- ft = "json",
       -- module = "schemastore",
       ft = "json"
     },
@@ -531,6 +525,7 @@ return packer.startup(function(use)
     {
       "dhruvasagar/vim-table-mode",
       ft = { "md", "markdown" },
+      disable = true,
       cmd = "TableModeToggle"
     },
     {
@@ -558,16 +553,10 @@ return packer.startup(function(use)
     config = function() require "user.plugins.config.xbase" end,
   }
 
-  -- themes
+  -- kitty (terminal) config syntax
   use {
-    {
-      "ellisonleao/gruvbox.nvim",
-      cmd = "colorscheme",
-    },
-    {
-      "fladson/vim-kitty",
-      ft = "kitty"
-    },
+    "fladson/vim-kitty",
+    ft = "kitty"
   }
 
   if PACKER_BOOTSTRAP then

@@ -2,7 +2,7 @@
  -- File         : bufferline.lua
  -- Description  : Bufferline config
  -- Author       : Kevin
- -- Last Modified: 13 Aug 2022, 16:00
+ -- Last Modified: 18 Aug 2022, 23:15
  -------------------------------------
 
 local ok, bufferline = pcall(require, "bufferline")
@@ -30,7 +30,7 @@ bufferline.setup {
     max_name_length = 20,
     max_prefix_length = 20,
     tab_size = 22,
-    diagnostics = false,
+    diagnostics = true,
     diagnostics_update_in_insert = false,
     offsets = {{ filetype = "NvimTree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard" }},
     -- offsets = {{ filetype = "neo-tree", text = "File Explorer", padding = 1, }, { filetype = "alpha", text = "Dashboard", padding = 1, }},
@@ -41,7 +41,7 @@ bufferline.setup {
     persist_buffer_sort = true,
     separator_style = "thin",
     enforce_regular_tabs = true,
-    always_show_bufferline = true,
+    always_show_bufferline = false,
   },
   highlights = {
     fill = {
