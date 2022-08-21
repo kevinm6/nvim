@@ -2,12 +2,12 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 11 Aug 2022, 14:15
+-- Last Modified: 21 Aug 2022, 10:02
 -------------------------------------
 
 
 local ok, telescope = pcall(require, "telescope")
-if not ok then return end
+if not ok then vim.notify("Error w/ Telescope " .. telescope, "Error") return end
 
 local icons = require "user.icons"
 

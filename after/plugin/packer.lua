@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 19 Aug 2022, 18:12
+-- Last Modified: 21 Aug 2022, 10:10
 --------------------------------------
 
 -- install packer if not found in default location
@@ -132,14 +132,9 @@ return packer.startup(function(use)
       module = "popup",
       cmd = "require",
     },
-
     {
       "tweekmonster/startuptime.vim",
       cmd = "StartupTime",
-    },
-    {
-      "MunifTanjim/nui.nvim",
-      cmd = "require",
     },
     { "kyazdani42/nvim-web-devicons", module = "nvim-web-devicons" },
     {
@@ -199,11 +194,6 @@ return packer.startup(function(use)
       event = "VimEnter",
       module = "which-key",
       config = function() require "user.plugins.config.whichkey" end,
-    },
-    {
-      "ghillb/cybu.nvim",
-      event = "BufAdd",
-      config = function() require "user.plugins.config.cybu" end,
     },
     {
       "akinsho/bufferline.nvim",
@@ -309,6 +299,11 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.autopairs" end,
     },
     {
+       "ur4ltz/surround.nvim",
+       event = "BufAdd",
+       config = function() require "user.plugins.config.surround" end,
+    },
+    {
       "folke/todo-comments.nvim",
       event = "BufAdd",
       config = function() require "user.plugins.config.todo-comments" end,
@@ -319,23 +314,10 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.comment" end,
     },
     {
-      "phaazon/hop.nvim",
-      event = "BufAdd",
-      disable = true,
-      config = function() require "user.plugins.config.hop" end,
-    },
-    {
       "michaelb/sniprun",
       run = "bash ./install.sh",
       event = "InsertLeave",
       config = function() require "user.plugins.config.sniprun" end,
-    },
-    {
-      "simrat39/symbols-outline.nvim",
-      event = "InsertLeave",
-      cmd = "SymbolsOutline",
-      requires = { "nvim-treesitter/nvim-treesitter" },
-      config = function() require "user.plugins.config.symbol-outline" end,
     },
     {
       "folke/trouble.nvim",
@@ -409,8 +391,9 @@ return packer.startup(function(use)
     },
     {
       "nvim-telescope/telescope.nvim",
-      module = "telescope",
+      module_pattern = "telescope*",
       cmd = { "Telescope" },
+      --[[ event = "VimEnter", ]]
       requires = { "nvim-lua/plenary.nvim" },
       config = function() require "user.plugins.config.telescope" end,
     }

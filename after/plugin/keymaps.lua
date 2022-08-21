@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim & VimR
 -- Author       : Kevin
--- Last Modified: 19 Aug 2022, 17:32
+-- Last Modified: 20 Aug 2022, 11:35
 -------------------------------------
 
 -- Function to make easier mapping in Lua
@@ -68,6 +68,8 @@ set_keymap("n", "<C-k>", "<C-w>k", opts)
 set_keymap("n", "<C-l>", "<Nop>", opts)
 set_keymap("n", "<C-l>", "<C-w>l", opts)
 set_keymap("n", "<C-r>", "<cmd>redraw!<CR>", opts)
+set_keymap("n", "<S-l>", "<cmd>bnext<CR>", opts)
+set_keymap("n", "<S-h>", "<cmd>bprevious<CR>", opts)
 set_keymap("n", "<Esc>", "<cmd>noh<CR>", opts)
 set_keymap("n", "Q", "<cmd>DeleteCurrentBuffer<CR>", opts)
 set_keymap("n", "U", "<C-r>", opts)

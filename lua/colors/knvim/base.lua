@@ -2,7 +2,7 @@
 --  File         : base.lua
 --  Description  : base colors palette for knvim colorscheme
 --  Author       : Kevin
---  Last Modified: 11 Aug 2022, 10:35
+--  Last Modified: 20 Aug 2022, 10:53
 -------------------------------------
 
 local colors = require "colors.knvim.colors"
@@ -108,6 +108,7 @@ local base_group = {
 	-- Folding
 	Folded = { bg = "grey13", fg = "Grey40" },
 	FoldColumn = { link = "Comment" },
+	Conceal = { fg = blue },
 
 	-- Search
 	IncSearch = { fg = "#3a3a3a", bg = green, bold = true },
@@ -117,7 +118,7 @@ local base_group = {
 	-- Debugging
 	Debug = { fg = red },
 
-	-- Status Line
+	-- StatusLine
 	StatusLine = { fg = "#626262", bg = "#1c1c1c" },
 	StatusLineNC = { fg = "#868686"},
 	StatusLineTerm = { fg = "#626262", bg = "#1c1c1c" },
@@ -132,6 +133,16 @@ local base_group = {
   StatusLineGpsDiagnostic = { fg = "#3c3c3c", bg = "#1c1c1c" },
   StatusLineEmptyspace = { fg = "#2c2c2c", bg = "#1c1c1c" },
 
+	-- TabLine
+	TabLineSel = { link = "Normal" },
+	--[[ TabLineSel = { fg = "#606060", bg = "#303030" }, ]]
+	TabLine = { fg = "#A9A9A9", bg = "#606060" },
+	TabLine_modified_visible = { fg = "#00afff", bg = "#303030" },
+	TabLine_modified_selected = { fg = "#A9A9A9", bg = "#303030" },
+	TabLine_indicator_selected = { fg = "#A9A9A9", bg = "#303030" },
+	TabLineFill = { fg = "#ff0000", bg = "#606060"  },
+
+  -- Nvim Modes
 	Nmode = { fg = "#158C8A" },
 	Vmode = { fg = "Gold1" },
 	Imode = { fg = "#00afff" },
@@ -139,13 +150,7 @@ local base_group = {
 	Tmode = { fg = "#FF5573" },
 	ShellMode = { fg = "#ffff87" },
 
-	-- TabLine
-	TabLineSel = { fg = "#606060", bg = "#303030" },
-	TabLine = { fg = "#A9A9A9", bg = "#606060" },
-	TabLine_modified_visible = { fg = "#00afff", bg = "#303030" },
-	TabLine_modified_selected = { fg = "#A9A9A9", bg = "#303030" },
-	TabLine_indicator_selected = { fg = "#A9A9A9", bg = "#303030" },
-
+  -- Syntax
 	Title = { fg = "Gold1" },
 	Statement = { fg = "#00afff" },
 	Directory = { fg = "#00af87" },
@@ -184,10 +189,11 @@ local base_group = {
 	StorageClass = { link = "k_themeOrange" },
 	Typedef = { link = "k_themeYellow" },
 
+  -- Font enhance
 	Bold = { bold = true },
 	Italic = { italic = true },
 
-	-- End of buffer and non text
+	-- End of buffer and non-text
 	NonText = { fg = "#626262", bg = bg0 },
 	EndOfBuffer = { fg = bg0, bg = bg0 },
 
@@ -202,6 +208,12 @@ local base_group = {
 	DiffChange = { fg = "#808000" },
 	DiffDelete = { fg = "#d70000" },
 	DiffText = { fg = "#ff00ff" },
+	diffAdded = { fg = green },
+	diffRemoved = { fg = red },
+	diffChanged = { fg = aqua },
+	diffFile = { fg = orange },
+	diffNewFile = { fg = yellow },
+	diffLine = { fg = blue },
 	SignColumn = { fg = "#626262", bg = bg0 },
 
 	-- Errors
@@ -216,7 +228,8 @@ local base_group = {
 	PmenuSbar = { bg = "#262626" },
 	PmenuThumb = { bg = "#3D3D40" },
 
-	Conceal = { fg = blue },
+
+  -- Spell
 	SpellRare = { fg = purple, underline = true },
 	SpellBad = { fg = red, underline = true },
 	SpellLocal = { fg = aqua, underline = true },
@@ -225,13 +238,6 @@ local base_group = {
 		bold = true,
 		italic = true,
 	} or { fg = blue, underline = true },
-	TabLineFill = { fg = bg4, bg = bg1, reverse = vim.g.k_theme_invert_tabline },
-	diffAdded = { fg = green },
-	diffRemoved = { fg = red },
-	diffChanged = { fg = aqua },
-	diffFile = { fg = orange },
-	diffNewFile = { fg = yellow },
-	diffLine = { fg = blue },
 
 	-- signature
 	SignatureMarkText = { link = "k_themeBlueSign" },

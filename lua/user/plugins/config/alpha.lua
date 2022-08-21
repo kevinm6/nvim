@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 11 Aug 2022, 12:52
+--	Last Modified: 19 Aug 2022, 18:32
 -----------------------------------
 
 local ok, alpha = pcall(require, "alpha")
@@ -47,8 +47,8 @@ dashboard.section.buttons.val = {
 	dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>lua require 'telescope.builtin'.find_files()<CR>"),
 	dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>lua require 'telescope.builtin'.oldfiles()<CR>"),
 	dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>lua require 'telescope'.extensions.project.project{}<CR>"),
-	dashboard.button("u", icons.ui.Uni .. " University", "<cmd>e $CS <CR>"),
-	dashboard.button("d", icons.ui.Dev .. " Developer", "<cmd>e ~/Documents/Developer <CR>"),
+	dashboard.button("u", icons.ui.Uni .. " University", "<cmd>NvimTreeOpen<CR> <cmd>cd $CS <CR>"),
+	dashboard.button("d", icons.ui.Dev .. " Developer", "<cmd>NvimTreeOpen<CR> <cmd>cd ~/Documents/Developer/ <CR>"),
 	dashboard.button("p", icons.ui.Packer .. " Plugin Manager", "<cmd> PackerSync <CR>"),
 	dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration", "<cmd>e $NVIMDOTDIR/after/plugin/packer.lua<CR>"),
 	dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
@@ -57,7 +57,7 @@ dashboard.section.buttons.val = {
 	-- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
 	dashboard.button("C",
 		icons.ui.Gear .. " Config",
-		"<cmd>cd $NVIMDOTDIR <CR> <BAR> <cmd>e $NVIMDOTDIR/init.lua <CR>"
+		"<cmd>cd $NVIMDOTDIR <CR> <cmd>e $NVIMDOTDIR/init.lua <CR>"
 	),
 	dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
 	dashboard.button("c", icons.documents.Files .. " Close", "<cmd>Alpha<CR>"),

@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 12 Aug 2022, 12:31
+-- Last Modified: 19 Aug 2022, 19:31
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -372,10 +372,6 @@ local leader_maps = {
     l = {
       function() vim.lsp.codelens.run() end,
       "CodeLens Action",
-    },
-    o = {
-      function() require("symbols-outline").toggle_outline() end,
-      "Symbols Outline"
     },
     q = {
       function() vim.diagnostic.setloclist() end,

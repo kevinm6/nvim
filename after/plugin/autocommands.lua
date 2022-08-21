@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 13 Aug 2022, 14:27
+-- Last Modified: 20 Aug 2022, 15:53
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -98,33 +98,6 @@ command("ToggleTimeStamp",
 )
 
 
--- Autocommand for Statusline & WinBar
--- Using CursorMoved to nvim-gps
-autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
-	group = augroup("Statusline", { clear = true, }),
-	pattern = "*",
-	callback = function()
-    local special_ft = {
-      ["alpha"] = true,
-      ["NvimTree"] = true,
-      ["packer"] = true,
-      ["lsp-installer"] = true,
-      ["lspinfo"] = true,
-      ["Telescope"] = true,
-      ["Trouble"] = true,
-      ["qf"] = true,
-      ["toggleterm"] = true,
-      ["DressingSelect"] = true,
-      ["Jaq"] = true,
-    }
-    if special_ft[vim.bo.filetype] then
-      vim.wo.statusline = require("user.statusline").disabled()
-      return
-    end
-		vim.wo.statusline = require("user.statusline").active()
-	end,
-})
-
 
 -- TODO: Remove condition on NeoVim 0.8
 if vim.fn.has "nvim-0.8" == 1 then
@@ -151,6 +124,33 @@ if vim.fn.has "nvim-0.8" == 1 then
        vim.opt_local.winbar = require("user.winbar").gps() or nil
      end,
    })
+  else
+  -- Autocommand for Statusline & WinBar
+  -- Using CursorMoved to nvim-gps
+  autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
+    group = augroup("Statusline", { clear = true, }),
+    pattern = "*",
+    callback = function()
+      local special_ft = {
+        ["alpha"] = true,
+        ["NvimTree"] = true,
+        ["packer"] = true,
+        ["lsp-installer"] = true,
+        ["lspinfo"] = true,
+        ["Telescope"] = true,
+        ["Trouble"] = true,
+        ["qf"] = true,
+        ["toggleterm"] = true,
+        ["DressingSelect"] = true,
+        ["Jaq"] = true,
+      }
+      if special_ft[vim.bo.filetype] then
+        vim.wo.statusline = require("user.statusline").disabled()
+        return
+      end
+      vim.wo.statusline = require("user.statusline").active()
+    end,
+  })
 end
 
 autocmd("BufWritePost", {
