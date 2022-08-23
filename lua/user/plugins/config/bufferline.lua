@@ -2,7 +2,7 @@
  -- File         : bufferline.lua
  -- Description  : Bufferline config
  -- Author       : Kevin
- -- Last Modified: 18 Aug 2022, 23:15
+ -- Last Modified: 22 Aug 2022, 10:42
  -------------------------------------
 
 local ok, bufferline = pcall(require, "bufferline")
@@ -21,7 +21,10 @@ bufferline.setup {
     -- NOTE: this plugin is designed with this icon in mind,
     -- and so changing this is NOT recommended, this is intended
     -- as an escape hatch for people who canno bear it for whatever reason
-    indicator_icon = icons.ui.AltSlArrowRight,--  "▎",
+    indicator = {
+      style = 'icon',
+      icon = icons.ui.AltSlArrowRight,--  "▎",
+    },
     buffer_close_icon = icons.bufferline.buffer_close_icon,
     modified = icons.bufferline.modified,
     close = icons.bufferline.close,

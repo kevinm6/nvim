@@ -2,7 +2,7 @@
 --  File         : plugins.lua
 --  Description  : 3rd part plugins palette
 --  Author       : Kevin
---  Last Modified: 15 Aug 2022, 11:24
+--  Last Modified: 23 Aug 2022, 16:11
 -------------------------------------
 
 local base = require "colors.knvim.base"
@@ -80,16 +80,16 @@ local plugins = {
   TSCodeSpan = { bg = "#3c3c3c", fg = "#DCDCDC"},
   TSCodeBlock = {},
   -- Telescope.nvim
-  TelescopeSelection = base.k_themeOrangeBold,
-  TelescopeSlectionCaret = base.k_themeRed,
-  TelescopeMultiSelection = base.k_themeGray,
-  TelescopeNormal = base.k_themeFg1,
-  TelescopeBorder = { link = "TelescopeNormal" },
-  TelescopePromptBorder = { link = "TelescopeNormal" },
-  TelescopeResultsBorder = { link = "TelescopeNormal" },
-  TelescopePreviewBorder = { link = "TelescopeNormal" },
-  TelescopeMatching = base.k_themeBlue,
-  TelescopePromptPrefix = base.k_themeRed,
+  TelescopeSelection = { link = "PmenuSel" },
+  TelescopeSlectionCaret = { link = "PmenuSbar" },
+  TelescopeMultiSelection = { reverse = true },
+  TelescopeNormal = { link = "Normal" },
+  TelescopeBorder = { link = "WinSeparator" },
+  TelescopePromptBorder = { link = "WinSeparator" },
+  TelescopeResultsBorder = { link = "WinSeparator" },
+  TelescopePreviewBorder = { link = "WinSeparator" },
+  TelescopeMatching = { link = "CmpItemAbbrMatch" },
+  TelescopePromptPrefix = { fg = "#36FF5A" },
   TelescopePrompt = { link = "TelescopeNormal" },
   -- gitsigns.nvim
   GitSignsAdd = base.k_themeGreenSign,

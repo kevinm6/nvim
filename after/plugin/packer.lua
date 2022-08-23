@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 21 Aug 2022, 10:10
+-- Last Modified: 22 Aug 2022, 10:39
 --------------------------------------
 
 -- install packer if not found in default location
@@ -197,7 +197,6 @@ return packer.startup(function(use)
     },
     {
       "akinsho/bufferline.nvim",
-      tag = "*",
       event = "BufAdd",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = function() require "user.plugins.config.bufferline" end,
