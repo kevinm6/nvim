@@ -2,7 +2,7 @@
 --	File: fidget.lua
 --	Description: fidget plugin config (lsp init progress)
 --	Author: Kevin
---	Last Modified: 09 Aug 2022, 09:55
+--	Last Modified: 25 Aug 2022, 20:39
 -----------------------------------
 
 local ok, fidget = pcall(require, "fidget")
@@ -20,13 +20,13 @@ local config = {
     right = true,             -- align fidgets along right edge of buffer
   },
   timer = {
-    spinner_rate = 125,       -- frame rate of spinner animation, in ms
+    spinner_rate = 200,       -- frame rate of spinner animation, in ms
     fidget_decay = 2000,      -- how long to keep around empty fidget, in ms
     task_decay = 1000,        -- how long to keep around completed task, in ms
   },
   window = {
     relative = "win",         -- where to anchor, either "win" or "editor"
-    blend = 100,              -- &winblend for the window
+    blend = 86,              -- &winblend for the window
     zindex = nil,             -- the zindex value for the window
   },
   fmt = {
@@ -47,11 +47,7 @@ local config = {
         )
       end,
   },
-  -- sources = {                 -- Sources to configure
-  --   * = {                     -- Name of source
-  --     ignore = false,         -- Ignore notifications from this source
-  --   },
-  -- },
+  sources = {},
   debug = {
     logging = false,          -- whether to enable logging, for debugging
     strict = false,           -- whether to interpret LSP strictly

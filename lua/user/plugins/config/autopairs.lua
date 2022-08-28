@@ -2,7 +2,7 @@
 -- File         : autopairs.lua
 -- Description  : Lua K NeoVim & VimR autopairs config
 -- Author       : Kevin
--- Last Modified: 22/03/2022 - 17:13
+-- Last Modified: 27 Aug 2022, 09:44
 -------------------------------------
 
 local ok, npairs = pcall(require, "nvim-autopairs")
@@ -15,8 +15,11 @@ npairs.setup {
 		javascript = { "string", "template_string" },
 		java = true,
 	},
+  break_undo = true,
+  map_c_w = true,
+  map_c_h = false,
   enable_check_bracket_line = true,
-	disable_filetype = { "TelescopePrompt", "spectre_panel" },
+	disable_filetype = { "TelescopePrompt", "Alpha", },
   fast_wrap = {
     map = "<C-e>",
     chars = { "{", "[", "(", '"', "'" },

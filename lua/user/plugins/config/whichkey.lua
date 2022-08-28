@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 19 Aug 2022, 19:31
+-- Last Modified: 26 Aug 2022, 09:39
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -196,8 +196,16 @@ local leader_maps = {
       function() require("telescope").extensions.neoclip.default() end,
       "Yank History",
     },
+    e = {
+      function() require("telescope").extensions.env.env() end,
+      "Environment",
+    },
+    E = {
+      function() require("telescope").extensions.emoji.emoji() end,
+      "Emoji",
+    },
     L = {
-      function() require'telescope'.extensions.luasnip.luasnip{} end,
+      function() require("telescope").extensions.luasnip.luasnip{} end,
       "Luasnip",
     },
     d = {
@@ -222,7 +230,6 @@ local leader_maps = {
         function() require 'telescope'.extensions.dap.frames {} end,
         "Frames"
       },
-
     }
   },
 

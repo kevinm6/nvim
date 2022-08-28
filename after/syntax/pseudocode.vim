@@ -2,13 +2,8 @@
 "	File: pseudocode.vim
 "	Description: pseudocode syntax for Vim / NeoVim
 "	Author: Kevin
-"	Last Modified: 18/02/2022 - 12:12
+"	Last Modified: 26 Aug 2022, 21:53
 " -----------------------------------
-
-
-if exists('b:current_syntax')
-  finish
-endif
 
 syntax case ignore
 
@@ -50,5 +45,3 @@ hi def link pseudoBuiltIn       Type
 hi def link pseudoString        String
 hi def link pseudoBoolean       Boolean
 hi def link pseudoComment       Comment
-
-let b:current_syntax = 'pseudocode'

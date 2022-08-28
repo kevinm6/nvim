@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 22 Aug 2022, 10:39
+-- Last Modified: 26 Aug 2022, 21:55
 --------------------------------------
 
 -- install packer if not found in default location
@@ -170,7 +170,7 @@ return packer.startup(function(use)
     {
       "is0n/jaq-nvim",
       event = "BufAdd",
-      cmd = "Jaq*",
+      cmd = "Jaq",
       config = function() require "user.plugins.config.jaq" end,
     },
     {
@@ -303,7 +303,7 @@ return packer.startup(function(use)
        config = function() require "user.plugins.config.surround" end,
     },
     {
-      "folke/todo-comments.nvim",
+      "B4mbus/todo-comments.nvim",
       event = "BufAdd",
       config = function() require "user.plugins.config.todo-comments" end,
     },
@@ -384,8 +384,16 @@ return packer.startup(function(use)
       module = "telescope._extensions.luasnip",
     },
     {
+      "LinArcX/telescope-env.nvim",
+      module = "telescope._extensions.env",
+    },
+    {
+      "xiyaowong/telescope-emoji.nvim",
+      module = "telescope._extensions.emoji",
+    },
+    {
       "nvim-telescope/telescope-ui-select.nvim",
-      module = "telescope",
+      after = "telescope.nvim",
       config = function() require "telescope".load_extension "ui-select" end,
     },
     {

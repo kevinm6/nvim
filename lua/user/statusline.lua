@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 17 Aug 2022, 17:37
+-- Last Modified: 26 Aug 2022, 18:57
 -----------------------------------------
 
 local S = {}
@@ -188,7 +188,7 @@ end
 
 -- Statusline disabled
 -- display only filetype and current mode
-S.disabled = function(name)
+S.off = function(name)
   local ftype = get_filetype()
 
   local special_filetypes = {
@@ -204,14 +204,13 @@ S.disabled = function(name)
     [" Jaq "] = icons.ui.BoldChevronRight .." Quick Run Code (Jaq) " .. icons.ui.BoldChevronLeft,
   }
   ftype = special_filetypes[get_filetype()]
-
-	return name and ("%s%s %%= %s%%="):format(get_mode(), colors.fformat, name)
-		or ("%s%s %%= %s %%="):format(get_mode(), colors.fformat, ftype)
+	return name and
+	 ("%s%s %%= %s%%="):format(get_mode(), colors.fformat, name) or
+		 ("%s%s %%= %s %%="):format(get_mode(), colors.fformat, ftype)
 end
 
-
 -- Statusline enabled
-S.active = function()
+S.on = function()
 	-- LeftSide
 	local currMode = "%m%r"
   local leftSide = ("%s%s%s%s%s%s%s %s%s%s%s"):format(

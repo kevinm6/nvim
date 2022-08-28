@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 20 Aug 2022, 15:53
+-- Last Modified: 26 Aug 2022, 19:24
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -65,6 +65,7 @@ local updateTimeStamp = autocmd({ "BufWritePre" }, {
 
 local autoTimeStampID = updateTimeStamp
 
+
 command("ToggleTimeStamp",
   function()
     local au = vim.api.nvim_get_autocmds({ group = _general_settings, event = "BufWritePre", pattern = "*" })
@@ -97,11 +98,38 @@ command("ToggleTimeStamp",
   { desc = "Update TimeStamp on save" }
 )
 
+-- Autocommand for Statusline & WinBar
+-- Using CursorMoved to nvim-gps
+autocmd({ "CursorMoved" }, {
+  group = augroup("Statusline", { clear = true, }),
+  pattern = "*",
+  callback = function()
+    local special_ft = {
+      ["alpha"] = true,
+      ["NvimTree"] = true,
+      ["packer"] = true,
+      ["lsp-installer"] = true,
+      ["lspinfo"] = true,
+      ["TelescopePrompt"] = true,
+      ["Trouble"] = true,
+      ["qf"] = true,
+      ["toggleterm"] = true,
+      ["DressingSelect"] = true,
+      ["Jaq"] = true,
+    }
+
+    if special_ft[vim.bo.filetype] then
+      vim.wo.statusline = "%!v:lua.require'user.statusline'.off()"
+      return
+    end
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.on()"
+    end,
+})
 
 
 -- TODO: Remove condition on NeoVim 0.8
 if vim.fn.has "nvim-0.8" == 1 then
-  autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
+  autocmd({ "CursorMoved" }, {
      callback = function()
        local winbar_filetype_exclude = {
          ["help"] = true,
@@ -121,36 +149,9 @@ if vim.fn.has "nvim-0.8" == 1 then
          return
        end
 
-       vim.opt_local.winbar = require("user.winbar").gps() or nil
+       vim.opt_local.winbar = "%!v:lua.require'user.winbar'.gps()"
      end,
    })
-  else
-  -- Autocommand for Statusline & WinBar
-  -- Using CursorMoved to nvim-gps
-  autocmd({ "CursorMoved", "BufWinEnter", "BufEnter" }, {
-    group = augroup("Statusline", { clear = true, }),
-    pattern = "*",
-    callback = function()
-      local special_ft = {
-        ["alpha"] = true,
-        ["NvimTree"] = true,
-        ["packer"] = true,
-        ["lsp-installer"] = true,
-        ["lspinfo"] = true,
-        ["Telescope"] = true,
-        ["Trouble"] = true,
-        ["qf"] = true,
-        ["toggleterm"] = true,
-        ["DressingSelect"] = true,
-        ["Jaq"] = true,
-      }
-      if special_ft[vim.bo.filetype] then
-        vim.wo.statusline = require("user.statusline").disabled()
-        return
-      end
-      vim.wo.statusline = require("user.statusline").active()
-    end,
-  })
 end
 
 autocmd("BufWritePost", {

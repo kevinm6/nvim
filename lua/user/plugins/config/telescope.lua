@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 23 Aug 2022, 16:20
+-- Last Modified: 26 Aug 2022, 21:12
 -------------------------------------
 
 
@@ -12,12 +12,18 @@ if not ok then vim.notify("Error w/ Telescope " .. telescope, "Error") return en
 local icons = require "user.icons"
 
 local actions = require "telescope.actions"
+local action_layout = require "telescope.actions.layout"
 
 telescope.setup {
   defaults = {
+    initial_mode = "insert",
     prompt_prefix = icons.ui.Telescope .. "  ",
-    selection_caret = "  ",
+    selection_caret = "> ",
     path_display = { "smart" },
+    selection_strategy = "reset",
+    scroll_strategy = "cycle",
+    layout_strategy = "horizontal",
+    winblend = 6,
 
     mappings = {
       i = {
@@ -26,6 +32,7 @@ telescope.setup {
 
         ["<C-c>"] = actions.close,
         ["<esc>"] = actions.close,
+        ["<C-u>"] = false,
         ["<C-e>"] = { "<esc>", type = "command" },
 
         ["<Down>"] = actions.move_selection_next,
@@ -46,6 +53,9 @@ telescope.setup {
         ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
         ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
         ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+
+        ["π"] = action_layout.toggle_preview,
+
         ["?"] = actions.which_key,
       },
 
@@ -70,14 +80,14 @@ telescope.setup {
 
         ["<Down>"] = actions.move_selection_next,
         ["<Up>"] = actions.move_selection_previous,
-        ["gg"] = actions.move_to_top,
-        ["G"] = actions.move_to_bottom,
 
         ["<C-p>"] = actions.preview_scrolling_up,
         ["<C-n>"] = actions.preview_scrolling_down,
 
         ["<PageUp>"] = actions.results_scrolling_up,
         ["<PageDown>"] = actions.results_scrolling_down,
+
+        ["π"] = action_layout.toggle_preview,
 
         ["?"] = actions.which_key,
       },

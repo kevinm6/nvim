@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 18 Jul 2022, 09:42
+-- Last Modified: 27 Aug 2022, 09:50
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -172,6 +172,11 @@ cmp.setup {
 		},
 	},
 }
+
+--[[ cmp.event:on( ]]
+--[[   'confirm_done', ]]
+--[[   require("nvim-autopairs.completion.cmp").on_confirm_done() ]]
+--[[ ) ]]
 
 -- Completion for command mode
 cmp.setup.cmdline(":", {

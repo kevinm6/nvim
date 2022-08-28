@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 19 Aug 2022, 12:14
+-- Last Modified: 27 Aug 2022, 10:01
 -------------------------------------
 
 -- CURSOR {

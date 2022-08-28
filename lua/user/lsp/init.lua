@@ -2,13 +2,13 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 10 Aug 2022, 23:34
+-- Last Modified: 25 Aug 2022, 21:07
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
 if not ok then return end
 
-local util = require "lspconfig.util"
+local util = lspconfig.util
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -66,7 +66,13 @@ local filetype_attach = setmetatable({
 	end,
 })
 
+-- Custom configs to apply when starting lsp
+local custom_init = function(client)
+	client.config.flags = client.config.flags or {}
+	client.config.flags.allow_incremental_sync = true
+end
 
+-- Custom configs to apply when attaching lsp to buffer
 local custom_attach = function(client, bufnr)
   -- Update capabilities with extended
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -85,15 +91,11 @@ local custom_attach = function(client, bufnr)
     vim.notify("Error attaching navic to LSP: "..navic, "Error", { title = "LSP" })
   end
 
-  filetype_attach[filetype](client)
   require("user.lsp.handlers").setup()
   require("user.lsp.codelens").run()
+  filetype_attach[filetype](client)
 end
 
-local custom_init = function(client)
-	client.config.flags = client.config.flags or {}
-	client.config.flags.allow_incremental_sync = true
-end
 
 
 -- Manage server with custom setup
@@ -176,7 +178,6 @@ local setup_server = function(server, config)
       "Warn",
       { title = "LSP: Servers Configuration" }
     )
-		return
 	end
 
 	if type(config) ~= "table" then config = {} end

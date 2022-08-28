@@ -2,11 +2,11 @@
 --  File         : jaq.lua
 --  Description  : jaq plugin conf
 --  Author       : Kevin
---  Last Modified: 06 Aug 2022, 09:23
+--  Last Modified: 26 Aug 2022, 21:57
 -------------------------------------
 
-local ok, jaq = pcall(require, "jaq-nvim")
-if not ok then return end
+local has_jaq, jaq = pcall(require, "jaq-nvim")
+if not has_jaq then return end
 
 jaq.setup {
   -- Commands used with 'Jaq'
@@ -86,8 +86,8 @@ jaq.setup {
   }
 }
 
-local ok, wk = pcall(require, "which-key")
-if not ok then return end
+local has_wk, wk = pcall(require, "which-key")
+if not has_wk then return end
 
 local wk_mappings = {
   j = {
