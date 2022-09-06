@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim & VimR
 -- Author       : Kevin
--- Last Modified: 20 Aug 2022, 11:35
+-- Last Modified: 04 Sep 2022, 10:59
 -------------------------------------
 
 -- Function to make easier mapping in Lua
@@ -51,7 +51,6 @@ set_keymap("i", "<M-Right>", "<Esc>ea", opts)
 set_keymap("i", "<Esc>", "<Esc>`^", opts)
 set_keymap("i", "<F2>", [[<C-R>=strftime("%d %b %y, %H:%M")<CR>]], opts)
 set_keymap("i", "jk", "<Esc>", opts)
-set_keymap("i", "kj", "<Esc>", opts)
 set_keymap("i", ",", ",<C-g>u", opts) -- checkpoints for undo
 set_keymap("i", ".", ".<C-g>u", opts) -- checkpoints for undo
 

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 25 Aug 2022, 21:07
+-- Last Modified: 04 Sep 2022, 17:11
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -104,10 +104,14 @@ local servers = {
 	pyright = require("user.lsp.configs.pyright"),
   emmet_ls = require("user.lsp.configs.emmet_ls"),
 	jsonls = require("user.lsp.configs.jsonls"),
-	ltex = require("user.lsp.configs.ltex"),
 	sqls = require("user.lsp.configs.sqls"),
 	asm_lsp = require("user.lsp.configs.asm_lsp"),
 	vimls = require("user.lsp.configs.vimls"),
+  marksman = {
+    cmd = { "marksman" , "server" },
+    filetypes = { "markdown" },
+    root_dir = util.root_pattern(".git", ".marksman.toml")
+  },
 	bashls = {
 		cmd = { "bash-language-server", "start" },
 		cmd_env = {

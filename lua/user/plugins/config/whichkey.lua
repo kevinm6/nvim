@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 26 Aug 2022, 09:39
+-- Last Modified: 04 Sep 2022, 17:17
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -149,16 +149,12 @@ local leader_maps = {
       "Open Telescope"
     },
     b = {
-      function() require("telescope").extensions.file_browser.file_browser() end,
+      function() require("telescope").extensions.file_browser.file_browser({ theme = "get_dropdown" }) end,
       "File Browser"
     },
     H = {
       function() require("telescope.builtin").help_tags() end,
       "Help"
-    },
-    i = {
-      function() require("telescope").extensions.media_files.media_files {} end,
-      "Media"
     },
     p = {
       function() require("telescope").extensions.project.project {} end,
@@ -393,11 +389,11 @@ local leader_maps = {
       "References"
     },
     s = {
-      function() require("telescope.builtin").lsp_document_symbols() end,
+      function() require("telescope.builtin").lsp_document_symbols(require("telescope.themes").get_dropdown()) end,
       "Document Symbols"
     },
     S = {
-      function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end,
+      function() require("telescope.builtin").lsp_dynamic_workspace_symbols(require("telescope.themes").get_dropdown()) end,
       "Workspace Symbols",
     },
     t = {

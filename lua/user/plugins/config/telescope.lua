@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 26 Aug 2022, 21:12
+-- Last Modified: 04 Sep 2022, 17:17
 -------------------------------------
 
 
@@ -114,12 +114,6 @@ telescope.setup {
       --     -- your custom normal mode mappings
       --   },
       -- },
-    },
-    media_files = {
-      -- filetypes whitelist
-      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = { "png", "mp4", "pdf", "webp", "jpg", "jpeg" },
-      find_cmd = "rg", -- find command (defaults to `fd`)
     },
     packer = {
       theme = "ivy",

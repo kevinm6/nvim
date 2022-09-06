@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 26 Aug 2022, 21:55
+-- Last Modified: 04 Sep 2022, 17:17
 --------------------------------------
 
 -- install packer if not found in default location
@@ -48,7 +48,7 @@ packer.init {
   transitive_opt = true, -- Make dependencies of opt plugins also opt by default
   transitive_disable = true, -- Automatically disable dependencies of disabled plugins
   display = {
-    open_fn = function() return require("packer.util").float { border = "rounded" } end,
+    open_fn = function() return require("packer.util").float { border = "rounded", style = "minimal" } end,
     working_sym = icons.packer.working_sym,
     error_sym = icons.packer.error_sym,
     done_sym = icons.packer.done_sym,
@@ -359,10 +359,6 @@ return packer.startup(function(use)
 
   -- Telescope
   use {
-    {
-      "nvim-telescope/telescope-media-files.nvim",
-      module = "telescope._extensions.media_files",
-    },
     {
       "nvim-telescope/telescope-file-browser.nvim",
       module = "telescope._extensions.file_browser",

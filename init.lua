@@ -17,3 +17,4 @@ if vim.fn.has "gui_vimr" == 1 then
 else
   vim.opt.shadafile = vim.fn.stdpath "cache" .. "/shada/main.shada"
 end
+

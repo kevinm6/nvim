@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 26 Aug 2022, 18:57
+-- Last Modified: 29 Aug 2022, 13:52
 -----------------------------------------
 
 local S = {}
@@ -99,7 +99,7 @@ end
 
 -- filename (tail) for statusline
 local function get_filename()
-	return " %t "
+	return "%t "
 end
 
 -- location function (current row on total rows)

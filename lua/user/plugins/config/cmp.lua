@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 27 Aug 2022, 09:50
+-- Last Modified: 04 Sep 2022, 11:57
 -------------------------------------
 
 local cmp_ok, cmp = pcall(require, "cmp")
@@ -79,13 +79,13 @@ cmp.setup {
 				return ls.expand_or_jumpable() and
 					ls.expand_or_jump() or fallback()
 			end,
-			c = function(fallback) -- CmdlineMode
-				if cmp.visible() then
-					cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
-				else
-          fallback()
-				end
-			end,
+			--[[ c = function(fallback) -- CmdlineMode ]]
+			--[[ 	if cmp.visible() then ]]
+			--[[ 		cmp.mapping(cmp.select_next_item()) ]]
+			--[[ 	else ]]
+   --[[        fallback() ]]
+			--[[ 	end ]]
+			--[[ end, ]]
 		},
 		["<S-Tab>"] = cmp.mapping {
       i = function(fallback) -- InsertMode
@@ -96,13 +96,13 @@ cmp.setup {
 				return ls.expand_or_jumpable() and
 					ls.expand_or_jump() or fallback()
 			end,
-			c = function() -- CmdlineMode
-				if cmp.visible() then
-					cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
-				else
-					cmp.complete { reason = cmp.ContexReason, config = cmp.ConfigSchema }
-				end
-			end,
+			--[[ c = function() -- CmdlineMode ]]
+			--[[ 	if cmp.visible() then ]]
+			--[[ 		cmp.mapping(cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }) ]]
+			--[[ 	else ]]
+			--[[ 		cmp.complete { reason = cmp.ContexReason, config = cmp.ConfigSchema } ]]
+			--[[ 	end ]]
+			--[[ end, ]]
     },
 
     ["<Up>"] = cmp.mapping(function(fallback)
