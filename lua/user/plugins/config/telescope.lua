@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 04 Sep 2022, 17:17
+-- Last Modified: 02 Oct 2022, 00:16
 -------------------------------------
 
 
@@ -101,6 +101,31 @@ telescope.setup {
     -- }
     -- Now the picker_config_key will be applied every time you call this
     -- builtin picker
+    find_files = {
+      theme = "dropdown",
+      previewer = false,
+    },
+    buffers = {
+      theme = "dropdown",
+      previewer = false,
+      initial_mode = "normal",
+    },
+    lsp_references = {
+      theme = "dropdown",
+      initial_mode = "normal",
+    },
+    lsp_definitions = {
+      theme = "dropdown",
+      initial_mode = "normal",
+    },
+    lsp_declarations = {
+      theme = "dropdown",
+      initial_mode = "normal",
+    },
+    lsp_implementations = {
+      theme = "dropdown",
+      initial_mode = "normal",
+    },
   },
   extensions = {
     file_browser = {

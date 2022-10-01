@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 04 Sep 2022, 17:17
+-- Last Modified: 02 Oct 2022, 00:33
 --------------------------------------
 
 -- install packer if not found in default location
@@ -147,10 +147,6 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.colorizer" end,
     },
     {
-      "antoinemadec/FixCursorHold.nvim",
-      event = "BufAdd",
-    },
-    {
       "ziontee113/color-picker.nvim",
       cmd = { "PickColor", "PickColorInsert" },
       config = function() require "user.plugins.config.color_picker" end,
@@ -196,12 +192,6 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.whichkey" end,
     },
     {
-      "akinsho/bufferline.nvim",
-      event = "BufAdd",
-      requires = { "kyazdani42/nvim-web-devicons" },
-      config = function() require "user.plugins.config.bufferline" end,
-    },
-    {
       "akinsho/toggleterm.nvim",
       cmd = { "ToggleTerm", "Git" },
       module = "toggleterm",
@@ -234,24 +224,12 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.dressing" end,
     },
     {
-      "lewis6991/spellsitter.nvim",
-      opt = true,
-      config = function () require "user.plugins.config.spellsitter" end,
-    },
-    {
       "lalitmee/browse.nvim",
       module = "browse",
       cmd = { "Browse" },
       requires = { "nvim-telescope/telescope.nvim" },
       config = function() require("user.browse") end,
     },
-    {
-      "rmagatti/auto-session",
-      event = "InsertLeave",
-      cmd = { "SaveSession", "RestoreSession", "DeleteSession", "AutoSession", "RestoreSessionFromFile" },
-      config = function() require "user.plugins.config.auto-session" end,
-    }
-
   }
 
   -- Autocompletion & Snippets
@@ -303,7 +281,7 @@ return packer.startup(function(use)
        config = function() require "user.plugins.config.surround" end,
     },
     {
-      "B4mbus/todo-comments.nvim",
+      "folke/todo-comments.nvim",
       event = "BufAdd",
       config = function() require "user.plugins.config.todo-comments" end,
     },
@@ -459,7 +437,7 @@ return packer.startup(function(use)
   use {
     {
       "mfussenegger/nvim-dap",
-      module = { "dap", "dapui" },
+      module = { "dap" },
       event = "BufAdd",
       config = function() require "user.plugins.config.dap" end
     },
@@ -469,7 +447,7 @@ return packer.startup(function(use)
     },
     {
       "rcarriga/nvim-dap-ui",
-      module = { "dap", "dapui" },
+      after = "nvim-dap",
       requires = { "mfussenegger/nvim-dap" },
     },
   }
@@ -511,7 +489,6 @@ return packer.startup(function(use)
     {
       "dhruvasagar/vim-table-mode",
       ft = { "md", "markdown" },
-      disable = true,
       cmd = "TableModeToggle"
     },
     {
@@ -537,6 +514,12 @@ return packer.startup(function(use)
     },
     ft = { "xcodeproj", "swift", "cpp", "objective-c" },
     config = function() require "user.plugins.config.xbase" end,
+  }
+
+  -- Docs
+  use {
+    "sunaku/vim-dasht",
+    cmd = { ":Dasht", ":Dasht!" }
   }
 
   -- kitty (terminal) config syntax

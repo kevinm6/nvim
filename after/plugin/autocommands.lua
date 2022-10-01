@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 26 Aug 2022, 19:24
+-- Last Modified: 02 Oct 2022, 00:04
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -11,26 +11,26 @@ local command = vim.api.nvim_create_user_command
 
 -- General
 local _general_settings = augroup("_general_settings", {
-	clear = true,
+  clear = true,
 })
 
 autocmd({ "FileType" }, {
-	group = _general_settings,
-	pattern = {
+  group = _general_settings,
+  pattern = {
     "qf", "help", "man", "git", "lspinfo",
     "Scratch", "checkhealth", "sqls_output", "DressingSelect", "Jaq"
   },
-	callback = function ()
+  callback = function ()
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
-	end
+  end
 })
 
 autocmd({ "TextYankPost" }, {
-	group = _general_settings,
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 200, on_macro = true })
-	end,
+  group = _general_settings,
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 200, on_macro = true })
+  end,
 })
 
 
@@ -123,103 +123,102 @@ autocmd({ "CursorMoved" }, {
       return
     end
     vim.wo.statusline = "%!v:lua.require'user.statusline'.on()"
-    end,
+  end,
 })
 
-
--- TODO: Remove condition on NeoVim 0.8
-if vim.fn.has "nvim-0.8" == 1 then
-  autocmd({ "CursorMoved" }, {
-     callback = function()
-       local winbar_filetype_exclude = {
-         ["help"] = true,
-         ["dashboard"] = true,
-         ["packer"] = true,
-         ["NvimTree"] = true,
-         ["Trouble"] = true,
-         ["alpha"] = true,
-         ["Outline"] = true,
-         ["toggleterm"] = true,
-         ["DressingSelect"] = true,
-         ["Jaq"] = true,
-       }
-
-       if winbar_filetype_exclude[vim.bo.filetype] then
-         vim.opt_local.winbar = nil
-         return
-       end
-
-       vim.opt_local.winbar = "%!v:lua.require'user.winbar'.gps()"
-     end,
-   })
-end
+-- WinBar
+-- HACK: require nvim0.8
+-- autocmd({ "CursorMoved", }, {
+--   callback = function()
+--     local winbar_filetype_exclude = {
+--       ["help"] = true,
+--       ["dashboard"] = true,
+--       ["packer"] = true,
+--       ["NvimTree"] = true,
+--       ["Trouble"] = true,
+--       ["alpha"] = true,
+--       ["Outline"] = true,
+--       ["toggleterm"] = true,
+--       ["DressingSelect"] = true,
+--       ["Jaq"] = true,
+--       ["TelescopePrompt"] = true,
+--     }
+-- 
+--     if winbar_filetype_exclude[vim.bo.filetype] then
+--       vim.opt_local.winbar = nil
+--       return
+--     end
+-- 
+--     vim.opt_local.winbar = "%!v:lua.require'user.winbar'.gps()"
+--   end,
+-- })
 
 autocmd("BufWritePost", {
- group = vim.api.nvim_create_augroup("_packer_user_config", { clear = true }),
- pattern = "*/packer.lua",
- callback = function()
-   vim.cmd "source <afile>"
-   require("packer").compile()
+  group = vim.api.nvim_create_augroup("_packer_user_config", { clear = true }),
+  pattern = "*/packer.lua",
+  callback = function()
+    vim.cmd "source <afile>"
+    require("packer").compile()
 
-   vim.notify(
-   " Plugins file update & compiled !", "Info", {
-     title = "Packer",
-   })
- end,
+    vim.notify(
+      " Plugins file update & compiled !", "Info", {
+        title = "Packer",
+      })
+  end,
 })
 
 autocmd({ "BufNewFile", "BufRead" }, {
-	group = augroup("_markdown", { clear = true }),
-	pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.md" },
-	callback = function()
-		vim.opt_local.filetype = "markdown"
-	end,
+  group = augroup("_markdown", { clear = true }),
+  pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.md" },
+  callback = function()
+    vim.opt_local.filetype = "markdown"
+  end,
 })
 
 -- Java
 autocmd({ "BufWritePost" }, {
-	pattern = { "*.java" },
-	callback = function()
-		vim.lsp.codelens.refresh()
-	end,
+  pattern = { "*.java" },
+  callback = function()
+    vim.lsp.codelens.refresh()
+  end,
 })
 
 -- SQL
 autocmd({ "BufNewFile", "BufRead" }, {
-	group = augroup("_sql", { clear = true }),
-	pattern = "*.psql*",
-	callback = function()
-		vim.opt_local.filetype = "sql"
-	end,
+  group = augroup("_sql", { clear = true }),
+  pattern = "*.psql*",
+  callback = function()
+    vim.opt_local.filetype = "sql"
+  end,
 })
 
 -- auto_resize
 autocmd({ "VimResized" }, {
-	group = augroup("_auto_resize", { clear = true }),
-	pattern = "*",
-	callback = function() vim.cmd "tabdo wincmd" end,
+  group = augroup("_auto_resize", { clear = true }),
+  pattern = "*",
+  callback = function() vim.cmd "tabdo wincmd" end,
 })
 
 -- Scratch
 local Scratch = function()
-	vim.api.nvim_command "new"
-	vim.opt_local.buftype = "nofile"
-	vim.opt_local.bufhidden = "wipe"
-	vim.opt_local.buflisted = false
-	vim.opt_local.swapfile = false
-	vim.opt_local.filetype = "Scratch"
+  vim.api.nvim_command "new"
+  vim.opt_local.buftype = "nofile"
+  vim.opt_local.bufhidden = "wipe"
+  vim.opt_local.buflisted = false
+  vim.opt_local.swapfile = false
+  vim.opt_local.filetype = "Scratch"
 end
 
 command("Scratch", Scratch, { desc = "Create a Scratch buffer" })
 
 -- Note
 local Note = function()
-	vim.api.nvim_command "new"
-	vim.opt_local.buftype = "nofile"
-	vim.opt_local.bufhidden = "hide"
-	vim.opt_local.buflisted = false
-	vim.opt_local.swapfile = false
-	vim.opt_local.filetype = "Note"
+  vim.api.nvim_command "new"
+  vim.opt_local.buftype = "nofile"
+  vim.opt_local.bufhidden = "hide"
+  vim.opt_local.buflisted = false
+  vim.opt_local.swapfile = false
+  vim.opt_local.filetype = "Note"
 end
 
 command("Note", Note, { desc = "Create a Note buffer" })

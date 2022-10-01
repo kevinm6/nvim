@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 08 Aug 2022, 09:59
+-- Last Modified: 22 Sep 2022, 10:22
 -------------------------------------
 
 if LOADED_JDTLS then return end
@@ -15,7 +15,7 @@ end
 
 local home = os.getenv "HOME"
 
-local root_dir = require("jdtls.setup").find_root({".git", "gradlew"})
+local root_dir = require("jdtls.setup").find_root {".git", "gradlew"}
 if root_dir == "" then
  root_dir = vim.fn.getcwd()
 end
@@ -28,7 +28,7 @@ local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_name
 
 local ext_bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/site/pack/packer/opt/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
+  vim.fn.glob("~/.local/share/nvim/site/pack/packer/opt/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
 }
 
 vim.list_extend(ext_bundles,
@@ -87,12 +87,12 @@ local config = {
         updateBuildConfiguration = "interactive",
         runtimes = {
           {
-            name = "JavaSE-18",
-            path = "/usr/local/opt/java/libexec/openjdk.jdk/"
-          },
-          {
             name = "JavaSE-11",
             path = "/usr/local/opt/java11/libexec/openjdk.jdk/"
+          },
+          {
+            name = "JavaSE-18",
+            path = "/usr/local/opt/java/libexec/openjdk.jdk/"
           },
         }
       },
@@ -146,7 +146,7 @@ local config = {
     handlers = {
       ["language/status"] = function() end,
     },
-    on_attach = function()
+    on_attach = function(client, bufnr)
       require("jdtls.setup").add_commands()
       jdtls.setup_dap { hotcodereplace = "auto" }
       require("jdtls.dap").setup_dap_main_class_configs()

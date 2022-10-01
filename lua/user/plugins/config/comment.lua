@@ -2,7 +2,7 @@
 -- File         : comment.lua
 -- Description  : Comment config
 -- Author       : Kevin
--- Last Modified: 12/03/2022 - 16:07
+-- Last Modified: 02 Oct 2022, 00:20
 -------------------------------------
 
 local ok, comment = pcall(require, "Comment")
@@ -41,18 +41,30 @@ comment.setup {
     eol = 'gcA',
   },
   pre_hook = function(ctx)
-    local U = require "Comment.utils"
+    if
+      vim.bo.filetype == "typescriptreact"
+      or vim.bo.filetype == "javascriptreact"
+      or vim.bo.filetype == "javascript"
+      or vim.bo.filetype == "typescript"
+    then
 
-    local location = nil
-    if ctx.ctype == U.ctype.block then
-      location = require("ts_context_commentstring.utils").get_cursor_location()
-    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-      location = require("ts_context_commentstring.utils").get_visual_start_location()
+      local U = require "Comment.utils"
+
+      -- Determine whether to use linewise or blockwise commentstring
+      local type = ctx.ctype == U.ctype.linewise and "__default" or "__multiline"
+
+      -- Determine the location where to calculate commentstring from
+      local location = nil
+      if ctx.ctype == U.ctype.blockwise then
+        location = require("ts_context_commentstring.utils").get_cursor_location()
+      elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+        location = require("ts_context_commentstring.utils").get_visual_start_location()
+      end
+
+      return require("ts_context_commentstring.internal").calculate_commentstring {
+        key = type,
+        location = location,
+      }
     end
-
-    return require("ts_context_commentstring.internal").calculate_commentstring {
-      key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
-      location = location,
-    }
   end,
 }

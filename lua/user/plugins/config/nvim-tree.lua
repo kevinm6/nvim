@@ -2,7 +2,7 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 11 Aug 2022, 19:33
+-- Last Modified: 22 Sep 2022, 10:29
 -------------------------------------
 
 local ok, nvim_tree = pcall(require, "nvim-tree")
@@ -68,7 +68,7 @@ nvim_tree.setup {
   },
   view = {
     width = 34,
-    height = 30,
+    adaptive_size = false,
     hide_root_folder = false,
     side = "left",
     preserve_window_proportions = false,

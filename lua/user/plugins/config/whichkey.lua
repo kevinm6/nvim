@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 04 Sep 2022, 17:17
+-- Last Modified: 02 Oct 2022, 00:23
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -99,7 +99,21 @@ local leader_maps = {
     end,
     "Change dir to current buffer's parent",
   },
-
+  A = {
+    name = "Session",
+    s = {
+      function() vim.cmd "SaveSession" end,  "Save"
+    },
+    r = {
+      function() vim.cmd "Autosession restore" end,  "Restore"
+    },
+    d = {
+      function() vim.cmd "Autosession delete" end,  "Delete"
+    },
+    a = {
+      function() vim.cmd "Autosession search" end, "Autosession {search|delete}"
+    }
+  },
   h = {
     function()
       local word = vim.fn.expand "<cword>"
@@ -581,7 +595,7 @@ local vopts = {
 local vmappings = {
   ["/"] = {
     function()
-      require("Comment.api").toggle_linewise_op(vim.fn.visualmode())
+      require("Comment.api").toggle.linewise.current(vim.fn.visualmode())
     end,
     "Comment"
   },

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 04 Sep 2022, 17:11
+-- Last Modified: 28 Sep 2022, 19:42
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -108,6 +108,7 @@ local servers = {
 	asm_lsp = require("user.lsp.configs.asm_lsp"),
 	vimls = require("user.lsp.configs.vimls"),
   marksman = {
+    autostart = false,
     cmd = { "marksman" , "server" },
     filetypes = { "markdown" },
     root_dir = util.root_pattern(".git", ".marksman.toml")
@@ -172,6 +173,24 @@ local servers = {
 			debounce_text_changes = 200,
 		},
 	},
+  metals = {
+    cmd = { "metals" },
+    filetypes = { "scala" },
+    capabilities = {
+      workspace = {
+        configuration = false
+      }
+    },
+    init_options = {
+      compilerOptions = {
+        snippetAutoIndent = false
+      },
+      isHttpEnabled = true,
+      statusBarProvider = "show-message"
+    },
+    message_level = 5,
+    root_dir = util.root_pattern("build.sbt", "build.sc", "build.gradle", "pom.xml")
+  },
 }
 
 -- LSP: Servers Configuration

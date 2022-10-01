@@ -2,7 +2,7 @@
 -- File         : vars.lua
 -- Description  : NeoVim & VimR global vars
 -- Author       : Kevin
--- Last Modified: 07 Aug 2022, 10:34
+-- Last Modified: 27 Sep 2022, 21:32
 -------------------------------------
 
 _G.__luacache_config = {
@@ -15,6 +15,10 @@ _G.__luacache_config = {
     path = vim.fn.stdpath "cache".."/impatient/luacache_modpaths",
   }
 }
+
+-- disable netrw
+vim.g.loaded = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- embedded script highlighting
 vim.g.vimsyn_embed = "lP"
@@ -68,9 +72,3 @@ vim.g.markdown_fenced_languages = {
 
 vim.g.markdown_folding = 0
 vim.g.rmd_include_html = 1
-
--- Session
-vim.g.session_autosave = "yes"
-vim.g.session_autoload = "yes"
-vim.g.session_default_to_last = 1
-

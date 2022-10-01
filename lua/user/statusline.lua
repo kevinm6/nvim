@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 29 Aug 2022, 13:52
+-- Last Modified: 12 Sep 2022, 10:58
 -----------------------------------------
 
 local S = {}
@@ -106,6 +106,12 @@ end
 local function get_line_onTot()
 	return win_is_smaller(preset_width.row_onTot) and " " .. colors.git ..  "%l" ..  colors.location .. "÷%L "
 		or colors.location .. " row " .. colors.git .. "%l" .. colors.location .. "÷%L "
+end
+
+-- TODO: add session name management
+local function session_name()
+  local has_session, s_name = pcall(require, "auto-session-library")
+  return has_session and s_name.current_session_name() or ""
 end
 
 
@@ -226,7 +232,7 @@ S.on = function()
   local center = function()
     if vim.fn.has "nvim-0.8" == 1 then
       return (" %s %s "):format(
-        sideSep, get_lsp_diagnostic()
+        session_name(), sideSep, get_lsp_diagnostic()
       )
     else
       return (" %s%s %s %s "):format(

@@ -2,14 +2,14 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 07 Aug 2022, 11:20
+--  Last Modified: 27 Sep 2022, 19:29
 -----------------------------------
 
 local has_dap, dap = pcall(require, "dap")
 if not has_dap then return end
 
-local has_dapui, dapui = pcall(require, "dapui")
-if not has_dapui then return end
+
+-- TODO: add other config for useful filetypes
 
 -- Filetype configs
 -- C
@@ -26,7 +26,6 @@ dap.adapters.c = {
   },
 }
 
--- TODO: add other config for useful filetypes
 -- CPP
 dap.configurations.cpp = {
   {
@@ -88,9 +87,7 @@ dap.configurations.lua = {
     type = "nlua",
     request = "attach",
     name = "Attach to running Neovim instance",
-    host = function()
-      return "127.0.0.1"
-    end,
+    host = "127.0.0.1",
     port = function()
       -- local val = tonumber(vim.fn.input('Port: '))
       -- assert(val, "Please provide a port number")
@@ -102,23 +99,38 @@ dap.configurations.lua = {
 
 
 -- JAVA
-dap.adapters.java = function(callback, config)
-  callback {
-    type = "server",
-    host = config.host,
-    port = config.port,
-  }
-end
 
 dap.configurations.java = {
+  {
+      type = "java",
+      request = "launch",
+      name = "Launch Java"
+  },
   {
     type = "java",
     request = "attach",
     name = "Attach to running Neovim instance",
     host = "127.0.0.1",
-    port = 80,
-  },
+    port = 8080,
+  }
 }
+
+dap.adapters.java = function(callback, config)
+
+  vim.lsp.buf.execute_command({ command = "vscode.java.startDebugSession" }, function(err0, port)
+    assert(not err0, vim.inspect(err0))
+    callback {
+      type = "server",
+      host = "127.0.0.1",
+      port = port,
+      enrich_config = function(_, on_config)
+        local final_config = vim.deepcopy(config)
+        final_config.extra_property = 'This got injected by the adapter'
+        on_config(final_config)
+      end
+    }
+  end)
+end
 
 -- PYTHON
 dap.configurations.python = {
@@ -213,6 +225,8 @@ dap.configurations.go = {
 }
 
 local icons = require "user.icons"
+local has_dapui, dapui = pcall(require, "dapui")
+if not has_dapui then return end
 
 dapui.setup {
   icons = { expanded = "▾", collapsed = "▸" },
