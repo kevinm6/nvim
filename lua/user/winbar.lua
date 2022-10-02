@@ -62,4 +62,26 @@ M.gps = function()
   end
 end
 
+
+M.get_winbar = function()
+  local winbar_filetype_exclude = {
+    ["help"] = true,
+    ["dashboard"] = true,
+    ["packer"] = true,
+    ["NvimTree"] = true,
+    ["Trouble"] = true,
+    ["alpha"] = true,
+    ["Outline"] = true,
+    ["toggleterm"] = true,
+    ["DressingSelect"] = true,
+    ["Jaq"] = true,
+    ["TelescopePrompt"] = true,
+  }
+  if winbar_filetype_exclude[vim.bo.filetype] then
+    vim.opt_local.winbar = nil
+  else
+    vim.opt_local.winbar = M.gps()
+  end
+end
+
 return M

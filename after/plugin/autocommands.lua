@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 02 Oct 2022, 00:04
+-- Last Modified: 02 Oct 2022, 18:29
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -101,57 +101,24 @@ command("ToggleTimeStamp",
 -- Autocommand for Statusline & WinBar
 -- Using CursorMoved to nvim-gps
 autocmd({ "CursorMoved" }, {
-  group = augroup("Statusline", { clear = true, }),
+  group = augroup("_statusline", { clear = true, }),
   pattern = "*",
   callback = function()
-    local special_ft = {
-      ["alpha"] = true,
-      ["NvimTree"] = true,
-      ["packer"] = true,
-      ["lsp-installer"] = true,
-      ["lspinfo"] = true,
-      ["TelescopePrompt"] = true,
-      ["Trouble"] = true,
-      ["qf"] = true,
-      ["toggleterm"] = true,
-      ["DressingSelect"] = true,
-      ["Jaq"] = true,
-    }
-
-    if special_ft[vim.bo.filetype] then
-      vim.wo.statusline = "%!v:lua.require'user.statusline'.off()"
-      return
-    end
-    vim.wo.statusline = "%!v:lua.require'user.statusline'.on()"
+    vim.wo.statusline = "%!v:lua.require'user.statusline'.get_statusline()"
   end,
 })
 
 -- WinBar
 -- HACK: require nvim0.8
--- autocmd({ "CursorMoved", }, {
---   callback = function()
---     local winbar_filetype_exclude = {
---       ["help"] = true,
---       ["dashboard"] = true,
---       ["packer"] = true,
---       ["NvimTree"] = true,
---       ["Trouble"] = true,
---       ["alpha"] = true,
---       ["Outline"] = true,
---       ["toggleterm"] = true,
---       ["DressingSelect"] = true,
---       ["Jaq"] = true,
---       ["TelescopePrompt"] = true,
---     }
--- 
---     if winbar_filetype_exclude[vim.bo.filetype] then
---       vim.opt_local.winbar = nil
---       return
---     end
--- 
---     vim.opt_local.winbar = "%!v:lua.require'user.winbar'.gps()"
---   end,
--- })
+autocmd({ "CursorMoved" }, {
+  group = augroup("_winbar", { clear = true }),
+  callback = function()
+    local has_float_win, _ = pcall(vim.api.nvim_buf_get_var, 0, "lsp_floating_window")
+    if not has_float_win then
+      require "user.winbar".get_winbar()
+    end
+  end,
+})
 
 autocmd("BufWritePost", {
   group = vim.api.nvim_create_augroup("_packer_user_config", { clear = true }),
