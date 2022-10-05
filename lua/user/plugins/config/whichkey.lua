@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 02 Oct 2022, 00:23
+-- Last Modified: 04 Oct 2022, 23:37
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -543,7 +543,7 @@ local leader_maps = {
       "Last"
     },
     u = {
-      function() require("dap").toggle {} end,
+      function() require("dapui").toggle {} end,
       "UI"
     },
     x = {

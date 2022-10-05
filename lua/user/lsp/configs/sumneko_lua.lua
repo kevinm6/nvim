@@ -2,13 +2,14 @@
 -- File         : sumneko_lua.lua
 -- Description  : lua lsp config
 -- Author       : Kevin
--- Last Modified: 11 Aug 2022, 12:27
+-- Last Modified: 04 Oct 2022, 23:28
 -------------------------------------
 
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
+local ih = require "inlay-hints"
 
 return {
   cmd = { "lua-language-server", "-E" };
@@ -35,6 +36,10 @@ return {
         enable = false,
       },
       single_file_support = true,
+      hint = { enable = true },
 		},
 	},
+  on_attach = function(c, b)
+    ih.on_attach(c, b) 
+  end
 }

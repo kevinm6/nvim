@@ -2,7 +2,7 @@
 -- File         : mason-lspconfig.lua
 -- Description  : mason-lspconfig setup
 -- Author       : Kevin
--- Last Modified: 29 Jul 2022, 09:50
+-- Last Modified: 04 Oct 2022, 11:18
 -------------------------------------
 
 local ok, mason_lsp = pcall(require, "mason-lspconfig")
@@ -16,7 +16,8 @@ mason_lsp.setup {
     "lua-language-server", "vimls", "emmet_ls",
     "ltex", "pyright", "jsonls", "gopls",
     "html", "asm_lsp", "bashls", "clangd",
-    "jdtls", "intelephense", "grammarly"
+    "jdtls", "intelephense", "grammarly",
+    "ocaml-lsp", "erlang-ls"
   },
   automatic_installation = true,
   ui = {

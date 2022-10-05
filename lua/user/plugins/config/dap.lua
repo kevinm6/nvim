@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 27 Sep 2022, 19:29
+--  Last Modified: 05 Oct 2022, 09:58
 -----------------------------------
 
 local has_dap, dap = pcall(require, "dap")
@@ -99,38 +99,32 @@ dap.configurations.lua = {
 
 
 -- JAVA
+-- dap.adapters.java = function(callback)
+--  require("jdtls.util").execute_command({command = 'vscode.java.startDebugSession'}, function(err0, port)
+--     assert(not err0, vim.inspect(err0))
+--     -- print("jdtls:", port)
+--     callback({
+--       type = "server";
+--       host = "127.0.0.1";
+--       port = port;
+--     })
+--   end)
+-- end
 
-dap.configurations.java = {
-  {
-      type = "java",
-      request = "launch",
-      name = "Launch Java"
-  },
-  {
-    type = "java",
-    request = "attach",
-    name = "Attach to running Neovim instance",
-    host = "127.0.0.1",
-    port = 8080,
-  }
-}
+-- dap.configurations.java = {
+--   type = "java",
+--   request = "attach",
+--   projectName = os.getenv("PROJECT_NAME") or nil,
+--   name = "Debug (Attach) - Remote",
+--   hostName = "127.0.0.1",
+--   port = function()
+--     require("jdtls.util").execute_command({command = 'vscode.java.startDebugSession'}, function(err0, port)
+--       assert(not err0, "dap.java: ".. err0)
+--       return port
+--     end)
+--   end
+-- }
 
-dap.adapters.java = function(callback, config)
-
-  vim.lsp.buf.execute_command({ command = "vscode.java.startDebugSession" }, function(err0, port)
-    assert(not err0, vim.inspect(err0))
-    callback {
-      type = "server",
-      host = "127.0.0.1",
-      port = port,
-      enrich_config = function(_, on_config)
-        local final_config = vim.deepcopy(config)
-        final_config.extra_property = 'This got injected by the adapter'
-        on_config(final_config)
-      end
-    }
-  end)
-end
 
 -- PYTHON
 dap.configurations.python = {

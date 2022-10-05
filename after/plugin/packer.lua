@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 02 Oct 2022, 00:33
+-- Last Modified: 04 Oct 2022, 23:32
 --------------------------------------
 
 -- install packer if not found in default location
@@ -406,14 +406,22 @@ return packer.startup(function(use)
       -- config = function() require "user.lsp.mason-lspconfig" end,
     },
     {
+      "simrat39/inlay-hints.nvim",
+      module = { "inlay-hints" },
+      config = function()
+        require("inlay-hints").setup {
+          only_current_line = false,
+          eol = {
+            right_align = true,
+          }
+        }
+      end
+    },
+    {
       -- Java
       "mfussenegger/nvim-jdtls",
       ft = "java",
-      requires = "Microsoft/java-debug",
-    },
-    {
-      "Microsoft/java-debug",
-      ft = "java",
+      -- requires = "Microsoft/java-debug",
     },
 
     -- database

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 28 Sep 2022, 19:42
+-- Last Modified: 04 Oct 2022, 23:32
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -97,6 +97,7 @@ local custom_attach = function(client, bufnr)
 end
 
 
+local ih = require "inlay-hints"
 
 -- Manage server with custom setup
 local servers = {
@@ -141,13 +142,30 @@ local servers = {
 			clangdFileStatus = true,
 		},
 	},
+  -- jdtls = {
+  --   cmd = { "jdtls", "-configuration", "~/.cache/jdtls/config", "-data", "~/.cache/jdtls/workspace" },
+  --   filetypes = { "java" },
+  --   root_dir = util.root_pattern(
+  --     'build.xml', -- Ant
+  --     'pom.xml', -- Maven
+  --     'settings.gradle', -- Gradle
+  --     'settings.gradle.kts', -- Gradle
+  --     'build.gradle', 'build.gradle.kts'
+  --   ) or vim.fn.getcwd(),
+  --   single_file_support = true,
+  --   progressReportProvider = true,
+  --   init_options = {
+  --       bundles = {
+  --           "~/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
+  --       }
+  --   },
+  -- },
 	intelephense = {
 		cmd = { "intelephense", "--stdio" },
 		filetypes = { "php" },
 		root_dir = util.root_pattern("composer.json", ".git"),
 	},
-  sourcekit = {
-    cmd = { "sourcekit-lsp" },
+  sourcekit = { cmd = { "sourcekit-lsp" },
     filetypes = { "swift" },
     root_dir = util.root_pattern("Package.swift", ".git"),
   },
@@ -167,11 +185,23 @@ local servers = {
 		settings = {
 			gopls = {
 				codelenses = { test = true },
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        }
 			},
 		},
 		flags = {
 			debounce_text_changes = 200,
 		},
+    on_attach = function(c, b)
+      ih.on_attach(c, b)
+    end
 	},
   metals = {
     cmd = { "metals" },
@@ -190,6 +220,16 @@ local servers = {
     },
     message_level = 5,
     root_dir = util.root_pattern("build.sbt", "build.sc", "build.gradle", "pom.xml")
+  },
+  ocamllsp = {
+    cmd = { "ocamllsp" },
+    filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+    root_dir = util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+  },
+  erlangls = {
+    cmd = { "erlang_ls" },
+    filetypes = { "erlang" },
+    root_dir = util.root_pattern("rebar.config", "erlang.mk", ".git"),
   },
 }
 

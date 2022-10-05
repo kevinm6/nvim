@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 22 Sep 2022, 10:22
+-- Last Modified: 05 Oct 2022, 09:55
 -------------------------------------
 
 if LOADED_JDTLS then return end
@@ -28,13 +28,13 @@ local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_name
 
 local ext_bundles = {
-  vim.fn.glob("~/.local/share/nvim/site/pack/packer/opt/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar")
+  vim.fn.glob("~/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar")
 }
 
 vim.list_extend(ext_bundles,
   vim.split(
     vim.fn.glob(
-      home .. "~/.local/share/nvim/dap/vscode-java-test/server/*.jar"
+      home .. "~/.local/share/nvim/mason/packages/java-test/extension/server/*.jar"
     ), "\n"
   )
 )
@@ -88,11 +88,11 @@ local config = {
         runtimes = {
           {
             name = "JavaSE-11",
-            path = "/usr/local/opt/java11/libexec/openjdk.jdk/"
+            path = "/usr/local/opt/java11/libexec/openjdk.jdk/Contents/Home/"
           },
           {
             name = "JavaSE-18",
-            path = "/usr/local/opt/java/libexec/openjdk.jdk/"
+            path = "/usr/local/opt/java/libexec/openjdk.jdk/Contents/Home/"
           },
         }
       },
@@ -137,25 +137,29 @@ local config = {
       debounce_text_changes = 150,
       allow_incremental_sync = true,
     },
-    init_options = {
-      -- jvm_args = "-javaagent:" .. home .."/.local/share/nvim/mason/packages/jdtls/lombok.jar",
-      -- workspace = workspace_dir .. project_name,
-      bundles = ext_bundles,
-      extendedClientCapabilities = extendedClientCapabilities,
-    },
-    handlers = {
-      ["language/status"] = function() end,
-    },
-    on_attach = function(client, bufnr)
-      require("jdtls.setup").add_commands()
-      jdtls.setup_dap { hotcodereplace = "auto" }
-      require("jdtls.dap").setup_dap_main_class_configs()
-    end,
-    on_init = function(client)
-      client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
-      ext_bundles = ext_bundles
-    end
   },
+  init_options = {
+    -- jvm_args = "-javaagent:" .. home .."/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+    -- workspace = workspace_dir .. project_name,
+    bundles = ext_bundles,
+    extendedClientCapabilities = extendedClientCapabilities,
+  },
+  handlers = {
+    ["language/status"] = function() end,
+    ["workspace/diagnostic/refresh"] = function() end,
+    ["textDocument/codeAction"] = function() end,
+    ["textDocument/rename"] = function() end,
+    ["workspace/applyEdit"] = function() end,
+    ["textDocument/documentHighlight"] = function() end,
+  },
+  on_attach = function(client, bufnr)
+    require("jdtls.setup").add_commands()
+    jdtls.setup_dap { hotcodereplace = "auto" }
+    require("jdtls.dap").setup_dap_main_class_configs()
+  end,
+  on_init = function(client)
+    client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+  end
 }
 
 -- -- UI
