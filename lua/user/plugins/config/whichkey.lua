@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 04 Oct 2022, 23:37
+-- Last Modified: 06 Oct 2022, 12:35
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -81,10 +81,6 @@ local opts = {
 
 local leader_maps = {
   -- Switch Buffers
-  ["1"] = { "<cmd>BufferLineGoToBuffer 1<CR>", "which_key_ignore" },
-  ["2"] = { "<cmd>BufferLineGoToBuffer 2<CR>", "which_key_ignore" },
-  ["3"] = { "<cmd>BufferLineGoToBuffer 3<CR>", "which_key_ignore" },
-  ["4"] = { "<cmd>BufferLineGoToBuffer 4<CR>", "which_key_ignore" },
   ["."] = {
     function()
       vim.cmd "cd %:h"

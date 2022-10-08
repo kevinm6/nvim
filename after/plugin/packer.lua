@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 04 Oct 2022, 23:32
+-- Last Modified: 08 Oct 2022, 13:16
 --------------------------------------
 
 -- install packer if not found in default location
@@ -228,7 +228,18 @@ return packer.startup(function(use)
       module = "browse",
       cmd = { "Browse" },
       requires = { "nvim-telescope/telescope.nvim" },
-      config = function() require("user.browse") end,
+      config = function() require "user.browse" end,
+    },
+    {
+      "folke/noice.nvim",
+      cmd = "Noice*",
+      module = "noice",
+      config = function() require "user.plugins.config.noice" end,
+      requires = {
+        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+        "MunifTanjim/nui.nvim",
+        "rcarriga/nvim-notify",
+      }
     },
   }
 
@@ -411,9 +422,7 @@ return packer.startup(function(use)
       config = function()
         require("inlay-hints").setup {
           only_current_line = false,
-          eol = {
-            right_align = true,
-          }
+          eol = { right_align = true }
         }
       end
     },
@@ -423,7 +432,6 @@ return packer.startup(function(use)
       ft = "java",
       -- requires = "Microsoft/java-debug",
     },
-
     -- database
     {
       "nanotee/sqls.nvim",
@@ -438,7 +446,14 @@ return packer.startup(function(use)
       -- module = "schemastore",
       ft = "json"
     },
+    {
+      "HiPhish/gradle.nvim",
+      disable = true,
+      module = "gradle",
+      cmd = { "GradleThrow", "GradleHanshake", "GradleTasks"}
+    }
   }
+
 
 
   -- DAP (Debugging)
@@ -477,6 +492,15 @@ return packer.startup(function(use)
       "bfredl/nvim-ipy",
       ft = "ipy",
     },
+    {
+      "mfussenegger/nvim-dap-python",
+      ft = { "py", "python", "ipynb" },
+      config = function()
+        require("dap-python").setup("~/.local/share/virtualenvs")
+      end
+
+
+    }
   }
 
 
