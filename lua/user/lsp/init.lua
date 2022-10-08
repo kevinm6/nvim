@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 04 Oct 2022, 23:32
+-- Last Modified: 08 Oct 2022, 12:43
 -------------------------------------
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -109,7 +109,7 @@ local servers = {
 	asm_lsp = require("user.lsp.configs.asm_lsp"),
 	vimls = require("user.lsp.configs.vimls"),
   marksman = {
-    autostart = false,
+    -- autostart = false,
     cmd = { "marksman" , "server" },
     filetypes = { "markdown" },
     root_dir = util.root_pattern(".git", ".marksman.toml")

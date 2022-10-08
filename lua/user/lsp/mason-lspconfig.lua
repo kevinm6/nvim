@@ -2,7 +2,7 @@
 -- File         : mason-lspconfig.lua
 -- Description  : mason-lspconfig setup
 -- Author       : Kevin
--- Last Modified: 04 Oct 2022, 11:18
+-- Last Modified: 05 Oct 2022, 12:06
 -------------------------------------
 
 local ok, mason_lsp = pcall(require, "mason-lspconfig")
@@ -19,7 +19,7 @@ mason_lsp.setup {
     "jdtls", "intelephense", "grammarly",
     "ocaml-lsp", "erlang-ls"
   },
-  automatic_installation = true,
+  automatic_installation = { exclude = { "julia" } },
   ui = {
     border = "rounded",
     icons = {

@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 05 Oct 2022, 09:55
+-- Last Modified: 08 Oct 2022, 11:15
 -------------------------------------
 
 if LOADED_JDTLS then return end
@@ -15,7 +15,7 @@ end
 
 local home = os.getenv "HOME"
 
-local root_dir = require("jdtls.setup").find_root {".git", "gradlew"}
+local root_dir = require("jdtls.setup").find_root {".git", "gradlew", "settings.gradle", "build.gradle"}
 if root_dir == "" then
  root_dir = vim.fn.getcwd()
 end
@@ -91,6 +91,10 @@ local config = {
             path = "/usr/local/opt/java11/libexec/openjdk.jdk/Contents/Home/"
           },
           {
+            name = "JavaSE-17",
+            path = "/usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/"
+          },
+          {
             name = "JavaSE-18",
             path = "/usr/local/opt/java/libexec/openjdk.jdk/Contents/Home/"
           },
@@ -163,37 +167,37 @@ local config = {
 }
 
 -- -- UI
--- local finders = require'telescope.finders'
--- local sorters = require'telescope.sorters'
--- local actions = require'telescope.actions'
--- local pickers = require'telescope.pickers'
--- require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
---   local opts = {}
---   pickers.new(opts, {
---     prompt_title = prompt,
---     finder    = finders.new_table {
---       results = items,
---       entry_maker = function(entry)
---         return {
---           value = entry,
---           display = label_fn(entry),
---           ordinal = label_fn(entry),
---         }
---       end,
---     },
---     sorter = sorters.get_generic_fuzzy_sorter(),
---     attach_mappings = function(prompt_bufnr)
---       actions.goto_file_selection_edit:replace(function()
---         local selection = actions.get_selected_entry(prompt_bufnr)
---         actions.close(prompt_bufnr)
+local finders = require'telescope.finders'
+local sorters = require'telescope.sorters'
+local actions = require'telescope.actions'
+local pickers = require'telescope.pickers'
+require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
+  local opts = {}
+  pickers.new(opts, {
+    prompt_title = prompt,
+    finder    = finders.new_table {
+      results = items,
+      entry_maker = function(entry)
+        return {
+          value = entry,
+          display = label_fn(entry),
+          ordinal = label_fn(entry),
+        }
+      end,
+    },
+    sorter = sorters.get_generic_fuzzy_sorter(),
+    attach_mappings = function(prompt_bufnr)
+      actions.goto_file_selection_edit:replace(function()
+        local selection = actions.get_selected_entry(prompt_bufnr)
+        actions.close(prompt_bufnr)
 
---         cb(selection.value)
---       end)
+        cb(selection.value)
+      end)
 
---       return true
---     end,
---   }):find()
--- end
+      return true
+    end,
+  }):find()
+end
 
 vim.cmd(
   "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
