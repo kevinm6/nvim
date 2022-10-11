@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 02 Oct 2022, 18:31
+-- Last Modified: 10 Oct 2022, 10:27
 -----------------------------------------
 
 local S = {}

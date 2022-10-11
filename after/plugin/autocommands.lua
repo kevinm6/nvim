@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 02 Oct 2022, 18:29
+-- Last Modified: 11 Oct 2022, 09:55
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -18,7 +18,7 @@ autocmd({ "FileType" }, {
   group = _general_settings,
   pattern = {
     "qf", "help", "man", "git", "lspinfo",
-    "Scratch", "checkhealth", "sqls_output", "DressingSelect", "Jaq"
+    "Scratch", "checkhealth", "sqls_output", "DressingSelect", "Jaq", "noice.log"
   },
   callback = function ()
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })

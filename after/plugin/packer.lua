@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 08 Oct 2022, 13:16
+-- Last Modified: 11 Oct 2022, 10:47
 --------------------------------------
 
 -- install packer if not found in default location
@@ -166,7 +166,6 @@ return packer.startup(function(use)
     {
       "is0n/jaq-nvim",
       event = "BufAdd",
-      cmd = "Jaq",
       config = function() require "user.plugins.config.jaq" end,
     },
     {
@@ -232,8 +231,9 @@ return packer.startup(function(use)
     },
     {
       "folke/noice.nvim",
-      cmd = "Noice*",
-      module = "noice",
+      -- cmd = "Noice*",
+      -- module = "noice",
+      event = "VimEnter",
       config = function() require "user.plugins.config.noice" end,
       requires = {
         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -421,7 +421,7 @@ return packer.startup(function(use)
       module = { "inlay-hints" },
       config = function()
         require("inlay-hints").setup {
-          only_current_line = false,
+          only_current_line = true,
           eol = { right_align = true }
         }
       end
@@ -465,13 +465,13 @@ return packer.startup(function(use)
       config = function() require "user.plugins.config.dap" end
     },
     {
-      "theHamsta/nvim-dap-virtual-text",
-      after = "nvim-dap",
-    },
-    {
       "rcarriga/nvim-dap-ui",
       after = "nvim-dap",
       requires = { "mfussenegger/nvim-dap" },
+    },
+    {
+      "theHamsta/nvim-dap-virtual-text",
+      after = "nvim-dap",
     },
   }
 

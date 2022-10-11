@@ -2,7 +2,7 @@
 --  File         : jaq.lua
 --  Description  : jaq plugin conf
 --  Author       : Kevin
---  Last Modified: 26 Aug 2022, 21:57
+--  Last Modified: 11 Oct 2022, 10:44
 -------------------------------------
 
 local has_jaq, jaq = pcall(require, "jaq-nvim")
@@ -38,10 +38,11 @@ jaq.setup {
       sh = "sh %",
       markdown = "glow %",
       python = "python3 %",
-      typescript = "deno run %",
+      -- typescript = "deno run %",
       javascript = "node %",
       rust = "rustc % && ./$fileBase && rm $fileBase",
-      java = "javac % && java %"
+      java = "javac % && java %",
+      ml = "ocaml %",
     },
   },
 
@@ -146,7 +147,8 @@ local ft_patterns = {
   "*.py",
   "*.java",
   "*.rs",
-  "*.js", "*.ts"
+  "*.js", "*.ts",
+  "*.ml"
 }
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {

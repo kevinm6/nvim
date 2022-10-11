@@ -58,7 +58,7 @@ M.gps = function()
       string.format("%s %s %s", retval, "%#NavicSeparator#"..icons.ui.ChevronRight.."%*", location) or
       retval
   else
-    return ""
+    return
   end
 end
 

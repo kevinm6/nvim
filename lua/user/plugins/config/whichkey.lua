@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 06 Oct 2022, 12:35
+-- Last Modified: 11 Oct 2022, 09:53
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -137,9 +137,10 @@ local leader_maps = {
     v = { '<cmd>vsplit<cr>', "VSplit" },
   },
   n = {
-    name = "Notifications",
-    n = { "<cmd>Notification<CR>", "Notifications" },
-    m = { "<cmd>messages<CR>", "Messages" }
+    name = "Noice",
+    n = { "<cmd>Noice<CR>", "History" },
+    m = { "<cmd>Noice log<CR>", "Messages (Log)" },
+    t = { "<cmd>Noice telescope<CR>", "Show on Telescope" }
   },
 
   f = {
@@ -407,12 +408,12 @@ local leader_maps = {
       "Workspace Symbols",
     },
     t = {
-      function() vim.cmd "TodoLocList" end,
-      "Todo in LocList",
-    },
-    T = {
       function() vim.cmd "TodoTrouble" end,
       "TodoTrouble"
+    },
+    T = {
+      function() vim.cmd "TodoLocList" end,
+      "Todo in LocList",
     }
   },
 
