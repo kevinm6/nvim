@@ -2,7 +2,7 @@
 -- File         : sumneko_lua.lua
 -- Description  : lua lsp config
 -- Author       : Kevin
--- Last Modified: 04 Oct 2022, 23:28
+-- Last Modified: 14 Oct 2022, 09:51
 -------------------------------------
 
 local runtime_path = vim.split(package.path, ';')
@@ -40,6 +40,6 @@ return {
 		},
 	},
   on_attach = function(c, b)
-    ih.on_attach(c, b) 
+    ih.on_attach(c, b)
   end
 }

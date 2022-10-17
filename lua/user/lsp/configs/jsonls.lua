@@ -2,16 +2,13 @@
 -- File         : jsonls.lua
 -- Description  : Jsonls server config
 -- Author       : Kevin
--- Last Modified: 31/03/2022 - 14:03
+-- Last Modified: 15 Oct 2022, 16:07
 -------------------------------------
-
-local ok, schema = pcall(require, "schemastore")
-if not ok then return end
 
 return {
  settings = {
     json = {
-      schemas = schema.json.schemas(),
+      schemas = require "schemastore".json.schemas() or nil,
     },
   },
   setup = {

@@ -2,19 +2,18 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 08 Oct 2022, 12:43
+-- Last Modified: 17 Oct 2022, 21:09
 -------------------------------------
 
-local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then return end
 
-local util = lspconfig.util
+local has_lspconf, lspconfig = pcall(require, "lspconfig")
+if not has_lspconf then vim.notify(" Error: LSPconfig", "Error") return end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Lsp highlights
 local function lsp_highlight_document(client)
- if client.server_capabilities.documentHighlightProvider then
+  if client.server_capabilities.documentHighlightProvider then
     local lsp_hi_doc_group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       group = lsp_hi_doc_group,
@@ -33,56 +32,36 @@ end
 -- The missing functions are most covered whith which-key mappings
 -- the `hover()` -> covers even signature_help on functions/methods
 local function lsp_keymaps(bufnr)
-	local opts = { noremap = true, silent = true, buffer = bufnr }
+  local opts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-	vim.keymap.set("n", "gI", function() vim.lsp.buf.implementation() end, opts)
-	vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
-	vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, opts)
-	vim.api.nvim_buf_create_user_command(0, "Format", function()
-		vim.lsp.buf.formatting()
-	end, { force = true })
+  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+  vim.keymap.set("n", "gI", function() vim.lsp.buf.implementation() end, opts)
+  vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
+  vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, opts)
+  vim.api.nvim_buf_create_user_command(0, "Format", function()
+    vim.lsp.buf.formatting()
+  end, { force = true })
 end
 
--- Default lsp config for filetypes
-local filetype_attach = setmetatable({
-	go = function()
-		local lspbufformat = vim.api.nvim_create_augroup("lsp_buf_format", { clear = true })
-
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = lspbufformat,
-			callback = function()
-				vim.lsp.buf.formatting_sync()
-			end,
-		})
-	end,
-	java = function(client)
-		if client.name == "jdt.ls" then return end
-  end,
-}, {
-	__index = function()
-		return function() end
-	end,
-})
 
 -- Custom configs to apply when starting lsp
 local custom_init = function(client)
-	client.config.flags = client.config.flags or {}
-	client.config.flags.allow_incremental_sync = true
+  client.config.flags = client.config.flags or {}
+  client.config.flags.allow_incremental_sync = true
 end
+
+
 
 -- Custom configs to apply when attaching lsp to buffer
 local custom_attach = function(client, bufnr)
   -- Update capabilities with extended
   capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+  capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
   -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-	lsp_keymaps(bufnr)
-	lsp_highlight_document(client)
+  lsp_keymaps(bufnr)
+  lsp_highlight_document(client)
 
   local navic_ok, navic = pcall(require, "nvim-navic")
   if navic_ok then
@@ -93,177 +72,57 @@ local custom_attach = function(client, bufnr)
 
   require("user.lsp.handlers").setup()
   require("user.lsp.codelens").run()
-  filetype_attach[filetype](client)
+  capabilities.textDocument.codeLens = { dynamicRegistration = true }
 end
 
 
-local ih = require "inlay-hints"
+-- LSP: Servers Configuration w/ Mason
+-- local setup_server = function(server, config)
+--   if not config then
+--     vim.notify(
+--       " No configuration passed to server < "..server.." >",
+--       "Warn",
+--       { title = "LSP: Servers Configuration" }
+--     )
+--   end
 
--- Manage server with custom setup
-local servers = {
-	sumneko_lua = require("user.lsp.configs.sumneko_lua"),
-	pyright = require("user.lsp.configs.pyright"),
-  emmet_ls = require("user.lsp.configs.emmet_ls"),
-	jsonls = require("user.lsp.configs.jsonls"),
-	sqls = require("user.lsp.configs.sqls"),
-	asm_lsp = require("user.lsp.configs.asm_lsp"),
-	vimls = require("user.lsp.configs.vimls"),
-  marksman = {
-    -- autostart = false,
-    cmd = { "marksman" , "server" },
-    filetypes = { "markdown" },
-    root_dir = util.root_pattern(".git", ".marksman.toml")
-  },
-	bashls = {
-		cmd = { "bash-language-server", "start" },
-		cmd_env = {
-			GLOB_PATTERN = "*@(.sh|.inc|.bash|.command)",
-		},
-		filetypes = { "sh", "bash" },
-		root_dir = util.find_git_ancestor,
-		single_file_support = true,
-	},
-	grammarly = {
-		filetypes = { "markdown", "txt", "text" },
-		single_file_support = true,
-		autostart = false,
-		root_dir = util.find_git_ancestor,
-	},
-	clangd = {
-		cmd = {
-			"clangd",
-			"--background-index",
-			"--suggest-missing-includes",
-			"--clang-tidy",
-			"--header-insertion=iwyu",
-		},
-		-- Required for lsp-status
-		init_options = {
-			clangdFileStatus = true,
-		},
-	},
-  -- jdtls = {
-  --   cmd = { "jdtls", "-configuration", "~/.cache/jdtls/config", "-data", "~/.cache/jdtls/workspace" },
-  --   filetypes = { "java" },
-  --   root_dir = util.root_pattern(
-  --     'build.xml', -- Ant
-  --     'pom.xml', -- Maven
-  --     'settings.gradle', -- Gradle
-  --     'settings.gradle.kts', -- Gradle
-  --     'build.gradle', 'build.gradle.kts'
-  --   ) or vim.fn.getcwd(),
-  --   single_file_support = true,
-  --   progressReportProvider = true,
-  --   init_options = {
-  --       bundles = {
-  --           "~/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
-  --       }
-  --   },
-  -- },
-	intelephense = {
-		cmd = { "intelephense", "--stdio" },
-		filetypes = { "php" },
-		root_dir = util.root_pattern("composer.json", ".git"),
-	},
-  sourcekit = { cmd = { "sourcekit-lsp" },
-    filetypes = { "swift" },
-    root_dir = util.root_pattern("Package.swift", ".git"),
-  },
-	gopls = {
-		root_dir = function(fname)
-			local Path = require("plenary.path")
+--   if type(config) ~= "table" then config = {} end
+-- end
 
-			local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
-			local absolute_fname = Path:new(fname):absolute()
+local global_lsp_config = {
+  on_init = custom_init,
+  on_attach = custom_attach,
+  capabilities = capabilities,
+  flags = { debounce_text_changes = nil }
+}
 
-			if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
-				return absolute_cwd
-			end
-
-			return util.root_pattern("go.mod", ".git")(fname)
-		end,
-		settings = {
-			gopls = {
-				codelenses = { test = true },
-        hints = {
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          compositeLiteralTypes = true,
-          constantValues = true,
-          functionTypeParameters = true,
-          parameterNames = true,
-          rangeVariableTypes = true,
-        }
-			},
-		},
-		flags = {
-			debounce_text_changes = 200,
-		},
-    on_attach = function(c, b)
-      ih.on_attach(c, b)
+-- Manage handlers w/ Mason-lspconfig
+require("mason-lspconfig").setup_handlers {
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler.
+  function (server_name)
+    if server_name == "jdtls" or server_name == "jdt.ls" then
+      global_lsp_config['on_attach'] = function ()
+        require 'jdtls'.setup_dap { hotcodereplace = "auto" }
+        require("jdtls.dap").setup_dap_main_class_configs()
+        require("jdtls.setup").add_commands()
+      end
+      return global_lsp_config
     end
-	},
-  metals = {
-    cmd = { "metals" },
-    filetypes = { "scala" },
-    capabilities = {
-      workspace = {
-        configuration = false
-      }
-    },
-    init_options = {
-      compilerOptions = {
-        snippetAutoIndent = false
-      },
-      isHttpEnabled = true,
-      statusBarProvider = "show-message"
-    },
-    message_level = 5,
-    root_dir = util.root_pattern("build.sbt", "build.sc", "build.gradle", "pom.xml")
-  },
-  ocamllsp = {
-    cmd = { "ocamllsp" },
-    filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-    root_dir = util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
-  },
-  erlangls = {
-    cmd = { "erlang_ls" },
-    filetypes = { "erlang" },
-    root_dir = util.root_pattern("rebar.config", "erlang.mk", ".git"),
-  },
+    lspconfig[server_name].setup(global_lsp_config)  -- default handler (optional)
+  end,
+
+  -- Next, you can provide targeted overrides for specific servers.
+  -- Manage server with custom setup
+  ["sumneko_lua"] = function() lspconfig.sumneko_lua.setup(vim.tbl_deep_extend("force", global_lsp_config, require "user.lsp.configs.sumneko_lua")) end,
+  ["jsonls"] = function() lspconfig.jsonls.setup(vim.tbl_deep_extend("force", global_lsp_config, require "user.lsp.configs.jsonls")) end,
+  ["sqls"] = function() lspconfig.sqls.setup(vim.tbl_deep_extend("force", global_lsp_config, require "user.lsp.configs.sqls")) end,
+  ["grammarly"] = function() lspconfig.grammarly.setup(vim.tbl_deep_extend("force", global_lsp_config, { autostart = false })) end,
+  ["ltex"] = function() lspconfig.ltex.setup(vim.tbl_deep_extend("force", global_lsp_config, require "user.lsp.configs.ltex")) end,
+  ["clangd"] = function() lspconfig.clangd.setup(vim.tbl_deep_extend("force", global_lsp_config, require "user.lsp.configs.clangd")) end,
+  ["gopls"] = function() lspconfig.gopls.setup(vim.tbl_deep_extend("force", global_lsp_config, require "user.lsp.configs.gopls")) end,
 }
 
--- LSP: Servers Configuration
-local setup_server = function(server, config)
-	if not config then
-    vim.notify(
-      " No configuration passed to server < "..server.." >",
-      "Warn",
-      { title = "LSP: Servers Configuration" }
-    )
-	end
 
-	if type(config) ~= "table" then config = {} end
-
-	config = vim.tbl_deep_extend("force", {
-		on_init = custom_init,
-		on_attach = custom_attach,
-		capabilities = capabilities,
-		flags = {
-			debounce_text_changes = nil,
-		},
-	}, config)
-
-	lspconfig[server].setup(config)
-end
-
-for server, config in pairs(servers) do
-	setup_server(server, config)
-end
-
-
-return {
-	on_init = custom_init,
-	on_attach = custom_attach,
-	capabilities = capabilities,
-}
+return global_lsp_config

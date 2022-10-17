@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 11 Oct 2022, 10:47
+-- Last Modified: 17 Oct 2022, 21:23
 --------------------------------------
 
 -- install packer if not found in default location
@@ -23,7 +23,7 @@ if not ok then
   vim.notify(
     (" %s\n (%s)"):format("Error loading Packer config ", packer)
     "Error",
-    { timeout = 4600, title = "INIT ERROR" }
+    { timeout = 1000, title = "INIT ERROR" }
   )
   return
 end
@@ -37,7 +37,7 @@ local icons = require "user.icons"
 packer.init {
   package_root = p_util.join_paths(vim.fn.stdpath("data"), "site", "pack"),
   compile_path = compile_path,
-  max_jobs = 20,
+  max_jobs = 16,
   ensure_dependecies = true,
   plugin_package = "packer",
   auto_reload_compiled = true,
@@ -165,7 +165,12 @@ return packer.startup(function(use)
     },
     {
       "is0n/jaq-nvim",
-      event = "BufAdd",
+      ft = {
+        "lua", "vim", "cpp",
+        "c", "go", "sh", "md",
+        "py", "java", "rs", "js", "ts",
+        "ml", "ocaml"
+      },
       config = function() require "user.plugins.config.jaq" end,
     },
     {
@@ -232,14 +237,14 @@ return packer.startup(function(use)
     {
       "folke/noice.nvim",
       -- cmd = "Noice*",
-      -- module = "noice",
       event = "VimEnter",
       config = function() require "user.plugins.config.noice" end,
       requires = {
         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
         "MunifTanjim/nui.nvim",
         "rcarriga/nvim-notify",
-      }
+      },
+      after = "nvim-notify"
     },
   }
 
@@ -360,10 +365,10 @@ return packer.startup(function(use)
       "nvim-telescope/telescope-project.nvim",
       module = "telescope._extensions.project",
     },
-    {
-      "nvim-telescope/telescope-dap.nvim",
-      module = "telescope._extensions.dap",
-    },
+    -- {
+    --   "nvim-telescope/telescope-dap.nvim",
+    --   module = "telescope._extensions.dap",
+    -- },
     {
       "benfowler/telescope-luasnip.nvim",
       module = "telescope._extensions.luasnip",
@@ -430,7 +435,6 @@ return packer.startup(function(use)
       -- Java
       "mfussenegger/nvim-jdtls",
       ft = "java",
-      -- requires = "Microsoft/java-debug",
     },
     -- database
     {
@@ -443,15 +447,9 @@ return packer.startup(function(use)
     -- Json
     {
       "b0o/SchemaStore.nvim",
-      -- module = "schemastore",
+      module = "schemastore",
       ft = "json"
     },
-    {
-      "HiPhish/gradle.nvim",
-      disable = true,
-      module = "gradle",
-      cmd = { "GradleThrow", "GradleHanshake", "GradleTasks"}
-    }
   }
 
 
@@ -462,11 +460,12 @@ return packer.startup(function(use)
       "mfussenegger/nvim-dap",
       module = { "dap" },
       event = "BufAdd",
-      config = function() require "user.plugins.config.dap" end
+      config = function() require "user.lsp.dap" end
     },
     {
       "rcarriga/nvim-dap-ui",
       after = "nvim-dap",
+      module = { "dap" },
       requires = { "mfussenegger/nvim-dap" },
     },
     {
@@ -518,10 +517,15 @@ return packer.startup(function(use)
       run = "cd app && yarn install",
       cmd = "MarkdownPreview",
     },
+    -- {
+    --   "toppair/peek.nvim",
+    --   run = "deno task --quiet build:fast",
+    --   ft = { "md", "markdown" },
+    --   config = function () require("user.plugins.config.peek") end
+    -- },
     {
       "dhruvasagar/vim-table-mode",
       ft = { "md", "markdown" },
-      cmd = "TableModeToggle"
     },
     {
       "mbpowers/nvimager",

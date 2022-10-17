@@ -2,7 +2,7 @@
 -- File         : mason.lua
 -- Description  : mason configuration
 -- Author       : Kevin
--- Last Modified: 07 Sep 2022, 12:21
+-- Last Modified: 11 Oct 2022, 20:49
 -------------------------------------
 
 local ok, mason = pcall(require, "mason")
@@ -12,8 +12,6 @@ local icons = require "user.icons"
 
 mason.setup {
   ui = {
-    width = 20,
-    height = 40,
     border = "rounded",
     icons = {
       -- The list icon to use for installed servers.

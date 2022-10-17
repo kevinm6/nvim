@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 10 Oct 2022, 10:11
+-- Last Modified: 17 Oct 2022, 15:11
 -------------------------------------
 
 -- CURSOR {
@@ -46,10 +46,9 @@ local options = {
 	listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_" },
   fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
   syntax = "off", -- using treesitter
-  mousemoveevent = true, -- only for bufferline tabs
 	timeoutlen = 100,
 	ttimeoutlen = 50,
-	lazyredraw = true,
+	-- lazyredraw = true,
 	completeopt = { "menu", "menuone", "noselect" },
 	matchpairs = vim.opt.matchpairs:append "<:>",
 	wildignore = {
@@ -79,7 +78,7 @@ local options = {
   foldexpr = "nvim_treesitter#foldexpr()", -- using treesitter to more folds
 	diffopt = { "internal", "filler", "closeoff", "vertical" },
 	foldcolumn = "auto", -- Add a bit extra margin to the Left
-	-- colorcolumn = "120",
+	colorcolumn = "90",
 
 	-- FILE_MANAGEMENT:
 	autowrite = true, -- write files

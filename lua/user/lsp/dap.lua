@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 05 Oct 2022, 09:58
+--  Last Modified: 16 Oct 2022, 21:09
 -----------------------------------
 
 local has_dap, dap = pcall(require, "dap")
@@ -236,21 +236,21 @@ dapui.setup {
   layouts = {
     {
       elements = {
-        'scopes',
-        'breakpoints',
-        'stacks',
-        'watches',
+        "scopes",
+        "breakpoints",
+        "stacks",
+        "watches",
       },
       size = 40,
-      position = 'right',
+      position = "right",
     },
     {
       elements = {
-        'repl',
-        'console',
+        "repl",
+        "console",
       },
       size = 10,
-      position = 'bottom',
+      position = "bottom",
     },
   },
   floating = {
@@ -270,9 +270,9 @@ vim.fn.sign_define('DapBreakpoint', {text=icons.ui.Bug, texthl='DiagnosticSignEr
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
 end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
-end
+-- dap.listeners.before.event_terminated["dapui_config"] = function()
+--   dapui.close()
+-- end
 dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end

@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 11 Oct 2022, 09:55
+-- Last Modified: 17 Oct 2022, 09:25
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -29,7 +29,7 @@ autocmd({ "TextYankPost" }, {
   group = _general_settings,
   pattern = "*",
   callback = function()
-    vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 200, on_macro = true })
+    vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 80, on_macro = true })
   end,
 })
 
@@ -109,7 +109,6 @@ autocmd({ "CursorMoved" }, {
 })
 
 -- WinBar
--- HACK: require nvim0.8
 autocmd({ "CursorMoved" }, {
   group = augroup("_winbar", { clear = true }),
   callback = function()
@@ -159,12 +158,13 @@ autocmd({ "BufNewFile", "BufRead" }, {
   end,
 })
 
+-- HACK: temporary disabled for `Noice` plugin
 -- auto_resize
-autocmd({ "VimResized" }, {
-  group = augroup("_auto_resize", { clear = true }),
-  pattern = "*",
-  callback = function() vim.cmd "tabdo wincmd" end,
-})
+-- autocmd({ "VimResized" }, {
+--   group = augroup("_auto_resize", { clear = true }),
+--   pattern = "*",
+--   callback = function() vim.cmd "tabdo wincmd" end,
+-- })
 
 -- Scratch
 local Scratch = function()

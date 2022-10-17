@@ -2,11 +2,19 @@
 --  File         : jaq.lua
 --  Description  : jaq plugin conf
 --  Author       : Kevin
---  Last Modified: 11 Oct 2022, 10:44
+--  Last Modified: 11 Oct 2022, 21:11
 -------------------------------------
 
 local has_jaq, jaq = pcall(require, "jaq-nvim")
 if not has_jaq then return end
+
+
+-- % / $file • Current File
+-- # / $altFile • Alternate File
+-- $dir • Current Working Directory
+-- $filePath • Path to Current File
+-- $fileBase • Basename of File (no extension)
+-- $moduleName • Python Module Name
 
 jaq.setup {
   -- Commands used with 'Jaq'
@@ -42,7 +50,7 @@ jaq.setup {
       javascript = "node %",
       rust = "rustc % && ./$fileBase && rm $fileBase",
       java = "javac % && java %",
-      ml = "ocaml %",
+      ocaml = "ocaml %",
     },
   },
 
@@ -60,7 +68,7 @@ jaq.setup {
       winblend = 6,
 
       -- Num from `0-1` for measurements
-      height = 0.8,
+      height = 0.6,
       width = 0.8,
       x = 0.5,
       y = 0.5,
@@ -108,11 +116,8 @@ local wk_mappings = {
       "Run in Qf",
     },
     t = {
-      function()
-        require "toggleterm"
-        vim.cmd [[Jaq toggleterm]]
-      end,
-      "Run in ToggleTerm",
+      function() vim.cmd [[Jaq terminal]] end,
+      "Run in terminal",
     },
     b = {
       function() vim.cmd [[Jaq bang]] end,
@@ -148,7 +153,7 @@ local ft_patterns = {
   "*.java",
   "*.rs",
   "*.js", "*.ts",
-  "*.ml"
+  "*.ml", "*.ocaml"
 }
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {

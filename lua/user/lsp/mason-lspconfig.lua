@@ -2,7 +2,7 @@
 -- File         : mason-lspconfig.lua
 -- Description  : mason-lspconfig setup
 -- Author       : Kevin
--- Last Modified: 05 Oct 2022, 12:06
+-- Last Modified: 16 Oct 2022, 10:45
 -------------------------------------
 
 local ok, mason_lsp = pcall(require, "mason-lspconfig")
@@ -10,15 +10,17 @@ if not ok then return end
 
 local icons = require "user.icons"
 
--- NEW CONFIGURATION OF NVIM-LSP-INSTALLER
+local servers_to_install = {
+  "lua-language-server", "vimls", "emmet_ls",
+  "ltex", "pyright", "jsonls", "gopls",
+  "html", "asm_lsp", "bashls", "clangd",
+ "intelephense", "grammarly",
+  "ocaml-lsp", "erlang-ls"
+}
+
+
 mason_lsp.setup {
-  ensure_installed = {
-    "lua-language-server", "vimls", "emmet_ls",
-    "ltex", "pyright", "jsonls", "gopls",
-    "html", "asm_lsp", "bashls", "clangd",
-    "jdtls", "intelephense", "grammarly",
-    "ocaml-lsp", "erlang-ls"
-  },
+  ensure_installed = servers_to_install,
   automatic_installation = { exclude = { "julia" } },
   ui = {
     border = "rounded",
@@ -31,20 +33,13 @@ mason_lsp.setup {
       server_uninstalled = icons.packer.removed_sym,
     },
     keymaps = {
-      -- Keymap to expand a server in the UI
-      toggle_server_expand = "<CR>",
-      -- Keymap to install the server under the current cursor position
-      install_server = "i",
-      -- Keymap to reinstall/update the server under the current cursor position
-      update_server = "u",
-      -- Keymap to check for new version for the server under the current cursor position
-      check_server_version = "c",
-      -- Keymap to update all installed servers
-      update_all_servers = "U",
-      -- Keymap to check which installed servers are outdated
-      check_outdated_servers = "C",
-      -- Keymap to uninstall a server
-      uninstall_server = "X",
+      toggle_server_expand = "<CR>", -- Keymap to expand a server in the UI
+      install_server = "i", -- Keymap to install the server under the current cursor position
+      update_server = "u", -- Keymap to reinstall/update the server under the current cursor position
+      check_server_version = "c", -- Keymap to check for new version for the server under the current cursor position
+      update_all_servers = "U", -- Keymap to update all installed servers
+      check_outdated_servers = "C", -- Keymap to check which installed servers are outdated
+      uninstall_server = "X", -- Keymap to uninstall a server
     },
   },
   github = {
@@ -63,3 +58,4 @@ mason_lsp.setup {
 
   max_concurrent_installers = 2,
 }
+

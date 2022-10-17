@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 02 Oct 2022, 00:16
+-- Last Modified: 15 Oct 2022, 16:15
 -------------------------------------
 
 
@@ -108,7 +108,15 @@ telescope.setup {
     buffers = {
       theme = "dropdown",
       previewer = false,
-      initial_mode = "normal",
+      initial_mode = "insert",
+      mappings = {
+        i = {
+          ["<C-d>"] = "delete_buffer"
+        },
+        n = {
+          ["d"] = "delete_buffer"
+        }
+      }
     },
     lsp_references = {
       theme = "dropdown",

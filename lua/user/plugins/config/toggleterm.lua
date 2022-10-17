@@ -2,14 +2,14 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 03/05/2022 - 09:36
+-- Last Modified: 11 Oct 2022, 21:23
 -------------------------------------
 
 local ok, toggleterm = pcall(require, "toggleterm")
 if not ok then return end
 
 toggleterm.setup({
-	size = 20,
+	size = 28,
 	open_mapping = [[<c-\>]],
 	hide_numbers = true,
 	shade_filetypes = {},
@@ -17,13 +17,13 @@ toggleterm.setup({
 	shading_factor = 2,
 	start_in_insert = true,
 	insert_mappings = true,
-	persist_size = true,
+	persist_size = false,
 	direction = "float",
 	close_on_exit = true,
 	shell = "/bin/zsh",
 	float_opts = {
 		border = "curved",
-		winblend = 0,
+		winblend = 6,
 		highlights = {
 			border = "Normal",
 			background = "Normal",

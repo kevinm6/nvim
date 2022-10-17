@@ -2,10 +2,8 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 17 Oct 2022, 21:08
+-- Last Modified: 16 Oct 2022, 19:02
 -------------------------------------
-
-if LOADED_JDTLS then return end
 
 local ok, jdtls = pcall(require, "jdtls")
 if not ok then
@@ -13,12 +11,10 @@ if not ok then
   return
 end
 
--- local home = os.getenv "HOME"
 
-local root_dir = require("jdtls.setup").find_root {".git", "gradlew", "settings.gradle", "build.gradle"}
-if root_dir == "" then
- root_dir = vim.fn.getcwd()
-end
+local root_dir = require("jdtls.setup").find_root {".git", "gradlew", "settings.gradle", "build.gradle", "mvnw"}
+if root_dir == "" then root_dir = vim.fn.getcwd() end
+
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
@@ -29,13 +25,27 @@ local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_name
 
 local bundles = {}
-bundles = {
-  vim.fn.expand ("~/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar")
+
+bundles = { -- java-debug
+  vim.fn.expand "~/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
+  vim.fn.expand "~/.local/share/nvim/dap/java-debug/com.microsoft.java.debug.plugin",
+  -- vim.fn.expand "~/.local/share/nvim/dap/vscode-java-test/server/*.jar",
+  vim.fn.expand "~/.local/share/nvim/dap/java-debug/com.microsoft.java.debug.core/target/com.microsoft.java.debug.core-*.jar",
 }
+-- adding java-test
+vim.list_extend(bundles, vim.split(vim.fn.expand"~/.local/share/nvim/dap/vscode-java-test/server/*.jar", "\n"))
 
-vim.list_extend(bundles, vim.split(vim.fn.glob( "~/.local/share/nvim/mason/packages/java-test/extension/server/*.jar"), "\n"))
+for _, bundle in pairs(bundles) do
+  if not vim.endswith(bundle, "com.microsoft.java.test.runner-jar-with-dependencies.jar") or
+    not vim.endswith(bundle, "com.microsoft.java.debug.core-0.41.0.jar") or
+  not vim.endswith(bundle, "com.microsoft.java.test.runner-jar-with-dependencies.jar\n") then
+    table.insert(bundles, bundle)
+  end
+end
 
-local config = {
+local config = require "user.lsp.init"
+
+config = {
   cmd = {
     "java",
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -48,13 +58,16 @@ local config = {
     "--add-opens", "java.base/java.util=ALL-UNNAMED",
     "--add-opens", "java.base/java.lang=ALL-UNNAMED",
 
-    "-jar", vim.fn.expand("~/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
+    -- "-javaagent:" .. vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+
+    "-jar", vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
 
     "-configuration", vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/config_mac",
 
     "-data", workspace_dir,
   },
   capabilities = capabilities,
+  extendedClientCapabilities = extendedClientCapabilities,
   root_dir = root_dir,
   single_file_support = true,
   settings = {
@@ -67,6 +80,24 @@ local config = {
       },
       signatureHelp = { enabled = true },
       contentProvider = { preferred = "fernflower" },
+      templates = {
+        fileHeader = {
+          "/**",
+          " * @author: ${user}",
+          " * @date: ${date}",
+          " * @description: ${file_name}",
+          " */",
+        },
+        typeComment = {
+          "/**",
+          " * @author: ${user}",
+          " * @date: ${date}",
+          " * @description: ${type_name}",
+          " * @param: ${pre_conditions}",
+          " * @return: ${post_conditions}",
+          " */",
+        }
+      },
       saveActions = {
         organizeImports = true
       },
@@ -80,16 +111,17 @@ local config = {
         updateBuildConfiguration = "interactive",
         runtimes = {
           {
-            name = "JavaSE-11",
-            path = "/usr/local/opt/java11/libexec/openjdk.jdk/Contents/Home/"
-          },
-          {
             name = "JavaSE-17",
-            path = "/usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/"
+            path =  "/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home",
+            default = true,
           },
           {
-            name = "JavaSE-18",
-            path = "/usr/local/opt/java/libexec/openjdk.jdk/Contents/Home/"
+            name = "JavaSE-11",
+            path = "/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home"
+          },
+          {
+            name = "JavaSE-19",
+            path = "/Library/Java/JavaVirtualMachines/openjdk-19.jdk/Contents/Home"
           },
         }
       },
@@ -135,29 +167,32 @@ local config = {
       allow_incremental_sync = true,
     },
   },
-  on_init = function(client)
-    client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
-  end,
+  handlers = {
+    ["language/status"] = function() end,
+    --   ["workspace/diagnostic/refresh"] = function() end,
+    --   ["textDocument/codeAction"] = function() end,
+    --   ["textDocument/rename"] = function() end,
+    --   ["workspace/applyEdit"] = function() end,
+    --   ["textDocument/documentHighlight"] = function() end,
+  },
   init_options = {
-    jvm_args = "-javaagent:" .. vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+    -- jvm_args = "-javaagent:" .. vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/lombok.jar",
     -- workspace = workspace_dir .. project_name,
     bundles = bundles,
     extendedClientCapabilities = extendedClientCapabilities,
   },
-  handlers = {
-    ["language/status"] = function() end,
-    ["workspace/diagnostic/refresh"] = function() end,
-    ["textDocument/codeAction"] = function() end,
-    ["textDocument/rename"] = function() end,
-    ["workspace/applyEdit"] = function() end,
-    ["textDocument/documentHighlight"] = function() end,
-  },
-  on_attach = function ()
-    jdtls.setup_dap { hotcodereplace = "auto" }
-    require("jdtls.dap").setup_dap_main_class_configs()
-    require("jdtls.setup").add_commands()
-  end
+  on_init = function(client)
+    client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+  end,
+  on_attach = function()
+    require "jdtls".setup_dap({ hotcodereplace = "auto" })
+    require "jdtls.dap".setup_dap_main_class_configs()
+    require "jdtls".setup.add_commands()
+  end,
 }
+
+require("jdtls").start_or_attach(config)
+
 
 -- -- UI
 local finders = require'telescope.finders'
@@ -192,6 +227,7 @@ require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
   }):find()
 end
 
+
 vim.cmd(
   "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
 )
@@ -202,8 +238,6 @@ vim.cmd("command! -buffer JdtUpdateConfig lua require('jdtls').update_project_co
 -- vim.cmd "command! -buffer JdtJol lua require('jdtls').jol()"
 vim.cmd("command! -buffer JdtBytecode lua require('jdtls').javap()")
 -- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
-
-jdtls.start_or_attach(config)
 
 
 -- Custom keymaps for Java
@@ -238,7 +272,8 @@ local mappings = {
       name = "Test (DAP)",
       c = { function() require("jdtls").test_class() end, "Class" },
       m = { function() require("jdtls").test_nearest_method() end, "Nearest Method" },
-    }
+    },
+    R = { function () require("jdtls").set_runtime() end, "Set runtime" }
   },
 }
 
@@ -259,8 +294,3 @@ local vmappings = {
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
 
-LOADED_JDTLS = true
-
--- jdtls.setup_dap { hotcodereplace = "auto" }
--- require("jdtls.dap").setup_dap_main_class_configs()
--- require("jdtls.setup").add_commands()

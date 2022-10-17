@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim & VimR
 -- Author       : Kevin
--- Last Modified: 27 Sep 2022, 21:37
+-- Last Modified: 16 Oct 2022, 10:59
 -------------------------------------
 
 -- Function to make easier mapping in Lua

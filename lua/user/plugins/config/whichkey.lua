@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 11 Oct 2022, 09:53
+-- Last Modified: 11 Oct 2022, 20:31
 -------------------------------------
 
 local ok, wk = pcall(require, "which-key")
@@ -137,11 +137,59 @@ local leader_maps = {
     v = { '<cmd>vsplit<cr>', "VSplit" },
   },
   n = {
-    name = "Noice",
-    n = { "<cmd>Noice<CR>", "History" },
-    m = { "<cmd>Noice log<CR>", "Messages (Log)" },
-    t = { "<cmd>Noice telescope<CR>", "Show on Telescope" }
+    name = "Notifications",
+    n = { "<cmd>Notifications<CR>", "Notifications" },
+    m = { "<cmd>messages<CR>", "Messages" },
+    -- t = { "<cmd>Noice telescope<CR>", "Show on Telescope" }
   },
+  u = {
+    u = { "<cmd>cd $CS<CR>", "University Folder" },
+  ['1'] = {
+    name = "1° Anno",
+    ['1'] = {
+        name = "1° Semestre",
+        m = { "<cmd>cd $CS/1°Anno/1°Semestre/Matematica del Continuo/<CR>", "Matematica Continuo" },
+    },
+    ['2'] = {
+        name = "2° Semestre",
+        a = { "<cmd>cd $CS/1°Anno/2°Semestre/Architettura degli Elaboratori II/<CR>", "Arch. Elaboratori II" },
+        l = { "<cmd>cd $CS/1°Anno/2°Semestre/Logica matematica/<CR>", "Logica matematica" },
+        m = { "<cmd>cd $CS/1°Anno/2°Semestre/Matematica del Discreto/<CR>", "Matematica Discreta" },
+    },
+  },
+  ['2'] = {
+    name = "2° Anno",
+    ['1'] = {
+        name = "1° Semestre",
+        a = { "<cmd>cd $CS/2°Anno/1°Semestre/Algoritmi e Strutture Dati/<CR>", "Algoritmi & Strutture Dati" },
+        b = { "<cmd>cd $CS/2°Anno/1°Semestre/Basi di Dati/<CR>", "Basi di Dati" },
+        p = { "<cmd>cd $CS/2°Anno/1°Semestre/Programmazione II/<CR>", "Programmazione II" },
+    },
+    ['2'] = {
+        name = "2° Semestre",
+        s = { "<cmd>cd $CS/2°Anno/2°Semestre/Sistemi Operativi/<CR>", "Sistemi Operativi" },
+        S = { "<cmd>cd $CS/2°Anno/2°Semestre/S&AD/<CR>", "Statistica & Analisi Dati" },
+    },
+  },
+  ['3'] = {
+    name = "3° Anno",
+    ['1'] = {
+        name = "1° Semestre",
+        c = { "<cmd>cd $CS/3°Anno/1°Semestre/Crittografia I/<CR>", "Crittografia I" },
+        i = { "<cmd>cd $CS/3°Anno/1°Semestre/Intelligenza Artificiale I/<CR>", "Intelligenza Artificiale I" },
+        I = { "<cmd>cd $CS/3°Anno/1°Semestre/Ingegneria del Software/<CR>", "Ingegneria Software" },
+        r = { "<cmd>cd $CS/3°Anno/1°Semestre/Reti di Calcolatori/<CR>", "Reti di Calcolatori" },
+        s = { "<cmd>cd $CS/3°Anno/1°Semestre/Sicurezza & Privatezza/<CR>", "Sicurezza & Privatezza" },
+        l = { "<cmd>cd $CS/3°Anno/1°Semestre/Linguaggi di Programmazione/<CR>", "Linguaggi di Programmazione" },
+    },
+    ['2'] = {
+        name = "2° Semestre",
+        t = { "<cmd>cd $CS/3°Anno/2°Semestre/Tecnologie & Linguaggi per il Web/<CR>", "Tecnologie Web" },
+    },
+  },
+
+  },
+
 
   f = {
     name = "Find",
@@ -369,11 +417,11 @@ local leader_maps = {
     },
     m = {
       function() vim.cmd "Mason" end,
-      "Info"
+      "Mason"
     },
     L = {
       function() vim.cmd "LspLog" end,
-      "Info"
+      "Lsp Log"
     },
     j = {
       function() vim.diagnostic.goto_next { buffer = 0 } end,

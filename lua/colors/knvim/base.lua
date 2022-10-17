@@ -2,7 +2,7 @@
 --  File         : base.lua
 --  Description  : base colors palette for knvim colorscheme
 --  Author       : Kevin
---  Last Modified: 20 Aug 2022, 10:53
+--  Last Modified: 17 Oct 2022, 15:31
 -------------------------------------
 
 local colors = require "colors.knvim.colors"
@@ -87,7 +87,7 @@ local base_group = {
 	ModeMsg = {},
 	MoreMsg = {},
 
-	colorColumn = { bg = bg0 },
+	colorColumn = { bg = "#3c3c3c" },
 
 	-- Cursor
 	Cursor = { reverse = true },
