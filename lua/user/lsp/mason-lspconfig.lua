@@ -2,7 +2,7 @@
 -- File         : mason-lspconfig.lua
 -- Description  : mason-lspconfig setup
 -- Author       : Kevin
--- Last Modified: 16 Oct 2022, 10:45
+-- Last Modified: 18 Oct 2022, 09:36
 -------------------------------------
 
 local ok, mason_lsp = pcall(require, "mason-lspconfig")
@@ -11,11 +11,11 @@ if not ok then return end
 local icons = require "user.icons"
 
 local servers_to_install = {
-  "lua-language-server", "vimls", "emmet_ls",
+  "sumneko_lua", "vimls", "emmet_ls",
   "ltex", "pyright", "jsonls", "gopls",
   "html", "asm_lsp", "bashls", "clangd",
- "intelephense", "grammarly",
-  "ocaml-lsp", "erlang-ls"
+  "intelephense", "grammarly",
+  "ocamllsp", "erlangls"
 }
 
 

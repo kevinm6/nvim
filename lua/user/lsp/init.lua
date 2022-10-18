@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 17 Oct 2022, 21:09
+-- Last Modified: 18 Oct 2022, 09:43
 -------------------------------------
 
 
@@ -31,14 +31,17 @@ end
 -- Create custom keymaps for useful lsp functions
 -- The missing functions are most covered whith which-key mappings
 -- the `hover()` -> covers even signature_help on functions/methods
-local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true, buffer = bufnr }
+local function lsp_keymaps()
+  local opts = { noremap = true, silent = true }
   vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "gI", function() vim.lsp.buf.implementation() end, opts)
   vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, opts)
+  -- HACK:
+  --     Move for now this keymap cause with nvim0.8 is 
+  --     override for go-to manual (is now in /after/plugin/keymaps)
+  --     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.api.nvim_buf_create_user_command(0, "Format", function()
     vim.lsp.buf.formatting()
   end, { force = true })
@@ -60,7 +63,7 @@ local custom_attach = function(client, bufnr)
   capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
   -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-  lsp_keymaps(bufnr)
+  lsp_keymaps()
   lsp_highlight_document(client)
 
   local navic_ok, navic = pcall(require, "nvim-navic")
@@ -102,7 +105,8 @@ require("mason-lspconfig").setup_handlers {
   -- and will be called for each installed server that doesn't have
   -- a dedicated handler.
   function (server_name)
-    if server_name == "jdtls" or server_name == "jdt.ls" then
+    if server_name == "jdtls" or server_name == "jdt.ls" and
+      vim.bo.filetype == "java" then
       global_lsp_config['on_attach'] = function ()
         require 'jdtls'.setup_dap { hotcodereplace = "auto" }
         require("jdtls.dap").setup_dap_main_class_configs()

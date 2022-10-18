@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 17 Oct 2022, 21:08
+-- Last Modified: 18 Oct 2022, 12:37
 -------------------------------------
 
 if LOADED_JDTLS then return end
@@ -238,7 +238,15 @@ local mappings = {
       name = "Test (DAP)",
       c = { function() require("jdtls").test_class() end, "Class" },
       m = { function() require("jdtls").test_nearest_method() end, "Nearest Method" },
-    }
+    },
+    S = {
+      function()
+        require "jdtls".setup_dap { hotcodereplace = "auto" }
+        require "jdtls.dap".setup_dap_main_class_configs()
+        require "jdtls.setup".add_commands()
+      end,
+      "Extract Constant"
+    },
   },
 }
 
@@ -261,6 +269,3 @@ which_key.register(vmappings, vopts)
 
 LOADED_JDTLS = true
 
--- jdtls.setup_dap { hotcodereplace = "auto" }
--- require("jdtls.dap").setup_dap_main_class_configs()
--- require("jdtls.setup").add_commands()

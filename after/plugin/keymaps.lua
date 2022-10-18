@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim & VimR
 -- Author       : Kevin
--- Last Modified: 16 Oct 2022, 10:59
+-- Last Modified: 18 Oct 2022, 09:41
 -------------------------------------
 
 -- Function to make easier mapping in Lua
@@ -85,6 +85,7 @@ set_keymap("n", "ˇ", "<C-w>L", opts)
 set_keymap("n", "Ø", "O<Esc>j", opts)
 set_keymap("n", "ø", "o<Esc>k", opts)
 set_keymap("n", "<C-lt>", "<cmd>NvimTreeToggle<CR>", opts)
+set_keymap("n", "K", function() vim.lsp.buf.hover() end, opts)
 -- move text
 set_keymap("n", "º", "<Esc>:m .-2<CR>==", opts)
 set_keymap("n", "ª", "<Esc>:m .+1<CR>==", opts)

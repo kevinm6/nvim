@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 17 Oct 2022, 16:14
+-- Last Modified: 18 Oct 2022, 09:10
 -------------------------------------
 
 local ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -11,7 +11,14 @@ if not ok then return end
 require("nvim-treesitter.install").prefer_git = true
 
 local parser_to_install = function()
-  return vim.fn.has "mac" == 1  and "all" or {} -- do not install parser for now in Manjaro-Linux
+  return vim.fn.has "mac" == 1  and {
+    "c", "comment", "cpp", "css", "dot", "dockerfile",
+    "bash", "gitignore", "gitattributes", "go", "help",
+    "html", "http", "json", "json5", "jsdoc", "latex", "erlang",
+    "lua", "java", "javascript", "markdown", "markdown_inline",
+    "ocaml", "ocaml_interface", "php", "python", "regex", "python",
+    "scala", "scheme", "sql", "swift", "todotxt", "vim", "yaml"
+  } or {} -- do not install parser for now in Manjaro-Linux
 end
 
 configs.setup {

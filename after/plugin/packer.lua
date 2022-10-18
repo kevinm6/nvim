@@ -2,7 +2,7 @@
 -- File         : packer.lua
 -- Description  : Plugin Manager (Packer) config
 -- Author       : Kevin
--- Last Modified: 17 Oct 2022, 21:23
+-- Last Modified: 18 Oct 2022, 08:34
 --------------------------------------
 
 -- install packer if not found in default location
@@ -517,12 +517,13 @@ return packer.startup(function(use)
       run = "cd app && yarn install",
       cmd = "MarkdownPreview",
     },
-    -- {
-    --   "toppair/peek.nvim",
-    --   run = "deno task --quiet build:fast",
-    --   ft = { "md", "markdown" },
-    --   config = function () require("user.plugins.config.peek") end
-    -- },
+    {
+      "toppair/peek.nvim",
+      run = "deno task --quiet build:fast",
+      branch = "separate-process",
+      ft = { "md", "markdown" },
+      config = function () require("user.plugins.config.peek") end
+    },
     {
       "dhruvasagar/vim-table-mode",
       ft = { "md", "markdown" },
