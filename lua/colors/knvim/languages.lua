@@ -2,7 +2,7 @@
 --  File         : languages.lua
 --  Description  : language specific palette for knvim colorscheme
 --  Author       : Kevin
---  Last Modified: 17 Oct 2022, 18:18
+--  Last Modified: 18 Oct 2022, 12:33
 -------------------------------------
 
 local base = require("colors.knvim.base")
@@ -81,12 +81,18 @@ local markdown = {
     bold = true,
     italic = true,
   },
-  markdownH1 = { link = "Title" },
-  markdownH2 = { link = "markdownH1" },
-  markdownH3 = base.YellowBold,
-  markdownH4 = { link = "markdownH3" },
+  atx_h1_marker = base.Title,
+  atx_h2_marker = base.Title,
+  atx_h3_marker = base.Title,
+  atx_h4_marker = base.Title,
+  atx_h5_marker = base.Title,
+  atx_h6_marker = base.Title,
+  markdownH1 = base.Title,
+  markdownH2 = base.Title,
+  markdownH3 = base.Title,
+  markdownH4 = base.Title,
   markdownH5 = base.Yellow,
-  markdownH6 = { link = "markdownH5" },
+  markdownH6 = base.Yellow,
   markdownCode = base.Aqua,
   markdownCodeBlock = base.Aqua,
   markdownCodeDelimiter = base.Aqua,
