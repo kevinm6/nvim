@@ -2,13 +2,12 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 07 Jan 2023, 13:41
+-- Last Modified: 09 Jan 2023, 14:33
 ---------------------------------------
 
 local M = {
   "nvim-telescope/telescope.nvim",
   cmd = { "Telescope" },
-  --  event = "VimEnter",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-file-browser.nvim",
@@ -16,22 +15,22 @@ local M = {
     "benfowler/telescope-luasnip.nvim",
     "debugloop/telescope-undo",
     "LinArcX/telescope-env.nvim",
-    { "xiyaowong/telescope-emoji.nvim", module = true, lazy = true },
+    "xiyaowong/telescope-emoji.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
   },
   keys = {
-    { "<leader>e", function() require "telescope".extensions.file_browser.file_browser {} end, desc = "File Browser" },
-    { "<leader>b", function() require "telescope.builtin".buffers {} end, desc = "Buffers" },
-
-    { "<leader>ff", function() require "telescope.builtin".find_files {} end, desc = "Find Files" },
-    { "<leader>fF", function() require "telescope.builtin".live_grep {} end, desc = "Find Text (LiveGrep)" },
-    { "<leader>fo", function() require "telescope.builtin".builtin () end, desc = "Open Telescope" },
+    { "<leader>e", function() require "telescope".extensions.file_browser.file_browser() end, desc = "File Browser" },
+    { "<leader>b", function() require "telescope.builtin".buffers() end, desc = "Buffers" },
+    { "<leader>ff", function() require "telescope.builtin".find_files() end, desc = "Find Files" },
+    { "<leader>fF", function() require "telescope.builtin".live_grep() end, desc = "Find Text (LiveGrep)" },
+    { "<leader>fo", function() require "telescope.builtin".builtin() end, desc = "Open Telescope" },
     { "<leader>fH", function() require "telescope.builtin".help_tags() end, desc = "Help" },
-    { "<leader>fg", function() require "telescope.builtin".git_files {} end, desc = "Git Files" },
+    { "<leader>fg", function() require "telescope.builtin".git_files() end, desc = "Git Files" },
     { "<leader>fp", function() require "telescope".extensions.project.project() end, desc = "Projects" },
-    { "<leader>fr", function() require "telescope.builtin".oldfiles {} end, desc = "Recent File" },
-    { "<leader>fR", function() require "telescope.builtin".registers {} end, desc = "Registers" },
-    { "<leader>fk", function() require "telescope.builtin".keymaps {} end, desc = "Keymaps" },
+    { "<leader>fr", function() require "telescope.builtin".oldfiles() end, desc = "Recent File" },
+    { "<leader>fR", function() require "telescope.builtin".registers() end, desc = "Registers" },
+    { "<leader>fk", function() require "telescope.builtin".keymaps() end, desc = "Keymaps" },
+    { "<leader>fl", function() require "telescope.builtin".resume() end, desc = "Keymaps" },
   }
 }
 
@@ -82,76 +81,79 @@ function M.config()
       winblend = 6,
       mappings = {
         i = {
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
+          ["<C-j>"] = "move_selection_next",
+          ["<C-k>"] = "move_selection_previous",
 
-          ["<esc>"] = actions.close,
+          ["<esc>"] = "close",
           ["<C-u>"] = false,
           ["<C-e>"] = { "<esc>", type = "command" },
 
-          ["<Down>"] = actions.move_selection_next,
-          ["<Up>"] = actions.move_selection_previous,
+          ["<Down>"] = "move_selection_next",
+          ["<Up>"] = "move_selection_previous",
 
-          ["<CR>"] = actions.select_default,
-          ["<C-l>"] = actions.select_default,
-          ["<C-h>"] = actions.select_horizontal,
-          ["<C-v>"] = actions.select_vertical,
-          ["<C-t>"] = actions.select_tab,
+          ["<CR>"] = "select_default",
+          ["<C-l>"] = "select_default",
+          ["<C-s>"] = "select_horizontal",
+          ["<C-v>"] = "select_vertical",
+          ["<C-t>"] = "select_tab",
 
-          ["<C-p>"] = actions.preview_scrolling_up,
-          ["<C-n>"] = actions.preview_scrolling_down,
+          ["<C-p>"] = "preview_scrolling_up",
+          ["<C-n>"] = "preview_scrolling_down",
 
-          ["<PageUp>"] = actions.results_scrolling_up,
-          ["<PageDown>"] = actions.results_scrolling_down,
+          ["<PageUp>"] = "results_scrolling_up",
+          ["<PageDown>"] = "results_scrolling_down",
 
           -- ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           -- ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
           ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+          ["„"] = false,
 
           ["<C-y>"] = action_layout.toggle_preview,
 
           -- ["<C-g>"] = fb_actions.goto_parent_dir,
 
-          ["?"] = actions.which_key,
+          ["?"] = "which_key",
         },
 
         n = {
-          ["<esc>"] = actions.close,
-          q = actions.close,
-          ["<CR>"] = actions.select_default,
-          ["<C-h>"] = actions.select_horizontal,
-          ["<C-v>"] = actions.select_vertical,
-          ["<C-t>"] = actions.select_tab,
-          ["<C-c>"] = actions.close,
+          ["<esc>"] = "close",
+          ["q"] = "close",
+          ["<CR>"] = "select_default",
+          ["<C-s>"] = "select_horizontal",
+          ["<C-v>"] = "select_vertical",
+          ["<C-t>"] = "select_tab",
+          ["<C-c>"] = "close",
 
-          -- ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-          -- ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+          -- ["<Tab>"] = "toggle_selection + actions.move_selection_worse"",
+          -- ["<S-Tab>"] = "toggle_selection + actions.move_selection_better"",
           ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+          ["„"] = false,
 
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-          ["<C-l>"] = actions.select_default,
-          j = actions.move_selection_next,
-          k = actions.move_selection_previous,
-          l = actions.select_default,
-          H = actions.move_to_top,
-          M = actions.move_to_middle,
-          L = actions.move_to_bottom,
+          ["<C-j>"] = "move_selection_next",
+          ["<C-k>"] = "move_selection_previous",
+          ["<C-l>"] = "select_default",
+          ["j"] = "move_selection_next",
+          ["k"] = "move_selection_previous",
+          ["l"] = "select_default",
+          ["H"] = "move_to_top",
+          ["M"] = "move_to_middle",
+          ["L"] = "move_to_bottom",
+          ["g"] = false, -- disable map
+          ["h"] = false, -- disable map
 
-          ["<Down>"] = actions.move_selection_next,
-          ["<Up>"] = actions.move_selection_previous,
+          ["<Down>"] = "move_selection_next",
+          ["<Up>"] = "move_selection_previous",
 
-          ["<C-p>"] = actions.preview_scrolling_up,
-          ["<C-n>"] = actions.preview_scrolling_down,
+          ["<C-p>"] = "preview_scrolling_up",
+          ["<C-n>"] = "preview_scrolling_down",
 
-          ["<PageUp>"] = actions.results_scrolling_up,
-          ["<PageDown>"] = actions.results_scrolling_down,
+          ["<PageUp>"] = "results_scrolling_up",
+          ["<PageDown>"] = "results_scrolling_down",
 
           ["<C-y>"] = action_layout.toggle_preview,
 
-          -- ["g"] = fb_actions.goto_parent_dir,
 
-          ["?"] = actions.which_key,
+          ["?"] = "which_key",
         },
       },
     },
@@ -170,7 +172,7 @@ function M.config()
         layout_strategy = "center",
         layout_config = {
           prompt_position = "bottom",
-          height = 0.3
+          height = 0.4
         },
         cwd = require "lspconfig.util".find_git_ancestor(vim.fn.expand "%:p:h") or vim.fn.expand "%:p:h",
         mappings = {
@@ -234,10 +236,11 @@ function M.config()
         cwd_only = false,
         initial_mode = "insert",
         sorting_strategy = "descending",
-        layout_strategy = "bottom_pane",
+        layout_strategy = "flex",
         layout_config = {
           prompt_position = "bottom",
-          height = 0.5
+          height = 0.8,
+          width = 0.6
         },
       },
       live_grep = {
@@ -248,6 +251,19 @@ function M.config()
         layout_config = {
           prompt_position = "bottom",
           height = 0.7
+        },
+      },
+      git_files = {
+        theme = "dropdown",
+        previewer = false,
+        cwd_only = false,
+        initial_mode = "insert",
+        sorting_strategy = "descending",
+        layout_strategy = "flex",
+        layout_config = {
+          prompt_position = "bottom",
+          height = 0.8,
+          width = 0.6
         },
       },
       git_status = {
@@ -272,31 +288,34 @@ function M.config()
           height = 0.4
         },
       },
-      lsp_diagnostics = {
-        theme = "dropdown",
+      diagnostics = {
         bufnr = 0,
+        theme = "dropdown",
         initial_mode = "normal",
         sorting_strategy = "descending",
         layout_strategy = "center",
         layout_config = {
           prompt_position = "bottom",
-          -- vertical = { width = 0.7, height = 0.8 }
+          vertical = { width = 0.6, height = 0.6 }
         },
       },
       lsp_references = {
         theme = "cursor",
-        bufnr = 0,
         initial_mode = "normal",
-        layout_strategy = "vertical",
-        layout_config = {
-          prompt_position = "bottom",
-          vertical = { width = 0.6, height = 0.8 }
-        },
+        layout_strategy = "cursor",
+        sorting_strategy = "ascending",
       },
       lsp_definitions = {
         theme = "cursor",
-        previewer = true,
         initial_mode = "normal",
+        layout_strategy = "cursor",
+        sorting_strategy = "ascending",
+      },
+      lsp_type_definitions = {
+        theme = "cursor",
+        initial_mode = "normal",
+        layout_strategy = "cursor",
+        sorting_strategy = "ascending",
       },
       lsp_declarations = {
         theme = "cursor",
@@ -330,7 +349,7 @@ function M.config()
         },
       },
       registers = {
-        theme = "cursor",
+        theme = "dropdown",
         initial_mode = "normal",
         layout_strategy = "center",
         layout_config = {
@@ -339,7 +358,7 @@ function M.config()
         },
       },
       keymaps = {
-        theme = "cursor",
+        theme = "dropdown",
         previewer = false,
         initial_mode = "insert",
         layout_strategy = "center",
@@ -364,9 +383,9 @@ function M.config()
         },
         mappings = {
           i = {
-            ["<C-j>"] = actions.move_selection_next,
-            ["<C-k>"] = actions.move_selection_previous,
-            ["<C-a>"] = fb_actions.create,
+            ["<C-j>"] = "move_selection_next",
+            ["<C-k>"] = "move_selection_previous",
+            ["<C-c>"] = fb_actions.create,
             ["<C-r>"] = fb_actions.rename,
             ["<C-m>"] = fb_actions.move,
             -- Trash files instead of deleting them
@@ -409,7 +428,7 @@ function M.config()
           },
           n = {
             m = fb_actions.move,
-            a = fb_actions.create,
+            c = fb_actions.create,
             -- Trash files instead of deleting them
             D = function(prompt_bufnr)
               local action_state = require("telescope.actions.state")
@@ -452,16 +471,18 @@ function M.config()
         },
       },
       ["ui-select"] = {
-        theme = "cursor",
-        layout_strategy = "vertical",
+        theme = "dropdown",
+        layout_strategy = "center",
         sorting_strategy = "descending",
         layout_config = {
           prompt_position = "bottom",
-          width = 0.7,
-          height = 0.4
+          width = 0.5,
+          height = 0.5
         },
       },
       project = {
+        theme = "dropdown",
+        hidden_files = true, -- default: false
         base_dirs = {
           "~/Documents/Developer",
           "~/dev",
@@ -469,15 +490,21 @@ function M.config()
           "~/Informatica/Anno2/Semestre1/Programmazione II",
           "~/Informatica/Anno3/Semestre1/Ingegneria del Software/Laboratorio",
         },
-        hidden_files = true, -- default: false
-        theme = "dropdown"
       },
-      -- dap = {}
       undo = {
         use_delta = false,
         side_by_side = true,
-        layout_strategy = "vertical",
+        layout_strategy = "flex",
         layout_config = { preview_height = 0.8, },
+      },
+      emoji = {
+        theme = "cursor",
+        initial_mode = "insert",
+        layout_strategy = "cursor",
+        layout_config = {
+          height = 0.4,
+          width = 0.5
+        }
       }
     }
   }
@@ -498,46 +525,49 @@ function M.config()
     telescope.extensions.emoji.emoji {
       theme = "cursor",
       initial_mode = "insert",
-      layout_strategy = "vertical",
+      layout_strategy = "cursor",
       layout_config = {
-        prompt_position = "bottom",
-        vertical = { width = 0.5, height = 0.5 }
-      },
+        height = 0.4,
+        width = 0.5
+      }
     }
   end, { desc = "Emoji" })
   vim.keymap.set("n", "<leader>fL", function()
-    telescope.extensions.luasnip.luasnip {}
+    telescope.extensions.luasnip.luasnip()
   end, { desc = "Luasnip" })
   vim.keymap.set("n", "<leader>fs", function()
     telescope_builtin.grep_string { theme = "dropdown", previewer = false }
   end, { desc = "Grep string under cursor" })
   vim.keymap.set("n", "<leader>fu", function()
-    telescope.extensions.undo.undo { theme = "dropdown", previewer = true }
+    telescope.extensions.undo.undo()
   end, { desc = "Undo" })
 
   vim.keymap.set("n", "<leader>go", function()
     telescope_builtin.git_status()
   end, { desc = "Open changed file" })
   vim.keymap.set("n", "<leader>gb", function()
-    telescope_builtin.git_branches{}
+    telescope_builtin.git_branches()
   end, { desc = "Checkout branch" })
   vim.keymap.set("n", "<leader>gc", function()
     telescope_builtin.git_commits()
   end, { desc = "Checkout commit" })
   vim.keymap.set("n", "<leader>ld", function()
-    telescope_builtin.diagnostics()
+    telescope_builtin.diagnostics { bufnr = 0 }
   end, { desc = "Lsp Diagnostics" })
   vim.keymap.set("n", "<leader>lr", function()
     telescope_builtin.lsp_references()
   end, { desc = "Lsp References" })
   vim.keymap.set("n", "<leader>lD", function()
-    telescope_builtin.lsp_type_definitions {}
+    telescope_builtin.lsp_definitions()
+  end, { desc = "Lsp Definitions" })
+  vim.keymap.set("n", "<leader>lt", function()
+    telescope_builtin.lsp_type_definitions()
   end, { desc = "Lsp Type Definitions" })
   vim.keymap.set("n", "<leader>li", function()
-    telescope_builtin.lsp_incoming_calls {}
+    telescope_builtin.lsp_incoming_calls()
   end, { desc = "Lsp InCalls" })
   vim.keymap.set("n", "<leader>lo", function()
-    telescope_builtin.lsp_outgoing_calls {}
+    telescope_builtin.lsp_outgoing_calls()
   end, { desc = "Lsp OutCalls" })
   vim.keymap.set("n", "<leader>ls", function()
     telescope_builtin.lsp_document_symbols()
@@ -545,6 +575,7 @@ function M.config()
   vim.keymap.set("n", "<leader>lS", function()
     telescope_builtin.lsp_dynamic_workspace_symbols()
   end, { desc = "Workspace Symbols" })
+
 end
 
 return M
