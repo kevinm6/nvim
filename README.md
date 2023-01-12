@@ -1,7 +1,5 @@
 # <p align="center">NeoVim config</p>
 
----
-
 <p align="center">
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kevinm6/nvim?style=for-the-badge">
 <img alt="GitHub" src="https://img.shields.io/github/license/kevinm6/nvim?style=for-the-badge">
