@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 06 Jan 2023, 19:58
+--  Last Modified: 11 Jan 2023, 19:00
 -------------------------------------
 
 local M =  {
@@ -11,7 +11,7 @@ local M =  {
   { "tweekmonster/startuptime.vim", cmd = "StartupTime", enabled = false },
   {
     "kyazdani42/nvim-web-devicons",
-    config = { default = true }
+    opts = { default = true }
   },
 
   {
@@ -35,7 +35,7 @@ local M =  {
     keys = {
      { mode = "n", "<leader>Z", function() vim.cmd.ZenMode() end, desc = "Zen" },
     },
-    config = {
+    opts = {
       window = {
         backdrop = 1,
         height = 0.8, -- height of the Zen window
@@ -59,7 +59,7 @@ local M =  {
     "kevinm6/hologram.nvim",
     dev = true,
     ft = { "md", "markdown" },
-    config = { auto_display = true }
+    opts = { auto_display = true }
   },
 
 
@@ -67,18 +67,16 @@ local M =  {
   {
     "simrat39/inlay-hints.nvim",
     -- ft = { "java", "go", "lua" },
-    config = function()
-      require("inlay-hints").setup {
+    opts = {
         only_current_line = true,
         eol = { right_align = true }
-      }
-    end
+    }
   },
 
   {
     "ziontee113/color-picker.nvim",
     cmd = { "PickColor", "PickColorInsert" },
-    config = {
+    opts = {
       ["icons"] = { "ﱢ", "" },
       -- ["icons"] = { "ﱢ", "" },
       -- ["icons"] = { "ﮊ", "" },
@@ -96,7 +94,7 @@ local M =  {
     "ellisonleao/glow.nvim",
     ft = { "md", "markdown" },
     cmd = "Glow",
-    config = {
+    opts = {
       glow_install_path = "~/.local/bin/glow/", -- default path for installing glow binary
       border = "rounded", -- floating window border config
       style = "dark", -- filled automatically with your current editor background, you can override using glow json style
@@ -108,7 +106,7 @@ local M =  {
   {
     "br1anchen/nvim-colorizer.lua",
     cmd = "ColorizerToggle",
-    config = {{ "*" }, {
+    opts = {{ "*" }, {
       RGB = true,          -- #RGB hex codes
       RRGGBB = true,       -- #RRGGBB hex codes
       names = true,        -- "Name" codes like Blue oe blue
@@ -129,7 +127,7 @@ local M =  {
       vim.opt.list = false
       vim.opt.listchars = {}
     end,
-    config = {
+    opts = {
       show_current_context = true,
       show_current_context_start = true,
       show_end_of_line = false,

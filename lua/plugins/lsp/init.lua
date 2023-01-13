@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 06 Jan 2023, 10:01
+-- Last Modified: 13 Jan 2023, 08:56
 -------------------------------------
 
 local M = {
@@ -146,8 +146,6 @@ function M.config()
 
   -- Custom configs to apply when attaching lsp to buffer
   local custom_attach = function(client, bufnr)
-    client.server_capabilities.documentFormattingProvider = false
-
     if client.server_capabilities.inlayHintProvider then
       require "inlay-hints".on_attach(client, bufnr)
     end

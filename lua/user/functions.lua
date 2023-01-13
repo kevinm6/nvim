@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 05 Jan 2023, 16:45
+--  Last Modified: 13 Jan 2023, 09:04
 -------------------------------------
 
 local F = {}
@@ -249,7 +249,7 @@ function F.format_on_save(enable)
       group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
       pattern = "*",
       callback = function()
-        vim.lsp.buf.formatting()
+        vim.lsp.buf.format()
       end,
     })
   else

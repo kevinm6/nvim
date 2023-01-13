@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 04 Jan 2023, 15:14
+-- Last Modified: 13 Jan 2023, 10:44
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -109,17 +109,55 @@ autocmd("LspAttach", {
     -- end
 
     -- Formatting
-    if client.server_capabilities.documentFormattingProvider then
+    -- if client.server_capabilities.documentFormattingProvider then
+    if  client.supports_method("textDocument/formatting") then
+      local lsp_formatting = function(bufnr)
+          vim.lsp.buf.format({
+              filter = function(client)
+                  -- apply whatever logic you want (in this example, we'll only use null-ls)
+                  return client.name == "null-ls"
+              end,
+              bufnr = bufnr,
+          })
+      end
+
+      -- Format on save
+      local function format_on_save(enable)
+        local action = function() return enable and "Enabled" or "Disabled" end
+
+        if enable then
+          vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+            group = vim.api.nvim_create_augroup("_format_on_save", { clear = true }),
+            pattern = "*",
+            callback = function()
+              lsp_formatting(args.buf)
+            end,
+          })
+        else
+          vim.api.nvim_clear_autocmds { group = "format_on_save" }
+        end
+
+        vim.notify(action().. " format on save", "Info", { title = "LSP" })
+      end
+
       vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
-        require "user.functions".toggle_format_on_save()
+        if vim.fn.exists "#format_on_save#BufWritePre" == 0 then
+          format_on_save(true)
+        else
+          format_on_save()
+        end
       end, {})
 
-      vim.api.nvim_buf_create_user_command(0, "Format", vim.lsp.buf.formatting, { force = true })
+      vim.api.nvim_buf_create_user_command(0, "Format", function()
+        vim.lsp.buf.format()
+      end, { force = true })
 
-      vim.keymap.set("n", "<leader>lf", function() vim.lsp.buf.format { async = true } end, { desc = "Format" })
-      vim.keymap.set("n", "<leader>lF", function()
-        require "user.functions".toggle_format_on_save()
+      vim.keymap.set("n", "<leader>lf", function()
+        lsp_formatting(args.buf)
       end, { desc = "Format" })
+      vim.keymap.set("n", "<leader>lF", function()
+        vim.cmd.LspToggleAutoFormat()
+      end, { desc = "Toggle AutoFormat" })
     end
 
     -- lsp-document_highlight

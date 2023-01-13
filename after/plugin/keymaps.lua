@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 03 Jan 2023, 18:51
+-- Last Modified: 10 Jan 2023, 12:21
 -------------------------------------
 
 local set_opts = function(opts)
@@ -82,6 +82,8 @@ set_keymap("n", "<leader>H", function() vim.cmd.nohlsearch {}  end, set_opts { d
 set_keymap("n", "<leader>c", function() vim.cmd.DeleteCurrentBuffer() end, set_opts { desc = "Close buffer" })
 set_keymap("n", "<leader>z", function() vim.cmd.DeleteCurrentBuffer() end, set_opts { desc = "Save and Close buffer" })
 set_keymap("n", "<leader>q", function() vim.cmd.bdelete {} end, set_opts { desc = "Quit" })
+set_keymap("n", "<leader>nn", function() vim.cmd.Notifications {} end, set_opts { desc = "Notifications" })
+set_keymap("n", "<leader>nm", function() vim.cmd.messages {} end, set_opts { desc = "Messages" })
 
 set_keymap("n", "<C-l>", "<Nop>", set_opts {})
 set_keymap("n", "<C-l>", "<C-w>l", set_opts {})
@@ -212,7 +214,7 @@ set_keymap("v", ">", ">gv", set_opts {})
 set_keymap("v", "p", "_dP", set_opts {})
 set_keymap("v", "<C-s>", [[:s///gI<Left><Left><Left><Left>]], set_opts { silent = false, desc = "Search" })
 set_keymap("v", "<leader>y", [["+y]], set_opts { desc = "Yank to clipboard" } )
-set_keymap("v", "<leader>ff", function() require "functions".range_format() end, set_opts { desc = "Range format" } )
+set_keymap("v", "<leader>ff", function() require "user.functions".range_format() end, set_opts { desc = "Range format" } )
 --set_keymap("v", "d", "\+d", set_opts { expr = true, desc = "Copy deletion into register \""})
 --set_keymap("v", "D", "\+D", set_opts { expr = true, desc = "Copy deletion to end into register \"" })
 --set_keymap("v", "y", "\+y", set_opts { expr = true, desc = "Copy yank into register \"" })
@@ -222,7 +224,7 @@ set_keymap("v", "gA", function()
 	vim.ui.input({ prompt = "Align regex pattern: ", default = nil },
 	function(input)
 		if input then
-			require "functions".align(input)
+			require "user.functions".align(input)
 		end
 	end)
 end, set_opts { desc = "Align from regex" })

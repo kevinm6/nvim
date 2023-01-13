@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 03 Jan 2023, 18:47
+-- Last Modified: 10 Jan 2023, 21:12
 -------------------------------------
 
 local M = {
