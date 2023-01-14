@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 06 Jan 2023, 11:22
+--	Last Modified: 14 Jan 2023, 10:55
 -----------------------------------
 
 local M = {

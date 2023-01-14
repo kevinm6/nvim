@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 06 Jan 2023, 11:33
+-- Last Modified: 14 Jan 2023, 10:28
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -99,7 +99,7 @@ local config = {
       --  * VimEnter: not useful to cache anything else beyond startup
       --  * BufReadPre: this will be triggered early when opening a file from the command line directly
       disable_events = { "VimEnter", "BufReadPre" },
-      ttl = 3600 * 24 * 2 -- keep unused modules for up to number of seconds
+      ttl = 3600 * 24 * 2 -- keep unused modules for up to 2 days
     },
     reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
@@ -108,14 +108,14 @@ local config = {
       paths = {}, -- add any custom paths here that you want to indluce in the rtp
       ---@type string[] list any plugins you want to disable here
       disabled_plugins = {
-        -- "gzip",
+        "gzip",
         -- "matchit",
         -- "matchparen",
         "netrwPlugin",
-        -- "tarPlugin",
-        -- "tohtml",
-        -- "tutor",
-        -- "zipPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
       },
     },
   },
@@ -130,6 +130,6 @@ local config = {
   },
 }
 
-vim.keymap.set("n", "<leader>L", vim.cmd.Lazy, { desc = "Package Manager" })
+vim.keymap.set("n", "<leader>L", function() vim.cmd.Lazy() end, { desc = "Package Manager" })
 
 lazy.setup("plugins", config)

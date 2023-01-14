@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 12 Jan 2023, 15:38
+-- Last Modified: 14 Jan 2023, 10:57
 -------------------------------------
 
 local M = {
@@ -16,8 +16,29 @@ local M = {
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
-    event = "BufReadPre",
-    config = true
+    event = "BufReadPost",
+    opts = {
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true, -- Throttles plugin updates (may improve performance)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+          -- For all filetypes
+          -- Note that setting an entry here replaces all other patterns for this entry.
+          -- By setting the 'default' entry below, you can control which nodes you want to
+          -- appear in the context window.
+          default = {
+            "class",
+            "function",
+            "method",
+            -- "for",
+            -- "if",
+            -- "while",
+            -- 'switch',
+            -- 'case',
+          },
+        },
+        exact_patterns = {},
+      }
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -144,31 +165,8 @@ local M = {
           },
         },
       }
-
-      require "treesitter-context".setup {
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true, -- Throttles plugin updates (may improve performance)
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-          -- For all filetypes
-          -- Note that setting an entry here replaces all other patterns for this entry.
-          -- By setting the 'default' entry below, you can control which nodes you want to
-          -- appear in the context window.
-          default = {
-            "class",
-            "function",
-            "method",
-            -- "for",
-            -- "if",
-            -- "while",
-            -- 'switch',
-            -- 'case',
-          },
-        },
-        exact_patterns = {},
-      }
     end
-  },
+  }
 }
 
 return M

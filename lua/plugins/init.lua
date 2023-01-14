@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 11 Jan 2023, 19:00
+--  Last Modified: 14 Jan 2023, 10:25
 -------------------------------------
 
 local M =  {
@@ -61,8 +61,6 @@ local M =  {
     ft = { "md", "markdown" },
     opts = { auto_display = true }
   },
-
-
 
   {
     "simrat39/inlay-hints.nvim",

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : NeoVim configuration
 -- Author       : Kevin
--- Last Modified: 07 Jan 2023, 11:23
+-- Last Modified: 14 Jan 2023, 12:29
 --------------------------------------
 
 -- Set leader key
@@ -23,3 +23,5 @@ elseif vim.g.vscode then
 else
   vim.opt.shadafile = vim.fn.stdpath "cache" .. "/shada/main.shada"
 end
+
+require "config.lazy"
