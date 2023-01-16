@@ -2,7 +2,7 @@
 -- File         : markdown.lua
 -- Description  : filetype markdown extra confi
 -- Author       : Kevin
--- Last Modified: 10 Jan 2023, 10:20
+-- Last Modified: 16 Jan 2023, 19:32
 -------------------------------------
 
 vim.opt_local.conceallevel = 2
@@ -22,7 +22,4 @@ vim.opt.spellfile = "/Users/Kevin/.MacDotfiles/nvim/.config/nvim/spell/en.utf-8.
 -- Add custom mappings only for markdown files
 
 vim.keymap.set("n", "<leader>mp", function() require "peek".open() end, { desc = "Open Peek preview" })
-
 vim.keymap.set("n", "<leader>mP", function() require "peek".close() end, { desc = "Close Peek preview" })
-
-vim.keymap.set("n", "<leader>mm", function() vim.cmd.Glow() end, { desc = "Floating Markdown Preview (Glow)" })
