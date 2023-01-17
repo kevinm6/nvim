@@ -2,7 +2,7 @@
 --  File         : code_runner.lua
 --  Description  : code_runner plugin config
 --  Author       : Kevin
---  Last Modified: 16 Jan 2023, 19:35
+--  Last Modified: 17 Jan 2023, 17:12
 ---------------------------------------
 
 local M = {
@@ -36,11 +36,11 @@ local M = {
       -- Num from `0 - 1` for measurements
       height = 0.4,
       width = 0.8,
-      x = 0.5,
+      x = 0.6,
       y = 0.9,
 
       -- Highlight group for floating window/border (see ':h winhl')
-      border_hl = "FloatBorder",
+      border_hl = "WinSeparator",
       float_hl = "Normal",
 
       -- Transparency (see ':h winblend')
@@ -58,8 +58,21 @@ local M = {
       markdown = "glow '$file'",
       javascript = "node '$file'",
       ocaml = "ocaml '$file'",
-      scala = "cd '$dir' && scalac '$file' && scala '$file'",
+      scala = "cd '$dir' && scalac $fileName && scala $fileName",
       -- typescript = "deno run %",
+
+      -- file               -- file path to currend file opened
+      -- fileName           -- file name to curren file opened
+      -- fileNameWithoutExt -- file without extension file opened
+      -- dir                -- path of directory to file opened
+      -- end                -- finish the command (it is useful for commands that do not require final autocompletion)
+
+      -- Below is an example of an absolute path and how it behaves depending on the variable:
+      -- absolute path: /home/anyuser/current/file.py
+      -- file               = /home/anyuser/current/file.py
+      -- fileName           = file.py
+      -- fileNameWithoutExt = file
+      -- dir                = /home/anyuser/current
     }
   }
 }

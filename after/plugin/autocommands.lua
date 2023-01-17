@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 13 Jan 2023, 10:44
+-- Last Modified: 17 Jan 2023, 16:42
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -17,7 +17,7 @@ local _general_settings = augroup("_general_settings", {
 autocmd({ "FileType" }, {
   group = _general_settings,
   pattern = {
-    "qf", "help", "git*", "lspinfo", "tsplayground",
+    "qf", "help", "git*", "lspinfo", "tsplayground", "crunner",
     "Scratch", "checkhealth", "sqls_output", "DressingSelect", "Jaq", "noice.log"
   },
   callback = function()
@@ -113,7 +113,7 @@ autocmd("LspAttach", {
     if  client.supports_method("textDocument/formatting") then
       local lsp_formatting = function(bufnr)
           vim.lsp.buf.format({
-              filter = function(client)
+              filter = function()
                   -- apply whatever logic you want (in this example, we'll only use null-ls)
                   return client.name == "null-ls"
               end,

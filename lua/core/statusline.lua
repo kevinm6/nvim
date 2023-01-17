@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 06 Jan 2023, 19:46
+-- Last Modified: 17 Jan 2023, 16:59
 -----------------------------------------
 
 local S = {}
@@ -191,6 +191,7 @@ S.off = function(name)
     TelescopePrompt = icons.ui.Telescope.." Telescope",
     qf = icons.ui.Gear.." QuickFix",
     toggleterm = icons.misc.Robot.." Terminal",
+    crunner = icons.ui.AltSlArrowRight.." CodeRunner",
   }
   local custom_ft = special_filetypes[ftype_name]
   return ("%s%s %%= %s%%="):format(get_mode(), colors.fformat, name or custom_ft or ftype_name)
@@ -242,7 +243,8 @@ local to_exclude = function()
     Trouble = true,
     qf = true,
     toggleterm = true,
-    lazy = true
+    lazy = true,
+    crunner = true,
   }
 
   return special_ft[vim.bo.filetype]

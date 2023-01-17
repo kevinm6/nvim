@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 13 Jan 2023, 09:04
+--  Last Modified: 17 Jan 2023, 16:37
 -------------------------------------
 
 local F = {}
@@ -138,7 +138,8 @@ end
 
 -- SESSIONS
 function F.delete_session()
-  local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(vim.fn.stdpath "data".."/sessions/", "*.vim"), "\n"))
+  local sessions_data_stdpath = vim.fn.stdpath "data".."/sessions/"
+  local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
   vim.ui.select(sessions, {
     prompt = "Select session to delete:",
     default = nil,
@@ -154,7 +155,7 @@ end
 
 function F.restore_session()
   local sessions_data_stdpath = vim.fn.stdpath "data".."/sessions/"
-  local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*.vim"), "\n"))
+  local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
   if #sessions > 0 then
     vim.ui.select(sessions, {
       prompt = " > Select session to restore",
@@ -175,7 +176,7 @@ end
 
 function F.save_session()
   vim.ui.input({
-    prompt = "Enter session name (.vim is added): ",
+    prompt = "Enter session name: ",
     default = nil,
     -- completion = "-complete=buffer,dir"
    }, function(input)
@@ -274,13 +275,15 @@ function F.new_file()
   vim.ui.input({
       prompt = "Enter name for newfile: ",
       default = nil,
-      -- completion = "-complete=buffer,dir"
      }, function (input)
-      vim.cmd.enew()
-      vim.cmd.edit(input)
-      vim.cmd.write(input)
-      vim.cmd.startinsert()
-     end)
+      if input ~= nil then
+        vim.cmd.enew()
+        vim.cmd.edit(input)
+        vim.cmd.write(input)
+        vim.cmd.startinsert()
+      end
+     end
+  )
 end
 
 return F

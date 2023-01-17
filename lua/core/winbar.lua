@@ -53,8 +53,8 @@ M.gps = function()
     string.format("%s %s %s", retval, "%#NavicSeparator#"..icons.ui.ChevronRight.."%*", location) or
     retval
 end
-
 M.get_winbar = function()
+
   local winbar_filetype_exclude = {
     help = true,
     dashboard = true,
@@ -65,6 +65,7 @@ M.get_winbar = function()
     toggleterm = true,
     DressingSelect = true,
     TelescopePrompt = true,
+    crunner = true
   }
 
   return winbar_filetype_exclude[vim.bo.filetype] and nil or M.gps()

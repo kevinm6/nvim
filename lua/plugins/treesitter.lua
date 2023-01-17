@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 14 Jan 2023, 10:57
+-- Last Modified: 17 Jan 2023, 17:16
 -------------------------------------
 
 local M = {
@@ -51,7 +51,6 @@ local M = {
       "nvim-treesitter/nvim-treesitter-refactor",
     },
     config = function()
-      local configs = require "nvim-treesitter.configs"
 
       require "nvim-treesitter.install".prefer_git = true
 
@@ -64,7 +63,7 @@ local M = {
           "scala", "scheme", "sql", "swift", "todotxt", "vim", "yaml", "org"
           } or {} -- do not install parser for now in Manjaro-Linux
 
-      configs.setup {
+      require "nvim-treesitter.configs".setup {
         ensure_installed = parser_to_install,
         sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
         ignore_install = {},
@@ -79,10 +78,10 @@ local M = {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = "gnn",
-            node_incremental = "grn",
-            scope_incremental = "grc",
-            node_decremental = "grm",
+            init_selection = "<CR>",
+            node_incremental = "<CR>",
+            scope_incremental = "<S-CR>",
+            node_decremental = "<BS>",
           },
         },
         indent = {

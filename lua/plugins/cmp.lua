@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 04 Jan 2023, 15:19
+-- Last Modified: 17 Jan 2023, 16:57
 -------------------------------------
 
 local M = {
@@ -63,9 +63,8 @@ function M.config()
 				end
 			end, { "i", "s" }),
 
-			-- ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
-
-			-- ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
+			["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
+			["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
 
 			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 

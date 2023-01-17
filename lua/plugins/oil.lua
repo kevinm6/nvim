@@ -2,7 +2,7 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 04 Jan 2023, 10:59
+-- Last Modified: 17 Jan 2023, 16:23
 -------------------------------------
 
 local M = {
@@ -10,20 +10,15 @@ local M = {
   -- event = "VimEnter",
   keys = {
     { "<leader>O", function() require "oil".open() end, desc = "Open in Oil" }
-  }
-}
-
-function M.config()
-  local oil = require "oil"
-
-  oil.setup {
+  },
+  opts = {
     -- Id is automatically added at the beginning, and name at the end
     -- See :help oil-columns
     columns = {
+      { "permissions", highlight = "String" },
+      { "mtime", highlight = "Comment" },
+      { "size", highlight = "Type" },
       "icon",
-      -- "permissions",
-      -- "size",
-      -- "mtime",
     },
     -- Window-local options to use for oil buffers
     win_options = {
@@ -48,10 +43,13 @@ function M.config()
     keymaps = {
       ["g?"] = "actions.show_help",
       ["<CR>"] = "actions.select",
-      ["<C-s>"] = "actions.select_vsplit",
-      ["<C-h>"] = "actions.select_split",
+      ["<C-l>"] = "actions.select",
+      ["<C-s>"] = "actions.select_split",
+      ["<C-v>"] = "actions.select_vsplit",
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = "actions.close",
+      ["<C-g>"] = "actions.parent",
+      ["<C-h>"] = "actions.toggle_hidden",
       ["-"] = "actions.parent",
       ["_"] = "actions.open_cwd",
       ["`"] = "actions.cd",
@@ -82,9 +80,7 @@ function M.config()
       ["scp://"] = "oil-ssh://",
       ["sftp://"] = "oil-ssh://",
     },
-
   }
-end
+}
 
 return M
-

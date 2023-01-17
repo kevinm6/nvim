@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 15 Jan 2023, 11:25
+--	Last Modified: 17 Jan 2023, 16:25
 -----------------------------------
 
 local M = {
@@ -51,13 +51,12 @@ function M.config()
     dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>lua require 'telescope.builtin'.oldfiles()<CR>"),
     dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>lua require 'telescope'.extensions.project.project{}<CR>"),
     dashboard.button("u", icons.ui.Uni .. " University", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$CS"}<CR>]]),
-    dashboard.button("A", icons.ui.History .. " Sessions", "<cmd>lua require 'user.functions'.restore_session()<CR>"),
     dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "~/Documents/Developer" }<CR>]]),
     dashboard.button("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy <CR>"),
     dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration", "<cmd>e $NVIMDOTDIR/lua/plugins/init.lua<CR>"),
     dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
     dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
-    -- dashboard.button("s", icons.ui.SignIn .. " Find Session", "<cmd>Telescope sessions save_current=false <CR>"),
+    dashboard.button("S", icons.ui.History .. " Sessions", "<cmd>lua require 'user.functions'.restore_session()<CR>"),
     dashboard.button("C",
       icons.ui.Gear .. " Config",
       "<cmd>cd $NVIMDOTDIR <CR> <cmd>e $NVIMDOTDIR/init.lua <CR>"
