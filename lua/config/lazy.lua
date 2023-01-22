@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 14 Jan 2023, 10:28
+-- Last Modified: 22 Jan 2023, 21:32
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -28,7 +28,13 @@ if not ok then
   return
 end
 
-local config = {
+lazy.setup({
+  { import = "plugins.dashboard" },
+  { import = "plugins.core" },
+  { import = "plugins.ui" },
+  { import = "plugins" },
+  { import = "plugins.utils" },
+}, {
   root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
   defaults = {
     lazy = true, -- should plugins be lazy-loaded?
@@ -128,8 +134,7 @@ local config = {
     -- only generate markdown helptags for plugins that dont have docs
     skip_if_doc_exists = true,
   },
-}
+})
 
 vim.keymap.set("n", "<leader>L", function() vim.cmd.Lazy() end, { desc = "Package Manager" })
 
-lazy.setup("plugins", config)
