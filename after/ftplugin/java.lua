@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 05 Jan 2023, 16:24
+-- Last Modified: 23 Jan 2023, 16:38
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
@@ -15,6 +15,8 @@ end
 local root_dir = require("jdtls.setup").find_root {".git", "gradlew", "settings.gradle", "build.gradle"}
 if root_dir == "" then root_dir = vim.fn.getcwd() end
 
+local data_path = vim.fn.stdpath "data"
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local extendedClientCapabilities = require "jdtls".extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
@@ -23,20 +25,25 @@ extendedClientCapabilities.document_formatting = false
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_name
 
-local home = vim.env.HOME
-
-local launcher_path = vim.fn.glob(home ..
-  "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
+local launcher_path = vim.fn.glob(
+  data_path.."/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
   1, 1)[1]
-
-local bundles = {
-  vim.fn.glob(home.."/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
+local bundles = vim.fn.glob(
+  data_path.."/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
     1, 1)
-}
 
-local extra_bundles = vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/packages/java-test/extension/server/*.jar", 1), "\n")
-vim.list_extend(bundles, extra_bundles)
+local lombok_path = data_path.."/mason/packages/jdtls/lombok.jar"
 
+local os_name = "mac"
+if vim.fn.has "mac" == 1 then
+  os_name = "mac"
+elseif vim.fn.has "unix" == 1 then
+  os_name = "linux"
+else
+  vim.notify("Unsupported OS", vim.log.levels.WARN)
+end
+
+vim.list_extend(bundles, vim.split(vim.fn.glob(data_path.."/mason/packages/java-test/extension/server/*.jar", 1), "\n"))
 
 local config = {
   cmd = {
@@ -53,7 +60,10 @@ local config = {
 
     "-jar", launcher_path,
 
-    "-configuration", vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/config_mac",
+    "-javaagent", lombok_path,
+    "-Xbootclasspath/a", lombok_path,
+
+    "-configuration", (vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/config_" )..os_name,
 
     "-data", workspace_dir,
   },
@@ -144,7 +154,7 @@ local config = {
   init_options = {
     -- jvm_args = "-javaagent:" .. vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/lombok.jar",
     -- workspace = workspace_dir .. project_name,
-    bundles = extra_bundles,
+    bundles = bundles,
     extendedClientCapabilities = extendedClientCapabilities,
     codelenses = {
       test = true,
@@ -159,9 +169,9 @@ local config = {
     ["textDocument/documentHighlight"] = function() end,
   },
   on_attach = function ()
-    jdtls.setup_dap { hotcodereplace = "auto" }
-    require("jdtls.dap").setup_dap_main_class_configs()
-    require("jdtls.setup").add_commands()
+    require "jdtls".setup_dap { hotcodereplace = "auto" }
+    require "jdtls.dap".setup_dap_main_class_configs()
+    require "jdtls.setup".add_commands()
   end
 }
 

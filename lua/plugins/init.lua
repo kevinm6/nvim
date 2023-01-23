@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 14 Jan 2023, 10:25
+--  Last Modified: 23 Jan 2023, 12:31
 -------------------------------------
 
 local M =  {
@@ -134,7 +134,8 @@ local M =  {
   },
   {
     "mfussenegger/nvim-jdtls",
-    dependencies = { "mfussenegger/nvim-dap" }
+    dependencies = { "mfussenegger/nvim-dap" },
+    ft = "java"
   },
   {
     "scalameta/nvim-metals",

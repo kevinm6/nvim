@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 03 Jan 2023, 17:34
+--  Last Modified: 23 Jan 2023, 16:57
 ----------------------------------------
 
 local M = {
@@ -192,7 +192,7 @@ function M.config()
     views = {
       cmdline_popup = {
         position = {
-          row = "50%",
+          row = "90%",
           col = "50%",
         },
         size = {
@@ -203,7 +203,7 @@ function M.config()
       popupmenu = {
         relative = "editor",
         position = {
-          row = "65%",
+          row = "83%",
           col = "50%",
         },
         size = {

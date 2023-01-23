@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 17 Jan 2023, 16:42
+-- Last Modified: 23 Jan 2023, 12:11
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -88,6 +88,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
 autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client.name == "jdtls" then return end
     -- local opts = { noremap = true, silent = true }
     vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, { buffer = args.buf, desc = "Open float" })
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, { buffer = args.buf })

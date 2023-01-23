@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 23 Jan 2023, 09:29
+-- Last Modified: 23 Jan 2023, 12:27
 -------------------------------------
 
 local icons = require "user.icons"
@@ -161,8 +161,9 @@ function M.config()
     -- and will be called for each installed server that doesn't have
     -- a dedicated handler.
     function(server_name)
-      if vim.bo.filetype == "java" or server_name == "jdtls" then return end
-      lspconfig[server_name].setup(default_lsp_config) -- default handler (optional)
+      if server_name ~= "jdtls" then
+        lspconfig[server_name].setup(default_lsp_config) -- default handler (optional)
+      end
     end,
 
     -- Next, you can provide targeted overrides for specific servers.

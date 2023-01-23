@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 23 Jan 2023, 10:42
+-- Last Modified: 23 Jan 2023, 12:24
 ---------------------------------------
 
 local M = {
@@ -541,7 +541,7 @@ function M.config()
   end, { desc = "Emoji" })
 
   vim.keymap.set("n", "<leader>fb", function()
-    telescope.extensions.file_browser.file_browser { cwd = vim.loop.cwd() }
+    telescope.extensions.file_browser.file_browser { cwd = vim.fn.getcwd() }
   end, { desc = "File Browser (CWD)" })
   vim.keymap.set("n", "<leader>fL", function()
     telescope.extensions.luasnip.luasnip()
