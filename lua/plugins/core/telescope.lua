@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 09 Jan 2023, 14:33
+-- Last Modified: 23 Jan 2023, 10:42
 ---------------------------------------
 
 local M = {
@@ -383,11 +383,15 @@ function M.config()
         },
         mappings = {
           i = {
+            ["<C-5>"] = fb_actions.goto_home_dir,
             ["<C-j>"] = "move_selection_next",
             ["<C-k>"] = "move_selection_previous",
+            ["<C-a>"] = fb_actions.toggle_all,
             ["<C-c>"] = fb_actions.create,
             ["<C-r>"] = fb_actions.rename,
             ["<C-m>"] = fb_actions.move,
+            ["<C-d>"] = fb_actions.remove,
+            ["<C-x>"] = fb_actions.change_cwd,
             -- Trash files instead of deleting them
             ["∂"] = function(prompt_bufnr)
               local action_state = require("telescope.actions.state")
@@ -427,6 +431,9 @@ function M.config()
             end,
           },
           n = {
+            ["~"] = fb_actions.goto_home_dir,
+            x = fb_actions.change_cwd,
+            a = fb_actions.toggle_all,
             m = fb_actions.move,
             c = fb_actions.create,
             -- Trash files instead of deleting them
@@ -532,6 +539,10 @@ function M.config()
       }
     }
   end, { desc = "Emoji" })
+
+  vim.keymap.set("n", "<leader>fb", function()
+    telescope.extensions.file_browser.file_browser { cwd = vim.loop.cwd() }
+  end, { desc = "File Browser (CWD)" })
   vim.keymap.set("n", "<leader>fL", function()
     telescope.extensions.luasnip.luasnip()
   end, { desc = "Luasnip" })
