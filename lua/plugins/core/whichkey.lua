@@ -2,22 +2,15 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 14 Jan 2023, 10:24
+-- Last Modified: 24 Jan 2023, 11:19
 -------------------------------------
+
+local icons = require "user.icons"
 
 local M = {
   "folke/which-key.nvim",
-  event = "BufEnter",
-  keys = {
-    { "<leader>" },
-  }
-}
-
-function M.config()
-	local wk = require "which-key"
-	local icons = require "user.icons"
-
-	wk.setup {
+  event = "VeryLazy",
+  opts = {
 	  plugins = {
 	    marks = true,
 	    registers = true,
@@ -65,31 +58,30 @@ function M.config()
 	    i = { "j", "k" },
 	    v = { "j", "k" },
 	  },
-	}
+	},
+  config = function(_, opts)
+    local wk = require "which-key"
+    wk.setup(opts)
+    wk.register(
+      {
+        mode = { "n", "v" },
+        ['0'] = { name = "Configuration File" },
+        ["<leader>A"] = { name = "Sessions" },
+        ["<leader>d"] = { name = "Dap" },
+        ["<leader>g"] = { name = "Git" },
+        ["<leader>l"] = { name = "Lsp" },
+        ["<leader>n"] = { name = "Notifications" },
+        ["<leader>f"] = { name = "Find" },
+        ["<leader>t"] = { name = "Terminal" },
+        ["<leader>T"] = { name = "Treesitter" },
+        ["<leader>u"] = { name = "University Folder" },
+        ["<leader>s"] = { name = "Surround" },
+        ["<leader>W"] = { name = "Window" },
+      })
 
-  wk.register(
-    {
-      ['0'] = { name = "Configuration File" },
-      A = { name = "Sessions" },
-      d = { name = "Dap" },
-      g = { name = "Git" },
-      l = { name = "Lsp" },
-      n = { name = "Notifications" },
-      f = { name = "Find" },
-      t = { name = "Terminal" },
-      T = { name = "Treesitter" },
-      u = { name = "University Folder" },
-      s = { name = "Surround" },
-      W = { name = "Window" },
-    }, {
-      mode = "n", -- NORMAL mode
-      prefix = "<leader>",
-      buffer = nil,
-      silent = true,
-      noremap = true,
-      nowait = true,
-    }
-  )
-end
+
+  end
+
+}
 
 return M

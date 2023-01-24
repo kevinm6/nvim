@@ -2,7 +2,7 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 17 Jan 2023, 16:23
+-- Last Modified: 24 Jan 2023, 09:34
 -------------------------------------
 
 local M = {
@@ -29,7 +29,7 @@ local M = {
       spell = false,
       list = false,
       conceallevel = 3,
-      concealcursor = "n",
+      concealcursor = "nvic",
     },
     -- Restore window options to previous values when leaving an oil buffer
     restore_win_options = true,

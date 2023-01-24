@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 17 Jan 2023, 16:37
+--  Last Modified: 24 Jan 2023, 09:39
 -------------------------------------
 
 local F = {}
@@ -284,6 +284,23 @@ function F.new_file()
       end
      end
   )
+end
+
+function F.workon()
+  local config = require('lazy.core.config')
+  vim.ui.select(vim.tbl_values(config.plugins), {
+    prompt = 'lcd to:',
+    format_item = function(plugin)
+      return string.format('%s (%s)', plugin.name, plugin.dir)
+    end,
+  }, function(plugin)
+    if not plugin then
+      return
+    end
+    vim.schedule(function()
+      vim.cmd.lcd(plugin.dir)
+    end)
+  end)
 end
 
 return F
