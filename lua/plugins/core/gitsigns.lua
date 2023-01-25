@@ -2,7 +2,7 @@
 -- File         : gitsigns.lua
 -- Description  : Lua K NeoVim & VimR gitsigns config
 -- Author       : Kevin
--- Last Modified: 02 Jan 2023, 11:40
+-- Last Modified: 25 Jan 2023, 20:28
 -------------------------------------
 
 local M = {
@@ -20,9 +20,6 @@ local M = {
     { "<leader>gd", function() require "gitsigns".diff_this() end, desc = "Diff" },
     { "<leader>gt", function() require "gitsigns".toggle_current_line_blame() end, desc = "Toggle Diff" },
   },
-  cond = function()
-    return vim.loop.fs_stat ".git"
-  end,
 }
 
 function M.config()

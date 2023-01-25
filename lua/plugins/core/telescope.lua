@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 23 Jan 2023, 12:24
+-- Last Modified: 25 Jan 2023, 20:29
 ---------------------------------------
 
 local M = {
@@ -544,7 +544,7 @@ function M.config()
     telescope.extensions.file_browser.file_browser { cwd = vim.fn.getcwd() }
   end, { desc = "File Browser (CWD)" })
   vim.keymap.set("n", "<leader>fL", function()
-    telescope.extensions.luasnip.luasnip()
+    telescope.extensions.luasnip.luasnip{}
   end, { desc = "Luasnip" })
   vim.keymap.set("n", "<leader>fs", function()
     telescope_builtin.grep_string { theme = "dropdown", previewer = false }
@@ -554,37 +554,37 @@ function M.config()
   end, { desc = "Undo" })
 
   vim.keymap.set("n", "<leader>go", function()
-    telescope_builtin.git_status()
+    telescope_builtin.git_status{}
   end, { desc = "Open changed file" })
   vim.keymap.set("n", "<leader>gb", function()
-    telescope_builtin.git_branches()
+    telescope_builtin.git_branches{}
   end, { desc = "Checkout branch" })
   vim.keymap.set("n", "<leader>gc", function()
-    telescope_builtin.git_commits()
+    telescope_builtin.git_commits {}
   end, { desc = "Checkout commit" })
-  vim.keymap.set("n", "<leader>ld", function()
+  vim.keymap.set("n", "<leader>lD", function()
     telescope_builtin.diagnostics { bufnr = 0 }
   end, { desc = "Lsp Diagnostics" })
   vim.keymap.set("n", "<leader>lr", function()
-    telescope_builtin.lsp_references()
+    telescope_builtin.lsp_references {}
   end, { desc = "Lsp References" })
-  vim.keymap.set("n", "<leader>lD", function()
-    telescope_builtin.lsp_definitions()
+  vim.keymap.set("n", "<leader>ld", function()
+    telescope_builtin.lsp_definitions{}
   end, { desc = "Lsp Definitions" })
   vim.keymap.set("n", "<leader>lt", function()
-    telescope_builtin.lsp_type_definitions()
+    telescope_builtin.lsp_type_definitions{}
   end, { desc = "Lsp Type Definitions" })
   vim.keymap.set("n", "<leader>li", function()
-    telescope_builtin.lsp_incoming_calls()
+    telescope_builtin.lsp_incoming_calls{}
   end, { desc = "Lsp InCalls" })
   vim.keymap.set("n", "<leader>lo", function()
-    telescope_builtin.lsp_outgoing_calls()
+    telescope_builtin.lsp_outgoing_calls{}
   end, { desc = "Lsp OutCalls" })
   vim.keymap.set("n", "<leader>ls", function()
-    telescope_builtin.lsp_document_symbols()
+    telescope_builtin.lsp_document_symbols{}
   end, { desc = "Document Symbols" })
   vim.keymap.set("n", "<leader>lS", function()
-    telescope_builtin.lsp_dynamic_workspace_symbols()
+    telescope_builtin.lsp_dynamic_workspace_symbols{}
   end, { desc = "Workspace Symbols" })
 
 end
