@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 23 Jan 2023, 12:27
+-- Last Modified: 26 Jan 2023, 08:57
 -------------------------------------
 
 local icons = require "user.icons"
@@ -143,9 +143,12 @@ function M.config()
       require "inlay-hints".on_attach(client, bufnr)
     end
 
+    if client.server_capabilities.documentSymbolProvider then
+      require "nvim-navic".attach(client, bufnr)
+    end
+
     require "plugins.lsp.handlers".setup()
     require "plugins.lsp.codelens".run()
-    require "nvim-navic".attach(client, bufnr)
   end
 
   local default_lsp_config = {
