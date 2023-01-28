@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 17 Jan 2023, 16:59
+-- Last Modified: 27 Jan 2023, 13:04
 -----------------------------------------
 
 local S = {}
@@ -221,7 +221,7 @@ S.on = function()
   local ftype = get_filetype()
 
   -- Right Side
-  local rightSide = ("%s%s%s%s %s%s  %s%s[%s] %s%s%s"):format(
+  local rightSide = ("%s%s%s %s %s%s  %s%s[%s] %s%s%s"):format(
     colors.empty, icons.ui.SlArrowLeft,
     colors.ftype, ftype.icon or "", ftype.name,
     colors.encoding, get_fencoding(),
