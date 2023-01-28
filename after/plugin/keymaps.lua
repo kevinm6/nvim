@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 17 Jan 2023, 16:27
+-- Last Modified: 28 Jan 2023, 19:31
 -------------------------------------
 
 local set_opts = function(opts)
@@ -124,6 +124,7 @@ set_keymap("n", "D", [["_D]], set_opts {})
 -- Window managing
 set_keymap("n", "<leader>Ws", function() vim.cmd.split {} end, set_opts { desc = "HSplit" })
 set_keymap("n", "<leader>Wv", function() vim.cmd.vsplit {} end, set_opts { desc = "VSplit" })
+set_keymap("n", "<leader>W=", "<C-w>=", set_opts { desc = "Window equals" })
 
 -- resize windows
 set_keymap("n", "<S-Up>", function() vim.cmd.resize "+2" end)
@@ -155,28 +156,9 @@ set_keymap("n", "ZA", ":%bdelete | :Alpha<CR>", set_opts { desc = "Close all Buf
 set_keymap({ "n", "v" }, "<leader>ft", function() require "plugins.translate".translate() end, set_opts { desc = "Translate" })
 
 -- University Folders
-set_keymap("n", "<leader>u11m", function() vim.cmd.cd "$CS/Anno1/Semestre1/Matematica del Continuo/" end, set_opts { desc = "Matematica Continuo" })
-
-set_keymap("n", "<leader>u12a", function() vim.cmd.cd "$CS/Anno1/Semestre2/Architettura degli Elaboratori II/" end, set_opts { desc = "Arch. Elaboratori II" })
-set_keymap("n", "<leader>u12l", function() vim.cmd.cd "$CS/Anno1/Semestre2/Logica Matematica/" end, set_opts { desc = "Logica Matematica" })
-set_keymap("n", "<leader>u12m", function() vim.cmd.cd "$CS/Anno1/Semestre2/Matematica del Discreto/" end, set_opts { desc = "Matematica Discreto" })
-
-set_keymap("n", "<leader>u21a", function() vim.cmd.cd "$CS/Anno2/Semestre1/Algoritmi e Strutture Dati/" end, set_opts { desc = "Algoritmi e Strutture Dati" })
-set_keymap("n", "<leader>u21b", function() vim.cmd.cd "$CS/Anno2/Semestre1/Basi di Dati/" end, set_opts { desc = "Basi di Dati" })
-set_keymap("n", "<leader>u21p", function() vim.cmd.cd "$CS/Anno2/Semestre1/Programmazione II/" end, set_opts { desc = "Programmazione II" })
-
-set_keymap("n", "<leader>u22s", function() vim.cmd.cd "$CS/Anno2/Semestre2/Sistemi Operativi/" end, set_opts { desc = "Sistemi Operativi" })
-set_keymap("n", "<leader>u22S", function() vim.cmd.cd "$CS/Anno2/Semestre2/S&AD/" end, set_opts { desc = "Statistica & Analisi Dati" })
-
-set_keymap("n", "<leader>u31c", function() vim.cmd.cd "$CS/Anno3/Semestre1/Crittografia I/" end, set_opts { desc = "Crittografia I" })
-set_keymap("n", "<leader>u31i", function() vim.cmd.cd "$CS/Anno3/Semestre1/Intelligenza Artificiale I/" end, set_opts { desc = "Intelligenza Artificiale I" })
-set_keymap("n", "<leader>u31I", function() vim.cmd.cd "$CS/Anno3/Semestre1/Ingegneria del Software/" end, set_opts { desc = "Ingegneria Software" })
-set_keymap("n", "<leader>u31r", function() vim.cmd.cd "$CS/Anno3/Semestre1/Reti di Calcolatori/" end, set_opts { desc = "Reti di Calcolatori" })
-set_keymap("n", "<leader>u31s", function() vim.cmd.cd "$CS/Anno3/Semestre1/Sicurezza & Privatezza/" end, set_opts { desc = "Sicurezza & Privatezza" })
-set_keymap("n", "<leader>u31l", function() vim.cmd.cd "$CS/Anno3/Semestre1/Linguaggi di Programmazione/" end, set_opts { desc = "Linguaggi di Programmazione" })
-
-set_keymap("n", "<leader>u32t", function() vim.cmd.cd "$CS/Anno3/Semestre2/Tecnologie & Linguaggi per il Web/" end, set_opts { desc = "Tecnologie Web" })
-
+set_keymap("n", "<leader>U", function()
+    require "telescope".extensions.file_browser.file_browser { cwd = "~/Informatica/" }
+end, set_opts { desc = "University Folder" })
 
 -- TERMINAL MODE
 set_keymap("t", "<Esc>", "<C-\\><C-n>", set_opts {})

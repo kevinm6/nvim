@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 24 Jan 2023, 09:39
+--  Last Modified: 28 Jan 2023, 19:31
 -------------------------------------
 
 local F = {}
@@ -43,11 +43,6 @@ function F.remove_augroup(name)
   end
 end
 
--- vim.api.nvim_buf_create_user_command(0, "SnipRunToggle",
---   require("user.functions").toggle_sniprun(),
---   { force = true, desc = "Toggle SnipRun plugin" }
--- )
-
 -- get length of current word
 function F.get_word_length()
   local word = vim.fn.expand "<cword>"
@@ -84,56 +79,23 @@ function F.toggle_diagnostics()
   end
 end
 
------------------------------------------------------
-
--- -- Autosource/autoreload modified modules
--- local source = { re = [[\v%(^|/)%(lua/)\zs.{-}\ze%(/init)?\.lua$]] }
--- local user = {}
-
--- -- For use with SourceCmd autocmd event
--- function M.source.reload_module(filename)
---   local relative = vim.fn.matchstr(filename, [[\v%(^|/)%(lua/)\zs.{-}%(/init)?\.lua$]])
---   local module = vim.fn.matchstr(relative, [[\v.{-}\ze%(/init)?\.lua$]])
---   local parent = vim.split(module, '/')[1]
---   module = module:gsub('/', '.')
---   if module == '' then
---     dofile(filename)
---     -- vim.notify(string.format('Reloaded %s', filename))
---     return
---   end
-
---   if parent == 'user' then
---     -- package.loaded[module]
---     package.loaded[module] = dofile(filename)
---     vim.notify(string.format('Reloaded %s', relative))
---     return
---   end
-
---   user.last_reloaded = source.unload(parent)
---   table.sort(user.last_reloaded)
-
---   package.loaded[module] = dofile(filename) or true
---   for _, name in ipairs(user.last_reloaded) do
---     if name ~= module then
---       require(name)
---     end
---   end
-
---   vim.notify(string.format('Reloaded %s and all "%s" submodules', relative, parent))
--- end
-
--- function M.source.unload(name)
---   local _re = '^' .. name
---   user.last_reloaded = {}
---   local unloaded = {}
---   for submod, _ in pairs(package.loaded) do
---     if submod:match(_re) then
---       package.loaded[submod] = nil
---       unloaded[#unloaded+1] = submod
---     end
---   end
---   return unloaded
--- end
+-- UNIVERSITY FOLDER
+function F.university_folder()
+  local university_paths = vim.fn.expand "~/Informatica/"
+  local folders = vim.list_extend({}, vim.split(vim.fn.globpath(university_paths, "*"), "\n"))
+  if #folders > 0 then
+    vim.ui.select(folders, {
+      prompt = " > Select university folder",
+      default = nil,
+     }, function(choice)
+          if choice then
+            vim.cmd.cd(choice)
+         end
+     end)
+  else
+    vim.notify("No Sessions to restore", "Warn")
+  end
+end
 
 
 -- SESSIONS
