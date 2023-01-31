@@ -2,7 +2,7 @@
 --	File: null-ls.lua
 --	Description: null-ls plugin config
 --	Author: Kevin
---	Last Modified: 06 Jan 2023, 12:35
+--	Last Modified: 29 Jan 2023, 11:49
 -----------------------------------
 
 local M = {
@@ -42,6 +42,25 @@ function M.init(opts)
     on_attach = opts.on_attach,
     root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".git"),
   }
+
+  -- CUSTOM null-ls action
+  -- HACK: This is just an example for future use
+  -- nls.register {
+  --   name = 'my-actions',
+  --   method = { require'null-ls'.methods.CODE_ACTION },
+  --   filetypes = { '_all' },
+  --   generator = {
+  --     fn = function()
+  --       return {{
+  --         title = 'add "hello world"',
+  --         action = function()
+  --           local current_row = vim.api.nvim_win_get_cursor(0)[1]
+  --           vim.api.nvim_buf_set_lines(0, current_row, current_row, true, {'hi mom'})
+  --         end
+  --       }}
+  --     end
+  --   }
+  -- }
 end
 
 return M

@@ -2,7 +2,7 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 28 Dec 2022, 19:31
+-- Last Modified: 31 Jan 2023, 10:39
 -------------------------------------
 
 local M = {
@@ -18,7 +18,7 @@ local M = {
     { "<leader>tl", function() _LAZYGIT_TOGGLE() end, desc = "LazyGit" },
     { "<leader>tn", function() _NCDU_TOGGLE() end, desc = "Ncdu" },
     { "<leader>tf", function() vim.cmd "ToggleTerm direction=float" end, desc = "Float" },
-    { "<leader>th", function() vim.cmd "ToggleTerm direction=horizontal size=16" end,
+    { "<leader>th", function() vim.cmd "ToggleTerm direction=horizontal size=25" end,
       desc = "Horizontal" },
     { "<leader>tv", function() vim.cmd "ToggleTerm direction=vertical size=80" end,
       desc = "Vertical" },
