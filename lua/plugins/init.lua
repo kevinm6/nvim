@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 23 Jan 2023, 12:31
+--  Last Modified: 05 Feb 2023, 15:43
 -------------------------------------
 
 local M =  {
