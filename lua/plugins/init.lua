@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 05 Feb 2023, 15:43
+--  Last Modified: 06 Feb 2023, 09:36
 -------------------------------------
 
 local M =  {
@@ -167,12 +167,11 @@ local M =  {
   },
 
   {
-    "jpalardy/vim-slime",
-    -- event = "BufAdd",
-    keys = {
-      { "<leader>Cc", function() vim.cmd.SlimeSendCurrentLine {} end, remap = true, silent = true, desc = "Send Cell" },
-      { "<leader>Cv", function() vim.cmd.SlimeParagraphSend {} end, remap = true, silent = true, desc = "Send Paragraph" },
-    },
+    "phaazon/mind.nvim",
+    version = 'v2.2',
+    dependencies = "nvim-lua/plenary.nvim",
+    cmd = { "MindOpenMain", "MindOpenProject", "MindOpenSmartProject", "MindClose" },
+    config = function () require "mind".setup {} end
   },
 
   -- Coding Helper
