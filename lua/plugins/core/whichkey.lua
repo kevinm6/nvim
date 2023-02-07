@@ -2,10 +2,10 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 28 Jan 2023, 19:24
+-- Last Modified: 07 Feb 2023, 18:53
 -------------------------------------
 
-local icons = require "user.icons"
+local icons = require "util.icons"
 
 local M = {
   "folke/which-key.nvim",

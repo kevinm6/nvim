@@ -2,10 +2,10 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 26 Jan 2023, 08:57
+-- Last Modified: 07 Feb 2023, 18:51
 -------------------------------------
 
-local icons = require "user.icons"
+local icons = require "util.icons"
 local servers_to_install = {
   "sumneko_lua", "vimls", "emmet_ls",
   "pyright", "jsonls", "gopls", "yamlls",

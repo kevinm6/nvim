@@ -2,7 +2,7 @@
 --	File         : navic.lua
 --	Description  : gps-like plugin config
 --	Author       : Kevin
---	Last Modified: 26 Jan 2023, 08:58
+--	Last Modified: 07 Feb 2023, 18:53
 -----------------------------------
 
 local M = {
@@ -13,7 +13,7 @@ local M = {
 
 function M.config()
   local navic = require "nvim-navic"
-  local icons = require "user.icons"
+  local icons = require "util.icons"
   vim.g.navic_silence = false -- disable error messages
 
   -- Customized config

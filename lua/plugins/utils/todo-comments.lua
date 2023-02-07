@@ -2,7 +2,7 @@
 -- File         : todo-comments.lua
 -- Description  : todo-comments plugin config
 -- Author       : Kevin
--- Last Modified: 03 Jan 2023, 18:49
+-- Last Modified: 07 Feb 2023, 18:53
 -----------------------------------
 
 local M = {
@@ -15,7 +15,7 @@ local M = {
 function M.config()
   local todo_comments = require "todo-comments"
 
-  local icons = require "user.icons"
+  local icons = require "util.icons"
 
   local error_red = "#F44747"
   local warning_orange = "#ff8800"

@@ -2,7 +2,7 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 05 Jan 2023, 15:16
+-- Last Modified: 07 Feb 2023, 18:51
 -------------------------------------
 
 local M = {
@@ -56,7 +56,7 @@ end
 
 function M.config()
   local nvim_tree = require "nvim-tree"
-  local icons = require "user.icons"
+  local icons = require "util.icons"
   local api = require "nvim-tree.api"
 
 

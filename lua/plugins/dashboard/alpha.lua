@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 02 Feb 2023, 09:34
+--	Last Modified: 07 Feb 2023, 18:53
 -----------------------------------
 
 local M = {
@@ -12,7 +12,7 @@ local M = {
 
 function M.config()
   local alpha = require "alpha"
-  local icons = require "user.icons"
+  local icons = require "util.icons"
   local dashboard = require "alpha.themes.dashboard"
 
   local newline = [[

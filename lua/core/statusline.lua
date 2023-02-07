@@ -2,12 +2,14 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 27 Jan 2023, 13:04
+-- Last Modified: 07 Feb 2023, 18:50
 -----------------------------------------
 
-local S = {}
+local S = {
+  "~/.config/nvim/lua/core/statusline.lua",
+}
 
-local icons = require "user.icons"
+local icons = require "util.icons"
 
 local diag_cached = ""
 

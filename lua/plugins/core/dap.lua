@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 03 Jan 2023, 18:47
+--  Last Modified: 07 Feb 2023, 18:53
 -----------------------------------
 
 local M = {
@@ -207,7 +207,7 @@ function M.config()
     },
   }
 
-  local icons = require "user.icons"
+  local icons = require "util.icons"
   local has_dapui, dapui = pcall(require, "dapui")
   if has_dapui then
     dapui.setup {

@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 25 Jan 2023, 20:29
+-- Last Modified: 07 Feb 2023, 18:55
 ---------------------------------------
 
 local M = {
@@ -30,7 +30,7 @@ local M = {
     { "<leader>fr", function() require "telescope.builtin".oldfiles() end, desc = "Recent File" },
     { "<leader>fR", function() require "telescope.builtin".registers() end, desc = "Registers" },
     { "<leader>fk", function() require "telescope.builtin".keymaps() end, desc = "Keymaps" },
-    { "<leader>fl", function() require "telescope.builtin".resume() end, desc = "Keymaps" },
+    { "<leader>fl", function() require "telescope.builtin".resume() end, desc = "Resume last" },
   }
 }
 
@@ -57,11 +57,12 @@ end
 
 function M.config()
   local telescope = require "telescope"
-  local icons = require "user.icons"
+  local icons = require "util.icons"
 
   local actions = require "telescope.actions"
   local action_layout = require "telescope.actions.layout"
   local fb_actions = require "telescope".extensions.file_browser.actions
+  local action_state = require "telescope.actions.state"
 
   telescope.setup {
     defaults = {
@@ -91,7 +92,16 @@ function M.config()
           ["<Down>"] = "move_selection_next",
           ["<Up>"] = "move_selection_previous",
 
-          ["<CR>"] = "select_default",
+          ["<CR>"] = function(pb)
+            local picker = action_state.get_current_picker(pb)
+              local multi = picker:get_multi_selection()
+              actions.select_default(pb) -- the normal enter behaviour
+              for _, j in pairs(multi) do
+                if j.path ~= nil then -- is it a file -> open it as well:
+                  vim.cmd(string.format("%s %s", "edit", j.path))
+                end
+              end
+          end,
           ["<C-l>"] = "select_default",
           ["<C-s>"] = "select_horizontal",
           ["<C-v>"] = "select_vertical",
@@ -216,7 +226,7 @@ function M.config()
         theme = "dropdown",
         sort_mru = true,
         previewer = false,
-        initial_mode = "normal",
+        initial_mode = "insert",
         sorting_strategy = "descending",
         layout_config = {
           prompt_position = "bottom"

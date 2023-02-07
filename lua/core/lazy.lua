@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 24 Jan 2023, 09:34
+-- Last Modified: 06 Feb 2023, 21:15
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -54,7 +54,7 @@ lazy.setup({
       -- directory where you store your local plugin projects
       path = "~/dev",
       ---@type string[] plugins that match these patterns will use your local versions instead of being fetched from GitHub
-      patterns = {}, -- For example {"folke"}
+      patterns = { "knvim" }, -- For example {"folke"}
     },
     install = {
       -- install missing plugins on startup. This doesn't increase startup time.
@@ -138,3 +138,24 @@ lazy.setup({
 
 vim.keymap.set("n", "<leader>L", function() vim.cmd.Lazy() end, { desc = "Package Manager" })
 
+local Util = require "lazy.util"
+local modules = {
+  "config.prefs",
+  "config.vars",
+  "config.autocommands",
+  "config.keymaps"
+}
+
+for _, mod in ipairs(modules) do
+  Util.try(function()
+    require(mod)
+  end, {
+      msg = "Failed loading " .. mod,
+      on_error = function(msg)
+        local modpath = require "lazy.core.cache".find(mod)
+        if modpath then
+          Util.error(msg)
+        end
+      end,
+    })
+end

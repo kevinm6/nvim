@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : NeoVim configuration
 -- Author       : Kevin
--- Last Modified: 14 Jan 2023, 12:29
+-- Last Modified: 06 Feb 2023, 21:30
 --------------------------------------
 
 -- Set leader key
@@ -24,4 +24,4 @@ else
   vim.opt.shadafile = vim.fn.stdpath "cache" .. "/shada/main.shada"
 end
 
-require "config.lazy"
+require "core.lazy"

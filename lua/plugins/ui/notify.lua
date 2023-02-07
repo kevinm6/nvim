@@ -2,7 +2,7 @@
 --	File         : notify.lua
 --	Description  : notify plugin configuration
 --	Author       : Kevin
---	Last Modified: 03 Jan 2023, 18:47
+--	Last Modified: 07 Feb 2023, 18:51
 -----------------------------------
 
 local M = {
@@ -12,7 +12,7 @@ local M = {
 
 function M.config()
 	local notify = require "notify"
-	local icons = require "user.icons"
+	local icons = require "util.icons"
 
 	notify.setup {
 	  -- Animation style (see below for details)

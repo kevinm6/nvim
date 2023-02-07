@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 06 Feb 2023, 09:36
+--  Last Modified: 07 Feb 2023, 19:13
 -------------------------------------
 
 local M =  {
@@ -104,20 +104,21 @@ local M =  {
   {
     "br1anchen/nvim-colorizer.lua",
     cmd = "ColorizerToggle",
-    opts = {{ "*" }, {
-      RGB = true,          -- #RGB hex codes
-      RRGGBB = true,       -- #RRGGBB hex codes
-      names = true,        -- "Name" codes like Blue oe blue
-      RRGGBBAA = false,    -- #RRGGBBAA hex codes
-      rgb_fn = false,      -- CSS rgb() and rgba() functions
-      hsl_fn = false,      -- CSS hsl() and hsla() functions
-      css = false,         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-      css_fn = false,      -- Enable all CSS *functions*: rgb_fn, hsl_fn
-                           -- Available modes: foreground, background, virtualtext
-      mode = "background", -- Set the display mode.)
-    }}
+    config = function ()
+      require "colorizer".setup({"*"}, {
+        RGB = true,          -- #RGB hex codes
+        RRGGBB = true,       -- #RRGGBB hex codes
+        names = true,        -- "Name" codes like Blue oe blue
+        RRGGBBAA = false,    -- #RRGGBBAA hex codes
+        rgb_fn = false,      -- CSS rgb() and rgba() functions
+        hsl_fn = false,      -- CSS hsl() and hsla() functions
+        css = false,         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = false,      -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                             -- Available modes: foreground, background, virtualtext
+        mode = "background", -- Set the display mode.)
+    })
+    end
   },
-
   {
     "lukas-reineke/indent-blankline.nvim",
     cmd = "IndentBlanklineToggle",

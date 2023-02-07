@@ -1,6 +1,12 @@
+-----------------------------------------
+-- File         : winbar.lua
+-- Description  : Personal winbar config w/ navic
+-- Author       : Kevin Manca
+-- Last Modified: 07 Feb 2023, 18:50
+-----------------------------------------
+
 local M = {
-  "~/.config/nvim/lua/winbar.lua",
-  event = "BufEnter",
+  "~/.config/nvim/lua/core/winbar.lua",
 }
 
 local navic = require "nvim-navic"
@@ -45,7 +51,7 @@ end
 M.gps = function()
   local location = navic.get_location()
 
-  local icons = require "user.icons"
+  local icons = require "util.icons"
 
   local retval = M.filename()
 
