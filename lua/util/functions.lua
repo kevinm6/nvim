@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 28 Jan 2023, 19:31
+--  Last Modified: 11 Feb 2023, 09:16
 -------------------------------------
 
 local F = {}
@@ -79,22 +79,21 @@ function F.toggle_diagnostics()
   end
 end
 
--- UNIVERSITY FOLDER
-function F.university_folder()
-  local university_paths = vim.fn.expand "~/Informatica/"
-  local folders = vim.list_extend({}, vim.split(vim.fn.globpath(university_paths, "*"), "\n"))
-  if #folders > 0 then
-    vim.ui.select(folders, {
-      prompt = " > Select university folder",
-      default = nil,
-     }, function(choice)
-          if choice then
-            vim.cmd.cd(choice)
-         end
-     end)
-  else
-    vim.notify("No Sessions to restore", "Warn")
-  end
+-- Dev FOLDER
+function F.dev_folder()
+  local dev_folders = {
+    vim.fn.expand "~/dev",
+    vim.fn.expand "~/Documents/developer"
+  }
+  require "telescope"
+  vim.ui.select(dev_folders, {
+    prompt = " > Select dev folder",
+    default = nil,
+   }, function(choice)
+        if choice then
+          require "telescope".extensions.file_browser.file_browser { cwd = choice }
+       end
+   end)
 end
 
 
@@ -102,6 +101,7 @@ end
 function F.delete_session()
   local sessions_data_stdpath = vim.fn.stdpath "data".."/sessions/"
   local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
+  require("telescope")
   vim.ui.select(sessions, {
     prompt = "Select session to delete:",
     default = nil,
@@ -119,6 +119,7 @@ function F.restore_session()
   local sessions_data_stdpath = vim.fn.stdpath "data".."/sessions/"
   local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
   if #sessions > 0 then
+    require("telescope")
     vim.ui.select(sessions, {
       prompt = " > Select session to restore",
       default = nil,
@@ -137,6 +138,7 @@ function F.restore_session()
 end
 
 function F.save_session()
+  require("telescope")
   vim.ui.input({
     prompt = "Enter session name: ",
     default = nil,
@@ -153,53 +155,53 @@ end
 -- END SESSIONS
 
 function F.align(pat)
-    local top, bot = vim.fn.getpos("'<"), vim.fn.getpos("'>")
-    F.align_lines(pat, top[2] - 1, bot[2])
-    vim.fn.setpos("'<", top)
-    vim.fn.setpos("'>", bot)
+  local top, bot = vim.fn.getpos("'<"), vim.fn.getpos("'>")
+  F.align_lines(pat, top[2] - 1, bot[2])
+  vim.fn.setpos("'<", top)
+  vim.fn.setpos("'>", bot)
 end
 
 function F.align_lines(pat, startline, endline)
-    local re = vim.regex(pat)
-    local max = -1
-    local lines = vim.api.nvim_buf_get_lines(0, startline, endline, false)
-    for _, line in pairs(lines) do
-        local s = re:match_str(line)
-        s = vim.str_utfindex(line, s)
-        if s and max < s then
-            max = s
-        end
+  local re = vim.regex(pat)
+  local max = -1
+  local lines = vim.api.nvim_buf_get_lines(0, startline, endline, false)
+  for _, line in pairs(lines) do
+    local s = re:match_str(line)
+    s = vim.str_utfindex(line, s)
+    if s and max < s then
+      max = s
     end
+  end
 
-    if max == -1 then return end
+  if max == -1 then return end
 
-    for i, line in pairs(lines) do
-        local s = re:match_str(line)
-        s = vim.str_utfindex(line, s)
-        if s then
-            local rep = max - s
-            local newline = {
-                string.sub(line, 1, s),
-                string.rep(' ', rep),
-                string.sub(line, s + 1),
-            }
-            lines[i] = table.concat(newline)
-        end
+  for i, line in pairs(lines) do
+    local s = re:match_str(line)
+    s = vim.str_utfindex(line, s)
+    if s then
+      local rep = max - s
+      local newline = {
+          string.sub(line, 1, s),
+          string.rep(' ', rep),
+          string.sub(line, s + 1),
+      }
+      lines[i] = table.concat(newline)
     end
+  end
 
-    vim.api.nvim_buf_set_lines(0, startline, endline, false, lines)
+  vim.api.nvim_buf_set_lines(0, startline, endline, false, lines)
 end
 
 function F.range_format()
   local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
-      local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
-      vim.lsp.buf.format({
-          range = {
-              ["start"] = { start_row, 0 },
-              ["end"] = { end_row, 0 },
-          },
-          async = true,
-      })
+  local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
+  vim.lsp.buf.format({
+      range = {
+          ["start"] = { start_row, 0 },
+          ["end"] = { end_row, 0 },
+      },
+      async = true,
+  })
 end
 
 

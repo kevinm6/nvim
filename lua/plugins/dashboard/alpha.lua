@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 09 Feb 2023, 10:20
+--	Last Modified: 11 Feb 2023, 09:07
 -----------------------------------
 
 local M = {
@@ -44,14 +44,14 @@ function M.config()
 
   dashboard.section.buttons.val = {
     dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'util.functions'.new_file()<CR>"),
-    dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>e ~/Documents/Notes/notes.md <BAR> startinsert <CR>"),
+    dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>MindOpenMain<CR>"),
     dashboard.button("e", icons.documents.OpenFolder .. " Explorer", "<cmd>lua require 'oil'.open()<CR>"),
     dashboard.button("t", icons.ui.Telescope .. " Open Telescope", "<cmd>lua require 'telescope.builtin'.builtin()<CR>"),
     dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>lua require 'telescope.builtin'.find_files()<CR>"),
     dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>lua require 'telescope.builtin'.oldfiles()<CR>"),
     dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>lua require 'telescope'.extensions.project.project{}<CR>"),
     dashboard.button("u", icons.ui.Uni .. " University", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$CS"}<CR>]]),
-    dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "~/Documents/Developer" }<CR>]]),
+    dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "util.functions".dev_folder()<CR>]]),
     dashboard.button("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
     dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration", "<cmd>e $NVIMDOTDIR/lua/plugins/init.lua<CR>"),
     dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
