@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 03 Feb 2023, 16:10
+-- Last Modified: 14 Feb 2023, 18:40
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -256,7 +256,7 @@ autocmd({ "BufReadPost" }, {
 autocmd({ "FileType" }, {
   group = _general_settings,
   pattern = { "gitcommit", "gitrebase" },
-  callback = function() vim.api.startinsert() end
+  callback = function() vim.cmd.startinsert() end
 })
 
 

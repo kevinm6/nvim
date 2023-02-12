@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : sumneko_lua.lua
+-- File         : lua_ls.lua
 -- Description  : lua lsp config
 -- Author       : Kevin
--- Last Modified: 04 Jan 2023, 10:10
+-- Last Modified: 12 Feb 2023, 09:55
 -------------------------------------
 
 local runtime_path = vim.split(package.path, ';')

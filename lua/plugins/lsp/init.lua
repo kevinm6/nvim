@@ -2,12 +2,12 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 07 Feb 2023, 18:51
+-- Last Modified: 12 Feb 2023, 20:12
 -------------------------------------
 
 local icons = require "util.icons"
 local servers_to_install = {
-  "sumneko_lua", "vimls", "emmet_ls",
+  "lua_ls", "vimls", "emmet_ls",
   "pyright", "jsonls", "gopls", "yamlls",
   "html", "asm_lsp", "bashls", "clangd",
   "intelephense", "ocamllsp", "erlangls"
@@ -171,8 +171,8 @@ function M.config()
 
     -- Next, you can provide targeted overrides for specific servers.
     -- Manage server with custom setup
-    ["sumneko_lua"] = function() lspconfig.sumneko_lua.setup(vim.tbl_deep_extend("force", default_lsp_config,
-      require "plugins.lsp.configs.sumneko_lua"))
+    ["lua_ls"] = function() lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", default_lsp_config,
+      require "plugins.lsp.configs.lua_ls"))
     end,
     ["jsonls"] = function() lspconfig.jsonls.setup(vim.tbl_deep_extend("force", default_lsp_config,
       require "plugins.lsp.configs.jsonls"))

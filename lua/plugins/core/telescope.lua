@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 07 Feb 2023, 18:55
+-- Last Modified: 12 Feb 2023, 10:27
 ---------------------------------------
 
 local M = {
@@ -31,6 +31,34 @@ local M = {
     { "<leader>fR", function() require "telescope.builtin".registers() end, desc = "Registers" },
     { "<leader>fk", function() require "telescope.builtin".keymaps() end, desc = "Keymaps" },
     { "<leader>fl", function() require "telescope.builtin".resume() end, desc = "Resume last" },
+    { "<leader>fC", function() require "telescope.builtin".colorscheme() end, desc = "Colorscheme" },
+    { "<leader>fe", function() require "telescope".extensions.env.env() end, desc = "Environment" },
+    { "<leader>fE", function() require "telescope".extensions.emoji.emoji {
+      theme = "cursor", initial_mode = "insert",
+        layout_strategy = "cursor",
+        layout_config = {
+          height = 0.4,
+          width = 0.5
+        }
+      }
+    end, desc = "Emoji" },
+
+    { "<leader>fb", function() require "telescope".extensions.file_browser.file_browser { cwd = vim.fn.getcwd() } end, desc = "File Browser (CWD)" },
+    { "<leader>fL", function() require "telescope".extensions.luasnip.luasnip{} end, desc = "Luasnip" },
+    { "<leader>fs", function() require "telescope.builtin".grep_string { theme = "dropdown", previewer = false } end, desc = "Grep string under cursor" },
+    { "<leader>fu", function() require "telescope".extensions.undo.undo() end, desc = "Undo" },
+
+    { "<leader>go", function() require "telescope.builtin".git_status{} end, desc = "Open changed file" },
+    { "<leader>gb", function() require "telescope.builtin".git_branches{} end, desc = "Checkout branch" },
+    { "<leader>gc", function() require "telescope.builtin".git_commits {} end, desc = "Checkout commit" },
+    { "<leader>lD", function() require "telescope.builtin".diagnostics { bufnr = 0 } end, desc = "Lsp Diagnostics" },
+    { "<leader>lr", function() require "telescope.builtin".lsp_references {} end, desc = "Lsp References" },
+    { "<leader>ld", function() require "telescope.builtin".lsp_definitions{} end, desc = "Lsp Definitions" },
+    { "<leader>lt", function() require "telescope.builtin".lsp_type_definitions{} end, desc = "Lsp Type Definitions" },
+    { "<leader>li", function() require "telescope.builtin".lsp_incoming_calls{} end, desc = "Lsp InCalls" },
+    { "<leader>lo", function() require "telescope.builtin".lsp_outgoing_calls{} end, desc = "Lsp OutCalls" },
+    { "<leader>ls", function() require "telescope.builtin".lsp_document_symbols{} end, desc = "Document Symbols" },
+    { "<leader>lS", function() require "telescope.builtin".lsp_dynamic_workspace_symbols{} end, desc = "Workspace Symbols" },
   }
 }
 
@@ -94,13 +122,13 @@ function M.config()
 
           ["<CR>"] = function(pb)
             local picker = action_state.get_current_picker(pb)
-              local multi = picker:get_multi_selection()
-              actions.select_default(pb) -- the normal enter behaviour
-              for _, j in pairs(multi) do
-                if j.path ~= nil then -- is it a file -> open it as well:
-                  vim.cmd(string.format("%s %s", "edit", j.path))
-                end
+            local multi = picker:get_multi_selection()
+            actions.select_default(pb) -- the normal enter behaviour
+            for _, j in pairs(multi) do
+              if j.path ~= nil then -- is it a file -> open it as well:
+                vim.cmd(string.format("%s %s", "edit", j.path))
               end
+            end
           end,
           ["<C-l>"] = "select_default",
           ["<C-s>"] = "select_horizontal",
@@ -528,75 +556,6 @@ function M.config()
 
   telescope.load_extension "file_browser"
   telescope.load_extension "ui-select"
-
-  -- Keymaps
-  local telescope_builtin = require "telescope.builtin"
-
-  vim.keymap.set("n", "<leader>fC", function()
-    telescope_builtin.colorscheme()
-  end, { desc = "Colorscheme" })
-  vim.keymap.set("n", "<leader>fe", function()
-    telescope.extensions.env.env()
-  end, { desc = "Environment" })
-  vim.keymap.set("n", "<leader>fE", function()
-    telescope.extensions.emoji.emoji {
-      theme = "cursor",
-      initial_mode = "insert",
-      layout_strategy = "cursor",
-      layout_config = {
-        height = 0.4,
-        width = 0.5
-      }
-    }
-  end, { desc = "Emoji" })
-
-  vim.keymap.set("n", "<leader>fb", function()
-    telescope.extensions.file_browser.file_browser { cwd = vim.fn.getcwd() }
-  end, { desc = "File Browser (CWD)" })
-  vim.keymap.set("n", "<leader>fL", function()
-    telescope.extensions.luasnip.luasnip{}
-  end, { desc = "Luasnip" })
-  vim.keymap.set("n", "<leader>fs", function()
-    telescope_builtin.grep_string { theme = "dropdown", previewer = false }
-  end, { desc = "Grep string under cursor" })
-  vim.keymap.set("n", "<leader>fu", function()
-    telescope.extensions.undo.undo()
-  end, { desc = "Undo" })
-
-  vim.keymap.set("n", "<leader>go", function()
-    telescope_builtin.git_status{}
-  end, { desc = "Open changed file" })
-  vim.keymap.set("n", "<leader>gb", function()
-    telescope_builtin.git_branches{}
-  end, { desc = "Checkout branch" })
-  vim.keymap.set("n", "<leader>gc", function()
-    telescope_builtin.git_commits {}
-  end, { desc = "Checkout commit" })
-  vim.keymap.set("n", "<leader>lD", function()
-    telescope_builtin.diagnostics { bufnr = 0 }
-  end, { desc = "Lsp Diagnostics" })
-  vim.keymap.set("n", "<leader>lr", function()
-    telescope_builtin.lsp_references {}
-  end, { desc = "Lsp References" })
-  vim.keymap.set("n", "<leader>ld", function()
-    telescope_builtin.lsp_definitions{}
-  end, { desc = "Lsp Definitions" })
-  vim.keymap.set("n", "<leader>lt", function()
-    telescope_builtin.lsp_type_definitions{}
-  end, { desc = "Lsp Type Definitions" })
-  vim.keymap.set("n", "<leader>li", function()
-    telescope_builtin.lsp_incoming_calls{}
-  end, { desc = "Lsp InCalls" })
-  vim.keymap.set("n", "<leader>lo", function()
-    telescope_builtin.lsp_outgoing_calls{}
-  end, { desc = "Lsp OutCalls" })
-  vim.keymap.set("n", "<leader>ls", function()
-    telescope_builtin.lsp_document_symbols{}
-  end, { desc = "Document Symbols" })
-  vim.keymap.set("n", "<leader>lS", function()
-    telescope_builtin.lsp_dynamic_workspace_symbols{}
-  end, { desc = "Workspace Symbols" })
-
 end
 
 return M
