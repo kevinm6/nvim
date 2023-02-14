@@ -48,3 +48,21 @@
   + [Todo-comments](https://github.com/folke/todo-comments.nvim)
   + [Twilight](https://github.com/folke/twilight.nvim)
   + [Ufo](https://github.com/kevinhwang91/nvim-ufo)
+
+---
+
+**Try with Docker**
+
+```bash
+  docker run -w /root -it --rm alpine:edge sh -uelic '
+    apk add git lazygit neovim ripgrep alpine-sdk --update
+    git clone https://github.com/kevinm6/knvim-theme.nvim ~/dev/knvim-theme.nvim
+    git clone https://github.com/kevinm6/nvim ~/.config/nvim
+    cd ~/.config/nvim
+    nvim
+  '
+```
+
+
+
+
