@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 06 Feb 2023, 21:15
+-- Last Modified: 15 Feb 2023, 20:33
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -48,7 +48,7 @@ lazy.setup({
       -- log = { "-10" }, -- show the last 10 commits
       log = { "--since=3 days ago" }, -- show commits from the last 3 days
       timeout = 120, -- kill processes that take more than 2 minutes
-      url_format = "https://github.com/%s.git",
+      url_format = "git@github.com:%s.git",
     },
     dev = {
       -- directory where you store your local plugin projects
