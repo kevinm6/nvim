@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 12 Feb 2023, 10:27
+-- Last Modified: 17 Feb 2023, 11:34
 ---------------------------------------
 
 local M = {
@@ -35,12 +35,12 @@ local M = {
     { "<leader>fe", function() require "telescope".extensions.env.env() end, desc = "Environment" },
     { "<leader>fE", function() require "telescope".extensions.emoji.emoji {
       theme = "cursor", initial_mode = "insert",
-        layout_strategy = "cursor",
-        layout_config = {
-          height = 0.4,
-          width = 0.5
-        }
+      layout_strategy = "cursor",
+      layout_config = {
+        height = 0.4,
+        width = 0.5
       }
+    }
     end, desc = "Emoji" },
 
     { "<leader>fb", function() require "telescope".extensions.file_browser.file_browser { cwd = vim.fn.getcwd() } end, desc = "File Browser (CWD)" },
@@ -63,23 +63,23 @@ local M = {
 }
 
 -- Do Not show binary
-local new_maker = function(filepath, bufnr, opts)
-  filepath = vim.fn.expand(filepath)
-  require "plenary.job":new({
-    command = "file",
-    args = { "--mime-type", "-b", filepath },
-    on_exit = function(j)
-      local mime_type = vim.split(j:result()[1], "/")[1]
-      if mime_type == "text" then
-        require "telescope.previewers".buffer_previewer_maker(filepath, bufnr, opts)
-      else
-        vim.schedule(function()
-          vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {  mime_type .. " FILE" })
-        end)
-      end
-    end
-  }):sync()
-end
+-- local new_maker = function(filepath, bufnr, opts)
+--   filepath = vim.fn.expand(filepath)
+--   require "plenary.job":new({
+--     command = "file",
+--     args = { "--mime-type", "-b", filepath },
+--     on_exit = function(j)
+--       local mime_type = vim.split(j:result()[1], "/")[1]
+--       -- if mime_type == "text" then
+--         require "telescope.previewers".buffer_previewer_maker(filepath, bufnr, opts)
+--       -- else
+--       --   vim.schedule(function()
+--       --     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {  mime_type .. " FILE" })
+--       --   end)
+--       -- end
+--     end
+--   }):sync()
+-- end
 
 
 
@@ -91,13 +91,37 @@ function M.config()
   local action_layout = require "telescope.actions.layout"
   local fb_actions = require "telescope".extensions.file_browser.actions
   local action_state = require "telescope.actions.state"
+  local os_sep = require "plenary.Path".sep
 
   telescope.setup {
     defaults = {
       preview = {
         hide_on_startup = true,
+        -- mime_hook = function(filepath, bufnr, opts)
+        --   local is_image = function(filepath)
+        --     local image_extensions = {'png','jpg'}   -- Supported image formats
+        --     local split_path = vim.split(filepath:lower(), '.', {plain=true})
+        --     local extension = split_path[#split_path]
+        --     return vim.tbl_contains(image_extensions, extension)
+        --   end
+        --   if is_image(filepath) then
+        --     local term = vim.api.nvim_open_term(bufnr, {})
+        --     local function send_output(_, data, _ )
+        --       for _, d in ipairs(data) do
+        --         vim.api.nvim_chan_send(term, d..'\r\n')
+        --       end
+        --     end
+        --     vim.fn.jobstart(
+        --       {
+        --         'tiv', filepath  -- Terminal image viewer command
+        --       },
+        --       {on_stdout=send_output, stdout_buffered=true, pty=true})
+        --   else
+        --     require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
+        --   end
+        -- end
       },
-      buffer_previewer_maker = new_maker,
+      -- buffer_previewer_maker = new_maker,
       initial_mode = "insert",
       prompt_prefix = icons.ui.Telescope .. "  ",
       selection_caret = "> ",
@@ -190,6 +214,13 @@ function M.config()
 
           ["<C-y>"] = action_layout.toggle_preview,
 
+          ["cd"] = function(prompt_bufnr) -- cd to dir in normal mode
+            local selection = action_state.get_selected_entry()
+            local dir = vim.fn.fnamemodify(selection.path, ":p:h")
+            actions.close(prompt_bufnr)
+            -- Depending on what you want put `cd`, `lcd`, `tcd`
+            vim.cmd(string.format("silent tcd %s", dir))
+          end,
 
           ["?"] = "which_key",
         },
@@ -415,10 +446,24 @@ function M.config()
         hijack_netrw = true,
         layout_strategy = "bottom_pane",
         sorting_strategy = "ascending",
+        hidden = false,
+        git_status = true,
         layout_config = {
           prompt_position = "bottom",
           height = 0.5
         },
+        -- on_input_filter_cb = function(prompt)
+        --   if prompt:sub(-1, -1) == os_sep then
+        --     local prompt_bufnr = vim.api.nvim_get_current_buf()
+        --     if vim.bo[prompt_bufnr].filetype == "TelescopePrompt" then
+        --       local current_picker = action_state.get_current_picker(prompt_bufnr)
+        --       if current_picker.finder.files then
+        --         fb_actions.toggle_browser(prompt_bufnr, { reset_prompt = true })
+        --         current_picker:set_prompt(prompt:sub(1, -2))
+        --       end
+        --     end
+        --   end
+        -- end,
         mappings = {
           i = {
             ["<C-5>"] = fb_actions.goto_home_dir,

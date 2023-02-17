@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 11 Feb 2023, 09:16
+--  Last Modified: 17 Feb 2023, 10:35
 -------------------------------------
 
 local F = {}
@@ -251,6 +251,7 @@ function F.new_file()
 end
 
 function F.workon()
+  require("telescope")
   local config = require('lazy.core.config')
   vim.ui.select(vim.tbl_values(config.plugins), {
     prompt = 'lcd to:',

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 12 Feb 2023, 20:12
+-- Last Modified: 17 Feb 2023, 11:45
 -------------------------------------
 
 local icons = require "util.icons"
