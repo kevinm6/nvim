@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 17 Feb 2023, 11:34
+-- Last Modified: 18 Feb 2023, 17:49
 ---------------------------------------
 
 local M = {
@@ -466,15 +466,18 @@ function M.config()
         -- end,
         mappings = {
           i = {
-            ["<C-5>"] = fb_actions.goto_home_dir,
+            ["<C-b>"] = fb_actions.goto_home_dir,
+            ["<C-g>"] = fb_actions.goto_cwd,
+            ["<C-h>"] = fb_actions.goto_parent_dir,
+            ["<C-.>"] = fb_actions.toggle_hidden,
+            ["<C-x>"] = fb_actions.change_cwd,
+            ["<C-a>"] = fb_actions.toggle_all,
             ["<C-j>"] = "move_selection_next",
             ["<C-k>"] = "move_selection_previous",
-            ["<C-a>"] = fb_actions.toggle_all,
             ["<C-c>"] = fb_actions.create,
             ["<C-r>"] = fb_actions.rename,
             ["<C-m>"] = fb_actions.move,
             ["<C-d>"] = fb_actions.remove,
-            ["<C-x>"] = fb_actions.change_cwd,
             -- Trash files instead of deleting them
             ["∂"] = function(prompt_bufnr)
               local action_state = require("telescope.actions.state")
@@ -514,11 +517,18 @@ function M.config()
             end,
           },
           n = {
-            ["~"] = fb_actions.goto_home_dir,
+            b = fb_actions.goto_home_dir,
+            g = fb_actions.goto_cwd,
+            h = fb_actions.goto_parent_dir,
             x = fb_actions.change_cwd,
+            ["."] = fb_actions.toggle_hidden,
             a = fb_actions.toggle_all,
-            m = fb_actions.move,
+            j = "move_selection_next",
+            k = "move_selection_previous",
             c = fb_actions.create,
+            r = fb_actions.rename,
+            m = fb_actions.move,
+            d = fb_actions.remove,
             -- Trash files instead of deleting them
             D = function(prompt_bufnr)
               local action_state = require("telescope.actions.state")
