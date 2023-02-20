@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 15 Feb 2023, 20:33
+-- Last Modified: 20 Feb 2023, 08:51
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -105,7 +105,7 @@ lazy.setup({
         --  * VimEnter: not useful to cache anything else beyond startup
         --  * BufReadPre: this will be triggered early when opening a file from the command line directly
         disable_events = { "VimEnter", "BufReadPre" },
-        ttl = 3600 * 24 * 3 -- keep unused modules for up to 2 days
+        ttl = 3600 * 24 * 3 -- keep unused modules for up to 3 days
       },
       reset_packpath = true, -- reset the package path to improve startup time
       rtp = {

@@ -2,13 +2,16 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 07 Feb 2023, 19:13
+--  Last Modified: 20 Feb 2023, 08:50
 -------------------------------------
 
 local M =  {
   "nvim-lua/plenary.nvim",
+
   "nvim-lua/popup.nvim",
+
   { "tweekmonster/startuptime.vim", cmd = "StartupTime", enabled = false },
+
   {
     "kyazdani42/nvim-web-devicons",
     opts = { default = true }
@@ -119,27 +122,16 @@ local M =  {
     })
     end
   },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    cmd = "IndentBlanklineToggle",
-    init = function()
-      vim.opt.list = false
-      vim.opt.listchars = {}
-    end,
-    opts = {
-      show_current_context = true,
-      show_current_context_start = true,
-      show_end_of_line = false,
-      show_trailing_blankline_indent = false
-    }
-  },
+
   {
     "mfussenegger/nvim-jdtls",
     dependencies = { "mfussenegger/nvim-dap" },
     ft = "java"
   },
+
   {
     "scalameta/nvim-metals",
+    ft = "scala",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "mfussenegger/nvim-dap",
@@ -173,17 +165,6 @@ local M =  {
     dependencies = "nvim-lua/plenary.nvim",
     cmd = { "MindOpenMain", "MindOpenProject", "MindOpenSmartProject", "MindClose" },
     config = function () require "mind".setup {} end
-  },
-
-  -- Coding Helper
-  {
-    "folke/trouble.nvim",
-    enabled = false,
-    cmd = "TroubleToggle",
-    --  keys = {
-    --  	{ mode = "n", "<leader>lt", function() vim.cmd.TodoTrouble {} end, desc = "TodoTrouble" },
-    --  	{ mode = "n", "<leader>lT", function() vim.cmd.TodoTelescope {} end, desc = "Todo in Telescope" }
-    --  }
   },
 }
 
