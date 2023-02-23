@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 18 Feb 2023, 17:49
+-- Last Modified: 24 Feb 2023, 10:31
 ---------------------------------------
 
 local M = {
@@ -48,7 +48,7 @@ local M = {
     { "<leader>fs", function() require "telescope.builtin".grep_string { theme = "dropdown", previewer = false } end, desc = "Grep string under cursor" },
     { "<leader>fu", function() require "telescope".extensions.undo.undo() end, desc = "Undo" },
 
-    { "<leader>go", function() require "telescope.builtin".git_status{} end, desc = "Open changed file" },
+    { "<leader>go", function() require "telescope.builtin".git_status{} end, desc = "Git status" },
     { "<leader>gb", function() require "telescope.builtin".git_branches{} end, desc = "Checkout branch" },
     { "<leader>gc", function() require "telescope.builtin".git_commits {} end, desc = "Checkout commit" },
     { "<leader>lD", function() require "telescope.builtin".diagnostics { bufnr = 0 } end, desc = "Lsp Diagnostics" },
@@ -91,7 +91,6 @@ function M.config()
   local action_layout = require "telescope.actions.layout"
   local fb_actions = require "telescope".extensions.file_browser.actions
   local action_state = require "telescope.actions.state"
-  local os_sep = require "plenary.Path".sep
 
   telescope.setup {
     defaults = {
@@ -448,6 +447,8 @@ function M.config()
         sorting_strategy = "ascending",
         hidden = false,
         git_status = true,
+        color_devicons = true,
+        use_less = true,
         layout_config = {
           prompt_position = "bottom",
           height = 0.5
@@ -480,7 +481,6 @@ function M.config()
             ["<C-d>"] = fb_actions.remove,
             -- Trash files instead of deleting them
             ["∂"] = function(prompt_bufnr)
-              local action_state = require("telescope.actions.state")
               local fb_utils = require("telescope._extensions.file_browser.utils")
               -- Get the finder
               local current_picker = action_state.get_current_picker(prompt_bufnr)
@@ -531,7 +531,6 @@ function M.config()
             d = fb_actions.remove,
             -- Trash files instead of deleting them
             D = function(prompt_bufnr)
-              local action_state = require("telescope.actions.state")
               local fb_utils = require("telescope._extensions.file_browser.utils")
               -- Get the finder
               local current_picker = action_state.get_current_picker(prompt_bufnr)

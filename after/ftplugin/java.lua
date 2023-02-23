@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 23 Jan 2023, 16:38
+-- Last Modified: 23 Feb 2023, 09:33
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
@@ -161,11 +161,11 @@ local config = {
       dynamicRegistration = true
     },
   },
-  handlers = {
+  handlers = { -- ovverride to mute
     ["language/status"] = function() end,
-    ["textDocument/codeAction"] = function() end,
-    ["textDocument/rename"] = function() end,
-    ["workspace/applyEdit"] = function() end,
+    -- ["textDocument/codeAction"] = function() end,
+    -- ["textDocument/rename"] = function() end,
+    -- ["workspace/applyEdit"] = function() end,
     ["textDocument/documentHighlight"] = function() end,
   },
   on_attach = function ()
@@ -242,17 +242,17 @@ vim.api.nvim_buf_create_user_command(0,
 
 -- lsp-document_highlight
 
-local java_lsp_hi_doc_group = vim.api.nvim_create_augroup("_java_lsp_document_highlight", { clear = true })
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-  group = java_lsp_hi_doc_group,
-  pattern = "*",
-  callback = function() vim.lsp.buf.document_highlight() end
-})
-vim.api.nvim_create_autocmd({ "CursorMoved" }, {
-  group = java_lsp_hi_doc_group,
-  pattern = "*",
-  callback = function() vim.lsp.buf.clear_references() end
-})
+-- local java_lsp_hi_doc_group = vim.api.nvim_create_augroup("_java_lsp_document_highlight", { clear = true })
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+--   group = java_lsp_hi_doc_group,
+--   pattern = "*",
+--   callback = function() vim.lsp.buf.document_highlight() end
+-- })
+-- vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+--   group = java_lsp_hi_doc_group,
+--   pattern = "*",
+--   callback = function() vim.lsp.buf.clear_references() end
+-- })
 
 -- nvim-dap keymaps
 vim.keymap.set("n", "<leader>df", function() require "jdtls".test_class() end, { buffer = true, desc = "Test class" })

@@ -2,12 +2,12 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 17 Feb 2023, 11:45
+-- Last Modified: 23 Feb 2023, 12:08
 -------------------------------------
 
 local icons = require "util.icons"
 local servers_to_install = {
-  "lua_ls", "vimls", "emmet_ls",
+  "lua_ls", "vimls", "emmet_ls", "tsserver",
   "pyright", "jsonls", "gopls", "yamlls",
   "html", "asm_lsp", "bashls", "clangd",
   "intelephense", "ocamllsp", "erlangls"
