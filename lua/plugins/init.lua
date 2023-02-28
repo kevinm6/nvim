@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 20 Feb 2023, 08:50
+--  Last Modified: 26 Feb 2023, 10:01
 -------------------------------------
 
 local M =  {
@@ -105,22 +105,31 @@ local M =  {
   },
 
   {
-    "br1anchen/nvim-colorizer.lua",
+    "NvChad/nvim-colorizer.lua",
     cmd = "ColorizerToggle",
-    config = function ()
-      require "colorizer".setup({"*"}, {
+    opts = {
+      filetypes = {"*"},
+      user_default_options = {
         RGB = true,          -- #RGB hex codes
         RRGGBB = true,       -- #RRGGBB hex codes
         names = true,        -- "Name" codes like Blue oe blue
-        RRGGBBAA = false,    -- #RRGGBBAA hex codes
+        AARRGGBB = false,    -- 0xAARRGGBB hex codes
         rgb_fn = false,      -- CSS rgb() and rgba() functions
         hsl_fn = false,      -- CSS hsl() and hsla() functions
         css = false,         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
         css_fn = false,      -- Enable all CSS *functions*: rgb_fn, hsl_fn
                              -- Available modes: foreground, background, virtualtext
         mode = "background", -- Set the display mode.)
-    })
-    end
+        -- Available methods are false / true / "normal" / "lsp" / "both"
+        -- True is same as normal
+        tailwind = false, -- Enable tailwind colors
+        -- parsers can contain values used in |user_default_options|
+        sass = { enable = false, parsers = { "css" }, }, -- Enable sass colors
+        virtualtext = "■",
+      },
+      -- all the sub-options of filetypes apply to buftypes
+      buftypes = {},
+    }
   },
 
   {

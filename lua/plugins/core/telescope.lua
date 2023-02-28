@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 24 Feb 2023, 10:31
+-- Last Modified: 27 Feb 2023, 21:06
 ---------------------------------------
 
 local M = {
@@ -17,6 +17,7 @@ local M = {
     "LinArcX/telescope-env.nvim",
     "xiyaowong/telescope-emoji.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
+    "chip/telescope-software-licenses.nvim"
   },
   keys = {
     { "<leader>e", function() require "telescope".extensions.file_browser.file_browser() end, desc = "File Browser" },
