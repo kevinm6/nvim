@@ -2,12 +2,11 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 26 Feb 2023, 10:01
+--  Last Modified: 01 Mar 2023, 21:20
 -------------------------------------
 
 local M =  {
   "nvim-lua/plenary.nvim",
-
   "nvim-lua/popup.nvim",
 
   { "tweekmonster/startuptime.vim", cmd = "StartupTime", enabled = false },
@@ -163,10 +162,6 @@ local M =  {
     ft = "kitty"
   },
 
-  {
-    "makerj/vim-pdf",
-    ft = "pdf",
-  },
 
   {
     "phaazon/mind.nvim",

@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 08 Feb 2023, 09:16
+-- Last Modified: 03 Mar 2023, 10:05
 -------------------------------------
 
 local set_opts = function(opts)
@@ -124,7 +124,8 @@ set_keymap("n", "D", [["_D]], set_opts {})
 -- Window managing
 set_keymap("n", "<leader>Ws", function() vim.cmd.split {} end, set_opts { desc = "HSplit" })
 set_keymap("n", "<leader>Wv", function() vim.cmd.vsplit {} end, set_opts { desc = "VSplit" })
-set_keymap("n", "<leader>W=", "<C-w>=", set_opts { desc = "Window equals" })
+set_keymap("n", "<leader>Wo", function() vim.cmd.only() end, set_opts { desc = "Close other windows" })
+set_keymap("n", "<leader>W=", "<C-w>=", set_opts { desc = "Windows equals" })
 
 -- resize windows
 set_keymap("n", "<S-Up>", function() vim.cmd.resize "+2" end)

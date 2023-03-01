@@ -2,7 +2,7 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 07 Feb 2023, 18:50
+-- Last Modified: 07 Mar 2023, 16:36
 -----------------------------------------
 
 local M = {
@@ -37,14 +37,9 @@ M.filename = function()
     file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = default })
 
     local hl_group = "FileIconColor" .. extension
-    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
+    -- vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color or default_file_icon_color })
 
-    if file_icon == nil then
-      file_icon = default_file_icon
-      file_icon_color = default_file_icon_color
-    end
-
-    return string.format(" %%#%s#%s %s", hl_group, file_icon .. "%*", filename)
+    return string.format(" %%#%s#%s %s", hl_group, file_icon or default_file_icon .. "%*", filename)
   end
 end
 

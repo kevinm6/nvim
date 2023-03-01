@@ -2,7 +2,7 @@
 --  File         : gopls.lua
 --  Description  : Description
 --  Author       : Kevin
---  Last Modified: 04 Jan 2023, 10:19
+--  Last Modified: 28 Feb 2023, 09:53
 -------------------------------------
 
 return {
@@ -16,20 +16,24 @@ return {
       return absolute_cwd
     end
 
-    return require "lspconfig".util.root_pattern("go.mod", ".git")(fname)
+    return require "lspconfig".util.root_pattern("go.mod", "go.work", ".git")(fname)
   end,
   settings = {
     gopls = {
       codelenses = { test = true },
-      hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        compositeLiteralTypes = true,
-        constantValues = true,
-        functionTypeParameters = true,
-        parameterNames = true,
-        rangeVariableTypes = true,
-      }
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+      -- hints = {
+      --   assignVariableTypes = true,
+      --   compositeLiteralFields = true,
+      --   compositeLiteralTypes = true,
+      --   constantValues = true,
+      --   functionTypeParameters = true,
+      --   parameterNames = true,
+      --   rangeVariableTypes = true,
+      -- }
     },
   },
   flags = {

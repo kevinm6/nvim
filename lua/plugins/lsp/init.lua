@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 23 Feb 2023, 12:08
+-- Last Modified: 28 Feb 2023, 09:51
 -------------------------------------
 
 local icons = require "util.icons"
@@ -139,14 +139,11 @@ function M.config()
 
   -- Custom configs to apply when attaching lsp to buffer
   local custom_attach = function(client, bufnr)
-    if client.server_capabilities.inlayHintProvider then
-      require "inlay-hints".on_attach(client, bufnr)
-    end
-
     if client.server_capabilities.documentSymbolProvider then
       require "nvim-navic".attach(client, bufnr)
     end
 
+    require "inlay-hints".on_attach(client, bufnr)
     require "plugins.lsp.handlers".setup()
     require "plugins.lsp.codelens".run()
   end

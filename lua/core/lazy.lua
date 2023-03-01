@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 20 Feb 2023, 08:51
+-- Last Modified: 04 Mar 2023, 08:59
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -49,18 +49,20 @@ lazy.setup({
       log = { "--since=3 days ago" }, -- show commits from the last 3 days
       timeout = 120, -- kill processes that take more than 2 minutes
       url_format = "git@github.com:%s.git",
+      filter = true
     },
     dev = {
       -- directory where you store your local plugin projects
       path = "~/dev",
       ---@type string[] plugins that match these patterns will use your local versions instead of being fetched from GitHub
-      patterns = { "knvim" }, -- For example {"folke"}
+      patterns = {}, -- For example {"kevin"}
+      fallback = false
     },
     install = {
       -- install missing plugins on startup. This doesn't increase startup time.
       missing = true,
       -- try to load one of these colorschemes when starting an installation during startup
-      colorscheme = {},
+      colorscheme = { "knvim" },
     },
     ui = {
       -- a number <1 is a percentage., >1 is a fixed size
@@ -81,11 +83,11 @@ lazy.setup({
         task = "✔ ",
       },
       throttle = 20, -- how frequently should the ui process render events
-      browser = 'Min',
+      browser = nil,
     },
     checker = {
       -- automatically check for plugin updates
-      enabled = false,
+      enabled = true,
       concurrency = nil, ---@type number? set to 1 to check for updates very slowly
       notify = true, -- get a notification when new updates are found
       frequency = 3600, -- check for updates every hour
@@ -125,15 +127,25 @@ lazy.setup({
         },
       },
     },
+    diff = {
+      -- diff command <d> can be one of:
+      -- * browser: opens the github compare view. Note that this is always mapped to <K> as well,
+      --   so you can have a different command for diff <d>
+      -- * git: will run git diff and open a buffer with filetype git
+      -- * terminal_git: will open a pseudo terminal with git diff
+      -- * diffview.nvim: will open Diffview to show the diff
+      cmd = "git",
+    },
     -- lazy can generate helptags from the headings in markdown readme files,
     -- so :help works even for plugins that don't have vim docs.
     -- when the readme opens with :help it will be correctly displayed as markdown
     readme = {
       root = vim.fn.stdpath("state") .. "/lazy/readme",
-      files = { "README.md" },
+      files = { "README.md", "lua/**/README.md" },
       -- only generate markdown helptags for plugins that dont have docs
       skip_if_doc_exists = true,
     },
+    state = vim.fn.stdpath("state") .. "/lazy/state.json", -- state info for checker and other things
   })
 
 vim.keymap.set("n", "<leader>L", function() vim.cmd.Lazy() end, { desc = "Package Manager" })

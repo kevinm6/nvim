@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 23 Jan 2023, 16:57
+--  Last Modified: 03 Mar 2023, 11:07
 ----------------------------------------
 
 local M = {
@@ -18,6 +18,7 @@ local M = {
 
 function M.config()
   local noice = require "noice"
+  require "nvim-treesitter"
 
   noice.setup {
     cmdline = {
