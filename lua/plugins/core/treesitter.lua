@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 15 Feb 2023, 20:41
+-- Last Modified: 08 Mar 2023, 11:44
 -------------------------------------
 
 local M = {
@@ -56,9 +56,9 @@ local M = {
 
       local parser_to_install = vim.fn.has "mac" == 1  and {
           "c", "comment", "cpp", "css", "dot", "dockerfile",
-            "bash", "gitignore", "gitattributes", "gitcommit", "git_rebase", "go", "help",
+          "bash", "gitignore", "gitattributes", "gitcommit", "git_rebase", "go", "help",
 
-          "html", "http", "json", "json5", "jsdoc", "latex", "erlang",
+          "html", "http", "json", "json5", "jsdoc", "latex", "erlang", "ruby",
           "lua", "java", "javascript", "markdown", "markdown_inline", "rust",
           "ocaml", "ocaml_interface", "php", "python", "regex", "python", "phpdoc",
           "scala", "scheme", "sql", "swift", "todotxt", "vim", "yaml", "org", "ini"

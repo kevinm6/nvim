@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 03 Jan 2023, 18:43
+-- Last Modified: 15 Mar 2023, 12:38
 -------------------------------------
 
 -- CURSOR {
@@ -14,9 +14,7 @@ vim.opt.guicursor = { -- cursor shape mode-based
 -- }
 
 local options = {
-  -- SHELL: setting bash shell 'cause is much faster in nvim
-  --        the terminal (toggleterm) uses zsh
-	shell = "/bin/zsh",
+	shell = vim.fn.split(vim.fn.system("which zsh"),'\n')[1],
 
 	-- MOUSE:
 	mouse = "vnc",

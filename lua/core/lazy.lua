@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 04 Mar 2023, 08:59
+-- Last Modified: 09 Mar 2023, 08:40
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -89,7 +89,7 @@ lazy.setup({
       -- automatically check for plugin updates
       enabled = true,
       concurrency = nil, ---@type number? set to 1 to check for updates very slowly
-      notify = true, -- get a notification when new updates are found
+      notify = false, -- get a notification when new updates are found
       frequency = 3600, -- check for updates every hour
     },
     change_detection = {

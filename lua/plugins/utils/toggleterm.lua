@@ -2,7 +2,7 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 31 Jan 2023, 10:39
+-- Last Modified: 15 Mar 2023, 13:25
 -------------------------------------
 
 local M = {
@@ -18,20 +18,26 @@ local M = {
     { "<leader>tl", function() _LAZYGIT_TOGGLE() end, desc = "LazyGit" },
     { "<leader>tn", function() _NCDU_TOGGLE() end, desc = "Ncdu" },
     { "<leader>tf", function() vim.cmd "ToggleTerm direction=float" end, desc = "Float" },
-    { "<leader>th", function() vim.cmd "ToggleTerm direction=horizontal size=25" end,
+    { "<leader>th", function() vim.cmd "ToggleTerm direction=horizontal" end,
       desc = "Horizontal" },
-    { "<leader>tv", function() vim.cmd "ToggleTerm direction=vertical size=80" end,
+    { "<leader>tv", function() vim.cmd "ToggleTerm direction=vertical" end,
       desc = "Vertical" },
     { "<leader>gg", function() vim.cmd.Git {} end, desc = "LazyGit" },
-  }
+  },
 }
 
 function M.config()
-  local ok, toggleterm = pcall(require, "toggleterm")
+  local ok, tt = pcall(require, "toggleterm")
   if not ok then return end
 
-  toggleterm.setup({
-    size = 28,
+  tt.setup {
+    size = function(term)
+      if term.direction == "horizontal" then
+        return vim.o.lines * 0.3
+      elseif term.direction == "vertical" then
+        return vim.o.columns * 0.4
+      end
+    end,
     open_mapping = [[<c-\>]],
     hide_numbers = true,
     shade_filetypes = {},
@@ -40,9 +46,10 @@ function M.config()
     start_in_insert = true,
     insert_mappings = true,
     persist_size = false,
-    direction = "float",
+    direction = "vertical",
     close_on_exit = true,
-    shell = "/bin/zsh",
+    shell = vim.o.shell,
+    auto_scroll = true,
     float_opts = {
       border = "curved",
       winblend = 6,
@@ -51,16 +58,26 @@ function M.config()
         background = "Normal",
       },
     },
-  })
+    winbar = {
+      enabled = false,
+      name_formatter = function(term)
+        return term.name
+      end
+    }
+  }
 
   local function set_terminal_keymaps()
-    local opts = {noremap = true}
+    local opts = { buffer = 0, noremap = true }
     -- vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+    vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+    vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+    vim.keymap.set('t', '<C-h>', [[<cmd>wincmd h<CR>]], opts)
+    vim.keymap.set('t', '<C-j>', [[<cmd>wincmd j<CR>]], opts)
+    vim.keymap.set('t', '<C-k>', [[<cmd>wincmd k<CR>]], opts)
+    vim.keymap.set('t', '<C-l>', [[<cmd>wincmd l<CR>]], opts)
+    vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+
+    vim.keymap.set('n', '<leader>ts', [[<cmd>ToggleTermSendCurrentLine<CR>]], { desc = "Send current line", noremap = true })
   end
 
   vim.api.nvim_create_autocmd("TermOpen", {

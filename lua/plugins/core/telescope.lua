@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 01 Mar 2023, 13:24
+-- Last Modified: 15 Mar 2023, 16:06
 ---------------------------------------
 
 local M = {
@@ -13,7 +13,6 @@ local M = {
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-project.nvim",
     "benfowler/telescope-luasnip.nvim",
-    "debugloop/telescope-undo",
     "LinArcX/telescope-env.nvim",
     "xiyaowong/telescope-emoji.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
@@ -47,7 +46,6 @@ local M = {
     { "<leader>fb", function() require "telescope".extensions.file_browser.file_browser { cwd = vim.fn.getcwd() } end, desc = "File Browser (CWD)" },
     { "<leader>fL", function() require "telescope".extensions.luasnip.luasnip{} end, desc = "Luasnip" },
     { "<leader>fs", function() require "telescope.builtin".grep_string { theme = "dropdown", previewer = false } end, desc = "Grep string under cursor" },
-    { "<leader>fu", function() require "telescope".extensions.undo.undo() end, desc = "Undo" },
 
     { "<leader>go", function() require "telescope.builtin".git_status{} end, desc = "Git status" },
     { "<leader>gb", function() require "telescope.builtin".git_branches{} end, desc = "Checkout branch" },
@@ -350,11 +348,12 @@ function M.config()
         theme = "dropdown",
         previewer = false,
         initial_mode = "normal",
+        sorting_strategy = "descending",
         layout_strategy = "vertical",
         layout_config = {
           prompt_position = "bottom",
-          width = 0.8,
-          height = 0.4
+          width = 0.4,
+          height = 0.3
         },
       },
       diagnostics = {
@@ -590,12 +589,6 @@ function M.config()
           "~/Informatica/Anno2/Semestre1/Programmazione II",
           "~/Informatica/Anno3/Semestre1/Ingegneria del Software/Laboratorio",
         },
-      },
-      undo = {
-        use_delta = false,
-        side_by_side = true,
-        layout_strategy = "flex",
-        layout_config = { preview_height = 0.8, },
       },
       emoji = {
         theme = "cursor",

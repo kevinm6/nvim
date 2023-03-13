@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 18 Feb 2023, 17:45
+-- Last Modified: 13 Mar 2023, 11:47
 -------------------------------------
 
 local icons = require "util.icons"
@@ -69,7 +69,6 @@ local M = {
         ["<leader>S"] = { name = "Sessions" },
         ["<leader>d"] = { name = "Dap" },
         ["<leader>g"] = { name = "Git" },
-        ["<leader>C"] = { name = "Slime" },
         ["<leader>R"] = { name = "Run" },
         ["<leader>l"] = { name = "Lsp" },
         ["<leader>n"] = { name = "Notifications" },
