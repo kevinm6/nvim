@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 03 Mar 2023, 10:05
+-- Last Modified: 18 Mar 2023, 18:00
 -------------------------------------
 
 local set_opts = function(opts)
@@ -80,7 +80,10 @@ end, set_opts { desc = "Delete" })
 set_keymap("n", "<leader>w", function() vim.cmd.update { bang = true } end, set_opts { desc = "Save buffer" })
 set_keymap("n", "<leader>H", function() vim.cmd.nohlsearch {}  end, set_opts { desc = "No Highlight" })
 set_keymap("n", "<leader>c", function() vim.cmd.DeleteCurrentBuffer() end, set_opts { desc = "Close buffer" })
-set_keymap("n", "<leader>z", function() vim.cmd.DeleteCurrentBuffer() end, set_opts { desc = "Save and Close buffer" })
+set_keymap("n", "<leader>z", function()
+	vim.cmd.update {}
+  vim.cmd.DeleteCurrentBuffer()
+end, set_opts { desc = "Save and Close buffer" })
 set_keymap("n", "<leader>q", function() vim.cmd.bdelete {} end, set_opts { desc = "Quit" })
 set_keymap("n", "<leader>nn", function() vim.cmd.Notifications {} end, set_opts { desc = "Notifications" })
 set_keymap("n", "<leader>nm", function() vim.cmd.messages {} end, set_opts { desc = "Messages" })

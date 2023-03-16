@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 08 Mar 2023, 20:17
+--  Last Modified: 18 Mar 2023, 15:44
 -------------------------------------
 
 local M =  {
@@ -163,6 +163,11 @@ local M =  {
     ft = "kitty"
   },
 
+  {
+    "turbio/bracey.vim",
+    ft = { "markdown", "html", "css", "js" },
+    build =  "npm install --prefix server"
+  },
 
   {
     "phaazon/mind.nvim",
