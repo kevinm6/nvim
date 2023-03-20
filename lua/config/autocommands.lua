@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 07 Mar 2023, 16:24
+-- Last Modified: 20 Mar 2023, 12:52
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -240,7 +240,7 @@ command("ToggleTimeStamp",
 )
 
 -- Jump to last < cursor-pos > in file
-autocmd({ "BufReadPost" }, {
+autocmd({ "BufRead" }, {
   group = _general_settings,
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -253,7 +253,7 @@ autocmd({ "BufReadPost" }, {
 
 
 -- Git
-autocmd({ "FileType" }, {
+autocmd({ "FileType", "BufNewFile" }, {
   group = _general_settings,
   pattern = { "gitcommit", "gitrebase" },
   callback = function() vim.cmd.startinsert() end
@@ -278,11 +278,21 @@ autocmd({ "BufWritePost" }, {
 })
 
 -- SQL
-autocmd({ "BufNewFile", "BufRead" }, {
+autocmd({ "BufRead", "BufNewFile" }, {
   group = augroup("_sql", { clear = true }),
   pattern = "*.psql*",
   callback = function()
     vim.api.nvim_buf_set_option(0, "filetype", "sql")
+  end
+})
+
+-- Kitty conf files
+autocmd({ "BufRead" }, {
+  group = augroup("_kitty", { clear = true }),
+  pattern = { "kitty.conf", "*/kitty/*.conf", "*/kitty/*.session" },
+  callback = function()
+    vim.api.nvim_buf_set_option(0, "filetype", "kitty")
+    vim.api.nvim_buf_set_option(0, "comments", "b:#,b:#\\:")
   end
 })
 
@@ -377,3 +387,6 @@ command("DiffOrig", function()
     end, { buffer = buf })
   end
 end, {})
+
+
+require "util.hex.hex".setup {}

@@ -2,19 +2,20 @@
 --  File         : code_runner.lua
 --  Description  : code_runner plugin config
 --  Author       : Kevin
---  Last Modified: 17 Jan 2023, 17:12
+--  Last Modified: 20 Mar 2023, 13:18
 ---------------------------------------
 
 local M = {
   "CRAG666/code_runner.nvim",
-  -- event = "VimEnter",
   dependencies = {
     "nvim-lua/plenary.nvim"
   },
   keys = {
     { '<leader>Rr', function() vim.cmd.RunCode() end, silent = false, desc = "RunCode" },
     { '<leader>Rf', function() vim.cmd.RunFile() end, silent = false, desc = "RunFile" },
-    { '<leader>Rt', ":RunFile tab<CR>", silent = false , desc = "RunFile in Tab"},
+    { '<leader>Rt', function() vim.cmd.RunFile { args = "tab" } end, silent = false , desc = "RunFile in Tab"},
+    { '<leader>Rb', function() vim.cmd.RunFile { args = "buf" } end, silent = false , desc = "RunFile in Buffer"},
+    { '<leader>RT', function() vim.cmd.RunFile { args = "toggle" } end, silent = false , desc = "RunFile Toggle"},
     { '<leader>Rp', function() vim.cmd.RunProject() end, silent = false, desc = "RunProject" },
     { '<leader>Rc', function() vim.cmd.RunClose() end, silent = false, desc = "RunClose" },
   },
@@ -34,7 +35,7 @@ local M = {
       border = "rounded",
 
       -- Num from `0 - 1` for measurements
-      height = 0.4,
+      height = 0.6,
       width = 0.8,
       x = 0.6,
       y = 0.9,
