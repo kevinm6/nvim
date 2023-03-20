@@ -2,12 +2,11 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 18 Mar 2023, 15:44
+--  Last Modified: 20 Mar 2023, 13:21
 -------------------------------------
 
 local M =  {
   "nvim-lua/plenary.nvim",
-  "nvim-lua/popup.nvim",
 
   { "tweekmonster/startuptime.vim", cmd = "StartupTime", enabled = false },
 
@@ -68,6 +67,7 @@ local M =  {
   {
     "simrat39/inlay-hints.nvim",
     -- ft = { "java", "go", "lua" },
+    enabled = false,
     opts = {
         only_current_line = true,
         eol = { right_align = true }
@@ -89,19 +89,6 @@ local M =  {
     --     { mode = "n", "<leader>Cc", function() vim.cmd.PickColor end, desc = "PickColor" },
     --     { mode = "n", "<leader>Ci", function() vim.cmd.PickColorInsert end, desc = "PickColorInsert" },
     --  },
-  },
-
-  {
-    "ellisonleao/glow.nvim",
-    ft = { "md", "markdown" },
-    cmd = "Glow",
-    opts = {
-      glow_install_path = "~/.local/bin/glow/", -- default path for installing glow binary
-      border = "rounded", -- floating window border config
-      style = "dark", -- filled automatically with your current editor background, you can override using glow json style
-      pager = false,
-      -- width = 120,
-    },
   },
 
   {
@@ -160,7 +147,8 @@ local M =  {
 
   {
     "fladson/vim-kitty",
-    ft = "kitty"
+    ft = "kitty",
+    enabled = false
   },
 
   {

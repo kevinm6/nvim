@@ -2,7 +2,7 @@
 --  File         : cheat_sheet.lua
 --  Description  : question cht.sh to get result in Neovim
 --  Author       : Kevin
---  Last Modified: 03 Mar 2023, 12:59
+--  Last Modified: 20 Mar 2023, 09:49
 -----------------------------------
 
 local M = {}
@@ -20,6 +20,7 @@ local opts = {
   },
 }
 
+-- TODO: improve since is a personal module
 function M.setup(user_conf)
   opts = vim.tbl_deep_extend("force", opts, user_conf or {})
 end
