@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 20 Mar 2023, 12:52
+-- Last Modified: 22 Mar 2023, 10:40
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -292,7 +292,8 @@ autocmd({ "BufRead" }, {
   pattern = { "kitty.conf", "*/kitty/*.conf", "*/kitty/*.session" },
   callback = function()
     vim.api.nvim_buf_set_option(0, "filetype", "kitty")
-    vim.api.nvim_buf_set_option(0, "comments", "b:#,b:#\\:")
+    vim.api.nvim_buf_set_option(0, "comments", ":#,:#\\:")
+    vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
   end
 })
 
