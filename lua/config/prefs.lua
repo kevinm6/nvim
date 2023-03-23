@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 15 Mar 2023, 12:38
+-- Last Modified: 23 Mar 2023, 11:29
 -------------------------------------
 
 -- CURSOR {
@@ -41,7 +41,7 @@ local options = {
 	pumblend = 8, -- popup menu transparency {0..100}
 	splitbelow = true, -- split below in horizontal split
 	splitright = true, -- split right in vertical split
-	updatetime = 300, -- lower than default for faster completion
+	updatetime = 100, -- lower than default for faster completion
 	listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_" },
   fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
   syntax = "off", -- using treesitter

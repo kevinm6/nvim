@@ -2,8 +2,39 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 15 Mar 2023, 16:06
+-- Last Modified: 23 Mar 2023, 09:34
 ---------------------------------------
+
+local git_hunks = function()
+  require("telescope.pickers")
+    .new({
+      finder = require("telescope.finders").new_oneshot_job({ "git", "jump", "--stdout", "diff" }, {
+        entry_maker = function(line)
+          local filename, lnum_string = line:match("([^:]+):(%d+).*")
+
+          -- I couldn't find a way to use grep in new_oneshot_job so we have to filter here.
+          -- return nil if filename is /dev/null because this means the file was deleted.
+          if filename:match("^/dev/null") then
+            return nil
+          end
+
+          return {
+            value = filename,
+            display = line,
+            ordinal = line,
+            filename = filename,
+            lnum = tonumber(lnum_string),
+          }
+        end,
+      }),
+      sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
+      previewer = require("telescope.config").values.grep_previewer({}),
+      results_title = "Git hunks",
+      prompt_title = "Git hunks",
+      layout_strategy = "flex",
+    }, {})
+    :find()
+end
 
 local M = {
   "nvim-telescope/telescope.nvim",
@@ -50,6 +81,8 @@ local M = {
     { "<leader>go", function() require "telescope.builtin".git_status{} end, desc = "Git status" },
     { "<leader>gb", function() require "telescope.builtin".git_branches{} end, desc = "Checkout branch" },
     { "<leader>gc", function() require "telescope.builtin".git_commits {} end, desc = "Checkout commit" },
+    { "<leader>gh", function() git_hunks() end, desc = "Git Hunks" },
+
     { "<leader>lD", function() require "telescope.builtin".diagnostics { bufnr = 0 } end, desc = "Lsp Diagnostics" },
     { "<leader>lr", function() require "telescope.builtin".lsp_references {} end, desc = "Lsp References" },
     { "<leader>ld", function() require "telescope.builtin".lsp_definitions{} end, desc = "Lsp Definitions" },

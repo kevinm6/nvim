@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 19 Feb 2023, 10:52
+-- Last Modified: 23 Mar 2023, 11:40
 -------------------------------------
 
 local M = {
@@ -74,6 +74,11 @@ function M.config()
       ["<C-e>"] = cmp.mapping {
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
+      },
+
+      ["<C-o>"] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
       },
 
       ["<CR>"] = cmp.mapping.confirm {
