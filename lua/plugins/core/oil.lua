@@ -2,15 +2,15 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 24 Mar 2023, 08:46
+-- Last Modified: 28 Mar 2023, 09:32
 -------------------------------------
 
 local M = {
   "stevearc/oil.nvim",
-  event = "VimEnter",
   keys = {
-    { "<leader>O", function() require "oil".open() end, desc = "Open in Oil" }
+    { "<leader>O", function() require "oil".open() end, desc = "Open parent dir (Oil)" }
   },
+  cmd = "Oil",
   opts = {
     -- Id is automatically added at the beginning, and name at the end
     -- See :help oil-columns
@@ -32,7 +32,7 @@ local M = {
       spell = false,
       list = false,
       conceallevel = 3,
-      concealcursor = "nvic",
+      concealcursor = "n",
     },
     -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`
     default_file_explorer = true,
@@ -55,12 +55,26 @@ local M = {
       ["<C-c>"] = "actions.close",
       ["<C-g>"] = "actions.parent",
       ["<C-h>"] = "actions.toggle_hidden",
+      ["<C-t>"] = "actions.open_terminal",
       ["-"] = "actions.parent",
       ["_"] = "actions.open_cwd",
       ["`"] = "actions.cd",
       ["~"] = "actions.tcd",
       ["g."] = "actions.toggle_hidden",
+      ["gd"] = {
+        desc = "Toggle detail view",
+        callback = function()
+          local oil = require("oil")
+          local config = require("oil.config")
+          if #config.columns == 1 then
+            oil.set_columns({ "icon", "permissions", "size", "mtime" })
+          else
+            oil.set_columns({ "icon" })
+          end
+        end,
+      },
     },
+    silence_scp_warning = true, -- disable scp warn to use oil-ssh since I'm using a remap
     use_default_keymaps = false,
     view_options = {
       -- Show files and directories that start with "."
@@ -106,16 +120,42 @@ local M = {
         winblend = 0,
       },
     },
-    adapters = {
-      ["oil://"] = "files",
-      ["oil-ssh://"] = "ssh",
-    },
+    -- This are defaults for now, no need to override
+    -- adapters = {
+    --   ["oil://"] = "files",
+    --   ["oil-ssh://"] = "ssh",
+    -- },
     -- When opening the parent of a file, substitute these url schemes
-    remap_schemes = {
+    -- HACK:
+    -- https://github.com/stevearc/oil.nvim/blob/931453fc09085c09537295c991c66637869e97e1/lua/oil/config.lua#L102~110
+    -- Using this to remap url-scheme from args with oil-ssh schemes
+    adapter_aliases = {
+      ["ssh://"] = "oil-ssh://",
       ["scp://"] = "oil-ssh://",
       ["sftp://"] = "oil-ssh://",
     },
-  }
+  },
+  init = function(plugin)
+    if vim.fn.argc() == 1 then
+      local stat = vim.loop.fs_stat(vim.fn.argv(0))
+      local remote_dir_args = vim.startswith(vim.fn.argv(0), "ssh") or
+        vim.startswith(vim.fn.argv(0), "sftp") or vim.startswith(vim.fn.argv(0), "scp")
+      if stat and stat.type == "directory" or remote_dir_args then
+        require("lazy").load { plugins = { plugin.name } }
+      end
+    end
+    if not require("lazy.core.config").plugins[plugin.name]._.loaded then
+      vim.api.nvim_create_autocmd("BufNew", {
+        callback = function()
+          if vim.fn.isdirectory(vim.fn.expand("<afile>")) == 1 then
+            require("lazy").load { plugins = { "oil.nvim" } }
+            -- Once oil is loaded, we can delete this autocmd
+            return true
+          end
+        end,
+      })
+    end
+  end
 }
 
 return M

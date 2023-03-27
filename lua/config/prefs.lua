@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 23 Mar 2023, 11:29
+-- Last Modified: 26 Mar 2023, 11:40
 -------------------------------------
 
 -- CURSOR {
@@ -76,7 +76,11 @@ local options = {
   foldmethod = "expr", -- method used to generate folds
   foldexpr = "nvim_treesitter#foldexpr()", -- using treesitter to more folds
 	diffopt = { "internal", "filler", "closeoff", "vertical" },
-	foldcolumn = "auto", -- Add a bit extra margin to the Left
+  -- FIX:
+  -- disable til statuscolumn fixes: see https://github.com/kevinhwang91/nvim-ufo/issues/4
+  -- and https://github.com/neovim/neovim/pull/17446
+  -- it's overrided by nvim-ufo for now
+	foldcolumn = "auto",
 	colorcolumn = "90",
 
 	-- FILE_MANAGEMENT:

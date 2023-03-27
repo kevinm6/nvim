@@ -2,7 +2,7 @@
 --  File         : ufo.lua
 --  Description  : ufo plugin configuration (folding)
 --  Author       : Kevin
---  Last Modified: 02 Jan 2023, 11:45
+--  Last Modified: 26 Mar 2023, 11:39
 -------------------------------------
 
 local M = {
@@ -21,7 +21,7 @@ local M = {
 function M.config()
   local ufo = require "ufo"
 
-  vim.wo.foldcolumn = '1'
+  vim.wo.foldcolumn = '0'
   vim.wo.foldlevel = 99
   vim.wo.foldenable = true
 
