@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 23 Mar 2023, 09:34
+-- Last Modified: 31 Mar 2023, 12:52
 ---------------------------------------
 
 local git_hunks = function()
@@ -185,7 +185,16 @@ function M.config()
               end
             end
           end,
-          ["<C-l>"] = "select_default",
+          ["<C-l>"] = function(pb)
+            local picker = action_state.get_current_picker(pb)
+            local multi = picker:get_multi_selection()
+            actions.select_default(pb) -- the normal enter behaviour
+            for _, j in pairs(multi) do
+              if j.path ~= nil then -- is it a file -> open it as well:
+                vim.cmd(string.format("%s %s", "edit", j.path))
+              end
+            end
+          end,
           ["<C-s>"] = "select_horizontal",
           ["<C-v>"] = "select_vertical",
           ["<C-t>"] = "select_tab",
@@ -211,7 +220,16 @@ function M.config()
         n = {
           ["<esc>"] = "close",
           ["q"] = "close",
-          ["<CR>"] = "select_default",
+          ["<CR>"] = function(pb)
+            local picker = action_state.get_current_picker(pb)
+            local multi = picker:get_multi_selection()
+            actions.select_default(pb) -- the normal enter behaviour
+            for _, j in pairs(multi) do
+              if j.path ~= nil then -- is it a file -> open it as well:
+                vim.cmd(string.format("%s %s", "edit", j.path))
+              end
+            end
+          end,
           ["<C-s>"] = "select_horizontal",
           ["<C-v>"] = "select_vertical",
           ["<C-t>"] = "select_tab",
@@ -224,7 +242,16 @@ function M.config()
 
           ["<C-j>"] = "move_selection_next",
           ["<C-k>"] = "move_selection_previous",
-          ["<C-l>"] = "select_default",
+          ["<C-l>"] = function(pb)
+            local picker = action_state.get_current_picker(pb)
+            local multi = picker:get_multi_selection()
+            actions.select_default(pb) -- the normal enter behaviour
+            for _, j in pairs(multi) do
+              if j.path ~= nil then -- is it a file -> open it as well:
+                vim.cmd(string.format("%s %s", "edit", j.path))
+              end
+            end
+          end,
           ["j"] = "move_selection_next",
           ["k"] = "move_selection_previous",
           ["l"] = "select_default",

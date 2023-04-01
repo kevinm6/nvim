@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 30 Mar 2023, 19:08
+-- Last Modified: 31 Mar 2023, 13:09
 -----------------------------------------
 
 local S = {
@@ -16,7 +16,7 @@ local diag_cached = ""
 S.session_name = ""
 
 local preset_width = setmetatable({
-  filename = 120,
+  filename = 60,
   git_branch = 60,
   git_status_full = 110,
   diagnostic = 128,
@@ -98,9 +98,16 @@ local function win_is_smaller(lower, upper)
   return upper and (win_size >= lower and win_size <= upper) or win_size < lower
 end
 
--- filename (tail) for statusline
+-- TODO: improve truncation
+-- filename for statusline
 local function get_filename()
-  return "%f "
+  local cols = vim.o.columns
+  local fname = vim.fn.expand "%f "
+  local len_fname = string.len(fname)
+  local to_trunc = len_fname >= preset_width.filename or len_fname >= (cols * 0.3)
+  local truncated_name = "...".. string.sub(fname, len_fname - (cols * 0.25), -1)
+
+  return to_trunc and truncated_name or fname
 end
 
 -- location function (current row on total rows)
