@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 20 Mar 2023, 09:59
+-- Last Modified: 04 Apr 2023, 09:45
 -------------------------------------
 
 local icons = require "util.icons"
@@ -187,6 +187,11 @@ function M.config()
       require "plugins.lsp.configs.gopls"))
     end,
   }
+
+  -- sourcekit is still not available on mason-lspconfig
+  lspconfig.sourcekit.setup(
+    vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.sourcekit")
+  )
 
   require "plugins.lsp.null-ls".init(default_lsp_config)
 end

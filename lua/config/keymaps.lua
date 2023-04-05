@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 18 Mar 2023, 18:00
+-- Last Modified: 05 Apr 2023, 09:33
 -------------------------------------
 
 local set_opts = function(opts)
@@ -13,9 +13,6 @@ local set_opts = function(opts)
 end
 
 local set_keymap = vim.keymap.set
-
-vim.g.mapleader = ","
-vim.g.maplocalleader = ","
 
 -- GUI
 -- VimR keymaps (command key and others not supported in term)
@@ -200,7 +197,7 @@ set_keymap("v", ">", ">gv", set_opts {})
 set_keymap("v", "p", "_dP", set_opts {})
 set_keymap("v", "<C-s>", [[:s///gI<Left><Left><Left><Left>]], set_opts { silent = false, desc = "Search" })
 set_keymap("v", "<leader>y", [["+y]], set_opts { desc = "Yank to clipboard" } )
-set_keymap("v", "<leader>ff", function() require "util.functions".range_format() end, set_opts { desc = "Range format" } )
+set_keymap("v", "<leader>lf", function() require "util.functions".range_format() end, set_opts { desc = "Range format" } )
 --set_keymap("v", "d", "\+d", set_opts { expr = true, desc = "Copy deletion into register \""})
 --set_keymap("v", "D", "\+D", set_opts { expr = true, desc = "Copy deletion to end into register \"" })
 --set_keymap("v", "y", "\+y", set_opts { expr = true, desc = "Copy yank into register \"" })

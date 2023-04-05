@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 01 Mar 2023, 12:48
+--  Last Modified: 05 Apr 2023, 11:59
 -------------------------------------
 
 local F = {}
@@ -12,11 +12,11 @@ function F.sniprun_enable()
     %SnipRun
 
     augroup _sniprun
-     autocmd!
-     autocmd TextChanged * call Test()
-     autocmd TextChangedI * call TestI()
+    autocmd!
+    autocmd TextChanged * call Test()
+    autocmd TextChangedI * call TestI()
     augroup end
-  ]]
+    ]]
   vim.notify "Enabled SnipRun"
 end
 
@@ -89,11 +89,11 @@ function F.dev_folder()
   vim.ui.select(dev_folders, {
     prompt = " > Select dev folder",
     default = nil,
-   }, function(choice)
-        if choice then
-          require "telescope".extensions.file_browser.file_browser { cwd = choice }
-       end
-   end)
+  }, function(choice)
+      if choice then
+        require "telescope".extensions.file_browser.file_browser { cwd = choice }
+      end
+    end)
 end
 
 
@@ -106,12 +106,12 @@ function F.delete_session()
     prompt = "Select session to delete:",
     default = nil,
     -- format_item = function(item) return "" end,
-   }, function(choice)
-       if choice then
-         vim.cmd("! rm ".. choice)
-         vim.notify("Session < "..choice.." > deleted!", "Warn")
-       end
-   end)
+  }, function(choice)
+      if choice then
+        vim.cmd("! rm ".. choice)
+        vim.notify("Session < "..choice.." > deleted!", "Warn")
+      end
+    end)
 end
 
 
@@ -124,14 +124,14 @@ function F.restore_session()
       prompt = " > Select session to restore",
       default = nil,
       -- format_item = function(item) return "" end,
-     }, function(choice)
-          local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
-          if choice then
-            vim.cmd.source(choice)
-            require "core.statusline".session_name = s_name
-            vim.notify("Session < "..choice.." > restored!", "Info")
-         end
-     end)
+    }, function(choice)
+        local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
+        if choice then
+          vim.cmd.source(choice)
+          require "core.statusline".session_name = s_name
+          vim.notify("Session < "..choice.." > restored!", "Info")
+        end
+      end)
   else
     vim.notify("No Sessions to restore", "Warn")
   end
@@ -143,13 +143,13 @@ function F.save_session()
     prompt = "Enter session name: ",
     default = nil,
     -- completion = "-complete=buffer,dir"
-   }, function(input)
-       if input then
-         local mks_path = vim.fn.stdpath "data".."/sessions/"..input..".vim"
-         vim.cmd("mksession! "..mks_path)
-         vim.notify("Session < "..input.." > created!", "Info")
-       end
-   end)
+  }, function(input)
+      if input then
+        local mks_path = vim.fn.stdpath "data".."/sessions/"..input..".vim"
+        vim.cmd("mksession! "..mks_path)
+        vim.notify("Session < "..input.." > created!", "Info")
+      end
+    end)
 end
 
 -- END SESSIONS
@@ -181,9 +181,9 @@ function F.align_lines(pat, startline, endline)
     if s then
       local rep = max - s
       local newline = {
-          string.sub(line, 1, s),
-          string.rep(' ', rep),
-          string.sub(line, s + 1),
+        string.sub(line, 1, s),
+        string.rep(' ', rep),
+        string.sub(line, s + 1),
       }
       lines[i] = table.concat(newline)
     end
@@ -196,11 +196,11 @@ function F.range_format()
   local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
   local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
   vim.lsp.buf.format({
-      range = {
-          ["start"] = { start_row, 0 },
-          ["end"] = { end_row, 0 },
-      },
-      async = true,
+    range = {
+      ["start"] = { start_row, 0 },
+      ["end"] = { end_row, 0 },
+    },
+    async = true,
   })
 end
 
@@ -237,16 +237,16 @@ end
 -- useful for dashboard and so on
 function F.new_file()
   vim.ui.input({
-      prompt = "Enter name for newfile: ",
-      default = nil,
-     }, function (input)
+    prompt = "Enter name for newfile: ",
+    default = nil,
+  }, function (input)
       if input ~= nil then
         vim.cmd.enew()
         vim.cmd.edit(input)
         vim.cmd.write(input)
         vim.cmd.startinsert()
       end
-     end
+    end
   )
 end
 
@@ -259,14 +259,15 @@ function F.workon()
       return string.format('%s (%s)', plugin.name, plugin.dir)
     end,
   }, function(plugin)
-    if not plugin then
-      return
-    end
-    vim.schedule(function()
-      vim.cmd.lcd(plugin.dir)
+      if not plugin then
+        return
+      end
+      vim.schedule(function()
+        vim.cmd.lcd(plugin.dir)
+      end)
     end)
-  end)
 end
+
 
 -- TODO: manage this better, it's just a copy-paste from source to not use another plugin
 -- source: https://github.com/chip/telescope-software-licenses.nvim/blob/master/lua/telescope/_extensions/software-licenses/find.lua
@@ -298,7 +299,7 @@ function F.software_licenses()
 
   M.licenses = function(telescope_opts)
     telescope_opts = vim.tbl_extend("keep", telescope_opts or {},
-                                    require("telescope.themes").get_dropdown {})
+      require("telescope.themes").get_dropdown {})
     pickers.new(telescope_opts, {
       prompt_title = "Software Licenses",
       finder = finders.new_table {
