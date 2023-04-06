@@ -41,6 +41,7 @@ jobs:
         shell: bash
         run: |
           cd dest/
-          git branch -m knvim
-          git pull origin nvim --force
-          git push origin knvim --force
+          # git branch -m knvim
+          git pull origin nvim --squash --force --no-rebase --allow-unrelated-histories
+          git status
+          # git push origin knvim --force

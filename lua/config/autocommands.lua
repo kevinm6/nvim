@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 22 Mar 2023, 10:40
+-- Last Modified: 06 Apr 2023, 17:23
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -32,7 +32,7 @@ autocmd({ "BufReadPre" }, {
   callback = function(data)
     local buf = vim.api.nvim_get_current_buf()
     local match = data.match
-    vim.pretty_print(match)
+    -- vim.pretty_print(match)
     local startline = -2
     local endline = -1
 

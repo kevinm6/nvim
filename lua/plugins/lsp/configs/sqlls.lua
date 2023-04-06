@@ -2,17 +2,17 @@
 --  File         : sqls.lua
 --  Description  : sqls configuration
 --  Author       : Kevin
---  Last Modified: 27 Dec 2022, 11:08
+--  Last Modified: 06 Apr 2023, 17:29
 -----------------------------------
 
 local M = {
-  "nanotee/sqls.nvim",
+  "joe-re/sql-language-server",
   ft = { "sql", "mysql", "psql" },
 }
 
 function M.config()
   return {
-    cmd = { "sqls" },
+    cmd = { "sql-language-server", "up", "--method", "stdio" },
     filetypes = { "sql", "mysql" },
     single_file_support = true,
     settings = {
@@ -61,9 +61,9 @@ function M.config()
         }
       },
     },
-    on_attach = function(client, bufnr)
-      require("sqls").on_attach(client, bufnr)
-    end
+    -- on_attach = function(client, bufnr)
+    --   require("sqls").on_attach(client, bufnr)
+    -- end
   }
 end
 

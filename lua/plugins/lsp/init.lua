@@ -2,12 +2,12 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 04 Apr 2023, 09:45
+-- Last Modified: 06 Apr 2023, 17:27
 -------------------------------------
 
 local icons = require "util.icons"
 local servers_to_install = {
-  "lua_ls", "vimls", "tsserver",
+  "lua_ls", "vimls", "tsserver", "sqlls",
   "pyright", "jsonls", "gopls", "yamlls",
   "html", "asm_lsp", "bashls", "clangd",
   "intelephense", "ocamllsp", "erlangls"
@@ -174,8 +174,8 @@ function M.config()
     ["jsonls"] = function() lspconfig.jsonls.setup(vim.tbl_deep_extend("force", default_lsp_config,
       require "plugins.lsp.configs.jsonls"))
     end,
-    ["sqls"] = function() lspconfig.sqls.setup(vim.tbl_deep_extend("force", default_lsp_config,
-      require "plugins.lsp.configs.sqls"))
+    ["sqlls"] = function() lspconfig.sqlls.setup(vim.tbl_deep_extend("force", default_lsp_config,
+      require "plugins.lsp.configs.sqlls"))
     end,
     ["grammarly"] = function() lspconfig.grammarly.setup(vim.tbl_deep_extend("force", default_lsp_config,
       { autostart = false }))
