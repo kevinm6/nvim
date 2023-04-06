@@ -1,0 +1,46 @@
+name: Push on knvim
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  push-on-knvim:
+    name: Push on knvim
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      Tag: ${{ github.ref_name }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          path: "src"
+          ref: "nvim"
+          persist-credentials: false
+
+      - name: Checkout dest
+        uses: actions/checkout@v3
+        with:
+          path: "dest"
+          ref: "knvim"
+          repository: "kevinm6/nvim"
+          token: ${{ secrets.PAT }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "GitHub Actions [Bot]"
+          git config --global user.mail "${{ secrets.BOT_EMAIL }}"
+
+      - name: Update tag on branch knvim
+        shell: bash
+        run: |
+          cd dest/
+          git branch -m knvim
+          git pull origin nvim --force
+          git push origin knvim --force
