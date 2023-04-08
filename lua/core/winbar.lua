@@ -2,7 +2,7 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 07 Mar 2023, 16:36
+-- Last Modified: 08 Apr 2023, 11:26
 -----------------------------------------
 
 local M = {
@@ -10,7 +10,6 @@ local M = {
 }
 
 local navic = require "nvim-navic"
--- if not status_gps_ok then return nil end
 
 local function isempty(s)
   return s == nil or s == ""
@@ -43,6 +42,7 @@ M.filename = function()
   end
 end
 
+
 M.gps = function()
   local location = navic.get_location()
 
@@ -54,6 +54,8 @@ M.gps = function()
     string.format("%s %s %s", retval, "%#NavicSeparator#"..icons.ui.ChevronRight.."%*", location) or
     retval
 end
+
+
 M.get_winbar = function()
 
   local winbar_filetype_exclude = {

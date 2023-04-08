@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 06 Apr 2023, 17:23
+-- Last Modified: 08 Apr 2023, 11:25
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -69,7 +69,8 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   group = vim.api.nvim_create_augroup("_statusline", { clear = true, }),
   pattern = "*",
   callback = function()
-    vim.wo.statusline = "%!v:lua.require'core.statusline'.get_statusline()"
+    vim.api.nvim_eval_statusline("%!v:lua.require'core.statusline'.get_statusline()", {})
+    -- vim.wo.statusline = "%!v:lua.require'core.statusline'.get_statusline()"
   end,
 })
 
@@ -77,8 +78,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
 vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   group = vim.api.nvim_create_augroup("_winbar", { clear = true }),
   callback = function()
-    local has_float_win, _ = pcall(vim.api.nvim_buf_get_var, 0, "lsp_floating_window")
-    if not has_float_win then
+    if not vim.api.nvim_win_get_config(0).relative ~= '' then -- disable on float windows
       vim.wo.winbar = require "core.winbar".get_winbar()
     end
   end,
