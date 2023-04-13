@@ -2,18 +2,10 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 08 Mar 2023, 11:44
+-- Last Modified: 14 Apr 2023, 15:26
 -------------------------------------
 
 local M = {
-  {
-    "nvim-treesitter/playground",
-    cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
-    keys = {
-      { "<leader>Tp", function() vim.cmd.TSPlaygroundToggle {} end, desc = "Playground" },
-      { "<leader>Th", function() vim.cmd.TSHighlightCapturesUnderCursor {} end, desc = "Highlight" }
-    }
-  },
   {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufReadPost",
@@ -30,11 +22,11 @@ local M = {
             "class",
             "function",
             "method",
-            -- "for",
-            -- "if",
-            -- "while",
-            -- 'switch',
-            -- 'case',
+            "for",
+            "if",
+            "while",
+            'switch',
+            'case',
           },
         },
         exact_patterns = {},
@@ -44,6 +36,10 @@ local M = {
     "nvim-treesitter/nvim-treesitter",
     event = "BufReadPre",
     build = ":TSUpdate",
+    keys = {
+      { "<leader>Tp", function() vim.cmd.InspectTree {} end, desc = "TS Inspector" },
+      { "<leader>Th", function() vim.cmd.Inspect {} end, desc = "TS Highlight" }
+    },
     dependencies = {
        "JoosepAlviste/nvim-ts-context-commentstring",
       { "windwp/nvim-ts-autotag", ft = { "html", "php", "xml" } },
@@ -56,7 +52,7 @@ local M = {
 
       local parser_to_install = vim.fn.has "mac" == 1  and {
           "c", "comment", "cpp", "css", "dot", "dockerfile",
-          "bash", "gitignore", "gitattributes", "gitcommit", "git_rebase", "go", "help",
+          "bash", "gitignore", "gitattributes", "gitcommit", "git_rebase", "go", "vimdoc",
 
           "html", "http", "json", "json5", "jsdoc", "latex", "erlang", "ruby",
           "lua", "java", "javascript", "markdown", "markdown_inline", "rust",

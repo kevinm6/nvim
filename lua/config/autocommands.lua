@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 08 Apr 2023, 11:25
+-- Last Modified: 14 Apr 2023, 19:35
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -389,5 +389,4 @@ command("DiffOrig", function()
   end
 end, {})
 
-
-require "util.hex.hex".setup {}
+command('HexToggle', function() require"util.hex.hex".setup {} end, {})

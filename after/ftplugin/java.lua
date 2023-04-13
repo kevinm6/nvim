@@ -2,13 +2,12 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 23 Feb 2023, 09:33
+-- Last Modified: 14 Apr 2023, 20:05
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
 if not has_jdtls then
-  vim.notify(" ERROR loading jdtls", "Error")
-  print(jdtls)
+  vim.notify(" ERROR loading jdtls", vim.log.levels.ERROR)
   return
 end
 
@@ -100,10 +99,11 @@ local config = {
             name = "JavaSE-17",
             path = "/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home"
           },
-          {
-            name = "JavaSE-19",
-            path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
-          },
+          -- TODO: add latest when it will be updated
+          -- {
+          --   name = "JavaSE-20",
+          --   path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
+          -- },
         }
       },
       implementationsCodeLens = {
@@ -237,7 +237,7 @@ vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = true })
 
 -- Formatting
 vim.api.nvim_buf_create_user_command(0,
-  "Format", vim.lsp.buf.formatting, { force = true }
+  "Format", function() vim.lsp.buf.formatting() end, { force = true }
 )
 
 -- lsp-document_highlight
@@ -265,5 +265,3 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = true, desc = "GoTo 
 vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { buffer = true , desc = "GoTo implementation"})
 vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = true , desc = "GoTo references"})
 
--- Formatting
-vim.api.nvim_buf_create_user_command(0, "Format", vim.lsp.buf.formatting, { force = true })

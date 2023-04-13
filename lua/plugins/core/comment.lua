@@ -2,7 +2,7 @@
 -- File         : comment.lua
 -- Description  : Comment config
 -- Author       : Kevin
--- Last Modified: 04 Jan 2023, 15:16
+-- Last Modified: 16 Apr 2023, 11:05
 -------------------------------------
 
 local M = {
@@ -19,13 +19,8 @@ local M = {
     { "/", function()
     require "comment.api".toggle.linewise.current(vim.fn.visualmode())
   end, desc = "comment", mode = "v" },
-  }
-}
-
-function M.config()
-  local comment = require "Comment"
-
-  comment.setup {
+  },
+  opts = {
     padding = true,
     sticky = true,
     ignore = "^$",
@@ -85,7 +80,6 @@ function M.config()
       end
     end,
   }
-
-end
+}
 
 return M

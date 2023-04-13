@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 06 Apr 2023, 17:27
+-- Last Modified: 14 Apr 2023, 20:01
 -------------------------------------
 
 local icons = require "util.icons"
@@ -63,9 +63,18 @@ local M = {
           },
         },
         pip = {
+          upgrade_pip = false,
           install_args = {},
         },
-        max_concurrent_installers = 3,
+        max_concurrent_installers = 4,
+        registries = {
+          "lua:mason-registry.index",
+          "github:mason-org/mason-registry",
+        },
+        providers = {
+          "mason.providers.registry-api",
+          "mason.providers.client",
+        },
         github = {
           -- The template URL to use when downloading assets from GitHub.
           -- The placeholders are the following (in order):
@@ -81,7 +90,7 @@ local M = {
       "williamboman/mason-lspconfig.nvim",
       opts = {
         ensure_installed = servers_to_install,
-        automatic_installation = { exclude = { "julia" } },
+        automatic_installation = {},
         ui = {
           border = "rounded",
           icons = {
@@ -101,14 +110,6 @@ local M = {
             check_outdated_servers = "C", -- Keymap to check which installed servers are outdated
             uninstall_server = "X", -- Keymap to uninstall a server
           },
-        },
-        github = {
-          -- The template URL to use when downloading assets from GitHub.
-          -- The placeholders are the following (in order):
-          -- 1. The repository (e.g. "rust-lang/rust-analyzer")
-          -- 2. The release version (e.g. "v0.3.0")
-          -- 3. The asset name (e.g. "rust-analyzer-v0.3.0-x86_64-unknown-linux-gnu.tar.gz")
-          download_url_template = "https://github.com/%s/releases/download/%s/%s",
         },
         pip = {
           install_args = {},

@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 06 Apr 2023, 17:31
+--  Last Modified: 15 Apr 2023, 17:33
 -------------------------------------
 
 local M =  {
@@ -58,7 +58,7 @@ local M =  {
 
   {
     "kevinm6/hologram.nvim",
-    enabled = false,
+    cmd = "Hologram",
     dev = true,
     ft = { "md", "markdown" },
     opts = { auto_display = true }

@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 26 Mar 2023, 11:40
+-- Last Modified: 14 Apr 2023, 19:47
 -------------------------------------
 
 -- CURSOR {
@@ -65,8 +65,8 @@ local options = {
 
 	-- INDENTATION:
 	smartindent = true, -- enable smart indentation
-	tabstop = 2, -- number of spaces of <Tab>
-	softtabstop = -1, -- :h softtabstop
+	tabstop = 3, -- number of spaces of <Tab>
+	softtabstop = 3, -- :h softtabstop
 	expandtab = true, -- convert tabs to spaces
 	shiftwidth = 2, -- number of spaces for indentation
 
