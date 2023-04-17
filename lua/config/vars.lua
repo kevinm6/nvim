@@ -2,7 +2,7 @@
 -- File         : vars.lua
 -- Description  : NeoVim & VimR global vars
 -- Author       : Kevin
--- Last Modified: 18 Jan 2023, 10:20
+-- Last Modified: 19 Apr 2023, 16:27
 -------------------------------------
 
 -- disable netrw
@@ -18,7 +18,7 @@ vim.g.python3_host_prog = "~/.local/share/nvim/nvim_python_venv/bin/python"
 -- }
 
 -- Ruby (disable the provider)
-vim.g.loaded_ruby_provider = 0
+-- vim.g.loaded_ruby_provider = 0
 
 -- Perl (disable the provider)
 vim.g.loaded_perl_provider = 0
@@ -36,7 +36,3 @@ vim.g.LanguageClient_serverCommands = {
     "sql-language-server", "up", "--method", "stdio"
   },
 }
-
--- REPL (slime)
-vim.g.slime_no_mappings = 1
-vim.g.slime_target = "neovim"
