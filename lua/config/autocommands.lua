@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 14 Apr 2023, 19:35
+-- Last Modified: 22 Apr 2023, 14:15
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -10,24 +10,27 @@ local autocmd = vim.api.nvim_create_autocmd
 local command = vim.api.nvim_create_user_command
 
 -- General
-local _general_settings = augroup("_general_settings", {
-  clear = true,
-})
+local _general_settings = augroup("_general_settings", { clear = true, })
 
 autocmd({ "FileType" }, {
-  group = _general_settings,
+  group = augroup("_q_exit", { clear = true }),
   pattern = {
-    "qf", "help", "git*", "lspinfo", "tsplayground", "crunner",
-    "Scratch", "checkhealth", "sqls_output", "DressingSelect", "Jaq", "noice.log"
+    "qf", "help", "git*", "lspinfo", "tsplayground", "crunner", "man", "diff",
+    "Scratch", "checkhealth", "sqls_output", "DressingSelect", "noice.log"
   },
-  callback = function()
-    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
-    vim.keymap.set("n", "<esc>", "<cmd>close<CR>", { buffer = true, silent = true })
+  callback = function(ft)
+      if ft == "man" or ft == "diff" then
+          vim.keymap.set("n", "q", "<cmd>quit<CR>", { buffer = true, silent = true })
+          vim.keymap.set("n", "<esc>", "<cmd>quit<CR>", { buffer = true, silent = true })
+      else
+          vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
+          vim.keymap.set("n", "<esc>", "<cmd>close<CR>", { buffer = true, silent = true })
+      end
   end
 })
 
 autocmd({ "BufReadPre" }, {
-  group = _general_settings,
+  group = augroup("_manage_pics", { clear = true }),
   pattern = { "*.png", "*.jpg", "*.jpeg" },
   callback = function(data)
     local buf = vim.api.nvim_get_current_buf()
@@ -45,17 +48,9 @@ autocmd({ "BufReadPre" }, {
   end
 })
 
-autocmd({ "FileType" }, {
-  group = _general_settings,
-  pattern = { "man", "diff" },
-  callback = function()
-    vim.keymap.set("n", "q", "<cmd>quit<CR>", { buffer = true, silent = true })
-    vim.keymap.set("n", "<esc>", "<cmd>quit<CR>", { buffer = true, silent = true })
-  end
-})
 
 autocmd({ "TextYankPost" }, {
-  group = _general_settings,
+  group = augroup("_highlight_yank", { clear = true }),
   pattern = "*",
   callback = function()
     vim.highlight.on_yank({ higroup = "TextYankPost", timeout = 80, on_macro = true })
@@ -86,6 +81,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved" }, {
 
 
 autocmd("LspAttach", {
+   group = augroup("_Lsp_attach", { clear = true }),
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client.name == "jdtls" then return end
@@ -138,7 +134,7 @@ autocmd("LspAttach", {
           vim.api.nvim_clear_autocmds { group = "format_on_save" }
         end
 
-        vim.notify(action().. " format on save", "Info", { title = "LSP" })
+        vim.notify(action().. " format on save", vim.log.levels.INFO, { title = "LSP" })
       end
 
       vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
@@ -191,7 +187,7 @@ autocmd("LspAttach", {
 -- If buffer modified, update any 'Last modified: ' in the first 10 lines.
 -- Restores cursor and window position using save_cursor variable.
 local updateTimeStamp = autocmd({ "BufWritePre" }, {
-  group = _general_settings,
+  group = augroup("_update_timestamp", { clear = true }),
   pattern = "*",
   callback = function()
     if vim.opt_local.modified._value == true then
@@ -216,11 +212,11 @@ command("ToggleTimeStamp",
       if au[1].id == autoTimeStampID then
         vim.api.nvim_del_autocmd(autoTimeStampID)
         autoTimeStampID = nil
-        vim.notify("❌ TimeStamp update on save disabled.", "Info", { title = "Update file INFO" })
+        vim.notify("❌ TimeStamp update on save disabled.", vim.log.levels.INFO, { title = "Update file INFO" })
       end
     else
       autoTimeStampID = autocmd({ "BufWritePre" }, {
-        group = _general_settings,
+        group = augroup("_update_timestamp", { clear = true }),
         pattern = "*",
         callback = function()
           if vim.opt_local.modified._value == true then
@@ -233,7 +229,7 @@ command("ToggleTimeStamp",
         end
       })
 
-      vim.notify("✅ TimeStamp update on save enabled.", "Info", { title = "Update file INFO" })
+      vim.notify("✅ TimeStamp update on save enabled.", vim.log.levels.INFO, { title = "Update file INFO" })
     end
   end,
   { desc = "Update TimeStamp on save" }
@@ -241,7 +237,7 @@ command("ToggleTimeStamp",
 
 -- Jump to last < cursor-pos > in file
 autocmd({ "BufRead" }, {
-  group = _general_settings,
+  group = augroup("_goto_last_pos", { clear = true }),
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
@@ -251,10 +247,30 @@ autocmd({ "BufRead" }, {
   end
 })
 
+-- Set makeprg for filetype
+-- TODO: add more filetypes (maybe porting from code_runner.lua)
+autocmd({ "FileType" }, {
+  group = augroup("_set_makefile", { clear = true }),
+  pattern = "*",
+  callback = function(match)
+      local file = vim.fn.expand "%:p"
+      local file_without_ext = vim.fn.expand "%<"
+      local filetypes = {
+         lua = "luafile ".. file,
+         java = "javac ".. file .. " && java " ..  file_without_ext,
+         c = "gcc ".. file .. " -o ".. file_without_ext .. "&& ./"..file_without_ext,
+         python = "python3 " .. file,
+      }
+      if filetypes[match.match] then
+         vim.opt.makeprg = filetypes[match.match]
+      end
+   end
+})
+
 
 -- Git
 autocmd({ "FileType", "BufNewFile" }, {
-  group = _general_settings,
+  group = augroup("_edit_gitfiles", { clear = true }),
   pattern = { "gitcommit", "gitrebase" },
   callback = function() vim.cmd.startinsert() end
 })

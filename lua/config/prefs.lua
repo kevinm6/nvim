@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 14 Apr 2023, 19:47
+-- Last Modified: 21 Apr 2023, 13:14
 -------------------------------------
 
 -- CURSOR {
@@ -18,7 +18,7 @@ local options = {
 
 	-- MOUSE:
 	mouse = "vnc",
-  fileencoding = "utf-8",
+   fileencoding = "utf-8",
 
 	-- GRAPHIC:
 	termguicolors = true,
@@ -68,7 +68,7 @@ local options = {
 	tabstop = 3, -- number of spaces of <Tab>
 	softtabstop = 3, -- :h softtabstop
 	expandtab = true, -- convert tabs to spaces
-	shiftwidth = 2, -- number of spaces for indentation
+	shiftwidth = 3, -- number of spaces for indentation
 
 	-- FOLDING:
 	wrap = false, -- Wrap long lines showing a linebreak

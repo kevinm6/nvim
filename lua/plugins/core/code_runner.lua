@@ -2,7 +2,7 @@
 --  File         : code_runner.lua
 --  Description  : code_runner plugin config
 --  Author       : Kevin
---  Last Modified: 20 Mar 2023, 13:18
+--  Last Modified: 22 Apr 2023, 12:53
 ---------------------------------------
 
 local M = {
@@ -52,8 +52,8 @@ local M = {
       python = "python3 -u '$file'",
       typescript = "deno run",
       rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
-      cpp = "g++ % -o $fileBase && ./$fileBase",
-      c = "gcc % -o $fileBase && ./$fileBase",
+      cpp = "g++ % -o $fileName && ./$fileName",
+      c = "gcc $file -o $fileName && ./$fileName",
       go = "go run '$file'",
       sh = "sh '$file'",
       markdown = "glow '$file'",

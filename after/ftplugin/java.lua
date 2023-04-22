@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 14 Apr 2023, 20:05
+-- Last Modified: 22 Apr 2023, 13:54
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
@@ -264,4 +264,3 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = true })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = true, desc = "GoTo definition" })
 vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { buffer = true , desc = "GoTo implementation"})
 vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = true , desc = "GoTo references"})
-

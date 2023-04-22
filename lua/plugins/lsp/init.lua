@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 14 Apr 2023, 20:01
+-- Last Modified: 22 Apr 2023, 12:58
 -------------------------------------
 
 local icons = require "util.icons"
@@ -132,6 +132,9 @@ function M.config()
   ext_capabilities = require "cmp_nvim_lsp".default_capabilities(ext_capabilities)
   ext_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+   -- HACK: this is to avoid errors on lsp that support only single encoding (ex: clangd)
+  ext_capabilities.offsetEncoding = 'utf-8'
+
   -- Custom configs to apply when starting lsp
   local custom_init = function(client)
     client.config.flags = client.config.flags or {}
@@ -187,6 +190,9 @@ function M.config()
     ["gopls"] = function() lspconfig.gopls.setup(vim.tbl_deep_extend("force", default_lsp_config,
       require "plugins.lsp.configs.gopls"))
     end,
+    -- ["tsserver"] = function() lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config,
+    --   require "plugins.lsp.configs.tsserver"))
+    -- end,
   }
 
   -- sourcekit is still not available on mason-lspconfig

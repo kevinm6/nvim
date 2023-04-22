@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 31 Mar 2023, 12:52
+-- Last Modified: 22 Apr 2023, 14:14
 ---------------------------------------
 
 local git_hunks = function()
@@ -205,6 +205,8 @@ function M.config()
           ["<PageUp>"] = "results_scrolling_up",
           ["<PageDown>"] = "results_scrolling_down",
 
+          ["<C-i>"] = actions.toggle_selection + actions.move_selection_worse,
+          ["<S-C-i>"] = actions.toggle_selection + actions.move_selection_better,
           -- ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           -- ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
           ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
@@ -453,13 +455,13 @@ function M.config()
       lsp_implementations = {
         theme = "cursor",
         previewer = true,
-        initial_mode = "normal",
+        initial_mode = "insert",
       },
       lsp_document_symbols = {
         theme = "dropdown",
         previewer = false,
         bufnr = 0,
-        initial_mode = "normal",
+        initial_mode = "insert",
         layout_strategy = "vertical",
         layout_config = {
           prompt_position = "bottom",
@@ -469,7 +471,7 @@ function M.config()
       lsp_dynamic_workspace_symbols = {
         theme = "dropdown",
         previewer = false,
-        initial_mode = "normal",
+        initial_mode = "insert",
         layout_strategy = "vertical",
         layout_config = {
           prompt_position = "bottom",
@@ -539,6 +541,7 @@ function M.config()
             ["<C-r>"] = fb_actions.rename,
             ["<C-m>"] = fb_actions.move,
             ["<C-d>"] = fb_actions.remove,
+            ["æ"] = fb_actions.copy,
             -- Trash files instead of deleting them
             ["∂"] = function(prompt_bufnr)
               local fb_utils = require("telescope._extensions.file_browser.utils")
