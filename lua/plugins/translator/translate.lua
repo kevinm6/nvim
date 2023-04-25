@@ -2,13 +2,13 @@
 --  File         : translate.lua
 --  Description  : translate.nvim config
 --  Author       : Kevin
---  Last Modified: 31 Dec 2022, 10:33
+--  Last Modified: 25 Apr 2023, 20:55
 -------------------------------------
 
 local M = {}
 
 function M.translate()
-  local languages = require "plugins.translate.languages";
+  local languages = require "plugins.translator.languages";
   local pickers = require 'telescope.pickers'
   local finders = require 'telescope.finders'
   local actions = require 'telescope.actions'

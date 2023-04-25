@@ -3,7 +3,7 @@
 --  Description  : edit hex files
 --  Author       : Kevin
 --  Source       : https://github.com/RaafatTurki/hex.nvim/tree/master/lua
---  Last Modified: 20 Mar 2023, 09:54
+--  Last Modified: 26 Apr 2023, 08:41
 -------------------------------------
 
 local u = require 'util.hex.utils'
@@ -15,13 +15,13 @@ M.cfg = {
   dump_cmd = 'xxd -g 1 -u',
   assemble_cmd = 'xxd -r',
   is_file_binary_pre_read = function()
-    binary_ext = { 'out', 'bin', 'png', 'jpg', 'jpeg', 'exe', 'dll' }
+    local binary_ext = { 'out', 'bin', 'png', 'jpg', 'jpeg', 'exe', 'dll' }
     -- only work on normal buffers
     if vim.bo.ft ~= "" then return false end
     -- check -b flag
     if vim.bo.bin then return true end
     -- check ext within binary_ext
-    local filename = vim.fn.expand('%:t')
+    -- local filename = vim.fn.expand('%:t')
     local ext = vim.fn.expand('%:e')
     if vim.tbl_contains(binary_ext, ext) then return true end
     -- none of the above
@@ -91,8 +91,8 @@ end
 M.setup = function(args)
   M.cfg = vim.tbl_deep_extend("force", M.cfg, args or {})
 
-  dump_program = vim.fn.split(M.cfg.dump_cmd)[1]
-  assemble_program = vim.fn.split(M.cfg.assemble_cmd)[1]
+  local dump_program = vim.fn.split(M.cfg.dump_cmd)[1]
+  local assemble_program = vim.fn.split(M.cfg.assemble_cmd)[1]
 
   if not u.is_program_executable(dump_program) then return end
   if not u.is_program_executable(assemble_program) then return end

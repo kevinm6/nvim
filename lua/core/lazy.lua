@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 16 Mar 2023, 08:45
+-- Last Modified: 26 Apr 2023, 08:39
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -21,9 +21,9 @@ vim.opt.runtimepath:prepend(lazypath)
 local ok, lazy = pcall(require, "lazy")
 if not ok then
   vim.notify(
-    (" %s\n (%s)"):format("Error loading lazy config \n ", lazy),
-    "Error",
-    { timeout = 1000, title = "INIT ERROR" }
+    (" %s\n (%s) \n"):format("Error loading lazy config", lazy),
+      vim.log.levels.ERROR,
+    { timeout = 1000, title = "LAZY ERROR" }
   )
   return
 end

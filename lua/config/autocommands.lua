@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 22 Apr 2023, 14:15
+-- Last Modified: 26 Apr 2023, 20:19
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -35,7 +35,7 @@ autocmd({ "BufReadPre" }, {
   callback = function(data)
     local buf = vim.api.nvim_get_current_buf()
     local match = data.match
-    -- vim.pretty_print(match)
+    -- vim.print(match)
     local startline = -2
     local endline = -1
 
@@ -170,6 +170,21 @@ autocmd("LspAttach", {
         buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
         callback = function() vim.lsp.buf.clear_references() end
       })
+      -- TODO: must be implemented better
+      -- else -- fallback w/ treesitter
+      --    local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
+      --    autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
+      --      group = lsp_hi_doc_group,
+      --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
+      --      callback = function()
+      --          require "util.functions".ts_fallback_lsp_highlighting(args.buf)
+      --      end
+      --    })
+      --    autocmd({ "BufEnter", "CursorMoved" }, {
+      --      group = lsp_hi_doc_group,
+      --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
+      --      callback = function() vim.lsp.buf.clear_references() end
+      --    })
     end
 
     vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end, { buffer = args.buf, desc = "Code Action" })
@@ -256,13 +271,34 @@ autocmd({ "FileType" }, {
       local file = vim.fn.expand "%:p"
       local file_without_ext = vim.fn.expand "%<"
       local filetypes = {
-         lua = "luafile ".. file,
-         java = "javac ".. file .. " && java " ..  file_without_ext,
-         c = "gcc ".. file .. " -o ".. file_without_ext .. "&& ./"..file_without_ext,
-         python = "python3 " .. file,
+         lua = {
+            prg = "nvim -l ".. file,
+            efmt = "%f",
+         },
+         java = {
+            "javac ".. file .. " && java " ..  file_without_ext,
+            efmt = "%f",
+         },
+         c = {
+           prg = "gcc ".. file .. " -o ".. file_without_ext .. "&& ./"..file_without_ext,
+            efmt = "",
+         },
+         python = {
+            prg = "python3 " .. file,
+            efmt = "",
+         },
+         sh = {
+            prg = "%",
+            efmt = [[%f:\ line\ %l:\ %m]]
+         },
+         zsh = {
+            prg = "%",
+            efmt = [[%f:\ line\ %l:\ %m]]
+         }
       }
       if filetypes[match.match] then
-         vim.opt.makeprg = filetypes[match.match]
+         vim.opt_local.makeprg = filetypes[match.match.prg]
+         vim.opt_local.errorformat = filetypes[match.match.efmt]
       end
    end
 })

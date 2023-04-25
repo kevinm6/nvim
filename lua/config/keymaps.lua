@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 06 Apr 2023, 17:10
+-- Last Modified: 26 Apr 2023, 17:43
 -------------------------------------
 
 local set_opts = function(opts)
@@ -43,7 +43,7 @@ end
 -- NORMAL MODE & VISUAL MODE
 set_keymap("n", "<leader>.", function()
 	vim.cmd.cd "%:h"
-	vim.notify(" Current Working Directory:   `" .. vim.fn.expand "%:p:h" .. "`", "Info", {
+	vim.notify(" Current Working Directory:   `" .. vim.fn.expand "%:p:h" .. "`", vim.log.levels.INFO, {
 		title = "File Explorer",
 		timeout = 4,
 		on_open = function(win)
@@ -126,6 +126,7 @@ set_keymap("n", "<leader>Ws", function() vim.cmd.split {} end, set_opts { desc =
 set_keymap("n", "<leader>Wv", function() vim.cmd.vsplit {} end, set_opts { desc = "VSplit" })
 set_keymap("n", "<leader>Wo", function() vim.cmd.only() end, set_opts { desc = "Close other windows" })
 set_keymap("n", "<leader>W=", "<C-w>=", set_opts { desc = "Windows equals" })
+set_keymap("n", "<leader>Wm", "<C-w>|<bar> <C-w>_", set_opts { desc = "Window maximise" })
 
 -- resize windows
 set_keymap("n", "<S-Up>", function() vim.cmd.resize "+2" end)
@@ -139,7 +140,7 @@ set_keymap("n", "<leader>Y", [["+y$]], set_opts { desc = "Yank 'til end to clipb
 -- Config File
 set_keymap("n", "<leader>0s", function()
 	vim.cmd.source "$MYVIMRC"
-	vim.notify("Config file sourced", "Info")
+	vim.notify("Config file sourced", vim.log.levels.INFO)
 end, set_opts { desc = "Source Neovim config file" })
 
 set_keymap("n", "<leader>0e", function() vim.cmd.edit "$NVIMDOTDIR/init.lua" end, set_opts { desc = "Edit Neovim config file" })
@@ -151,10 +152,9 @@ set_keymap("n", "ZZ", function()
 	vim.cmd.update {}
 	vim.cmd.DeleteCurrentBuffer {}
 end, set_opts { desc = "Save and Close buffer" })
-set_keymap("n", "ZQ", function() vim.cmd.quit { bang = true } end, set_opts { desc = "Close buffer and go to next" })
-set_keymap("n", "ZA", ":%bdelete | :Alpha<CR>", set_opts { desc = "Close all Buffers" })
+set_keymap("n", "ZQ", function() vim.cmd.quit { bang = true } end, set_opts { desc = "Close buffer and go to next" }) set_keymap("n", "ZA", ":%bdelete | :Alpha<CR>", set_opts { desc = "Close all Buffers" })
 
-set_keymap({ "n", "v" }, "<leader>ft", function() require "plugins.translate".translate() end, set_opts { desc = "Translate" })
+set_keymap({ "n", "v" }, "<leader>ft", function() require "plugins.translator.translate".translate() end, set_opts { desc = "Translate" })
 
 -- University Folders
 set_keymap("n", "<leader>U", function()

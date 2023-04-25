@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 07 Feb 2023, 18:53
+--  Last Modified: 24 Apr 2023, 18:04
 -----------------------------------
 
 local M = {
@@ -80,15 +80,18 @@ function M.config()
   }
 
   dap.defaults.fallback.external_terminal = {
-    command = "/usr/local/bin/kitty",
+    command = "/usr/bin/env kitty",
     args = { "-e " },
   }
 
   -- C
   dap.configurations.c = dap.configurations.cpp
 
+
   -- RUST
   dap.configurations.rust = dap.configurations.cpp
+
+
 
   -- LUA
   dap.adapters.nlua = function(callback, config)
@@ -137,75 +140,81 @@ function M.config()
 
   dap.adapters.python = {
     type = 'executable';
-    command = os.getenv('HOME') .. '/.local/share/nvim/dap/python';
-    args = { '-m', 'debugpy.adapter' };
+    command = vim.fn.stdpath "data" .. "/dap/python",
+    args = { '-m', 'debugpy.adapter' },
   }
 
 
   -- GO
-  dap.adapters.go = function(callback, _)
-    local stdout = vim.loop.new_pipe(false)
-    local handle, pid_or_err
-    local port = 38697
+   dap.adapters.go = {
+     type = 'executable';
+     command = 'node';
+     args = { vim.fn.stdpath "data" .. "/mason/packages/go-debug-adapter/extension/dist/debugAdapter.js" }
+   }
+   dap.configurations.go = {
+     {
+       type = 'go';
+       name = 'Debug';
+       request = 'launch';
+       showLog = false;
+       program = "${file}";
+       dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+     },
+   }
 
-    handle, pid_or_err = vim.loop.spawn("dlv", {
-      stdio = { nil, stdout },
-      args = { "dap", "-l", "127.0.0.1:" .. port },
-      detached = true,
-    }, function(code)
-      stdout:close()
-      handle:close()
 
-      print("[delve] Exit Code:", code)
-    end)
+   -- JavaScript
+   dap.adapters["pwa-node"] = {
+     type = "server",
+     host = "localhost",
+     port = "${port}",
+     executable = {
+       command = "node",
+       -- 💀 Make sure to update this path to point to your installation
+       args = { vim.fn.stdpath "data" .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js", "${port}" },
+     }
+   }
 
-    assert(handle, "Error running dlv: " .. tostring(pid_or_err))
+   dap.configurations.javascript = {
+     {
+       type = "pwa-node",
+       request = "launch",
+       name = "Launch file",
+       program = "${file}",
+       cwd = "${workspaceFolder}",
+     },
+   }
 
-    stdout:read_start(function(err, chunk)
-      assert(not err, err)
 
-      if chunk then
-        vim.schedule(function()
-          require("dap.repl").append(chunk)
-          print("[delve]", chunk)
-        end)
-      end
-    end)
+   -- Bash
+   dap.adapters.bashdb = {
+     type = 'executable';
+     command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
+     name = 'bashdb';
+   }
 
-    -- Wait for delve to start
-    vim.defer_fn(function()
-      callback { type = "server", host = "127.0.0.1", port = port }
-    end, 100)
-  end
+   dap.configurations.sh = {
+     {
+       type = 'bashdb';
+       request = 'launch';
+       name = "Launch file";
+       showDebugOutput = true;
+       pathBashdb = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb';
+       pathBashdbLib = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir';
+       trace = true;
+       file = "${file}";
+       program = "${file}";
+       cwd = '${workspaceFolder}';
+       pathCat = "cat";
+       pathBash = "/opt/homebrew/bin/bash";
+       pathMkfifo = "mkfifo";
+       pathPkill = "pkill";
+       args = {};
+       env = {};
+       terminalKind = "integrated";
+     }
+   }
 
-  dap.configurations.go = {
-    {
-      type = "go",
-      name = "Debug (from vscode-go)",
-      request = "launch",
-      showLog = false,
-      program = "${file}",
-      dlvToolPath = vim.fn.exepath "dlv", -- Adjust to where delve is installed
-    },
-    {
-      type = "go",
-      name = "Debug",
-      request = "launch",
-      program = "${file}",
-      showLog = true,
-      -- console = "externalTerminal",
-      -- dlvToolPath = vim.fn.exepath "dlv",
-    },
-    {
-      name = "Test Current File",
-      type = "go",
-      request = "launch",
-      showLog = true,
-      mode = "test",
-      program = ".",
-      dlvToolPath = vim.fn.exepath "dlv",
-    },
-  }
 
   local icons = require "util.icons"
   local has_dapui, dapui = pcall(require, "dapui")

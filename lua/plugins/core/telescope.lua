@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 22 Apr 2023, 14:14
+-- Last Modified: 25 Apr 2023, 12:01
 ---------------------------------------
 
 local git_hunks = function()
@@ -61,6 +61,7 @@ local M = {
     { "<leader>fR", function() require "telescope.builtin".registers() end, desc = "Registers" },
     { "<leader>fk", function() require "telescope.builtin".keymaps() end, desc = "Keymaps" },
     { "<leader>fl", function() require "telescope.builtin".resume() end, desc = "Resume last" },
+    { "<leader>fc", function() require "telescope.builtin".current_buffer_fuzzy_find() end, desc = "Line fuzzy" },
     { "<leader>fC", function() require "telescope.builtin".colorscheme() end, desc = "Colorscheme" },
     { "<leader>fe", function() require "telescope".extensions.env.env() end, desc = "Environment" },
     { "<leader>fO", function() require "util.functions".software_licenses().licenses() end, desc = "Software Licenses" },
@@ -78,7 +79,7 @@ local M = {
     { "<leader>fL", function() require "telescope".extensions.luasnip.luasnip{} end, desc = "Luasnip" },
     { "<leader>fs", function() require "telescope.builtin".grep_string { theme = "dropdown", previewer = false } end, desc = "Grep string under cursor" },
 
-    { "<leader>go", function() require "telescope.builtin".git_status{} end, desc = "Git status" },
+    { "<leader>gs", function() require "telescope.builtin".git_status{} end, desc = "Git status" },
     { "<leader>gb", function() require "telescope.builtin".git_branches{} end, desc = "Checkout branch" },
     { "<leader>gc", function() require "telescope.builtin".git_commits {} end, desc = "Checkout commit" },
     { "<leader>gh", function() git_hunks() end, desc = "Git Hunks" },
@@ -304,6 +305,7 @@ function M.config()
           height = 0.4
         },
         cwd = require "lspconfig.util".find_git_ancestor(vim.fn.expand "%:p:h") or vim.fn.expand "%:p:h",
+        no_ignore = true,
         mappings = {
           n = {
             ["h"] = function(prompt_bufnr)
@@ -507,6 +509,7 @@ function M.config()
         hijack_netrw = true,
         layout_strategy = "bottom_pane",
         sorting_strategy = "ascending",
+        respect_gitignore = false,
         hidden = false,
         git_status = true,
         color_devicons = true,

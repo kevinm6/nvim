@@ -2,7 +2,7 @@
 -- File         : gitsigns.lua
 -- Description  : Lua K NeoVim & VimR gitsigns config
 -- Author       : Kevin
--- Last Modified: 25 Jan 2023, 20:28
+-- Last Modified: 25 Apr 2023, 11:52
 -------------------------------------
 
 local M = {
@@ -15,17 +15,12 @@ local M = {
     { "<leader>gp", function() require "gitsigns".preview_hunk() end, desc = "Preview Hunk" },
     { "<leader>gr", function() require "gitsigns".reset_hunk() end, desc = "Reset Hunk" },
     { "<leader>gR", function() require "gitsigns".reset_buffer() end, desc = "Reset Buffer" },
-    { "<leader>gs", function() require "gitsigns".stage_hunk() end, desc = "Stage Hunk" },
+    { "<leader>gS", function() require "gitsigns".stage_hunk() end, desc = "Stage Hunk" },
     { "<leader>gu", function() require "gitsigns".undo_stage_hunk() end, desc = "Undo Stage Hunk" },
     { "<leader>gd", function() require "gitsigns".diff_this() end, desc = "Diff" },
     { "<leader>gt", function() require "gitsigns".toggle_current_line_blame() end, desc = "Toggle Diff" },
   },
-}
-
-function M.config()
-  local gitsigns = require "gitsigns"
-
-  gitsigns.setup {
+   opts = {
     signs = {
       add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
       change = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
@@ -68,6 +63,6 @@ function M.config()
       enable = false,
     },
   }
-end
+}
 
 return M
