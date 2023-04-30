@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 25 Apr 2023, 11:32
+--  Last Modified: 28 Apr 2023, 12:38
 -------------------------------------
 
 local F = {}
@@ -83,79 +83,77 @@ end
 function F.dev_folder()
    local dev_folders = {
       vim.fn.expand "~/dev",
-      vim.fn.expand "~/Documents/developer"
+      vim.fn.expand "~/Documents/developer",
    }
    require "telescope"
    vim.ui.select(dev_folders, {
       prompt = " > Select dev folder",
       default = nil,
    }, function(choice)
-         if choice then
-            require "telescope".extensions.file_browser.file_browser { cwd = choice }
-         end
-      end)
+      if choice then
+         require("telescope").extensions.file_browser.file_browser { cwd = choice }
+      end
+   end)
 end
-
 
 -- SESSIONS
 function F.delete_session()
-   local sessions_data_stdpath = vim.fn.stdpath "data".."/sessions/"
+   local sessions_data_stdpath = vim.fn.stdpath "data" .. "/sessions/"
    local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
-   require("telescope")
+   require "telescope"
    vim.ui.select(sessions, {
       prompt = "Select session to delete:",
       default = nil,
       -- format_item = function(item) return "" end,
    }, function(choice)
-         if choice then
-            vim.cmd("! rm ".. choice)
-            vim.notify("Session < "..choice.." > deleted!", "Warn")
-         end
-      end)
+      if choice then
+         vim.cmd("! rm " .. choice)
+         vim.notify("Session < " .. choice .. " > deleted!", vim.log.levels.INFO)
+      end
+   end)
 end
 
-
 function F.restore_session()
-   local sessions_data_stdpath = vim.fn.stdpath "data".."/sessions/"
+   local sessions_data_stdpath = vim.fn.stdpath "data" .. "/sessions/"
    local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
    if #sessions > 0 then
-      require("telescope")
+      require "telescope"
       vim.ui.select(sessions, {
          prompt = " > Select session to restore",
          default = nil,
          -- format_item = function(item) return "" end,
       }, function(choice)
-            local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
-            if choice then
-               vim.cmd.source(choice)
-               require "core.statusline".session_name = s_name
-               vim.notify("Session < "..choice.." > restored!", "Info")
-            end
-         end)
+         local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
+         if choice then
+            vim.cmd.source(choice)
+            require("core.statusline").session_name = s_name
+            vim.notify("Session < " .. choice .. " > restored!", vim.log.levels.INFO)
+         end
+      end)
    else
-      vim.notify("No Sessions to restore", "Warn")
+      vim.notify("No Sessions to restore", vim.log.levels.WARN)
    end
 end
 
 function F.save_session()
-   require("telescope")
+   require "telescope"
    vim.ui.input({
       prompt = "Enter session name: ",
       default = nil,
       -- completion = "-complete=buffer,dir"
    }, function(input)
-         if input then
-            local mks_path = vim.fn.stdpath "data".."/sessions/"..input..".vim"
-            vim.cmd("mksession! "..mks_path)
-            vim.notify("Session < "..input.." > created!", "Info")
-         end
-      end)
+      if input then
+         local mks_path = vim.fn.stdpath "data" .. "/sessions/" .. input .. ".vim"
+         vim.cmd("mksession! " .. mks_path)
+         vim.notify("Session < " .. input .. " > created!", vim.log.levels.INFO)
+      end
+   end)
 end
 
 -- END SESSIONS
 
 function F.align(pat)
-   local top, bot = vim.fn.getpos("'<"), vim.fn.getpos("'>")
+   local top, bot = vim.fn.getpos "'<", vim.fn.getpos "'>"
    F.align_lines(pat, top[2] - 1, bot[2])
    vim.fn.setpos("'<", top)
    vim.fn.setpos("'>", bot)
@@ -173,7 +171,9 @@ function F.align_lines(pat, startline, endline)
       end
    end
 
-   if max == -1 then return end
+   if max == -1 then
+      return
+   end
 
    for i, line in pairs(lines) do
       local s = re:match_str(line)
@@ -182,7 +182,7 @@ function F.align_lines(pat, startline, endline)
          local rep = max - s
          local newline = {
             string.sub(line, 1, s),
-            string.rep(' ', rep),
+            string.rep(" ", rep),
             string.sub(line, s + 1),
          }
          lines[i] = table.concat(newline)
@@ -195,19 +195,20 @@ end
 function F.range_format()
    local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
    local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
-   vim.lsp.buf.format({
+   vim.lsp.buf.format {
       range = {
          ["start"] = { start_row, 0 },
          ["end"] = { end_row, 0 },
       },
       async = true,
-   })
+   }
 end
-
 
 -- Format on save
 function F.format_on_save(enable)
-   local action = function() return enable and "Enabled" or "Disabled" end
+   local action = function()
+      return enable and "Enabled" or "Disabled"
+   end
 
    if enable then
       vim.api.nvim_create_autocmd({ "BufWritePre" }, {
@@ -221,7 +222,7 @@ function F.format_on_save(enable)
       vim.api.nvim_clear_autocmds { group = "format_on_save" }
    end
 
-   vim.notify(action().. " format on save", "Info", { title = "LSP" })
+   vim.notify(action() .. " format on save", vim.log.levels.INFO, { title = "LSP" })
 end
 
 function F.toggle_format_on_save()
@@ -232,42 +233,39 @@ function F.toggle_format_on_save()
    end
 end
 
-
 -- Create new file w/ input for filename
 -- useful for dashboard and so on
 function F.new_file()
    vim.ui.input({
       prompt = "Enter name for newfile: ",
       default = nil,
-   }, function (input)
-         if input ~= nil then
-            vim.cmd.enew()
-            vim.cmd.edit(input)
-            vim.cmd.write(input)
-            vim.cmd.startinsert()
-         end
+   }, function(input)
+      if input ~= nil then
+         vim.cmd.enew()
+         vim.cmd.edit(input)
+         vim.cmd.write(input)
+         vim.cmd.startinsert()
       end
-   )
+   end)
 end
 
 function F.workon()
-   require("telescope")
-   local config = require('lazy.core.config')
+   require "telescope"
+   local config = require "lazy.core.config"
    vim.ui.select(vim.tbl_values(config.plugins), {
-      prompt = 'lcd to:',
+      prompt = "lcd to:",
       format_item = function(plugin)
-         return string.format('%s (%s)', plugin.name, plugin.dir)
+         return string.format("%s (%s)", plugin.name, plugin.dir)
       end,
    }, function(plugin)
-         if not plugin then
-            return
-         end
-         vim.schedule(function()
-            vim.cmd.lcd(plugin.dir)
-         end)
+      if not plugin then
+         return
+      end
+      vim.schedule(function()
+         vim.cmd.lcd(plugin.dir)
       end)
+   end)
 end
-
 
 -- Software Licenses
 function F.software_licenses()
@@ -284,45 +282,48 @@ function F.software_licenses()
       sep = sep or "\n"
       local fields = {}
       local pattern = string.format("([^%s]+)", sep)
-      for match, _ in string.gmatch(s, pattern) do table.insert(fields, match) end
+      for match, _ in string.gmatch(s, pattern) do
+         table.insert(fields, match)
+      end
       return fields
    end
 
    for _, license in ipairs(licenses) do
       local name = license.name
       local text = split(license.text)
-      table.insert(results, {name, text})
+      table.insert(results, { name, text })
    end
 
    local M = {}
 
    M.licenses = function(telescope_opts)
-      telescope_opts = vim.tbl_extend("keep", telescope_opts or {},
-         require("telescope.themes").get_dropdown {})
-      pickers.new(telescope_opts, {
-         prompt_title = "Software Licenses",
-         finder = finders.new_table {
-            results = results,
-            entry_maker = function(entry)
-               return {value = entry, display = entry[1], ordinal = entry[1]}
-            end
-         },
-         sorter = conf.generic_sorter(telescope_opts),
-         attach_mappings = function(prompt_bufnr, _)
-            actions.select_default:replace(function()
-               actions.close(prompt_bufnr)
-               local selection = action_state.get_selected_entry()
-               vim.api.nvim_put(selection.value[2], "l", false, true)
-            end)
-            return true
-         end,
-         previewer = previewers.new_buffer_previewer({
-            define_preview = function(self, entry)
-               local output = entry.value[2]
-               vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, output)
-            end
+      telescope_opts = vim.tbl_extend("keep", telescope_opts or {}, require("telescope.themes").get_dropdown {})
+      pickers
+         .new(telescope_opts, {
+            prompt_title = "Software Licenses",
+            finder = finders.new_table {
+               results = results,
+               entry_maker = function(entry)
+                  return { value = entry, display = entry[1], ordinal = entry[1] }
+               end,
+            },
+            sorter = conf.generic_sorter(telescope_opts),
+            attach_mappings = function(prompt_bufnr, _)
+               actions.select_default:replace(function()
+                  actions.close(prompt_bufnr)
+                  local selection = action_state.get_selected_entry()
+                  vim.api.nvim_put(selection.value[2], "l", false, true)
+               end)
+               return true
+            end,
+            previewer = previewers.new_buffer_previewer {
+               define_preview = function(self, entry)
+                  local output = entry.value[2]
+                  vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, output)
+               end,
+            },
          })
-      }):find()
+         :find()
    end
 
    return M
