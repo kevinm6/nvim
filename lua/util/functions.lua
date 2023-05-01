@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 28 Apr 2023, 12:38
+--  Last Modified: 01 May 2023, 13:30
 -------------------------------------
 
 local F = {}
@@ -493,5 +493,59 @@ end
 
 --    vim.print(refs)
 -- end
+
+-- Python Venv
+local ORIGINAL_PATH = vim.fn.getenv "PATH"
+local current_venv = nil
+local post_set_venv = nil
+local venvs_paths = {
+   vim.fn.expand "~/dev/audioToText-bot",
+   vim.fn.expand "~/.local/share/nvim/nvim_python_venv",
+}
+
+local set_venv = function(venv)
+   current_venv = venv
+   local venv_bin_path = venv.path .. "/bin"
+   vim.fn.setenv("PATH", venv_bin_path .. ":" .. ORIGINAL_PATH)
+   vim.fn.setenv("VIRTUAL_ENV", venv.path)
+   if post_set_venv then
+      post_set_venv(venv)
+   end
+end
+
+F.get_current_venv = function() return current_venv end
+
+local get_venvs = function(venvs_path)
+   local success, Path = pcall(require, "plenary.path")
+   if not success then
+      vim.notify("Could not require plenary: " .. Path, vim.log.levels.WARN)
+      return
+   end
+   -- local scan_dir = require("plenary.scandir").scan_dir
+
+   local paths = venvs_path -- scan_dir(venvs_path, { depth = 1, only_dirs = true })
+   local venvs = {}
+   for _, path in ipairs(paths) do
+      table.insert(venvs, {
+         name = Path:new(path):make_relative(vim.fn.expand "~/"),
+         path = path,
+      })
+   end
+   return venvs
+end
+
+F.pick_venv = function()
+   vim.ui.select(get_venvs(venvs_paths), {
+      prompt = "Select python venv",
+      format_item = function(item)
+         return ("%s (%s)").format(item.name, item.path)
+      end,
+   }, function(choice)
+      if not choice then
+         return
+      end
+      set_venv(choice)
+   end)
+end
 
 return F

@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 22 Apr 2023, 13:23
+--  Last Modified: 01 May 2023, 13:56
 ----------------------------------------
 
 local M = {
@@ -11,15 +11,25 @@ local M = {
    event = "VeryLazy",
    dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "nvim-treesitter/nvim-treesitter",
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
-   }
+   },
+   keys = {
+      { "<leader>nn", function() require "noice".cmd "History" end, { desc = "Notifications" } },
+      { "<leader>nL", function() require "noice".cmd "Log" end, { desc = "Log" } },
+      { "<leader>ne", function() require "noice".cmd "Error" end, { desc = "Error" } },
+      { "<leader>nl", function() require "noice".cmd "Last" end, { desc = "Last" } },
+      { "<leader>nt", function() require("telescope").extensions.noice.noice { theme = "dropdown" } end, { desc = "Noice Telescope" } },
+
+      { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, { silent = true, expr = true } },
+
+      { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, { silent = true, expr = true } },
+   },
 }
 
 function M.config()
    local noice = require "noice"
-   require "nvim-treesitter"
-
    noice.setup {
       cmdline = {
          enabled = true,
@@ -100,7 +110,7 @@ function M.config()
          -- The default routes will forward notifications to nvim-notify
          -- Benefit of using Noice for this is the routing and consistent history view
          enabled = true,
-         view = "notify"
+         view = "notify",
       },
       lsp = {
          progress = {
@@ -230,9 +240,9 @@ function M.config()
          {
             filter = {
                event = "notify",
-               min_height = 15
+               min_height = 15,
             },
-            view = 'split'
+            view = "split",
          },
          -- {
          --   filter = {
@@ -251,6 +261,18 @@ function M.config()
          -- opts: any options passed to the view
          -- icon_hl_group: optional hl_group for the icon
          -- title: set to anything or empty string to hide
+         default = { "{level} ", "{title} ", "{message}" },
+         notify = { "{message}" },
+         details = {
+            "{level} ",
+            "{date} ",
+            "{event}",
+            { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } },
+            " ",
+            "{title} ",
+            "{cmdline} ",
+            "{message}",
+         },
          cmdline = { pattern = "^:", icon = "", lang = "vim" },
          search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
          search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
@@ -261,27 +283,6 @@ function M.config()
          -- lua = false, -- to disable a format, set to `false`
       }, -- @see section on formatting
    }
-
-   vim.keymap.set("n", "<leader>nn", function() noice.cmd "History" end, { desc = "Notifications" })
-   vim.keymap.set("n", "<leader>nL", function() noice.cmd "Log" end, { desc = "Log" })
-   vim.keymap.set("n", "<leader>ne", function() noice.cmd "Error" end, { desc = "Error" })
-   vim.keymap.set("n", "<leader>nl", function() noice.cmd "Last" end, { desc = "Last" })
-   vim.keymap.set("n", "<leader>nt", function()
-      require "telescope".extensions.noice.noice { theme = "dropdown" }
-   end, { desc = "Noice Telescope" })
-
-
-   vim.keymap.set("n", "<c-f>", function()
-      if not require("noice.lsp").scroll(4) then
-         return "<c-f>"
-      end
-   end, { silent = true, expr = true })
-
-   vim.keymap.set("n", "<c-b>", function()
-      if not require("noice.lsp").scroll(-4) then
-         return "<c-b>"
-      end
-   end, { silent = true, expr = true })
 end
 
 return M
