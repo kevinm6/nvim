@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 16 Feb 2023, 18:55
+--	Last Modified: 02 May 2023, 14:22
 -----------------------------------
 
 local M = {
@@ -76,8 +76,8 @@ function M.config()
 
     local my_url =  "https://github.com/kevinm6/nvim"
     local myself = string.format(
-      "%s %s %s",
-      icons.ui.BoldChevronLeft, my_url, icons.ui.BoldChevronRight
+      " %s %s ",
+      icons.misc.GitHub, my_url
     )
 
     return plugins_count..newline..newline..myself

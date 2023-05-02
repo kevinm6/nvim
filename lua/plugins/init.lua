@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 30 Apr 2023, 08:48
+--  Last Modified: 02 May 2023, 14:22
 -------------------------------------
 
 local M = {
@@ -84,7 +84,7 @@ local M = {
       "ziontee113/color-picker.nvim",
       cmd = { "PickColor", "PickColorInsert" },
       opts = {
-         ["icons"] = { "ﱢ", "" },
+         ["icons"] = { "", "" },
          ["border"] = "rounded",
       },
    },
@@ -156,13 +156,23 @@ local M = {
    },
 
    {
-      "phaazon/mind.nvim",
-      version = "v2.2",
-      dependencies = "nvim-lua/plenary.nvim",
-      cmd = { "MindOpenMain", "MindOpenProject", "MindOpenSmartProject", "MindClose" },
-      config = function()
-         require("mind").setup {}
-      end,
+      "nvim-neorg/neorg",
+      enabled = false,
+       build = ":Neorg sync-parsers",
+        opts = {
+            load = {
+                ["core.defaults"] = {}, -- Loads default behaviour
+                ["core.concealer"] = {}, -- Adds pretty icons to your documents
+                ["core.dirman"] = { -- Manages Neorg workspaces
+                    config = {
+                        workspaces = {
+                            notes = "~/notes",
+                        },
+                    },
+                },
+            },
+        },
+        dependencies = { { "nvim-lua/plenary.nvim" } },
    },
 }
 

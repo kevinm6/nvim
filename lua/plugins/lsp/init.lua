@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 22 Apr 2023, 12:58
+-- Last Modified: 02 May 2023, 16:38
 -------------------------------------
 
 local icons = require "util.icons"
@@ -23,7 +23,7 @@ local M = {
       cmd = "Mason",
       event = "BufReadPre",
       keys = {
-        { "<leader>M", vim.cmd.Mason, desc = "Mason" }
+        { "<leader>Cm", vim.cmd.Mason, desc = "Mason" }
       },
       opts = {
         install_root_dir = vim.fn.stdpath "data" .. "/mason",

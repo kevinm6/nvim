@@ -2,58 +2,68 @@
 --	File         : navic.lua
 --	Description  : gps-like plugin config
 --	Author       : Kevin
---	Last Modified: 07 Feb 2023, 18:53
+--	Last Modified: 02 May 2023, 14:19
 -----------------------------------
 
 local M = {
-  "SmiteshP/nvim-navic",
-  event = "BufReadPre",
-  -- dependencies = "neovim/nvim-lspconfig",
+   "SmiteshP/nvim-navic",
+   event = "BufReadPre",
 }
 
 function M.config()
-  local navic = require "nvim-navic"
-  local icons = require "util.icons"
-  vim.g.navic_silence = false -- disable error messages
+   local navic = require "nvim-navic"
+   local icons = require "util.icons"
+   vim.g.navic_silence = false -- disable error messages
 
-  -- Customized config
-  navic.setup {
-    icons = {
-      ["class-name"] = icons.kind.Class,
-      ["function-name"] = icons.kind.Function,
-      ["method-name"] = icons.kind.Method,
-      ["container-name"] = icons.type.Object,
-      ["tag-name"] = icons.misc.Tag,
-      ["mapping-name"] = icons.type.Object,
-      ["sequence-name"] = icons.type.Array,
-      ["null-name"] = icons.kind.Field,
-      ["boolean-name"] = icons.type.Boolean,
-      ["integer-name"] = icons.type.Number,
-      ["float-name"] = icons.type.Number,
-      ["string-name"] = icons.type.String,
-      ["array-name"] = icons.type.Array,
-      ["object-name"] = icons.type.Object,
-      ["number-name"] = icons.type.Number,
-      ["table-name"] = icons.ui.Table,
-      ["date-name"] = icons.ui.Calendar,
-      ["date-time-name"] = icons.ui.Table,
-      ["inline-table-name"] = icons.ui.Calendar,
-      ["time-name"] = icons.misc.Watch,
-      ["module-name"] = icons.kind.Module,
-    },
-    highlight = true,
+   -- Customized config
+   navic.setup {
+      icons = {
+         -- ui
+         Package = icons.ui.Package .. " ",
+         -- kinds
+         File = icons.kind.File .. " ",
+         Module = icons.kind.Module .. " ",
+         Namespace = icons.kind.Namespace .. " ",
+         Class = icons.kind.Class .. " ",
+         Method = icons.kind.Method .. " ",
+         Property = icons.kind.Property .. " ",
+         Field = icons.kind.Field .. " ",
+         Constructor = icons.kind.Constructor .. " ",
+         Enum = icons.kind.Enum .. " ",
+         Interface = icons.kind.Interface .. " ",
+         Function = icons.kind.Function .. " ",
+         Variable = icons.kind.Variable .. " ",
+         Constant = icons.kind.Constant .. " ",
+         Key = icons.kind.Keyword .. " ",
+         Null = icons.kind.Null .. " ",
+         EnumMember = icons.kind.EnumMember .. " ",
+         Struct = icons.kind.Struct .. " ",
+         Event = icons.kind.Event .. " ",
+         Operator = icons.kind.Operator .. " ",
+         TypeParameter = icons.kind.TypeParameter .. " ",
+         -- types
+         String = icons.type.String .. " ",
+         Number = icons.type.Number .. " ",
+         Boolean = icons.type.Boolean .. " ",
+         Array = icons.type.Array .. " ",
+         Object = icons.type.Object .. " ",
+      },
+      highlight = true,
 
-    separator = " " .. icons.ui.ChevronRight .. " ",
+      separator = " "..icons.ui.ChevronRight.." ",
 
-    -- limit for amount of context shown
-    -- 0 means no limit
-    -- Note: to make use of depth feature properly, make sure your separator isn't something that can appear
-    -- in context names (eg: function names, class names, etc)
-    depth_limit = 5,
+      -- limit for amount of context shown
+      -- 0 means no limit
+      -- Note: to make use of depth feature properly, make sure your separator isn't something that can appear
+      -- in context names (eg: function names, class names, etc)
+      depth_limit = 5,
 
-    -- indicator used when context is hits depth limit
-    depth_limit_indicator = icons.ui.ChevronRight .. "..." .. icons.ui.ChevronLeft,
-  }
+      safe_output = false,
+
+      depth_limit_indicator = "...",
+
+      click = false,
+   }
 end
 
 return M

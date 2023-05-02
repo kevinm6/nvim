@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 26 Apr 2023, 08:39
+-- Last Modified: 02 May 2023, 16:38
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -60,7 +60,7 @@ lazy.setup({
     },
     install = {
       -- install missing plugins on startup. This doesn't increase startup time.
-      missing = true,
+      missing = false,
       -- try to load one of these colorschemes when starting an installation during startup
       colorscheme = { "knvim" },
     },
@@ -148,7 +148,7 @@ lazy.setup({
     state = vim.fn.stdpath("state") .. "/lazy/state.json", -- state info for checker and other things
   })
 
-vim.keymap.set("n", "<leader>L", function() vim.cmd.Lazy() end, { desc = "Package Manager" })
+vim.keymap.set("n", "<leader>Cl", function() vim.cmd.Lazy() end, { desc = "Package Manager" })
 
 local Util = require "lazy.util"
 local modules = {
