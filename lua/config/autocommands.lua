@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 28 Apr 2023, 18:08
+-- Last Modified: 06 May 2023, 09:27
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -30,9 +30,13 @@ autocmd({ "FileType" }, {
       "noice.log",
    },
    callback = function(ft)
-      if ft == "man" or ft == "diff" then
-         vim.keymap.set("n", "q", "<cmd>quit<CR>", { buffer = true, silent = true })
-         vim.keymap.set("n", "<esc>", "<cmd>quit<CR>", { buffer = true, silent = true })
+      if ft.match == "man" or ft.match == "diff" then -- for man and diff exit on 'q'
+         vim.keymap.set("n", "q", function()
+            vim.cmd.quit { bang = true }
+         end, { buffer = true, silent = true })
+         vim.keymap.set("n", "<esc>", function()
+            vim.cmd.quit { bang = true }
+         end, { buffer = true, silent = true })
       else
          vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
          vim.keymap.set("n", "<esc>", "<cmd>close<CR>", { buffer = true, silent = true })

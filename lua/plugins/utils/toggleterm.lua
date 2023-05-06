@@ -2,12 +2,12 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 15 Mar 2023, 13:25
+-- Last Modified: 06 May 2023, 10:37
 -------------------------------------
 
 local M = {
   "akinsho/toggleterm.nvim",
-  cmd = { "ToggleTerm", "Git" },
+  cmd = { "ToggleTerm", "Git", "TermExec", "TermSelect", "ToggleTermToggleAll" },
   keys = {
     { "<leader>t", desc = "Terminal" },
     { "<leader>t1", function() vim.cmd "1ToggleTerm" end, desc = "Term 1"  },

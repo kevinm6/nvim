@@ -2,7 +2,7 @@
 -- File         : markdown.lua
 -- Description  : filetype markdown extra confi
 -- Author       : Kevin
--- Last Modified: 21 Apr 2023, 13:15
+-- Last Modified: 06 May 2023, 11:06
 -------------------------------------
 
 vim.opt_local.conceallevel = 2
@@ -17,9 +17,19 @@ vim.opt_local.formatoptions = "tcoqln"
 vim.opt_local.comments:append { "nb:+", "nb:>", "nb:-", "nb:." }
 
 vim.opt.spell = false
-vim.opt.spellfile = "/Users/Kevin/.MacDotfiles/nvim/.config/nvim/spell/en.utf-8.add"
+vim.opt.spellfile = "~/.MacDotfiles/nvim/.config/nvim/spell/en.utf-8.add"
 
 -- Add custom mappings only for markdown files
 
-vim.keymap.set("n", "<leader>mp", function() require "peek".open() end, { desc = "Open Peek preview" })
-vim.keymap.set("n", "<leader>mP", function() require "peek".close() end, { desc = "Close Peek preview" })
+local has_peek, peek = pcall(require, "peek")
+if not has_peek then
+   vim.notify("Peek is not installed or loaded!", vim.log.levels.WARN)
+   return
+end
+vim.keymap.set("n", "<leader>mp", function()
+   if peek.is_open() then
+      peek.close()
+   else
+      peek.open()
+   end
+end, { desc = "Markdown Preview [Peek]" })

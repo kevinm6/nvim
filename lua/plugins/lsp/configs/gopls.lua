@@ -2,7 +2,7 @@
 --  File         : gopls.lua
 --  Description  : Description
 --  Author       : Kevin
---  Last Modified: 28 Feb 2023, 09:53
+--  Last Modified: 06 May 2023, 19:06
 -------------------------------------
 
 return {
@@ -20,7 +20,15 @@ return {
   end,
   settings = {
     gopls = {
-      codelenses = { test = true },
+      codelenses = {
+            test = true,
+            gc_details = false,
+            generate = true,
+            regenerate_cgo = true,
+            tidy = true,
+            upgrade_dependency = true,
+            vendor = true
+         },
       analyses = {
         unusedparams = true,
       },

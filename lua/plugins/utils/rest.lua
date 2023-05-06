@@ -2,11 +2,12 @@
 -- File         : rest.lua
 -- Descriptions : curl & http wrapper for API testing and more
 -- Author       : Kevin
--- Last Modified: 30 Mar 2023, 17:06
+-- Last Modified: 05 May 2023, 10:03
 -------------------------------------
 
 local M = {
   "rest-nvim/rest.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
   opts = {
     -- Open request results in a horizontal split
     result_split_horizontal = false,

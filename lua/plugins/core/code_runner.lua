@@ -2,7 +2,7 @@
 --  File         : code_runner.lua
 --  Description  : code_runner plugin config
 --  Author       : Kevin
---  Last Modified: 22 Apr 2023, 12:53
+--  Last Modified: 06 May 2023, 09:31
 ---------------------------------------
 
 local M = {
@@ -55,11 +55,13 @@ local M = {
       cpp = "g++ % -o $fileName && ./$fileName",
       c = "gcc $file -o $fileName && ./$fileName",
       go = "go run '$file'",
-      sh = "sh '$file'",
       markdown = "glow '$file'",
       javascript = "node '$file'",
       ocaml = "ocaml '$file'",
       scala = "cd '$dir' && scalac $fileName && scala $fileName",
+      sh = "sh '$file'",
+      bash = "bash '$file'",
+      zsh = "zsh '$file'",
       -- typescript = "deno run %",
 
       -- file               -- file path to currend file opened
