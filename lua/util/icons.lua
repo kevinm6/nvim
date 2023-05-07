@@ -2,7 +2,7 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 02 May 2023, 14:14
+--	Last Modified: 07 May 2023, 15:50
 -----------------------------------
 
 -- Font: SauceCodePro Nerd Font Mono:13, v|i 92, n/n 90
@@ -58,25 +58,20 @@ return {
    },
    git = {
       -- Change Type
-      -- deleted   = "✖",
-      -- renamed   = "",
       Add = "",
       Mod = "",
       Ignore = "",
       Remove = "",
-      Rename = "➜",
+      Rename = "",
       Diff = "",
       Repo = "",
       -- Status Type
       unstaged = "✗",
-      staged = "",
+      staged = "",
       unmerged = "",
-      untracked = "★",
+      untracked = "",
       conflict = "",
-      -- untracked = "",
       ignored = "",
-      -- unstaged  = "",
-      -- staged    = "",
    },
    ui = {
       Lock = "",
@@ -162,14 +157,14 @@ return {
       header_sym = "━",
    },
    lsp = {
-      nvim_lsp = "[  ]",
-      nvim_lua = "[  ]",
-      luasnip = "[ 󰘦 ]",
-      buffer = "[  ]",
-      path = "[  ]",
-      treesitter = "[  ]",
-      latex_symbols = "[ α ]",
-      emoji = "[  ]",
-      calc = "[  ]",
+      nvim_lsp = "[]",
+      nvim_lua = "[]",
+      luasnip = "[󰘦]",
+      buffer = "[]",
+      path = "[]",
+      treesitter = "[]",
+      latex_symbols = "[α]",
+      emoji = "[]",
+      calc = "[]",
    },
 }

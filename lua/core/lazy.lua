@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 02 May 2023, 16:38
+-- Last Modified: 07 May 2023, 15:42
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -80,7 +80,7 @@ lazy.setup({
         runtime = " ",
         source = " ",
         start = "",
-        task = "✔ ",
+        task = " ",
       },
       throttle = 20, -- how frequently should the ui process render events
       browser = nil,

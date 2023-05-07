@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 01 May 2023, 13:56
+--  Last Modified: 07 May 2023, 15:45
 ----------------------------------------
 
 local M = {
@@ -39,6 +39,14 @@ function M.config()
             ["/"] = { icon = " ", hl_group = "DiagnosticWarn" },
             ["?"] = { icon = " ", hl_group = "DiagnosticWarn" },
             [":"] = { icon = " ", hl_group = "DiagnosticInfo", firstc = false },
+         },
+         format = {
+           cmdline = { icon = " " },
+           search_down = { icon = " ⌄" },
+           search_up = { icon = " ⌃" },
+           filter = { icon = "$" },
+           lua = { icon = " " },
+           help = { icon = "?" },
          },
       },
       messages = {
@@ -273,7 +281,9 @@ function M.config()
             "{cmdline} ",
             "{message}",
          },
-         cmdline = { pattern = "^:", icon = "", lang = "vim" },
+         cmdline = {
+            pattern = "^:", icon = "", lang = "vim"
+         },
          search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
          search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
          filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },

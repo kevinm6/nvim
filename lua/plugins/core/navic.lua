@@ -2,7 +2,7 @@
 --	File         : navic.lua
 --	Description  : gps-like plugin config
 --	Author       : Kevin
---	Last Modified: 02 May 2023, 14:19
+--	Last Modified: 07 May 2023, 13:19
 -----------------------------------
 
 local M = {
