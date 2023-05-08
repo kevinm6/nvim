@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 02 May 2023, 16:37
+-- Last Modified: 08 May 2023, 10:16
 -------------------------------------
 
 local icons = require "util.icons"
@@ -30,8 +30,8 @@ local M = {
 	  },
 	  icons = {
 	    breadcrumb = icons.ui.ChevronRight,
-	    separator = icons.git.Rename,
-	    group = icons.ui.List .. " ",
+	    separator = icons.ui.WhichKeySep,
+	    group = icons.ui.List.." ",
 	  },
 	  popup_mappings = {
 	    scroll_down = "<c-d>",

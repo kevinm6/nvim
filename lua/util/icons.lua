@@ -2,21 +2,19 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 07 May 2023, 15:50
+--	Last Modified: 08 May 2023, 19:21
 -----------------------------------
 
--- Font: SauceCodePro Nerd Font Mono:13, v|i 92, n/n 90
+-- NOTE:
+-- Font    : Source Code Pro : 13 v|i 92, n/n 90
+-- Fallback: Symbols (Only) Nerd Font
 
 return {
    kind = {
       Text = "",
-      AltText = "",
-      AltMethod = "",
       Function = "󰊕",
       Constructor = "",
       Method = "",
-      AltFunction = "",
-      AltConstructor = "",
       Field = "",
       Variable = "",
       Class = "",
@@ -110,7 +108,7 @@ return {
       AltSlArrowLeft = "◄",
       SlCircleRight = "",
       SlCircleLeft = "",
-      SlEndLeft = "",
+      SlEndLeft = " ",
       SlEndRight = "",
       Table = "",
       Calendar = "",
@@ -124,6 +122,7 @@ return {
       Version = "",
       Plus = "",
       Dev = "󰾰",
+      WhichKeySep = "⇢",
    },
    diagnostics = {
       Error = "",

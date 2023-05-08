@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 31 Mar 2023, 13:09
+-- Last Modified: 08 May 2023, 19:29
 -----------------------------------------
 
 local S = {
@@ -38,6 +38,7 @@ local colors = {
   fformat = "%#StatusLineFileFormat#",
   location = "%#StatusLineLocation#",
   session = "%#StatusLineSession#",
+  inverted = "%#StatusLineInverted#",
   Nmode = "%#Nmode#",
   Vmode = "%#Vmode#",
   Imode = "%#Imode#",
@@ -212,7 +213,7 @@ S.on = function()
   local currMode = "%m%r"
   local leftSide = ("%s%s%s%s%s%s%s %s%s%s%s %s"):format(
     colors.mode, currMode, get_mode(),
-    colors.empty, icons.ui.SlEndLeft,
+    colors.inverted, icons.ui.SlArrowRight,
     colors.git, get_git_status(),
     colors.name, get_filename(),
     colors.empty, icons.ui.SlArrowRight,
@@ -236,7 +237,7 @@ S.on = function()
     colors.encoding, get_fencoding(),
     colors.fformat, fformat,
     get_line_onTot(),
-    colors.empty, icons.ui.SlEndRight
+    colors.inverted, icons.ui.SlArrowLeft
   )
 
   return ("%s%s%s"):format(leftSide, center, rightSide)

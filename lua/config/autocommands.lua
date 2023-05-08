@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 06 May 2023, 09:27
+-- Last Modified: 07 May 2023, 20:34
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -44,24 +44,27 @@ autocmd({ "FileType" }, {
    end,
 })
 
-autocmd({ "BufReadPre" }, {
-   group = augroup("_manage_pics", { clear = true }),
-   pattern = { "*.png", "*.jpg", "*.jpeg" },
-   callback = function(data)
-      local buf = vim.api.nvim_get_current_buf()
-      local match = data.match
-      -- vim.print(match)
-      local startline = -2
-      local endline = -1
 
-      if vim.endswith(match, "png") then
-         vim.api.nvim_buf_set_option(buf, "filetype", "png")
-      elseif vim.endswith(match, "jpeg") or vim.endswith(match, "jpg") then
-         vim.api.nvim_buf_set_option(buf, "filetype", "jpg")
-      end
-      vim.api.nvim_buf_set_lines(buf, startline, endline, false, "")
-   end,
-})
+-- TODO: configure to display image w/ hologram (very-low priority)
+--
+-- autocmd({ "BufReadPre" }, {
+--    group = augroup("_manage_pics", { clear = true }),
+--    pattern = { "*.png", "*.jpg", "*.jpeg" },
+--    callback = function(data)
+--       local buf = vim.api.nvim_get_current_buf()
+--       local match = data.match
+--       -- vim.print(match)
+--       local startline = -2
+--       local endline = -1
+
+--       if vim.endswith(match, "png") then
+--          vim.api.nvim_buf_set_option(buf, "filetype", "png")
+--       elseif vim.endswith(match, "jpeg") or vim.endswith(match, "jpg") then
+--          vim.api.nvim_buf_set_option(buf, "filetype", "jpg")
+--       end
+--       vim.api.nvim_buf_set_lines(buf, startline, endline, false, "")
+--    end,
+-- })
 
 -- autocmd({ "BufReadPre", "BufNewFile" }, {
 --    group = augroup("_manage_folders", { clear = true }),
@@ -88,7 +91,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- Statusline
-autocmd({ "CursorMoved" }, {
+autocmd({ "BufNewFile", "CursorMoved" }, {
    group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
    pattern = "*",
    callback = function()
@@ -369,14 +372,27 @@ autocmd({ "FileType", "BufNewFile" }, {
    end,
 })
 
--- Markdown
-autocmd({ "BufNewFile", "BufRead" }, {
-   group = augroup("_markdown", { clear = true }),
-   pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.md" },
-   callback = function()
-      vim.api.nvim_buf_set_option(0, "filetype", "markdown")
-   end,
-})
+
+-- Match FileTypes
+vim.filetype.add {
+   extension = {
+      conf = "config",
+   },
+   pattern = {
+      ["*.mdown"] = "markdown",
+      ["*.mkd"] = "markdown",
+      ["*.mkdn"] = "markdown",
+      ["*.md"] = "markdown",
+      ["*.psql*"] = "sql",
+      ["README.(a+)$"] = function(_, _, ext)
+         if ext == "md" then
+            return "markdown"
+         elseif ext == "rst" then
+            return "rst"
+         end
+      end,
+   },
+}
 
 -- Java
 autocmd({ "BufWritePost" }, {
@@ -386,17 +402,9 @@ autocmd({ "BufWritePost" }, {
    end,
 })
 
--- SQL
-autocmd({ "BufRead", "BufNewFile" }, {
-   group = augroup("_sql", { clear = true }),
-   pattern = "*.psql*",
-   callback = function()
-      vim.api.nvim_buf_set_option(0, "filetype", "sql")
-   end,
-})
 
 -- Kitty conf files
-autocmd({ "BufRead" }, {
+autocmd({ "BufRead", "BufNewFile" }, {
    group = augroup("_kitty", { clear = true }),
    pattern = { "kitty.conf", "*/kitty/*.conf", "*/kitty/*.session" },
    callback = function()

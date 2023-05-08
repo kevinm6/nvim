@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 07 May 2023, 15:45
+--  Last Modified: 08 May 2023, 11:44
 ----------------------------------------
 
 local M = {
@@ -16,15 +16,61 @@ local M = {
       "rcarriga/nvim-notify",
    },
    keys = {
-      { "<leader>nn", function() require "noice".cmd "History" end, { desc = "Notifications" } },
-      { "<leader>nL", function() require "noice".cmd "Log" end, { desc = "Log" } },
-      { "<leader>ne", function() require "noice".cmd "Error" end, { desc = "Error" } },
-      { "<leader>nl", function() require "noice".cmd "Last" end, { desc = "Last" } },
-      { "<leader>nt", function() require("telescope").extensions.noice.noice { theme = "dropdown" } end, { desc = "Noice Telescope" } },
+      {
+         "<leader>nn",
+         function()
+            require("noice").cmd "History"
+         end,
+         { desc = "Notifications" },
+      },
+      {
+         "<leader>nL",
+         function()
+            require("noice").cmd "Log"
+         end,
+         { desc = "Log" },
+      },
+      {
+         "<leader>ne",
+         function()
+            require("noice").cmd "Error"
+         end,
+         { desc = "Error" },
+      },
+      {
+         "<leader>nl",
+         function()
+            require("noice").cmd "Last"
+         end,
+         { desc = "Last" },
+      },
+      {
+         "<leader>nt",
+         function()
+            require("telescope").extensions.noice.noice { theme = "dropdown" }
+         end,
+         { desc = "Noice Telescope" },
+      },
 
-      { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, { silent = true, expr = true } },
+      {
+         "<c-f>",
+         function()
+            if not require("noice.lsp").scroll(4) then
+               return "<c-f>"
+            end
+         end,
+         { silent = true, expr = true },
+      },
 
-      { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, { silent = true, expr = true } },
+      {
+         "<c-b>",
+         function()
+            if not require("noice.lsp").scroll(-4) then
+               return "<c-b>"
+            end
+         end,
+         { silent = true, expr = true },
+      },
    },
 }
 
@@ -41,12 +87,12 @@ function M.config()
             [":"] = { icon = " ", hl_group = "DiagnosticInfo", firstc = false },
          },
          format = {
-           cmdline = { icon = " " },
-           search_down = { icon = " ⌄" },
-           search_up = { icon = " ⌃" },
-           filter = { icon = "$" },
-           lua = { icon = " " },
-           help = { icon = "?" },
+            cmdline = { icon = " " },
+            search_down = { icon = " ⌄" },
+            search_up = { icon = " ⌃" },
+            filter = { icon = "$" },
+            lua = { icon = " " },
+            help = { icon = "?" },
          },
       },
       messages = {
@@ -128,7 +174,11 @@ function M.config()
             --- @type NoiceFormat|string
             format = "lsp_progress",
             --- @type NoiceFormat|string
-            format_done = "lsp_progress_done",
+            format_done = {
+               { "✓ ", hl_group = "NoiceLspProgressSpinner" },
+               { "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
+               { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+            },
             throttle = 1000 / 30, -- frequency to update lsp progress message
             view = "mini",
          },
@@ -271,6 +321,7 @@ function M.config()
          -- title: set to anything or empty string to hide
          default = { "{level} ", "{title} ", "{message}" },
          notify = { "{message}" },
+         level = { icons = { error = " ", warn = " ", info = " " } },
          details = {
             "{level} ",
             "{date} ",
@@ -282,7 +333,9 @@ function M.config()
             "{message}",
          },
          cmdline = {
-            pattern = "^:", icon = "", lang = "vim"
+            pattern = "^:",
+            icon = "",
+            lang = "vim",
          },
          search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
          search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
