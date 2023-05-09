@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 08 May 2023, 11:44
+--  Last Modified: 09 May 2023, 18:37
 ----------------------------------------
 
 local M = {

@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 07 May 2023, 14:16
+-- Last Modified: 10 May 2023, 09:29
 ---------------------------------------
 
 local git_hunks = function()
@@ -198,6 +198,13 @@ local M = {
          end,
          desc = "Grep string under cursor",
       },
+      {
+         "<leader>fU",
+         function()
+            require("telescope").extensions.file_browser.file_browser { cwd = "~/Informatica/" }
+         end,
+         desc = "University Folder"
+      },
 
       {
          "<leader>gs",
@@ -284,6 +291,7 @@ local M = {
          end,
          desc = "Workspace Symbols",
       },
+
    },
 }
 

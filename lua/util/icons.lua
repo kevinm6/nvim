@@ -2,7 +2,7 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 08 May 2023, 19:21
+--	Last Modified: 10 May 2023, 10:46
 -----------------------------------
 
 -- NOTE:
@@ -147,7 +147,7 @@ return {
       left_trunc_marker = "",
       right_trunc_marker = "",
    },
-   packer = {
+   package_manager = {
       working_sym = "⟳",
       error_sym = "✗",
       done_sym = "✓",

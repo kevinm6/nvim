@@ -2,17 +2,18 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 28 Apr 2023, 13:30
+-- Last Modified: 10 May 2023, 12:42
 -------------------------------------
 
 local set_opts = function(opts)
    local noremap = opts.noremap == nil and true or opts.noremap
    local silent = opts.silent == nil and true or opts.silent
-   local desc = opts.desc or nil
+   local desc = opts.desc
    return { noremap = noremap, silent = silent, desc = desc }
 end
 
 local set_keymap = vim.keymap.set
+
 
 -- GUI
 -- VimR keymaps (command key and others not supported in term)
@@ -39,10 +40,11 @@ if vim.fn.has "gui_vimr" == 1 then
    set_keymap("i", "<M-Del>", [[<C-o>"_dw]], set_opts {})
 end
 
+
 -- NORMAL MODE & VISUAL MODE
 set_keymap("n", "<leader>.", function()
    vim.cmd.cd "%:h"
-   vim.notify(" Current Working Directory:   `" .. vim.fn.expand "%:p:h" .. "`", vim.log.levels.INFO, {
+   vim.notify((" Current Working Directory:   « %s »"):format(vim.fn.expand "%:p:h"), vim.log.levels.INFO, {
       title = "File Explorer",
       timeout = 4,
       on_open = function(win)
@@ -63,13 +65,13 @@ set_keymap("n", "<C-k>", "<C-w>k", set_opts {})
 
 -- Session
 set_keymap("n", "<leader>Ss", function()
-   require("util.functions").save_session()
+   require "util.functions".save_session()
 end, set_opts { desc = "Save" })
 set_keymap("n", "<leader>Sr", function()
-   require("util.functions").restore_session()
+   require "util.functions".restore_session()
 end, set_opts { desc = "Restore" })
 set_keymap("n", "<leader>Sd", function()
-   require("util.functions").delete_session()
+   require "util.functions".delete_session()
 end, set_opts { desc = "Delete" })
 
 -- useful maps
@@ -204,13 +206,10 @@ set_keymap({ "n", "v" }, "<leader>ft", function()
    require("plugins.translator.translate").translate()
 end, set_opts { desc = "Translate" })
 
--- University Folders
-set_keymap("n", "<leader>U", function()
-   require("telescope").extensions.file_browser.file_browser { cwd = "~/Informatica/" }
-end, set_opts { desc = "University Folder" })
 
 -- TERMINAL MODE
 set_keymap("t", "<Esc>", "<C-\\><C-n>", set_opts {})
+
 -- INSERT MODE
 set_keymap("i", "<S-Right>", "<C-o>vl", set_opts {})
 set_keymap("i", "<S-Left>", "<C-o>vh", set_opts {})
@@ -238,6 +237,7 @@ set_keymap("i", "<C-x><C-u>", "<C-x><C-u>", set_opts { expr = true, desc = "User
 set_keymap("i", "<C-x><C-o>", "<C-x><C-o>", set_opts { expr = true, desc = "Omni completion" })
 set_keymap("i", "<C-x>s", "<C-x>s", set_opts { expr = true, desc = "Spelling suggestions" })
 
+
 -- VISUAL MODE
 set_keymap("v", "<BS>", [["_d]], set_opts {})
 set_keymap("v", "<", "<gv", set_opts {})
@@ -252,11 +252,11 @@ end, set_opts { desc = "Range format" })
 --set_keymap("v", "D", "\+D", set_opts { expr = true, desc = "Copy deletion to end into register \"" })
 --set_keymap("v", "y", "\+y", set_opts { expr = true, desc = "Copy yank into register \"" })
 --set_keymap("v", "<BS>", "\"+d", set_opts { desc = "Copy deletion into register \"" })
-set_keymap("v", "gA", function()
+set_keymap("v", "ga", function()
    vim.cmd.normal "!"
    vim.ui.input({ prompt = "Align regex pattern: ", default = nil }, function(input)
       if input then
-         require("util.functions").align(input)
+         require "util.functions".align(input)
       end
    end)
 end, set_opts { desc = "Align from regex" })

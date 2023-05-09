@@ -2,7 +2,7 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 02 May 2023, 14:18
+-- Last Modified: 10 May 2023, 10:49
 -----------------------------------------
 
 local M = {
@@ -62,7 +62,6 @@ M.get_winbar = function()
    local winbar_filetype_exclude = {
       help = true,
       dashboard = true,
-      packer = true,
       NvimTree = true,
       Trouble = true,
       alpha = true,

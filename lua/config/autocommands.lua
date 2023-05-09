@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 07 May 2023, 20:34
+-- Last Modified: 10 May 2023, 12:44
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -44,7 +44,6 @@ autocmd({ "FileType" }, {
    end,
 })
 
-
 -- TODO: configure to display image w/ hologram (very-low priority)
 --
 -- autocmd({ "BufReadPre" }, {
@@ -82,6 +81,7 @@ autocmd({ "FileType" }, {
 --    end,
 -- })
 
+-- Hightlight on yank
 autocmd({ "TextYankPost" }, {
    group = augroup("_highlight_yank", { clear = true }),
    pattern = "*",
@@ -148,6 +148,9 @@ autocmd("LspAttach", {
       if client.name == "jdtls" then
          return
       end
+
+      local has_telescope, telescope = pcall(require, "telescope.builtin")
+
       -- local opts = { noremap = true, silent = true }
       vim.keymap.set("n", "gl", function()
          vim.diagnostic.open_float()
@@ -158,22 +161,38 @@ autocmd("LspAttach", {
 
       if client.server_capabilities.declarationProvider then
          vim.keymap.set("n", "gD", function()
-            vim.lsp.buf.declaration()
+            if has_telescope then
+               telescope.lsp_declarations {}
+            else
+               vim.lsp.buf.declaration()
+            end
          end, { buffer = args.buf, desc = "GoTo declaration" })
       end
       if client.server_capabilities.definitionProvider then
          vim.keymap.set("n", "gd", function()
-            vim.lsp.buf.definition()
+            if has_telescope then
+               telescope.lsp_definitions {}
+            else
+               vim.lsp.buf.definition()
+            end
          end, { buffer = args.buf, desc = "GoTo definition" })
       end
       if client.server_capabilities.implementationProvider then
          vim.keymap.set("n", "gI", function()
-            vim.lsp.buf.implementation()
+            if has_telescope then
+               telescope.lsp_incoming_calls {}
+            else
+               vim.lsp.buf.implementation()
+            end
          end, { buffer = args.buf, desc = "GoTo implementation" })
       end
       if client.server_capabilities.referencesProvider then
          vim.keymap.set("n", "gr", function()
-            vim.lsp.buf.references()
+            if has_telescope then
+               telescope.lsp_references {}
+            else
+               vim.lsp.buf.references()
+            end
          end, { buffer = args.buf, desc = "GoTo references" })
       end
       -- if client.server_capabilities.referencesProvider then
@@ -322,43 +341,36 @@ autocmd({ "BufRead" }, {
    end,
 })
 
--- Set makeprg for filetype
--- TODO: add more filetypes (maybe porting from code_runner.lua)
+
+-- Set makeprg for filetype (using default compiler when available)
 autocmd({ "FileType" }, {
    group = augroup("_set_makefile", { clear = true }),
    pattern = "*",
-   callback = function(match)
-      local file = vim.fn.expand "%:p"
-      local file_without_ext = vim.fn.expand "%<"
+   callback = function(ev)
       local filetypes = {
+         java = "javac",
+         c = "gcc",
          lua = {
-            prg = "nvim -l " .. file,
+            prg = "nvim -l",
             efmt = "%f",
          },
-         java = {
-            "javac " .. file .. " && java " .. file_without_ext,
-            efmt = "%f",
-         },
-         c = {
-            prg = "gcc " .. file .. " -o " .. file_without_ext .. "&& ./" .. file_without_ext,
-            efmt = "",
+         go = {
+            prg = "go run",
+            efmt = "%-G# %.%#, %A%f:%l:%c: %m, %A%f:%l: %m, %C%*\\s%m, %-G%.%#"
          },
          python = {
-            prg = "python3 " .. file,
-            efmt = "",
-         },
-         sh = {
-            prg = "%",
-            efmt = [[%f:\ line\ %l:\ %m]],
-         },
-         zsh = {
-            prg = "%",
-            efmt = [[%f:\ line\ %l:\ %m]],
+            prg = "python3",
+            efmt = "%C %.%#,%A  File \"%f\"\\, line %l%.%#,%Z%[%^ ]%\\@=%m"
          },
       }
-      if filetypes[match.match] then
-         vim.opt_local.makeprg = filetypes[match.match.prg]
-         vim.opt_local.errorformat = filetypes[match.match.efmt]
+      if filetypes[ev.match] then
+         if filetypes[ev.match].prg then
+            vim.opt_local.makeprg = filetypes[ev.match].prg
+            vim.opt_local.errorformat = filetypes[ev.match].efmt
+         else
+            vim.opt_local.compiler = filetypes[ev.match]
+         end
+         vim.api.nvim_buf_set_keymap(ev.buf, "n", '<leader>RR', ':make %<CR>', { desc = "Compile Code" })
       end
    end,
 })
@@ -371,7 +383,6 @@ autocmd({ "FileType", "BufNewFile" }, {
       vim.cmd.startinsert()
    end,
 })
-
 
 -- Match FileTypes
 vim.filetype.add {
@@ -401,7 +412,6 @@ autocmd({ "BufWritePost" }, {
       vim.lsp.codelens.refresh()
    end,
 })
-
 
 -- Kitty conf files
 autocmd({ "BufRead", "BufNewFile" }, {
@@ -450,6 +460,7 @@ autocmd("BufWritePre", {
 })
 user_command("RemoveTrailingSpaces", [[%s/\s\+$//e]], { desc = "Remove extra trailing white spaces" })
 
+-- Delete Current Buffer (helper function for autocmd)
 local DeleteCurrentBuffer = function()
    local cBuf = vim.api.nvim_get_current_buf()
    local bufs = vim.fn.getbufinfo { buflisted = true }
@@ -509,6 +520,7 @@ user_command("DiffOrig", function()
    end
 end, {})
 
+-- Hex Dump
 user_command("HexToggle", function()
    require("util.hex.hex").setup {}
 end, {})

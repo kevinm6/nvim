@@ -2,12 +2,12 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 01 May 2023, 13:30
+--  Last Modified: 10 May 2023, 08:57
 -------------------------------------
 
 local F = {}
 
-function F.sniprun_enable()
+F.sniprun_enable = function()
    vim.cmd [[
     %SnipRun
 
@@ -20,7 +20,7 @@ function F.sniprun_enable()
    vim.notify "Enabled SnipRun"
 end
 
-function F.disable_sniprun()
+F.disable_sniprun = function()
    F.remove_augroup "_sniprun"
    vim.cmd [[
     SnipClose
@@ -29,7 +29,7 @@ function F.disable_sniprun()
    vim.notify "Disabled SnipRun"
 end
 
-function F.toggle_sniprun()
+F.toggle_sniprun = function()
    if vim.fn.exists "#_sniprun#TextChanged" == 0 then
       F.sniprun_enable()
    else
@@ -37,25 +37,25 @@ function F.toggle_sniprun()
    end
 end
 
-function F.remove_augroup(name)
+F.remove_augroup = function(name)
    if vim.fn.exists("#" .. name) == 1 then
       vim.cmd("au! " .. name)
    end
 end
 
 -- get length of current word
-function F.get_word_length()
+F.get_word_length = function()
    local word = vim.fn.expand "<cword>"
    return #word
 end
 
-function F.toggle_option(option)
+F.toggle_option = function(option)
    local value = not vim.api.nvim_get_option_value(option, {})
    vim.opt[option] = value
    vim.notify(option .. " set to " .. tostring(value))
 end
 
-function F.toggle_tabline()
+F.toggle_tabline = function()
    local value = vim.api.nvim_get_option_value("showtabline", {})
 
    if value == 2 then
@@ -70,7 +70,7 @@ function F.toggle_tabline()
 end
 
 local diagnostics_active = true
-function F.toggle_diagnostics()
+F.toggle_diagnostics = function()
    diagnostics_active = not diagnostics_active
    if diagnostics_active then
       vim.diagnostic.show()
@@ -80,7 +80,7 @@ function F.toggle_diagnostics()
 end
 
 -- Dev FOLDER
-function F.dev_folder()
+F.dev_folder = function()
    local dev_folders = {
       vim.fn.expand "~/dev",
       vim.fn.expand "~/Documents/developer",
@@ -97,37 +97,58 @@ function F.dev_folder()
 end
 
 -- SESSIONS
-function F.delete_session()
-   local sessions_data_stdpath = vim.fn.stdpath "data" .. "/sessions/"
-   local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
-   require "telescope"
-   vim.ui.select(sessions, {
-      prompt = "Select session to delete:",
-      default = nil,
-      -- format_item = function(item) return "" end,
-   }, function(choice)
-      if choice then
-         vim.cmd("! rm " .. choice)
-         vim.notify("Session < " .. choice .. " > deleted!", vim.log.levels.INFO)
-      end
-   end)
+
+local get_sessions = function()
+   local sessions = {}
+
+   local sessions_data_stdpath = vim.fn.stdpath "data" .. "/sessions"
+   local sessions_files = vim.split(vim.fn.globpath(sessions_data_stdpath, "*.vim"), "\n", { trimempty = true })
+
+   for _, f in pairs(sessions_files) do
+      table.insert(sessions, f)
+   end
+   return sessions
 end
 
-function F.restore_session()
-   local sessions_data_stdpath = vim.fn.stdpath "data" .. "/sessions/"
-   local sessions = vim.list_extend({}, vim.split(vim.fn.globpath(sessions_data_stdpath, "*"), "\n"))
-   if #sessions > 0 then
+
+F.delete_session = function()
+   local sessions = get_sessions()
+
+   if #sessions >= 1 then
+      require "telescope"
+      vim.ui.select(sessions, {
+         prompt = "Select session to delete:",
+         default = nil,
+      }, function(choice)
+         if choice then
+            vim.fn.jobstart("mv " .. vim.fn.fnameescape(choice) .. " ~/.Trash", {
+               detach = true,
+               on_exit = function()
+                  vim.notify(("Session < %s > deleted!"):format(choice), vim.log.levels.WARN)
+               end,
+            })
+         end
+      end)
+   else
+      vim.notify("No Sessions to delete", vim.log.levels.WARN)
+   end
+end
+
+
+F.restore_session = function()
+   local sessions = get_sessions()
+
+   if #sessions >= 1 then
       require "telescope"
       vim.ui.select(sessions, {
          prompt = " > Select session to restore",
          default = nil,
-         -- format_item = function(item) return "" end,
       }, function(choice)
          local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
          if choice then
             vim.cmd.source(choice)
             require("core.statusline").session_name = s_name
-            vim.notify("Session < " .. choice .. " > restored!", vim.log.levels.INFO)
+            vim.notify( ("Session < %s > restored!"):format(choice), vim.log.levels.INFO )
          end
       end)
    else
@@ -135,32 +156,37 @@ function F.restore_session()
    end
 end
 
-function F.save_session()
+
+F.save_session = function()
    require "telescope"
    vim.ui.input({
       prompt = "Enter session name: ",
       default = nil,
-      -- completion = "-complete=buffer,dir"
    }, function(input)
       if input then
          local mks_path = vim.fn.stdpath "data" .. "/sessions/" .. input .. ".vim"
          vim.cmd("mksession! " .. mks_path)
-         vim.notify("Session < " .. input .. " > created!", vim.log.levels.INFO)
+         vim.notify( ("Session < %s > created!"):format(input), vim.log.levels.INFO )
       end
    end)
 end
 
 -- END SESSIONS
 
-function F.align(pat)
+F.align = function(pat)
    local top, bot = vim.fn.getpos "'<", vim.fn.getpos "'>"
    F.align_lines(pat, top[2] - 1, bot[2])
    vim.fn.setpos("'<", top)
    vim.fn.setpos("'>", bot)
 end
 
-function F.align_lines(pat, startline, endline)
+F.align_lines = function(pat, startline, endline)
    local re = vim.regex(pat)
+   if not pat or not re then
+      vim.notify("Pattern for RegEx not valid", vim.log.levels.WARN)
+      return
+   end
+
    local max = -1
    local lines = vim.api.nvim_buf_get_lines(0, startline, endline, false)
    for _, line in pairs(lines) do
@@ -176,7 +202,7 @@ function F.align_lines(pat, startline, endline)
    end
 
    for i, line in pairs(lines) do
-      local s = re:match_str(line)
+      local s = vim.regex(pat):match_str(line)
       s = vim.str_utfindex(line, s)
       if s then
          local rep = max - s
@@ -192,7 +218,7 @@ function F.align_lines(pat, startline, endline)
    vim.api.nvim_buf_set_lines(0, startline, endline, false, lines)
 end
 
-function F.range_format()
+F.range_format = function()
    local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
    local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
    vim.lsp.buf.format {
@@ -205,7 +231,7 @@ function F.range_format()
 end
 
 -- Format on save
-function F.format_on_save(enable)
+F.format_on_save = function(enable)
    local action = function()
       return enable and "Enabled" or "Disabled"
    end
@@ -225,7 +251,7 @@ function F.format_on_save(enable)
    vim.notify(action() .. " format on save", vim.log.levels.INFO, { title = "LSP" })
 end
 
-function F.toggle_format_on_save()
+F.toggle_format_on_save = function()
    if vim.fn.exists "#format_on_save#BufWritePre" == 0 then
       F.format_on_save(true)
    else
@@ -235,7 +261,7 @@ end
 
 -- Create new file w/ input for filename
 -- useful for dashboard and so on
-function F.new_file()
+F.new_file = function()
    vim.ui.input({
       prompt = "Enter name for newfile: ",
       default = nil,
@@ -249,7 +275,7 @@ function F.new_file()
    end)
 end
 
-function F.workon()
+F.workon = function()
    require "telescope"
    local config = require "lazy.core.config"
    vim.ui.select(vim.tbl_values(config.plugins), {
@@ -268,7 +294,7 @@ function F.workon()
 end
 
 -- Software Licenses
-function F.software_licenses()
+F.software_licenses = function()
    local pickers = require "telescope.pickers"
    local finders = require "telescope.finders"
    local conf = require("telescope.config").values
@@ -329,7 +355,7 @@ function F.software_licenses()
    return M
 end
 
--- function F.ts_fallback_lsp_highlighting(bufnr)
+-- F.ts_fallback_lsp_highlighting(bufnr)
 --    local ts_utils = require('nvim-treesitter.ts_utils')
 --    local locals = require('nvim-treesitter.locals')
 
@@ -538,7 +564,7 @@ F.pick_venv = function()
    vim.ui.select(get_venvs(venvs_paths), {
       prompt = "Select python venv",
       format_item = function(item)
-         return ("%s (%s)").format(item.name, item.path)
+         return ("%s (%s)"):format("%s (%s)", item.name, item.path)
       end,
    }, function(choice)
       if not choice then

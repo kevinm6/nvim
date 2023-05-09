@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 06 May 2023, 17:03
+-- Last Modified: 10 May 2023, 10:49
 -------------------------------------
 
 local icons = require "util.icons"
@@ -47,11 +47,11 @@ local M = {
                height = 0.7,
                icons = {
                   -- The list icon to use for installed servers.
-                  package_installed = icons.packer.done_sym,
+                  package_installed = icons.package_manager.done_sym,
                   -- The list icon to use for servers that are pending installation.
-                  package_pending = icons.packer.working_sym,
+                  package_pending = icons.package_manager.working_sym,
                   -- The list icon to use for servers that are not installed.
-                  package_uninstalled = icons.packer.removed_sym,
+                  package_uninstalled = icons.package_manager.removed_sym,
                },
                keymaps = {
                   -- Keymap to expand a server in the UI
@@ -107,11 +107,11 @@ local M = {
                border = "rounded",
                icons = {
                   -- The list icon to use for installed servers.
-                  server_installed = icons.packer.done_sym,
+                  server_installed = icons.package_manager.done_sym,
                   -- The list icon to use for servers that are pending installation.
-                  server_pending = icons.packer.working_sym,
+                  server_pending = icons.package_manager.working_sym,
                   -- The list icon to use for servers that are not installed.
-                  server_uninstalled = icons.packer.removed_sym,
+                  server_uninstalled = icons.package_manager.removed_sym,
                },
                keymaps = {
                   toggle_server_expand = "<CR>", -- Keymap to expand a server in the UI

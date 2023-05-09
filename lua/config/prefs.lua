@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 08 May 2023, 12:07
+-- Last Modified: 10 May 2023, 09:51
 -------------------------------------
 
 -- CURSOR {
@@ -14,7 +14,7 @@ vim.opt.guicursor = { -- cursor shape mode-based
 -- }
 
 local options = {
-   shell = vim.fn.split(vim.fn.system "which zsh", "\n")[1],
+   -- shell = vim.fn.split(vim.fn.system "which zsh", "\n")[1],
 
    -- MOUSE:
    mouse = "vnc",
@@ -23,7 +23,7 @@ local options = {
    -- GRAPHIC:
    termguicolors = true,
    laststatus = 3,
-   guifont = "Sauce Code Pro Nerd Font Complete Mono:h13", -- font for gui-apps
+   guifont = "Source Code Pro:h13", -- font for gui-apps
    -- clipboard = vim.opt.clipboard:append "unnamedplus", -- allow neovim access to system clipboardpre
    relativenumber = true, -- Show line numbers - relativenumber from current
    number = true, -- relativenumber but show current line number
@@ -42,6 +42,7 @@ local options = {
    splitbelow = true, -- split below in horizontal split
    splitright = true, -- split right in vertical split
    updatetime = 100, -- lower than default for faster completion
+   updatecount = 0, -- do not create swap file
    listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_" },
    fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
    syntax = "off", -- using treesitter
@@ -89,7 +90,7 @@ local options = {
    undofile = true, -- enable undo
    backup = false, -- disable backups
    swapfile = false, -- disable swaps
-   undodir = vim.fn.expand "~/.cache/nvim/tmp/undo", -- path to undo directory
+   undodir = vim.fn.expand "~/.cache/nvim/undo", -- path to undo directory
 
    -- SEARCH:
    smartcase = true, -- smart case for search

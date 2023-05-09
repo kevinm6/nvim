@@ -2,7 +2,7 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file for manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 06 May 2023, 16:41
+-- Last Modified: 10 May 2023, 12:22
 --------------------------------------
 
 local M = {}
@@ -157,7 +157,7 @@ M.code_action_listener = function()
   local params = vim.lsp.util.make_range_params()
   params.context = context
   vim.lsp.buf_request(0, 'textDocument/codeAction', params, function(err)
-    if err ~= nil then vim.notify("Code Action Listener: " .. err, "Error") end
+if err ~= nil then vim.notify(("Code Action Listener: %s"):format(err) , vim.log.levels.ERROR) end
   end)
 end
 

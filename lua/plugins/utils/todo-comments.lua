@@ -2,7 +2,7 @@
 -- File         : todo-comments.lua
 -- Description  : todo-comments plugin config
 -- Author       : Kevin
--- Last Modified: 07 Feb 2023, 18:53
+-- Last Modified: 10 May 2023, 09:53
 -----------------------------------
 
 local M = {
@@ -52,7 +52,7 @@ function M.config()
       multiline_context = 10,
       before = "", -- "fg" or "bg" or empty
       -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-      keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+      keyword = "fg", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
       after = "fg", -- "fg" or "bg" or empty
       pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
       comments_only = true, -- uses treesitter to match keywords in comments only

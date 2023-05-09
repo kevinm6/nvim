@@ -2,7 +2,7 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 06 May 2023, 10:37
+-- Last Modified: 10 May 2023, 10:22
 -------------------------------------
 
 local M = {
@@ -23,6 +23,7 @@ local M = {
     { "<leader>tv", function() vim.cmd "ToggleTerm direction=vertical" end,
       desc = "Vertical" },
     { "<leader>gg", function() vim.cmd.Git {} end, desc = "LazyGit" },
+    { "<leader>ts", function() vim.cmd.ToggleTermSendCurrentLine() end, desc = "Send current line", noremap = true },
   },
 }
 
@@ -66,24 +67,22 @@ function M.config()
     }
   }
 
-  local function set_terminal_keymaps()
-    local opts = { buffer = 0, noremap = true }
+  local function set_terminal_keymaps(buf)
+    local opts = { buffer = buf, noremap = true }
     -- vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
     vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-    vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+    vim.keymap.set('t', '<C-e>', [[<C-\><C-n>]], opts)
     vim.keymap.set('t', '<C-h>', [[<cmd>wincmd h<CR>]], opts)
     vim.keymap.set('t', '<C-j>', [[<cmd>wincmd j<CR>]], opts)
     vim.keymap.set('t', '<C-k>', [[<cmd>wincmd k<CR>]], opts)
     vim.keymap.set('t', '<C-l>', [[<cmd>wincmd l<CR>]], opts)
-    vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
-
-    vim.keymap.set('n', '<leader>ts', [[<cmd>ToggleTermSendCurrentLine<CR>]], { desc = "Send current line", noremap = true })
+    vim.keymap.set('t', '<C-w>', [[<C-\><C-n>C-w>]], opts)
   end
 
   vim.api.nvim_create_autocmd("TermOpen", {
     pattern = "term://*",
-    callback = function()
-      set_terminal_keymaps()
+    callback = function(ev)
+      set_terminal_keymaps(ev.buf)
     end,
   })
 

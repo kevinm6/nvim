@@ -2,98 +2,129 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 02 May 2023, 14:22
+--	Last Modified: 10 May 2023, 10:11
 -----------------------------------
 
 local M = {
-  "goolord/alpha-nvim",
-  event = "VimEnter",
+   "goolord/alpha-nvim",
+   event = "VimEnter",
 }
 
 function M.config()
-  local alpha = require "alpha"
-  local icons = require "util.icons"
-  local dashboard = require "alpha.themes.dashboard"
+   -- local has_telescope, _ = pcall(require, "telescope")
+   -- if not has_telescope then
+   --    vim.notify("Telescope not available!\n Not opening dashboard", vim.log.levels.WARN)
+   --    return
+   -- end
 
-  local newline = [[
+
+   local alpha = require "alpha"
+   local icons = require "util.icons"
+   local dashboard = require "alpha.themes.dashboard"
+
+   local newline = [[
 ]]
 
-  local date = function()
-    return os.date("  %d/%m/%Y   %H:%M:%S")
-    -- return require "plugins.dashboard.clock".get_time()
-  end
+   local date = function()
+      return os.date "  %d/%m/%Y   %H:%M:%S"
+      -- return require "plugins.dashboard.clock".get_time()
+   end
 
-  local nvim_version = function()
-    local v = vim.version()
-    local v_info = (icons.ui.Version .. " v" .. v.major .. "." .. v.minor .. "." .. v.patch)
-    return v_info
-  end
+   local nvim_version = function()
+      local v = vim.version()
+      local v_info = string.format("%s v%s.%s.%s", icons.ui.Version, v.major, v.minor, v.patch)
+      return v_info
+   end
 
-  dashboard.section.header.val = {
-    [[               ]] .. date() .. newline,
-    [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
-    [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
-    [[ ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║]],
-    [[ ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║]],
-    [[ ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║]],
-    [[ ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝]],
-    [[
+   dashboard.section.header.val = {
+      [[               ]] .. date() .. newline,
+      [[ ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗]],
+      [[ ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║]],
+      [[ ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║]],
+      [[ ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║]],
+      [[ ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║]],
+      [[ ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝]],
+      [[
     ]],
-    [[                      ]] .. nvim_version(),
-  }
+      [[                      ]] .. nvim_version(),
+   }
 
-  dashboard.section.buttons.val = {
-    dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'util.functions'.new_file()<CR>"),
-    dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>MindOpenMain<CR>"),
-    dashboard.button("e", icons.documents.OpenFolder .. " Explorer", "<cmd>lua require 'oil'.open()<CR>"),
-    dashboard.button("t", icons.ui.Telescope .. " Open Telescope", "<cmd>lua require 'telescope.builtin'.builtin()<CR>"),
-    dashboard.button("f", icons.documents.Files .. " Find file", "<cmd>lua require 'telescope.builtin'.find_files()<CR>"),
-    dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>lua require 'telescope.builtin'.oldfiles()<CR>"),
-    dashboard.button("R", icons.git.Repo .. " Find project", "<cmd>lua require 'telescope'.extensions.project.project{}<CR>"),
-    dashboard.button("u", icons.ui.Uni .. " University", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$CS"}<CR>]]),
-    dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "util.functions".dev_folder()<CR>]]),
-    dashboard.button("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
-    dashboard.button("P", icons.ui.Plugin .. " Plugins Configuration", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$NVIMDOTDIR/lua/plugins"}<CR>]]),
-    dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
-    dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
-    dashboard.button("S", icons.ui.History .. " Sessions", "<cmd>lua require 'util.functions'.restore_session()<CR>"),
-    dashboard.button("C",
-      icons.ui.Gear .. " Config", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$NVIMDOTDIR" }<CR>]]
-    ),
-    dashboard.button("D", icons.ui.Lock .. " Dotfiles", [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$DOTFILES" }<CR>]]),
-    dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
-    dashboard.button("c", icons.documents.Files .. " Close", "<cmd>Alpha<CR>"),
-    dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
-  }
 
-  local footer = function()
-    local plugins = require "lazy".stats().count
-    local loaded = require "lazy".stats().loaded
-    local plugins_count = string.format(
-      "      %s %d Plugins, %d loaded \n\n",
-      icons.ui.Plugin, plugins, loaded
-    )
+   dashboard.section.buttons.val = {
+      dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'util.functions'.new_file()<CR>"),
+      dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>MindOpenMain<CR>"),
+      dashboard.button("e", icons.documents.OpenFolder .. " Explorer", "<cmd>lua require 'oil'.open()<CR>"),
 
-    local my_url =  "https://github.com/kevinm6/nvim"
-    local myself = string.format(
-      " %s %s ",
-      icons.misc.GitHub, my_url
-    )
+      dashboard.button(
+         "t",
+         icons.ui.Telescope .. " Open Telescope",
+         "<cmd>lua require 'telescope.builtin'.builtin()<CR>"
+      ),
+      dashboard.button(
+         "f",
+         icons.documents.Files .. " Find file",
+         "<cmd>lua require 'telescope.builtin'.find_files()<CR>"
+      ),
+      dashboard.button("r", icons.ui.History .. " Recent files", "<cmd>lua require 'telescope.builtin'.oldfiles()<CR>"),
+      dashboard.button(
+         "R",
+         icons.git.Repo .. " Find project",
+         "<cmd>lua require 'telescope'.extensions.project.project{}<CR>"
+      ),
+      dashboard.button(
+         "u",
+         icons.ui.Uni .. " University",
+         [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$CS"}<CR>]]
+      ),
+      dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "util.functions".dev_folder()<CR>]]),
+      dashboard.button("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
+      dashboard.button(
+         "P",
+         icons.ui.Plugin .. " Plugins Configuration",
+         [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$NVIMDOTDIR/lua/plugins"}<CR>]]
+      ),
+      dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
+      dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
+      dashboard.button("S", icons.ui.History .. " Sessions", "<cmd>lua require 'util.functions'.restore_session()<CR>"),
+      dashboard.button(
+         "C",
+         icons.ui.Gear .. " Config",
+         [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$NVIMDOTDIR" }<CR>]]
+      ),
+      dashboard.button(
+         "D",
+         icons.ui.Lock .. " Dotfiles",
+         [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$DOTFILES" }<CR>]]
+      ),
+      dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
+      dashboard.button("c", icons.documents.Files .. " Close", "<cmd>Alpha<CR>"),
+      dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
+   }
 
-    return plugins_count..newline..newline..myself
-  end
+   local footer = function()
+      local plugins = require("lazy").stats().count
+      local loaded = require("lazy").stats().loaded
+      local plugins_count = string.format("      %s %d Plugins, %d loaded \n\n", icons.ui.Plugin, plugins, loaded)
 
-  dashboard.section.footer.val = footer()
+      local my_url = "https://github.com/kevinm6/nvim"
+      local myself = string.format(" %s %s ", icons.misc.GitHub, my_url)
 
-  dashboard.section.header.opts.hl = "AlphaHeader"
-  dashboard.section.buttons.opts.hl = "AlphaButtons"
-  dashboard.section.footer.opts.hl = "AlphaFooter"
+      return plugins_count .. newline .. newline .. myself
+   end
 
-  -- dashboard.config.opts.noautocmd = true
+   dashboard.section.footer.val = footer()
 
-  alpha.setup(dashboard.opts)
+   dashboard.section.header.opts.hl = "AlphaHeader"
+   dashboard.section.buttons.opts.hl = "AlphaButtons"
+   dashboard.section.footer.opts.hl = "AlphaFooter"
 
-  vim.keymap.set("n", "<leader>a", function() vim.cmd.Alpha {} end, { desc = "Alpha Dashboard" })
+   -- dashboard.config.opts.noautocmd = true
+
+   alpha.setup(dashboard.opts)
+
+   vim.keymap.set("n", "<leader>a", function()
+      vim.cmd.Alpha {}
+   end, { desc = "Alpha Dashboard" })
 end
 
 return M
