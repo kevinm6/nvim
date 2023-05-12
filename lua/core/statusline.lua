@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 10 May 2023, 10:49
+-- Last Modified: 12 May 2023, 13:49
 -----------------------------------------
 
 local S = {
@@ -27,62 +27,92 @@ local preset_width = setmetatable({
    end,
 })
 
+local set_color_groups = function()
+   vim.g.statusline_color = true
+
+   local hls = {
+      -- StatusLine
+      StatusLine              = { fg = "#626262", bg = "NONE" },
+      StatusLineNC            = { fg = "#868686", bg = "NONE" },
+      StatusLineTerm          = { fg = "#626262", bg = "NONE" },
+      StatusLineTermNC        = { fg = "#A9A9A9", bg = "#2c2c2c" },
+      StatusLineMode          = { fg = "#158C8A" },
+      StatusLineGit           = { fg = "#af8700", bg = "#2c2c2c" },
+      StatusLineFileName      = { fg = "#36FF5A", bg = "#2c2c2c" },
+      StatusLineLspActive     = { fg = "#4c4c4c", bg = "#2c2c2c" },
+      StatusLineLspNotActive  = { fg = "#3c3c3c", bg = "#2c2c2c" },
+      StatusLineFileEncoding  = { fg = "#86868B", bg = "#2c2c2c" },
+      StatusLineFileType      = { fg = "#158C8A", bg = "#2c2c2c" },
+      StatusLineFileFormat    = { fg = "#86868B", bg = "#2c2c2c" },
+      StatusLineLocation      = { fg = "#86868B", bg = "#2c2c2c" },
+      StatusLineGpsDiagnostic = { fg = "#3c3c3c", bg = "NONE" },
+      StatusLineInverted      = { fg = "#1c1c1c", bg = "#2c2c2c" },
+      StatusLineEmptyspace    = { fg = "#2c2c2c", bg = "NONE" },
+      StatusLineInactive      = { fg = "#5c5c5c", bg = "#2c2c2c" },
+   }
+
+   require("util.functions").set_highlights(hls)
+end
+
 local colors = {
-   mode = "%#StatusLineMode#",
-   git = "%#StatusLineGit#",
-   diag = "%#StatusLineDiagnostic#",
-   ftype = "%#StatusLineFileType#",
-   empty = "%#StatusLineEmptyspace#",
-   name = "%#StatusLineFileName#",
-   encoding = "%#StatusLineFileEncoding#",
-   fformat = "%#StatusLineFileFormat#",
-   location = "%#StatusLineLocation#",
-   session = "%#StatusLineSession#",
-   inverted = "%#StatusLineInverted#",
-   Nmode = "%#Nmode#",
-   Vmode = "%#Vmode#",
-   Imode = "%#Imode#",
-   Cmode = "%#Cmode#",
-   Tmode = "%#Tmode#",
-   ShellMode = "%#Tmode#",
+   inactive    = "%#StatusLineInactive#",
+   mode        = "%#StatusLineMode#",
+   git         = "%#StatusLineGit#",
+   diag        = "%#StatusLineGpsDiagnostic#",
+   lspactive   = "%#StatusLineLspActive#",
+   lspnoactive = "%#StatusLineLspNotActive#",
+   ftype       = "%#StatusLineFileType#",
+   empty       = "%#StatusLineEmptyspace#",
+   name        = "%#StatusLineFileName#",
+   encoding    = "%#StatusLineFileEncoding#",
+   fformat     = "%#StatusLineFileFormat#",
+   location    = "%#StatusLineLocation#",
+   session     = "%#StatusLineSession#",
+   inverted    = "%#StatusLineInverted#",
+   Nmode       = "%#Nmode#",
+   Vmode       = "%#Vmode#",
+   Imode       = "%#Imode#",
+   Cmode       = "%#Cmode#",
+   Tmode       = "%#Tmode#",
+   ShellMode   = "%#Tmode#",
 }
 
 local map = {
-   ["n"] = colors.Nmode .. "NORMAL",
-   ["no"] = colors.Nmode .. "O-PENDING",
-   ["nov"] = colors.Nmode .. "O-PENDING",
-   ["noV"] = colors.Nmode .. "O-PENDING",
+   ["n"]     = colors.Nmode .. "NORMAL",
+   ["no"]    = colors.Nmode .. "O-PENDING",
+   ["nov"]   = colors.Nmode .. "O-PENDING",
+   ["noV"]   = colors.Nmode .. "O-PENDING",
    ["no\22"] = colors.Nmode .. "O-PENDING",
-   ["niI"] = colors.Nmode .. "NORMAL",
-   ["niR"] = colors.Nmode .. "NORMAL",
-   ["niV"] = colors.Nmode .. "NORMAL",
-   ["nt"] = colors.Nmode .. "NORMAL",
-   ["v"] = colors.Vmode .. "VISUAL",
-   ["vs"] = colors.Vmode .. "VISUAL",
-   ["V"] = colors.Vmode .. "V-LINE",
-   ["Vs"] = colors.Vmode .. "V-LINE",
-   ["\22"] = colors.Vmode .. "V-BLOCK",
-   ["\22s"] = colors.Vmode .. "V-BLOCK",
-   ["s"] = colors.Vmode .. "SELECT",
-   ["S"] = colors.Vmode .. "S-LINE",
-   ["\19"] = colors.Vmode .. "S-BLOCK",
-   ["i"] = colors.Imode .. "INSERT",
-   ["ic"] = colors.Imode .. "INSERT",
-   ["ix"] = colors.Imode .. "INSERT",
-   ["R"] = colors.Tmode .. "REPLACE",
-   ["Rc"] = colors.Tmode .. "REPLACE",
-   ["Rx"] = colors.Tmode .. "REPLACE",
-   ["Rv"] = colors.Tmode .. "V-REPLACE",
-   ["Rvc"] = colors.Tmode .. "V-REPLACE",
-   ["Rvx"] = colors.Tmode .. "V-REPLACE",
-   ["c"] = colors.Cmode .. "COMMAND",
-   ["cv"] = colors.Cmode .. "EX",
-   ["ce"] = colors.Cmode .. "EX",
-   ["r"] = colors.Tmode .. "REPLACE",
-   ["rm"] = colors.Nmode .. "MORE",
-   ["r?"] = colors.Nmode .. "CONFIRM",
-   ["!"] = colors.ShellMode .. "SHELL",
-   ["t"] = colors.Tmode .. "TERMINAL",
+   ["niI"]   = colors.Nmode .. "NORMAL",
+   ["niR"]   = colors.Nmode .. "NORMAL",
+   ["niV"]   = colors.Nmode .. "NORMAL",
+   ["nt"]    = colors.Nmode .. "NORMAL",
+   ["v"]     = colors.Vmode .. "VISUAL",
+   ["vs"]    = colors.Vmode .. "VISUAL",
+   ["V"]     = colors.Vmode .. "V-LINE",
+   ["Vs"]    = colors.Vmode .. "V-LINE",
+   ["\22"]   = colors.Vmode .. "V-BLOCK",
+   ["\22s"]  = colors.Vmode .. "V-BLOCK",
+   ["s"]     = colors.Vmode .. "SELECT",
+   ["S"]     = colors.Vmode .. "S-LINE",
+   ["\19"]   = colors.Vmode .. "S-BLOCK",
+   ["i"]     = colors.Imode .. "INSERT",
+   ["ic"]    = colors.Imode .. "INSERT",
+   ["ix"]    = colors.Imode .. "INSERT",
+   ["R"]     = colors.Tmode .. "REPLACE",
+   ["Rc"]    = colors.Tmode .. "REPLACE",
+   ["Rx"]    = colors.Tmode .. "REPLACE",
+   ["Rv"]    = colors.Tmode .. "V-REPLACE",
+   ["Rvc"]   = colors.Tmode .. "V-REPLACE",
+   ["Rvx"]   = colors.Tmode .. "V-REPLACE",
+   ["c"]     = colors.Cmode .. "COMMAND",
+   ["cv"]    = colors.Cmode .. "EX",
+   ["ce"]    = colors.Cmode .. "EX",
+   ["r"]     = colors.Tmode .. "REPLACE",
+   ["rm"]    = colors.Nmode .. "MORE",
+   ["r?"]    = colors.Nmode .. "CONFIRM",
+   ["!"]     = colors.ShellMode .. "SHELL",
+   ["t"]     = colors.Tmode .. "TERMINAL",
 }
 
 local function get_mode()
@@ -196,31 +226,68 @@ local function session_name()
    return S.session_name ~= "" and "Session: " .. colors.session .. S.session_name or nil
 end
 
+local function get_python_env()
+   if not win_is_smaller(preset_width.git_branch) then
+      if vim.bo.filetype == "python" then
+         local venv = os.getenv "VIRTUAL_ENV"
+         if venv then
+            if string.find(venv, "/") then
+               local final_venv = venv
+               for w in venv:gmatch "([^/]+)" do
+                  final_venv = w
+               end
+               venv = final_venv
+            end
+            local dev_icons = require "nvim-web-devicons"
+            local py_icon, _ = dev_icons.get_icon ".py"
+            return ("%s (%s)"):format(py_icon, venv)
+         end
+      end
+   end
+   return nil
+end
+
+local function get_lsp_info()
+   local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
+   if #buf_clients == 0 then
+      return ("%s%s LSP Inactive"):format(colors.lspnoactive, icons.ui.CircleEmpty)
+   end
+   local buf_client_names = ("%s%s%s ["):format(colors.name, icons.ui.SmallCircle, colors.lspactive)
+   -- add client
+   for idx, client in pairs(buf_clients) do
+      if idx > 1 then
+         buf_client_names = buf_client_names .. ","
+      end
+      buf_client_names = buf_client_names .. client.name
+   end
+   return buf_client_names .. "]"
+end
+
 -- Statusline disabled
 -- display only filetype and current mode
 S.off = function(name)
    local ftype_name = get_filetype().name
 
    local special_filetypes = {
-      alpha = icons.ui.Plugin .. " Dashboard",
-      oil = icons.documents.OpenFolder .. " File Explorer",
-      lazy = icons.ui.PluginManager .. " Plugin Manager",
-      lspinfo = icons.ui.Health .. " LSP Status",
+      alpha           = icons.ui.Plugin .. " Dashboard",
+      oil             = icons.documents.OpenFolder .. " File Explorer",
+      lazy            = icons.ui.PluginManager .. " Plugin Manager",
+      lspinfo         = icons.ui.Health .. " LSP Status",
       TelescopePrompt = icons.ui.Telescope .. " Telescope",
-      qf = icons.ui.Gear .. " QuickFix",
-      toggleterm = icons.misc.Robot .. " Terminal",
-      crunner = icons.ui.AltSlArrowRight .. " CodeRunner",
-      mason = icons.ui.List .. " Package Manager",
+      qf              = icons.ui.Gear .. " QuickFix",
+      toggleterm      = icons.misc.Robot .. " Terminal",
+      crunner         = icons.ui.AltSlArrowRight .. " CodeRunner",
+      mason           = icons.ui.List .. " Package Manager",
    }
    local custom_ft = special_filetypes[ftype_name]
-   return ("%s%s %%= %s%%="):format(get_mode(), colors.fformat, name or custom_ft or ftype_name)
+   return ("%s%s %%= %s%%="):format(get_mode(), colors.inactive, name or custom_ft or ftype_name)
 end
 
 -- Statusline enabled
 S.on = function()
    -- LeftSide
    local currMode = "%m%r"
-   local leftSide = ("%s%s%s%s%s%s%s %s%s%s%s %s"):format(
+   local leftSide = ("%s%s%s%s%s%s%s %s%s%s%s %s %s"):format(
       colors.mode,
       currMode,
       get_mode(),
@@ -232,7 +299,8 @@ S.on = function()
       get_filename(),
       colors.empty,
       icons.ui.SlArrowRight,
-      session_name() or ""
+      session_name() or "",
+      get_python_env() or ""
    )
 
    -- Middle
@@ -244,9 +312,10 @@ S.on = function()
    local ftype = get_filetype()
 
    -- Right Side
-   local rightSide = ("%s%s%s %s %s%s  %s%s[%s] %s%s%s"):format(
+   local rightSide = ("%s%s%s %s %s %s%s  %s%s[%s] %s%s%s"):format(
       colors.empty,
       icons.ui.SlArrowLeft,
+      get_lsp_info(),
       colors.ftype,
       ftype.icon or "",
       ftype.name,
@@ -264,22 +333,23 @@ end
 
 local to_exclude = function()
    local special_ft = {
-      alpha = true,
-      NvimTree = true,
-      lspinfo = true,
+      alpha           = true,
+      NvimTree        = true,
+      lspinfo         = true,
       TelescopePrompt = true,
-      Trouble = true,
-      qf = true,
-      toggleterm = true,
-      lazy = true,
-      crunner = true,
-      mason = true,
+      Trouble         = true,
+      qf              = true,
+      toggleterm      = true,
+      lazy            = true,
+      crunner         = true,
+      mason           = true,
    }
 
    return special_ft[vim.bo.filetype]
 end
 
 S.get_statusline = function()
+   if not vim.g.statusline_color then set_color_groups() end
    if not to_exclude() then
       vim.wo.statusline = S.on()
    else

@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 10 May 2023, 12:44
+-- Last Modified: 12 May 2023, 12:56
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup

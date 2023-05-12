@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 10 May 2023, 08:57
+--  Last Modified: 12 May 2023, 12:45
 -------------------------------------
 
 local F = {}
@@ -572,6 +572,13 @@ F.pick_venv = function()
       end
       set_venv(choice)
    end)
+end
+
+
+F.set_highlights = function(hls)
+  for group, settings in pairs(hls) do
+    vim.api.nvim_set_hl(0, group, settings)
+  end
 end
 
 return F

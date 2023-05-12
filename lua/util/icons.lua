@@ -2,7 +2,7 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 10 May 2023, 10:46
+--	Last Modified: 12 May 2023, 13:31
 -----------------------------------
 
 -- NOTE:
@@ -74,6 +74,8 @@ return {
    ui = {
       Lock = "",
       Circle = "",
+      SmallCircle = "",
+      CircleEmpty = "○",
       BigCircle = "",
       BigUnfilledCircle = "",
       Close = "",
