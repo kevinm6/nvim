@@ -2,27 +2,27 @@
 -- File         : rest.lua
 -- Descriptions : curl & http wrapper for API testing and more
 -- Author       : Kevin
--- Last Modified: 05 May 2023, 10:03
+-- Last Modified: 14 May 2023, 10:08
 -------------------------------------
 
 local M = {
   "rest-nvim/rest.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
-  opts = {
+  opts = function(_, o)
     -- Open request results in a horizontal split
-    result_split_horizontal = false,
+    o.result_split_horizontal = false
     -- Keep the http file buffer above|left when split horizontal|vertical
-    result_split_in_place = false,
+    o.result_split_in_place = false
     -- Skip SSL verification, useful for unknown certificates
-    skip_ssl_verification = false,
+    o.skip_ssl_verification = false
     -- Encode URL before making request
-    encode_url = true,
+    o.encode_url = true
     -- Highlight request on run
-    highlight = {
+    o.highlight = {
       enabled = true,
       timeout = 150,
-    },
-    result = {
+    }
+    o.result = {
       -- toggle showing URL, HTTP info, headers at top the of result window
       show_url = true,
       show_http_info = true,
@@ -35,13 +35,13 @@ local M = {
           return vim.fn.system({"tidy", "-i", "-q", "-"}, body)
         end
       },
-    },
+    }
     -- Jump to request line on run
-    jump_to_request = false,
-    env_file = '.env',
-    custom_dynamic_variables = {},
-    yank_dry_run = true,
-  }
+    o.jump_to_request = false
+    o.env_file = '.env'
+    o.custom_dynamic_variables = {}
+    o.yank_dry_run = true
+   end
 }
 
 return M

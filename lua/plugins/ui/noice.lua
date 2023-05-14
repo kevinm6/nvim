@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 09 May 2023, 18:37
+--  Last Modified: 13 May 2023, 11:01
 ----------------------------------------
 
 local M = {
@@ -72,12 +72,8 @@ local M = {
          { silent = true, expr = true },
       },
    },
-}
-
-function M.config()
-   local noice = require "noice"
-   noice.setup {
-      cmdline = {
+   opts = function(_, o)
+      o.cmdline = {
          enabled = true,
          view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
          opts = { buf_options = { filetype = "vim" } }, -- enable syntax highlighting in the cmdline
@@ -94,8 +90,8 @@ function M.config()
             lua = { icon = " " },
             help = { icon = "?" },
          },
-      },
-      messages = {
+      }
+      o.messages = {
          -- NOTE: If you enable messages, then the cmdline is enabled automatically.
          -- This is a current Neovim limitation.
          enabled = true, -- enables the Noice messages UI
@@ -105,19 +101,19 @@ function M.config()
          view_history = "messages",
          view_search = "virtualtext",
          opts = {},
-      },
-      popupmenu = {
+      }
+      o.popupmenu = {
          enabled = true, -- disable if you use something like cmp-cmdline
          ---@type 'nui'|'cmp'
          backend = "nui", -- backend to use to show regular cmdline completions
          kind_icons = {},
-      },
-      redirect = {
+      }
+      o.redirect = {
          view = "popup",
          filter = { event = "msg_show" },
-      },
+      }
       -- :Noice command
-      commands = {
+      o.commands = {
          -- :Noice history
          history = {
             -- options for the message history that you get with `:Noice`
@@ -156,8 +152,8 @@ function M.config()
             filter = { error = true },
             filter_opts = { reverse = true },
          },
-      },
-      notify = {
+      }
+      o.notify = {
          -- Noice can be used as `vim.notify` so you can route any notification like other messages
          -- Notification messages have their level and other properties set.
          -- event is always "notify" and kind can be any log level as a string
@@ -165,8 +161,8 @@ function M.config()
          -- Benefit of using Noice for this is the routing and consistent history view
          enabled = true,
          view = "notify",
-      },
-      lsp = {
+      }
+      o.lsp = {
          progress = {
             enabled = true,
             -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
@@ -227,8 +223,8 @@ function M.config()
                win_options = { concealcursor = "n", conceallevel = 3 },
             },
          },
-      },
-      markdown = {
+      }
+      o.markdown = {
          hover = {
             ["|(%S-)|"] = vim.cmd.help, -- vim help links
             ["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
@@ -241,18 +237,18 @@ function M.config()
             ["^%s*(See also:)"] = "@text.title",
             ["{%S-}"] = "@parameter",
          },
-      },
-      health = {
+      }
+      o.health = {
          checker = true, -- Disable if you don't want health checks to run
-      },
-      smart_move = {
+      }
+      o.smart_move = {
          -- noice tries to move out of the way of existing floating windows.
          enabled = true, -- you can disable this behaviour here
          -- add any filetypes here, that shouldn't trigger smart move.
          excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
-      },
+      }
       ---@type NoicePresets
-      presets = {
+      o.presets = {
          -- you can enable a preset by setting it to true, or a table that will override the preset config
          -- you can also add custom presets that you can enable/disable with enabled=true
          bottom_search = false, -- use a classic bottom cmdline for search
@@ -260,10 +256,10 @@ function M.config()
          long_message_to_split = true, -- long messages will be sent to a split
          inc_rename = false, -- enables an input dialog for inc-rename.nvim
          lsp_doc_border = false, -- add a border to hover docs and signature help
-      },
-      throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
+      }
+      o.throttle = 1000 / 30 -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
       ---@type table<string, NoiceViewOptions>
-      views = {
+      o.views = {
          cmdline_popup = {
             position = {
                row = "90%",
@@ -292,9 +288,9 @@ function M.config()
                winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
             },
          },
-      }, -- @see the section on views below
+      } -- @see the section on views below
       ---@type NoiceRouteConfig[]
-      routes = {
+      o.routes = {
          {
             filter = {
                event = "notify",
@@ -309,11 +305,11 @@ function M.config()
          --   },
          --   opts = { skip = true },
          -- },
-      }, -- @see the section on routes below
+      } -- @see the section on routes below
       ---@type table<string, NoiceFilter>
-      status = {}, --@see the section on statusline components below
+      o.status = {} --@see the section on statusline components below
       ---@type NoiceFormatOptions
-      format = {
+      o.format = {
          -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
          -- view: (default is cmdline view)
          -- opts: any options passed to the view
@@ -344,8 +340,8 @@ function M.config()
          help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
          input = {}, -- Used by input()
          -- lua = false, -- to disable a format, set to `false`
-      }, -- @see section on formatting
-   }
-end
+      } -- @see section on formatting
+   end,
+}
 
 return M

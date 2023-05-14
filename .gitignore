@@ -10,3 +10,4 @@ startup_time*
 colors/.DS_Store
 .metals
 rplugin
+.luarc.json

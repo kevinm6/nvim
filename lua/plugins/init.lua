@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 07 May 2023, 15:55
+--  Last Modified: 13 May 2023, 11:25
 -------------------------------------
 
 local M = {
@@ -12,7 +12,7 @@ local M = {
 
    {
       "kyazdani42/nvim-web-devicons",
-      opts = { default = true },
+      config = true,
    },
 
    {
@@ -42,8 +42,8 @@ local M = {
             desc = "Zen",
          },
       },
-      opts = {
-         window = {
+      opts = function(_, o)
+         o.window = {
             backdrop = 1,
             height = 0.8, -- height of the Zen window
             width = 0.85,
@@ -53,13 +53,13 @@ local M = {
                relativenumber = false, -- disable relative numbers
                cursorline = true, -- disable cursorline
             },
-         },
-         plugins = {
+         }
+         o.plugins = {
             gitsigns = { enabled = false }, -- disables git signs
             tmux = { enabled = false },
             twilight = { enabled = true },
-         },
-      },
+         }
+      end
    },
 
    {
@@ -68,16 +68,6 @@ local M = {
       dev = true,
       -- ft = { "md", "markdown" },
       opts = { auto_display = true },
-   },
-
-   {
-      "simrat39/inlay-hints.nvim",
-      -- ft = { "java", "go", "lua" },
-      enabled = false,
-      opts = {
-         only_current_line = true,
-         eol = { right_align = true },
-      },
    },
 
    {
@@ -92,29 +82,32 @@ local M = {
    {
       "NvChad/nvim-colorizer.lua",
       cmd = "ColorizerToggle",
-      opts = {
-         filetypes = { "*" },
-         user_default_options = {
-            RGB = true, -- #RGB hex codes
-            RRGGBB = true, -- #RRGGBB hex codes
-            names = true, -- "Name" codes like Blue oe blue
-            AARRGGBB = false, -- 0xAARRGGBB hex codes
-            rgb_fn = false, -- CSS rgb() and rgba() functions
-            hsl_fn = false, -- CSS hsl() and hsla() functions
-            css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-            css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            -- Available modes: foreground, background, virtualtext
-            mode = "background", -- Set the display mode.)
-            -- Available methods are false / true / "normal" / "lsp" / "both"
-            -- True is same as normal
-            tailwind = false, -- Enable tailwind colors
-            -- parsers can contain values used in |user_default_options|
-            sass = { enable = false, parsers = { "css" } }, -- Enable sass colors
-            virtualtext = "■",
-         },
-         -- all the sub-options of filetypes apply to buftypes
-         buftypes = {},
-      },
+      opts = function(_, opts)
+         opts = {
+            filetypes = { "*" },
+            user_default_options = {
+               RGB = true, -- #RGB hex codes
+               RRGGBB = true, -- #RRGGBB hex codes
+               names = true, -- "Name" codes like Blue oe blue
+               AARRGGBB = false, -- 0xAARRGGBB hex codes
+               rgb_fn = false, -- CSS rgb() and rgba() functions
+               hsl_fn = false, -- CSS hsl() and hsla() functions
+               css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+               css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+               -- Available modes: foreground, background, virtualtext
+               mode = "background", -- Set the display mode.)
+               -- Available methods are false / true / "normal" / "lsp" / "both"
+               -- True is same as normal
+               tailwind = false, -- Enable tailwind colors
+               -- parsers can contain values used in |user_default_options|
+               sass = { enable = false, parsers = { "css" } }, -- Enable sass colors
+               virtualtext = "■",
+            },
+            -- all the sub-options of filetypes apply to buftypes
+            buftypes = {},
+         }
+         return opts
+      end
    },
 
    {
@@ -144,12 +137,6 @@ local M = {
    },
 
    {
-      "fladson/vim-kitty",
-      ft = "kitty",
-      enabled = false,
-   },
-
-   {
       "turbio/bracey.vim",
       ft = { "markdown", "html", "css", "js" },
       build = "npm install --prefix server",
@@ -157,8 +144,8 @@ local M = {
 
    {
       "folke/neodev.nvim",
-      opts = {
-         library = {
+      opts = function(_, o)
+         o.library = {
             enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
             -- these settings will be used for your Neovim config directory
             runtime = true, -- runtime path
@@ -166,41 +153,20 @@ local M = {
             plugins = true, -- installed opt or start plugins in packpath
             -- you can also specify the list of plugins to make available as a workspace library
             -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
-         },
-         setup_jsonls = true, -- configures jsonls to provide completion for project specific .luarc.json files
+         }
+         o.setup_jsonls = true -- configures jsonls to provide completion for project specific .luarc.json files
          -- for your Neovim config directory, the config.library settings will be used as is
          -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
          -- for any other directory, config.library.enabled will be set to false
-         override = function(root_dir, options) end,
+         o.override = function(root_dir, options) end
          -- With lspconfig, Neodev will automatically setup your lua-language-server
          -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
          -- in your lsp start options
-         lspconfig = true,
+         o.lspconfig = true
          -- much faster, but needs a recent built of lua-language-server
          -- needs lua-language-server >= 3.6.0
-         pathStrict = true,
-      },
-   },
-
-
-   {
-      "nvim-neorg/neorg",
-      enabled = false,
-      build = ":Neorg sync-parsers",
-      opts = {
-         load = {
-            ["core.defaults"] = {}, -- Loads default behaviour
-            ["core.concealer"] = {}, -- Adds pretty icons to your documents
-            ["core.dirman"] = { -- Manages Neorg workspaces
-               config = {
-                  workspaces = {
-                     notes = "~/notes",
-                  },
-               },
-            },
-         },
-      },
-      dependencies = { { "nvim-lua/plenary.nvim" } },
+         o.pathStrict = true
+      end
    },
 }
 

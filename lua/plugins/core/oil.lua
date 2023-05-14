@@ -2,7 +2,7 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 28 Mar 2023, 09:32
+-- Last Modified: 13 May 2023, 11:05
 -------------------------------------
 
 local M = {
@@ -11,20 +11,20 @@ local M = {
     { "<leader>O", function() require "oil".open() end, desc = "Open parent dir (Oil)" }
   },
   cmd = "Oil",
-  opts = {
+  opts = function(_, o)
     -- Id is automatically added at the beginning, and name at the end
     -- See :help oil-columns
-    columns = {
+    o.columns = {
       { "permissions", highlight = "String" },
       { "mtime", highlight = "Comment" },
       { "size", highlight = "Type" },
       "icon",
-    },
-    buf_options = {
+    }
+    o.buf_options = {
       buflisted = false,
-    },
+    }
     -- Window-local options to use for oil buffers
-    win_options = {
+    o.win_options = {
       wrap = false,
       signcolumn = "no",
       cursorcolumn = false,
@@ -33,19 +33,19 @@ local M = {
       list = false,
       conceallevel = 3,
       concealcursor = "n",
-    },
+    }
     -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`
-    default_file_explorer = true,
+    o.default_file_explorer = true
     -- Restore window options to previous values when leaving an oil buffer
-    restore_win_options = true,
+    o.restore_win_options = true
     -- Skip the confirmation popup for simple operations
-    skip_confirm_for_simple_edits = false,
+    o.skip_confirm_for_simple_edits = false
     -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
     -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
     -- Additionally, if it is a string that matches "action.<name>",
     -- it will use the mapping at require("oil.action").<name>
     -- Set to `false` to remove a keymap
-    keymaps = {
+    o.keymaps = {
       ["g?"] = "actions.show_help",
       ["<CR>"] = "actions.select",
       ["<C-l>"] = "actions.select",
@@ -73,10 +73,10 @@ local M = {
           end
         end,
       },
-    },
-    silence_scp_warning = true, -- disable scp warn to use oil-ssh since I'm using a remap
-    use_default_keymaps = false,
-    view_options = {
+    }
+    o.silence_scp_warning = true -- disable scp warn to use oil-ssh since I'm using a remap
+    o.use_default_keymaps = false
+    o.view_options = {
       -- Show files and directories that start with "."
       show_hidden = false,
       is_hidden_file = function (name, bufnr)
@@ -85,9 +85,9 @@ local M = {
       is_always_hidden = function (name, bufnr)
         return false
       end
-    },
+    }
     -- Configuration for the floating window in oil.open_float
-    float = {
+    o.float = {
       -- Padding around the floating window
       padding = 2,
       max_width = 0,
@@ -96,9 +96,9 @@ local M = {
       win_options = {
         winblend = 10,
       },
-    },
+    }
     -- Configuration for the actions floating preview window
-    preview = {
+    o.preview = {
       -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
       -- min_width and max_width can be a single value or a list of mixed integer/float types.
       -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
@@ -119,7 +119,7 @@ local M = {
       win_options = {
         winblend = 0,
       },
-    },
+    }
     -- This are defaults for now, no need to override
     -- adapters = {
     --   ["oil://"] = "files",
@@ -129,22 +129,22 @@ local M = {
     -- HACK:
     -- https://github.com/stevearc/oil.nvim/blob/931453fc09085c09537295c991c66637869e97e1/lua/oil/config.lua#L102~110
     -- Using this to remap url-scheme from args with oil-ssh schemes
-    adapter_aliases = {
+    o.adapter_aliases = {
       ["ssh://"] = "oil-ssh://",
       ["scp://"] = "oil-ssh://",
       ["sftp://"] = "oil-ssh://",
-    },
-  },
-  init = function(plugin)
+    }
+end,
+  init = function(p)
     if vim.fn.argc() == 1 then
       local stat = vim.loop.fs_stat(vim.fn.argv(0))
       local remote_dir_args = vim.startswith(vim.fn.argv(0), "ssh") or
         vim.startswith(vim.fn.argv(0), "sftp") or vim.startswith(vim.fn.argv(0), "scp")
       if stat and stat.type == "directory" or remote_dir_args then
-        require("lazy").load { plugins = { plugin.name } }
+        require("lazy").load { plugins = { p.name } }
       end
     end
-    if not require("lazy.core.config").plugins[plugin.name]._.loaded then
+    if not require("lazy.core.config").plugins[p.name]._.loaded then
       vim.api.nvim_create_autocmd("BufNew", {
         callback = function()
           if vim.fn.isdirectory(vim.fn.expand("<afile>")) == 1 then

@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 14 Apr 2023, 15:26
+-- Last Modified: 13 May 2023, 12:11
 -------------------------------------
 
 local M = {

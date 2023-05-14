@@ -2,7 +2,7 @@
 --  File         : luasnip.lua
 --  Description  : luasnip configuration
 --  Author       : Kevin
---  Last Modified: 02 Mar 2023, 16:53
+--  Last Modified: 13 May 2023, 11:21
 -------------------------------------
 
 local M = {
@@ -30,12 +30,12 @@ local M = {
     -- local lambda = require("luasnip.extras").l
 
   -- Luasnip Configuration
-    opts = {
-      history = true,
-      updateevents = "TextChanged, TextChangedI",
-      delete_check_events = "TextChanged, InsertEnter",
-      enable_autosnippets = true,
-      exet_prio_increase = 1,
+    opts = function(_, o)
+      o.history = true
+      o.updateevents = "TextChanged, TextChangedI"
+      o.delete_check_events = "TextChanged, InsertEnter"
+      o.enable_autosnippets = true
+      o.exet_prio_increase = 1
       -- ext_opts = {
       --   [types.choiceNode] = {
       --     active = {
@@ -48,7 +48,7 @@ local M = {
       --     }
       --   }
       -- },
-    },
+   end,
 
     -- ls.add_snippets("lua", {
     --   s(

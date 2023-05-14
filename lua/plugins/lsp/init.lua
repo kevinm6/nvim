@@ -2,28 +2,10 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 10 May 2023, 10:49
+-- Last Modified: 13 May 2023, 10:50
 -------------------------------------
 
 local icons = require "util.icons"
-local servers_to_install = {
-   "lua_ls",
-   "vimls",
-   "tsserver",
-   "sqlls",
-   "pyright",
-   "jsonls",
-   "gopls",
-   "yamlls",
-   "html",
-   "asm_lsp",
-   "bashls",
-   "clangd",
-   "intelephense",
-   "ocamllsp",
-   "erlangls",
-   "dockerls",
-}
 
 local M = {
    "neovim/nvim-lspconfig",
@@ -37,11 +19,11 @@ local M = {
          keys = {
             { "<leader>Cm", vim.cmd.Mason, desc = "Mason" },
          },
-         opts = {
-            install_root_dir = vim.fn.stdpath "data" .. "/mason",
-            PATH = "append",
+         opts = function(_, o)
+            o.install_root_dir = vim.fn.stdpath "data" .. "/mason"
+            o.PATH = "append"
 
-            ui = {
+            o.ui = {
                border = "rounded",
                width = 0.7,
                height = 0.7,
@@ -73,37 +55,43 @@ local M = {
                   -- Keymap to apply language filter
                   apply_language_filter = "<C-f>",
                },
-            },
-            pip = {
+            }
+            o.pip = {
                upgrade_pip = false,
                install_args = {},
-            },
-            max_concurrent_installers = 4,
-            registries = {
+            }
+            o.max_concurrent_installers = 4
+            o.registries = {
                "lua:mason-registry.index",
                "github:mason-org/mason-registry",
-            },
-            providers = {
+            }
+            o.providers = {
                "mason.providers.registry-api",
                "mason.providers.client",
-            },
-            github = {
+            }
+            o.github = {
                -- The template URL to use when downloading assets from GitHub.
                -- The placeholders are the following (in order):
                -- 1. The repository (e.g. "rust-lang/rust-analyzer")
                -- 2. The release version (e.g. "v0.3.0")
                -- 3. The asset name (e.g. "rust-analyzer-v0.3.0-x86_64-unknown-linux-gnu.tar.gz")
                download_url_template = "https://github.com/%s/releases/download/%s/%s",
-            },
-            log_level = vim.log.levels.INFO,
-         },
+            }
+            o.log_level = vim.log.levels.INFO
+         end,
       },
       {
          "williamboman/mason-lspconfig.nvim",
-         opts = {
-            ensure_installed = servers_to_install,
-            automatic_installation = {},
-            ui = {
+         opts = function(_, o)
+            local servers_to_install = {
+               "lua_ls", "vimls", "tsserver", "sqlls",
+               "pyright", "jsonls", "gopls", "yamlls",
+               "html", "asm_lsp", "bashls", "clangd",
+               "intelephense", "ocamllsp", "erlangls", "dockerls",
+            }
+            o.ensure_installed = servers_to_install
+            o.automatic_installation = {}
+            o.ui = {
                border = "rounded",
                icons = {
                   -- The list icon to use for installed servers.
@@ -122,15 +110,18 @@ local M = {
                   check_outdated_servers = "C", -- Keymap to check which installed servers are outdated
                   uninstall_server = "X", -- Keymap to uninstall a server
                },
-            },
-            pip = {
-               install_args = {},
-            },
-            log_level = vim.log.levels.INFO,
-            max_concurrent_installers = 2,
-         },
+            }
+            o.pip = { install_args = {}, }
+            o.log_level = vim.log.levels.INFO
+            o.max_concurrent_installers = 2
+         end
       },
-      "hrsh7th/cmp-nvim-lsp",
+      {
+         "hrsh7th/cmp-nvim-lsp",
+         cond = function()
+            return require "lazy.core.config".plugins["nvim-cmp"] ~= nil
+         end
+      },
       "jose-elias-alvarez/null-ls.nvim",
       -- "SmiteshP/nvim-navic",
    },

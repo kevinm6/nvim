@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 10 May 2023, 10:46
+-- Last Modified: 14 May 2023, 10:51
 --------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -127,7 +127,7 @@ lazy.setup({
         ---@type string[] list any plugins you want to disable here
         disabled_plugins = {
           "gzip",
-          -- "matchit",
+          "matchit",
           "matchparen",
           "netrwPlugin",
           "tarPlugin",

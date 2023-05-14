@@ -2,7 +2,7 @@
 --  File         : peek.lua
 --  Description  : Description
 --  Author       : Kevin
---  Last Modified: 06 May 2023, 11:06
+--  Last Modified: 14 May 2023, 10:06
 -------------------------------------
 
 local M = {
@@ -11,23 +11,23 @@ local M = {
    build = "deno task --quiet build:fast",
    cmd = { "PeekOpen", "PeekClose" },
    ft = { "md", "markdown" },
-   opts = {
-      auto_load = true, -- whether to automatically load preview when
+   opts = function(_, o)
+      o.auto_load = true -- whether to automatically load preview when
       -- entering another markdown buffer
-      close_on_bdelete = true, -- close preview window on buffer delete
+      o.close_on_bdelete = true -- close preview window on buffer delete
 
-      syntax = true, -- enable syntax highlighting, affects performance
+      o.syntax = true -- enable syntax highlighting, affects performance
 
-      theme = "dark", -- 'dark' or 'light'
+      o.theme = "dark" -- 'dark' or 'light'
 
-      update_on_change = true,
+      o.update_on_change = true
 
       -- relevant if update_in_insert == true
-      throttle_at = 200000, -- start throttling when file exceeds this
+      o.throttle_at = 200000 -- start throttling when file exceeds this
       -- amount of bytes in size
-      throttle_time = "auto", -- minimum amount of time in milliseconds
+      o.throttle_time = "auto" -- minimum amount of time in milliseconds
       -- that has to pass before starting new render
-   },
+   end
 }
 
 function M.config()

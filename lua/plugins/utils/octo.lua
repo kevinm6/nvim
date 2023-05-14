@@ -2,7 +2,7 @@
 --  File         : octo.lua
 --  Description  : octo plugin config
 --  Author       : Kevin
---  Last Modified: 29 Jan 2023, 11:38
+--  Last Modified: 13 May 2023, 11:18
 -------------------------------------
 
 local M = {
@@ -13,36 +13,36 @@ local M = {
     "nvim-telescope/telescope.nvim",
     "kyazdani42/nvim-web-devicons",
   },
-  opts = {
-    default_remote = {"upstream", "origin"}; -- order to try remotes
-    ssh_aliases = {},                        -- SSH aliases. e.g. `ssh_aliases = {["github.com-work"] = "github.com"}`
-    reaction_viewer_hint_icon = "";         -- marker for user reactions
-    user_icon = " ";                        -- user icon
-    timeline_marker = "";                   -- timeline marker
-    timeline_indent = "2";                   -- timeline indentation
-    right_bubble_delimiter = "";            -- bubble delimiter
-    left_bubble_delimiter = "";             -- bubble delimiter
-    github_hostname = "";                    -- GitHub Enterprise host
-    snippet_context_lines = 4;               -- number or lines around commented lines
-    gh_env = {},                             -- extra environment variables to pass on to GitHub CLI, can be a table or function returning a table
-    issues = {
+  opts = function(_, o)
+    o.default_remote = {"upstream", "origin"} -- order to try remotes
+    o.ssh_aliases = {}                        -- SSH aliases. e.g. `ssh_aliases = {["github.com-work"] = "github.com"}`
+    o.reaction_viewer_hint_icon = ""         -- marker for user reactions
+    o.user_icon = " "                        -- user icon
+    o.timeline_marker = ""                   -- timeline marker
+    o.timeline_indent = "2"                   -- timeline indentation
+    o.right_bubble_delimiter = ""            -- bubble delimiter
+    o.left_bubble_delimiter = ""             -- bubble delimiter
+    o.github_hostname = ""                    -- GitHub Enterprise host
+    o.snippet_context_lines = 4               -- number or lines around commented lines
+    o.gh_env = {}                             -- extra environment variables to pass on to GitHub CLI, can be a table or function returning a table
+    o.issues = {
       order_by = {                           -- criteria to sort results of `Octo issue list`
         field = "CREATED_AT",                -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
         direction = "DESC"                   -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
       }
-    },
-    pull_requests = {
+    }
+    o.pull_requests = {
       order_by = {                           -- criteria to sort the results of `Octo pr list`
         field = "CREATED_AT",                -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
         direction = "DESC"                   -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
       },
       always_select_remote_on_create = "false" -- always give prompt to select base remote repo when creating PRs
-    },
-    file_panel = {
+    }
+    o.file_panel = {
       size = 10,                             -- changed files panel rows
       use_icons = true                       -- use web-devicons in file panel (if false, nvim-web-devicons does not need to be installed)
-    },
-    mappings = {
+    }
+    o.mappings = {
       issue = {
         close_issue = { lhs = "<space>ic", desc = "close issue" },
         reopen_issue = { lhs = "<space>io", desc = "reopen issue" },
@@ -154,7 +154,7 @@ local M = {
         toggle_viewed = { lhs = "<leader><space>", desc = "toggle viewer viewed state" },
       }
     }
-  },
+   end
 }
 
 return M

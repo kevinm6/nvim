@@ -2,7 +2,7 @@
 --	File: null-ls.lua
 --	Description: null-ls plugin config
 --	Author: Kevin
---	Last Modified: 29 Jan 2023, 11:49
+--	Last Modified: 13 May 2023, 10:36
 -----------------------------------
 
 local M = {

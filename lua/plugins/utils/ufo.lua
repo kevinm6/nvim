@@ -2,49 +2,54 @@
 --  File         : ufo.lua
 --  Description  : ufo plugin configuration (folding)
 --  Author       : Kevin
---  Last Modified: 26 Mar 2023, 11:39
+--  Last Modified: 14 May 2023, 10:45
 -------------------------------------
 
-local M = {
-  "kevinhwang91/nvim-ufo",
-  event = "BufAdd",
-  dependencies = {
-    "kevinhwang91/promise-async",
-    "nvim-treesitter/nvim-treesitter"
-  },
-  keys = {
-    { "zc" }, { "zr" }, { "zR" }, { "zo" },
-    { "zO" }, { "zm" }, { "zM" },
-  }
+local ftMap = {
+   vim = "indent",
+   python = { "indent" },
+   git = "",
 }
 
-function M.config()
-  local ufo = require "ufo"
+local M = {
+   "kevinhwang91/nvim-ufo",
+   event = "BufAdd",
+   dependencies = {
+      "kevinhwang91/promise-async",
+      "nvim-treesitter/nvim-treesitter",
+   },
+   keys = {
+      { "zc" },
+      { "zr" },
+      { "zR" },
+      { "zo" },
+      { "zO" },
+      { "zm" },
+      { "zM" },
+   },
+   opts = function(_, o)
+      -- fold_virt_text_handler = handler,
+      vim.wo.foldcolumn = "0"
+      vim.wo.foldlevel = 99
+      vim.wo.foldenable = true
 
-  vim.wo.foldcolumn = '0'
-  vim.wo.foldlevel = 99
-  vim.wo.foldenable = true
-
-  ufo.setup {
-    -- fold_virt_text_handler = handler,
-    open_fold_hl_timeout = 150,
-    preview = {
-      win_config = {
-        border = {'', '─', '', '', '', '─', '', ''},
-        winhighlight = 'Normal:Folded',
-        winblend = 0
-      },
-      mappings = {
-        scrollU = '<C-b>',
-        scrollD = '<C-f>'
+      o.open_fold_hl_timeout = 150
+      o.preview = {
+         win_config = {
+            border = { "", "─", "", "", "", "─", "", "" },
+            winhighlight = "Normal:Folded",
+            winblend = 0,
+         },
+         mappings = {
+            scrollU = "<C-b>",
+            scrollD = "<C-f>",
+         },
       }
-    },
-    provider_selector = function(bufnr, filetype, buftype)
-        return {'treesitter', 'indent'}
-    end
-  }
-
-  -- require('ufo').setFoldVirtTextHandler(bufnr, handler)
-end
+      o.close_fold_kinds = { 'imports', 'comment' }
+      o.provider_selector = function(bufnr, filetype, buftype)
+         return ftMap[filetype]
+      end
+   end,
+}
 
 return M
