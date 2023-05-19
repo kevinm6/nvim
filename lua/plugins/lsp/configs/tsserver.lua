@@ -2,7 +2,7 @@
 --  File         : tsserver.lua
 --  Description  : tsserver lsp user config
 --  Author       : Kevin
---  Last Modified: 21 Apr 2023, 08:45
+--  Last Modified: 15 May 2023, 19:14
 -------------------------------------
 
 return {
@@ -15,10 +15,8 @@ return {
   init_options = {
     hostInfo = "neovim"
   },
-  root_dir = function()
-    return require "lspconfig".util.root_pattern("go.mod", "go.work", ".git") or
-      vim.loop.cwd()
-  end,
+  root_dir = require "lspconfig".util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git") or
+      vim.loop.cwd(),
   single_file_support = true,
 }
 

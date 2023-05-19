@@ -2,13 +2,14 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 13 May 2023, 11:25
+--  Last Modified: 16 May 2023, 09:03
 -------------------------------------
 
 local M = {
-   "nvim-lua/plenary.nvim",
-
-   { "tweekmonster/startuptime.vim", cmd = "StartupTime", enabled = false },
+   {
+      "nvim-lua/plenary.nvim",
+      lazy = true,
+   },
 
    {
       "kyazdani42/nvim-web-devicons",
@@ -25,7 +26,7 @@ local M = {
          if not has_theme then
             vim.notify(("%s:\n%s"):format("Error loading theme < knvim >", knvim), "Info")
          end
-         require("knvim").setup()
+         require "knvim".setup()
       end,
    },
 
@@ -131,17 +132,14 @@ local M = {
       ft = "json",
    },
 
+   -- Dev Docs
    {
       "sunaku/vim-dasht",
       cmd = "Dasht",
    },
 
-   {
-      "turbio/bracey.vim",
-      ft = { "markdown", "html", "css", "js" },
-      build = "npm install --prefix server",
-   },
 
+   -- Lua dev
    {
       "folke/neodev.nvim",
       opts = function(_, o)

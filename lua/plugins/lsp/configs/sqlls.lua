@@ -2,7 +2,7 @@
 --  File         : sqls.lua
 --  Description  : sqls configuration
 --  Author       : Kevin
---  Last Modified: 06 Apr 2023, 17:29
+--  Last Modified: 16 May 2023, 18:05
 -----------------------------------
 
 local M = {
@@ -15,6 +15,7 @@ function M.config()
     cmd = { "sql-language-server", "up", "--method", "stdio" },
     filetypes = { "sql", "mysql" },
     single_file_support = true,
+    root_dir = require "lspconfig.util".root_pattern "/Users/Kevin/.config/sql-language-server/.sqllsrc.json",
     settings = {
       sqls = {
         connections = {

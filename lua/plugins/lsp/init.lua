@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 13 May 2023, 10:50
+-- Last Modified: 20 May 2023, 12:30
 -------------------------------------
 
 local icons = require "util.icons"
@@ -146,6 +146,7 @@ function M.config()
 
    -- Custom configs to apply when attaching lsp to buffer
    local custom_attach = function(client, bufnr)
+      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
       if client.server_capabilities.documentSymbolProvider then
          require("nvim-navic").attach(client, bufnr)
       end
@@ -175,6 +176,9 @@ function M.config()
 
       -- Next, you can provide targeted overrides for specific servers.
       -- Manage server with custom setup
+      ["asm_lsp"] = function()
+         lspconfig.asm_lsp.setup(vim.tbl_deep_extend("force", default_lsp_config, { root_dir = require "lspconfig.util".find_git_ancestor }))
+      end,
       ["lua_ls"] = function()
          lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.lua_ls"))
       end,
@@ -193,9 +197,9 @@ function M.config()
       ["gopls"] = function()
          lspconfig.gopls.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.gopls"))
       end,
-      -- ["tsserver"] = function() lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config,
-      --   require "plugins.lsp.configs.tsserver"))
-      -- end,
+      ["tsserver"] = function() lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config,
+        require "plugins.lsp.configs.tsserver"))
+      end,
    }
 
    -- sourcekit is still not available on mason-lspconfig

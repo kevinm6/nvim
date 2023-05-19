@@ -2,13 +2,13 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 13 May 2023, 11:05
+-- Last Modified: 21 May 2023, 12:57
 -------------------------------------
 
 local M = {
   "stevearc/oil.nvim",
   keys = {
-    { "<leader>O", function() require "oil".open() end, desc = "Open parent dir (Oil)" }
+    { "<leader>E", function() require "oil".open() end, desc = "[Oil] Open parent dir" }
   },
   cmd = "Oil",
   opts = function(_, o)
