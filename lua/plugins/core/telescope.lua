@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 10 May 2023, 09:29
+-- Last Modified: 22 May 2023, 10:12
 ---------------------------------------
 
 local git_hunks = function()
@@ -521,6 +521,7 @@ function M.config()
          buffers = {
             theme = "dropdown",
             sort_mru = true,
+            ignore_current_buffer = true,
             previewer = false,
             initial_mode = "insert",
             sorting_strategy = "descending",

@@ -2,13 +2,14 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 21 May 2023, 12:57
+-- Last Modified: 22 May 2023, 17:57
 -------------------------------------
 
 local M = {
   "stevearc/oil.nvim",
   keys = {
-    { "<leader>E", function() require "oil".open() end, desc = "[Oil] Open parent dir" }
+    { "<leader>E", function() require "oil".open() end, desc = "[Oil] Open parent dir" },
+    { "<leader>O", function() require "oil".open_float() end, desc = "[Oil] Open float" }
   },
   cmd = "Oil",
   opts = function(_, o)
@@ -46,21 +47,24 @@ local M = {
     -- it will use the mapping at require("oil.action").<name>
     -- Set to `false` to remove a keymap
     o.keymaps = {
-      ["g?"] = "actions.show_help",
+      ["?"] = "actions.show_help",
       ["<CR>"] = "actions.select",
+      ["<C-k>"] = "k",
+      ["<C-j>"] = "j",
       ["<C-l>"] = "actions.select",
       ["<C-s>"] = "actions.select_split",
       ["<C-v>"] = "actions.select_vsplit",
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = "actions.close",
-      ["<C-g>"] = "actions.parent",
-      ["<C-h>"] = "actions.toggle_hidden",
+      ["q"] = "actions.close",
+      ["<C-h>"] = "actions.parent",
+      ["<C-.>"] = "actions.toggle_hidden",
+      ["g."] = "actions.toggle_hidden",
       ["<C-t>"] = "actions.open_terminal",
       ["-"] = "actions.parent",
-      ["_"] = "actions.open_cwd",
-      ["`"] = "actions.cd",
+      ["<C-g>"] = "actions.open_cwd",
+      ["<C-x>"] = "actions.cd",
       ["~"] = "actions.tcd",
-      ["g."] = "actions.toggle_hidden",
       ["gd"] = {
         desc = "Toggle detail view",
         callback = function()
@@ -89,12 +93,12 @@ local M = {
     -- Configuration for the floating window in oil.open_float
     o.float = {
       -- Padding around the floating window
-      padding = 2,
+      padding = 10,
       max_width = 0,
       max_height = 0,
       border = "rounded",
       win_options = {
-        winblend = 10,
+        winblend = 8,
       },
     }
     -- Configuration for the actions floating preview window
@@ -118,6 +122,20 @@ local M = {
       border = "rounded",
       win_options = {
         winblend = 0,
+      },
+      -- Configuration for the floating progress window
+      progress = {
+        max_width = 0.9,
+        min_width = { 40, 0.4 },
+        width = nil,
+        max_height = { 10, 0.9 },
+        min_height = { 5, 0.1 },
+        height = nil,
+        border = "rounded",
+        minimized_border = "none",
+        win_options = {
+          winblend = 0,
+        },
       },
     }
     -- This are defaults for now, no need to override
