@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 12 May 2023, 12:56
+-- Last Modified: 25 May 2023, 17:45
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -362,15 +362,19 @@ autocmd({ "FileType" }, {
             prg = "python3",
             efmt = "%C %.%#,%A  File \"%f\"\\, line %l%.%#,%Z%[%^ ]%\\@=%m"
          },
+         erlang = {
+            prg = "erlc -Wall %:S",
+            efmt = "%f:%l:%c: %m"
+         },
       }
       if filetypes[ev.match] then
          if filetypes[ev.match].prg then
             vim.opt_local.makeprg = filetypes[ev.match].prg
             vim.opt_local.errorformat = filetypes[ev.match].efmt
          else
-            vim.opt_local.compiler = filetypes[ev.match]
+            vim.cmd.compiler(filetypes[ev.match])
          end
-         vim.api.nvim_buf_set_keymap(ev.buf, "n", '<leader>RR', ':make %<CR>', { desc = "Compile Code" })
+        vim.api.nvim_buf_set_keymap(ev.buf, "n", '<leader>RR', ':make %<CR>', { desc = "Compile Code" })
       end
    end,
 })
@@ -426,7 +430,7 @@ autocmd({ "BufRead", "BufNewFile" }, {
 
 -- Scratch
 local Scratch = function()
-   vim.cmd.new ""
+   vim.cmd.new()
    vim.opt_local.buftype = "nofile"
    vim.opt_local.bufhidden = "wipe"
    vim.opt_local.buflisted = false
@@ -438,7 +442,7 @@ user_command("Scratch", Scratch, { desc = "Create a Scratch buffer" })
 
 -- Note
 local Note = function()
-   vim.cmd.new ""
+   vim.cmd.new()
    vim.opt_local.buftype = "nofile"
    vim.opt_local.bufhidden = "hide"
    vim.opt_local.buflisted = false

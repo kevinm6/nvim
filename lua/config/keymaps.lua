@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 10 May 2023, 12:42
+-- Last Modified: 25 May 2023, 17:40
 -------------------------------------
 
 local set_opts = function(opts)
@@ -97,6 +97,12 @@ end, set_opts { desc = "Notifications" })
 set_keymap("n", "<leader>nm", function()
    vim.cmd.messages {}
 end, set_opts { desc = "Messages" })
+set_keymap("n", "<leader>Q", function()
+   vim.cmd.copen {}
+end, set_opts { desc = "QuickFixList" })
+set_keymap("n", "<leader>L", function()
+   vim.cmd.copen {}
+end, set_opts { desc = "LocationList" })
 
 set_keymap("n", "<C-l>", "<Nop>", set_opts {})
 set_keymap("n", "<C-l>", "<C-w>l", set_opts {})
@@ -177,20 +183,19 @@ set_keymap("n", "<leader>yy", [["+yy]], set_opts { desc = "Yank line to clipboar
 set_keymap("n", "<leader>Y", [["+y$]], set_opts { desc = "Yank 'til end to clipboard" })
 
 -- Config File
-set_keymap("n", "<leader>0s", function()
-   vim.cmd.source "$MYVIMRC"
-   vim.notify("Config file sourced", vim.log.levels.INFO)
-end, set_opts { desc = "Source Neovim config file" })
-
-set_keymap("n", "<leader>0e", function()
-   vim.cmd.edit "$NVIMDOTDIR/init.lua"
-end, set_opts { desc = "Edit Neovim config file" })
-set_keymap("n", "<leader>0r", function()
-   vim.cmd.luafile "%"
-end, set_opts { desc = "Reload current buffer" })
-set_keymap("n", "<leader>0S", function()
-   vim.cmd.source "~/.config/nvim/lua/plugins/core/luasnip.lua"
-end, set_opts { desc = "Reload custom snippet" })
+-- set_keymap("n", "<leader>0s", function()
+--    vim.cmd.source "$MYVIMRC"
+--    vim.notify("Config file sourced", vim.log.levels.INFO)
+-- end, set_opts { desc = "Source Neovim config file" })
+-- set_keymap("n", "<leader>0e", function()
+--    vim.cmd.edit "$NVIMDOTDIR/init.lua"
+-- end, set_opts { desc = "Edit Neovim config file" })
+-- set_keymap("n", "<leader>0r", function()
+--    vim.cmd.luafile "%"
+-- end, set_opts { desc = "Reload current buffer" })
+-- set_keymap("n", "<leader>0S", function()
+--    vim.cmd.source "~/.config/nvim/lua/plugins/core/luasnip.lua"
+-- end, set_opts { desc = "Reload custom snippet" })
 
 -- exit from NeoVim and Save or not
 set_keymap("n", "ZZ", function()

@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 22 May 2023, 10:12
+-- Last Modified: 25 May 2023, 17:37
 ---------------------------------------
 
 local git_hunks = function()
@@ -125,6 +125,20 @@ local M = {
             require("telescope.builtin").keymaps()
          end,
          desc = "Keymaps",
+      },
+      {
+         "<leader>fq",
+         function()
+            require("telescope.builtin").quickfix()
+         end,
+         desc = "QuickFix",
+      },
+      {
+         "<leader>fQ",
+         function()
+            require("telescope.builtin").loclist()
+         end,
+         desc = "LocationList",
       },
       {
          "<leader>fl",

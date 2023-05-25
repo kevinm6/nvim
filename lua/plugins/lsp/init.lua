@@ -2,14 +2,14 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 20 May 2023, 12:30
+-- Last Modified: 24 May 2023, 08:46
 -------------------------------------
 
 local icons = require "util.icons"
 
 local M = {
    "neovim/nvim-lspconfig",
-   event = "BufReadPre",
+   event = { "BufReadPre", "BufNewFile" },
    cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
    dependencies = {
       {
@@ -199,6 +199,9 @@ function M.config()
       end,
       ["tsserver"] = function() lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config,
         require "plugins.lsp.configs.tsserver"))
+      end,
+      ["erlangls"] = function() lspconfig.erlangls.setup(vim.tbl_deep_extend("force", default_lsp_config,
+        require "plugins.lsp.configs.erlangls"))
       end,
    }
 

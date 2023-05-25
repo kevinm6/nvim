@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 13 May 2023, 12:11
+-- Last Modified: 24 May 2023, 12:08
 -------------------------------------
 
 local M = {
@@ -42,7 +42,22 @@ local M = {
     },
     dependencies = {
        "JoosepAlviste/nvim-ts-context-commentstring",
-      { "windwp/nvim-ts-autotag", ft = { "html", "php", "xml" } },
+      {
+        "windwp/nvim-ts-autotag",
+        ft = {
+          "html", "javascript", "typescript", "javascriptreact", "typescriptreact",
+          "svelte", "vue", "tsx", "jsx", "rescript", "xml", "php", "markdown",
+          "glimmer", "handlebars", "hbs",
+        },
+        opts = {
+          enable = true,
+          filetypes = {
+            "html", "javascript", "typescript", "javascriptreact", "typescriptreact",
+            "svelte", "vue", "tsx", "jsx", "rescript", "xml", "php", "markdown",
+            "glimmer", "handlebars", "hbs",
+          },
+        },
+      },
       "p00f/nvim-ts-rainbow",
       "nvim-treesitter/nvim-treesitter-refactor",
     },
@@ -50,7 +65,8 @@ local M = {
 
       require "nvim-treesitter.install".prefer_git = true
 
-      local parser_to_install = vim.fn.has "mac" == 1  and {
+      require "nvim-treesitter.configs".setup {
+        ensure_installed = vim.fn.has "mac" == 1  and {
           "c", "comment", "cpp", "css", "dot", "dockerfile",
           "bash", "gitignore", "gitattributes", "gitcommit", "git_rebase", "go", "vimdoc",
 
@@ -58,10 +74,7 @@ local M = {
           "lua", "java", "javascript", "markdown", "markdown_inline", "rust",
           "ocaml", "ocaml_interface", "php", "python", "regex", "python", "phpdoc",
           "scala", "scheme", "sql", "swift", "todotxt", "vim", "yaml", "org", "ini"
-          } or {} -- do not install parser for now in Manjaro-Linux
-
-      require "nvim-treesitter.configs".setup {
-        ensure_installed = parser_to_install,
+          } or {},
         sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
         ignore_install = {},
         highlight = {

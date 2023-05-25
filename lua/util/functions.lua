@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 12 May 2023, 12:45
+--  Last Modified: 24 May 2023, 21:07
 -------------------------------------
 
 local F = {}
@@ -266,7 +266,21 @@ F.new_file = function()
       prompt = "Enter name for newfile: ",
       default = nil,
    }, function(input)
-      if input ~= nil then
+      if input then
+         vim.cmd.enew()
+         vim.cmd.edit(input)
+         vim.cmd.write(input)
+         vim.cmd.startinsert()
+      end
+   end)
+end
+
+F.new_tmp_file = function()
+   vim.ui.input({
+      prompt = "Enter name for temp file: ",
+      default = os.date("%d%m%Y_file_%H%M%S")..".",
+   }, function(input)
+      if input then
          vim.cmd.enew()
          vim.cmd.edit(input)
          vim.cmd.write(input)
