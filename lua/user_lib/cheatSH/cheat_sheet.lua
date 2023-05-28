@@ -2,7 +2,7 @@
 --  File         : cheat_sheet.lua
 --  Description  : question cht.sh to get result in Neovim
 --  Author       : Kevin
---  Last Modified: 20 Mar 2023, 09:49
+--  Last Modified: 28 May 2023, 19:57
 -----------------------------------
 
 local M = {}
@@ -37,7 +37,7 @@ function M.run(input)
   M.main_col = ui.width / 2 - M.main_win_width / 2
   M.main_row = ui.height / 1.1 - M.main_win_height / 2
 
-  M.openPreview(input.args)
+  M.open_preview(input.args)
 end
 
 
@@ -53,7 +53,7 @@ local function split_string(input_string, sep)
   return t
 end
 
-function M.openPreview(args)
+function M.open_preview(args)
   local search_input = {}
   local sep = " "
 

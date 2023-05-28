@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 13:46
+-- Last Modified: 28 May 2023, 20:08
 -------------------------------------
 
 local icons = require "user_lib.icons"
@@ -270,7 +270,7 @@ local set_buf_capabilities = function(client, bufnr)
       end, {})
 
       vim.api.nvim_create_user_command("Format", function()
-         vim.lsp.buf.format()
+         user_lib_funcs.lsp_format(bufnr)
       end, { force = true })
 
       vim.keymap.set("n", "<leader>lf", function()

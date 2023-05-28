@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 13:26
+-- Last Modified: 28 May 2023, 20:03
 -------------------------------------
 
 local M = {

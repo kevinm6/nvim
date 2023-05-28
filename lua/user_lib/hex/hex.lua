@@ -3,10 +3,10 @@
 --  Description  : edit hex files
 --  Author       : Kevin
 --  Source       : https://github.com/RaafatTurki/hex.nvim/tree/master/lua
---  Last Modified: 26 Apr 2023, 08:41
+--  Last Modified: 28 May 2023, 19:56
 -------------------------------------
 
-local u = require 'util.hex.utils'
+local u = require 'user_lib.hex.utils'
 local augroup_hex_editor = vim.api.nvim_create_augroup('hex_editor', { clear = true })
 
 local M = {}

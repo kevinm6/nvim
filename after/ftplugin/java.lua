@@ -2,12 +2,12 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 22 Apr 2023, 13:54
+-- Last Modified: 28 May 2023, 18:45
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
 if not has_jdtls then
-  vim.notify(" ERROR loading jdtls", vim.log.levels.ERROR)
+  vim.notify(" ERROR loading jdtls", vim.log.levels.ERROR)
   return
 end
 

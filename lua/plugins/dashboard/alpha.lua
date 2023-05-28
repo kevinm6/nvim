@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 28 May 2023, 13:18
+--	Last Modified: 28 May 2023, 20:10
 -----------------------------------
 
 local M = {
@@ -16,7 +16,6 @@ function M.config()
    --    vim.notify("Telescope not available!\n Not opening dashboard", vim.log.levels.WARN)
    --    return
    -- end
-
 
    local alpha = require "alpha"
    local icons = require "user_lib.icons"
@@ -49,11 +48,18 @@ function M.config()
       [[                      ]] .. nvim_version(),
    }
 
-
    dashboard.section.buttons.val = {
       dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'user_lib.functions'.new_file()<CR>"),
-      dashboard.button("t", icons.ui.NewFile .. " New temp file", "<cmd>lua require 'user_lib.functions'.new_tmp_file()<CR>"),
-      dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>edit ~/Library/Mobile Documents/com~apple~CloudDocs/Notes/notes.md<CR>"),
+      dashboard.button(
+         "t",
+         icons.ui.NewFile .. " New temp file",
+         "<cmd>lua require 'user_lib.functions'.new_tmp_file()<CR>"
+      ),
+      dashboard.button(
+         "N",
+         icons.ui.Note .. " Notes",
+         "<cmd>edit ~/Library/Mobile Documents/com~apple~CloudDocs/Notes/notes.md<CR>"
+      ),
 
       dashboard.button(
          "f",
@@ -80,7 +86,11 @@ function M.config()
       ),
       dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
       dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
-      dashboard.button("S", icons.ui.History .. " Sessions", "<cmd>lua require 'user_lib.functions'.restore_session()<CR>"),
+      dashboard.button(
+         "S",
+         icons.ui.History .. " Sessions",
+         "<cmd>lua require 'user_lib.functions'.restore_session()<CR>"
+      ),
       dashboard.button(
          "C",
          icons.ui.Gear .. " Config",

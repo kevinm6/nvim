@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 28 May 2023, 13:20
+--  Last Modified: 28 May 2023, 20:03
 -----------------------------------
 
 local M = {
@@ -21,7 +21,6 @@ local M = {
     { "<leader>dl", function() require "dap".run_last() end, desc = "Last" },
     { "<leader>du", function() require "dapui".toggle {} end, desc = "UI" },
     { "<leader>dx", function() require "dap".terminate() end, desc = "Exit" },
-
   }
 }
 

@@ -2,7 +2,7 @@
 --	File         : notify.lua
 --	Description  : notify plugin configuration
 --	Author       : Kevin
---	Last Modified: 28 May 2023, 13:26
+--	Last Modified: 28 May 2023, 20:12
 -----------------------------------
 
 local M = {
@@ -51,8 +51,7 @@ local M = {
 }
 
 function M.config()
-   local notify = require "notify"
-   vim.notify = notify
+   vim.notify = require "notify"
 end
 
 return M

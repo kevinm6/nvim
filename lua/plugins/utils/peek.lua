@@ -2,7 +2,7 @@
 --  File         : peek.lua
 --  Description  : Description
 --  Author       : Kevin
---  Last Modified: 14 May 2023, 10:06
+--  Last Modified: 28 May 2023, 20:16
 -------------------------------------
 
 local M = {
@@ -27,13 +27,12 @@ local M = {
       -- amount of bytes in size
       o.throttle_time = "auto" -- minimum amount of time in milliseconds
       -- that has to pass before starting new render
-   end
+   end,
 }
 
 function M.config()
-   local peek = require "peek"
-   vim.api.nvim_create_user_command("PeekOpen", peek.open, {})
-   vim.api.nvim_create_user_command("PeekClose", peek.close, {})
+   vim.api.nvim_create_user_command("PeekOpen", function() require"peek".open() end, {})
+   vim.api.nvim_create_user_command("PeekClose", function() require"peek".close() end, {})
 end
 
 return M

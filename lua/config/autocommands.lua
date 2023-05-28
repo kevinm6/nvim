@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 13:32
+-- Last Modified: 28 May 2023, 19:51
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -26,7 +26,6 @@ autocmd({ "FileType" }, {
       "Scratch",
       "checkhealth",
       "sqls_output",
-      "DressingSelect",
       "noice.log",
    },
    callback = function(ft)
@@ -110,191 +109,37 @@ autocmd({ "CursorMoved" }, {
    end,
 })
 
-
--- autocmd("LspAttach", {
---    group = augroup("_Lsp_attach", { clear = true }),
---    callback = function(args)
---       local client = vim.lsp.get_client_by_id(args.data.client_id)
---       if client.name == "jdtls" then
---          return
---       end
-
---       local has_telescope, telescope = pcall(require, "telescope.builtin")
-
---       -- local opts = { noremap = true, silent = true }
---       vim.keymap.set("n", "gl", function()
---          vim.diagnostic.open_float()
---       end, { buffer = args.buf, desc = "Open float" })
---       vim.keymap.set("n", "K", function()
---          vim.lsp.buf.hover()
---       end, { buffer = args.buf })
-
---       if client.server_capabilities.declarationProvider then
---          vim.keymap.set("n", "gD", function()
---             if has_telescope then
---                telescope.lsp_declarations {}
---             else
---                vim.lsp.buf.declaration()
---             end
---          end, { buffer = args.buf, desc = "GoTo declaration" })
---       end
---       if client.server_capabilities.definitionProvider then
---          vim.keymap.set("n", "gd", function()
---             if has_telescope then
---                telescope.lsp_definitions {}
---             else
---                vim.lsp.buf.definition()
---             end
---          end, { buffer = args.buf, desc = "GoTo definition" })
---       end
---       if client.server_capabilities.implementationProvider then
---          vim.keymap.set("n", "gI", function()
---             if has_telescope then
---                telescope.lsp_incoming_calls {}
---             else
---                vim.lsp.buf.implementation()
---             end
---          end, { buffer = args.buf, desc = "GoTo implementation" })
---       end
---       if client.server_capabilities.referencesProvider then
---          vim.keymap.set("n", "gr", function()
---             if has_telescope then
---                telescope.lsp_references {}
---             else
---                vim.lsp.buf.references()
---             end
---          end, { buffer = args.buf, desc = "GoTo references" })
---       end
---       -- if client.server_capabilities.referencesProvider then
---       vim.keymap.set("n", "<leader>ll", function()
---          vim.lsp.codelens.run()
---       end, { buffer = args.buf, desc = "CodeLens Action" })
---       -- end
-
---       -- lsp-document_highlight
---       if client.server_capabilities.documentHighlightProvider then
---          local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
---          autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
---             group = lsp_hi_doc_group,
---             buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
---             callback = function()
---                vim.lsp.buf.document_highlight()
---             end,
---          })
---          autocmd({ "BufEnter", "CursorMoved" }, {
---             group = lsp_hi_doc_group,
---             buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
---             callback = function()
---                vim.lsp.buf.clear_references()
---             end,
---          })
---          -- TODO: must be implemented better
---          -- else -- fallback w/ treesitter
---          --    local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
---          --    autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
---          --      group = lsp_hi_doc_group,
---          --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
---          --      callback = function()
---          --          require "user_lib.functions".ts_fallback_lsp_highlighting(args.buf)
---          --      end
---          --    })
---          --    autocmd({ "BufEnter", "CursorMoved" }, {
---          --      group = lsp_hi_doc_group,
---          --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
---          --      callback = function() vim.lsp.buf.clear_references() end
---          --    })
---       end
-
---       -- Formatting
---       if client.supports_method "textDocument/formatting" then
---          user_command("LspToggleAutoFormat", function()
---             if vim.fn.exists "#_format_on_save#BufWritePre" == 0 then
---                format_on_save(args.buf, true)
---             else
---                format_on_save(args.buf)
---             end
---          end, {})
-
---          user_command("Format", function()
---             vim.lsp.buf.format()
---          end, { force = true })
-
---          vim.keymap.set("n", "<leader>lf", function()
---             lsp_formatting(args.buf)
---          end, { desc = "Format" })
---          vim.keymap.set("n", "<leader>lF", function()
---             vim.cmd.LspToggleAutoFormat()
---          end, { desc = "Toggle AutoFormat" })
---       end
-
---       vim.keymap.set("n", "<leader>la", function()
---          vim.lsp.buf.code_action()
---       end, { buffer = args.buf, desc = "Code Action" })
---       vim.keymap.set("n", "<leader>lI", function()
---          vim.cmd.LspInfo {}
---       end, { buffer = args.buf, desc = "Lsp Info" })
---       vim.keymap.set("n", "<leader>lL", function()
---          vim.cmd.LspLog {}
---       end, { buffer = args.buf, desc = "Lsp Log" })
---       vim.keymap.set("n", "<leader>r", function()
---          vim.lsp.buf.rename()
---       end, { buffer = args.buf, desc = "Rename" })
---       vim.keymap.set("n", "<leader>lq", function()
---          vim.diagnostic.setloclist()
---       end, { buffer = args.buf, desc = "Lsp Diagnostics" })
---       -- Diagnostics
---       vim.keymap.set("n", "<leader>dj", function()
---          vim.diagnostic.goto_next { buffer = args.buf }
---       end, { desc = "Next Diagnostic" })
---       vim.keymap.set("n", "<leader>dk", function()
---          vim.diagnostic.goto_prev { buffer = args.buf }
---       end, { desc = "Prev Diagnostic" })
---    end,
--- })
-
 -- If buffer modified, update any 'Last modified: ' in the first 10 lines.
 -- Restores cursor and window position using save_cursor variable.
-local updateTimeStamp = autocmd({ "BufWritePre" }, {
-   group = augroup("_update_timestamp", { clear = true }),
-   pattern = "*",
-   callback = function()
-      if vim.opt_local.modified._value == true then
-         local cursor_pos = vim.api.nvim_win_get_cursor(0)
+local auto_timestamp = function()
+   autocmd({ "BufWritePre" }, {
+      group = augroup("_update_timestamp", { clear = true }),
+      pattern = "*",
+      callback = function()
+         if vim.api.nvim_get_option_value("modified", { scope = "local" }) == true then
+            local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-         vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
-         vim.fn.histdel("search", -1)
-         vim.api.nvim_win_set_cursor(0, cursor_pos)
-      end
-   end,
-})
+            vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
+            vim.fn.histdel("search", -1)
+            vim.api.nvim_win_set_cursor(0, cursor_pos)
+         end
+      end,
+   })
+end
 
-local autoTimeStampID = updateTimeStamp
+auto_timestamp()
 
 user_command("ToggleTimeStamp", function()
-   local au = vim.api.nvim_get_autocmds { group = _general_settings, event = "BufWritePre", pattern = "*" }
-   if autoTimeStampID ~= nil and au[1] ~= nil then
-      -- remove autocmd if exists and match w/ the one created
-      --[[ print(au[1].id == toggleUpdateTimeStamp) ]]
-      if au[1].id == autoTimeStampID then
-         vim.api.nvim_del_autocmd(autoTimeStampID)
-         autoTimeStampID = nil
-         vim.notify("❌ TimeStamp update on save disabled.", vim.log.levels.INFO, { title = "Update file INFO" })
-      end
+   local _autocmd_timestamp =
+      vim.api.nvim_get_autocmds { group = "_update_timestamp", event = "BufWritePre", pattern = "*" }
+
+   if vim.g.auto_timestamp and _autocmd_timestamp[1] then
+      vim.api.nvim_del_autocmd(_autocmd_timestamp[1].id)
+      vim.g.auto_timestamp = 0
+      vim.notify("❌ TimeStamp update on save disabled.", vim.log.levels.INFO, { title = "Update file INFO" })
    else
-      autoTimeStampID = autocmd({ "BufWritePre" }, {
-         group = augroup("_update_timestamp", { clear = true }),
-         pattern = "*",
-         callback = function()
-            if vim.opt_local.modified._value == true then
-               local cursor_pos = vim.api.nvim_win_get_cursor(0)
-
-               vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
-               vim.fn.histdel("search", -1)
-               vim.api.nvim_win_set_cursor(0, cursor_pos)
-            end
-         end,
-      })
-
+      vim.g.auto_timestamp = 1
+      auto_timestamp()
       vim.notify("✅ TimeStamp update on save enabled.", vim.log.levels.INFO, { title = "Update file INFO" })
    end
 end, { desc = "Update TimeStamp on save" })
@@ -311,7 +156,6 @@ autocmd({ "BufRead" }, {
    end,
 })
 
-
 -- Set makeprg for filetype (using default compiler when available)
 autocmd({ "FileType" }, {
    group = augroup("_set_makefile", { clear = true }),
@@ -320,21 +164,22 @@ autocmd({ "FileType" }, {
       local filetypes = {
          java = "javac",
          c = "gcc",
+         rust = "rustc",
          lua = {
             prg = "nvim -l",
             efmt = "%f",
          },
          go = {
             prg = "go run",
-            efmt = "%-G# %.%#, %A%f:%l:%c: %m, %A%f:%l: %m, %C%*\\s%m, %-G%.%#"
+            efmt = "%-G# %.%#, %A%f:%l:%c: %m, %A%f:%l: %m, %C%*\\s%m, %-G%.%#",
          },
          python = {
             prg = "python3",
-            efmt = "%C %.%#,%A  File \"%f\"\\, line %l%.%#,%Z%[%^ ]%\\@=%m"
+            efmt = '%C %.%#,%A  File "%f"\\, line %l%.%#,%Z%[%^ ]%\\@=%m',
          },
          erlang = {
             prg = "erlc -Wall %:S",
-            efmt = "%f:%l:%c: %m"
+            efmt = "%f:%l:%c: %m",
          },
       }
       if filetypes[ev.match] then
@@ -344,7 +189,7 @@ autocmd({ "FileType" }, {
          else
             vim.cmd.compiler(filetypes[ev.match])
          end
-        vim.api.nvim_buf_set_keymap(ev.buf, "n", '<leader>RR', ':make %<CR>', { desc = "Compile Code" })
+         vim.api.nvim_buf_set_keymap(ev.buf, "n", "<leader>RR", ":make %<CR>", { desc = "Compile Code" })
       end
    end,
 })
@@ -435,7 +280,7 @@ autocmd("BufWritePre", {
 user_command("RemoveTrailingSpaces", [[%s/\s\+$//e]], { desc = "Remove extra trailing white spaces" })
 
 -- Delete Current Buffer (helper function for autocmd)
-local DeleteCurrentBuffer = function()
+local delete_current_buffer = function()
    local cBuf = vim.api.nvim_get_current_buf()
    local bufs = vim.fn.getbufinfo { buflisted = true }
    if #bufs == 0 then
@@ -455,10 +300,12 @@ local DeleteCurrentBuffer = function()
    vim.cmd.bdelete(cBuf)
 end
 
-user_command("DeleteCurrentBuffer", DeleteCurrentBuffer, { desc = "Close current buffer and go to next" })
+user_command("DeleteCurrentBuffer", function()
+   delete_current_buffer()
+end, { desc = "Close current buffer and go to next" })
 
 user_command("CheatSH", function(args)
-   require "user_lib.cheatSH.cheat_sheet".run(args)
+   require("user_lib.cheatSH.cheat_sheet").run(args)
 end, {
    nargs = "?",
    desc = "Cheat-Sheet",
@@ -496,9 +343,9 @@ end, {})
 
 -- Hex Dump
 user_command("HexToggle", function()
-   require "user_lib.hex.hex".setup {}
+   require("user_lib.hex.hex").setup {}
 end, {})
 
 user_command("LspCapabilities", function()
-  require "user_lib.functions".get_current_buf_lsp_capabilities()
+   require("user_lib.functions").get_current_buf_lsp_capabilities()
 end, {})
