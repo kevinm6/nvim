@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 26 May 2023, 10:12
+-- Last Modified: 28 May 2023, 13:32
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -110,177 +110,147 @@ autocmd({ "CursorMoved" }, {
    end,
 })
 
--- Use null-ls for lsp-formatting
-local lsp_formatting = function(bufnr)
-   vim.lsp.buf.format {
-      filter = function(client)
-         return client.name == "null-ls"
-      end,
-      bufnr = bufnr,
-   }
-end
 
--- Format on save
-local function format_on_save(buf, enable)
-   local action = function()
-      return enable and "Enabled" or "Disabled"
-   end
+-- autocmd("LspAttach", {
+--    group = augroup("_Lsp_attach", { clear = true }),
+--    callback = function(args)
+--       local client = vim.lsp.get_client_by_id(args.data.client_id)
+--       if client.name == "jdtls" then
+--          return
+--       end
 
-   if enable then
-      autocmd({ "BufWritePre" }, {
-         group = augroup("_format_on_save", { clear = true }),
-         pattern = "*",
-         callback = function()
-            lsp_formatting(buf)
-         end,
-      })
-   else
-      vim.api.nvim_clear_autocmds { group = "_format_on_save" }
-   end
+--       local has_telescope, telescope = pcall(require, "telescope.builtin")
 
-   vim.notify(action() .. " format on save", vim.log.levels.INFO, { title = "LSP" })
-end
+--       -- local opts = { noremap = true, silent = true }
+--       vim.keymap.set("n", "gl", function()
+--          vim.diagnostic.open_float()
+--       end, { buffer = args.buf, desc = "Open float" })
+--       vim.keymap.set("n", "K", function()
+--          vim.lsp.buf.hover()
+--       end, { buffer = args.buf })
 
-autocmd("LspAttach", {
-   group = augroup("_Lsp_attach", { clear = true }),
-   callback = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if client.name == "jdtls" then
-         return
-      end
+--       if client.server_capabilities.declarationProvider then
+--          vim.keymap.set("n", "gD", function()
+--             if has_telescope then
+--                telescope.lsp_declarations {}
+--             else
+--                vim.lsp.buf.declaration()
+--             end
+--          end, { buffer = args.buf, desc = "GoTo declaration" })
+--       end
+--       if client.server_capabilities.definitionProvider then
+--          vim.keymap.set("n", "gd", function()
+--             if has_telescope then
+--                telescope.lsp_definitions {}
+--             else
+--                vim.lsp.buf.definition()
+--             end
+--          end, { buffer = args.buf, desc = "GoTo definition" })
+--       end
+--       if client.server_capabilities.implementationProvider then
+--          vim.keymap.set("n", "gI", function()
+--             if has_telescope then
+--                telescope.lsp_incoming_calls {}
+--             else
+--                vim.lsp.buf.implementation()
+--             end
+--          end, { buffer = args.buf, desc = "GoTo implementation" })
+--       end
+--       if client.server_capabilities.referencesProvider then
+--          vim.keymap.set("n", "gr", function()
+--             if has_telescope then
+--                telescope.lsp_references {}
+--             else
+--                vim.lsp.buf.references()
+--             end
+--          end, { buffer = args.buf, desc = "GoTo references" })
+--       end
+--       -- if client.server_capabilities.referencesProvider then
+--       vim.keymap.set("n", "<leader>ll", function()
+--          vim.lsp.codelens.run()
+--       end, { buffer = args.buf, desc = "CodeLens Action" })
+--       -- end
 
-      local has_telescope, telescope = pcall(require, "telescope.builtin")
+--       -- lsp-document_highlight
+--       if client.server_capabilities.documentHighlightProvider then
+--          local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
+--          autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
+--             group = lsp_hi_doc_group,
+--             buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
+--             callback = function()
+--                vim.lsp.buf.document_highlight()
+--             end,
+--          })
+--          autocmd({ "BufEnter", "CursorMoved" }, {
+--             group = lsp_hi_doc_group,
+--             buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
+--             callback = function()
+--                vim.lsp.buf.clear_references()
+--             end,
+--          })
+--          -- TODO: must be implemented better
+--          -- else -- fallback w/ treesitter
+--          --    local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
+--          --    autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
+--          --      group = lsp_hi_doc_group,
+--          --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
+--          --      callback = function()
+--          --          require "user_lib.functions".ts_fallback_lsp_highlighting(args.buf)
+--          --      end
+--          --    })
+--          --    autocmd({ "BufEnter", "CursorMoved" }, {
+--          --      group = lsp_hi_doc_group,
+--          --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
+--          --      callback = function() vim.lsp.buf.clear_references() end
+--          --    })
+--       end
 
-      -- local opts = { noremap = true, silent = true }
-      vim.keymap.set("n", "gl", function()
-         vim.diagnostic.open_float()
-      end, { buffer = args.buf, desc = "Open float" })
-      vim.keymap.set("n", "K", function()
-         vim.lsp.buf.hover()
-      end, { buffer = args.buf })
+--       -- Formatting
+--       if client.supports_method "textDocument/formatting" then
+--          user_command("LspToggleAutoFormat", function()
+--             if vim.fn.exists "#_format_on_save#BufWritePre" == 0 then
+--                format_on_save(args.buf, true)
+--             else
+--                format_on_save(args.buf)
+--             end
+--          end, {})
 
-      if client.server_capabilities.declarationProvider then
-         vim.keymap.set("n", "gD", function()
-            if has_telescope then
-               telescope.lsp_declarations {}
-            else
-               vim.lsp.buf.declaration()
-            end
-         end, { buffer = args.buf, desc = "GoTo declaration" })
-      end
-      if client.server_capabilities.definitionProvider then
-         vim.keymap.set("n", "gd", function()
-            if has_telescope then
-               telescope.lsp_definitions {}
-            else
-               vim.lsp.buf.definition()
-            end
-         end, { buffer = args.buf, desc = "GoTo definition" })
-      end
-      if client.server_capabilities.implementationProvider then
-         vim.keymap.set("n", "gI", function()
-            if has_telescope then
-               telescope.lsp_incoming_calls {}
-            else
-               vim.lsp.buf.implementation()
-            end
-         end, { buffer = args.buf, desc = "GoTo implementation" })
-      end
-      if client.server_capabilities.referencesProvider then
-         vim.keymap.set("n", "gr", function()
-            if has_telescope then
-               telescope.lsp_references {}
-            else
-               vim.lsp.buf.references()
-            end
-         end, { buffer = args.buf, desc = "GoTo references" })
-      end
-      -- if client.server_capabilities.referencesProvider then
-      vim.keymap.set("n", "<leader>ll", function()
-         vim.lsp.codelens.run()
-      end, { buffer = args.buf, desc = "CodeLens Action" })
-      -- end
+--          user_command("Format", function()
+--             vim.lsp.buf.format()
+--          end, { force = true })
 
-      -- lsp-document_highlight
-      if client.server_capabilities.documentHighlightProvider then
-         local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
-         autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
-            group = lsp_hi_doc_group,
-            buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
-            callback = function()
-               vim.lsp.buf.document_highlight()
-            end,
-         })
-         autocmd({ "BufEnter", "CursorMoved" }, {
-            group = lsp_hi_doc_group,
-            buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
-            callback = function()
-               vim.lsp.buf.clear_references()
-            end,
-         })
-         -- TODO: must be implemented better
-         -- else -- fallback w/ treesitter
-         --    local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
-         --    autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
-         --      group = lsp_hi_doc_group,
-         --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
-         --      callback = function()
-         --          require "util.functions".ts_fallback_lsp_highlighting(args.buf)
-         --      end
-         --    })
-         --    autocmd({ "BufEnter", "CursorMoved" }, {
-         --      group = lsp_hi_doc_group,
-         --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
-         --      callback = function() vim.lsp.buf.clear_references() end
-         --    })
-      end
+--          vim.keymap.set("n", "<leader>lf", function()
+--             lsp_formatting(args.buf)
+--          end, { desc = "Format" })
+--          vim.keymap.set("n", "<leader>lF", function()
+--             vim.cmd.LspToggleAutoFormat()
+--          end, { desc = "Toggle AutoFormat" })
+--       end
 
-      -- Formatting
-      if client.supports_method "textDocument/formatting" then
-         user_command("LspToggleAutoFormat", function()
-            if vim.fn.exists "#_format_on_save#BufWritePre" == 0 then
-               format_on_save(args.buf, true)
-            else
-               format_on_save(args.buf)
-            end
-         end, {})
-
-         user_command("Format", function()
-            vim.lsp.buf.format()
-         end, { force = true })
-
-         vim.keymap.set("n", "<leader>lf", function()
-            lsp_formatting(args.buf)
-         end, { desc = "Format" })
-         vim.keymap.set("n", "<leader>lF", function()
-            vim.cmd.LspToggleAutoFormat()
-         end, { desc = "Toggle AutoFormat" })
-      end
-
-      vim.keymap.set("n", "<leader>la", function()
-         vim.lsp.buf.code_action()
-      end, { buffer = args.buf, desc = "Code Action" })
-      vim.keymap.set("n", "<leader>lI", function()
-         vim.cmd.LspInfo {}
-      end, { buffer = args.buf, desc = "Lsp Info" })
-      vim.keymap.set("n", "<leader>lL", function()
-         vim.cmd.LspLog {}
-      end, { buffer = args.buf, desc = "Lsp Log" })
-      vim.keymap.set("n", "<leader>r", function()
-         vim.lsp.buf.rename()
-      end, { buffer = args.buf, desc = "Rename" })
-      vim.keymap.set("n", "<leader>lq", function()
-         vim.diagnostic.setloclist()
-      end, { buffer = args.buf, desc = "Lsp Diagnostics" })
-      -- Diagnostics
-      vim.keymap.set("n", "<leader>dj", function()
-         vim.diagnostic.goto_next { buffer = args.buf }
-      end, { desc = "Next Diagnostic" })
-      vim.keymap.set("n", "<leader>dk", function()
-         vim.diagnostic.goto_prev { buffer = args.buf }
-      end, { desc = "Prev Diagnostic" })
-   end,
-})
+--       vim.keymap.set("n", "<leader>la", function()
+--          vim.lsp.buf.code_action()
+--       end, { buffer = args.buf, desc = "Code Action" })
+--       vim.keymap.set("n", "<leader>lI", function()
+--          vim.cmd.LspInfo {}
+--       end, { buffer = args.buf, desc = "Lsp Info" })
+--       vim.keymap.set("n", "<leader>lL", function()
+--          vim.cmd.LspLog {}
+--       end, { buffer = args.buf, desc = "Lsp Log" })
+--       vim.keymap.set("n", "<leader>r", function()
+--          vim.lsp.buf.rename()
+--       end, { buffer = args.buf, desc = "Rename" })
+--       vim.keymap.set("n", "<leader>lq", function()
+--          vim.diagnostic.setloclist()
+--       end, { buffer = args.buf, desc = "Lsp Diagnostics" })
+--       -- Diagnostics
+--       vim.keymap.set("n", "<leader>dj", function()
+--          vim.diagnostic.goto_next { buffer = args.buf }
+--       end, { desc = "Next Diagnostic" })
+--       vim.keymap.set("n", "<leader>dk", function()
+--          vim.diagnostic.goto_prev { buffer = args.buf }
+--       end, { desc = "Prev Diagnostic" })
+--    end,
+-- })
 
 -- If buffer modified, update any 'Last modified: ' in the first 10 lines.
 -- Restores cursor and window position using save_cursor variable.
@@ -488,7 +458,7 @@ end
 user_command("DeleteCurrentBuffer", DeleteCurrentBuffer, { desc = "Close current buffer and go to next" })
 
 user_command("CheatSH", function(args)
-   require("util.cheatSH.cheat_sheet").run(args)
+   require "user_lib.cheatSH.cheat_sheet".run(args)
 end, {
    nargs = "?",
    desc = "Cheat-Sheet",
@@ -526,9 +496,9 @@ end, {})
 
 -- Hex Dump
 user_command("HexToggle", function()
-   require("util.hex.hex").setup {}
+   require "user_lib.hex.hex".setup {}
 end, {})
 
 user_command("LspCapabilities", function()
-  require("util.functions").get_current_buf_lsp_capabilities()
+  require "user_lib.functions".get_current_buf_lsp_capabilities()
 end, {})

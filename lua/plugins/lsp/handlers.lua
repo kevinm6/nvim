@@ -2,13 +2,13 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file for manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 10 May 2023, 12:22
+-- Last Modified: 28 May 2023, 13:28
 --------------------------------------
 
 local M = {}
 
 M.setup = function()
-  local icons = require "util.icons"
+  local icons = require "user_lib.icons"
 
   local signs = {
     { name = "DiagnosticSignError", text = icons.diagnostics.Error },
@@ -149,7 +149,7 @@ M.implementation = function()
 end
 
 vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
-  require "util.functions".toggle_format_on_save()
+  require "user_lib.functions".toggle_format_on_save()
 end, {})
 
 M.code_action_listener = function()

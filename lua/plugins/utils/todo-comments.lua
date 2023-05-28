@@ -2,7 +2,7 @@
 -- File         : todo-comments.lua
 -- Description  : todo-comments plugin config
 -- Author       : Kevin
--- Last Modified: 14 May 2023, 10:13
+-- Last Modified: 28 May 2023, 13:26
 -----------------------------------
 
 local M = {
@@ -11,7 +11,7 @@ local M = {
    event = "BufReadPost",
    dependencies = { "nvim-lua/plenary.nvim" },
    opts = function(_, o)
-      local icons = require "util.icons"
+      local icons = require "user_lib.icons"
 
       local error_red = "#F44747"
       local warning_orange = "#ff8800"

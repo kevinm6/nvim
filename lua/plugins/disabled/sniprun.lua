@@ -2,11 +2,12 @@
 --  File         : sniprun.lua
 --  Description  : sniprun plugin config
 --  Author       : Kevin
---  Last Modified: 13 May 2023, 11:20
+--  Last Modified: 27 May 2023, 16:42
 ---------------------------------------
 
 local M = {
   "michaelb/sniprun",
+  enabled = false,
   cmd = { "SnipRun", "SnipInfo" },
   build = "bash ./install.sh",
   opts = function(_, o)

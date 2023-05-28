@@ -2,7 +2,7 @@
 -- File         : nvimtree.lua
 -- Description  : NvimTree config
 -- Author       : Kevin
--- Last Modified: 14 May 2023, 09:58
+-- Last Modified: 28 May 2023, 13:23
 -------------------------------------
 
 
@@ -61,7 +61,7 @@ local M = {
       },
    },
    opts = function(_, o)
-      local icons = require "util.icons"
+      local icons = require "user_lib.icons"
 
       o.auto_reload_on_write = true
       o.disable_netrw = true

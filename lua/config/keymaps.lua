@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 25 May 2023, 17:40
+-- Last Modified: 28 May 2023, 13:30
 -------------------------------------
 
 local set_opts = function(opts)
@@ -65,13 +65,13 @@ set_keymap("n", "<C-k>", "<C-w>k", set_opts {})
 
 -- Session
 set_keymap("n", "<leader>Ss", function()
-   require "util.functions".save_session()
+   require "user_lib.functions".save_session()
 end, set_opts { desc = "Save" })
 set_keymap("n", "<leader>Sr", function()
-   require "util.functions".restore_session()
+   require "user_lib.functions".restore_session()
 end, set_opts { desc = "Restore" })
 set_keymap("n", "<leader>Sd", function()
-   require "util.functions".delete_session()
+   require "user_lib.functions".delete_session()
 end, set_opts { desc = "Delete" })
 
 -- useful maps
@@ -251,7 +251,7 @@ set_keymap("v", "p", "_dP", set_opts {})
 set_keymap("v", "<C-s>", [[:s///gI<Left><Left><Left><Left>]], set_opts { silent = false, desc = "Search" })
 set_keymap("v", "<leader>y", [["+y]], set_opts { desc = "Yank to clipboard" })
 set_keymap("v", "<leader>lf", function()
-   require("util.functions").range_format()
+   require("user_lib.functions").range_format()
 end, set_opts { desc = "Range format" })
 --set_keymap("v", "d", "\+d", set_opts { expr = true, desc = "Copy deletion into register \""})
 --set_keymap("v", "D", "\+D", set_opts { expr = true, desc = "Copy deletion to end into register \"" })
@@ -261,7 +261,7 @@ set_keymap("v", "ga", function()
    vim.cmd.normal "!"
    vim.ui.input({ prompt = "Align regex pattern: ", default = nil }, function(input)
       if input then
-         require "util.functions".align(input)
+         require "user_lib.functions".align(input)
       end
    end)
 end, set_opts { desc = "Align from regex" })

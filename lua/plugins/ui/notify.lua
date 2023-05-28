@@ -2,7 +2,7 @@
 --	File         : notify.lua
 --	Description  : notify plugin configuration
 --	Author       : Kevin
---	Last Modified: 13 May 2023, 11:13
+--	Last Modified: 28 May 2023, 13:26
 -----------------------------------
 
 local M = {
@@ -41,11 +41,11 @@ local M = {
 
       -- Icons for the different levels
       o.icons = {
-         ERROR = require "util.icons".diagnostics.Error,
-         WARN = require "util.icons".diagnostics.Warning,
-         INFO = require "util.icons".diagnostics.Information,
-         DEBUG = require "util.icons".ui.Bug,
-         TRACE = require "util.icons".ui.Pencil,
+         ERROR = require "user_lib.icons".diagnostics.Error,
+         WARN = require "user_lib.icons".diagnostics.Warning,
+         INFO = require "user_lib.icons".diagnostics.Information,
+         DEBUG = require "user_lib.icons".ui.Bug,
+         TRACE = require "user_lib.icons".ui.Pencil,
       }
    end
 }

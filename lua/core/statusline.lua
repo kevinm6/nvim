@@ -2,14 +2,14 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 26 May 2023, 10:21
+-- Last Modified: 28 May 2023, 13:17
 -----------------------------------------
 
 local S = {
    "~/.config/nvim/lua/core/statusline.lua",
 }
 
-local icons = require "util.icons"
+local icons = require "user_lib.icons"
 
 local diag_cached = ""
 
@@ -51,7 +51,7 @@ local set_color_groups = function()
       StatusLineInactive      = { fg = "#5c5c5c", bg = "#2c2c2c" },
    }
 
-   require("util.functions").set_highlights(hls)
+   require("user_lib.functions").set_highlights(hls)
 end
 
 local colors = {

@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 24 May 2023, 20:59
+--	Last Modified: 28 May 2023, 13:18
 -----------------------------------
 
 local M = {
@@ -19,7 +19,7 @@ function M.config()
 
 
    local alpha = require "alpha"
-   local icons = require "util.icons"
+   local icons = require "user_lib.icons"
    local dashboard = require "alpha.themes.dashboard"
 
    local newline = [[
@@ -51,8 +51,8 @@ function M.config()
 
 
    dashboard.section.buttons.val = {
-      dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'util.functions'.new_file()<CR>"),
-      dashboard.button("t", icons.ui.NewFile .. " New temp file", "<cmd>lua require 'util.functions'.new_tmp_file()<CR>"),
+      dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'user_lib.functions'.new_file()<CR>"),
+      dashboard.button("t", icons.ui.NewFile .. " New temp file", "<cmd>lua require 'user_lib.functions'.new_tmp_file()<CR>"),
       dashboard.button("N", icons.ui.Note .. " Notes", "<cmd>edit ~/Library/Mobile Documents/com~apple~CloudDocs/Notes/notes.md<CR>"),
 
       dashboard.button(
@@ -71,7 +71,7 @@ function M.config()
          icons.ui.Uni .. " University",
          [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$CS"}<CR>]]
       ),
-      dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "util.functions".dev_folder()<CR>]]),
+      dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "user_lib.functions".dev_folder()<CR>]]),
       dashboard.button("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
       dashboard.button(
          "P",
@@ -80,7 +80,7 @@ function M.config()
       ),
       dashboard.button("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
       dashboard.button("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
-      dashboard.button("S", icons.ui.History .. " Sessions", "<cmd>lua require 'util.functions'.restore_session()<CR>"),
+      dashboard.button("S", icons.ui.History .. " Sessions", "<cmd>lua require 'user_lib.functions'.restore_session()<CR>"),
       dashboard.button(
          "C",
          icons.ui.Gear .. " Config",

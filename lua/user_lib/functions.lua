@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 26 May 2023, 10:12
+--  Last Modified: 28 May 2023, 14:04
 -------------------------------------
 
 local F = {}
@@ -97,7 +97,6 @@ F.dev_folder = function()
 end
 
 -- SESSIONS
-
 local get_sessions = function()
    local sessions = {}
 
@@ -109,7 +108,6 @@ local get_sessions = function()
    end
    return sessions
 end
-
 
 F.delete_session = function()
    local sessions = get_sessions()
@@ -134,7 +132,6 @@ F.delete_session = function()
    end
 end
 
-
 F.restore_session = function()
    local sessions = get_sessions()
 
@@ -148,14 +145,13 @@ F.restore_session = function()
          if choice then
             vim.cmd.source(choice)
             require("core.statusline").session_name = s_name
-            vim.notify( ("Session < %s > restored!"):format(choice), vim.log.levels.INFO )
+            vim.notify(("Session < %s > restored!"):format(choice), vim.log.levels.INFO)
          end
       end)
    else
       vim.notify("No Sessions to restore", vim.log.levels.WARN)
    end
 end
-
 
 F.save_session = function()
    require "telescope"
@@ -166,7 +162,7 @@ F.save_session = function()
       if input then
          local mks_path = vim.fn.stdpath "data" .. "/sessions/" .. input .. ".vim"
          vim.cmd("mksession! " .. mks_path)
-         vim.notify( ("Session < %s > created!"):format(input), vim.log.levels.INFO )
+         vim.notify(("Session < %s > created!"):format(input), vim.log.levels.INFO)
       end
    end)
 end
@@ -230,18 +226,28 @@ F.range_format = function()
    }
 end
 
+-- Use null-ls for lsp-formatting
+F.lsp_format = function(bufnr)
+   vim.lsp.buf.format {
+      filter = function(client)
+         return client.name == "null-ls"
+      end,
+      bufnr = bufnr,
+   }
+end
+
 -- Format on save
-F.format_on_save = function(enable)
+F.format_on_save = function(buf, enable)
    local action = function()
       return enable and "Enabled" or "Disabled"
    end
 
    if enable then
       vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-         group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
+         group = vim.api.nvim_create_augroup("_format_on_save", { clear = true }),
          pattern = "*",
          callback = function()
-            vim.lsp.buf.format()
+            F.lsp_format(buf)
          end,
       })
    else
@@ -278,7 +284,7 @@ end
 F.new_tmp_file = function()
    vim.ui.input({
       prompt = "Enter name for temp file: ",
-      default = os.date("%d%m%Y_file_%H%M%S")..".",
+      default = os.date "%d%m%Y_file_%H%M%S" .. ".",
    }, function(input)
       if input then
          vim.cmd.enew()
@@ -315,7 +321,7 @@ F.software_licenses = function()
    local actions = require "telescope.actions"
    local action_state = require "telescope.actions.state"
    local previewers = require "telescope.previewers"
-   local licenses = require "util.licenses"
+   local licenses = require "user_lib.licenses"
    local results = {}
 
    local function split(s, sep)
@@ -535,25 +541,16 @@ end
 -- end
 
 -- Python Venv
-local ORIGINAL_PATH = vim.fn.getenv "PATH"
-local current_venv = nil
-local post_set_venv = nil
-local venvs_paths = {
-   vim.fn.expand "~/dev/audioToText-bot",
-   vim.fn.expand "~/.local/share/nvim/nvim_python_venv",
-}
-
 local set_venv = function(venv)
-   current_venv = venv
+   local ORIGINAL_PATH = vim.fn.getenv "PATH"
    local venv_bin_path = venv.path .. "/bin"
    vim.fn.setenv("PATH", venv_bin_path .. ":" .. ORIGINAL_PATH)
    vim.fn.setenv("VIRTUAL_ENV", venv.path)
-   if post_set_venv then
-      post_set_venv(venv)
-   end
 end
 
-F.get_current_venv = function() return current_venv end
+F.get_current_venv = function()
+   return vim.g.python_venv
+end
 
 local get_venvs = function(venvs_path)
    local success, Path = pcall(require, "plenary.path")
@@ -575,10 +572,15 @@ local get_venvs = function(venvs_path)
 end
 
 F.pick_venv = function()
+   local venvs_paths = {
+      vim.fn.expand "~/dev/audioToText-bot",
+      vim.fn.stdpath "data" .. "nvim_python_venv",
+   }
+
    vim.ui.select(get_venvs(venvs_paths), {
       prompt = "Select python venv",
       format_item = function(item)
-         return ("%s (%s)"):format("%s (%s)", item.name, item.path)
+         return ("%s (%s)"):format(item.name, item.path)
       end,
    }, function(choice)
       if not choice then
@@ -588,38 +590,37 @@ F.pick_venv = function()
    end)
 end
 
-
 F.set_highlights = function(hls)
-  for group, settings in pairs(hls) do
-    vim.api.nvim_set_hl(0, group, settings)
-  end
+   for group, settings in pairs(hls) do
+      vim.api.nvim_set_hl(0, group, settings)
+   end
 end
 
 F.get_current_buf_lsp_capabilities = function()
-	local curBuf = vim.api.nvim_get_current_buf()
-	local clients = vim.lsp.get_active_clients { bufnr = curBuf }
+   local curBuf = vim.api.nvim_get_current_buf()
+   local clients = vim.lsp.get_active_clients { bufnr = curBuf }
 
-	for _, client in pairs(clients) do
-		if client.name ~= "null-ls" then
-			local capAsList = {}
-			for key, value in pairs(client.server_capabilities) do
-				if value and key:find("Provider") then
-					local capability = key:gsub("Provider$", "")
-					table.insert(capAsList, "- " .. capability)
-				end
-			end
-			table.sort(capAsList) -- sorts alphabetically
-			local msg = "# " .. client.name .. "\n" .. table.concat(capAsList, "\n")
-			vim.notify(msg, "trace", {
-				on_open = function(win)
-					local buf = vim.api.nvim_win_get_buf(win)
-					vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
-				end,
-				timeout = 14000,
-			})
-			vim.fn.setreg("+", "Capabilities = " .. vim.inspect(client.server_capabilities))
-		end
-	end
+   for _, client in pairs(clients) do
+      if client.name ~= "null-ls" then
+         local capAsList = {}
+         for key, value in pairs(client.server_capabilities) do
+            if value and key:find "Provider" then
+               local capability = key:gsub("Provider$", "")
+               table.insert(capAsList, "- " .. capability)
+            end
+         end
+         table.sort(capAsList) -- sorts alphabetically
+         local msg = "# " .. client.name .. "\n" .. table.concat(capAsList, "\n")
+         vim.notify(msg, "trace", {
+            on_open = function(win)
+               local buf = vim.api.nvim_win_get_buf(win)
+               vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+            end,
+            timeout = 14000,
+         })
+         vim.fn.setreg("+", "Capabilities = " .. vim.inspect(client.server_capabilities))
+      end
+   end
 end
 
 return F

@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 23 Mar 2023, 11:40
+-- Last Modified: 28 May 2023, 13:26
 -------------------------------------
 
 local M = {
@@ -29,7 +29,7 @@ function M.config()
   local cmp = require "cmp"
   local cmp_dap = require "cmp_dap"
   local ls = require "luasnip"
-  local icons = require "util.icons"
+  local icons = require "user_lib.icons"
   local icons_kind = icons.kind
   local context = require "cmp.config.context"
 

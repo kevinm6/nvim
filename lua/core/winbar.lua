@@ -2,7 +2,7 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 10 May 2023, 10:49
+-- Last Modified: 28 May 2023, 13:18
 -----------------------------------------
 
 local M = {
@@ -10,13 +10,13 @@ local M = {
 }
 
 local navic = require "nvim-navic"
+local icons = require "user_lib.icons"
 
 local function isempty(s)
    return s == nil or s == ""
 end
 
 M.filename = function()
-   local icons = require "util.icons"
 
    local filename = vim.fn.expand "%:t"
 
@@ -50,8 +50,6 @@ end
 M.gps = function()
    local location = navic.get_location()
    local retval = M.filename()
-
-   local icons = require "util.icons"
 
    return not isempty(location)
          and string.format("%s %s %s", retval, "%#NavicSeparator#" .. icons.ui.ChevronRight .. "%*", location)

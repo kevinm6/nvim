@@ -2,7 +2,7 @@
 --  File         : translate.lua
 --  Description  : translate.nvim config
 --  Author       : Kevin
---  Last Modified: 25 Apr 2023, 20:55
+--  Last Modified: 28 May 2023, 13:24
 -------------------------------------
 
 local M = {}
@@ -49,6 +49,7 @@ function M.translate()
         vim.api.nvim_win_set_cursor(0, end_mark);
 
         local timer = vim.loop.new_timer()
+        if not timer then return end
         timer:start(500, 0, vim.schedule_wrap(function()
           if mode == "v" or mode == "V" then
             vim.cmd("'<,'>Translate " .. selection.value)
