@@ -2,7 +2,7 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 20:44
+-- Last Modified: 01 Jun 2023, 09:18
 -------------------------------------
 
 local M = {
@@ -105,7 +105,7 @@ local M = {
       },
    },
    opts = function(_, o)
-      size = function(term)
+      o.size = function(term)
          if term.direction == "horizontal" then
             return vim.o.lines * 0.3
          elseif term.direction == "vertical" then
