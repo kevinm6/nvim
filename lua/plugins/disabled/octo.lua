@@ -2,12 +2,13 @@
 --  File         : octo.lua
 --  Description  : octo plugin config
 --  Author       : Kevin
---  Last Modified: 28 May 2023, 20:16
+--  Last Modified: 01 Jun 2023, 12:32
 -------------------------------------
 
 local M = {
    "pwntester/octo.nvim",
    cmd = "Octo",
+   enabled = false,
    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
