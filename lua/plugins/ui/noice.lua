@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 28 May 2023, 20:10
+--  Last Modified: 10 Jun 2023, 20:55
 ----------------------------------------
 
 local M = {
@@ -11,9 +11,9 @@ local M = {
    event = "VeryLazy",
    dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "nvim-treesitter/nvim-treesitter",
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
+      -- "nvim-treesitter/nvim-treesitter",
    },
    keys = {
       {
@@ -21,35 +21,35 @@ local M = {
          function()
             require("noice").cmd "History"
          end,
-         { desc = "Notifications" },
+         desc = "Notifications",
       },
       {
          "<leader>nL",
          function()
             require("noice").cmd "Log"
          end,
-         { desc = "Log" },
+         desc = "Log",
       },
       {
          "<leader>ne",
          function()
             require("noice").cmd "Error"
          end,
-         { desc = "Error" },
+         desc = "Error",
       },
       {
          "<leader>nl",
          function()
             require("noice").cmd "Last"
          end,
-         { desc = "Last" },
+         desc = "NoiceLast",
       },
       {
          "<leader>nt",
          function()
             require("telescope").extensions.noice.noice { theme = "dropdown" }
          end,
-         { desc = "Noice Telescope" },
+         desc = "Noice Telescope",
       },
 
       {
@@ -59,7 +59,8 @@ local M = {
                return "<c-f>"
             end
          end,
-         { silent = true, expr = true },
+         silent = true,
+         expr = true,
       },
 
       {
@@ -100,7 +101,7 @@ local M = {
          view_warn = "notify",
          view_history = "messages",
          view_search = "virtualtext",
-         opts = {},
+         -- opts = {},
       }
       o.popupmenu = {
          enabled = true, -- disable if you use something like cmp-cmdline
@@ -128,29 +129,6 @@ local M = {
                   { event = "lsp", kind = "message" },
                },
             },
-         },
-         -- :Noice last
-         last = {
-            view = "popup",
-            opts = { enter = true, format = "details" },
-            filter = {
-               any = {
-                  { event = "notify" },
-                  { error = true },
-                  { warning = true },
-                  { event = "msg_show", kind = { "" } },
-                  { event = "lsp", kind = "message" },
-               },
-            },
-            filter_opts = { count = 1 },
-         },
-         -- :Noice errors
-         errors = {
-            -- options for the message history that you get with `:Noice`
-            view = "popup",
-            opts = { enter = true, format = "details" },
-            filter = { error = true },
-            filter_opts = { reverse = true },
          },
       }
       o.notify = {
@@ -290,7 +268,9 @@ local M = {
          },
       } -- @see the section on views below
       ---@type NoiceRouteConfig[]
+      -- NOTE: https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages#messages-and-notifications-in-neovim
       o.routes = {
+         -- NOTE: reroute long notifications to split
          {
             filter = {
                event = "notify",
@@ -298,12 +278,25 @@ local M = {
             },
             view = "split",
          },
+         -- NOTE: avoid search messages (using virtualtext as default)
+         {
+            filter = {
+               event = "msg_show",
+               kind = "search_count",
+            },
+            opts = { skip = true },
+         },
+         {
+            view = "notify",
+            filter = { event = "msg_showmode" },
+         },
+         -- NOTE: this avoid written messages
          -- {
-         --   filter = {
-         --     event = "msg_show",
-         --     kind = "",
-         --   },
-         --   opts = { skip = true },
+         --    filter = {
+         --       event = "msg_show",
+         --       kind = "",
+         --    },
+         --    opts = { skip = true },
          -- },
       } -- @see the section on routes below
       ---@type table<string, NoiceFilter>
@@ -333,11 +326,25 @@ local M = {
             icon = "",
             lang = "vim",
          },
-         search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-         search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+         search_down = {
+            kind = "search",
+            pattern = "^/",
+            icon = " ",
+            lang = "regex",
+         },
+         search_up = {
+            kind = "search",
+            pattern = "^%?",
+            icon = " ",
+            lang = "regex",
+         },
          filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-         lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-         help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+         lua = {
+            pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" },
+            icon = "",
+            lang = "lua",
+         },
+         help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
          input = {}, -- Used by input()
          -- lua = false, -- to disable a format, set to `false`
       } -- @see section on formatting

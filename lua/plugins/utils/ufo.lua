@@ -2,7 +2,7 @@
 --  File         : ufo.lua
 --  Description  : ufo plugin configuration (folding)
 --  Author       : Kevin
---  Last Modified: 14 May 2023, 10:45
+--  Last Modified: 09 Jun 2023, 17:16
 -------------------------------------
 
 local ftMap = {
@@ -37,7 +37,7 @@ local M = {
       o.preview = {
          win_config = {
             border = { "", "─", "", "", "", "─", "", "" },
-            winhighlight = "Normal:Folded",
+            winhighlight = "Special:Folded",
             winblend = 0,
          },
          mappings = {

@@ -2,7 +2,7 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 28 May 2023, 14:04
+--  Last Modified: 04 Jun 2023, 14:21
 -------------------------------------
 
 local F = {}
@@ -101,7 +101,11 @@ local get_sessions = function()
    local sessions = {}
 
    local sessions_data_stdpath = vim.fn.stdpath "data" .. "/sessions"
-   local sessions_files = vim.split(vim.fn.globpath(sessions_data_stdpath, "*.vim"), "\n", { trimempty = true })
+   local sessions_files = vim.split(
+      vim.fn.globpath(sessions_data_stdpath, "*.vim"),
+      "\n",
+      { trimempty = true }
+   )
 
    for _, f in pairs(sessions_files) do
       table.insert(sessions, f)
@@ -122,7 +126,10 @@ F.delete_session = function()
             vim.fn.jobstart("mv " .. vim.fn.fnameescape(choice) .. " ~/.Trash", {
                detach = true,
                on_exit = function()
-                  vim.notify(("Session < %s > deleted!"):format(choice), vim.log.levels.WARN)
+                  vim.notify(
+                     ("Session < %s > deleted!"):format(choice),
+                     vim.log.levels.WARN
+                  )
                end,
             })
          end
@@ -229,32 +236,41 @@ end
 -- Use null-ls for lsp-formatting
 F.lsp_format = function(bufnr)
    vim.lsp.buf.format {
+      bufnr = bufnr,
+      formatting_options = {
+         tabSize = 3,
+         insertSpaces = true,
+         trimTrailingWhitespaces = false,
+         insertFinalNewline = true,
+         trimFinalNewline = false,
+      },
       filter = function(client)
          return client.name == "null-ls"
       end,
-      bufnr = bufnr,
    }
 end
 
 -- Format on save
-F.format_on_save = function(buf, enable)
-   local action = function()
-      return enable and "Enabled" or "Disabled"
-   end
+F.format_on_save = function(enable)
+   local action = enable and "Enabled" or "Disabled"
 
    if enable then
       vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-         group = vim.api.nvim_create_augroup("_format_on_save", { clear = true }),
+         group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
          pattern = "*",
-         callback = function()
-            F.lsp_format(buf)
+         callback = function(ev)
+            F.lsp_format(ev.buf)
          end,
       })
    else
       vim.api.nvim_clear_autocmds { group = "format_on_save" }
    end
 
-   vim.notify(action() .. " format on save", vim.log.levels.INFO, { title = "LSP" })
+   vim.notify(
+      action .. " format on save",
+      vim.log.levels.INFO,
+      { title = "LSP - Format" }
+   )
 end
 
 F.toggle_format_on_save = function()
@@ -343,7 +359,11 @@ F.software_licenses = function()
    local M = {}
 
    M.licenses = function(telescope_opts)
-      telescope_opts = vim.tbl_extend("keep", telescope_opts or {}, require("telescope.themes").get_dropdown {})
+      telescope_opts = vim.tbl_extend(
+         "keep",
+         telescope_opts or {},
+         require("telescope.themes").get_dropdown {}
+      )
       pickers
          .new(telescope_opts, {
             prompt_title = "Software Licenses",

@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 13:16
+-- Last Modified: 06 Jun 2023, 09:04
 -------------------------------------
 
 local icons = require "user_lib.icons"
@@ -64,7 +64,6 @@ local M = {
       wk.setup(opts)
       wk.register {
          mode = { "n", "v" },
-         ["<leader>0"] = { name = "Configuration File" },
          ["<leader>S"] = { name = "Sessions" },
          ["<leader>d"] = { name = "Dap" },
          ["<leader>C"] = { name = "Core" },
@@ -76,8 +75,6 @@ local M = {
          ["<leader>t"] = { name = "Terminal" },
          ["<leader>T"] = { name = "Treesitter" },
          ["<leader>y"] = { name = "Yank" },
-         ["<leader>U"] = { name = "University Folder" },
-         ["<leader>s"] = { name = "Surround" },
          ["<leader>W"] = { name = "Window" },
       }
    end,

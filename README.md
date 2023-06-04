@@ -20,7 +20,7 @@
 
 > Written mostly in [Lua](https://www.lua.org/)
 
-_Most used plugins_:
+_Most used plugins_:  
 
 - [Lazy](https://github.com/folke/lazy.nvim)
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim)

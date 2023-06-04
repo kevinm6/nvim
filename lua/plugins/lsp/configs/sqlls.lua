@@ -2,13 +2,15 @@
 --  File         : sqls.lua
 --  Description  : sqls configuration
 --  Author       : Kevin
---  Last Modified: 16 May 2023, 18:05
+--  Last Modified: 10 Jun 2023, 09:10
 -----------------------------------
 
 local M = {
   "joe-re/sql-language-server",
   ft = { "sql", "mysql", "psql" },
 }
+
+local databases_path = vim.fn.expand "~/Informatica/Anno2/Semestre1/Basi di Dati"
 
 function M.config()
   return {
@@ -27,7 +29,7 @@ function M.config()
             port = 5432,
             passwd = "",
             host = "localhost",
-            path = "/Users/Kevin/Documents/Informatica/2°Anno/1°Semestre/Basi di Dati/",
+            path = databases_path,
           },
           {
             driver = "postgresql",
@@ -37,7 +39,7 @@ function M.config()
             port = 5432,
             passwd = "",
             host = "localhost",
-            path = "/Users/Kevin/Documents/Informatica/2°Anno/1°Semestre/Basi di Dati/",
+            path = databases_path,
           },
           {
             driver = "postgresql",
@@ -47,7 +49,7 @@ function M.config()
             port = 5432,
             passwd = "",
             host = "localhost",
-            path = "/Users/Kevin/Documents/Informatica/2°Anno/1°Semestre/Basi di Dati/",
+            path = databases_path,
           },
           {
             driver = "postgresql",
@@ -57,7 +59,7 @@ function M.config()
             port = 5432,
             passwd = "",
             host = "localhost",
-            path = "/Users/Kevin/Documents/Informatica/2°Anno/1°Semestre/Basi di Dati/",
+            path = databases_path,
           },
         }
       },

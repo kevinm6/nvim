@@ -2,7 +2,7 @@
 --	File: null-ls.lua
 --	Description: null-ls plugin config
 --	Author: Kevin
---	Last Modified: 31 May 2023, 09:35
+--	Last Modified: 10 Jun 2023, 09:00
 -----------------------------------
 
 local M = {
@@ -20,6 +20,8 @@ function M.init(opts)
    local formatting = null_ls.builtins.formatting
    -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
    local diagnostics = null_ls.builtins.diagnostics
+   -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/code_actions
+   local code_actions = null_ls.builtins.code_actions
 
    -- https://github.com/prettier-solidity/prettier-plugin-solidity
    -- npm install --save-dev prettier prettier-plugin-solidity
@@ -30,30 +32,67 @@ function M.init(opts)
       sources = {
          formatting.prettier.with {
             extra_filetypes = { "toml", "solidity" },
-            extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },
+            extra_args = function(params)
+               return params.options
+                  and {
+                     "--no-semi",
+                     "--single-quote",
+                     "--jsx-single-quote",
+                  }
+                  and params.options.tabSize
+                  and { "--tab-width", params.options.tabSize }
+            end,
          },
-         formatting.black.with { extra_args = { "--fast" } },
-         formatting.stylua,
-         formatting.google_java_format,
-         null_ls.builtins.code_actions.gitsigns.with {
+         formatting.black.with {
+            extra_args = function(params)
+               return params.options
+                  and { "--fast" }
+                  and params.options.tabSize
+                  and { "--tab-width", params.options.tabSize }
+            end,
+         },
+         formatting.stylua.with {
+            extra_args = function(params)
+               return params.options
+                  and params.options.tabSize
+                  and { "--indent-width", params.options.tabSize }
+            end,
+         },
+         formatting.google_java_format.with {
+            extra_args = function(params)
+               return params.options
+                  and params.options.tabSize
+                  and { "--tab-width", params.options.tabSize }
+            end,
+         },
+
+         formatting.yamlfmt.with {
+            extra_args = function(params)
+               return params.options
+                  and params.options.tabSize
+                  and { "--tab-width", params.options.tabSize }
+            end,
+         },
+
+         code_actions.gitsigns.with {
             config = {
                filter_actions = function(title)
                   return title:lower():match "blame" == nil
                end,
             },
          },
-         null_ls.builtins.code_actions.gitrebase,
-         null_ls.builtins.code_actions.refactoring,
-         null_ls.builtins.code_actions.shellcheck,
+         code_actions.gitrebase,
+         code_actions.refactoring,
+         -- code_actions.shellcheck,
          -- null_ls.builtins.code_actions.ts_node_action,
 
          null_ls.builtins.completion.luasnip,
          null_ls.builtins.completion.tags,
          -- nls.builtins.completion.spell,
 
-         null_ls.builtins.diagnostics.standardjs,
+         -- diagnostics.standardjs,
          -- null_ls.builtins.diagnostics.markdownlint,
-         null_ls.builtins.diagnostics.zsh,
+         diagnostics.zsh,
 
          null_ls.builtins.hover.dictionary,
          null_ls.builtins.hover.printenv,

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 31 May 2023, 09:29
+-- Last Modified: 11 Jun 2023, 09:45
 -------------------------------------
 
 local icons = require "user_lib.icons"
@@ -222,36 +222,22 @@ end
 local set_buf_capabilities = function(client, bufnr)
    -- lsp-document_highlight
    if client.server_capabilities.documentHighlightProvider then
-      local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
-      vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
-         group = lsp_hi_doc_group,
-         buffer = bufnr, -- passing buffer instead of pattern to prevent errors on switching bufs
-         callback = function()
-            vim.lsp.buf.document_highlight()
-         end,
+      local lsp_document_highlight =
+         vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
+      vim.api.nvim_clear_autocmds {
+         buffer = bufnr,
+         group = lsp_document_highlight,
+      }
+      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+         group = lsp_document_highlight,
+         buffer = bufnr,
+         callback = vim.lsp.buf.document_highlight,
       })
-      vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
-         group = lsp_hi_doc_group,
-         buffer = bufnr, -- passing buffer instead of pattern to prevent errors on switching bufs
-         callback = function()
-            vim.lsp.buf.clear_references()
-         end,
+      vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+         group = lsp_document_highlight,
+         buffer = bufnr,
+         callback = vim.lsp.buf.clear_references,
       })
-      -- TODO: must be implemented better
-      -- else -- fallback w/ treesitter
-      --    local lsp_hi_doc_group = vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = true })
-      --    autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
-      --      group = lsp_hi_doc_group,
-      --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
-      --      callback = function()
-      --          require "user_lib.functions".ts_fallback_lsp_highlighting(args.buf)
-      --      end
-      --    })
-      --    autocmd({ "BufEnter", "CursorMoved" }, {
-      --      group = lsp_hi_doc_group,
-      --      buffer = args.buf, -- passing buffer instead of pattern to prevent errors on switching bufs
-      --      callback = function() vim.lsp.buf.clear_references() end
-      --    })
    end
 
    if client.server_capabilities.documentSymbolProvider then
@@ -259,14 +245,10 @@ local set_buf_capabilities = function(client, bufnr)
    end
 
    -- Formatting
-   if client.supports_method "textDocument/formatting" then
+   if client.server_capabilities.documentFormattingProvider then
       local user_lib_funcs = require "user_lib.functions"
       vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
-         if vim.fn.exists "#_format_on_save#BufWritePre" == 0 then
-            user_lib_funcs.format_on_save(bufnr, true)
-         else
-            user_lib_funcs.format_on_save(bufnr)
-         end
+         user_lib_funcs.toggle_format_on_save()
       end, {})
 
       vim.api.nvim_create_user_command("Format", function()
@@ -280,6 +262,29 @@ local set_buf_capabilities = function(client, bufnr)
          vim.cmd.LspToggleAutoFormat()
       end, { desc = "Toggle AutoFormat" })
    end
+   if client.server_capabilities.documentRangeFormattingProvider then
+      vim.keymap.set("v", "<leader>lf", function()
+         require("user_lib.functions").range_format()
+      end, { desc = "Range format" })
+   end
+end
+
+-- Custom configs to apply when starting lsp
+local custom_init = function(client)
+   client.config.flags = client.config.flags or {}
+   client.config.flags.allow_incremental_sync = true
+end
+
+-- Custom configs to apply when attaching lsp to buffer
+local custom_attach = function(client, bufnr)
+   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+   -- require "inlay-hints".on_attach(client, bufnr)
+   require("plugins.lsp.handlers").setup()
+   require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
+
+   set_buf_keymaps(client, bufnr)
+   set_buf_capabilities(client, bufnr)
 end
 
 function M.config()
@@ -291,25 +296,9 @@ function M.config()
    ext_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
    -- HACK: this is to avoid errors on lsp that support only single encoding (ex: clangd)
+   --       maybe is resolved with this change on nvim_v0.10
+   -- `https://github.com/neovim/neovim/commit/ca26ec34386dfe98b0edf3de9aeb7b66f40d5efd`
    ext_capabilities.offsetEncoding = "utf-8"
-
-   -- Custom configs to apply when starting lsp
-   local custom_init = function(client)
-      client.config.flags = client.config.flags or {}
-      client.config.flags.allow_incremental_sync = true
-   end
-
-   -- Custom configs to apply when attaching lsp to buffer
-   local custom_attach = function(client, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-      -- require "inlay-hints".on_attach(client, bufnr)
-      require("plugins.lsp.handlers").setup()
-      require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
-
-      set_buf_keymaps(client, bufnr)
-      set_buf_capabilities(client, bufnr)
-   end
 
    local default_lsp_config = {
       on_init = custom_init,
@@ -333,41 +322,91 @@ function M.config()
       -- Manage server with custom setup
       ["asm_lsp"] = function()
          lspconfig.asm_lsp.setup(
-            vim.tbl_deep_extend("force", default_lsp_config, { root_dir = require("lspconfig.util").find_git_ancestor })
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               { root_dir = require("lspconfig.util").find_git_ancestor }
+            )
          )
       end,
       ["lua_ls"] = function()
-         lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.lua_ls"))
+         lspconfig.lua_ls.setup(
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               require "plugins.lsp.configs.lua_ls"
+            )
+         )
       end,
       ["jsonls"] = function()
-         lspconfig.jsonls.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.jsonls"))
+         lspconfig.jsonls.setup(
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               require "plugins.lsp.configs.jsonls"
+            )
+         )
       end,
       ["sqlls"] = function()
-         lspconfig.sqlls.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.sqlls"))
+         lspconfig.sqlls.setup(
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               require "plugins.lsp.configs.sqlls"
+            )
+         )
       end,
       ["grammarly"] = function()
-         lspconfig.grammarly.setup(vim.tbl_deep_extend("force", default_lsp_config, { autostart = false }))
+         lspconfig.grammarly.setup(
+            vim.tbl_deep_extend("force", default_lsp_config, { autostart = false })
+         )
       end,
       ["clangd"] = function()
-         lspconfig.clangd.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.clangd"))
+         lspconfig.clangd.setup(
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               require "plugins.lsp.configs.clangd"
+            )
+         )
       end,
       ["gopls"] = function()
-         lspconfig.gopls.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.gopls"))
+         lspconfig.gopls.setup(
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               require "plugins.lsp.configs.gopls"
+            )
+         )
       end,
       ["tsserver"] = function()
          lspconfig.tsserver.setup(
-            vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.tsserver")
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               require "plugins.lsp.configs.tsserver"
+            )
          )
       end,
       ["erlangls"] = function()
          lspconfig.erlangls.setup(
-            vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.erlangls")
+            vim.tbl_deep_extend(
+               "force",
+               default_lsp_config,
+               require "plugins.lsp.configs.erlangls"
+            )
          )
       end,
    }
 
    -- sourcekit is still not available on mason-lspconfig
-   lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, require "plugins.lsp.configs.sourcekit"))
+   lspconfig.sourcekit.setup(
+      vim.tbl_deep_extend(
+         "force",
+         default_lsp_config,
+         require "plugins.lsp.configs.sourcekit"
+      )
+   )
 
    require("plugins.lsp.null_ls").init(default_lsp_config)
 end

@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 19:51
+-- Last Modified: 06 Jun 2023, 09:25
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -90,7 +90,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- Statusline
-autocmd({ "BufNewFile", "CursorMoved" }, {
+autocmd({ "BufNewFile", "CursorMoved", "ModeChanged" }, {
    group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
    pattern = "*",
    callback = function()
@@ -100,7 +100,7 @@ autocmd({ "BufNewFile", "CursorMoved" }, {
 })
 
 -- WinBar
-autocmd({ "CursorMoved" }, {
+autocmd({ "CursorMoved", "ModeChanged" }, {
    group = augroup("_winbar", { clear = true }),
    callback = function()
       if not vim.api.nvim_win_get_config(0).relative ~= "" then -- disable on float windows
@@ -116,7 +116,7 @@ local auto_timestamp = function()
       group = augroup("_update_timestamp", { clear = true }),
       pattern = "*",
       callback = function()
-         if vim.api.nvim_get_option_value("modified", { scope = "local" }) == true then
+         if vim.opt_local.modified:get() == true then
             local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
             vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
@@ -131,7 +131,7 @@ auto_timestamp()
 
 user_command("ToggleTimeStamp", function()
    local _autocmd_timestamp =
-      vim.api.nvim_get_autocmds { group = "_update_timestamp", event = "BufWritePre", pattern = "*" }
+       vim.api.nvim_get_autocmds { group = "_update_timestamp", event = "BufWritePre", pattern = "*" }
 
    if vim.g.auto_timestamp and _autocmd_timestamp[1] then
       vim.api.nvim_del_autocmd(_autocmd_timestamp[1].id)
@@ -271,10 +271,9 @@ user_command("Note", Note, { desc = "Create a Note buffer" })
 autocmd("BufWritePre", {
    pattern = "*",
    callback = function()
-      if not vim.bo.filetype == "markdown" then
-         return
+      if vim.opt_local.filetype:get() ~= "markdown" then
+         vim.cmd [[%s/\s\+$//e]]
       end
-      vim.cmd [[%s/\s\+$//e]]
    end,
 })
 user_command("RemoveTrailingSpaces", [[%s/\s\+$//e]], { desc = "Remove extra trailing white spaces" })

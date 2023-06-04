@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 13:30
+-- Last Modified: 08 Jun 2023, 13:34
 -------------------------------------
 
 local set_opts = function(opts)
@@ -250,9 +250,6 @@ set_keymap("v", ">", ">gv", set_opts {})
 set_keymap("v", "p", "_dP", set_opts {})
 set_keymap("v", "<C-s>", [[:s///gI<Left><Left><Left><Left>]], set_opts { silent = false, desc = "Search" })
 set_keymap("v", "<leader>y", [["+y]], set_opts { desc = "Yank to clipboard" })
-set_keymap("v", "<leader>lf", function()
-   require("user_lib.functions").range_format()
-end, set_opts { desc = "Range format" })
 --set_keymap("v", "d", "\+d", set_opts { expr = true, desc = "Copy deletion into register \""})
 --set_keymap("v", "D", "\+D", set_opts { expr = true, desc = "Copy deletion to end into register \"" })
 --set_keymap("v", "y", "\+y", set_opts { expr = true, desc = "Copy yank into register \"" })
