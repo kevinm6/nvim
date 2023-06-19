@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 06 Jun 2023, 09:25
+-- Last Modified: 19 Jun 2023, 13:35
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -242,6 +242,22 @@ autocmd({ "BufRead", "BufNewFile" }, {
       vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
    end,
 })
+
+-- PDF
+autocmd({ "FileType" }, {
+   group = augroup("_pdf_reader", { clear = true }),
+   pattern = { "pdf", "PDF" },
+   callback = function(ev)
+      vim.api.nvim_buf_set_option(ev.buf, "readonly", true)
+      if not vim.fn.executable "pdftotext" then
+         vim.notify("vim-pdf: pdftotext is not found.\nStop converting...", vim.log.levels.ERROR)
+         return
+      end
+
+      require "user_lib.pdf".load_pdf(ev.file)
+   end,
+})
+
 
 -- Scratch
 local Scratch = function()

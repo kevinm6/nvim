@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 13:30
+-- Last Modified: 19 Jun 2023, 09:59
 ---------------------------------------
 
 local git_hunks = function()

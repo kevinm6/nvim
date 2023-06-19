@@ -2,8 +2,10 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 04 Jun 2023, 14:21
+--  Last Modified: 19 Jun 2023, 13:22
 -------------------------------------
+
+-- TODO: modularize this file in more submodules/modules to avoid store such a big table
 
 local F = {}
 
@@ -126,8 +128,9 @@ F.delete_session = function()
             vim.fn.jobstart("mv " .. vim.fn.fnameescape(choice) .. " ~/.Trash", {
                detach = true,
                on_exit = function()
+                  local choice_name = vim.fn.fnamemodify(choice, ":t")
                   vim.notify(
-                     ("Session < %s > deleted!"):format(choice),
+                     ("Session < %s > deleted!"):format(choice_name),
                      vim.log.levels.WARN
                   )
                end,
@@ -299,13 +302,13 @@ end
 
 F.new_tmp_file = function()
    vim.ui.input({
-      prompt = "Enter name for temp file: ",
-      default = os.date "%d%m%Y_file_%H%M%S" .. ".",
+      prompt = "Enter ext for temp file: ",
+      default = "."
    }, function(input)
       if input then
-         vim.cmd.enew()
-         vim.cmd.edit(input)
-         vim.cmd.write(input)
+         local temp_file = vim.fn.tempname()..input
+         vim.cmd.edit(temp_file)
+         vim.cmd.write(temp_file)
          vim.cmd.startinsert()
       end
    end)

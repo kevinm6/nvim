@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 28 May 2023, 20:10
+--	Last Modified: 19 Jun 2023, 11:32
 -----------------------------------
 
 local M = {
@@ -49,7 +49,7 @@ function M.config()
    }
 
    dashboard.section.buttons.val = {
-      dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'user_lib.functions'.new_file()<CR>"),
+      dashboard.button("f", icons.ui.NewFile .. " New file", "<cmd>lua require 'user_lib.functions'.new_file()<CR>"),
       dashboard.button(
          "t",
          icons.ui.NewFile .. " New temp file",
@@ -62,7 +62,7 @@ function M.config()
       ),
 
       dashboard.button(
-         "f",
+         "F",
          icons.documents.Files .. " Find file",
          "<cmd>lua require 'telescope.builtin'.find_files()<CR>"
       ),

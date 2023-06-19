@@ -2,11 +2,12 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 09 Jun 2023, 17:53
+-- Last Modified: 18 Jun 2023, 18:07
 -------------------------------------
 
 local M = {
    "nvim-treesitter/nvim-treesitter",
+   event = "BufReadPre",
    build = ":TSUpdate",
    keys = {
       {
