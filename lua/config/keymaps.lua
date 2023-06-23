@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 08 Jun 2023, 13:34
+-- Last Modified: 21 Jun 2023, 20:54
 -------------------------------------
 
 local set_opts = function(opts)
@@ -65,13 +65,13 @@ set_keymap("n", "<C-k>", "<C-w>k", set_opts {})
 
 -- Session
 set_keymap("n", "<leader>Ss", function()
-   require "user_lib.functions".save_session()
+   require "user_lib.sessions".save_session()
 end, set_opts { desc = "Save" })
 set_keymap("n", "<leader>Sr", function()
-   require "user_lib.functions".restore_session()
+   require "user_lib.sessions".restore_session()
 end, set_opts { desc = "Restore" })
 set_keymap("n", "<leader>Sd", function()
-   require "user_lib.functions".delete_session()
+   require "user_lib.sessions".delete_session()
 end, set_opts { desc = "Delete" })
 
 -- useful maps

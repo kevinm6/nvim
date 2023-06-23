@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 19 Jun 2023, 09:59
+-- Last Modified: 23 Jun 2023, 09:47
 ---------------------------------------
 
 local git_hunks = function()
@@ -171,7 +171,7 @@ local M = {
       {
          "<leader>fO",
          function()
-            require("user_lib.functions").software_licenses().licenses()
+            require("user_lib.software_licenses.licenses").pick_license()
          end,
          desc = "Software Licenses",
       },

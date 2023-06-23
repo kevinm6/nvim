@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 19 Jun 2023, 13:35
+-- Last Modified: 23 Jun 2023, 09:54
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -358,7 +358,7 @@ end, {})
 
 -- Hex Dump
 user_command("HexToggle", function()
-   require("user_lib.hex.hex").setup {}
+   require("user_lib.hex_handler.hex").setup {}
 end, {})
 
 user_command("LspCapabilities", function()

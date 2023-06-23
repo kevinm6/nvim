@@ -2,7 +2,7 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 19 Jun 2023, 11:32
+--	Last Modified: 21 Jun 2023, 20:54
 -----------------------------------
 
 local M = {
@@ -89,7 +89,7 @@ function M.config()
       dashboard.button(
          "S",
          icons.ui.History .. " Sessions",
-         "<cmd>lua require 'user_lib.functions'.restore_session()<CR>"
+         "<cmd>lua require 'user_lib.sessions'.restore_session()<CR>"
       ),
       dashboard.button(
          "C",

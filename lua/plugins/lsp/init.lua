@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 11 Jun 2023, 09:45
+-- Last Modified: 23 Jun 2023, 09:50
 -------------------------------------
 
 local icons = require "user_lib.icons"
@@ -221,7 +221,8 @@ end
 
 local set_buf_capabilities = function(client, bufnr)
    -- lsp-document_highlight
-   if client.server_capabilities.documentHighlightProvider then
+   if client.server_capabilities.documentHighlightProvider and
+      client.supports_method "textDocument/documentHighlight" then
       local lsp_document_highlight =
          vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
       vim.api.nvim_clear_autocmds {
@@ -246,17 +247,17 @@ local set_buf_capabilities = function(client, bufnr)
 
    -- Formatting
    if client.server_capabilities.documentFormattingProvider then
-      local user_lib_funcs = require "user_lib.functions"
+      local user_lib_format = require "user_lib.format"
       vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
-         user_lib_funcs.toggle_format_on_save()
+         user_lib_format.toggle_format_on_save()
       end, {})
 
       vim.api.nvim_create_user_command("Format", function()
-         user_lib_funcs.lsp_format(bufnr)
+         user_lib_format.lsp_format(bufnr)
       end, { force = true })
 
       vim.keymap.set("n", "<leader>lf", function()
-         user_lib_funcs.lsp_format(bufnr)
+         user_lib_format.lsp_format(bufnr)
       end, { desc = "Format" })
       vim.keymap.set("n", "<leader>lF", function()
          vim.cmd.LspToggleAutoFormat()
@@ -325,7 +326,9 @@ function M.config()
             vim.tbl_deep_extend(
                "force",
                default_lsp_config,
-               { root_dir = require("lspconfig.util").find_git_ancestor }
+               {
+                  root_dir = function() return vim.loop.cwd() end
+               }
             )
          )
       end,
@@ -387,6 +390,19 @@ function M.config()
                require "plugins.lsp.configs.tsserver"
             )
          )
+      end,
+      ["bashls"] = function()
+         lspconfig.bashls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            cmd = { "bash-language-server", "start" },
+            filetypes = { "sh", "bash", "zsh" },
+            allowList = { "sh", "bash", "zsh" },
+            settings = {
+               allowList = { "sh", "bash", "zsh" }
+            },
+            on_attach = function(client, bufnr)
+               client.server_capabilities.documentHighlightProvider = false
+            end
+         }))
       end,
       ["erlangls"] = function()
          lspconfig.erlangls.setup(
