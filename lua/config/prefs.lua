@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 09 Jun 2023, 17:15
+-- Last Modified: 24 Jun 2023, 12:55
 -------------------------------------
 
 -- CURSOR {
@@ -44,7 +44,7 @@ local options = {
    updatetime = 100, -- lower than default for faster completion
    updatecount = 0, -- do not create swap file
    listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_" },
-   fillchars = [[eob: ,fold:,foldopen:,foldsep:,foldclose:]],
+   fillchars = [[eob: ,fold:,foldopen:,foldsep: ,foldclose:]],
    syntax = "off", -- using treesitter
    timeoutlen = 100,
    ttimeoutlen = 50,

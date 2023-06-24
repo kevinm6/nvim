@@ -2,16 +2,18 @@
 --  File         : python_envs.lua
 --  Description  : helper module to get and manage python_envs
 --  Author       : Kevin
---  Last Modified: 23 Jun 2023, 09:27
+--  Last Modified: 24 Jun 2023, 10:45
 -------------------------------------
 
--- Python envs
---  Available funcs:
---    - get_current_venv
---    - pick_venv
+--- Python envs
+---  Available funcs:
+---    - get_current_venv
+---    - pick_venv
 local P = {}
 
--- Python Venv
+--- Set Python venv
+--- @private
+--- @param venv table set this venv as current python venv
 local set_venv = function(venv)
    local ORIGINAL_PATH = vim.fn.getenv "PATH"
    local venv_bin_path = venv.path .. "/bin"
@@ -19,10 +21,16 @@ local set_venv = function(venv)
    vim.fn.setenv("VIRTUAL_ENV", venv.path)
 end
 
+--- Get active Python venv
+--- @return string|nil
 P.get_current_venv = function()
    return vim.g.python_venv
 end
 
+--- Get Python venvs from given paths
+--- @private
+--- @param venvs_path table list of paths of python venvs
+--- @return table|nil
 local get_venvs = function(venvs_path)
    local success, Path = pcall(require, "plenary.path")
    if not success then
@@ -42,6 +50,8 @@ local get_venvs = function(venvs_path)
    return venvs
 end
 
+--- Show a picker for select Python venv
+--- and make it active
 P.pick_venv = function()
    local venvs_paths = {
       vim.fn.expand "~/dev/audioToText-bot",

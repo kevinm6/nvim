@@ -2,18 +2,23 @@
 --  File         : pdf.lua
 --  Description  : use Neovim as pdf reader (need pdftotext binaries)
 --  Author       : Kevin
---  Last Modified: 19 Jun 2023, 13:34
+--  Last Modified: 24 Jun 2023, 10:26
 -------------------------------------
 
 local M = {}
 
 local pdf_cache = {}
 
+--- Read file and load buffer
+--- @private
+--- @param cache_file string file already created to load and show in buffer
 local read_file = function(cache_file)
    local command = ("bdelete | edit %s | set readonly | set filetype=text"):format(cache_file)
    vim.cmd(command)
 end
 
+--- Load pdf file using <pdftotext> shell command
+--- @param file string pdf file to be displayed
 M.load_pdf = function(file)
    if vim.g[file] == 1 then return end
 

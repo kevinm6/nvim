@@ -2,31 +2,35 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 23 Jun 2023, 09:22
+--  Last Modified: 24 Jun 2023, 10:23
 -------------------------------------
-
 
 local F = {}
 
+--- Remove augroup, if exists from given name
+--- @param name string name of matching augroup to remove
 F.remove_augroup = function(name)
    if vim.fn.exists("#" .. name) == 1 then
       vim.cmd("au! " .. name)
    end
 end
 
--- get length of current word
+--- Get lenght of current word
+--- @see |<cword>|
 F.get_word_length = function()
    local word = vim.fn.expand "<cword>"
    return #word
 end
 
+--- toggle_option()
+--- @param option string option to toggle value
 F.toggle_option = function(option)
    local value = not vim.api.nvim_get_option_value(option, {})
    vim.opt[option] = value
    vim.notify(option .. " set to " .. tostring(value), vim.log.levels.INFO)
 end
 
-
+--- Enable|Disable Diagnostics
 F.toggle_diagnostics = function()
    vim.g.diagnostics_status = not vim.g.diagnostics_status
    if vim.g.diagnostics_status == true then
@@ -36,7 +40,8 @@ F.toggle_diagnostics = function()
    end
 end
 
--- Dev FOLDER
+
+--- Dev FOLDER
 F.dev_folder = function()
    local dev_folders = {
       vim.fn.expand "~/dev",
@@ -53,18 +58,14 @@ F.dev_folder = function()
    end)
 end
 
-
--- Alignment text from RegEx
-F.align = function(pat)
-   local top, bot = vim.fn.getpos "'<", vim.fn.getpos "'>"
-   F.align_lines(pat, top[2] - 1, bot[2])
-   vim.fn.setpos("'<", top)
-   vim.fn.setpos("'>", bot)
-end
-
-F.align_lines = function(pat, startline, endline)
-   local re = vim.regex(pat)
-   if not pat or not re then
+--- align lines from pattern
+--- @private
+--- @param pattern string RegEx to match text
+--- @param startline any start line position
+--- @param endline any end line position
+local function align_lines(pattern, startline, endline)
+   local re = vim.regex(pattern)
+   if not pattern or not re then
       vim.notify("Pattern for RegEx not valid", vim.log.levels.WARN)
       return
    end
@@ -84,7 +85,7 @@ F.align_lines = function(pat, startline, endline)
    end
 
    for i, line in pairs(lines) do
-      local s = vim.regex(pat):match_str(line)
+      local s = vim.regex(pattern):match_str(line)
       s = vim.str_utfindex(line, s)
       if s then
          local rep = max - s
@@ -100,9 +101,17 @@ F.align_lines = function(pat, startline, endline)
    vim.api.nvim_buf_set_lines(0, startline, endline, false, lines)
 end
 
+--- Alignment text from RegEx
+--- @param pattern string RegEx or matching text
+F.align = function(pattern)
+   local top, bot = vim.fn.getpos "'<", vim.fn.getpos "'>"
+   align_lines(pattern, top[2] - 1, bot[2])
+   vim.fn.setpos("'<", top)
+   vim.fn.setpos("'>", bot)
+end
 
--- Create new file w/ input for filename
--- useful for dashboard and so on
+--- Create new file w/ input for filename
+--- useful for dashboard and so on
 F.new_file = function()
    vim.ui.input({
       prompt = "Enter name for newfile: ",
@@ -117,13 +126,14 @@ F.new_file = function()
    end)
 end
 
+--- Create temporary file
 F.new_tmp_file = function()
    vim.ui.input({
       prompt = "Enter ext for temp file: ",
-      default = "."
+      default = ".",
    }, function(input)
       if input then
-         local temp_file = vim.fn.tempname()..input
+         local temp_file = vim.fn.tempname() .. input
          vim.cmd.edit(temp_file)
          vim.cmd.write(temp_file)
          vim.cmd.startinsert()
@@ -149,15 +159,19 @@ F.workon = function()
    end)
 end
 
-
--- Set highlights
---    @param highlights
+--- Set highlights
+--- @param hls table
+--- @see |nvim_set_hl()|
 F.set_highlights = function(hls)
    for group, settings in pairs(hls) do
       vim.api.nvim_set_hl(0, group, settings)
    end
 end
 
+
+--- Get current buf lsp Capabilities
+--- @module "user_lib.functions"
+--- @see |nvim_lsp_get_active_clients()|
 F.get_current_buf_lsp_capabilities = function()
    local curBuf = vim.api.nvim_get_current_buf()
    local clients = vim.lsp.get_active_clients { bufnr = curBuf }

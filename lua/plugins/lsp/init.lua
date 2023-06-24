@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 23 Jun 2023, 09:50
+-- Last Modified: 24 Jun 2023, 20:35
 -------------------------------------
 
 local icons = require "user_lib.icons"
@@ -93,7 +93,6 @@ local M = {
                "gopls",
                "yamlls",
                "html",
-               "asm_lsp",
                "bashls",
                "clangd",
                "rust_analyzer",
@@ -321,17 +320,6 @@ function M.config()
 
       -- Next, you can provide targeted overrides for specific servers.
       -- Manage server with custom setup
-      ["asm_lsp"] = function()
-         lspconfig.asm_lsp.setup(
-            vim.tbl_deep_extend(
-               "force",
-               default_lsp_config,
-               {
-                  root_dir = function() return vim.loop.cwd() end
-               }
-            )
-         )
-      end,
       ["lua_ls"] = function()
          lspconfig.lua_ls.setup(
             vim.tbl_deep_extend(
