@@ -51,7 +51,6 @@ _Most used plugins_:
 - [Todo-comments](https://github.com/folke/todo-comments.nvim)
 - [Twilight](https://github.com/folke/twilight.nvim)
 - [Ufo](https://github.com/kevinhwang91/nvim-ufo)
-- [Glow](https://github.com/ellisonleao/glow.nvim)
 
 ---
 

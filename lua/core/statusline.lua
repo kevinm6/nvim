@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 06 Jun 2023, 09:10
+-- Last Modified: 27 Jun 2023, 12:42
 -----------------------------------------
 
 local S = {
@@ -280,6 +280,7 @@ S.off = function(name)
       mason           = icons.ui.List .. " Package Manager",
       Outline         = icons.ui.Table .. " Symbols Outline",
       noice           = icons.ui.List .. " Notifications",
+      checkhealth     = icons.ui.Health .. " Health",
    }
    local custom_ft = special_filetypes[ftype_name]
    return ("%s%s %%= %s%%="):format(get_mode(), colors.inactive, name or custom_ft or ftype_name)
@@ -347,6 +348,7 @@ local to_exclude = function()
       mason           = true,
       Outline         = true,
       noice           = true,
+      checkhealth     = true,
    }
 
    return special_ft[vim.bo.filetype]

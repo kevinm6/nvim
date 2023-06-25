@@ -2,7 +2,7 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 06 Jun 2023, 09:04
+-- Last Modified: 27 Jun 2023, 11:10
 -------------------------------------
 
 local icons = require "user_lib.icons"
@@ -62,21 +62,6 @@ local M = {
    config = function(_, opts)
       local wk = require "which-key"
       wk.setup(opts)
-      wk.register {
-         mode = { "n", "v" },
-         ["<leader>S"] = { name = "Sessions" },
-         ["<leader>d"] = { name = "Dap" },
-         ["<leader>C"] = { name = "Core" },
-         ["<leader>g"] = { name = "Git" },
-         ["<leader>R"] = { name = "Run" },
-         ["<leader>l"] = { name = "Lsp" },
-         ["<leader>n"] = { name = "Notifications" },
-         ["<leader>f"] = { name = "Find" },
-         ["<leader>t"] = { name = "Terminal" },
-         ["<leader>T"] = { name = "Treesitter" },
-         ["<leader>y"] = { name = "Yank" },
-         ["<leader>W"] = { name = "Window" },
-      }
    end,
 }
 

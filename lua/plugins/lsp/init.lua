@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 24 Jun 2023, 20:35
+-- Last Modified: 27 Jun 2023, 11:53
 -------------------------------------
 
 local icons = require "user_lib.icons"
@@ -11,12 +11,16 @@ local M = {
    "neovim/nvim-lspconfig",
    event = { "BufReadPre", "BufNewFile" },
    cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
+   keys = {
+      { "<leader>l", nil, buffer = true, desc = "LSP" }
+   },
    dependencies = {
       {
          "williamboman/mason.nvim",
          cmd = "Mason",
          event = "BufReadPre",
          keys = {
+            { "<leader>C", nil, desc = "Packages" },
             { "<leader>Cm", vim.cmd.Mason, desc = "Mason" },
          },
          opts = function(_, o)
@@ -139,20 +143,21 @@ local M = {
    },
 }
 
-local set_buf_keymaps = function(client, bufnr)
+local set_buf_keymaps = function(client, _)
    if client.name == "jdtls" then
       return
    end
 
    local has_telescope, telescope = pcall(require, "telescope.builtin")
 
+
    -- local opts = { noremap = true, silent = true }
    vim.keymap.set("n", "gl", function()
       vim.diagnostic.open_float()
-   end, { buffer = bufnr, desc = "Open float" })
+   end, { buffer = true, desc = "Open float" })
    vim.keymap.set("n", "K", function()
       vim.lsp.buf.hover()
-   end, { buffer = bufnr })
+   end, { buffer = true })
 
    if client.server_capabilities.declarationProvider then
       vim.keymap.set("n", "gD", function()
@@ -161,7 +166,7 @@ local set_buf_keymaps = function(client, bufnr)
          else
             vim.lsp.buf.declaration()
          end
-      end, { buffer = bufnr, desc = "GoTo declaration" })
+      end, { buffer = true, desc = "GoTo declaration" })
    end
    if client.server_capabilities.definitionProvider then
       vim.keymap.set("n", "gd", function()
@@ -170,7 +175,7 @@ local set_buf_keymaps = function(client, bufnr)
          else
             vim.lsp.buf.definition()
          end
-      end, { buffer = bufnr, desc = "GoTo definition" })
+      end, { buffer = true, desc = "GoTo definition" })
    end
    if client.server_capabilities.implementationProvider then
       vim.keymap.set("n", "gI", function()
@@ -179,7 +184,7 @@ local set_buf_keymaps = function(client, bufnr)
          else
             vim.lsp.buf.implementation()
          end
-      end, { buffer = bufnr, desc = "GoTo implementation" })
+      end, { buffer = true, desc = "GoTo implementation" })
    end
    if client.server_capabilities.referencesProvider then
       vim.keymap.set("n", "gr", function()
@@ -188,33 +193,33 @@ local set_buf_keymaps = function(client, bufnr)
          else
             vim.lsp.buf.references()
          end
-      end, { buffer = bufnr, desc = "GoTo references" })
+      end, { buffer = true, desc = "GoTo references" })
    end
 
    vim.keymap.set("n", "<leader>ll", function()
       vim.lsp.codelens.run()
-   end, { buffer = bufnr, desc = "CodeLens Action" })
+   end, { buffer = true, desc = "CodeLens Action" })
    vim.keymap.set("n", "<leader>la", function()
       vim.lsp.buf.code_action()
-   end, { buffer = bufnr, desc = "Code Action" })
+   end, { buffer = true, desc = "Code Action" })
    vim.keymap.set("n", "<leader>lI", function()
       vim.cmd.LspInfo {}
-   end, { buffer = bufnr, desc = "Lsp Info" })
+   end, { buffer = true, desc = "Lsp Info" })
    vim.keymap.set("n", "<leader>lL", function()
       vim.cmd.LspLog {}
-   end, { buffer = bufnr, desc = "Lsp Log" })
+   end, { buffer = true, desc = "Lsp Log" })
    vim.keymap.set("n", "<leader>r", function()
       vim.lsp.buf.rename()
-   end, { buffer = bufnr, desc = "Rename" })
+   end, { buffer = true, desc = "Rename" })
    vim.keymap.set("n", "<leader>lq", function()
       vim.diagnostic.setloclist()
-   end, { buffer = bufnr, desc = "Lsp Diagnostics" })
+   end, { buffer = true, desc = "Lsp Diagnostics" })
    -- Diagnostics
    vim.keymap.set("n", "<leader>dj", function()
-      vim.diagnostic.goto_next { buffer = bufnr }
+      vim.diagnostic.goto_next { buffer = true }
    end, { desc = "Next Diagnostic" })
    vim.keymap.set("n", "<leader>dk", function()
-      vim.diagnostic.goto_prev { buffer = bufnr }
+      vim.diagnostic.goto_prev { buffer = true }
    end, { desc = "Prev Diagnostic" })
 end
 

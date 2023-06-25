@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 18 Jun 2023, 18:07
+-- Last Modified: 27 Jun 2023, 11:28
 -------------------------------------
 
 local M = {
@@ -10,6 +10,11 @@ local M = {
    event = "BufReadPre",
    build = ":TSUpdate",
    keys = {
+      {
+         "<leader>T",
+         nil,
+         desc = "Treesitter",
+      },
       {
          "<leader>Tp",
          function()

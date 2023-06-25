@@ -2,7 +2,7 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 06 Jun 2023, 09:08
+-- Last Modified: 27 Jun 2023, 18:43
 -----------------------------------------
 
 local M = {
@@ -68,6 +68,7 @@ M.get_winbar = function()
       TelescopePrompt = true,
       crunner = true,
       noice = true,
+      checkhealth = true,
    }
 
    return winbar_filetype_exclude[vim.bo.filetype] and nil or M.gps()

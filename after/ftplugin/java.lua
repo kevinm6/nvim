@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 18:45
+-- Last Modified: 25 Jun 2023, 10:43
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
@@ -227,13 +227,6 @@ vim.keymap.set("n", "ø", function() require "jdtls".organize_imports() end, { b
 vim.keymap.set({ "v", "n" }, "crv", function() require "jdtls".extract_variable(true) end, { buffer = true, desc = "Extract variable" })
 vim.keymap.set({ "v", "n" }, "crc", function() require "jdtls".extract_constant(true) end, { buffer = true, desc = "Extract constant" })
 vim.keymap.set("v", "crm", function() require "jdtls".extract_method(true) end, { buffer = true, desc = "Extract method" })
-
-vim.keymap.set("n", "gl", vim.diagnostic.open_float, { buffer = true })
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = true })
-vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = true })
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = true })
-vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { buffer = true })
-vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = true })
 
 -- Formatting
 vim.api.nvim_buf_create_user_command(0,

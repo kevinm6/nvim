@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 10 Jun 2023, 20:55
+--  Last Modified: 27 Jun 2023, 19:01
 ----------------------------------------
 
 local M = {
@@ -16,6 +16,11 @@ local M = {
       -- "nvim-treesitter/nvim-treesitter",
    },
    keys = {
+      {
+         "<leader>n",
+         function() end,
+         desc = "Notifications",
+      },
       {
          "<leader>nn",
          function()
@@ -51,27 +56,6 @@ local M = {
          end,
          desc = "Noice Telescope",
       },
-
-      {
-         "<c-f>",
-         function()
-            if not require("noice.lsp").scroll(4) then
-               return "<c-f>"
-            end
-         end,
-         silent = true,
-         expr = true,
-      },
-
-      {
-         "<c-b>",
-         function()
-            if not require("noice.lsp").scroll(-4) then
-               return "<c-b>"
-            end
-         end,
-         { silent = true, expr = true },
-      },
    },
    opts = function(_, o)
       o.cmdline = {
@@ -87,9 +71,9 @@ local M = {
             cmdline = { icon = " " },
             search_down = { icon = " ⌄" },
             search_up = { icon = " ⌃" },
-            filter = { icon = "$" },
+            filter = { icon = "" },
             lua = { icon = " " },
-            help = { icon = "?" },
+            help = { icon = "" },
          },
       }
       o.messages = {
@@ -260,10 +244,19 @@ local M = {
             },
             border = {
                style = "rounded",
-               padding = { 0, 1 },
+               padding = {
+                 bottom = -1,
+                  left = 1,
+                  right = 1
+               },
             },
             win_options = {
-               winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+               winhighlight = { Normal = "Normal", FloatBorder = "WinSeparator" },
+            },
+         },
+         split = {
+            win_options = {
+               winhighlight = { Normal = "Normal", FloatBorder = "WinSeparator" },
             },
          },
       } -- @see the section on views below
@@ -349,6 +342,22 @@ local M = {
          -- lua = false, -- to disable a format, set to `false`
       } -- @see section on formatting
    end,
+   config = function(_, o)
+      require "noice".setup(o)
+
+      vim.keymap.set({ "n", "s" }, "<C-f>", function()
+         if not require("noice.lsp").scroll(4) then
+            return "<C-f>"
+         end
+      end, { silent = true, expr = true })
+
+      vim.keymap.set({ "n", "s" }, "<C-b>", function()
+         if not require("noice.lsp").scroll(-4) then
+            return "<C-b>"
+         end
+      end, { silent = true, expr = true })
+
+   end
 }
 
 return M

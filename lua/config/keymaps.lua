@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 21 Jun 2023, 20:54
+-- Last Modified: 27 Jun 2023, 11:52
 -------------------------------------
 
 local set_opts = function(opts)
@@ -52,7 +52,7 @@ set_keymap("n", "<leader>.", function()
          vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
       end,
    })
-end, set_opts { desc = "Set dir to buffer parent" })
+end, set_opts { desc = "Set cwd from current buffer " })
 set_keymap({ "n", "v" }, "<M-Left>", "b", set_opts {})
 set_keymap({ "n", "v" }, "<M-Right>", "E", set_opts {})
 set_keymap("n", "<S-Left>", "vh", set_opts {})
@@ -63,7 +63,10 @@ set_keymap("n", "<C-h>", "<C-w>h", set_opts {})
 set_keymap("n", "<C-j>", "<C-w>j", set_opts {})
 set_keymap("n", "<C-k>", "<C-w>k", set_opts {})
 
+vim.keymap.set({ "n", "v" }, "<leader>R", function() end, { desc = "Run" })
+
 -- Session
+set_keymap("n", "<leader>S", function() end, set_opts { desc = "Sessions" })
 set_keymap("n", "<leader>Ss", function()
    require "user_lib.sessions".save_session()
 end, set_opts { desc = "Save" })
@@ -153,6 +156,7 @@ set_keymap({ "n", "v" }, "d", [["_d]], set_opts {})
 set_keymap("n", "D", [["_D]], set_opts {})
 
 -- Window managing
+set_keymap("n", "<leader>W", function() end, set_opts { desc = "Window" })
 set_keymap("n", "<leader>Ws", function()
    vim.cmd.split {}
 end, set_opts { desc = "HSplit" })
@@ -179,6 +183,7 @@ set_keymap("n", "<S-Right>", function()
    vim.cmd "vertical resize +2"
 end)
 
+set_keymap({ "n", "v" }, "<leader>y", function() end, set_opts { desc = "Yank" })
 set_keymap("n", "<leader>yy", [["+yy]], set_opts { desc = "Yank line to clipboard" })
 set_keymap("n", "<leader>Y", [["+y$]], set_opts { desc = "Yank 'til end to clipboard" })
 

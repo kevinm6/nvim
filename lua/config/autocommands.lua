@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 23 Jun 2023, 09:54
+-- Last Modified: 27 Jun 2023, 11:43
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -189,7 +189,8 @@ autocmd({ "FileType" }, {
          else
             vim.cmd.compiler(filetypes[ev.match])
          end
-         vim.api.nvim_buf_set_keymap(ev.buf, "n", "<leader>RR", ":make %<CR>", { desc = "Compile Code" })
+         vim.keymap.set("n", "<leader>RR", ":make %<CR>", { buffer = true, desc = "Compile Code" })
+         vim.keymap.set({ "n", "v" }, "<leader>R", function() end, { buffer = true, desc = "Run" })
       end
    end,
 })

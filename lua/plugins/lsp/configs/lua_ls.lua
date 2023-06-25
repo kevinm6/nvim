@@ -2,14 +2,14 @@
 -- File         : lua_ls.lua
 -- Description  : lua lsp config
 -- Author       : Kevin
--- Last Modified: 24 May 2023, 12:27
+-- Last Modified: 27 Jun 2023, 10:29
 -------------------------------------
 
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-require "neodev".setup {}
+-- require "neodev".setup {}
 
 return {
    cmd = { "lua-language-server", "-E" },
@@ -32,7 +32,7 @@ return {
             library = {
                [vim.fn.expand "$VIMRUNTIME/lua"] = true,
                [vim.fn.stdpath "config" .. "/lua"] = true,
-               [vim.fn.stdpath "data" .. "/mason/packages/lua-language-server/libexec/meta/5393ac01" ] = true,
+               -- [vim.fn.stdpath "data" .. "/mason/packages/lua-language-server/libexec/meta/5393ac01" ] = true,
             },
          },
          telemetry = {

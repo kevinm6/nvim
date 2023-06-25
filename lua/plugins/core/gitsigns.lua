@@ -2,13 +2,14 @@
 -- File         : gitsigns.lua
 -- Description  : Lua K NeoVim & VimR gitsigns config
 -- Author       : Kevin
--- Last Modified: 13 May 2023, 11:15
+-- Last Modified: 27 Jun 2023, 11:27
 -------------------------------------
 
 local M = {
   "lewis6991/gitsigns.nvim",
   event = "BufReadPre",
   keys = {
+    { "<leader>g", nil, mode = { "v", "n" }, desc = "Git" },
     { "<leader>gj", function() require "gitsigns".next_hunk() end, desc = "Next Hunk" },
     { "<leader>gk", function() require "gitsigns".prev_hunk() end, desc = "Prev Hunk" },
     { "<leader>gl", function() require "gitsigns".blame_line() end, desc = "Blame" },
@@ -17,7 +18,7 @@ local M = {
     { "<leader>gR", function() require "gitsigns".reset_buffer() end, desc = "Reset Buffer" },
     { "<leader>gS", function() require "gitsigns".stage_hunk() end, desc = "Stage Hunk" },
     { "<leader>gu", function() require "gitsigns".undo_stage_hunk() end, desc = "Undo Stage Hunk" },
-    { "<leader>gd", function() require "gitsigns".diff_this() end, desc = "Diff" },
+    { "<leader>gd", function() require "gitsigns".diff_this() end, mode = { "n", "v" }, desc = "Diff" },
     { "<leader>gt", function() require "gitsigns".toggle_current_line_blame() end, desc = "Toggle Diff" },
   },
    opts = function(_, o)

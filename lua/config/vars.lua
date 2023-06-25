@@ -2,7 +2,7 @@
 -- File         : vars.lua
 -- Description  : NeoVim & VimR global vars
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 19:53
+-- Last Modified: 25 Jun 2023, 10:32
 -------------------------------------
 
 -- disable netrw
@@ -36,7 +36,7 @@ vim.g.python3_host_prog = "~/.local/share/nvim/nvim_python_venv/bin/python"
 -- }
 
 -- Ruby (disable the provider)
--- vim.g.loaded_ruby_provider = 0
+vim.g.loaded_ruby_provider = 0
 
 -- Perl (disable the provider)
 vim.g.loaded_perl_provider = 0

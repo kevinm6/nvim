@@ -2,7 +2,7 @@
 --  File         : python_envs.lua
 --  Description  : helper module to get and manage python_envs
 --  Author       : Kevin
---  Last Modified: 24 Jun 2023, 10:45
+--  Last Modified: 25 Jun 2023, 11:24
 -------------------------------------
 
 --- Python envs
@@ -14,15 +14,21 @@ local P = {}
 --- Set Python venv
 --- @private
 --- @param venv table set this venv as current python venv
-local set_venv = function(venv)
+P.set_venv = function(venv)
    local ORIGINAL_PATH = vim.fn.getenv "PATH"
    local venv_bin_path = venv.path .. "/bin"
-   vim.fn.setenv("PATH", venv_bin_path .. ":" .. ORIGINAL_PATH)
-   vim.fn.setenv("VIRTUAL_ENV", venv.path)
+   if vim.fn.isdirectory(venv_bin_path) == 1 then
+      vim.fn.setenv("PATH", venv_bin_path .. ":" .. ORIGINAL_PATH)
+      vim.fn.setenv("VIRTUAL_ENV", venv.path)
+   else
+      vim.notify("ERROR: Given path is not a python venv!", vim.log.levels.ERROR, {
+         title = "Python Venv"
+      })
+   end
 end
 
 --- Get active Python venv
---- @return string|nil
+--- @return string|nil _ current active python venv or nothing
 P.get_current_venv = function()
    return vim.g.python_venv
 end
@@ -37,9 +43,8 @@ local get_venvs = function(venvs_path)
       vim.notify("Could not require plenary: " .. Path, vim.log.levels.WARN)
       return
    end
-   -- local scan_dir = require("plenary.scandir").scan_dir
 
-   local paths = venvs_path -- scan_dir(venvs_path, { depth = 1, only_dirs = true })
+   local paths = venvs_path
    local venvs = {}
    for _, path in ipairs(paths) do
       table.insert(venvs, {
@@ -55,19 +60,20 @@ end
 P.pick_venv = function()
    local venvs_paths = {
       vim.fn.expand "~/dev/audioToText-bot",
-      vim.fn.stdpath "data" .. "nvim_python_venv",
+      vim.fn.stdpath "data" .. "/nvim_python_venv",
    }
 
    vim.ui.select(get_venvs(venvs_paths), {
-      prompt = "Select python venv",
+      prompt = "Select Python venv",
       format_item = function(item)
-         return ("%s (%s)"):format(item.name, item.path)
+         local name = vim.fn.fnamemodify(item.name, ":t")
+         return ("%s (%s)"):format(name, item.path)
       end,
    }, function(choice)
       if not choice then
          return
       end
-      set_venv(choice)
+      P.set_venv(choice)
    end)
 end
 

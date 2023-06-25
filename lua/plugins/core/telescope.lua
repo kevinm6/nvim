@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 24 Jun 2023, 09:39
+-- Last Modified: 27 Jun 2023, 11:45
 ---------------------------------------
 
 local git_hunks = function()
@@ -63,6 +63,7 @@ local M = {
          end,
          desc = "Buffers",
       },
+      { "<leader>f", nil, desc = "Find" },
       {
          "<leader>ff",
          function()

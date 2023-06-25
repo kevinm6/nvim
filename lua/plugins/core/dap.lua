@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 28 May 2023, 20:03
+--  Last Modified: 27 Jun 2023, 11:09
 -----------------------------------
 
 local M = {
@@ -12,6 +12,7 @@ local M = {
     "theHamsta/nvim-dap-virtual-text",
   },
   keys = {
+    { "<leader>d", function() end, desc = "Dap" },
     { "<leader>dp", function() require "dap".toggle_breakpoint() end, desc = "Breakpoint" },
     { "<leader>dc", function() require "dap".continue() end, desc = "Continue" },
     { "<leader>di", function() require "dap".step_into() end, desc = "Into" },
