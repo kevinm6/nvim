@@ -2,7 +2,7 @@
 -- File         : autopairs.lua
 -- Description  : Lua K NeoVim & VimR autopairs config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 20:13
+-- Last Modified: 15 Jul 2023, 09:06
 -------------------------------------
 
 local M = {
@@ -17,21 +17,29 @@ local M = {
       }
       o.break_undo = true
       o.map_c_w = true
-      o.map_c_h = false
-      o.enable_check_bracket_line = true
-      o.disable_filetype = { "TelescopePrompt", "Alpha" }
+      o.map_c_h = true
+      o.disable_filetype = { "TelescopePrompt", "Alpha", "vim", "text" }
       o.fast_wrap = {
-         map = "<C-e>",
-         chars = { "{", "[", "(", '"', "'" },
+         map = "<C-s>",
          pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-         offset = 0, -- Offset from pattern match
-         end_key = "$",
-         keys = "qwertyuiopzxcvbnmasdfghjkl",
-         check_comma = true,
          highlight = "PmenuSel",
          highlight_grey = "LineNr",
       }
-   end
+   end,
+   config = function(_, opts)
+      local npairs = require "nvim-autopairs"
+      local cond = require "nvim-autopairs.conds"
+      local Rule = require "nvim-autopairs.rule"
+
+      npairs.setup(opts)
+
+      npairs.add_rules {
+         ---@diagnostic disable-next-line: redefined-local
+         Rule("<", ">"):with_pair(cond.before_regex "%a+"):with_move(function(opts)
+            return opts.char == ">"
+         end),
+      }
+   end,
 }
 
 return M

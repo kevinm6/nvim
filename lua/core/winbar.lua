@@ -2,21 +2,20 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 27 Jun 2023, 18:43
+-- Last Modified: 05 Jul 2023, 10:17
 -----------------------------------------
 
 local M = {
    "~/.config/nvim/lua/core/winbar.lua",
 }
 
-local navic = require "nvim-navic"
-local icons = require "user_lib.icons"
 
 local function isempty(s)
    return s == nil or s == ""
 end
 
 M.filename = function()
+   local icons = require "user_lib.icons"
 
    local filename = vim.fn.expand "%:t"
 
@@ -48,6 +47,9 @@ M.filename = function()
 end
 
 M.gps = function()
+   local icons = require "user_lib.icons"
+   local navic = require "nvim-navic"
+
    local location = navic.get_location()
    local retval = M.filename()
 
@@ -69,9 +71,11 @@ M.get_winbar = function()
       crunner = true,
       noice = true,
       checkhealth = true,
+      org = true,
+      orgagenda = true,
    }
 
-   return winbar_filetype_exclude[vim.bo.filetype] and nil or M.gps()
+   return winbar_filetype_exclude[vim.bo.filetype] and "" or M.gps()
 end
 
 return M

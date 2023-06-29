@@ -2,30 +2,21 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 27 Jun 2023, 11:10
+-- Last Modified: 15 Jul 2023, 13:09
 -------------------------------------
 
-local icons = require "user_lib.icons"
 
 local M = {
    "folke/which-key.nvim",
    event = "VeryLazy",
    opts = function(_, o)
+      local icons = require "user_lib.icons"
+
       o.plugins = {
-         marks = true,
-         registers = true,
-         spelling = {
-            enabled = true,
-            suggestions = 20,
-         },
          presets = {
             operators = false,
             motions = false,
             text_objects = false,
-            windows = true,
-            nav = true,
-            z = true,
-            g = true,
          },
       }
       o.icons = {
@@ -51,17 +42,13 @@ local M = {
          align = "center",
       }
       o.ignore_missing = false
-      o.hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "<cr>", "call", "lua", "^:", "^ " } -- hide mapping boilerplate
+      o.hidden = { "<silent>", "<Cmd>", "<CR>", "<cr>", "call", "lua", "^:", "^ " } -- hide mapping boilerplate
       o.show_help = false
       o.show_keys = false
       o.triggers_blacklist = {
          i = { "j", "k" },
          v = { "j", "k" },
       }
-   end,
-   config = function(_, opts)
-      local wk = require "which-key"
-      wk.setup(opts)
    end,
 }
 

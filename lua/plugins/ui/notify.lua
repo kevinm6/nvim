@@ -2,7 +2,7 @@
 --	File         : notify.lua
 --	Description  : notify plugin configuration
 --	Author       : Kevin
---	Last Modified: 28 May 2023, 20:12
+--	Last Modified: 02 Jul 2023, 11:56
 -----------------------------------
 
 local M = {
@@ -11,7 +11,6 @@ local M = {
    opts = function(_, o)
       -- Animation style (see below for details)
       o.stages = "fade"
-      o.fps = 20
 
       -- Function called when a new window is opened, use for changing win settings/config
       o.on_open = nil

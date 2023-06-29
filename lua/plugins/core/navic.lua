@@ -2,7 +2,7 @@
 --	File         : navic.lua
 --	Description  : gps-like plugin config
 --	Author       : Kevin
---	Last Modified: 28 May 2023, 13:20
+--	Last Modified: 02 Jul 2023, 10:44
 -----------------------------------
 
 local M = {
@@ -47,17 +47,7 @@ local M = {
 
       o.separator = " "..icons.ui.ChevronRight.." "
 
-      -- limit for amount of context shown
-      -- 0 means no limit
-      -- Note: to make use of depth feature properly, make sure your separator isn't something that can appear
-      -- in context names (eg: function names, class names, etc)
-      o.depth_limit = 5
-
       o.safe_output = false
-
-      o.depth_limit_indicator = "..."
-
-      click = false
    end
 }
 

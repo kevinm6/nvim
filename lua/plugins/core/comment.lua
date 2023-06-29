@@ -2,68 +2,37 @@
 -- File         : comment.lua
 -- Description  : Comment config
 -- Author       : Kevin
--- Last Modified: 13 May 2023, 10:54
+-- Last Modified: 14 Jul 2023, 17:24
 -------------------------------------
 
 local M = {
    "numToStr/Comment.nvim",
-   event = "FileType",
+   event = { "BufReadPre", "BufNewFile" },
    keys = {
-      { "gcc", mode = { "n", "v" } },
-      { "gbc", mode = { "n", "v" } },
-      { "gbO", mode = { "n", "v" } },
-      { "gbo", mode = { "n", "v" } },
-      { "gcO", mode = { "n", "v" } },
-      { "gcA", mode = { "n", "v" } },
-      { "gco", mode = { "n", "v" } },
+      { "gc", mode = { "n", "v" } },
+      { "gb", mode = { "n", "v" } },
       {
          "/",
          function()
-            require("comment.api").toggle.linewise.current(vim.fn.visualmode())
+            require("Comment.api").toggle.linewise.current(vim.fn.visualmode())
          end,
          desc = "comment",
          mode = "v",
       },
    },
    opts = function(_, o)
-      o.padding = true
-      o.sticky = true
       o.ignore = "^$"
-      ---LHS of toggle mappings in NORMAL + VISUAL mode
-      ---@type table
-      o.toggler = {
-         ---Line-comment toggle keymap
-         line = "gcc",
-         ---Block-comment toggle keymap
-         block = "gbc",
-      }
 
-      ---LHS of operator-pending mappings in NORMAL + VISUAL mode
-      ---@type table
-      o.opleader = {
-         ---Line-comment keymap
-         line = "gc",
-         ---Block-comment keymap
-         block = "gb",
-      }
-
-      ---LHS of extra mappings
-      ---@type table
-      o.extra = {
-         ---Add comment on the line above
-         above = "gcO",
-         ---Add comment on the line below
-         below = "gco",
-         ---Add comment at the end of line
-         eol = "gcA",
-      }
       o.pre_hook = function(ctx)
-         if
-            vim.bo.filetype == "typescriptreact"
-            or vim.bo.filetype == "javascriptreact"
-            or vim.bo.filetype == "javascript"
-            or vim.bo.filetype == "typescript"
-         then
+         require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
+         local javascript_filetypes = {
+           typescriptreact = true,
+           javascriptreact = true,
+           javascript = true,
+           typescript = true,
+         }
+
+         if javascript_filetypes[vim.bo.filetype] then
             local U = require "Comment.utils"
 
             -- Determine whether to use linewise or blockwise commentstring

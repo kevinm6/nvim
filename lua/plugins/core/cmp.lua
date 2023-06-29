@@ -2,50 +2,47 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 27 Jun 2023, 19:01
+-- Last Modified: 11 Jul 2023, 17:54
 -------------------------------------
 
 local M = {
    "hrsh7th/nvim-cmp",
    event = "InsertEnter",
    dependencies = {
-      "kevinm6/the-snippets",
+      { "kevinm6/the-snippets", dev = true },
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-buffer",
       { "ray-x/cmp-treesitter", dependencies = { "nvim-treesitter/nvim-treesitter" } },
+      "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
-      "rcarriga/cmp-dap",
+      { "rcarriga/cmp-dap", ft = { "dap-repl", "dapui_watches", "dapui_hover" } },
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
+      { "hrsh7th/cmp-cmdline", event = "CmdlineEnter" },
       "hrsh7th/cmp-calc",
       { "kdheepak/cmp-latex-symbols", ft = "markdown" },
    },
-}
+   opts = function(_, o)
+      local cmp = require "cmp"
+      local cmp_dap = require "cmp_dap"
+      local ls = require "luasnip"
+      local icons = require "user_lib.icons"
+      local icons_kind = icons.kind
+      local context = require "cmp.config.context"
 
--- Cmp Configuration
-function M.config()
-   local cmp = require "cmp"
-   local cmp_dap = require "cmp_dap"
-   local ls = require "luasnip"
-   local icons = require "user_lib.icons"
-   local icons_kind = icons.kind
-   local context = require "cmp.config.context"
-
-   cmp.setup {
-      snippet = {
+      o.snippet = {
          expand = function(args)
             ls.lsp_expand(args.body)
          end,
-      },
+      }
 
-      enabled = function()
+      o.enabled = function()
          return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
             or cmp_dap.is_dap_buffer()
-      end,
+      end
 
-      mapping = cmp.mapping.preset.insert {
+      o.mapping = cmp.mapping.preset.insert {
          ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
 
          ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
@@ -115,18 +112,25 @@ function M.config()
                fallback()
             end
          end, { "i" }),
-      },
+      }
 
-      formatting = {
+      o.formatting = {
          fields = { "abbr", "kind", "menu" },
-         format = function(_, vim_item)
+         format = function(entry, vim_item)
             -- Kind icons
-            vim_item.kind =
-               string.format("%s %s", icons_kind[vim_item.kind], vim_item.kind)
+            vim_item.kind = string.format("%s %s", icons_kind[vim_item.kind], vim_item.kind)
+            vim_item.dup = ({
+              luasnip = 0,
+              nvim_lsp = 0,
+              nvim_lua = 0,
+              buffer = 0,
+            })[entry.source.name] or 0
+
             return vim_item
          end,
-      },
-      sources = {
+      }
+
+      o.sources = {
          {
             name = "nvim_lsp",
             priority = 9,
@@ -167,61 +171,71 @@ function M.config()
          { name = "path", option = { trailing_slash = true } },
          { name = "latex_symbols", keyword_length = 2, priority = 2 },
          { name = "calc" },
-      },
-      confirm_opts = {
+      }
+
+      o.confirm_opts = {
          behavior = cmp.ConfirmBehavior.Replace,
          select = false,
-      },
-      window = {
+      }
+
+      o.window = {
          documentation = {
             border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
             winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
          },
-      },
-      experimental = {
+      }
+
+      o.experimental = {
          ghost_text = {
             enable = true,
             hl_group = "Comment",
          },
-      },
-   }
+      }
 
-   -- per-filetype config
-   cmp.setup.filetype("markdown", {
-      sources = cmp.config.sources {
-         { name = "nvim_lsp", priority = 7 },
-         { name = "luasnip", priority = 8 },
-         {
-            name = "buffer",
-            option = { keyword_length = 3, keyword_pattern = [[\k\+]] },
-            priority = 8,
+   end,
+   config = function(_, o)
+      -- Cmp Configuration
+      local cmp = require "cmp"
+      cmp.setup(o)
+
+      -- per-filetype config
+      -- cmp.setup.filetype("markdown", {
+      --    sources = cmp.config.sources {
+      --       { name = "nvim_lsp", priority = 7, dup = 0 },
+      --       { name = "luasnip", priority = 8, dup = 0 },
+      --       {
+      --          name = "buffer",
+      --          option = { keyword_length = 3, keyword_pattern = [[\k\+]] },
+      --          priority = 8,
+      --          dup = 0,
+      --       },
+      --       { name = "treesitter", priority = 6 },
+      --       { name = "path", option = { trailing_slash = true } },
+      --       { name = "latex_symbols", keyword_length = 2, priority = 4 },
+      --       { name = "calc" },
+      --    },
+      -- })
+
+      cmp.setup.filetype("help", {
+         window = {
+            documentation = cmp.config.disable,
          },
-         { name = "treesitter", priority = 6 },
-         { name = "path", option = { trailing_slash = true } },
-         { name = "latex_symbols", keyword_length = 2, priority = 4 },
-         { name = "calc" },
-      },
-   })
+      })
 
-   cmp.setup.filetype("help", {
-      window = {
-         documentation = cmp.config.disable,
-      },
-   })
+      cmp.setup.cmdline("/", {
+         sources = cmp.config.sources({
+            { name = "nvim_lsp_document_symbol" },
+         }, {
+            { name = "buffer" },
+         }),
+      })
 
-   cmp.setup.cmdline("/", {
-      sources = cmp.config.sources({
-         { name = "nvim_lsp_document_symbol" },
-      }, {
-         { name = "buffer" },
-      }),
-   })
-
-   cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-      sources = {
-         { name = "dap" },
-      },
-   })
-end
+      cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+         sources = {
+            { name = "dap" },
+         },
+      })
+   end
+}
 
 return M

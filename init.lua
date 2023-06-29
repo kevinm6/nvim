@@ -2,12 +2,12 @@
 -- File         : init.lua
 -- Description  : NeoVim configuration
 -- Author       : Kevin
--- Last Modified: 05 Apr 2023, 20:18
+-- Last Modified: 16 Jul 2023, 09:57
 --------------------------------------
 
 -- Set leader key
 vim.g.mapleader = ","
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = " "
 
 -- check if NeoVim or Vim
 if not vim.fn.has "nvim" == 1 then

@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 27 Jun 2023, 19:01
+--  Last Modified: 02 Jul 2023, 11:53
 ----------------------------------------
 
 local M = {
@@ -76,54 +76,6 @@ local M = {
             help = { icon = "" },
          },
       }
-      o.messages = {
-         -- NOTE: If you enable messages, then the cmdline is enabled automatically.
-         -- This is a current Neovim limitation.
-         enabled = true, -- enables the Noice messages UI
-         view = "notify", -- default view for messages
-         view_error = "notify",
-         view_warn = "notify",
-         view_history = "messages",
-         view_search = "virtualtext",
-         -- opts = {},
-      }
-      o.popupmenu = {
-         enabled = true, -- disable if you use something like cmp-cmdline
-         ---@type 'nui'|'cmp'
-         backend = "nui", -- backend to use to show regular cmdline completions
-         kind_icons = {},
-      }
-      o.redirect = {
-         view = "popup",
-         filter = { event = "msg_show" },
-      }
-      -- :Noice command
-      o.commands = {
-         -- :Noice history
-         history = {
-            -- options for the message history that you get with `:Noice`
-            view = "split",
-            opts = { enter = true, format = "details" },
-            filter = {
-               any = {
-                  { event = "notify" },
-                  { error = true },
-                  { warning = true },
-                  { event = "msg_show", kind = { "" } },
-                  { event = "lsp", kind = "message" },
-               },
-            },
-         },
-      }
-      o.notify = {
-         -- Noice can be used as `vim.notify` so you can route any notification like other messages
-         -- Notification messages have their level and other properties set.
-         -- event is always "notify" and kind can be any log level as a string
-         -- The default routes will forward notifications to nvim-notify
-         -- Benefit of using Noice for this is the routing and consistent history view
-         enabled = true,
-         view = "notify",
-      }
       o.lsp = {
          progress = {
             enabled = true,
@@ -148,79 +100,10 @@ local M = {
             -- override cmp documentation with Noice (needs the other options to work)
             ["cmp.entry.get_documentation"] = true,
          },
-         signature = {
-            enabled = true,
-            auto_open = {
-               enabled = true,
-               trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-               luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
-               throttle = 50, -- Debounce lsp signature help request by 50ms
-            },
-            view = nil, -- when nil, use defaults from documentation
-            ---@type NoiceViewOptions
-            opts = {}, -- merged with defaults from documentation
-         },
-         hover = {
-            enabled = true,
-            silent = false,
-            view = nil, -- when nil, use defaults from documentation
-            ---@type NoiceViewOptions
-            opts = {}, -- merged with defaults from documentation
-         },
-         message = {
-            -- Messages shown by lsp servers
-            enabled = true,
-            view = "notify",
-            opts = {},
-         },
-         -- defaults for hover and signature help
-         documentation = {
-            view = "hover",
-            ---@type NoiceViewOptions
-            opts = {
-               lang = "markdown",
-               replace = true,
-               render = "plain",
-               format = { "{message}" },
-               win_options = { concealcursor = "n", conceallevel = 3 },
-            },
-         },
       }
-      o.markdown = {
-         hover = {
-            ["|(%S-)|"] = vim.cmd.help, -- vim help links
-            ["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
-         },
-         highlights = {
-            ["|%S-|"] = "@text.reference",
-            ["@%S+"] = "@parameter",
-            ["^%s*(Parameters:)"] = "@text.title",
-            ["^%s*(Return:)"] = "@text.title",
-            ["^%s*(See also:)"] = "@text.title",
-            ["{%S-}"] = "@parameter",
-         },
-      }
-      o.health = {
-         checker = true, -- Disable if you don't want health checks to run
-      }
-      o.smart_move = {
-         -- noice tries to move out of the way of existing floating windows.
-         enabled = true, -- you can disable this behaviour here
-         -- add any filetypes here, that shouldn't trigger smart move.
-         excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
-      }
-      ---@type NoicePresets
       o.presets = {
-         -- you can enable a preset by setting it to true, or a table that will override the preset config
-         -- you can also add custom presets that you can enable/disable with enabled=true
-         bottom_search = false, -- use a classic bottom cmdline for search
-         command_palette = false, -- position the cmdline and popupmenu together
          long_message_to_split = true, -- long messages will be sent to a split
-         inc_rename = false, -- enables an input dialog for inc-rename.nvim
-         lsp_doc_border = false, -- add a border to hover docs and signature help
       }
-      o.throttle = 1000 / 30 -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
-      ---@type table<string, NoiceViewOptions>
       o.views = {
          cmdline_popup = {
             position = {

@@ -2,7 +2,7 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 22 May 2023, 17:57
+-- Last Modified: 02 Jul 2023, 10:49
 -------------------------------------
 
 local M = {
@@ -21,31 +21,11 @@ local M = {
       { "size", highlight = "Type" },
       "icon",
     }
-    o.buf_options = {
-      buflisted = false,
-    }
-    -- Window-local options to use for oil buffers
-    o.win_options = {
-      wrap = false,
-      signcolumn = "no",
-      cursorcolumn = false,
-      foldcolumn = "0",
-      spell = false,
-      list = false,
-      conceallevel = 3,
-      concealcursor = "n",
-    }
-    -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`
-    o.default_file_explorer = true
-    -- Restore window options to previous values when leaving an oil buffer
-    o.restore_win_options = true
-    -- Skip the confirmation popup for simple operations
-    o.skip_confirm_for_simple_edits = false
-    -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
-    -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
-    -- Additionally, if it is a string that matches "action.<name>",
-    -- it will use the mapping at require("oil.action").<name>
-    -- Set to `false` to remove a keymap
+    --- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
+    --- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
+    --- Additionally, if it is a string that matches "action.<name>",
+    --- it will use the mapping at require("oil.action").<name>
+    --- Set to `false` to remove a keymap
     o.keymaps = {
       ["?"] = "actions.show_help",
       ["<CR>"] = "actions.select",
@@ -78,8 +58,8 @@ local M = {
         end,
       },
     }
+      o.use_default_keymaps = false
     o.silence_scp_warning = true -- disable scp warn to use oil-ssh since I'm using a remap
-    o.use_default_keymaps = false
     o.view_options = {
       -- Show files and directories that start with "."
       show_hidden = false,
@@ -98,44 +78,7 @@ local M = {
       max_height = 0,
       border = "rounded",
       win_options = {
-        winblend = 8,
-      },
-    }
-    -- Configuration for the actions floating preview window
-    o.preview = {
-      -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-      -- min_width and max_width can be a single value or a list of mixed integer/float types.
-      -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
-      max_width = 0.9,
-      -- min_width = {40, 0.4} means "the greater of 40 columns or 40% of total"
-      min_width = { 40, 0.4 },
-      -- optionally define an integer/float for the exact width of the preview window
-      width = nil,
-      -- Height dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-      -- min_height and max_height can be a single value or a list of mixed integer/float types.
-      -- max_height = {80, 0.9} means "the lesser of 80 columns or 90% of total"
-      max_height = 0.9,
-      -- min_height = {5, 0.1} means "the greater of 5 columns or 10% of total"
-      min_height = { 5, 0.1 },
-      -- optionally define an integer/float for the exact height of the preview window
-      height = nil,
-      border = "rounded",
-      win_options = {
-        winblend = 0,
-      },
-      -- Configuration for the floating progress window
-      progress = {
-        max_width = 0.9,
-        min_width = { 40, 0.4 },
-        width = nil,
-        max_height = { 10, 0.9 },
-        min_height = { 5, 0.1 },
-        height = nil,
-        border = "rounded",
-        minimized_border = "none",
-        win_options = {
-          winblend = 0,
-        },
+        winblend = 10,
       },
     }
     -- This are defaults for now, no need to override

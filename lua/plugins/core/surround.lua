@@ -2,7 +2,7 @@
 -- File         : surround.lua
 -- Description  : Surround config
 -- Author       : Kevin
--- Last Modified: 13 May 2023, 12:08
+-- Last Modified: 02 Jul 2023, 10:52
 --------------------------------------
 
 local M = {
@@ -60,19 +60,11 @@ local M = {
       },
    },
    opts = function(_, o)
-      o.context_offset = 100
-      o.load_autogroups = false
       o.load_keymaps = true
-      o.mappings_style = "sandwich"
-      o.map_insert_mode = true
-      o.quotes = { "'", '"' }
-      o.brackets = { "(", "{ ", "[" }
-      o.space_on_closing_char = false
       o.pairs = {
          nestable = { { "(", ")" }, { "[", "]" }, { "{", "}" }, { "<", ">" } },
          linear = { { "'", "'" }, { "`", "`" }, { '"', '"' }, { "*", "*" } },
       }
-      o.prefix = "s"
    end,
 }
 

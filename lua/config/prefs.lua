@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 24 Jun 2023, 12:55
+-- Last Modified: 18 Jul 2023, 08:59
 -------------------------------------
 
 -- CURSOR {
@@ -74,6 +74,7 @@ local options = {
    -- FOLDING:
    wrap = false, -- Wrap long lines showing a linebreak
    foldenable = true, -- enable code folding
+   linebreak = true,
    foldmethod = "expr", -- method used to generate folds
    foldexpr = "nvim_treesitter#foldexpr()", -- using treesitter to more folds
    diffopt = { "internal", "filler", "closeoff", "vertical" },

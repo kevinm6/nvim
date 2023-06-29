@@ -2,7 +2,7 @@
 -- File         : gitsigns.lua
 -- Description  : Lua K NeoVim & VimR gitsigns config
 -- Author       : Kevin
--- Last Modified: 27 Jun 2023, 11:27
+-- Last Modified: 02 Jul 2023, 10:41
 -------------------------------------
 
 local M = {
@@ -20,6 +20,9 @@ local M = {
     { "<leader>gu", function() require "gitsigns".undo_stage_hunk() end, desc = "Undo Stage Hunk" },
     { "<leader>gd", function() require "gitsigns".diff_this() end, mode = { "n", "v" }, desc = "Diff" },
     { "<leader>gt", function() require "gitsigns".toggle_current_line_blame() end, desc = "Toggle Diff" },
+    { "<leader>gL", function() require "gitsigns".toggle_linehl() end, desc = "Toggle Linehl" },
+    { "<leader>gW", function() require "gitsigns".toggle_word_diff() end, desc = "Toggle Word diff" },
+    { "<leader>gN", function() require "gitsigns".toggle_numhl() end, desc = "Toggle Numhl" },
   },
    opts = function(_, o)
     o.signs = {
@@ -29,29 +32,13 @@ local M = {
       topdelete = { hl = "GitSignsDelete", text = "-", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
       changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
     }
-    o.signcolumn = true -- Toggle with `:Gitsigns toggle_signs`
-    o.numhl = false -- Toggle with `:Gitsigns toggle_numhl`
-    o.linehl = false -- Toggle with `:Gitsigns toggle_linehl`
-    o.word_diff = false -- Toggle with `:Gitsigns toggle_word_diff`
     o.watch_gitdir = {
       interval = 1000,
       follow_files = true,
     }
-    o.attach_to_untracked = true
-    o.current_line_blame = false -- Toggle with `:Gitsigns toggle_current_line_blame`
-    o.current_line_blame_opts = {
-      virt_text = true,
-      virt_text_pos = "right_align", -- 'eol' | 'overlay' | 'right_align'
-      delay = 1000,
-      ignore_whitespace = false,
-    }
     o.current_line_blame_formatter_opts = {
       relative_time = false,
     }
-    o.sign_priority = 6
-    o.update_debounce = 100
-    o.status_formatter = nil -- Use default
-    o.max_file_length = 40000
     o.preview_config = {
       -- Options passed to nvim_open_win
       border = "rounded",
@@ -59,9 +46,6 @@ local M = {
       relative = "cursor",
       row = 0,
       col = 1,
-    }
-    o.yadm = {
-      enable = false,
     }
    end
 }

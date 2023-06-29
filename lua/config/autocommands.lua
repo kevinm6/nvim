@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 27 Jun 2023, 11:43
+-- Last Modified: 07 Jul 2023, 10:38
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -90,7 +90,7 @@ autocmd({ "TextYankPost" }, {
 })
 
 -- Statusline
-autocmd({ "BufNewFile", "CursorMoved", "ModeChanged" }, {
+autocmd({ "BufNewFile", "CursorMoved", "ModeChanged", "VimResized", "FileType", "FileChangedShellPost" }, {
    group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
    pattern = "*",
    callback = function()
@@ -103,7 +103,8 @@ autocmd({ "BufNewFile", "CursorMoved", "ModeChanged" }, {
 autocmd({ "CursorMoved", "ModeChanged" }, {
    group = augroup("_winbar", { clear = true }),
    callback = function()
-      if not vim.api.nvim_win_get_config(0).relative ~= "" then -- disable on float windows
+      -- disable on float windows
+      if not vim.api.nvim_win_get_config(0).relative ~= "" and not vim.bo.filetype == "alpha" then
          vim.wo.winbar = require("core.winbar").get_winbar()
       end
    end,

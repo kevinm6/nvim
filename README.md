@@ -18,7 +18,7 @@
 
 ---
 
-> Written mostly in [Lua](https://www.lua.org/)
+> Written mostly in [ Lua](https://www.lua.org/)
 
 _Most used plugins_:  
 
@@ -43,9 +43,7 @@ _Most used plugins_:
 - [Gitsigns](https://github.com/lewis6991/gitsigns.nvim)
 - [Luasnip](https://github.com/L3MON4D3/LuaSnip)
 - [Navic](https://github.com/SmiteshP/nvim-navic)
-- [Nvim-tree](https://github.com/kyazdani42/nvim-tree.lua)
 - [Oil](https://github.com/stevearc/oil.nvim)
-- [Mind](https://github.com/phaazon/mind.nvim)
 - [Peek](https://github.com/toppair/peek.nvim)
 - [Surround](https://github.com/ur4ltz/surround.nvim)
 - [Todo-comments](https://github.com/folke/todo-comments.nvim)

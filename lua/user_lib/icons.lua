@@ -2,7 +2,7 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 12 May 2023, 13:31
+--	Last Modified: 01 Jul 2023, 12:27
 -----------------------------------
 
 -- NOTE:
@@ -125,6 +125,7 @@ return {
       Plus = "",
       Dev = "󰾰",
       WhichKeySep = "⇢",
+      Orgmode = "",
    },
    diagnostics = {
       Error = "",

@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 27 Jun 2023, 12:42
+-- Last Modified: 07 Jul 2023, 11:50
 -----------------------------------------
 
 local S = {
@@ -48,10 +48,13 @@ local set_color_groups = function()
       StatusLineGpsDiagnostic = { fg = "#3c3c3c", bg = "NONE" },
       StatusLineInverted      = { fg = "#1c1c1c", bg = "#2c2c2c" },
       StatusLineEmptyspace    = { fg = "#2c2c2c", bg = "NONE" },
+      StatusLineLite          = { fg = "#dcdcdc", bg = "#262626" },
       StatusLineInactive      = { fg = "#5c5c5c", bg = "#2c2c2c" },
    }
 
-   require("user_lib.functions").set_highlights(hls)
+   for group, settings in pairs(hls) do
+      vim.api.nvim_set_hl(0, group, settings)
+   end
 end
 
 local colors = {
@@ -63,6 +66,7 @@ local colors = {
    lspnoactive = "%#StatusLineLspNotActive#",
    ftype       = "%#StatusLineFileType#",
    empty       = "%#StatusLineEmptyspace#",
+   lite        = "%#StatusLineLite#",
    name        = "%#StatusLineFileName#",
    encoding    = "%#StatusLineFileEncoding#",
    fformat     = "%#StatusLineFileFormat#",
@@ -219,11 +223,11 @@ local function get_filetype()
 end
 
 local function get_fencoding()
-   return "%{&fileencoding?&fileencoding:&encoding}"
+   return " %{&fileencoding?&fileencoding:&encoding} "
 end
 
 local function session_name()
-   return S.session_name ~= "" and "Session: " .. colors.session .. S.session_name or nil
+   return S.session_name ~= "" and "Session: " .. colors.session .. S.session_name or ""
 end
 
 local function get_python_env()
@@ -244,15 +248,15 @@ local function get_python_env()
          end
       end
    end
-   return nil
+   return ""
 end
 
 local function get_lsp_info()
    local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
    if #buf_clients == 0 then
-      return ("%s%s LSP Inactive"):format(colors.lspnoactive, icons.ui.CircleEmpty)
+      return ("%s%s LSP Inactive "):format(colors.lspnoactive, icons.ui.CircleEmpty)
    end
-   local buf_client_names = ("%s%s%s ["):format(colors.name, icons.ui.SmallCircle, colors.lspactive)
+   local buf_client_names = ("%s%s%s["):format(colors.name, icons.ui.SmallCircle, colors.lspactive)
    -- add client
    for idx, client in pairs(buf_clients) do
       if idx > 1 then
@@ -260,80 +264,11 @@ local function get_lsp_info()
       end
       buf_client_names = buf_client_names .. client.name
    end
-   return buf_client_names .. "]"
+   return buf_client_names .. "] "
 end
 
--- Statusline disabled
--- display only filetype and current mode
-S.off = function(name)
-   local ftype_name = get_filetype().name
-
-   local special_filetypes = {
-      alpha           = icons.ui.Plugin .. " Dashboard",
-      oil             = icons.documents.OpenFolder .. " File Explorer",
-      lazy            = icons.ui.PluginManager .. " Plugin Manager",
-      lspinfo         = icons.ui.Health .. " LSP Status",
-      TelescopePrompt = icons.ui.Telescope .. " Telescope",
-      qf              = icons.ui.Gear .. " QuickFix",
-      toggleterm      = icons.misc.Robot .. " Terminal",
-      crunner         = icons.ui.AltSlArrowRight .. " CodeRunner",
-      mason           = icons.ui.List .. " Package Manager",
-      Outline         = icons.ui.Table .. " Symbols Outline",
-      noice           = icons.ui.List .. " Notifications",
-      checkhealth     = icons.ui.Health .. " Health",
-   }
-   local custom_ft = special_filetypes[ftype_name]
-   return ("%s%s %%= %s%%="):format(get_mode(), colors.inactive, name or custom_ft or ftype_name)
-end
-
--- Statusline enabled
-S.on = function()
-   -- LeftSide
-   local currMode = "%m%r"
-   local leftSide = ("%s%s%s%s%s%s%s %s%s%s%s %s %s"):format(
-      colors.mode,
-      currMode,
-      get_mode(),
-      colors.inverted,
-      icons.ui.SlArrowRight,
-      colors.git,
-      get_git_status(),
-      colors.name,
-      get_filename(),
-      colors.empty,
-      icons.ui.SlArrowRight,
-      session_name() or "",
-      get_python_env() or ""
-   )
-
-   -- Middle
-   local sideSep = "%="
-   local center = (" %s%s "):format(sideSep, get_lsp_diagnostic())
-
-   -- RightSide
-   local fformat = "%{&ff}"
-   local ftype = get_filetype()
-
-   -- Right Side
-   local rightSide = ("%s%s%s %s %s %s%s  %s%s[%s] %s%s%s"):format(
-      colors.empty,
-      icons.ui.SlArrowLeft,
-      get_lsp_info(),
-      colors.ftype,
-      ftype.icon or "",
-      ftype.name,
-      colors.encoding,
-      get_fencoding(),
-      colors.fformat,
-      fformat,
-      get_line_onTot(),
-      colors.inverted,
-      icons.ui.SlArrowLeft
-   )
-
-   return ("%s%s%s"):format(leftSide, center, rightSide)
-end
-
+--- Check if matching filetype exists and exclude
+--- @return boolean
 local to_exclude = function()
    local special_ft = {
       alpha           = true,
@@ -349,10 +284,76 @@ local to_exclude = function()
       Outline         = true,
       noice           = true,
       checkhealth     = true,
+      org             = true,
+      orgagenda       = true,
    }
 
    return special_ft[vim.bo.filetype]
 end
+
+
+-- Statusline disabled
+-- display only filetype and current mode
+S.off = function(name)
+   local ftype_name = vim.bo.filetype
+
+   local special_filetypes = {
+      alpha           = icons.ui.Plugin .. " Dashboard",
+      oil             = icons.documents.OpenFolder .. " File Explorer",
+      lazy            = icons.ui.PluginManager .. " Plugin Manager",
+      lspinfo         = icons.ui.Health .. " LSP Status",
+      TelescopePrompt = icons.ui.Telescope .. " Telescope",
+      qf              = icons.ui.Gear .. " QuickFix",
+      toggleterm      = icons.misc.Robot .. " Terminal",
+      crunner         = icons.ui.AltSlArrowRight .. " CodeRunner",
+      mason           = icons.ui.List .. " Package Manager",
+      Outline         = icons.ui.Table .. " Symbols Outline",
+      noice           = icons.ui.List .. " Notifications",
+      checkhealth     = icons.ui.Health .. " Health",
+      org             = icons.ui.Orgmode .. " Orgmode",
+      orgagenda       = icons.ui.Calendar .. " OrgAgenda"
+   }
+   local custom_ft = special_filetypes[ftype_name]
+   return ("%s%s %%= %s%%="):format(get_mode(), colors.inactive, name or custom_ft or ftype_name)
+end
+
+
+S.on = function()
+   local sideSep = "%="
+   local currMode = "%m%r"
+   local fformat = "%{&ff}"
+   local space = " "
+
+   local sl = {
+      -- LeftSide
+      colors.mode, currMode, get_mode(),
+      colors.inverted, icons.ui.SlArrowRight,
+      colors.git, get_git_status(),
+      colors.name, get_filename(),
+      colors.empty, icons.ui.SlArrowRight,
+      session_name(),
+      get_python_env(),
+
+      -- Middle
+      sideSep,
+      get_lsp_diagnostic(),
+
+      -- Right Side
+      colors.empty, icons.ui.SlArrowLeft, get_lsp_info(),
+      colors.ftype, get_filetype().icon or "",
+      space,
+      get_filetype().name,
+      colors.encoding, get_fencoding(),
+      colors.fformat, fformat,
+      get_line_onTot(),
+      colors.inverted, icons.ui.SlArrowLeft
+   }
+
+   return table.concat(sl)
+end
+
+
+
 
 S.get_statusline = function()
    if not vim.g.statusline_color then set_color_groups() end

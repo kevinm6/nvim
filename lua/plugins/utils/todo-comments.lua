@@ -2,11 +2,15 @@
 -- File         : todo-comments.lua
 -- Description  : todo-comments plugin config
 -- Author       : Kevin
--- Last Modified: 28 May 2023, 13:26
+-- Last Modified: 02 Jul 2023, 13:15
 -----------------------------------
 
 local M = {
    "folke/todo-comments.nvim",
+   keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Prev todo comment" },
+   },
    cmd = { "TodoTrouble", "TodoTelescope " },
    event = "BufReadPost",
    dependencies = { "nvim-lua/plenary.nvim" },
@@ -18,11 +22,6 @@ local M = {
       local info_yellow = "#FFCC66"
       local hint_blue = "#4FC1FF"
       local perf_purple = "#7C3AED"
-      -- local note_green = '#10B981'
-
-      o.signs = true -- show icons in the signs column
-      o.sign_priority = 8 -- sign priority
-      -- keywords recognized as todo comments
       o.keywords = {
          FIX = {
             icon = icons.ui.Bug, -- icon used for the sign, and in search results
@@ -35,47 +34,6 @@ local M = {
          WARN = { icon = icons.diagnostics.Warning, color = warning_orange, alt = { "WARNING", "XXX" } },
          PERF = { icon = icons.ui.Dashboard, color = perf_purple, alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
          NOTE = { icon = icons.ui.Note, color = info_yellow, alt = { "INFO" } },
-      }
-      -- merge_keywords = true, -- when true, custom keywords will be merged with the defaults
-      -- highlighting of the line containing the todo comment
-      -- * before: highlights before the keyword (typically comment characters)
-      -- * keyword: highlights of the keyword
-      -- * after: highlights after the keyword (todo text)
-      o.highlight = {
-         multiline = true,
-         multiline_pattern = "^.",
-         multiline_context = 10,
-         before = "", -- "fg" or "bg" or empty
-         -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-         keyword = "fg", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-         after = "fg", -- "fg" or "bg" or empty
-         pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-         comments_only = true, -- uses treesitter to match keywords in comments only
-         max_line_len = 400, -- ignore lines longer than this
-         exclude = {}, -- list of file types to exclude highlighting
-      }
-      -- list of named colors where we try to extract the guifg from the
-      -- list of hilight groups or use the hex color if hl not found as a fallback
-      -- colors = {
-      --   error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
-      --   warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
-      --   info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
-      --   hint = { "LspDiagnosticsDefaultHint", "#10B981" },
-      --   default = { "Identifier", "#7C3AED" },
-      -- },
-      o.search = {
-         command = "rg",
-         args = {
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-         },
-         -- regex that will be used to match keywords.
-         -- don't replace the (KEYWORDS) placeholder
-         pattern = [[\b(KEYWORDS):]], -- ripgrep regex
-         -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
       }
    end,
 }
