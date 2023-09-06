@@ -2,22 +2,21 @@
 --	File: alpha.lua
 --	Description: alplha config for Neovim
 --	Author: Kevin
---	Last Modified: 11 Jul 2023, 11:05
+--	Last Modified: 28 Sep 2023, 13:08
 -----------------------------------
 
 local M = {
    "goolord/alpha-nvim",
    event = "VimEnter",
+   keys = {
+        { "<leader>a", function() vim.cmd.Alpha {} end, desc = "Alpha Dashboard" }
+   }
 }
 
 function M.config()
-   -- local has_telescope, _ = pcall(require, "telescope")
-   -- if not has_telescope then
-   --    vim.notify("Telescope not available!\n Not opening dashboard", vim.log.levels.WARN)
-   --    return
-   -- end
+   local has_dashboard, alpha = pcall(require, "alpha")
+   if not has_dashboard then return end
 
-   local alpha = require "alpha"
    local icons = require "user_lib.icons"
    local dashboard = require "alpha.themes.dashboard"
 
@@ -49,16 +48,16 @@ function M.config()
    }
 
    dashboard.section.buttons.val = {
-      dashboard.button("f", icons.ui.NewFile .. " New file", "<cmd>lua require 'user_lib.functions'.new_file()<CR>"),
+      dashboard.button("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'user_lib.functions'.new_file()<CR>"),
       dashboard.button(
          "t",
          icons.ui.NewFile .. " New temp file",
          "<cmd>lua require 'user_lib.functions'.new_tmp_file()<CR>"
       ),
-      dashboard.button("o", icons.ui.Note .. " Notes", "<cmd>edit ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes/pages/notes.md<CR>"),
+      dashboard.button("o", icons.ui.Note .. " Notes", [[<cmd>lua require "user_lib.notes".open_note()<CR>]]),
 
       dashboard.button(
-         "F",
+         "f",
          icons.documents.Files .. " Find file",
          "<cmd>lua require 'telescope.builtin'.find_files()<CR>"
       ),
@@ -67,11 +66,6 @@ function M.config()
          "R",
          icons.git.Repo .. " Find project",
          "<cmd>lua require 'telescope'.extensions.project.project{}<CR>"
-      ),
-      dashboard.button(
-         "u",
-         icons.ui.Uni .. " University",
-         [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$CS"}<CR>]]
       ),
       dashboard.button("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "user_lib.functions".dev_folder()<CR>]]),
       dashboard.button("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
@@ -88,16 +82,11 @@ function M.config()
          "<cmd>lua require 'user_lib.sessions'.restore_session()<CR>"
       ),
       dashboard.button(
-         "C",
-         icons.ui.Gear .. " Config",
-         [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$NVIMDOTDIR" }<CR>]]
-      ),
-      dashboard.button(
          "D",
          icons.ui.Lock .. " Dotfiles",
          [[<cmd>lua require "telescope".extensions.file_browser.file_browser { cwd = "$DOTFILES" }<CR>]]
       ),
-      dashboard.button("h", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
+      dashboard.button("H", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
       dashboard.button("c", icons.documents.Files .. " Close", "<cmd>Alpha<CR>"),
       dashboard.button("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
    }
@@ -119,13 +108,9 @@ function M.config()
    dashboard.section.buttons.opts.hl = "AlphaButtons"
    dashboard.section.footer.opts.hl = "AlphaFooter"
 
-   -- dashboard.config.opts.noautocmd = true
+   dashboard.config.opts.noautocmd = true
 
    alpha.setup(dashboard.opts)
-
-   vim.keymap.set("n", "<leader>a", function()
-      vim.cmd.Alpha {}
-   end, { desc = "Alpha Dashboard" })
 end
 
 return M

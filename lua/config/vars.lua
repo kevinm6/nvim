@@ -2,7 +2,7 @@
 -- File         : vars.lua
 -- Description  : NeoVim & VimR global vars
 -- Author       : Kevin
--- Last Modified: 25 Jun 2023, 10:32
+-- Last Modified: 11 Sep 2023, 17:20
 -------------------------------------
 
 -- disable netrw
@@ -48,6 +48,7 @@ vim.g.omni_sql_no_default_maps = 1
 vim.g.dbs = {
    imdb = "postgres://:@localhost/imdb",
    lezione = "postgres://:@localhost/lezione",
+   -- tlwproject = "mongodb+srv://tlwproject.tszysxw.mongodb.net/ --apiVersion 1 --username tlwuser"
 }
 vim.g.LanguageClient_serverCommands = {
    ["sql"] = {

@@ -2,7 +2,7 @@
 --  File         : format.lua
 --  Description  : format functions
 --  Author       : Kevin
---  Last Modified: 23 Jun 2023, 09:18
+--  Last Modified: 28 Sep 2023, 08:23
 -------------------------------------
 
 local F = {}
@@ -19,7 +19,7 @@ F.lsp_format = function(bufnr)
          trimFinalNewline = false,
       },
       filter = function(client)
-         return client.name == "null-ls"
+         return client.name ~= "null-ls"
       end,
    }
 end

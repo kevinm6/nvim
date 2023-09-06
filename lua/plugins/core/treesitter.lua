@@ -2,21 +2,59 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 21 Jul 2023, 09:00
+-- Last Modified: 12 Sep 2023, 10:56
 -------------------------------------
 
 local function parsers_to_be_installed()
    local parsers = {
-      "c", "comment", "cpp", "css", "dot", "dockerfile", "bash",
-      "gitignore", "gitattributes", "gitcommit", "git_rebase", "go",
-      "vimdoc", "html", "http", "json", "json5", "jsdoc",
-      "latex", "erlang", "ruby", "lua", "java", "javascript",
-      "markdown", "markdown_inline", "rust", "ocaml",
-      "ocaml_interface", "php", "python", "regex", "python",
-      "phpdoc", "scala", "scheme", "sql", "swift", "todotxt",
-      "vim", "yaml", "org", "ini",
+      "c",
+      "comment",
+      "cpp",
+      "css",
+      "dot",
+      "dockerfile",
+      "bash",
+      "gitignore",
+      "gitattributes",
+      "gitcommit",
+      "git_rebase",
+      "go",
+      "vimdoc",
+      "html",
+      "http",
+      "json",
+      "json5",
+      "jsdoc",
+      "latex",
+      "erlang",
+      "ruby",
+      "lua",
+      "java",
+      "javascript",
+      "markdown",
+      "markdown_inline",
+      "rust",
+      "ocaml",
+      "ocaml_interface",
+      "php",
+      "python",
+      "regex",
+      "python",
+      "phpdoc",
+      "scala",
+      "scheme",
+      "sql",
+      "swift",
+      "todotxt",
+      "vim",
+      "yaml",
+      "ini",
    }
-   if vim.fn.has "mac" == 1 then return parsers else return {} end
+   if vim.fn.has "mac" == 1 then
+      return parsers
+   else
+      return {}
+   end
 end
 
 local M = {
@@ -49,7 +87,7 @@ local M = {
          "JoosepAlviste/nvim-ts-context-commentstring",
          "nvim-treesitter/nvim-treesitter-refactor",
          "nvim-treesitter/nvim-treesitter-context",
-         "windwp/nvim-ts-autotag",
+         -- "windwp/nvim-ts-autotag",
          {
             "HiPhish/rainbow-delimiters.nvim",
             config = function()
@@ -85,6 +123,11 @@ local M = {
             enable = true, -- false will disable the whole extension
             disable = {}, -- list of language that will be disabled
             additional_vim_regex_highlighting = { "markdown" },
+            cond = function(_, bufnr)
+               -- disable on big files or long one line files
+               return (vim.api.nvim_buf_line_count(bufnr) < 20000 and
+               #vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] < 1000)
+            end
          }
          o.autopairs = {
             enable = true,
@@ -101,40 +144,21 @@ local M = {
          o.indent = {
             enable = true,
             disable = {
-               "css",
+               -- "css",
                "python",
-               "yaml",
+               -- "yaml",
             },
          }
          o.context_commentstring = {
             enable = true,
             enable_autocmd = false,
             config = {
-               css = "/* %s */"
-            }
+               css = "/* %s */",
+            },
          }
          o.autotag = {
-            enable = true,
+            enable = false,
             disable = {},
-         }
-         o.playground = {
-            enable = true,
-            disable = {},
-            updatetime = 25,
-            persist_queries = false,
-            keymaps = {
-               open = "gtd",
-               toggle_query_editor = "o",
-               toggle_hl_groups = "i",
-               toggle_injected_languages = "t",
-               toggle_anonymous_nodes = "a",
-               toggle_language_display = "I",
-               focus_language = "f",
-               unfocus_language = "F",
-               update = "R",
-               goto_node = "<cr>",
-               show_help = "?",
-            },
          }
          o.refactor = {
             highlight_definitions = {
@@ -158,6 +182,25 @@ local M = {
                   goto_next_usage = "<C-n>",
                   goto_previous_usage = "<C-p>",
                },
+            },
+         }
+         o.playground = {
+            enable = true,
+            disable = {},
+            updatetime = 25,
+            persist_queries = false,
+            keymaps = {
+               open = "gtd",
+               toggle_query_editor = "o",
+               toggle_hl_groups = "i",
+               toggle_injected_languages = "t",
+               toggle_anonymous_nodes = "a",
+               toggle_language_display = "I",
+               focus_language = "f",
+               unfocus_language = "F",
+               update = "R",
+               goto_node = "<cr>",
+               show_help = "?",
             },
          }
       end,

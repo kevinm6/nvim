@@ -2,7 +2,7 @@
 -- File         : todo-comments.lua
 -- Description  : todo-comments plugin config
 -- Author       : Kevin
--- Last Modified: 02 Jul 2023, 13:15
+-- Last Modified: 16 Sep 2023, 17:22
 -----------------------------------
 
 local M = {
@@ -10,8 +10,11 @@ local M = {
    keys = {
       { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
       { "[t", function() require("todo-comments").jump_prev() end, desc = "Prev todo comment" },
+      { "<leader>ftt", function() vim.cmd.TodoTelescope() end, desc = "ToDo Telescope" },
+      { "<leader>ftq", function() vim.cmd.TodoQuickFix() end, desc = "ToDo QuickFix" },
+      { "<leader>ftl", function() vim.cmd.TodoLocList() end, desc = "ToDo LocList" },
    },
-   cmd = { "TodoTrouble", "TodoTelescope " },
+   cmd = { "TodoTelescope", "TodoLocList", "TodoQuickFix" } ,
    event = "BufReadPost",
    dependencies = { "nvim-lua/plenary.nvim" },
    opts = function(_, o)

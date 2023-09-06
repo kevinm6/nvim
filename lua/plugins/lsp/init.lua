@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 22 Jul 2023, 13:19
+-- Last Modified: 24 Sep 2023, 12:12
 -------------------------------------
 
 --- Set buffer keymaps based on supported capabilities of the
@@ -14,20 +14,24 @@ local set_buf_keymaps = function(client, _)
       return
    end
 
-   local has_telescope, telescope = pcall(require, "telescope.builtin")
+   local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
 
    -- local opts = { noremap = true, silent = true }
    vim.keymap.set("n", "gl", function()
       vim.diagnostic.open_float()
    end, { buffer = true, desc = "Open float" })
+
    vim.keymap.set("n", "K", function()
-      vim.lsp.buf.hover()
-   end, { buffer = true })
+      local winid = require("ufo").peekFoldedLinesUnderCursor()
+      if not winid then
+         vim.lsp.buf.hover()
+      end
+   end, { desc = "Hover | PeekFold", buffer = true })
 
    if client.server_capabilities.declarationProvider then
       vim.keymap.set("n", "gD", function()
          if has_telescope then
-            telescope.lsp_declarations {}
+            tele_builtin.lsp_declarations()
          else
             vim.lsp.buf.declaration()
          end
@@ -36,7 +40,7 @@ local set_buf_keymaps = function(client, _)
    if client.server_capabilities.definitionProvider then
       vim.keymap.set("n", "gd", function()
          if has_telescope then
-            telescope.lsp_definitions {}
+            tele_builtin.lsp_definitions()
          else
             vim.lsp.buf.definition()
          end
@@ -45,7 +49,7 @@ local set_buf_keymaps = function(client, _)
    if client.server_capabilities.implementationProvider then
       vim.keymap.set("n", "gI", function()
          if has_telescope then
-            telescope.lsp_incoming_calls {}
+            tele_builtin.lsp_incoming_calls {}
          else
             vim.lsp.buf.implementation()
          end
@@ -54,7 +58,7 @@ local set_buf_keymaps = function(client, _)
    if client.server_capabilities.referencesProvider then
       vim.keymap.set("n", "gr", function()
          if has_telescope then
-            telescope.lsp_references {}
+            tele_builtin.lsp_references {}
          else
             vim.lsp.buf.references()
          end
@@ -93,20 +97,16 @@ end
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
 local set_buf_capabilities = function(client, bufnr)
-   -- TODO: enable on nvim_v0.10
-   -- https://github.com/neovim/neovim/commit/37079fca58f396fd866dc7b7d87a0100c17ee760
-   -- inlay hints
-   if vim.fn.has "nvim-0.10" then
+   -- TODO: remove check for nvim_v0.10 after update
+   if vim.lsp.inlay_hint then
       vim.lsp.inlay_hint(bufnr, true)
    end
 
    -- lsp-document_highlight
-   if
-      client.server_capabilities.documentHighlightProvider
-      and client.supports_method "textDocument/documentHighlight"
-   then
+   if client.server_capabilities.documentHighlightProvider and
+      client.supports_method "textDocument/documentHighlight" then
       local lsp_document_highlight =
-         vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
+      vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
       vim.api.nvim_clear_autocmds {
          buffer = bufnr,
          group = lsp_document_highlight,
@@ -145,6 +145,7 @@ local set_buf_capabilities = function(client, bufnr)
          vim.cmd.LspToggleAutoFormat()
       end, { desc = "Toggle AutoFormat" })
    end
+
    if client.server_capabilities.documentRangeFormattingProvider then
       vim.keymap.set("v", "<leader>lf", function()
          require("user_lib.functions").range_format()
@@ -163,8 +164,6 @@ end
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
 local custom_attach = function(client, bufnr)
-   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
    require("plugins.lsp.handlers").setup()
    require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
 
@@ -185,14 +184,20 @@ local M = {
          local lsputil = require "lspconfig.util"
 
          -- Update capabilities with extended
-         local ext_capabilities = vim.lsp.protocol.make_client_capabilities()
-         ext_capabilities = require("cmp_nvim_lsp").default_capabilities(ext_capabilities)
+         local ext_capabilities = nil
+         local has_cmp, cmp_nvim_lsp =  pcall(require, "cmp_nvim_lsp")
+         if not has_cmp then
+            ext_capabilities = vim.lsp.protocol.make_client_capabilities()
+         else
+            ext_capabilities = cmp_nvim_lsp.default_capabilities()
+         end
+
          ext_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
          -- HACK: this is to avoid errors on lsp that support only single encoding (ex: clangd)
          --       maybe is resolved with this change on nvim_v0.10
          -- `https://github.com/neovim/neovim/commit/ca26ec34386dfe98b0edf3de9aeb7b66f40d5efd`
-         ext_capabilities.offsetEncoding = "utf-8"
+         -- ext_capabilities.offsetEncoding = "utf-8"
 
          local default_lsp_config = {
             on_init = custom_init,
@@ -214,6 +219,8 @@ local M = {
             -- Next, you can provide targeted overrides for specific servers.
             -- Manage server with custom setup
             ["lua_ls"] = function()
+               require "neodev".setup()
+
                local runtime_path = vim.split(package.path, ";")
                table.insert(runtime_path, "lua/?.lua")
                table.insert(runtime_path, "lua/?/init.lua")
@@ -230,8 +237,11 @@ local M = {
                            disable = { "lowercase-global" },
                         },
                         completion = {
-                           keywordSnippet = "Replace",
-                           callSnippet = "Replace",
+                           enable = true,
+                           autoRequire = true,
+                           keywordSnippet = "Both",
+                           callSnippet = "Both",
+                           displayContext = 2,
                         },
                         workspace = {
                            library = {
@@ -239,7 +249,7 @@ local M = {
                               [vim.fn.stdpath "config" .. "/lua"] = true,
                            },
                            checkThirdParty = false,
-                        },
+                       },
                         hint = { enable = true },
                      },
                   },
@@ -269,7 +279,7 @@ local M = {
             end,
             ["sqlls"] = function()
                local databases_path =
-                  vim.fn.expand "~/Informatica/Anno2/Semestre1/Basi di Dati"
+               vim.fn.expand "~/Informatica/Anno2/Semestre1/Basi di Dati"
                lspconfig.sqlls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
                   settings = {
                      sqls = {
@@ -323,7 +333,10 @@ local M = {
             end,
             ["grammarly"] = function()
                lspconfig.grammarly.setup(
-                  vim.tbl_deep_extend("force", default_lsp_config, { autostart = false })
+                  vim.tbl_deep_extend("force", default_lsp_config, {
+                     filetypes = { "markdown", "text" },
+                     autostart = false,
+                  })
                )
             end,
             ["clangd"] = function()
@@ -361,11 +374,7 @@ local M = {
                         return absolute_cwd
                      end
 
-                     return lsputil.root_pattern(
-                        "go.mod",
-                        "go.work",
-                        ".git"
-                     )(fname)
+                     return lsputil.root_pattern("go.mod", "go.work", ".git")(fname)
                   end,
                   settings = {
                      gopls = {
@@ -401,11 +410,17 @@ local M = {
             ["tsserver"] = function()
                lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config, {
                   root_dir = lsputil.root_pattern(
-                        "tsconfig.json",
-                        "package.json",
-                        "jsconfig.json",
-                        ".git"
-                     ) or vim.loop.cwd(),
+                     "tsconfig.json",
+                     "package.json",
+                     "jsconfig.json",
+                     ".git"
+                  ) or vim.loop.cwd(),
+                  init_options = {
+                      preferences = {
+                        includeCompletionsWithSnippetText = true,
+                        includeCompletionsForImportStatements = true,
+                      }
+                  }
                }))
             end,
             ["bashls"] = function()
@@ -422,33 +437,24 @@ local M = {
                }))
             end,
             ["erlangls"] = function()
-               lspconfig.erlangls.setup(
-                  vim.tbl_deep_extend(
-                     "force",
-                     default_lsp_config, {
-                       docs = {
-                         description = [[
+               lspconfig.erlangls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+                  docs = {
+                     description = [[
                          https://github.com/erlang-ls/erlang_ls
-                         ]];
-                       },
-                       root_dir = lsputil.root_pattern("rebar.config", "erlang.mk", ".git") or
-                           vim.loop.cwd(),
-                     })
-               )
+                         ]],
+                  },
+                  root_dir = lsputil.root_pattern("rebar.config", "erlang.mk", ".git")
+                     or vim.loop.cwd(),
+               }))
             end,
          }
 
          -- sourcekit is still not available on mason-lspconfig
-         lspconfig.sourcekit.setup(
-            vim.tbl_deep_extend(
-               "force",
-               default_lsp_config, {
-                 cmd = { "/usr/bin/xcrun", "sourcekit-lsp" },
-                 filetypes = { "swift" },
-                 root_dir = lsputil.root_pattern("Package.swift", ".git")
-               }
-            )
-         )
+         lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            cmd = { "/usr/bin/xcrun", "sourcekit-lsp" },
+            filetypes = { "swift" },
+            root_dir = lsputil.root_pattern("Package.swift", ".git"),
+         }))
       end,
    },
 
@@ -480,7 +486,6 @@ local M = {
             },
          }
          o.registries = {
-            "lua:mason-registry.index",
             "github:mason-org/mason-registry",
          }
       end,
@@ -529,12 +534,41 @@ local M = {
    },
 
    {
+      "mfussenegger/nvim-lint",
+      event = "InsertEnter",
+      config = function()
+         local lint = require "lint"
+         lint.linters_by_ft = {
+            markdown = { "markdownlint" },
+            json = { "jsonlint" },
+            javascript = {
+               "eslint_d"
+            },
+            typescript = {
+               "eslint_d"
+            },
+            python = { "flake8" },
+            gitcommit = { "commitlint" },
+            php = { "php" },
+            yaml = { "yamllint" },
+         }
+
+         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+            callback = function()
+               if lint then
+                  lint.try_lint()
+               end
+            end,
+         })
+      end
+
+   },
+
+   -- TODO: to be removed later
+   {
       "jose-elias-alvarez/null-ls.nvim",
       event = "LspAttach",
       dependencies = { "nvim-lua/plenary.nvim" },
-      cond = function()
-         return vim.bo.filetype ~= "org"
-      end,
       --- @param o table options passed to config
       opts = function(_, o)
          local null_ls = require "null-ls"
@@ -553,7 +587,6 @@ local M = {
                      and {
                         "--no-semi",
                         "--single-quote",
-                        "--jsx-single-quote",
                      }
                      and params.options.tabSize
                      and { "--tab-width", params.options.tabSize }

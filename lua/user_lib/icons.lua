@@ -2,7 +2,7 @@
 --	File: icons.lua
 --	Description: K Neovim all icons
 --	Author: Kevin
---	Last Modified: 01 Jul 2023, 12:27
+--	Last Modified: 12 Sep 2023, 11:37
 -----------------------------------
 
 -- NOTE:
@@ -100,6 +100,10 @@ return {
       Pencil = "",
       ChevronRight = "",
       ChevronLeft = "",
+      RightTriangle = '▶',
+      LeftTriangle = '◀',
+      UpTriangle = '▲',
+      DownTriangle = '▼',
       BoldChevronRight = "",
       BoldChevronLeft = "",
       SlChevronRight = "⟩",

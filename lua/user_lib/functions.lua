@@ -2,10 +2,18 @@
 --  File         : functions.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 18 Jul 2023, 08:43
+--  Last Modified: 02 Oct 2023, 17:06
 -------------------------------------
 
 local F = {}
+
+---Hotloading source plugin/module
+---@param mod any
+---@return any, any
+F.load = function(mod)
+   package.loaded[mod] = nil
+   return require(mod)
+end
 
 --- Remove augroup, if exists from given name
 --- @param name string name of matching augroup to remove
@@ -16,7 +24,7 @@ F.remove_augroup = function(name)
 end
 
 --- Get lenght of current word
---- @see |<cword>|
+--- @see cword |<cword>|
 F.get_word_length = function()
    local word = vim.fn.expand "<cword>"
    return #word
@@ -58,57 +66,6 @@ F.dev_folder = function()
    end)
 end
 
---- align lines from pattern
---- @private
---- @param pattern string RegEx to match text
---- @param startline any start line position
---- @param endline any end line position
-local function align_lines(pattern, startline, endline)
-   local re = vim.regex(pattern)
-   if not pattern or not re then
-      vim.notify("Pattern for RegEx not valid", vim.log.levels.WARN)
-      return
-   end
-
-   local max = -1
-   local lines = vim.api.nvim_buf_get_lines(0, startline, endline, false)
-   for _, line in pairs(lines) do
-      local s = re:match_str(line)
-      s = vim.str_utfindex(line, s)
-      if s and max < s then
-         max = s
-      end
-   end
-
-   if max == -1 then
-      return
-   end
-
-   for i, line in pairs(lines) do
-      local s = vim.regex(pattern):match_str(line)
-      s = vim.str_utfindex(line, s)
-      if s then
-         local rep = max - s
-         local newline = {
-            string.sub(line, 1, s),
-            string.rep(" ", rep),
-            string.sub(line, s + 1),
-         }
-         lines[i] = table.concat(newline)
-      end
-   end
-
-   vim.api.nvim_buf_set_lines(0, startline, endline, false, lines)
-end
-
---- Alignment text from RegEx
---- @param pattern string RegEx or matching text
-F.align = function(pattern)
-   local top, bot = vim.fn.getpos "'<", vim.fn.getpos "'>"
-   align_lines(pattern, top[2] - 1, bot[2])
-   vim.fn.setpos("'<", top)
-   vim.fn.setpos("'>", bot)
-end
 
 --- Create new file w/ input for filename
 --- useful for dashboard and so on
@@ -141,6 +98,7 @@ F.new_tmp_file = function()
    end)
 end
 
+
 F.workon = function()
    require "telescope"
    local config = require "lazy.core.config"
@@ -161,7 +119,7 @@ end
 
 --- Set highlights
 --- @param hls table
---- @see |nvim_set_hl()|
+--- @see nvim_set_hl |nvim_set_hl()|
 F.set_highlights = function(hls)
    for group, settings in pairs(hls) do
       vim.api.nvim_set_hl(0, group, settings)
@@ -170,8 +128,7 @@ end
 
 
 --- Get current buf lsp Capabilities
---- @module "user_lib.functions"
---- @see |nvim_lsp_get_active_clients()|
+--- @see nvim_lsp_get_active_clients |nvim_lsp_get_active_clients()|
 F.get_current_buf_lsp_capabilities = function()
    local curBuf = vim.api.nvim_get_current_buf()
    local clients = vim.lsp.get_active_clients { bufnr = curBuf }

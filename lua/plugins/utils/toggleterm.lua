@@ -2,7 +2,7 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 01 Jun 2023, 09:18
+-- Last Modified: 01 Oct 2023, 18:18
 -------------------------------------
 
 local M = {
@@ -15,6 +15,7 @@ local M = {
       "ToggleTermToggleAll",
       "Ncdu",
       "Htop",
+      "GHDash",
    },
    keys = {
       { "<leader>t", desc = "Terminal" },
@@ -49,21 +50,21 @@ local M = {
       {
          "<leader>tt",
          function()
-            _HTOP_TOGGLE()
+            vim.cmd.Htop()
          end,
          desc = "Htop",
       },
       {
          "<leader>tl",
          function()
-            _LAZYGIT_TOGGLE()
+            vim.cmd.Git()
          end,
          desc = "LazyGit",
       },
       {
          "<leader>tn",
          function()
-            _NCDU_TOGGLE()
+            vim.cmd.Ncdu()
          end,
          desc = "Ncdu",
       },
@@ -106,10 +107,10 @@ local M = {
    },
    opts = function(_, o)
       o.size = function(term)
-         if term.direction == "horizontal" then
-            return vim.o.lines * 0.3
-         elseif term.direction == "vertical" then
-            return vim.o.columns * 0.4
+         if term.direction == 'horizontal' then
+            return math.floor(vim.o.lines * 0.3)
+         elseif term.direction == 'vertical' then
+            return math.floor(vim.o.columns * 0.4)
          end
       end
       o.open_mapping = [[<c-\>]]
@@ -120,16 +121,16 @@ local M = {
       o.start_in_insert = true
       o.insert_mappings = true
       o.persist_size = false
-      o.direction = "vertical"
+      o.direction = 'horizontal'
       o.close_on_exit = true
       o.shell = vim.o.shell
       o.auto_scroll = true
       o.float_opts = {
-         border = "curved",
+         border = 'curved',
          winblend = 6,
          highlights = {
-            border = "Normal",
-            background = "Normal",
+            border = 'Normal',
+            background = 'Normal',
          },
       }
       o.winbar = {
@@ -141,55 +142,39 @@ local M = {
    end,
 }
 
-local function set_terminal_keymaps(buf)
-   local opts = { buffer = buf, noremap = true }
-   -- vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
-   vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-   vim.keymap.set("t", "<C-e>", [[<C-\><C-n>]], opts)
-   vim.keymap.set("t", "<C-h>", [[<cmd>wincmd h<CR>]], opts)
-   vim.keymap.set("t", "<C-j>", [[<cmd>wincmd j<CR>]], opts)
-   vim.keymap.set("t", "<C-k>", [[<cmd>wincmd k<CR>]], opts)
-   vim.keymap.set("t", "<C-l>", [[<cmd>wincmd l<CR>]], opts)
-   vim.keymap.set("t", "<C-w>", [[<C-\><C-n>C-w>]], opts)
-end
 
 function M.config(_, o)
    require("toggleterm").setup(o)
 
-   vim.api.nvim_create_autocmd("TermOpen", {
-      pattern = "term://*",
-      callback = function(ev)
-         set_terminal_keymaps(ev.buf)
-      end,
-   })
-
    local Terminal = require("toggleterm.terminal").Terminal
 
-   local lazygit = Terminal:new { cmd = "lazygit", hidden = true, count = 3 }
-   function _LAZYGIT_TOGGLE()
-      lazygit:toggle()
-   end
-
-   vim.api.nvim_create_user_command("Git", _LAZYGIT_TOGGLE, {
-      desc = "Open lazygit inside NeoVim",
+   local lazygit = Terminal:new { cmd = "lazygit", hidden = true, direction = 'float', count = 3 }
+   vim.api.nvim_create_user_command("Git", function() lazygit:toggle() end, {
+      desc = "LazyGit",
       force = true,
    })
 
-   local htop = Terminal:new { cmd = "htop", hidden = true }
-   function _HTOP_TOGGLE()
-      htop:toggle()
-   end
-   vim.api.nvim_create_user_command("Htop", _HTOP_TOGGLE, {
-      desc = "Open HTOP inside NeoVim",
+   local lazydocker = Terminal:new { cmd = 'lazygit', hidden = true, count = 3 }
+   vim.api.nvim_create_user_command('Docker', function() lazydocker:toggle() end, {
+      desc = 'Docker',
       force = true,
    })
 
-   local ncdu = Terminal:new { cmd = "ncdu", hidden = true }
-   function _NCDU_TOGGLE()
-      ncdu:toggle()
-   end
-   vim.api.nvim_create_user_command("Ncdu", _NCDU_TOGGLE, {
-      desc = "Open NCDU inside NeoVim",
+   local gh_dash = Terminal:new { cmd = "gh dash", hidden = true, direction = 'float' }
+   vim.api.nvim_create_user_command('GHDash', function() gh_dash:toggle() end, {
+      desc = "GitHub Dashboard",
+      force = true
+   })
+
+   local htop = Terminal:new { cmd = 'htop', hidden = true }
+   vim.api.nvim_create_user_command('Htop', function() htop:toggle() end, {
+      desc = 'HTOP',
+      force = true,
+   })
+
+   local ncdu = Terminal:new { cmd = 'ncdu', hidden = true }
+   vim.api.nvim_create_user_command('Ncdu', function() ncdu:toggle() end, {
+      desc = 'NCDU',
       force = true,
    })
 end

@@ -2,80 +2,55 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 05 Jul 2023, 10:17
+-- Last Modified: 06 Sep 2023, 12:54
 -----------------------------------------
 
 local M = {
-   "~/.config/nvim/lua/core/winbar.lua",
+   dir = "~/.config/nvim/lua/core/winbar.lua",
 }
 
-
-local function isempty(s)
-   return s == nil or s == ""
+local function is_not_empty(s)
+   return s ~= nil and s ~= ""
 end
 
 M.filename = function()
-   local icons = require "user_lib.icons"
-
+   local default_file_icon = require "user_lib.icons".kind.File
    local filename = vim.fn.expand "%:t"
 
-   local extension = ""
-   local file_icon = ""
+   if is_not_empty(filename) then
+      local file_icon = ""
+      local extension = vim.fn.expand "%:e"
 
-   local default_file_icon = icons.kind.File
-   -- local file_icon_color = ""
-   -- local default_file_icon_color = ""
+      file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
+         filename,
+         extension,
+         { default = not is_not_empty(extension) or false }
+      )
 
-   if not isempty(filename) then
-      extension = vim.fn.expand "%:e"
-
-      local default = false
-
-      if isempty(extension) then
-         extension = ""
-         default = true
-      end
-
-      file_icon, file_icon_color =
-         require("nvim-web-devicons").get_icon_color(filename, extension, { default = default })
-
-      local hl_group = "FileIconColor" .. extension
-      -- vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color or default_file_icon_color })
-
-      return string.format(" %%#%s#%s %s", hl_group, file_icon or default_file_icon .. "%*", filename)
+      return string.format(
+         "%%#FileIconColor%s#%s%%* %s",
+         extension,
+         file_icon or default_file_icon,
+         filename
+      )
    end
 end
 
-M.gps = function()
+M.get_winbar = function()
    local icons = require "user_lib.icons"
-   local navic = require "nvim-navic"
+   local has_navic, navic = pcall(require, "nvim-navic")
+   local location = has_navic and navic.get_location() or nil
 
-   local location = navic.get_location()
    local retval = M.filename()
 
-   return not isempty(location)
-         and string.format("%s %s %s", retval, "%#NavicSeparator#" .. icons.ui.ChevronRight .. "%*", location)
+   return is_not_empty(location)
+         and string.format(
+            "%s %%#NavicSeparator# %s %%* %s",
+            retval,
+            icons.ui.ChevronRight,
+            location
+         )
       or retval
-end
-
-M.get_winbar = function()
-   local winbar_filetype_exclude = {
-      help = true,
-      dashboard = true,
-      NvimTree = true,
-      Trouble = true,
-      alpha = true,
-      toggleterm = true,
-      DressingSelect = true,
-      TelescopePrompt = true,
-      crunner = true,
-      noice = true,
-      checkhealth = true,
-      org = true,
-      orgagenda = true,
-   }
-
-   return winbar_filetype_exclude[vim.bo.filetype] and "" or M.gps()
 end
 
 return M

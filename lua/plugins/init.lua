@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 06 Jul 2023, 12:24
+--  Last Modified: 24 Sep 2023, 12:04
 -------------------------------------
 
 local M = {
@@ -11,10 +11,7 @@ local M = {
       lazy = true,
    },
 
-   {
-      "kyazdani42/nvim-web-devicons",
-      config = true,
-   },
+   { "nvim-tree/nvim-web-devicons", lazy = true },
 
    {
       "kevinm6/knvim-theme.nvim",
@@ -66,7 +63,7 @@ local M = {
    {
       "3rd/image.nvim",
       enabled = false,
-      ft = { "org", "markdown" },
+      ft = { "markdown" },
       init = function()
          package.path = package.path .. ";/Users/Kevin/.luarocks.share/lua/5.1/?/init.lua;"
          package.path = package.path .. ";/Users/Kevin/.luarocks.share/lua/5.1/?.lua;"
@@ -112,7 +109,53 @@ local M = {
             desc = "Symbols Outline",
          },
       },
-      config = true,
+      opts = function(_, o)
+         local icons = require "user_lib.icons"
+         o.symbols = {
+            File = { icon = icons.kind.File, hl = "@text.uri" },
+            Module = { icon = icons.kind.Module, hl = "@namespace" },
+            Namespace = { icon = icons.kind.Namespace, hl = "@namespace" },
+            Package = { icon = icons.ui.Package, hl = "@namespace" },
+            Class = { icon = icons.kind.Class, hl = "@type" },
+            Method = { icon = icons.kind.Method, hl = "@method" },
+            Property = { icon = icons.kind.Property, hl = "@method" },
+            Field = { icon = icons.kind.Field, hl = "@field" },
+            Constructor = { icon = icons.kind.Constructor, hl = "@constructor" },
+            Enum = { icon = icons.kind.Enum, hl = "@type" },
+            Interface = { icon = icons.kind.Interface, hl = "@type" },
+            Function = { icon = icons.kind.Function, hl = "@function" },
+            Variable = { icon = icons.kind.Variable, hl = "@constant" },
+            Constant = { icon = icons.kind.Constant, hl = "@constant" },
+            String = { icon = icons.type.String, hl = "@string" },
+            Number = { icon = icons.type.Number, hl = "@number" },
+            Boolean = { icon = icons.type.Boolean, hl = "@boolean" },
+            Array = { icon = icons.type.Array, hl = "@constant" },
+            Object = { icon = icons.type.Object, hl = "@type" },
+            Key = { icon = icons.kind.Keyword, hl = "@type" },
+            Null = { icon = icons.kind.Null, hl = "@type" },
+            EnumMember = { icon = icons.kind.EnumMember, hl = "@field" },
+            Struct = { icon = icons.kind.Struct, hl = "@type" },
+            Event = { icon = icons.kind.Event, hl = "@type" },
+            Operator = { icon = icons.kind.Operator, hl = "@operator" },
+            TypeParameter = { icon = icons.kind.TypeParameter, hl = "@parameter" },
+            Component = { icon = icons.kind.Field, hl = "@function" },
+            Fragment = { icon = icons.kind.Field, hl = "@constant" }, }
+      end
+   },
+
+   -- DB
+   {
+      "tpope/vim-dadbod",
+      ft = {
+         "sql", "pgsql"
+      },
+      dependencies = {
+         "kristijanhusak/vim-dadbod-ui",
+         "kristijanhusak/vim-dadbod-completion"
+      },
+      config = function()
+         require("config.dadbod").setup()
+      end
    },
 
    -- Java
@@ -147,7 +190,7 @@ local M = {
    -- Lua dev
    {
       "folke/neodev.nvim",
-      enabled = false,
+      enabled = true,
       config = true
    },
 }

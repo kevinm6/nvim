@@ -18,9 +18,9 @@
 
 ---
 
-> Written mostly in [ Lua](https://www.lua.org/)
+> Written mostly in ![Lua](https://img.shields.io/badge/Lua-2C2D72?style=flat&logo=lua&logoColor=white)
 
-_Most used plugins_:  
+## Most used plugins  
 
 - [Lazy](https://github.com/folke/lazy.nvim)
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim)
@@ -30,14 +30,14 @@ _Most used plugins_:
 - [Mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim)
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 - [Dap](https://github.com/mfussenegger/nvim-dap)
-- [Null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim)
-- [Whichkey](https://github.com/folke/which-key.nvim)
+- [Which-Key](https://github.com/folke/which-key.nvim)
 - [Notify](https://github.com/rcarriga/nvim-notify)
 - [Noice](https://github.com/folke/noice.nvim)
 - [ToggleTerm](https://github.com/akinsho/toggleterm.nvim)
-- [Alpha](https://github.com/goolord/alpha-nvim)
+- [Todo-comments](https://github.com/folke/todo-comments.nvim)
+- [Surround](https://github.com/ur4ltz/surround.nvim)
 - [Autopairs](https://github.com/windwp/nvim-autopairs)
-- [Cheatsheet](https://github.com/Djancyp/cheat-sheet)
+- [Ufo](https://github.com/kevinhwang91/nvim-ufo)
 - [Code_runner](https://github.com/CRAG666/code_runner.nvim)
 - [Comment](https://github.com/numToStr/Comment.nvim)
 - [Gitsigns](https://github.com/lewis6991/gitsigns.nvim)
@@ -45,14 +45,14 @@ _Most used plugins_:
 - [Navic](https://github.com/SmiteshP/nvim-navic)
 - [Oil](https://github.com/stevearc/oil.nvim)
 - [Peek](https://github.com/toppair/peek.nvim)
-- [Surround](https://github.com/ur4ltz/surround.nvim)
-- [Todo-comments](https://github.com/folke/todo-comments.nvim)
 - [Twilight](https://github.com/folke/twilight.nvim)
-- [Ufo](https://github.com/kevinhwang91/nvim-ufo)
+- [Alpha](https://github.com/goolord/alpha-nvim)
+- [Cheatsheet](https://github.com/Djancyp/cheat-sheet)
+- [⚠️  Null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim)
 
 ---
 
-**Try with Docker**
+### Try with Docker
 
 ```bash
   docker run -w /root -it --rm alpine:edge sh -uelic '

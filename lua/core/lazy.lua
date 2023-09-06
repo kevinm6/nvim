@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 16 Jul 2023, 10:06
+-- Last Modified: 27 Sep 2023, 12:58
 --------------------------------------
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
@@ -18,8 +18,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-local ok, lazy = pcall(require, "lazy")
-if not ok then
+local has_lazy, lazy = pcall(require, "lazy")
+if not has_lazy then
    vim.notify(
       (" %s\n (%s) \n"):format("Error loading lazy config", lazy),
       vim.log.levels.ERROR,
@@ -35,70 +35,70 @@ lazy.setup({
    { import = "plugins" },
    { import = "plugins.utils" },
 }, {
-   root = vim.fn.stdpath "data" .. "/lazy", -- directory where plugins will be installed
-   defaults = {
-      lazy = true, -- plugins lazy-loaded by default
-   },
-   lockfile = vim.fn.stdpath "config" .. "/lazy-lock.json", -- lockfile generated after running update.
-   dev = {
-      path = "~/dev",
-      fallback = false,
-   },
-   install = {
-      -- install missing plugins on startup. This doesn't increase startup time.
-      missing = false,
-      -- try to load one of these colorschemes when starting an installation during startup
-      colorscheme = { "knvim", "habamax" },
-   },
-   ui = {
-      -- a number <1 is a percentage., >1 is a fixed size
-      size = { width = 0.8, height = 0.8 },
-      -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
-      border = "none",
-      icons = {
-         cmd = " ",
-         config = "",
-         event = "",
-         ft = " ",
-         init = " ",
-         import = " ",
-         keys = " ",
-         lazy = "󰒲 ",
-         plugin = " ",
-         runtime = " ",
-         source = " ",
-         start = "",
-         task = " ",
-         loaded = "●",
-         not_loaded = "○",
-         list = {
-            "●",
-            "→",
-            "✮",
-            "‒",
+      root = vim.fn.stdpath "data" .. "/lazy", -- directory where plugins will be installed
+      defaults = {
+         lazy = true, -- plugins lazy-loaded by default
+      },
+      lockfile = vim.fn.stdpath "config" .. "/lazy-lock.json", -- lockfile generated after running update.
+      dev = {
+         path = "~/dev",
+         fallback = false,
+      },
+      install = {
+         -- install missing plugins on startup. This doesn't increase startup time.
+         missing = false,
+         -- try to load one of these colorschemes when starting an installation during startup
+         colorscheme = { "knvim", "habamax" },
+      },
+      ui = {
+         -- a number <1 is a percentage., >1 is a fixed size
+         size = { width = 0.8, height = 0.8 },
+         -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
+         border = "none",
+         icons = {
+            cmd = " ",
+            config = "",
+            event = "",
+            ft = " ",
+            init = " ",
+            import = " ",
+            keys = " ",
+            lazy = "󰒲 ",
+            plugin = " ",
+            runtime = " ",
+            source = " ",
+            start = "",
+            task = " ",
+            loaded = "●",
+            not_loaded = "○",
+            list = {
+               "●",
+               "→",
+               "✮",
+               "‒",
+            },
          },
       },
-   },
-   performance = {
-      cache = {
-         enabled = true,
-         path = vim.fn.stdpath "state" .. "/lazy/cache",
-      },
-      rtp = {
-         reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
-         disabled_plugins = {
-            "gzip",
-            "matchit",
-            "matchparen",
-            "netrwPlugin",
-            "tarPlugin",
-            "tohtml",
-            "tutor",
-            "zipPlugin",
+      performance = {
+         cache = {
+            enabled = true,
+            path = vim.fn.stdpath "state" .. "/lazy/cache",
+         },
+         rtp = {
+            reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+            disabled_plugins = {
+               "gzip",
+               "matchit",
+               "matchparen",
+               "netrwPlugin",
+               "tarPlugin",
+               "tohtml",
+               "tutor",
+               "zipPlugin",
+            },
          },
       },
-   },
-})
+   })
 
 vim.keymap.set("n", "<leader>Cl", function()
    vim.cmd.Lazy()
@@ -113,15 +113,15 @@ local modules = {
 }
 
 for _, mod in ipairs(modules) do
-   Util.try(function()
-      require(mod)
-   end, {
-      msg = "Failed loading " .. mod,
-      on_error = function(msg)
-         local modpath = require("lazy.core.cache").find(mod)
-         if modpath then
-            Util.error(msg)
-         end
-      end,
-   })
+Util.try(function()
+ require(mod)
+end, {
+    msg = "Failed loading " .. mod,
+    on_error = function(msg)
+       local modpath = require("lazy.core.cache").find(mod)
+       if modpath then
+	  Util.error(msg)
+       end
+    end,
+ })
 end

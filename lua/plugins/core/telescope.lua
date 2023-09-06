@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 21 Jul 2023, 10:37
+-- Last Modified: 02 Oct 2023, 09:08
 ---------------------------------------
 
 local function git_hunks()
@@ -39,6 +39,30 @@ local function git_hunks()
       :find()
 end
 
+
+local select_one_or_multi = function(prompt_bufnr, action)
+  local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+  local multi = picker:get_multi_selection()
+  if not vim.tbl_isempty(multi) then
+    require('telescope.actions').close(prompt_bufnr)
+    for _, j in pairs(multi) do
+      if j.path ~= nil then
+        vim.cmd(string.format("%s %s", action, j.path))
+      end
+    end
+  else
+    if action == 'edit' then
+      require('telescope.actions').select_default(prompt_bufnr)
+    elseif action == 'sp' then
+      require('telescope.actions').select_horizontal(prompt_bufnr)
+    elseif action == 'vsp' then
+      require('telescope.actions').select_vertical(prompt_bufnr)
+    elseif action == 'tabe' then
+      require('telescope.actions').select_tab(prompt_bufnr)
+    end
+  end
+end
+
 local M = {
    {
       "nvim-telescope/telescope.nvim",
@@ -59,7 +83,6 @@ local M = {
             end,
             desc = "Buffers",
          },
-         -- { "<leader>f", nil, desc = "Find" },
          {
             "<leader>ff",
             function()
@@ -345,29 +368,11 @@ local M = {
                   ["<Down>"] = "move_selection_next",
                   ["<Up>"] = "move_selection_previous",
 
-                  ["<CR>"] = function(pb)
-                     local picker = action_state.get_current_picker(pb)
-                     local multi = picker:get_multi_selection()
-                     actions.select_default(pb) -- the normal enter behaviour
-                     for _, j in pairs(multi) do
-                        if j.path ~= nil then -- is it a file -> open it as well:
-                           vim.cmd(string.format("%s %s", "edit", j.path))
-                        end
-                     end
-                  end,
-                  ["<C-l>"] = function(pb)
-                     local picker = action_state.get_current_picker(pb)
-                     local multi = picker:get_multi_selection()
-                     actions.select_default(pb) -- the normal enter behaviour
-                     for _, j in pairs(multi) do
-                        if j.path ~= nil then -- is it a file -> open it as well:
-                           vim.cmd(string.format("%s %s", "edit", j.path))
-                        end
-                     end
-                  end,
-                  ["<C-s>"] = "select_horizontal",
-                  ["<C-v>"] = "select_vertical",
-                  ["<C-t>"] = "select_tab",
+                  ["<CR>"] = function(pb) select_one_or_multi(pb, 'edit') end,
+                  ["<C-l>"] = function(pb) select_one_or_multi(pb, 'edit') end,
+                  ["<C-s>"] = function (pb) select_one_or_multi(pb, 'sp') end,
+                  ["<C-v>"] = function (pb) select_one_or_multi(pb, 'vsp') end,
+                  ["<C-t>"] = function (pb) select_one_or_multi(pb, 'tabe') end,
 
                   ["<C-p>"] = "preview_scrolling_up",
                   ["<C-n>"] = "preview_scrolling_down",
@@ -392,19 +397,11 @@ local M = {
                n = {
                   ["<esc>"] = "close",
                   ["q"] = "close",
-                  ["<CR>"] = function(pb)
-                     local picker = action_state.get_current_picker(pb)
-                     local multi = picker:get_multi_selection()
-                     actions.select_default(pb) -- the normal enter behaviour
-                     for _, j in pairs(multi) do
-                        if j.path ~= nil then -- is it a file -> open it as well:
-                           vim.cmd(string.format("%s %s", "edit", j.path))
-                        end
-                     end
-                  end,
-                  ["<C-s>"] = "select_horizontal",
-                  ["<C-v>"] = "select_vertical",
-                  ["<C-t>"] = "select_tab",
+                  ["<CR>"] = function(pb) select_one_or_multi(pb, 'edit') end,
+                  ["<C-l>"] = function(pb) select_one_or_multi(pb, 'edit') end,
+                  ["<C-s>"] = function (pb) select_one_or_multi(pb, 'sp') end,
+                  ["<C-v>"] = function (pb) select_one_or_multi(pb, 'vsp') end,
+                  ["<C-t>"] = function (pb) select_one_or_multi(pb, 'tabe') end,
                   ["<C-c>"] = "close",
 
                   -- ["<Tab>"] = "toggle_selection + actions.move_selection_worse"",
@@ -414,16 +411,7 @@ local M = {
 
                   ["<C-j>"] = "move_selection_next",
                   ["<C-k>"] = "move_selection_previous",
-                  ["<C-l>"] = function(pb)
-                     local picker = action_state.get_current_picker(pb)
-                     local multi = picker:get_multi_selection()
-                     actions.select_default(pb) -- the normal enter behaviour
-                     for _, j in pairs(multi) do
-                        if j.path ~= nil then -- is it a file -> open it as well:
-                           vim.cmd(string.format("%s %s", "edit", j.path))
-                        end
-                     end
-                  end,
+
                   ["j"] = "move_selection_next",
                   ["k"] = "move_selection_previous",
                   ["l"] = "select_default",

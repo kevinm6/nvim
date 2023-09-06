@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 18 Jul 2023, 08:59
+-- Last Modified: 25 Sep 2023, 09:56
 -------------------------------------
 
 -- CURSOR {
@@ -33,7 +33,7 @@ local options = {
    mat = 2, -- tenths of second to blink during matching brackets
    visualbell = false, -- disable visual sounds
    cursorline = true, -- highlight cursor line
-   showtabline = 0, -- show tabs if more than 1
+   showtabline = 1, -- show tabs if more than 1
    showmatch = true, -- Show matching brackets when over
    signcolumn = "yes", -- always show signcolumns
    cmdheight = 1, -- #lines for vim for commands/logs
@@ -43,8 +43,8 @@ local options = {
    splitright = true, -- split right in vertical split
    updatetime = 100, -- lower than default for faster completion
    updatecount = 0, -- do not create swap file
-   listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_" },
-   fillchars = [[eob: ,fold:,foldopen:,foldsep: ,foldclose:]],
+   listchars = vim.opt.listchars:append { tab = "⇥ ", eol = "↲", trail = "~", space = "_", nbsp = "␣" },
+   fillchars = [[eob: ,fold:󰇘,foldopen:,foldsep: ,foldclose:]],
    syntax = "off", -- using treesitter
    timeoutlen = 100,
    ttimeoutlen = 50,
@@ -83,6 +83,7 @@ local options = {
    -- and https://github.com/neovim/neovim/pull/17446
    -- it's overrided by nvim-ufo for now
    foldcolumn = "auto",
+
    colorcolumn = "90",
 
    -- FILE_MANAGEMENT:

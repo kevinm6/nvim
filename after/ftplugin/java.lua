@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 25 Jun 2023, 10:43
+-- Last Modified: 01 Oct 2023, 02:31
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
@@ -26,10 +26,11 @@ local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_na
 
 local launcher_path = vim.fn.glob(
   data_path.."/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
-  1, 1)[1]
+  true, true)[1]
 local bundles = vim.fn.glob(
   data_path.."/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
-    1, 1)
+    true, true)
+
 
 local lombok_path = data_path.."/mason/packages/jdtls/lombok.jar"
 
@@ -42,7 +43,7 @@ else
   vim.notify("Unsupported OS", vim.log.levels.WARN)
 end
 
-vim.list_extend(bundles, vim.split(vim.fn.glob(data_path.."/mason/packages/java-test/extension/server/*.jar", 1), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob(data_path.."/mason/packages/java-test/extension/server/*.jar", true), "\n"))
 
 local config = {
   cmd = {
@@ -233,19 +234,13 @@ vim.api.nvim_buf_create_user_command(0,
   "Format", function() vim.lsp.buf.formatting() end, { force = true }
 )
 
--- lsp-document_highlight
 
--- local java_lsp_hi_doc_group = vim.api.nvim_create_augroup("_java_lsp_document_highlight", { clear = true })
--- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
---   group = java_lsp_hi_doc_group,
---   pattern = "*",
---   callback = function() vim.lsp.buf.document_highlight() end
--- })
--- vim.api.nvim_create_autocmd({ "CursorMoved" }, {
---   group = java_lsp_hi_doc_group,
---   pattern = "*",
---   callback = function() vim.lsp.buf.clear_references() end
--- })
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+   pattern = { "*.java" },
+   callback = function()
+      vim.lsp.codelens.refresh()
+   end,
+})
 
 -- nvim-dap keymaps
 vim.keymap.set("n", "<leader>df", function() require "jdtls".test_class() end, { buffer = true, desc = "Test class" })

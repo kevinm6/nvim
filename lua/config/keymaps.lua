@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 27 Jun 2023, 11:52
+-- Last Modified: 19 Sep 2023, 09:07
 -------------------------------------
 
 local set_opts = function(opts)
@@ -115,7 +115,7 @@ set_keymap(
    "n",
    "<C-s>",
    [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-   set_opts { silent = false, desc = "Search" }
+   set_opts { silent = false, desc = "Replace occurence from <cword>" }
 )
 set_keymap("n", "<S-l>", function()
    vim.cmd.bnext {}
@@ -134,7 +134,7 @@ set_keymap("n", "Y", "y$", set_opts {})
 set_keymap("n", "J", "mzJ`z", set_opts {})
 set_keymap("n", "n", "nzzzv", set_opts {})
 set_keymap("n", "N", "Nzzzv", set_opts {})
-set_keymap("n", "S", ":s///<Left><Left>", set_opts { silent = false })
+set_keymap("n", "S", ":%s///g<Left><Left><Left>", set_opts { silent = false })
 -- set_keymap("n", "µ", "<cmd>Glow<cr>", set_opts {})
 set_keymap("n", "—", "<C-w>| <C-w>_", set_opts {})
 set_keymap("n", "˝", "<C-w>J", set_opts {})
@@ -150,10 +150,11 @@ set_keymap("n", "ff", "/", set_opts { silent = false, desc = "Search" })
 -- move text
 set_keymap("n", "º", "<Esc>:m .-2<CR>==", set_opts {})
 set_keymap("n", "ª", "<Esc>:m .+1<CR>==", set_opts {})
+
 -- delete & cut
 set_keymap("n", "x", [["_x]], set_opts {})
-set_keymap({ "n", "v" }, "d", [["_d]], set_opts {})
-set_keymap("n", "D", [["_D]], set_opts {})
+-- set_keymap({ "n", "v" }, "d", [["_d]], set_opts {})
+-- set_keymap("n", "D", [["_D]], set_opts {})
 
 -- Window managing
 set_keymap("n", "<leader>W", function() end, set_opts { desc = "Window" })
@@ -187,20 +188,19 @@ set_keymap({ "n", "v" }, "<leader>y", function() end, set_opts { desc = "Yank" }
 set_keymap("n", "<leader>yy", [["+yy]], set_opts { desc = "Yank line to clipboard" })
 set_keymap("n", "<leader>Y", [["+y$]], set_opts { desc = "Yank 'til end to clipboard" })
 
+-- Tabs
+set_keymap("n", "<Tab>", "<cmd>tabnext<cr>", set_opts {})
+set_keymap("n", "<S-Tab>", "<cmd>tabprev<cr>", set_opts {})
+
 -- Config File
--- set_keymap("n", "<leader>0s", function()
---    vim.cmd.source "$MYVIMRC"
---    vim.notify("Config file sourced", vim.log.levels.INFO)
--- end, set_opts { desc = "Source Neovim config file" })
--- set_keymap("n", "<leader>0e", function()
---    vim.cmd.edit "$NVIMDOTDIR/init.lua"
--- end, set_opts { desc = "Edit Neovim config file" })
--- set_keymap("n", "<leader>0r", function()
---    vim.cmd.luafile "%"
--- end, set_opts { desc = "Reload current buffer" })
--- set_keymap("n", "<leader>0S", function()
---    vim.cmd.source "~/.config/nvim/lua/plugins/core/luasnip.lua"
--- end, set_opts { desc = "Reload custom snippet" })
+set_keymap("n", "<leader>Cc", function()
+   local has_telescope, telescope = pcall(require, "telescope")
+   if has_telescope then
+      telescope.extensions.file_browser.file_browser { cwd = "$NVIMDOTDIR" }
+   else
+      vim.cmd.edit "$NVIMDOTDIR"
+   end
+end, set_opts { desc = "Neovim Config" })
 
 -- exit from NeoVim and Save or not
 set_keymap("n", "ZZ", function()
@@ -212,13 +212,20 @@ set_keymap("n", "ZQ", function()
 end, set_opts { desc = "Close buffer and go to next" })
 set_keymap("n", "ZA", ":%bdelete | :Alpha<CR>", set_opts { desc = "Close all Buffers" })
 
-set_keymap({ "n", "v" }, "<leader>ft", function()
+set_keymap({ "n", "v" }, "<leader>fT", function()
    require("plugins.translator.translate").translate()
 end, set_opts { desc = "Translate" })
 
 
 -- TERMINAL MODE
-set_keymap("t", "<Esc>", "<C-\\><C-n>", set_opts {})
+set_keymap("t", "<Esc>", [[<C-\><C-n>]], set_opts {})
+set_keymap("t", "<C-e>", [[<C-\><C-n>]], set_opts {})
+set_keymap("t", "<C-o>", [[<C-\><C-o>]], set_opts {})
+set_keymap("t", "<C-h>", [[<C-\><C-n><C-w>h]], set_opts {})
+set_keymap("t", "<C-j>", [[<C-\><C-n><C-w>j]], set_opts {})
+set_keymap("t", "<C-k>", [[<C-\><C-n><C-w>k]], set_opts {})
+set_keymap("t", "<C-l>", [[<C-\><C-n><C-w>l]], set_opts {})
+
 
 -- INSERT MODE
 set_keymap("i", "<S-Right>", "<C-o>vl", set_opts {})
@@ -263,14 +270,14 @@ set_keymap("v", "ga", function()
    vim.cmd.normal "!"
    vim.ui.input({ prompt = "Align regex pattern: ", default = nil }, function(input)
       if input then
-         require "user_lib.functions".align(input)
+         require "user_lib.alignment".align(input)
       end
    end)
 end, set_opts { desc = "Align from regex" })
 
 -- move selected text
 set_keymap("x", "<leader>p", '"_dP', set_opts {})
-set_keymap("x", "J", [[:move '>+1<CR>gv-gv]], set_opts {})
-set_keymap("x", "K", [[:move '<-2<CR>gv-gv]], set_opts {})
+-- set_keymap("x", "J", [[:move '>+1<CR>gv-gv]], set_opts {})
+-- set_keymap("x", "K", [[:move '<-2<CR>gv-gv]], set_opts {})
 set_keymap("x", "ª", [[:move '>+1<CR>gv-gv]], set_opts {}) -- <A-j>
 set_keymap("x", "º", [[:move '<-2<CR>gv-gv]], set_opts {}) -- <A-k>

@@ -2,12 +2,12 @@
 --	File         : notify.lua
 --	Description  : notify plugin configuration
 --	Author       : Kevin
---	Last Modified: 02 Jul 2023, 11:56
+--	Last Modified: 27 Sep 2023, 11:03
 -----------------------------------
 
 local M = {
    "rcarriga/nvim-notify",
-   event = "VeryLazy",
+   event = "BufReadPre",
    opts = function(_, o)
       -- Animation style (see below for details)
       o.stages = "fade"

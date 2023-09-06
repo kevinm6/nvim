@@ -2,12 +2,12 @@
 -- File         : scala.lua
 -- Description  : scala language server configuration (metals)
 -- Author       : Kevin
--- Last Modified: 31 Dec 2022, 12:45
+-- Last Modified: 08 Aug 2023, 17:18
 -------------------------------------
 
 local ok, metals = pcall(require, "metals")
 if not ok then
-  vim.notify("  Error on starting metals ", "Error")
+  vim.notify("  Error on starting metals ", vim.log.levels.ERROR)
   return
 end
 
@@ -43,7 +43,7 @@ dap.configurations.scala = {
   },
 }
 
-metals_config.on_attach = function(client, bufnr)
+metals_config.on_attach = function(_, _)
   require "metals".setup_dap()
 end
 

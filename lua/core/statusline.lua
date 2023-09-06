@@ -2,11 +2,11 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 07 Jul 2023, 11:50
+-- Last Modified: 01 Oct 2023, 02:37
 -----------------------------------------
 
 local S = {
-   "~/.config/nvim/lua/core/statusline.lua",
+   dir = "~/.config/nvim/lua/core/statusline.lua",
 }
 
 local icons = require "user_lib.icons"
@@ -21,6 +21,7 @@ local preset_width = setmetatable({
    git_status_full = 110,
    diagnostic = 128,
    row_onTot = 100,
+   lsp_info = 100,
 }, {
    __index = function()
       return 80
@@ -62,6 +63,10 @@ local colors = {
    mode        = "%#StatusLineMode#",
    git         = "%#StatusLineGit#",
    diag        = "%#StatusLineGpsDiagnostic#",
+   diagError   = "%#DiagnosticError#",
+   diagWarn    = "%#DiagnosticWarn#",
+   diagInfo    = "%#DiagnosticInfo#",
+   diagHint    = "%#DiagnosticHint#",
    lspactive   = "%#StatusLineLspActive#",
    lspnoactive = "%#StatusLineLspNotActive#",
    ftype       = "%#StatusLineFileType#",
@@ -167,13 +172,17 @@ local function get_lsp_diagnostic()
    local status_ok = (errors == 0) and (warns == 0) and (infos == 0) and (hints == 0) or false
 
    local diag = string.format(
-      "%s:%d %s:%d %s:%d %s:%d",
+      "%s%s:%d %s%s:%d %s%s:%d %s%s:%d",
+      colors.diagError,
       icons.diagnostics.Error,
       errors,
+      colors.diagWarn,
       icons.diagnostics.Warning,
       warns,
+      colors.diagInfo,
       icons.diagnostics.Information,
       infos,
+      colors.diagHint,
       icons.diagnostics.Hint,
       hints
    )
@@ -253,18 +262,28 @@ end
 
 local function get_lsp_info()
    local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
-   if #buf_clients == 0 then
-      return ("%s%s LSP Inactive "):format(colors.lspnoactive, icons.ui.CircleEmpty)
-   end
-   local buf_client_names = ("%s%s%s["):format(colors.name, icons.ui.SmallCircle, colors.lspactive)
-   -- add client
-   for idx, client in pairs(buf_clients) do
-      if idx > 1 then
-         buf_client_names = buf_client_names .. ","
+   if not win_is_smaller(preset_width.lsp_info) then
+      if #buf_clients == 0 then
+         return ("%s%s LSP Inactive "):format(colors.lspnoactive, icons.ui.CircleEmpty)
       end
-      buf_client_names = buf_client_names .. client.name
+      local buf_client_names = ("%s%s%s["):format(colors.name, icons.ui.SmallCircle, colors.lspactive)
+      -- add client
+      local real_idx = 0
+      for _, client in pairs(buf_clients) do
+         if client.name == "null-ls" then goto continue end
+         if real_idx > 1 then
+            buf_client_names = buf_client_names .. ","
+         end
+         buf_client_names = buf_client_names .. client.name
+         real_idx = real_idx + 1
+         ::continue::
+      end
+      return buf_client_names .. "] "
+   else
+      return #buf_clients == 0 and
+      ("%s%s"):format(colors.lspnoactive, icons.ui.SmallCircle) or
+      ("%s%s"):format(colors.name, icons.ui.SmallCircle)
    end
-   return buf_client_names .. "] "
 end
 
 --- Check if matching filetype exists and exclude
@@ -284,8 +303,7 @@ local to_exclude = function()
       Outline         = true,
       noice           = true,
       checkhealth     = true,
-      org             = true,
-      orgagenda       = true,
+      WhichKey        = true,
    }
 
    return special_ft[vim.bo.filetype]
@@ -304,17 +322,23 @@ S.off = function(name)
       lspinfo         = icons.ui.Health .. " LSP Status",
       TelescopePrompt = icons.ui.Telescope .. " Telescope",
       qf              = icons.ui.Gear .. " QuickFix",
-      toggleterm      = icons.misc.Robot .. " Terminal",
+      toggleterm      = icons.misc.Robot ..  "Terminal",
       crunner         = icons.ui.AltSlArrowRight .. " CodeRunner",
       mason           = icons.ui.List .. " Package Manager",
       Outline         = icons.ui.Table .. " Symbols Outline",
       noice           = icons.ui.List .. " Notifications",
       checkhealth     = icons.ui.Health .. " Health",
-      org             = icons.ui.Orgmode .. " Orgmode",
-      orgagenda       = icons.ui.Calendar .. " OrgAgenda"
+      WhichKey        = icons.ui.Search .. " WhichKey",
    }
    local custom_ft = special_filetypes[ftype_name]
-   return ("%s%s %%= %s%%="):format(get_mode(), colors.inactive, name or custom_ft or ftype_name)
+   return ("%s%s%s%s %%= %s%%="):format(
+      colors.mode,
+      get_mode(),
+      colors.inverted,
+      icons.ui.SlArrowRight,
+      colors.inactive,
+      name or custom_ft or ftype_name
+   )
 end
 
 
@@ -337,6 +361,7 @@ S.on = function()
       -- Middle
       sideSep,
       get_lsp_diagnostic(),
+      space,
 
       -- Right Side
       colors.empty, icons.ui.SlArrowLeft, get_lsp_info(),
