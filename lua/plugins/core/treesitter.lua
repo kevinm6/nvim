@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 12 Sep 2023, 10:56
+-- Last Modified: 11 Oct 2023, 17:57
 -------------------------------------
 
 local function parsers_to_be_installed()
@@ -60,7 +60,7 @@ end
 local M = {
    {
       "nvim-treesitter/nvim-treesitter",
-      event = "BufReadPre",
+      event = "BufRead",
       build = ":TSUpdate",
       keys = {
          {
@@ -208,7 +208,7 @@ local M = {
       config = function(_, o)
          require("nvim-treesitter.install").prefer_git = true
          require("nvim-treesitter.configs").setup(o)
-      end,
+      end
    },
 }
 

@@ -7,7 +7,7 @@
 
 local M = {
    "SmiteshP/nvim-navic",
-   event = "BufReadPre",
+   event = "BufRead",
    opts = function(_, o)
       vim.g.navic_silence = false -- disable error messages
       local icons = require "user_lib.icons"

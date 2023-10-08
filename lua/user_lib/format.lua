@@ -1,13 +1,13 @@
 -------------------------------------
---  File         : format.lua
---  Description  : format functions
---  Author       : Kevin
---  Last Modified: 28 Sep 2023, 08:23
+-- File         : format.lua
+-- Description  : format functions
+-- Author       : Kevin
+-- Last Modified: 14 Oct 2023, 09:15
 -------------------------------------
 
 local F = {}
 
--- Use null-ls for lsp-formatting
+---Use null-ls for lsp-formatting
 F.lsp_format = function(bufnr)
    vim.lsp.buf.format {
       bufnr = bufnr,
@@ -24,34 +24,39 @@ F.lsp_format = function(bufnr)
    }
 end
 
--- Format on save
+---Format on save
 F.format_on_save = function(enable)
-   local action = enable and "Enabled" or "Disabled"
+   local action = enable and "  ON" or "  OFF"
+   local log_level = enable and "INFO" or "WARN"
 
    if enable then
-      vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-         group = vim.api.nvim_create_augroup("format_on_save", { clear = true }),
+      local autocmd_id = vim.api.nvim_create_autocmd({ "BufWritePre" }, {
          pattern = "*",
          callback = function(ev)
             F.lsp_format(ev.buf)
          end,
       })
+      vim.g.format_on_save = autocmd_id
    else
-      vim.api.nvim_clear_autocmds { group = "format_on_save" }
+      vim.api.nvim_del_autocmd(vim.g.format_on_save)
+      vim.g.format_on_save = nil
    end
 
    vim.notify(
-      action .. " format on save",
-      vim.log.levels.INFO,
-      { title = "LSP - Format" }
+      action,
+      vim.log.levels[log_level],
+      {
+         render = "wrapped-compact",
+         title = "Auto Format LSP"
+      }
    )
 end
 
 F.toggle_format_on_save = function()
-   if vim.fn.exists "#format_on_save#BufWritePre" == 0 then
-      F.format_on_save(true)
-   else
+   if vim.g.format_on_save then
       F.format_on_save()
+   else
+      F.format_on_save(true)
    end
 end
 

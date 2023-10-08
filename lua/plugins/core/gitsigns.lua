@@ -7,7 +7,7 @@
 
 local M = {
   "lewis6991/gitsigns.nvim",
-  event = "BufReadPre",
+  event = "BufRead",
   keys = {
     { "<leader>g", nil, mode = { "v", "n" }, desc = "Git" },
     { "<leader>gj", function() require "gitsigns".next_hunk() end, desc = "Next Hunk" },

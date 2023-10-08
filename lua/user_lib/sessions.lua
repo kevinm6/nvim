@@ -2,14 +2,14 @@
 --  File         : sessions.lua
 --  Description  : module to manage vim builtin sessions
 --  Author       : Kevin
---  Last Modified: 24 Jun 2023, 10:48
+--  Last Modified: 14 Oct 2023, 09:14
 -------------------------------------
 
 local S = {}
 
---- Get available sessions
---- @private
---- @return table
+---Get available sessions
+---@private
+---@return table
 local get_sessions = function()
    local sessions = {}
 
@@ -26,7 +26,7 @@ local get_sessions = function()
    return sessions
 end
 
---- Delete selected session
+---Delete selected session
 S.delete_session = function()
    local sessions = get_sessions()
 
@@ -54,7 +54,7 @@ S.delete_session = function()
    end
 end
 
---- Restore selected session
+---Restore selected session
 S.restore_session = function()
    local sessions = get_sessions()
 
@@ -77,9 +77,9 @@ S.restore_session = function()
 end
 
 
---- Save current vim session with name.
----   The session is saved into 'data' stdpath of nvim
---- @see |:mksession|
+---Save current vim session with name.
+--- The session is saved into 'data' stdpath of nvim
+---@see mksession |:mksession|
 S.save_session = function()
    require "telescope"
    vim.ui.input({

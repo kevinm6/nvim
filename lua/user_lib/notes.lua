@@ -2,14 +2,14 @@
 --  File         : notes.lua
 --  Description  : module to manage notes
 --  Author       : Kevin
---  Last Modified: 02 Oct 2023, 17:12
+--  Last Modified: 14 Oct 2023, 09:13
 -------------------------------------
 
 local N = {}
 
---- Get available sessions
---- @private
---- @return table
+---Get available sessions
+---@private
+---@return table
 local get_notes = function()
    local notes = {}
 
@@ -19,6 +19,15 @@ local get_notes = function()
       "\n",
       { trimempty = true }
    )
+   local logseq_path = vim.fn.expand "~/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents"
+   local logseq_notes = vim.split(
+      vim.fn.globpath(logseq_path, "**/*.md"),
+      "\n",
+      { trimempty = true }
+   )
+   for _, note in ipairs(logseq_notes) do
+      table.insert(notes_files, note)
+   end
 
    for _, f in pairs(notes_files) do
       table.insert(notes, f)
@@ -26,7 +35,7 @@ local get_notes = function()
    return notes
 end
 
---- Delete selected session
+---Delete selected session
 N.delete_note = function()
    local notes = get_notes()
 
@@ -54,7 +63,7 @@ N.delete_note = function()
    end
 end
 
---- Restore selected session
+---Restore selected session
 N.open_note = function()
    local notes = get_notes()
 

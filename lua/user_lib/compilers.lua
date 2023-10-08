@@ -2,16 +2,13 @@
 --  File         : compilers.lua
 --  Description  : get compilers
 --  Author       : Kevin
---  Last Modified: 02 Oct 2023, 13:50
+--  Last Modified: 14 Oct 2023, 09:11
 -------------------------------------
 
 local C = {}
 
-
--- TODO: think about how to pass items and populate makeprg
-
---- Compilers to use for matching filetype
---- @type table
+---Compilers to use for matching filetype
+---@type table
 C.compiler = {
    java = "cd '$dir' && javac '$fileName' && java $fileNameWithoutExt",
    c = "gcc -Wall '$file' -o $fileName && ./$fileName",
@@ -43,8 +40,8 @@ C.compiler = {
    ocaml = "ocaml $file",
 }
 
---- Get matching compiler from current filetype
---- @return any compilers all compilers available w/ Vim
+---Get matching compiler from current filetype
+---@return any compilers all compilers available w/ Vim
 local get_matching_compiler = function(filetype)
    local compilers = vim.fn.globpath("$VIMRUNTIME/compiler", filetype .. ".vim", 0, 0)
 
@@ -52,7 +49,26 @@ local get_matching_compiler = function(filetype)
 end
 
 
---- Select compiler
+---Get command and replace placeholders < $varName >
+---@param command any command to be parsed
+local function getCommand(command)
+   local filepath = vim.fn.expand("%:p")
+   local clean_cmd = command
+
+   command = command:gsub("$fileNameWithoutExt", vim.fn.fnamemodify(filepath, ":t:r"))
+   command = command:gsub("$fileName", vim.fn.fnamemodify(filepath, ":t"))
+   command = command:gsub("$file", filepath)
+   command = command:gsub("$dir", vim.fn.fnamemodify(filepath, ":p:h"))
+   command = command:gsub("$end", "")
+
+   return (command == clean_cmd) and command or ("%s %s"):format(command, filepath)
+end
+
+
+---Select compiler from vimruntime compilers
+---or enter a custom command to compile the current file.
+---If a custom command is entered, the same filetypes open
+---in the same nvim session will use the same command.
 local function select_compiler()
    local compilers = vim.fn.globpath(vim.fn.expand "$VIMRUNTIME/compiler", "*.vim", 1, 1)
    table.insert(compilers, 1, "CUSTOM")
@@ -64,7 +80,9 @@ local function select_compiler()
    }, function(choice)
          if choice then
             if choice == "CUSTOM" then
-               vim.ui.input({ prompt = " Enter command to compile: "}, function(input)
+               local prompt_msg = [[ Enter command to compile
+(vars: $file,$fileName,$fileNameWithoutExt,$dir)]]
+               vim.ui.input({ prompt = prompt_msg}, function(input)
                   if input then
                      vim.opt_local.makeprg = input
                      C.compiler[vim.bo.filetype] = input
@@ -80,31 +98,16 @@ local function select_compiler()
 end
 
 
---- Get command and replace placeholders < $varName >
---- @param command any
-local function getCommand(command)
-   local filepath = vim.fn.expand("%:p")
-   local clean_cmd = command
-
-   command = command:gsub("$fileNameWithoutExt", vim.fn.fnamemodify(filepath, ":t:r"))
-   command = command:gsub("$fileName", vim.fn.fnamemodify(filepath, ":t"))
-   command = command:gsub("$file", filepath)
-   command = command:gsub("$dir", vim.fn.fnamemodify(filepath, ":p:h"))
-   command = command:gsub("$end", "")
-
-   return (command == clean_cmd) and command or ("%s %s"):format(command, filepath)
-end
-
-
+---Open terminal in a float window.
+---@param command string command runned by the spawned shell
 local function float_terminal(command)
-   local width = vim.o.columns
-   local height = vim.o.lines
+   local cols, lines = vim.o.columns, vim.o.lines
    local opts = {
       relative = 'editor',
-      row = math.floor(height * 6/20),
-      col = math.floor(width * 4/20),
-      width = math.floor(width * 0.6),
-      height = math.floor(height * 0.4),
+      row = math.floor(lines * 6/20),
+      col = math.floor(cols * 4/20),
+      width = math.floor(cols * 0.6),
+      height = math.floor(lines * 0.4),
       style = 'minimal',
       border = 'rounded',
       title = 'Run File in Terminal',
@@ -122,8 +125,11 @@ local function float_terminal(command)
 end
 
 
---- Open Terminal and run command passed as param
---- @param command string
+---Open Terminal and run command passed as param.
+---The default terminal spawned is toggleterm if is available, instead default
+---nvim-terminal is launched.
+---@param command string command to be runned on the spawned shell in terminal
+---@param direction string type of window where launch terminal
 local function run_in_terminal(command, direction)
    local full_command = getCommand(command)
 
@@ -149,11 +155,11 @@ local function run_in_terminal(command, direction)
 end
 
 
---- Set keymap for compile and run file.
---- I do some check in the keymap to avoid asking user to choose a compiler if
---- not present every time a file with specific filetype is open.
---- In this way, only if user wants to compile/run the file we prompt the selection
---- @param buf any
+---Set keymap for compile and run file.
+---I do some check in the keymap to avoid asking user to choose a compiler if
+---not present every time a file with specific filetype is open.
+---In this way, only if user wants to compile/run the file we prompt the selection
+---@param buf any bufId for which set keymap
 local set_keymaps = function(buf)
    vim.keymap.set(
       { "n", "v" },
@@ -205,9 +211,9 @@ local set_keymaps = function(buf)
 end
 
 
---- Set compiler based on filetype.
---- If custom_compiler is not specified the default one is used ($VIMRUNTIME/compiler/)
---- @param ev table event matched for filetype
+---Set compiler based on filetype.
+---If custom_compiler is not specified the default one is used ($VIMRUNTIME/compiler/)
+---@param ev table event matched for filetype
 C.set_compiler = function(ev)
    local filetype = ev.match
    local buf = ev.buf
@@ -256,8 +262,6 @@ C.set_compiler = function(ev)
 
    set_keymaps(buf)
 end
-
-
 
 
 return C

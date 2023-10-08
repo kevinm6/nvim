@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 24 Sep 2023, 12:12
+-- Last Modified: 15 Oct 2023, 11:46
 -------------------------------------
 
 --- Set buffer keymaps based on supported capabilities of the
@@ -82,7 +82,7 @@ local set_buf_keymaps = function(client, _)
    end, { buffer = true, desc = "Rename" })
    vim.keymap.set("n", "<leader>lq", function()
       vim.diagnostic.setloclist()
-   end, { buffer = true, desc = "Lsp trueDiagnostics" })
+   end, { buffer = true, desc = "Lsp QFDiagnostics" })
    -- Diagnostics
    vim.keymap.set("n", "<leader>dj", function()
       vim.diagnostic.goto_next { buffer = true }
@@ -92,21 +92,30 @@ local set_buf_keymaps = function(client, _)
    end, { desc = "Prev Diagnostic" })
 end
 
+
 --- Set buffer capabilities based if supported by the
 --- passed client and buffer id
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
-local set_buf_capabilities = function(client, bufnr)
+local set_buf_funcs_for_capabilities = function(client, bufnr)
    -- TODO: remove check for nvim_v0.10 after update
    if vim.lsp.inlay_hint then
-      vim.lsp.inlay_hint(bufnr, true)
+      vim.api.nvim_create_user_command("InlayHints", function ()
+         if vim.g.inlay_hints == true then
+            vim.lsp.inlay_hint(bufnr, false)
+            vim.g.inlay_hints = false
+         else
+            vim.lsp.inlay_hint(bufnr, true)
+            vim.g.inlay_hints = true
+         end
+      end, {})
    end
 
    -- lsp-document_highlight
    if client.server_capabilities.documentHighlightProvider and
-      client.supports_method "textDocument/documentHighlight" then
+       client.supports_method "textDocument/documentHighlight" then
       local lsp_document_highlight =
-      vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
+          vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
       vim.api.nvim_clear_autocmds {
          buffer = bufnr,
          group = lsp_document_highlight,
@@ -130,7 +139,7 @@ local set_buf_capabilities = function(client, bufnr)
    -- Formatting
    if client.server_capabilities.documentFormattingProvider then
       local user_lib_format = require "user_lib.format"
-      vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
+      vim.api.nvim_create_user_command("LspAutoFormat", function()
          user_lib_format.toggle_format_on_save()
       end, {})
 
@@ -151,6 +160,10 @@ local set_buf_capabilities = function(client, bufnr)
          require("user_lib.functions").range_format()
       end, { desc = "Range format" })
    end
+
+   vim.api.nvim_create_user_command("LspCapabilities", function()
+      require("user_lib.functions").get_current_buf_lsp_capabilities()
+   end, {})
 end
 
 -- Custom configs to apply when starting lsp
@@ -168,31 +181,30 @@ local custom_attach = function(client, bufnr)
    require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
 
    set_buf_keymaps(client, bufnr)
-   set_buf_capabilities(client, bufnr)
+   set_buf_funcs_for_capabilities(client, bufnr)
 end
 
 local M = {
    {
       "neovim/nvim-lspconfig",
-      event = { "BufReadPre", "BufNewFile" },
+      event = "BufRead",
       cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
       keys = {
          { "<leader>l", nil, desc = "LSP" },
       },
-      config = function(_, _)
+      config = function()
          local lspconfig = require "lspconfig"
          local lsputil = require "lspconfig.util"
 
-         -- Update capabilities with extended
+         -- Update capabilities with extended from cmp_nvim_lsp
          local ext_capabilities = nil
-         local has_cmp, cmp_nvim_lsp =  pcall(require, "cmp_nvim_lsp")
+         local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
          if not has_cmp then
             ext_capabilities = vim.lsp.protocol.make_client_capabilities()
          else
+            -- ext_capabilities = vim.lsp.protocol.make_client_capabilities()
             ext_capabilities = cmp_nvim_lsp.default_capabilities()
          end
-
-         ext_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
          -- HACK: this is to avoid errors on lsp that support only single encoding (ex: clangd)
          --       maybe is resolved with this change on nvim_v0.10
@@ -236,20 +248,20 @@ local M = {
                            globals = { "vim", "pcall", "format" },
                            disable = { "lowercase-global" },
                         },
-                        completion = {
-                           enable = true,
-                           autoRequire = true,
-                           keywordSnippet = "Both",
-                           callSnippet = "Both",
-                           displayContext = 2,
-                        },
+                        -- completion = {
+                        --    enable = true,
+                        --    autoRequire = true,
+                        --    keywordSnippet = "Both",
+                        --    callSnippet = "Both",
+                        --    displayContext = 2,
+                        -- },
                         workspace = {
                            library = {
                               [vim.fn.expand "$VIMRUNTIME/lua"] = true,
                               [vim.fn.stdpath "config" .. "/lua"] = true,
                            },
                            checkThirdParty = false,
-                       },
+                        },
                         hint = { enable = true },
                      },
                   },
@@ -279,7 +291,7 @@ local M = {
             end,
             ["sqlls"] = function()
                local databases_path =
-               vim.fn.expand "~/Informatica/Anno2/Semestre1/Basi di Dati"
+                   vim.fn.expand "~/Informatica/Anno2/Semestre1/Basi di Dati"
                lspconfig.sqlls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
                   settings = {
                      sqls = {
@@ -368,8 +380,8 @@ local M = {
                      local absolute_fname = Path:new(fname):absolute()
 
                      if
-                        string.find(absolute_cwd, "/cmd/", 1, true)
-                        and string.find(absolute_fname, absolute_cwd, 1, true)
+                         string.find(absolute_cwd, "/cmd/", 1, true)
+                         and string.find(absolute_fname, absolute_cwd, 1, true)
                      then
                         return absolute_cwd
                      end
@@ -416,10 +428,10 @@ local M = {
                      ".git"
                   ) or vim.loop.cwd(),
                   init_options = {
-                      preferences = {
+                     preferences = {
                         includeCompletionsWithSnippetText = true,
                         includeCompletionsForImportStatements = true,
-                      }
+                     }
                   }
                }))
             end,
@@ -444,7 +456,7 @@ local M = {
                          ]],
                   },
                   root_dir = lsputil.root_pattern("rebar.config", "erlang.mk", ".git")
-                     or vim.loop.cwd(),
+                      or vim.loop.cwd(),
                }))
             end,
          }
@@ -453,7 +465,7 @@ local M = {
          lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
             cmd = { "/usr/bin/xcrun", "sourcekit-lsp" },
             filetypes = { "swift" },
-            root_dir = lsputil.root_pattern("Package.swift", ".git"),
+            root_dir = lsputil.root_pattern("Package.swift", ".git") or vim.loop.cwd(),
          }))
       end,
    },
@@ -462,7 +474,7 @@ local M = {
       "williamboman/mason.nvim",
       cmd = "Mason",
       keys = {
-         { "<leader>C", nil, desc = "Packages" },
+         { "<leader>C",  nil,           desc = "Packages" },
          { "<leader>Cm", vim.cmd.Mason, desc = "Mason" },
       },
       --- @param o table options passed to config
@@ -584,42 +596,42 @@ local M = {
                extra_filetypes = { "toml", "solidity" },
                extra_args = function(params)
                   return params.options
-                     and {
-                        "--no-semi",
-                        "--single-quote",
-                     }
-                     and params.options.tabSize
-                     and { "--tab-width", params.options.tabSize }
+                      and {
+                         "--no-semi",
+                         "--single-quote",
+                      }
+                      and params.options.tabSize
+                      and { "--tab-width", params.options.tabSize }
                end,
             },
             null_ls.builtins.formatting.black.with {
                extra_args = function(params)
                   return params.options
-                     and { "--fast" }
-                     and params.options.tabSize
-                     and { "--tab-width", params.options.tabSize }
+                      and { "--fast" }
+                      and params.options.tabSize
+                      and { "--tab-width", params.options.tabSize }
                end,
             },
             null_ls.builtins.formatting.stylua.with {
                extra_args = function(params)
                   return params.options
-                     and params.options.tabSize
-                     and { "--indent-width", params.options.tabSize }
+                      and params.options.tabSize
+                      and { "--indent-width", params.options.tabSize }
                end,
             },
             null_ls.builtins.formatting.google_java_format.with {
                extra_args = function(params)
                   return params.options
-                     and params.options.tabSize
-                     and { "--tab-width", params.options.tabSize }
+                      and params.options.tabSize
+                      and { "--tab-width", params.options.tabSize }
                end,
             },
 
             null_ls.builtins.formatting.yamlfmt.with {
                extra_args = function(params)
                   return params.options
-                     and params.options.tabSize
-                     and { "--tab-width", params.options.tabSize }
+                      and params.options.tabSize
+                      and { "--tab-width", params.options.tabSize }
                end,
             },
 

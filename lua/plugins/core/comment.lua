@@ -7,7 +7,7 @@
 
 local M = {
    "numToStr/Comment.nvim",
-   event = { "BufReadPre", "BufNewFile" },
+   event = "BufRead",
    keys = {
       { "gc", mode = { "n", "v" } },
       { "gb", mode = { "n", "v" } },

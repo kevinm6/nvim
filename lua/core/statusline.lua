@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 01 Oct 2023, 02:37
+-- Last Modified: 14 Oct 2023, 09:11
 -----------------------------------------
 
 local S = {
@@ -15,6 +15,8 @@ local diag_cached = ""
 
 S.session_name = ""
 
+-- TODO: adapt using priority
+
 local preset_width = setmetatable({
    filename = 60,
    git_branch = 60,
@@ -25,8 +27,11 @@ local preset_width = setmetatable({
 }, {
    __index = function()
       return 80
-   end,
+   end
 })
+
+
+
 
 local set_color_groups = function()
    vim.g.statusline_color = true
@@ -86,69 +91,62 @@ local colors = {
    ShellMode   = "%#Tmode#",
 }
 
-local map = {
-   ["n"]     = colors.Nmode .. "NORMAL",
-   ["no"]    = colors.Nmode .. "O-PENDING",
-   ["nov"]   = colors.Nmode .. "O-PENDING",
-   ["noV"]   = colors.Nmode .. "O-PENDING",
-   ["no\22"] = colors.Nmode .. "O-PENDING",
-   ["niI"]   = colors.Nmode .. "NORMAL",
-   ["niR"]   = colors.Nmode .. "NORMAL",
-   ["niV"]   = colors.Nmode .. "NORMAL",
-   ["nt"]    = colors.Nmode .. "NORMAL",
-   ["v"]     = colors.Vmode .. "VISUAL",
-   ["vs"]    = colors.Vmode .. "VISUAL",
-   ["V"]     = colors.Vmode .. "V-LINE",
-   ["Vs"]    = colors.Vmode .. "V-LINE",
-   ["\22"]   = colors.Vmode .. "V-BLOCK",
-   ["\22s"]  = colors.Vmode .. "V-BLOCK",
-   ["s"]     = colors.Vmode .. "SELECT",
-   ["S"]     = colors.Vmode .. "S-LINE",
-   ["\19"]   = colors.Vmode .. "S-BLOCK",
-   ["i"]     = colors.Imode .. "INSERT",
-   ["ic"]    = colors.Imode .. "INSERT",
-   ["ix"]    = colors.Imode .. "INSERT",
-   ["R"]     = colors.Tmode .. "REPLACE",
-   ["Rc"]    = colors.Tmode .. "REPLACE",
-   ["Rx"]    = colors.Tmode .. "REPLACE",
-   ["Rv"]    = colors.Tmode .. "V-REPLACE",
-   ["Rvc"]   = colors.Tmode .. "V-REPLACE",
-   ["Rvx"]   = colors.Tmode .. "V-REPLACE",
-   ["c"]     = colors.Cmode .. "COMMAND",
-   ["cv"]    = colors.Cmode .. "EX",
-   ["ce"]    = colors.Cmode .. "EX",
-   ["r"]     = colors.Tmode .. "REPLACE",
-   ["rm"]    = colors.Nmode .. "MORE",
-   ["r?"]    = colors.Nmode .. "CONFIRM",
-   ["!"]     = colors.ShellMode .. "SHELL",
-   ["t"]     = colors.Tmode .. "TERMINAL",
-}
 
 local function get_mode()
+   local mode = {
+      ["n"]     = colors.Nmode .. "N",
+      ["no"]    = colors.Nmode .. "O-P",
+      ["nov"]   = colors.Nmode .. "O-P",
+      ["noV"]   = colors.Nmode .. "O-P",
+      ["no\22"] = colors.Nmode .. "O-P",
+      ["niI"]   = colors.Nmode .. "N",
+      ["niR"]   = colors.Nmode .. "N",
+      ["niV"]   = colors.Nmode .. "N",
+      ["nt"]    = colors.Nmode .. "N",
+      ["v"]     = colors.Vmode .. "V",
+      ["vs"]    = colors.Vmode .. "V",
+      ["V"]     = colors.Vmode .. "V-L",
+      ["Vs"]    = colors.Vmode .. "V-L",
+      ["\22"]   = colors.Vmode .. "V-B",
+      ["\22s"]  = colors.Vmode .. "V-B",
+      ["s"]     = colors.Vmode .. "S",
+      ["S"]     = colors.Vmode .. "S-L",
+      ["\19"]   = colors.Vmode .. "S-B",
+      ["i"]     = colors.Imode .. "I",
+      ["ic"]    = colors.Imode .. "I",
+      ["ix"]    = colors.Imode .. "I",
+      ["R"]     = colors.Tmode .. "R",
+      ["Rc"]    = colors.Tmode .. "R",
+      ["Rx"]    = colors.Tmode .. "R",
+      ["Rv"]    = colors.Tmode .. "V-R",
+      ["Rvc"]   = colors.Tmode .. "V-R",
+      ["Rvx"]   = colors.Tmode .. "V-R",
+      ["c"]     = colors.Cmode .. "C",
+      ["cv"]    = colors.Cmode .. "EX",
+      ["ce"]    = colors.Cmode .. "EX",
+      ["r"]     = colors.Tmode .. "R",
+      ["rm"]    = colors.Nmode .. "M",
+      ["r?"]    = colors.Nmode .. "C",
+      ["!"]     = colors.ShellMode .. "S",
+      ["t"]     = colors.Tmode .. "T",
+   }
+
    local mode_code = vim.api.nvim_get_mode().mode
-   return map[mode_code] or mode_code
+   return mode[mode_code] or mode_code
 end
 
--- Helper function to check window size
--- if 2 values are passed as args, returns true
---  if win_size is between or equal to one of the limits
--- (in lua, only nil and false are "FALSY", 0 and '' are true)
+
+---Check window size compared to args.
+---if 2 args are passed checks if win_width is between or equal to lower and upper,
+---otherwise check if win_width is bigger than single value passed.
+---@param lower number lower bound or minimum width allowed
+---@param upper number? upper bound, if passed
 local function win_is_smaller(lower, upper)
+   upper = upper or nil
    local win_size = vim.api.nvim_win_get_width(0)
    return upper and (win_size >= lower and win_size <= upper) or win_size < lower
 end
 
--- TODO: improve truncation
--- filename for statusline
-local function get_filename()
-   local cols = vim.o.columns
-   local fname = vim.fn.expand "%f "
-   local len_fname = string.len(fname)
-   local to_trunc = len_fname >= preset_width.filename or len_fname >= (cols * 0.3)
-   local truncated_name = "..." .. string.sub(fname, len_fname - (cols * 0.25), -1)
-
-   return to_trunc and truncated_name or fname
-end
 
 -- location function (current row on total rows)
 local function get_line_onTot()
@@ -156,35 +154,38 @@ local function get_line_onTot()
       or colors.location .. " row " .. colors.git .. "%l" .. colors.location .. "÷%L "
 end
 
+
+local function get_filename()
+   local cols = vim.o.columns
+   local fname = vim.fn.expand "%f "
+   local to_trunc = #fname >= preset_width.filename or #fname >= (cols * 0.26)
+   local truncated_name = "..." .. string.sub(fname, #fname - (cols * 0.20), -1)
+
+   return to_trunc and truncated_name or fname
+end
+
+
 -- function lsp diagnostic
 -- display diagnostic if enough space is available
 -- based on win_size
 local function get_lsp_diagnostic()
-   local do_not_show_diag = win_is_smaller(preset_width.diagnostic) or win_is_smaller(90)
+   local do_not_show_diag = win_is_smaller(80)
 
-   local diagnostics = vim.diagnostic
    -- assign to relative vars the count of diagnostics
-   local errors = #diagnostics.get(0, { severity = diagnostics.severity.ERROR })
-   local warns = #diagnostics.get(0, { severity = diagnostics.severity.WARN })
-   local infos = #diagnostics.get(0, { severity = diagnostics.severity.INFO })
-   local hints = #diagnostics.get(0, { severity = diagnostics.severity.HINT })
+
+   local errors = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.ERROR }})
+   local warns  = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.WARN }})
+   local infos  = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.INFO }})
+   local hints  = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.HINT }})
 
    local status_ok = (errors == 0) and (warns == 0) and (infos == 0) and (hints == 0) or false
 
    local diag = string.format(
       "%s%s:%d %s%s:%d %s%s:%d %s%s:%d",
-      colors.diagError,
-      icons.diagnostics.Error,
-      errors,
-      colors.diagWarn,
-      icons.diagnostics.Warning,
-      warns,
-      colors.diagInfo,
-      icons.diagnostics.Information,
-      infos,
-      colors.diagHint,
-      icons.diagnostics.Hint,
-      hints
+      colors.diagError, icons.diagnostics.Error, errors,
+      colors.diagWarn, icons.diagnostics.Warning, warns,
+      colors.diagInfo, icons.diagnostics.Information, infos,
+      colors.diagHint, icons.diagnostics.Hint, hints
    )
 
    if diag_cached ~= diag then
@@ -232,7 +233,11 @@ local function get_filetype()
 end
 
 local function get_fencoding()
-   return " %{&fileencoding?&fileencoding:&encoding} "
+   return not win_is_smaller(76) and " %{&fileencoding?&fileencoding:&encoding} " or ""
+end
+
+local function get_fformat()
+   return not win_is_smaller(76) and "%{&ff}" or ""
 end
 
 local function session_name()
@@ -240,8 +245,8 @@ local function session_name()
 end
 
 local function get_python_env()
-   if not win_is_smaller(preset_width.git_branch) then
-      if vim.bo.filetype == "python" then
+   if vim.bo.filetype == "python" then
+      if not win_is_smaller(preset_width.git_branch) then
          local venv = os.getenv "VIRTUAL_ENV"
          if venv then
             if string.find(venv, "/") then
@@ -251,8 +256,7 @@ local function get_python_env()
                end
                venv = final_venv
             end
-            local dev_icons = require "nvim-web-devicons"
-            local py_icon, _ = dev_icons.get_icon ".py"
+            local py_icon = '󰌠'
             return ("%s (%s)"):format(py_icon, venv)
          end
       end
@@ -260,60 +264,45 @@ local function get_python_env()
    return ""
 end
 
+---Get lsp status and if active get names of server running
 local function get_lsp_info()
-   local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
-   if not win_is_smaller(preset_width.lsp_info) then
-      if #buf_clients == 0 then
-         return ("%s%s LSP Inactive "):format(colors.lspnoactive, icons.ui.CircleEmpty)
-      end
-      local buf_client_names = ("%s%s%s["):format(colors.name, icons.ui.SmallCircle, colors.lspactive)
-      -- add client
-      local real_idx = 0
-      for _, client in pairs(buf_clients) do
-         if client.name == "null-ls" then goto continue end
-         if real_idx > 1 then
-            buf_client_names = buf_client_names .. ","
-         end
-         buf_client_names = buf_client_names .. client.name
-         real_idx = real_idx + 1
-         ::continue::
-      end
-      return buf_client_names .. "] "
-   else
-      return #buf_clients == 0 and
-      ("%s%s"):format(colors.lspnoactive, icons.ui.SmallCircle) or
-      ("%s%s"):format(colors.name, icons.ui.SmallCircle)
-   end
+   -- TODO: remove when update to nvim-0.10
+   local buf_clients = vim.fn.has("nvim-0.10") == 1 and vim.lsp.get_clients() or
+      vim.lsp.get_active_clients { bufnr = 0 }
+
+   return #buf_clients == 0 and
+      ("%s%s "):format(colors.lspnoactive, icons.ui.SmallCircle) or
+      ("%s%s "):format(colors.name, icons.ui.SmallCircle)
 end
 
---- Check if matching filetype exists and exclude
---- @return boolean
-local to_exclude = function()
+---Check if current filetype match the filetype to exclude
+---@return boolean
+local function to_exclude()
    local special_ft = {
       alpha           = true,
       NvimTree        = true,
       lspinfo         = true,
       TelescopePrompt = true,
-      Trouble         = true,
       qf              = true,
       toggleterm      = true,
       lazy            = true,
-      crunner         = true,
       mason           = true,
       Outline         = true,
       noice           = true,
       checkhealth     = true,
       WhichKey        = true,
+      query           = true,
    }
 
    return special_ft[vim.bo.filetype]
 end
 
 
--- Statusline disabled
--- display only filetype and current mode
+---Statusline disabled that display only filetype and current mode
+---@return string statusline
 S.off = function(name)
    local ftype_name = vim.bo.filetype
+   local sideSep = "%="
 
    local special_filetypes = {
       alpha           = icons.ui.Plugin .. " Dashboard",
@@ -323,34 +312,37 @@ S.off = function(name)
       TelescopePrompt = icons.ui.Telescope .. " Telescope",
       qf              = icons.ui.Gear .. " QuickFix",
       toggleterm      = icons.misc.Robot ..  "Terminal",
-      crunner         = icons.ui.AltSlArrowRight .. " CodeRunner",
       mason           = icons.ui.List .. " Package Manager",
       Outline         = icons.ui.Table .. " Symbols Outline",
       noice           = icons.ui.List .. " Notifications",
       checkhealth     = icons.ui.Health .. " Health",
       WhichKey        = icons.ui.Search .. " WhichKey",
+      query           = icons.ui.Query .. " Query",
    }
    local custom_ft = special_filetypes[ftype_name]
-   return ("%s%s%s%s %%= %s%%="):format(
+   return table.concat({
       colors.mode,
       get_mode(),
       colors.inverted,
       icons.ui.SlArrowRight,
+      sideSep,
       colors.inactive,
-      name or custom_ft or ftype_name
-   )
+      name or custom_ft or ftype_name,
+      sideSep
+   })
 end
 
 
+---Statusline enabled with all items
+---@return string statusline
 S.on = function()
    local sideSep = "%="
-   local currMode = "%m%r"
-   local fformat = "%{&ff}"
+   -- local currMode = "%m%r"
    local space = " "
 
    local sl = {
       -- LeftSide
-      colors.mode, currMode, get_mode(),
+      colors.mode, get_mode(),
       colors.inverted, icons.ui.SlArrowRight,
       colors.git, get_git_status(),
       colors.name, get_filename(),
@@ -369,7 +361,7 @@ S.on = function()
       space,
       get_filetype().name,
       colors.encoding, get_fencoding(),
-      colors.fformat, fformat,
+      colors.fformat, get_fformat(),
       get_line_onTot(),
       colors.inverted, icons.ui.SlArrowLeft
    }
@@ -378,9 +370,8 @@ S.on = function()
 end
 
 
-
-
-S.get_statusline = function()
+---Set statusline based on filetype of current buffer
+S.set_statusline = function()
    if not vim.g.statusline_color then set_color_groups() end
    if not to_exclude() then
       vim.wo.statusline = S.on()

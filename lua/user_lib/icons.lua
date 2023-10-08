@@ -1,8 +1,8 @@
 -----------------------------------
 --	File: icons.lua
---	Description: K Neovim all icons
+--	Description: useful icons used in other modules and all neovim
 --	Author: Kevin
---	Last Modified: 12 Sep 2023, 11:37
+--	Last Modified: 14 Oct 2023, 09:13
 -----------------------------------
 
 -- NOTE:
@@ -130,6 +130,7 @@ return {
       Dev = "󰾰",
       WhichKeySep = "⇢",
       Orgmode = "",
+      Query = "󱩾"
    },
    diagnostics = {
       Error = "",

@@ -20,7 +20,7 @@
 
 > Written mostly in ![Lua](https://img.shields.io/badge/Lua-2C2D72?style=flat&logo=lua&logoColor=white)
 
-## Most used plugins  
+## Most used plugins
 
 - [Lazy](https://github.com/folke/lazy.nvim)
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim)

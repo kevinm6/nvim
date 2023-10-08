@@ -2,43 +2,23 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 19 Sep 2023, 09:07
+-- Last Modified: 13 Oct 2023, 17:25
 -------------------------------------
 
-local set_opts = function(opts)
-   local noremap = opts.noremap == nil and true or opts.noremap
-   local silent = opts.silent == nil and true or opts.silent
-   local desc = opts.desc
-   return { noremap = noremap, silent = silent, desc = desc }
+
+--- Set opts for keymaps. It's a wrapper to return a table of options.
+--- @param opts table populated table of keymap specific opts or empty table to ovverride
+--- default
+--- @return table opts options to be used for keymaps
+local function set_opts(opts)
+   local remap = (opts.remap == nil) and false or opts.remap
+   local noremap = (opts.noremap == nil and not opts.remap) and true or opts.noremap
+   local silent = (opts.silent == nil) and true or opts.silent
+
+   return { noremap = noremap, remap = remap, silent = silent, desc = opts.desc }
 end
 
 local set_keymap = vim.keymap.set
-
-
--- GUI
--- VimR keymaps (command key and others not supported in term)
-if vim.fn.has "gui_vimr" == 1 then
-   -- NORMAL-MODE & VISUAL-MODE
-   set_keymap({ "n", "v" }, "<D-Right>", "$", set_opts {})
-   set_keymap({ "n", "v" }, "<D-Left>", "0", set_opts {})
-   set_keymap({ "n", "v" }, "<D-Down>", "G", set_opts {})
-   set_keymap({ "n", "v" }, "<D-Up>", "gg", set_opts {})
-   set_keymap("n", "<C-Tab>", "<cmd>bnext<cr>", set_opts {})
-   set_keymap("n", "<C-S-Tab>", "<cmd>bprevious<cr>", set_opts {})
-   -- move text
-   set_keymap("n", "ª", ":move .+1<CR>==gi", set_opts {}) -- "ª" = "<A-j>"
-   set_keymap("n", "º", ":move .-2<CR>==gi", set_opts {}) -- "º" = "<A-k>"
-
-   -- INSERT-MODE
-   set_keymap("i", "<D-BS>", "<C-u>", set_opts {})
-   set_keymap("i", "<D-Del>", [[<Esc>"_dA]], set_opts {})
-   set_keymap("i", "<D-Right>", "<Esc>A", set_opts {})
-   set_keymap("i", "<D-Left>", "<Esc>I", set_opts {})
-   set_keymap("i", "<D-Down>", "<Esc>Gi", set_opts {})
-   set_keymap("i", "<D-Up>", "<Esc>ggi", set_opts {})
-   set_keymap("i", "<M-BS>", "<C-w>", set_opts {})
-   set_keymap("i", "<M-Del>", [[<C-o>"_dw]], set_opts {})
-end
 
 
 -- NORMAL MODE & VISUAL MODE
@@ -53,15 +33,12 @@ set_keymap("n", "<leader>.", function()
       end,
    })
 end, set_opts { desc = "Set cwd from current buffer " })
-set_keymap({ "n", "v" }, "<M-Left>", "b", set_opts {})
-set_keymap({ "n", "v" }, "<M-Right>", "E", set_opts {})
-set_keymap("n", "<S-Left>", "vh", set_opts {})
-set_keymap("n", "<S-Right>", "vl", set_opts {})
-set_keymap("n", "<S-Up>", "vk", set_opts {})
-set_keymap("n", "<S-Down>", "vj", set_opts {})
+set_keymap({ "n", "v" }, "<M-Left>", "b", set_opts { remap = true })
+set_keymap({ "n", "v" }, "<M-Right>", "E", set_opts { remap = true })
 set_keymap("n", "<C-h>", "<C-w>h", set_opts {})
 set_keymap("n", "<C-j>", "<C-w>j", set_opts {})
 set_keymap("n", "<C-k>", "<C-w>k", set_opts {})
+
 
 vim.keymap.set({ "n", "v" }, "<leader>R", function() end, { desc = "Run" })
 
@@ -82,29 +59,29 @@ set_keymap("n", "<leader>w", function()
    vim.cmd.update { bang = true }
 end, set_opts { desc = "Save buffer" })
 set_keymap("n", "<leader>H", function()
-   vim.cmd.nohlsearch {}
+   vim.cmd.nohlsearch()
 end, set_opts { desc = "No Highlight" })
 set_keymap("n", "<leader>c", function()
    vim.cmd.DeleteCurrentBuffer()
 end, set_opts { desc = "Close buffer" })
 set_keymap("n", "<leader>x", function()
-   vim.cmd.update {}
+   vim.cmd.update()
    vim.cmd.DeleteCurrentBuffer()
 end, set_opts { desc = "Save and Close buffer" })
 set_keymap("n", "<leader>q", function()
-   vim.cmd.bdelete {}
+   vim.cmd.bdelete()
 end, set_opts { desc = "Quit" })
 set_keymap("n", "<leader>nn", function()
    vim.cmd.Notifications {}
 end, set_opts { desc = "Notifications" })
 set_keymap("n", "<leader>nm", function()
-   vim.cmd.messages {}
+   vim.cmd.messages()
 end, set_opts { desc = "Messages" })
 set_keymap("n", "<leader>Q", function()
-   vim.cmd.copen {}
+   vim.cmd.copen()
 end, set_opts { desc = "QuickFixList" })
 set_keymap("n", "<leader>L", function()
-   vim.cmd.copen {}
+   vim.cmd.lopen()
 end, set_opts { desc = "LocationList" })
 
 set_keymap("n", "<C-l>", "<Nop>", set_opts {})
@@ -117,14 +94,15 @@ set_keymap(
    [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
    set_opts { silent = false, desc = "Replace occurence from <cword>" }
 )
+
 set_keymap("n", "<S-l>", function()
-   vim.cmd.bnext {}
+   vim.cmd.bnext()
 end, set_opts {})
 set_keymap("n", "<S-h>", function()
    vim.cmd.bprevious {}
 end, set_opts {})
 set_keymap("n", "<Esc>", function()
-   vim.cmd.noh {}
+   vim.cmd.noh()
 end, set_opts {})
 set_keymap("n", "Q", function()
    vim.cmd.DeleteCurrentBuffer()
@@ -143,9 +121,6 @@ set_keymap("n", "¸", "<C-w>H", set_opts {})
 set_keymap("n", "ˇ", "<C-w>L", set_opts {})
 set_keymap("n", "Ø", "O<Esc>j", set_opts {})
 set_keymap("n", "ø", "o<Esc>k", set_opts {})
-set_keymap("n", "+", "<C-a>", set_opts {})
-set_keymap("n", "-", "<C-x>", set_opts {})
-set_keymap("n", "ff", "/", set_opts { silent = false, desc = "Search" })
 
 -- move text
 set_keymap("n", "º", "<Esc>:m .-2<CR>==", set_opts {})
@@ -157,18 +132,7 @@ set_keymap("n", "x", [["_x]], set_opts {})
 -- set_keymap("n", "D", [["_D]], set_opts {})
 
 -- Window managing
-set_keymap("n", "<leader>W", function() end, set_opts { desc = "Window" })
-set_keymap("n", "<leader>Ws", function()
-   vim.cmd.split {}
-end, set_opts { desc = "HSplit" })
-set_keymap("n", "<leader>Wv", function()
-   vim.cmd.vsplit {}
-end, set_opts { desc = "VSplit" })
-set_keymap("n", "<leader>Wo", function()
-   vim.cmd.only()
-end, set_opts { desc = "Close other windows" })
-set_keymap("n", "<leader>W=", "<C-w>=", set_opts { desc = "Windows equals" })
-set_keymap("n", "<leader>Wm", "<C-w>|<bar> <C-w>_", set_opts { desc = "Window maximise" })
+set_keymap("n", "<leader>W", "<C-W>", set_opts { desc = "Window", remap = true })
 
 -- resize windows
 set_keymap("n", "<S-Up>", function()
@@ -204,8 +168,8 @@ end, set_opts { desc = "Neovim Config" })
 
 -- exit from NeoVim and Save or not
 set_keymap("n", "ZZ", function()
-   vim.cmd.update {}
-   vim.cmd.DeleteCurrentBuffer {}
+   vim.cmd.update()
+   vim.cmd.DeleteCurrentBuffer()
 end, set_opts { desc = "Save and Close buffer" })
 set_keymap("n", "ZQ", function()
    vim.cmd.quit { bang = true }
@@ -228,10 +192,6 @@ set_keymap("t", "<C-l>", [[<C-\><C-n><C-w>l]], set_opts {})
 
 
 -- INSERT MODE
-set_keymap("i", "<S-Right>", "<C-o>vl", set_opts {})
-set_keymap("i", "<S-Left>", "<C-o>vh", set_opts {})
-set_keymap("i", "<S-Down>", "<C-o>vj", set_opts {})
-set_keymap("i", "<S-Up>", "<C-o>vk", set_opts {})
 set_keymap("i", "<M-Left>", "<Esc>bi", set_opts {})
 set_keymap("i", "<M-Right>", "<Esc>ea", set_opts {})
 set_keymap("i", "<Esc>", "<Esc>`^", set_opts {})
@@ -260,7 +220,7 @@ set_keymap("v", "<BS>", [["_d]], set_opts {})
 set_keymap("v", "<", "<gv", set_opts {})
 set_keymap("v", ">", ">gv", set_opts {})
 set_keymap("v", "p", "_dP", set_opts {})
-set_keymap("v", "<C-s>", [[:s///gI<Left><Left><Left><Left>]], set_opts { silent = false, desc = "Search" })
+set_keymap("v", "<C-s>", [[:s///gI<Left><Left><Left><Left>]], set_opts { silent = false, desc = "Range Search & Replace" })
 set_keymap("v", "<leader>y", [["+y]], set_opts { desc = "Yank to clipboard" })
 --set_keymap("v", "d", "\+d", set_opts { expr = true, desc = "Copy deletion into register \""})
 --set_keymap("v", "D", "\+D", set_opts { expr = true, desc = "Copy deletion to end into register \"" })
@@ -277,7 +237,5 @@ end, set_opts { desc = "Align from regex" })
 
 -- move selected text
 set_keymap("x", "<leader>p", '"_dP', set_opts {})
--- set_keymap("x", "J", [[:move '>+1<CR>gv-gv]], set_opts {})
--- set_keymap("x", "K", [[:move '<-2<CR>gv-gv]], set_opts {})
-set_keymap("x", "ª", [[:move '>+1<CR>gv-gv]], set_opts {}) -- <A-j>
-set_keymap("x", "º", [[:move '<-2<CR>gv-gv]], set_opts {}) -- <A-k>
+set_keymap("x", "ª", [[:move '>+1<CR>gv-gv]], set_opts {})
+set_keymap("x", "º", [[:move '<-2<CR>gv-gv]], set_opts {})

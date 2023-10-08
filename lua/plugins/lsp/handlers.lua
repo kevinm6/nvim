@@ -149,9 +149,9 @@ M.implementation = function()
    end)
 end
 
-vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
-   require "user_lib.functions".toggle_format_on_save()
-end, {})
+-- vim.api.nvim_create_user_command("LspToggleAutoFormat", function()
+--    require "user_lib.functions".toggle_format_on_save()
+-- end, {})
 
 M.code_action_listener = function()
    local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }

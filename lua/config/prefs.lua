@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 25 Sep 2023, 09:56
+-- Last Modified: 11 Oct 2023, 12:52
 -------------------------------------
 
 -- CURSOR {
@@ -45,7 +45,7 @@ local options = {
    updatecount = 0, -- do not create swap file
    listchars = vim.opt.listchars:append { tab = "⇥ ", eol = "↲", trail = "~", space = "_", nbsp = "␣" },
    fillchars = [[eob: ,fold:󰇘,foldopen:,foldsep: ,foldclose:]],
-   syntax = "off", -- using treesitter
+   -- syntax = "off", -- using treesitter
    timeoutlen = 100,
    ttimeoutlen = 50,
    -- lazyredraw = true,
@@ -75,14 +75,9 @@ local options = {
    wrap = false, -- Wrap long lines showing a linebreak
    foldenable = true, -- enable code folding
    linebreak = true,
-   foldmethod = "expr", -- method used to generate folds
-   foldexpr = "nvim_treesitter#foldexpr()", -- using treesitter to more folds
+   -- foldmethod = "expr", -- method used to generate folds
+   -- foldexpr = "nvim_treesitter#foldexpr()", -- using treesitter to more folds
    diffopt = { "internal", "filler", "closeoff", "vertical" },
-   -- FIX:
-   -- disable til statuscolumn fixes: see https://github.com/kevinhwang91/nvim-ufo/issues/4
-   -- and https://github.com/neovim/neovim/pull/17446
-   -- it's overrided by nvim-ufo for now
-   foldcolumn = "auto",
 
    colorcolumn = "90",
 

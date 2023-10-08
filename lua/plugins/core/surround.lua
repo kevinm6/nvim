@@ -7,7 +7,7 @@
 
 local M = {
    "ur4ltz/surround.nvim",
-   event = "BufReadPre",
+   event = "BufRead",
    keys = {
       -- Normal & Visual Keymaps
       {

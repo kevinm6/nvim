@@ -1,8 +1,8 @@
 -----------------------------------
---  File         : cheat_sheet.lua
---  Description  : query < https://cht.sh > to get result in Neovim
---  Author       : Kevin
---  Last Modified: 07 Aug 2023, 11:04
+-- File         : cheat_sheet.lua
+-- Description  : query < https://cht.sh > to get result in Neovim
+-- Author       : Kevin
+-- Last Modified: 14 Oct 2023, 09:15
 -----------------------------------
 
 local M = {}
@@ -20,7 +20,7 @@ local opts = {
   },
 }
 
--- TODO: improve since is a personal module
+---TODO: to improve and remove deprecated code after update to nvim-0.10
 function M.setup(user_conf)
   opts = vim.tbl_deep_extend("force", opts, user_conf or {})
 end
@@ -41,7 +41,10 @@ function M.run(input)
 end
 
 
--- @type <string, string>
+---Split a string based on input
+---@param input_string string string to be splitted
+---@param sep string string to be used as separator
+---@return table t string splitted in a table
 local function split_string(input_string, sep)
   if sep == nil then
     sep = "%s"

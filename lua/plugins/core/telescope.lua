@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 02 Oct 2023, 09:08
+-- Last Modified: 15 Oct 2023, 12:00
 ---------------------------------------
 
 local function git_hunks()
@@ -107,7 +107,8 @@ local M = {
          {
             "<leader>fH",
             function()
-               require("telescope.builtin").help_tags()
+               local cword = vim.fn.expand "<cword>"
+               require("telescope.builtin").help_tags({ default_text = cword })
             end,
             desc = "Help",
          },
@@ -539,6 +540,7 @@ local M = {
                initial_mode = "insert",
                sorting_strategy = "descending",
                layout_strategy = "bottom_pane",
+               debounce = 400,
                layout_config = {
                   prompt_position = "bottom",
                   height = 0.7,

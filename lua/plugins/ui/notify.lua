@@ -7,7 +7,7 @@
 
 local M = {
    "rcarriga/nvim-notify",
-   event = "BufReadPre",
+   event = "BufRead",
    opts = function(_, o)
       -- Animation style (see below for details)
       o.stages = "fade"

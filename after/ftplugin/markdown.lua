@@ -2,7 +2,7 @@
 -- File         : markdown.lua
 -- Description  : filetype markdown extra config
 -- Author       : Kevin
--- Last Modified: 29 Sep 2023, 09:15
+-- Last Modified: 12 Oct 2023, 18:45
 -------------------------------------
 
 vim.opt_local.conceallevel = 2
@@ -17,17 +17,19 @@ vim.opt_local.formatoptions = "tcoqln"
 vim.opt_local.comments:append { "nb:+", "nb:>", "nb:-", "nb:." }
 
 vim.opt.spell = false
-vim.opt.spellfile = "~/.MacDotfiles/nvim/.config/nvim/spell/en.utf-8.add"
 
-vim.api.nvim_create_autocmd("BufEnter", {
-   pattern = "*.md",
-   callback = function()
-      vim.cmd [[
-         syntax match @text.todo.unchecked.markdown '\v(\s+)?-\s\[\s\]'hs=e-4 conceal cchar=☐
-         syntax match @text.todo.checked.markdown '\v(\s+)?-\s\[x\]'hs=e-4 conceal cchar=
-      ]]
+local function conceal_as_devicon(match, _, bufnr, pred, metadata)
+   if #pred == 2 then
+      -- (#as_devicon! @capture)
+      local capture_id = pred[2]
+      local lang = vim.treesitter.get_node_text(match[capture_id], bufnr)
+
+      local icon, _ = require("nvim-web-devicons").get_icon_by_filetype(lang, { default = true })
+      metadata["conceal"] = icon
    end
-})
+end
+
+vim.treesitter.query.add_directive("as_devicon!", conceal_as_devicon, true)
 
 -- add custom mappings only for markdown files
 -- if plugin 'peek' is installed
