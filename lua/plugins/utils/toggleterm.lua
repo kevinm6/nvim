@@ -2,7 +2,7 @@
 -- File         : toggleterm.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
--- Last Modified: 01 Oct 2023, 18:18
+-- Last Modified: 25 Oct 2023, 12:01
 -------------------------------------
 
 local M = {
@@ -19,34 +19,6 @@ local M = {
    },
    keys = {
       { "<leader>t", desc = "Terminal" },
-      {
-         "<leader>t1",
-         function()
-            vim.cmd "1ToggleTerm"
-         end,
-         desc = "Term 1",
-      },
-      {
-         "<leader>t2",
-         function()
-            vim.cmd "2ToggleTerm"
-         end,
-         desc = "Term 2",
-      },
-      {
-         "<leader>t3",
-         function()
-            vim.cmd "3ToggleTerm"
-         end,
-         desc = "Term 3",
-      },
-      {
-         "<leader>t4",
-         function()
-            vim.cmd "4ToggleTerm"
-         end,
-         desc = "Term 4",
-      },
       {
          "<leader>tt",
          function()
@@ -88,13 +60,6 @@ local M = {
             vim.cmd.ToggleTerm "direction=vertical"
          end,
          desc = "Vertical",
-      },
-      {
-         "<leader>gg",
-         function()
-            vim.cmd.Git {}
-         end,
-         desc = "LazyGit",
       },
       {
          "<leader>ts",
@@ -162,7 +127,7 @@ function M.config(_, o)
 
    local gh_dash = Terminal:new { cmd = "gh dash", hidden = true, direction = 'float' }
    vim.api.nvim_create_user_command('GHDash', function() gh_dash:toggle() end, {
-      desc = "GitHub Dashboard",
+      desc = "GHDash",
       force = true
    })
 
@@ -177,6 +142,35 @@ function M.config(_, o)
       desc = 'NCDU',
       force = true,
    })
+
+   vim.keymap.set("n",
+      "<leader>t1",
+      function()
+         vim.cmd "1ToggleTerm"
+      end,
+      { desc = "Term 1" }
+   )
+   vim.keymap.set("n",
+      "<leader>t2",
+      function()
+         vim.cmd "2ToggleTerm"
+      end,
+      { desc = "Term 2" }
+   )
+   vim.keymap.set("n",
+      "<leader>t3",
+      function()
+         vim.cmd "3ToggleTerm"
+      end,
+      { desc = "Term 3" }
+   )
+   vim.keymap.set("n",
+      "<leader>t4",
+      function()
+         vim.cmd "4ToggleTerm"
+      end,
+      { desc = "Term 4" }
+   )
 end
 
 return M

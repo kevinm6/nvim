@@ -12,8 +12,13 @@ local M = {
    dependencies = {
       {
          "kristijanhusak/vim-dadbod-ui",
-         config = function()
-            local icons = require "user_lib.icons"
+         init = function()
+            vim.g.dbs = {
+               imdb = "postgres://:@localhost/imdb",
+               lezione = "postgres://:@localhost/lezione",
+            }
+
+            local icons = require "lib.icons"
             vim.g.db_ui_icons = {
                expanded = {
                   db = icons.ui.DownTriangle,

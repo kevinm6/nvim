@@ -2,94 +2,183 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 15 Oct 2023, 11:46
+-- Last Modified: 03 Dec 2023, 10:48
 -------------------------------------
+
+---Auto Stop LSP client if no more buffers attached.
+---@param client table client attached to buffer
+---@param bufnr number buffer id of which client is attached
+local set_auto_stop_lsp = function(client, bufnr)
+  if (vim.fn.has "nvim-0.10" ~= 1) then return end
+
+  vim.api.nvim_create_autocmd("BufDelete", {
+    group = vim.api.nvim_create_augroup("_lsp_timeout", {clear = false}),
+    buffer = bufnr,
+    callback = function(ev)
+      local clients = vim.lsp.get_clients({ name = client.name, bufnr = bufnr })[1] or
+      vim.lsp.get_clients({ name = client.name })[1]
+      local attached_bufs = clients.attached_buffers
+      local n_bufs = 0
+      for _, _ in pairs(attached_bufs) do
+        n_bufs = n_bufs + 1
+      end
+
+      if n_bufs == 1 and attached_bufs[ev.buf] or n_bufs == 0 then
+        vim.defer_fn(function()
+          vim.lsp.stop_client(clients.id)
+
+          vim.notify("No more clients attached. Stopped.",
+            vim.log.levels.INFO, {
+              title = "LSP: "..clients.name,
+            }
+          )
+        end, 6000)
+      end
+    end
+  })
+end
+
 
 --- Set buffer keymaps based on supported capabilities of the
 --- passed client and buffer id
 --- @param client any client passed to attach config
 local set_buf_keymaps = function(client, _)
-   if client.name == "jdtls" then
-      client.server_capabilities.documentHighlightProvider = false
-      return
-   end
+  if client.name == "jdtls" then
+    client.server_capabilities.documentHighlightProvider = false
+  end
 
-   local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
+  local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
 
-   -- local opts = { noremap = true, silent = true }
-   vim.keymap.set("n", "gl", function()
-      vim.diagnostic.open_float()
-   end, { buffer = true, desc = "Open float" })
+  -- local opts = { noremap = true, silent = true }
+  vim.keymap.set("n", "gl", function()
+    vim.diagnostic.open_float()
+  end, { buffer = true, desc = "Open float" })
 
-   vim.keymap.set("n", "K", function()
-      local winid = require("ufo").peekFoldedLinesUnderCursor()
-      if not winid then
-         vim.lsp.buf.hover()
+  vim.keymap.set("n", "K", function()
+    local winid = require("ufo").peekFoldedLinesUnderCursor()
+    if not winid then
+      vim.lsp.buf.hover()
+    end
+  end, { desc = "Hover | PeekFold", buffer = true })
+
+  if client.server_capabilities.declarationProvider then
+    vim.keymap.set("n", "gD", function()
+      if has_telescope then
+        tele_builtin.lsp_definitions()
+      else
+        vim.lsp.buf.declaration()
       end
-   end, { desc = "Hover | PeekFold", buffer = true })
+    end, { buffer = true, desc = "LSP Declaration" })
+  end
+  if client.server_capabilities.definitionProvider then
+    vim.keymap.set("n", "gd", function()
+      if has_telescope then
+        tele_builtin.lsp_definitions()
+      else
+        vim.lsp.buf.definition()
+      end
+    end, { buffer = true, desc = "LSP Definition" })
 
-   if client.server_capabilities.declarationProvider then
-      vim.keymap.set("n", "gD", function()
-         if has_telescope then
-            tele_builtin.lsp_declarations()
-         else
-            vim.lsp.buf.declaration()
-         end
-      end, { buffer = true, desc = "GoTo declaration" })
-   end
-   if client.server_capabilities.definitionProvider then
-      vim.keymap.set("n", "gd", function()
-         if has_telescope then
-            tele_builtin.lsp_definitions()
-         else
-            vim.lsp.buf.definition()
-         end
-      end, { buffer = true, desc = "GoTo definition" })
-   end
-   if client.server_capabilities.implementationProvider then
-      vim.keymap.set("n", "gI", function()
-         if has_telescope then
-            tele_builtin.lsp_incoming_calls {}
-         else
-            vim.lsp.buf.implementation()
-         end
-      end, { buffer = true, desc = "GoTo implementation" })
-   end
-   if client.server_capabilities.referencesProvider then
-      vim.keymap.set("n", "gr", function()
-         if has_telescope then
-            tele_builtin.lsp_references {}
-         else
-            vim.lsp.buf.references()
-         end
-      end, { buffer = true, desc = "GoTo references" })
-   end
+    vim.keymap.set("n", "<leader>ld", function()
+      if has_telescope then
+        tele_builtin.lsp_definitions()
+      else
+        vim.lsp.buf.definition()
+      end
+    end, { buffer = true, desc = "LSP Definition" })
+  end
+  if client.server_capabilities.implementationProvider then
+    vim.keymap.set("n", "gI", function()
+      if has_telescope then
+        tele_builtin.lsp_incoming_calls {}
+      else
+        vim.lsp.buf.implementation()
+      end
+    end, { buffer = true, desc = "LSP IncCalls" })
+  end
+  if client.supports_method "callHierarchy/outgoingCalls" then
+    vim.keymap.set("n", "gC", function()
+      if has_telescope then
+        tele_builtin.lsp_outgoing_calls {}
+      else
+        vim.lsp.buf.outgoing_calls()
+      end
+    end, { buffer = true, desc = "LSP OutCalls" })
+  end
+  if client.server_capabilities.referencesProvider then
+    vim.keymap.set("n", "gr", function()
+      if has_telescope then
+        tele_builtin.lsp_references {}
+      else
+        vim.lsp.buf.references()
+      end
+    end, { buffer = true, desc = "LSP References" })
+    vim.keymap.set("n", "<leader>lr", function()
+      if has_telescope then
+        tele_builtin.lsp_references {}
+      else
+        vim.lsp.buf.references()
+      end
+    end, { buffer = true, desc = "LSP References" })
+  end
 
-   vim.keymap.set("n", "<leader>ll", function()
-      vim.lsp.codelens.run()
-   end, { buffer = true, desc = "CodeLens Action" })
-   vim.keymap.set("n", "<leader>la", function()
-      vim.lsp.buf.code_action()
-   end, { buffer = true, desc = "Code Action" })
-   vim.keymap.set("n", "<leader>lI", function()
-      vim.cmd.LspInfo {}
-   end, { buffer = true, desc = "Lsp Info" })
-   vim.keymap.set("n", "<leader>lL", function()
-      vim.cmd.LspLog {}
-   end, { buffer = true, desc = "Lsp Log" })
-   vim.keymap.set("n", "<leader>r", function()
-      vim.lsp.buf.rename()
-   end, { buffer = true, desc = "Rename" })
-   vim.keymap.set("n", "<leader>lq", function()
-      vim.diagnostic.setloclist()
-   end, { buffer = true, desc = "Lsp QFDiagnostics" })
-   -- Diagnostics
-   vim.keymap.set("n", "<leader>dj", function()
-      vim.diagnostic.goto_next { buffer = true }
-   end, { desc = "Next Diagnostic" })
-   vim.keymap.set("n", "<leader>dk", function()
-      vim.diagnostic.goto_prev { buffer = true }
-   end, { desc = "Prev Diagnostic" })
+  vim.keymap.set("n", "gs", function()
+    if has_telescope then
+      tele_builtin.lsp_document_symbols()
+    else
+      vim.lsp.buf.document_symbol()
+    end
+  end, { buffer = true, desc = "LSP Symbols" })
+
+  vim.keymap.set("n", "<leader>ls", function()
+    if has_telescope then
+      tele_builtin.lsp_document_symbols()
+    else
+      vim.lsp.buf.document_symbol()
+    end
+  end, { buffer = true, desc = "LSP Symbols" })
+
+  vim.keymap.set("n", "<leader>lt", function()
+    if has_telescope then
+      tele_builtin.lsp_type_definitions()
+    else
+      vim.lsp.buf.type_definition()
+    end
+  end, { buffer = true, desc = "LSP TypeDef" })
+
+  vim.keymap.set("n", "<leader>lS", function()
+    if has_telescope then
+      tele_builtin.lsp_dynamic_workspace_symbols {}
+    else
+      vim.lsp.buf.workspace_symbol()
+    end
+  end, { desc = "Workspace Symbols" })
+
+  vim.keymap.set("n", "<leader>ll", function()
+    vim.lsp.codelens.run()
+  end, { buffer = true, desc = "CodeLens Action" })
+  vim.keymap.set("n", "<leader>la", function()
+    vim.lsp.buf.code_action()
+  end, { buffer = true, desc = "Code Action" })
+  vim.keymap.set("n", "<leader>lI", function()
+    vim.cmd.LspInfo {}
+  end, { buffer = true, desc = "Lsp Info" })
+  vim.keymap.set("n", "<leader>lL", function()
+    vim.cmd.LspLog {}
+  end, { buffer = true, desc = "Lsp Log" })
+  vim.keymap.set("n", "<leader>r", function()
+    vim.lsp.buf.rename()
+  end, { buffer = true, desc = "Rename" })
+  vim.keymap.set("n", "<leader>lq", function()
+    vim.diagnostic.setloclist()
+  end, { buffer = true, desc = "Lsp QFDiagnostics" })
+  -- Diagnostics
+  vim.keymap.set("n", "<leader>dj", function()
+    vim.diagnostic.goto_next { buffer = true }
+  end, { desc = "Next Diagnostic" })
+  vim.keymap.set("n", "<leader>dk", function()
+    vim.diagnostic.goto_prev { buffer = true }
+  end, { desc = "Prev Diagnostic" })
 end
 
 
@@ -98,563 +187,559 @@ end
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
 local set_buf_funcs_for_capabilities = function(client, bufnr)
-   -- TODO: remove check for nvim_v0.10 after update
-   if vim.lsp.inlay_hint then
-      vim.api.nvim_create_user_command("InlayHints", function ()
-         if vim.g.inlay_hints == true then
-            vim.lsp.inlay_hint(bufnr, false)
-            vim.g.inlay_hints = false
-         else
-            vim.lsp.inlay_hint(bufnr, true)
-            vim.g.inlay_hints = true
-         end
-      end, {})
-   end
+  -- TODO: remove check for nvim_v0.10 after update
+  if vim.lsp.inlay_hint then
+    vim.api.nvim_create_user_command("InlayHints", function ()
+      if vim.lsp.inlay_hint.is_enabled(bufnr) then
+        vim.lsp.inlay_hint.enable(bufnr, false)
+      else
+        vim.lsp.inlay_hint.enable(bufnr, true)
+      end
+    end, { desc = "Toggle Inlay hints"})
+  end
 
-   -- lsp-document_highlight
-   if client.server_capabilities.documentHighlightProvider and
-       client.supports_method "textDocument/documentHighlight" then
-      local lsp_document_highlight =
-          vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
-      vim.api.nvim_clear_autocmds {
-         buffer = bufnr,
-         group = lsp_document_highlight,
-      }
-      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-         group = lsp_document_highlight,
-         buffer = bufnr,
-         callback = vim.lsp.buf.document_highlight,
-      })
-      vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-         group = lsp_document_highlight,
-         buffer = bufnr,
-         callback = vim.lsp.buf.clear_references,
-      })
-   end
+  -- lsp-document_highlight
+  if client.server_capabilities.documentHighlightProvider and
+    client.supports_method "textDocument/documentHighlight" then
+    local lsp_document_highlight =
+    vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
+    vim.api.nvim_clear_autocmds {
+      buffer = bufnr,
+      group = lsp_document_highlight,
+    }
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = lsp_document_highlight,
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+      group = lsp_document_highlight,
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
+  end
 
-   if client.server_capabilities.documentSymbolProvider then
-      require("nvim-navic").attach(client, bufnr)
-   end
+  if client.server_capabilities.documentSymbolProvider then
+    require("nvim-navic").attach(client, bufnr)
+  end
 
-   -- Formatting
-   if client.server_capabilities.documentFormattingProvider then
-      local user_lib_format = require "user_lib.format"
-      vim.api.nvim_create_user_command("LspAutoFormat", function()
-         user_lib_format.toggle_format_on_save()
-      end, {})
+  -- Formatting
+  if client.server_capabilities.documentFormattingProvider then
+    local lib_format = require "lib.format"
+    vim.api.nvim_create_user_command("LspAutoFormat", function()
+      lib_format.toggle_format_on_save()
+    end, {})
 
-      vim.api.nvim_create_user_command("Format", function()
-         user_lib_format.lsp_format(bufnr)
-      end, { force = true })
+    vim.api.nvim_create_user_command("Format", function()
+      lib_format.lsp_format(bufnr)
+    end, { force = true })
 
-      vim.keymap.set("n", "<leader>lf", function()
-         user_lib_format.lsp_format(bufnr)
-      end, { desc = "Format" })
-      vim.keymap.set("n", "<leader>lF", function()
-         vim.cmd.LspToggleAutoFormat()
-      end, { desc = "Toggle AutoFormat" })
-   end
+    vim.keymap.set("n", "<leader>lf", function()
+      lib_format.lsp_format(bufnr)
+    end, { desc = "Format" })
+    vim.keymap.set("n", "<leader>lF", function()
+      vim.cmd.LspToggleAutoFormat()
+    end, { desc = "Toggle AutoFormat" })
+  end
 
-   if client.server_capabilities.documentRangeFormattingProvider then
-      vim.keymap.set("v", "<leader>lf", function()
-         require("user_lib.functions").range_format()
-      end, { desc = "Range format" })
-   end
+  if client.server_capabilities.documentRangeFormattingProvider then
+    vim.keymap.set("v", "<leader>lf", function()
+      require("lib.utils").range_format()
+    end, { desc = "Range format" })
+  end
 
-   vim.api.nvim_create_user_command("LspCapabilities", function()
-      require("user_lib.functions").get_current_buf_lsp_capabilities()
-   end, {})
+  vim.api.nvim_create_user_command("LspCapabilities", function()
+    require("lib.utils").get_current_buf_lsp_capabilities()
+  end, {})
 end
 
 -- Custom configs to apply when starting lsp
 --- @param client any client passed to attach config
 local custom_init = function(client)
-   client.config.flags = client.config.flags or {}
-   client.config.flags.allow_incremental_sync = true
+  client.config.flags = client.config.flags or {}
+  client.config.flags.allow_incremental_sync = true
 end
 
 --- Custom configs to apply when attaching lsp to buffer
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
 local custom_attach = function(client, bufnr)
-   require("plugins.lsp.handlers").setup()
-   require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
+  require("plugins.lsp.handlers").setup()
+  require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
 
-   set_buf_keymaps(client, bufnr)
-   set_buf_funcs_for_capabilities(client, bufnr)
+  set_buf_keymaps(client, bufnr)
+  set_buf_funcs_for_capabilities(client, bufnr)
+  -- set_auto_stop_lsp(client, bufnr)
+  require "knvim.plugins.lsp"
 end
 
 local M = {
-   {
-      "neovim/nvim-lspconfig",
-      event = "BufRead",
-      cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
-      keys = {
-         { "<leader>l", nil, desc = "LSP" },
-      },
-      config = function()
-         local lspconfig = require "lspconfig"
-         local lsputil = require "lspconfig.util"
+  {
+    "neovim/nvim-lspconfig",
+    event = "BufRead",
+    cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
+    keys = {
+      { "<leader>l", nil, desc = "LSP" },
+    },
+    config = function()
+      local lspconfig = require "lspconfig"
+      local lsputil = require "lspconfig.util"
 
-         -- Update capabilities with extended from cmp_nvim_lsp
-         local ext_capabilities = nil
-         local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-         if not has_cmp then
-            ext_capabilities = vim.lsp.protocol.make_client_capabilities()
-         else
-            -- ext_capabilities = vim.lsp.protocol.make_client_capabilities()
-            ext_capabilities = cmp_nvim_lsp.default_capabilities()
-         end
-
-         -- HACK: this is to avoid errors on lsp that support only single encoding (ex: clangd)
-         --       maybe is resolved with this change on nvim_v0.10
-         -- `https://github.com/neovim/neovim/commit/ca26ec34386dfe98b0edf3de9aeb7b66f40d5efd`
-         -- ext_capabilities.offsetEncoding = "utf-8"
-
-         local default_lsp_config = {
-            on_init = custom_init,
-            on_attach = custom_attach,
-            capabilities = ext_capabilities,
-            flags = { debounce_text_changes = 150 },
-         }
-
-         require("mason-lspconfig").setup_handlers {
-            -- The first entry (without a key) will be the default handler
-            -- and will be called for each installed server that doesn't have
-            --- @param server_name string name of the server of which handler is being set
-            function(server_name)
-               if server_name ~= "jdtls" then
-                  lspconfig[server_name].setup(default_lsp_config) -- default handler (optional)
-               end
-            end,
-
-            -- Next, you can provide targeted overrides for specific servers.
-            -- Manage server with custom setup
-            ["lua_ls"] = function()
-               require "neodev".setup()
-
-               local runtime_path = vim.split(package.path, ";")
-               table.insert(runtime_path, "lua/?.lua")
-               table.insert(runtime_path, "lua/?/init.lua")
-
-               lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  settings = {
-                     Lua = {
-                        runtime = {
-                           path = runtime_path,
-                        },
-                        diagnostics = {
-                           enable = true,
-                           globals = { "vim", "pcall", "format" },
-                           disable = { "lowercase-global" },
-                        },
-                        -- completion = {
-                        --    enable = true,
-                        --    autoRequire = true,
-                        --    keywordSnippet = "Both",
-                        --    callSnippet = "Both",
-                        --    displayContext = 2,
-                        -- },
-                        workspace = {
-                           library = {
-                              [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                              [vim.fn.stdpath "config" .. "/lua"] = true,
-                           },
-                           checkThirdParty = false,
-                        },
-                        hint = { enable = true },
-                     },
-                  },
-               }))
-            end,
-            ["jsonls"] = function()
-               lspconfig.jsonls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  settings = {
-                     json = {
-                        schemas = require("schemastore").json.schemas() or nil,
-                     },
-                  },
-                  setup = {
-                     commands = {
-                        Format = {
-                           function()
-                              vim.lsp.buf.range_formatting(
-                                 {},
-                                 { 0, 0 },
-                                 { vim.fn.line "$", 0 }
-                              )
-                           end,
-                        },
-                     },
-                  },
-               }))
-            end,
-            ["sqlls"] = function()
-               local databases_path =
-                   vim.fn.expand "~/Informatica/Anno2/Semestre1/Basi di Dati"
-               lspconfig.sqlls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  settings = {
-                     sqls = {
-                        workspace = {
-                           connections = {
-                              {
-                                 driver = "postgresql",
-                                 dbName = "postgres",
-                                 proto = "tcp",
-                                 user = "Kevin",
-                                 port = 5432,
-                                 passwd = "",
-                                 host = "localhost",
-                                 path = databases_path,
-                              },
-                              {
-                                 driver = "postgresql",
-                                 dbName = "imdb",
-                                 proto = "tcp",
-                                 user = "Kevin",
-                                 port = 5432,
-                                 passwd = "",
-                                 host = "localhost",
-                                 path = databases_path,
-                              },
-                              {
-                                 driver = "postgresql",
-                                 dbName = "lezione",
-                                 proto = "tcp",
-                                 user = "Kevin",
-                                 port = 5432,
-                                 passwd = "",
-                                 host = "localhost",
-                                 path = databases_path,
-                              },
-                              {
-                                 driver = "postgresql",
-                                 dbName = "freshrss",
-                                 proto = "tcp",
-                                 user = "Kevin",
-                                 port = 5432,
-                                 passwd = "",
-                                 host = "localhost",
-                                 path = databases_path,
-                              },
-                           },
-                        },
-                     },
-                  },
-               }))
-            end,
-            ["grammarly"] = function()
-               lspconfig.grammarly.setup(
-                  vim.tbl_deep_extend("force", default_lsp_config, {
-                     filetypes = { "markdown", "text" },
-                     autostart = false,
-                  })
-               )
-            end,
-            ["clangd"] = function()
-               lspconfig.clangd.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  cmd = {
-                     "clangd",
-                     "--background-index",
-                     "--suggest-missing-includes",
-                     "--clang-tidy",
-                     "--header-insertion=iwyu",
-                  },
-                  init_options = {
-                     clangdFileStatus = true,
-                  },
-                  offsetEncoding = "utf-8",
-                  inlayHints = {
-                     enabled = true,
-                     parameterNames = true,
-                     deducedTypes = true,
-                  },
-               }))
-            end,
-            ["gopls"] = function()
-               lspconfig.gopls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  root_dir = function(fname)
-                     local Path = require "plenary.path"
-
-                     local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
-                     local absolute_fname = Path:new(fname):absolute()
-
-                     if
-                         string.find(absolute_cwd, "/cmd/", 1, true)
-                         and string.find(absolute_fname, absolute_cwd, 1, true)
-                     then
-                        return absolute_cwd
-                     end
-
-                     return lsputil.root_pattern("go.mod", "go.work", ".git")(fname)
-                  end,
-                  settings = {
-                     gopls = {
-                        codelenses = {
-                           test = true,
-                           gc_details = false,
-                           generate = true,
-                           regenerate_cgo = true,
-                           tidy = true,
-                           upgrade_dependency = true,
-                           vendor = true,
-                        },
-                        analyses = {
-                           unusedparams = true,
-                        },
-                        staticcheck = true,
-                        -- hints = {
-                        --   assignVariableTypes = true,
-                        --   compositeLiteralFields = true,
-                        --   compositeLiteralTypes = true,
-                        --   constantValues = true,
-                        --   functionTypeParameters = true,
-                        --   parameterNames = true,
-                        --   rangeVariableTypes = true,
-                        -- }
-                     },
-                  },
-                  flags = {
-                     debounce_text_changes = 200,
-                  },
-               }))
-            end,
-            ["tsserver"] = function()
-               lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  root_dir = lsputil.root_pattern(
-                     "tsconfig.json",
-                     "package.json",
-                     "jsconfig.json",
-                     ".git"
-                  ) or vim.loop.cwd(),
-                  init_options = {
-                     preferences = {
-                        includeCompletionsWithSnippetText = true,
-                        includeCompletionsForImportStatements = true,
-                     }
-                  }
-               }))
-            end,
-            ["bashls"] = function()
-               lspconfig.bashls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  cmd = { "bash-language-server", "start" },
-                  filetypes = { "sh", "bash", "zsh" },
-                  allowList = { "sh", "bash", "zsh" },
-                  settings = {
-                     allowList = { "sh", "bash", "zsh" },
-                  },
-                  on_attach = function(client, _)
-                     client.server_capabilities.documentHighlightProvider = false
-                  end,
-               }))
-            end,
-            ["erlangls"] = function()
-               lspconfig.erlangls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-                  docs = {
-                     description = [[
-                         https://github.com/erlang-ls/erlang_ls
-                         ]],
-                  },
-                  root_dir = lsputil.root_pattern("rebar.config", "erlang.mk", ".git")
-                      or vim.loop.cwd(),
-               }))
-            end,
-         }
-
-         -- sourcekit is still not available on mason-lspconfig
-         lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-            cmd = { "/usr/bin/xcrun", "sourcekit-lsp" },
-            filetypes = { "swift" },
-            root_dir = lsputil.root_pattern("Package.swift", ".git") or vim.loop.cwd(),
-         }))
-      end,
-   },
-
-   {
-      "williamboman/mason.nvim",
-      cmd = "Mason",
-      keys = {
-         { "<leader>C",  nil,           desc = "Packages" },
-         { "<leader>Cm", vim.cmd.Mason, desc = "Mason" },
-      },
-      --- @param o table options passed to config
-      opts = function(_, o)
-         local icons = require "user_lib.icons"
-
-         o.install_root_dir = vim.fn.stdpath "data" .. "/mason"
-
-         o.ui = {
-            border = "rounded",
-            width = 0.7,
-            height = 0.7,
-            icons = {
-               package_installed = icons.package_manager.done_sym,
-               package_pending = icons.package_manager.working_sym,
-               package_uninstalled = icons.package_manager.removed_sym,
-            },
-            keymaps = {
-               -- Keymap to uninstall a server
-               uninstall_package = "D",
-            },
-         }
-         o.registries = {
-            "github:mason-org/mason-registry",
-         }
-      end,
-   },
-
-   {
-      "williamboman/mason-lspconfig.nvim",
-      --- @param o table options passed to config
-      opts = function(_, o)
-         local icons = require "user_lib.icons"
-
-         o.ensure_installed = {
-            "lua_ls",
-            "vimls",
-            "tsserver",
-            "sqlls",
-            "pyright",
-            "jsonls",
-            "gopls",
-            "yamlls",
-            "html",
-            "bashls",
-            "clangd",
-            "rust_analyzer",
-            "intelephense",
-            "ocamllsp",
-            "erlangls",
-            "dockerls",
-         }
-         o.automatic_installation = {}
-         o.ui = {
-            border = "rounded",
-            icons = {
-               -- The list icon to use for installed servers.
-               server_installed = icons.package_manager.done_sym,
-               -- The list icon to use for servers that are pending installation.
-               server_pending = icons.package_manager.working_sym,
-               -- The list icon to use for servers that are not installed.
-               server_uninstalled = icons.package_manager.removed_sym,
-            },
-         }
-         o.pip = { install_args = {} }
-         o.log_level = vim.log.levels.INFO
-         o.max_concurrent_installers = 2
-      end,
-   },
-
-   {
-      "mfussenegger/nvim-lint",
-      event = "InsertEnter",
-      config = function()
-         local lint = require "lint"
-         lint.linters_by_ft = {
-            markdown = { "markdownlint" },
-            json = { "jsonlint" },
-            javascript = {
-               "eslint_d"
-            },
-            typescript = {
-               "eslint_d"
-            },
-            python = { "flake8" },
-            gitcommit = { "commitlint" },
-            php = { "php" },
-            yaml = { "yamllint" },
-         }
-
-         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-            callback = function()
-               if lint then
-                  lint.try_lint()
-               end
-            end,
-         })
+      -- Update capabilities with extended from cmp_nvim_lsp
+      local ext_capabilities = nil
+      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      if not has_cmp then
+        ext_capabilities = vim.lsp.protocol.make_client_capabilities()
+      else
+        ext_capabilities = cmp_nvim_lsp.default_capabilities()
       end
 
-   },
+      local default_lsp_config = {
+        on_init = custom_init,
+        on_attach = custom_attach,
+        capabilities = ext_capabilities,
+        flags = { debounce_text_changes = 150 },
+      }
 
-   -- TODO: to be removed later
-   {
-      "jose-elias-alvarez/null-ls.nvim",
-      event = "LspAttach",
-      dependencies = { "nvim-lua/plenary.nvim" },
-      --- @param o table options passed to config
-      opts = function(_, o)
-         local null_ls = require "null-ls"
+      require("mason-lspconfig").setup_handlers {
+        -- The first entry (without a key) will be the default handler
+        -- and will be called for each installed server that doesn't have
+        --- @param server_name string name of the server of which handler is being set
+        function(server_name)
+          if server_name ~= "jdtls" then
+            lspconfig[server_name].setup(default_lsp_config) -- default handler (optional)
+          else return
+          end
+        end,
 
-         o.debounce = 150
-         o.save_after_format = false
-         o.debug = false
-         o.on_attach = o.on_attach
-         o.root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".git")
+        -- Next, you can provide targeted overrides for specific servers.
+        -- Manage server with custom setup
+        ["lua_ls"] = function()
+          require "neodev".setup()
 
-         o.sources = {
-            null_ls.builtins.formatting.prettier.with {
-               extra_filetypes = { "toml", "solidity" },
-               extra_args = function(params)
-                  return params.options
-                      and {
-                         "--no-semi",
-                         "--single-quote",
-                      }
-                      and params.options.tabSize
-                      and { "--tab-width", params.options.tabSize }
-               end,
-            },
-            null_ls.builtins.formatting.black.with {
-               extra_args = function(params)
-                  return params.options
-                      and { "--fast" }
-                      and params.options.tabSize
-                      and { "--tab-width", params.options.tabSize }
-               end,
-            },
-            null_ls.builtins.formatting.stylua.with {
-               extra_args = function(params)
-                  return params.options
-                      and params.options.tabSize
-                      and { "--indent-width", params.options.tabSize }
-               end,
-            },
-            null_ls.builtins.formatting.google_java_format.with {
-               extra_args = function(params)
-                  return params.options
-                      and params.options.tabSize
-                      and { "--tab-width", params.options.tabSize }
-               end,
-            },
+          local runtime_path = vim.split(package.path, ";")
+          table.insert(runtime_path, "lua/?.lua")
+          table.insert(runtime_path, "lua/?/init.lua")
 
-            null_ls.builtins.formatting.yamlfmt.with {
-               extra_args = function(params)
-                  return params.options
-                      and params.options.tabSize
-                      and { "--tab-width", params.options.tabSize }
-               end,
+          lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            settings = {
+              Lua = {
+                runtime = {
+                  path = runtime_path,
+                },
+                diagnostics = {
+                  enable = true,
+                  globals = { "vim", "format", "pandoc", "quarto" },
+                  disable = {},
+                },
+                -- completion = {
+                --    enable = true,
+                --    autoRequire = true,
+                --    keywordSnippet = "Both",
+                --    callSnippet = "Both",
+                --    displayContext = 2,
+                -- },
+                workspace = {
+                  library = {
+                    [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+                    [vim.fn.stdpath "config" .. "/lua"] = true,
+                  },
+                  checkThirdParty = false,
+                },
+                hint = { enable = true },
+                telemetry = { enable = false }
+              },
             },
-
-            null_ls.builtins.code_actions.gitsigns.with {
-               config = {
-                  filter_actions = function(title)
-                     return title:lower():match "blame" == nil
+          }))
+        end,
+        ["jsonls"] = function()
+          lspconfig.jsonls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            settings = {
+              json = {
+                schemas = require("schemastore").json.schemas() or nil,
+              },
+            },
+            setup = {
+              commands = {
+                Format = {
+                  function()
+                    vim.lsp.buf.range_formatting(
+                      {},
+                      { 0, 0 },
+                      { vim.fn.line "$", 0 }
+                    )
                   end,
-               },
+                },
+              },
             },
-            null_ls.builtins.code_actions.gitrebase,
-            null_ls.builtins.code_actions.refactoring,
+          }))
+        end,
+        ["sqlls"] = function()
+          vim.g.LanguageClient_serverCommands = {
+            ["sql"] = {
+              "sql-language-server",
+              "up",
+              "--method",
+              "stdio",
+            },
+          }
+        end,
+        ["marksman"] = function()
+          lspconfig.marksman.setup(
+            vim.tbl_deep_extend("force", default_lsp_config, {
+              filetypes = { "markdown", "quarto" },
+              root_dir = lsputil.root_pattern(".git", "marksman.toml", "_quarto.yml")
+            })
+          )
+        end,
+        ["pyright"] = function()
+          lspconfig.pyright.setup(
+            vim.tbl_deep_extend("force", default_lsp_config, {
+              settings = {
+                python = {
+                  analysis = {
+                    autoSearchPaths = true,
+                    useLibraryCodeForTypes = false,
+                    diagnosticMode = "openFilesOnly",
+                  },
+                },
+              },
+              root_dir = function(fname)
+                return lsputil.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt")(
+                  fname
+                ) or lsputil.path.dirname(fname)
+              end,
+            })
+          )
+        end,
+        ["grammarly"] = function()
+          lspconfig.grammarly.setup(
+            vim.tbl_deep_extend("force", default_lsp_config, {
+              filetypes = { "markdown", "text" },
+              autostart = false,
+            })
+          )
+        end,
+        ["clangd"] = function()
+          lspconfig.clangd.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            init_options = {
+              clangdFileStatus = true,
+            },
+            inlayHints = {
+              enabled = true,
+              parameterNames = true,
+              deducedTypes = true,
+            },
+          }))
+        end,
+        ["gopls"] = function()
+          lspconfig.gopls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            root_dir = function(fname)
+              local Path = require "plenary.path"
 
-            null_ls.builtins.completion.luasnip,
-            null_ls.builtins.completion.tags,
+              local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
+              local absolute_fname = Path:new(fname):absolute()
 
-            null_ls.builtins.diagnostics.zsh,
+              if
+                string.find(absolute_cwd, "/cmd/", 1, true)
+                and string.find(absolute_fname, absolute_cwd, 1, true)
+              then
+                return absolute_cwd
+              end
 
-            null_ls.builtins.hover.dictionary,
-            null_ls.builtins.hover.printenv,
-         }
-      end,
-   },
+              return lsputil.root_pattern("go.mod", "go.work", ".git")(fname)
+            end,
+            settings = {
+              gopls = {
+                codelenses = {
+                  test = true,
+                  gc_details = false,
+                  generate = true,
+                  regenerate_cgo = true,
+                  tidy = true,
+                  upgrade_dependency = true,
+                  vendor = true,
+                },
+                analyses = {
+                  unusedparams = true,
+                },
+                staticcheck = true,
+                -- hints = {
+                --   assignVariableTypes = true,
+                --   compositeLiteralFields = true,
+                --   compositeLiteralTypes = true,
+                --   constantValues = true,
+                --   functionTypeParameters = true,
+                --   parameterNames = true,
+                --   rangeVariableTypes = true,
+                -- }
+              },
+            },
+            flags = {
+              debounce_text_changes = 200,
+            },
+          }))
+        end,
+        ["tsserver"] = function()
+          lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            root_dir = lsputil.root_pattern(
+              "tsconfig.json",
+              "package.json",
+              "jsconfig.json",
+              ".git"
+            ) or vim.loop.cwd(),
+            init_options = {
+              preferences = {
+                includeCompletionsWithSnippetText = true,
+                includeCompletionsForImportStatements = true,
+              }
+            }
+          }))
+        end,
+        ["bashls"] = function()
+          lspconfig.bashls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            cmd = { "bash-language-server", "start" },
+            filetypes = { "sh", "bash", "zsh" },
+            allowList = { "sh", "bash", "zsh" },
+            settings = {
+              allowList = { "sh", "bash", "zsh" },
+            },
+            on_attach = function(client, _)
+              client.server_capabilities.documentHighlightProvider = false
+            end,
+          }))
+        end,
+        ["erlangls"] = function()
+          lspconfig.erlangls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            docs = {
+              description = [[
+                         https://github.com/erlang-ls/erlang_ls
+                         ]],
+            },
+            root_dir = lsputil.root_pattern("rebar.config", "erlang.mk", ".git")
+              or vim.loop.cwd(),
+          }))
+        end,
+      }
+
+      -- sourcekit is still not available on mason-lspconfig
+      lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+        cmd = {
+          vim.fn.glob("/Applications/Xcode*.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp", true, true)[1]
+        },
+        filetypes = { "swift" },
+        root_dir = function(filename, _)
+          local git_root = lsputil.find_git_ancestor(filename)
+          return git_root
+        end
+      }))
+    end,
+  },
+
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    --- @param o table options passed to config
+    opts = function(_, o)
+      local icons = require "lib.icons"
+
+      o.install_root_dir = vim.fn.stdpath "data" .. "/mason"
+
+      o.ui = {
+        border = "rounded",
+        width = 0.7,
+        height = 0.7,
+        icons = {
+          package_installed = icons.package_manager.done_sym,
+          package_pending = icons.package_manager.working_sym,
+          package_uninstalled = icons.package_manager.removed_sym,
+        },
+        keymaps = {
+          -- Keymap to uninstall a server
+          uninstall_package = "D",
+        },
+      }
+      o.registries = {
+        "github:mason-org/mason-registry",
+      }
+    end,
+  },
+
+  {
+    "williamboman/mason-lspconfig.nvim",
+    --- @param o table options passed to config
+    opts = function(_, o)
+      local icons = require "lib.icons"
+
+      o.ensure_installed = {
+        "lua_ls",
+        "vimls",
+        "marksman",
+        "tsserver",
+        "sqlls",
+        "pyright",
+        "jsonls",
+        "gopls",
+        "yamlls",
+        "html",
+        "bashls",
+        "clangd",
+        "intelephense",
+        "ocamllsp",
+        "dockerls",
+      }
+      o.automatic_installation = {}
+      o.ui = {
+        border = "rounded",
+        icons = {
+          -- The list icon to use for installed servers.
+          server_installed = icons.package_manager.done_sym,
+          -- The list icon to use for servers that are pending installation.
+          server_pending = icons.package_manager.working_sym,
+          -- The list icon to use for servers that are not installed.
+          server_uninstalled = icons.package_manager.removed_sym,
+        },
+      }
+      o.pip = { install_args = {} }
+      o.log_level = vim.log.levels.INFO
+      o.max_concurrent_installers = 2
+    end,
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    event = "InsertEnter",
+    config = function()
+      local lint = require "lint"
+      lint.linters_by_ft = {
+        markdown = { "markdownlint" },
+        json = { "jsonlint" },
+        javascript = {
+          "eslint_d"
+        },
+        typescript = {
+          "eslint_d"
+        },
+        python = { "flake8" },
+        gitcommit = { "commitlint" },
+        php = { "php" },
+        yaml = { "yamllint" },
+      }
+
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          if lint then
+            lint.try_lint()
+          end
+        end,
+      })
+    end
+
+  },
+
+  {
+    "nvimtools/none-ls.nvim",
+    event = "LspAttach",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    --- @param o table options passed to config
+    opts = function(_, o)
+      local null_ls = require "null-ls"
+
+      o.debounce = 150
+      o.save_after_format = false
+      o.debug = false
+      o.on_attach = o.on_attach
+      o.root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".git")
+
+      o.sources = {
+        null_ls.builtins.formatting.prettier.with {
+          extra_filetypes = { "toml", "solidity" },
+          extra_args = function(params)
+            return params.options
+              and {
+                "--no-semi",
+                "--single-quote",
+              }
+              and params.options.tabSize
+              and { "--tab-width", params.options.tabSize }
+          end,
+        },
+        null_ls.builtins.formatting.black.with {
+          extra_args = function(params)
+            return params.options
+              and { "--fast" }
+              and params.options.tabSize
+              and { "--tab-width", params.options.tabSize }
+          end,
+        },
+        null_ls.builtins.formatting.stylua.with {
+          extra_args = function(params)
+            return params.options
+              and params.options.tabSize
+              and { "--indent-width", params.options.tabSize }
+          end,
+        },
+        null_ls.builtins.formatting.google_java_format.with {
+          extra_args = function(params)
+            return params.options
+              and params.options.tabSize
+              and { "--tab-width", params.options.tabSize }
+          end,
+        },
+
+        null_ls.builtins.formatting.yamlfmt.with {
+          extra_args = function(params)
+            return params.options
+              and params.options.tabSize
+              and { "--tab-width", params.options.tabSize }
+          end,
+        },
+
+        null_ls.builtins.code_actions.gitsigns.with {
+          config = {
+            filter_actions = function(title)
+              return title:lower():match "blame" == nil
+            end,
+          },
+        },
+        null_ls.builtins.code_actions.gitrebase,
+        null_ls.builtins.code_actions.refactoring,
+
+        null_ls.builtins.completion.luasnip,
+        null_ls.builtins.completion.tags,
+
+        null_ls.builtins.diagnostics.zsh,
+
+        null_ls.builtins.hover.dictionary,
+        null_ls.builtins.hover.printenv,
+      }
+
+      require "knvim.plugins.null_ls"
+    end,
+  },
+
+  -- Java
+  {
+    "mfussenegger/nvim-jdtls",
+    dependencies = { "mfussenegger/nvim-dap" },
+    ft = "java",
+  },
+
+  -- Scala
+  {
+    "scalameta/nvim-metals",
+    ft = "scala",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "mfussenegger/nvim-dap",
+    },
+  },
+
+  -- Json
+  {
+    "b0o/SchemaStore.nvim",
+    ft = "json",
+  }
 }
 
 return M

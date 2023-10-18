@@ -30,6 +30,9 @@
 - [Mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim)
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 - [Dap](https://github.com/mfussenegger/nvim-dap)
+- [Gitsigns](https://github.com/lewis6991/gitsigns.nvim)
+- [Luasnip](https://github.com/L3MON4D3/LuaSnip)
+- [None-ls](https://github.com/nvimtools/none-ls.nvim)
 - [Which-Key](https://github.com/folke/which-key.nvim)
 - [Notify](https://github.com/rcarriga/nvim-notify)
 - [Noice](https://github.com/folke/noice.nvim)
@@ -38,17 +41,13 @@
 - [Surround](https://github.com/ur4ltz/surround.nvim)
 - [Autopairs](https://github.com/windwp/nvim-autopairs)
 - [Ufo](https://github.com/kevinhwang91/nvim-ufo)
-- [Code_runner](https://github.com/CRAG666/code_runner.nvim)
 - [Comment](https://github.com/numToStr/Comment.nvim)
-- [Gitsigns](https://github.com/lewis6991/gitsigns.nvim)
-- [Luasnip](https://github.com/L3MON4D3/LuaSnip)
 - [Navic](https://github.com/SmiteshP/nvim-navic)
 - [Oil](https://github.com/stevearc/oil.nvim)
 - [Peek](https://github.com/toppair/peek.nvim)
-- [Twilight](https://github.com/folke/twilight.nvim)
 - [Alpha](https://github.com/goolord/alpha-nvim)
+- [Twilight](https://github.com/folke/twilight.nvim)
 - [Cheatsheet](https://github.com/Djancyp/cheat-sheet)
-- [⚠️  Null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim)
 
 ---
 

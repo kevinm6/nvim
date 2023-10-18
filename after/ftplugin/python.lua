@@ -10,18 +10,18 @@ vim.opt_local.autoindent = true
 
 -- Add custom mappings only for python files
 vim.keymap.set("n", "<leader>pv", function()
-   require "user_lib.python_envs".pick_venv()
+   require "lib.python_envs".pick_venv()
 end, { desc = "Pick Python Venv" })
 
 vim.api.nvim_create_user_command("Pyvenv", function(arg)
    if arg.args ~= "" then
       local venv = {
          name = vim.fn.fnamemodify(arg.args, ":t"),
-         path = ("%s/%s"):format(vim.loop.cwd(), vim.fn.expand(arg.args))
+         path = string.format("%s/%s", vim.loop.cwd(), vim.fn.expand(arg.args))
       }
-      require "user_lib.python_envs".set_venv(venv)
+      require "lib.python_envs".set_venv(venv)
    else
-      require "user_lib.python_envs".pick_venv()
+      require "lib.python_envs".pick_venv()
    end
 end, {
    nargs = "?",

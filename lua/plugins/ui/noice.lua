@@ -1,61 +1,65 @@
+---@diagnostic disable: missing-fields
 ----------------------------------------
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 08 Oct 2023, 12:54
+--  Last Modified: 03 Dec 2023, 10:49
 ----------------------------------------
 
 local M = {
   "folke/noice.nvim",
   cmd = "Noice",
-  event = "VeryLazy",
+  event = { "VeryLazy", "CmdLineEnter" },
   dependencies = {
-    -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-    { "MunifTanjim/nui.nvim", event = "BufReadPre" },
-    "rcarriga/nvim-notify",
-    -- "nvim-treesitter/nvim-treesitter",
-  },
-  keys = {
+    "MunifTanjim/nui.nvim",
     {
-      "<leader>n",
-      function() end,
-      desc = "Notifications",
-    },
-    {
-      "<leader>nn",
-      function()
-        require("noice").cmd "History"
+      "rcarriga/nvim-notify",
+      event = "BufRead",
+      opts = function(_, o)
+        -- Animation style (see below for details)
+        o.stages = "fade"
+
+        -- Function called when a new window is opened, use for changing win settings/config
+        o.on_open = nil
+
+        -- Function called when a window is closed
+        o.on_close = nil
+
+        -- Render function for notifications. See notify-render()
+        o.render = "default"
+
+        -- Default timeout for notifications
+        o.timeout = 1600
+
+        -- For stages that change opacity this is treated as the highlight behind the window
+        -- Set this to either a highlight group or an RGB hex value e.g. "#000000"
+        o.background_colour = "#2c2c2c"
+
+        -- Minimum width for notification windows
+        o.minimum_width = 12
+
+        o.max_height = function()
+          return math.floor(vim.o.lines * 0.75)
+        end
+        o.max_width = function()
+          return math.floor(vim.o.columns * 0.75)
+        end
+
+        -- Icons for the different levels
+        o.icons = {
+          ERROR = require "lib.icons".diagnostics.Error,
+          WARN = require "lib.icons".diagnostics.Warning,
+          INFO = require "lib.icons".diagnostics.Information,
+          DEBUG = require "lib.icons".ui.Bug,
+          TRACE = require "lib.icons".ui.Pencil,
+        }
       end,
-      desc = "Notifications",
-    },
-    {
-      "<leader>nL",
-      function()
-        require("noice").cmd "Log"
-      end,
-      desc = "Log",
-    },
-    {
-      "<leader>ne",
-      function()
-        require("noice").cmd "Error"
-      end,
-      desc = "Error",
-    },
-    {
-      "<leader>nl",
-      function()
-        require("noice").cmd "Last"
-      end,
-      desc = "NoiceLast",
-    },
-    {
-      "<leader>nt",
-      function()
-        require("telescope").extensions.noice.noice { theme = "dropdown" }
-      end,
-      desc = "Noice Telescope",
-    },
+      config = function(_, o)
+        local notify = require "notify"
+        notify.setup(o)
+        vim.notify = notify
+      end
+    }
   },
   opts = function(_, o)
     o.cmdline = {
@@ -141,18 +145,50 @@ local M = {
           winhighlight = { Normal = "Normal", FloatBorder = "WinSeparator" },
         },
       },
+      mini = { win_options = { winblend = 6 } }
     } -- @see the section on views below
     ---@type NoiceRouteConfig[]
     -- NOTE: https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages#messages-and-notifications-in-neovim
     o.routes = {
       -- NOTE: reroute long notifications to split
+      -- {
+      --    filter = {
+      --       event = "msg_show",
+      --       any = { { min_height = 5 }, { min_width = 100 } },
+      --       ["not"] = {
+      --          kind = { "confirm", "confirm_sub", "return_prompt", "quickfix", "search_count" }
+      --       },
+      --       blocking = false
+      --    },
+      --    view = "messages",
+      --    opts = { stop = true }
+      -- },
       {
         filter = {
           event = "notify",
-          min_height = 15,
+          min_height = 4
         },
         view = "split",
       },
+      {
+        filter = {
+          event = "lsp",
+          kind = "progress",
+          find = "workspace", -- skip all progress containing 'workspace'
+        },
+        opts = { skip = true }
+      },
+      -- { -- skip lsp_progress for client
+      --    filter = {
+      --      event = "lsp",
+      --      kind = "progress",
+      --      cond = function(message)
+      --        local client = vim.tbl_get(message.opts, "progress", "client")
+      --        return client == "lua_ls" -- skip lua-ls progress
+      --      end,
+      --    },
+      --    opts = { skip = true },
+      --  },
       -- NOTE: avoid search messages (using virtualtext as default)
       {
         filter = {
@@ -161,9 +197,33 @@ local M = {
         },
         opts = { skip = true },
       },
-      {
+      { -- show @recording messages as notification
         view = "notify",
         filter = { event = "msg_showmode" },
+      },
+      {
+        view = "mini",
+        filter = {
+          event = "msg_show",
+          any = {
+            { find = '; after #%d+' },
+            { find = '; before #%d+' },
+            { find = 'fewer lines' },
+            { find = 'written' },
+            { find = 'E162' },
+            { find = 'E37' }
+          }
+        }
+      },
+      {
+        view = 'mini',
+        filter = {
+          event = 'notify',
+          any = {
+            { find = 'hidden' },
+            { find = 'clipboard' },
+          },
+        },
       },
       -- NOTE: this avoid written messages
       -- {
@@ -227,6 +287,8 @@ local M = {
   config = function(_, o)
     require "noice".setup(o)
 
+    require "knvim.plugins.noice"
+
     vim.keymap.set({ "n", "s" }, "<C-f>", function()
       if not require("noice.lsp").scroll(4) then
         return "<C-f>"
@@ -239,6 +301,46 @@ local M = {
       end
     end, { silent = true, expr = true })
 
+    vim.keymap.set("n",
+      "<leader>n",
+      function() end,
+      { desc = "Notifications" }
+    )
+    vim.keymap.set("n",
+      "<leader>nn",
+      function()
+        require("noice").cmd "History"
+      end,
+      { desc = "Notifications" }
+    )
+    vim.keymap.set("n",
+      "<leader>nL",
+      function()
+        require("noice").cmd "Log"
+      end,
+      { desc = "Log" }
+    )
+    vim.keymap.set("n",
+      "<leader>ne",
+      function()
+        require("noice").cmd "Error"
+      end,
+      { desc = "Error" }
+    )
+    vim.keymap.set("n",
+      "<leader>nl",
+      function()
+        require("noice").cmd "Last"
+      end,
+      { desc = "NoiceLast" }
+    )
+    vim.keymap.set("n",
+      "<leader>nt",
+      function()
+        require("telescope").extensions.noice.noice { theme = "dropdown" }
+      end,
+      { desc = "Noice Telescope" }
+    )
   end
 }
 
