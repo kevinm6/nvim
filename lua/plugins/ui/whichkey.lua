@@ -39,10 +39,6 @@ local M = {
     }
     o.show_help = false
   end,
-  config = function(_, o)
-    require("which-key").setup(o)
-    require "knvim.plugins.whichkey"
-  end
 }
 
 return M

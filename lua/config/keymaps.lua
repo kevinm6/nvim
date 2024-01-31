@@ -14,7 +14,7 @@ map("n", "<leader>.", function()
       title = "File Explorer",
       render = "wrapped-compact",
       timeout = 4,
-      on_open = function(win)
+    on_open = function(win)
          local buf = vim.api.nvim_win_get_buf(win)
          vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
       end,
@@ -22,10 +22,13 @@ map("n", "<leader>.", function()
 end, { desc = "Set cwd from current buffer " })
 map({ "n", "v" }, "<M-Left>", "b", { remap = true })
 map({ "n", "v" }, "<M-Right>", "E", { remap = true })
+
 map("n", "<C-h>", "<C-w>h")
 map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
-
+map("n", "<C-l>", "<C-w>l")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
 
 map({ "n", "v" }, "<leader>R", function() end, { desc = "Run" })
 
@@ -59,22 +62,18 @@ map("n", "<leader>q", function()
    vim.cmd.bdelete()
 end, { desc = "Quit" })
 map("n", "<leader>nn", function()
-   vim.cmd.Notifications {}
+   vim.cmd.Notifications()
 end, { desc = "Notifications" })
 map("n", "<leader>nm", function()
    vim.cmd.messages()
 end, { desc = "Messages" })
 map("n", "<leader>Q", function()
-   vim.cmd.copen()
+  pcall(vim.cmd.copen)
 end, { desc = "QuickFixList" })
 map("n", "<leader>L", function()
-   vim.cmd.lopen()
+  pcall(vim.cmd.lopen)
 end, { desc = "LocationList" })
 
-map("n", "<C-l>", "<Nop>")
-map("n", "<C-l>", "<C-w>l")
-map("n", "<C-d>", "<C-d>zz")
-map("n", "<C-u>", "<C-u>zz")
 map(
    "n",
    "<C-s>",
@@ -90,20 +89,22 @@ map("n", "Q", function() pcall(vim.cmd.DeleteCurrentBuffer) end)
 map("n", "U", "<C-r>")
 map("n", "Y", "y$")
 map("n", "J", "mzJ`z")
-map("n", "n", "nzzzv")
-map("n", "N", "Nzzzv")
+map("n", "n", "nzz")
+map("n", "N", "Nzz")
+map("n", "#", "#zz")
+map("n", "g*", "g*zz")
 map("n", "S", ":%s///g<Left><Left><Left>")
-map("n", "—", "<C-w>| <C-w>_")
-map("n", "˝", "<C-w>J")
-map("n", "˛", "<C-w>K")
-map("n", "¸", "<C-w>H")
-map("n", "ˇ", "<C-w>L")
-map("n", "Ø", "O<Esc>j")
-map("n", "ø", "o<Esc>k")
+map("n", "<M-S-->", "<C-w>| <C-w>_")
+map("n", "<M-J>", "<C-w>J")
+map("n", "<M-K>", "<C-w>K")
+map("n", "<M-H>", "<C-w>H")
+map("n", "<M-L>", "<C-w>L")
+map("n", "<M-O>", "O<Esc>j")
+map("n", "<M-o>", "o<Esc>k")
 
 -- move text
-map("n", "º", "<Esc>:m .-2<CR>==", { silent = true })
-map("n", "ª", "<Esc>:m .+1<CR>==", { silent = true })
+map("n", "<M-k>", "<Esc>:m .-2<CR>==", { silent = true })
+map("n", "<M-j>", "<Esc>:m .+1<CR>==", { silent = true })
 
 -- delete & cut
 map("n", "x", [["_x]])
@@ -150,6 +151,12 @@ map("n", "<leader>fp", function()
    require("lib.utils").projects()
 end, { desc = "Projects" })
 
+map("n", "<leader>fx",  function ()
+  local file = vim.fn.expand "%:t"
+  vim.api.nvim_exec2(':!chmod +x %', {})
+  local msg = string.format("File\n < %s >\n is now executable", file)
+  vim.notify(msg, vim.log.levels.INFO, { title = "File Info" })
+end, { desc = "File executable" })
 
 -- TERMINAL MODE
 map("t", "<Esc>", [[<C-\><C-n>]])
@@ -196,7 +203,7 @@ map("v", "<leader>y", [["+y]], { desc = "Yank to clipboard" })
 --set_keymap("v", "D", "\+D", { expr = true, desc = "Copy deletion to end into register \"" })
 --set_keymap("v", "y", "\+y", { expr = true, desc = "Copy yank into register \"" })
 --set_keymap("v", "<BS>", "\"+d", { desc = "Copy deletion into register \"" })
-map("v", "ga", function()
+map("x", "ga", function()
    vim.cmd.normal "!"
    vim.ui.input({
       prompt = "Align regex pattern: ",
@@ -209,5 +216,10 @@ end, { desc = "Align from regex" })
 
 -- move selected text
 map("x", "<leader>p", '"_dP')
-map("x", "ª", [[:move '>+1<CR>gv-gv]], { silent = true })
-map("x", "º", [[:move '<-2<CR>gv-gv]], { silent = true })
+map("x", "<M-j>", [[:move '>+1<CR>gv-gv]], { silent = true })
+map("x", "<M-k>", [[:move '<-2<CR>gv-gv]], { silent = true })
+
+vim.cmd.cnoreabbrev("Wq", "wq")
+vim.cmd.cnoreabbrev("Wq", "wq")
+vim.cmd.cnoreabbrev("Xa", "xa")
+vim.cmd.cnoreabbrev("XA", "xa")

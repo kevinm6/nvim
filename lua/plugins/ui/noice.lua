@@ -15,7 +15,7 @@ local M = {
     {
       "rcarriga/nvim-notify",
       event = "BufRead",
-      opts = function(_, o)
+      config = function(_, o)
         -- Animation style (see below for details)
         o.stages = "fade"
 
@@ -45,16 +45,16 @@ local M = {
           return math.floor(vim.o.columns * 0.75)
         end
 
+        local icons = require "lib.icons"
         -- Icons for the different levels
         o.icons = {
-          ERROR = require "lib.icons".diagnostics.Error,
-          WARN = require "lib.icons".diagnostics.Warning,
-          INFO = require "lib.icons".diagnostics.Information,
-          DEBUG = require "lib.icons".ui.Bug,
-          TRACE = require "lib.icons".ui.Pencil,
+          ERROR = icons.diagnostics.Error,
+          WARN  = icons.diagnostics.Warning,
+          INFO  = icons.diagnostics.Information,
+          DEBUG = icons.ui.Bug,
+          TRACE = icons.ui.Pencil,
         }
-      end,
-      config = function(_, o)
+
         local notify = require "notify"
         notify.setup(o)
         vim.notify = notify
@@ -287,8 +287,6 @@ local M = {
   config = function(_, o)
     require "noice".setup(o)
 
-    require "knvim.plugins.noice"
-
     vim.keymap.set({ "n", "s" }, "<C-f>", function()
       if not require("noice.lsp").scroll(4) then
         return "<C-f>"
@@ -341,6 +339,7 @@ local M = {
       end,
       { desc = "Noice Telescope" }
     )
+
   end
 }
 

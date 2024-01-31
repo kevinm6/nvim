@@ -47,6 +47,6 @@
 
 ([
   (block_quote_marker)
+  (block_continuation)
 ] @conceal (#set! conceal "|"))
-
 

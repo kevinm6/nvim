@@ -10,16 +10,13 @@ local M = {
   "nvim-tree/nvim-web-devicons",
 
   {
-    "kevinm6/knvim-theme.nvim",
+    "kevinm6/knvim.nvim",
+    lazy = false,
     dev = true,
     priority = 1000,
     config = function()
-      local has_theme, knvim = pcall(require, "knvim")
-      if not has_theme then
-        vim.notify(string.format("Error loading theme < knvim >:\n%s", knvim), vim.log.levels.INFO)
-      end
-      require("knvim").setup()
-    end,
+      vim.cmd.colorscheme('knvim')
+    end
   },
 
   {
@@ -47,34 +44,46 @@ local M = {
 
   {
     "3rd/image.nvim",
-    ft = { "markdown", "vimwiki", "image_nvim" },
+    ft = { "markdown", "vimwiki", "image_nvim", "png", "jpeg", "jpg",  "image_nvim"  },
     init = function()
-      package.path = package.path .. ";" .. vim.fn.expand "$HOME" .. "/.luarocks/share/lua/5.1/?/init.lua"
-      package.path = package.path .. ";" .. vim.fn.expand "$HOME" .. "/.luarocks/share/lua/5.1/?.lua"
+      package.path = package.path..";"..vim.env.HOME.."/.luarocks/share/lua/5.1/?/init.lua"
+      package.path = package.path..";"..vim.env.HOME.."/.luarocks/share/lua/5.1/?.lua"
     end,
-    config = function()
-      require "image".setup({
-        backend = "kitty",
-        integrations = {
-          markdown = {
-            enabled = true,
-            sizing_strategy = "auto",
-            download_remote_images = true,
-            clear_in_insert_mode = true,
-            only_render_image_at_cursor = true,
-            filetypes = { "markdown", "vimwiki", "quarto" }
-          }
-        },
-        hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" }
-      })
+    opts = function(_, o)
+      o.backend = "kitty"
+      o.window_overlap_clear_enabled = true -- toggles images when windows are overlapped
+      o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
+      o.window_overlap_clear_ft_ignore = {}
+      o.integrations = {
+        markdown = {
+          enabled = true,
+          sizing_strategy = "auto",
+          download_remote_images = true,
+          clear_in_insert_mode = true,
+          only_render_image_at_cursor = true,
+          filetypes = { "markdown", "vimwiki", "quarto" }
+        }
+      }
+      o.hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" } -- render image files as images when opened
     end
   },
 
   -- Jupyter Notebook
   {
     "GCBallesteros/jupytext.nvim",
-    config = true,
-    event = { "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
+    lazy = false,
+    -- config = true,
+    event = { "VeryLazy", "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
+    config = function(_, o)
+      o.custom_language_formatting = {
+        python = {
+          extension = "qmd",
+          style = "quarto",
+          force_ft = true
+        }
+      }
+      require "jupytext".setup(o)
+    end
     -- "goerz/jupytext.vim",
     -- lazy = false,
     -- ft = { "jupyter_notebook" },
@@ -89,7 +98,7 @@ local M = {
     "benlubas/molten-nvim",
     -- event = { "BufWriteFile ".. vim.fn.expand (vim.b.jupyter_file) },
     event = { "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
-    ft = { "quarto", "jupyter_notebook" },
+    ft = { "qmd", "jupyter_notebook" },
     version = "^1.0.0",
     build = ":UpdateRemotePlugins",
     dependencies = { "3rd/image.nvim" },
@@ -127,7 +136,7 @@ local M = {
   },
   {
     "quarto-dev/quarto-nvim",
-    ft = { "quarto", "qmd" },
+    ft = { "qmd" },
     dependencies = {
       {
         "jmbuhr/otter.nvim",
@@ -239,6 +248,7 @@ local M = {
   {
     'vidocqh/data-viewer.nvim',
     ft = { "sqlite", "tsv", "csv" },
+    cmd = { "DataViewerFocusTable", "DataViewer" },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function(_, o)
       require "data-viewer".setup(o)
@@ -246,11 +256,9 @@ local M = {
       vim.api.nvim_set_hl(0, "DataViewerColumn0", { fg = "#4fc1ff", bold = true })
       vim.api.nvim_set_hl(0, "DataViewerColumn1", { fg = "#6c7986" })
       vim.api.nvim_set_hl(0, "DataViewerColumn2", { fg = "#626262" })
-      vim.api.nvim_set_hl(0, "DataViewerFocuTable", { fg = "#00ff87", bold = true })
+      vim.api.nvim_set_hl(0, "DataViewerFocusTable", { fg = "#00ff87", bold = true })
     end
-  }
-
-
+  },
 
 }
 

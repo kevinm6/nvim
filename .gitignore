@@ -1,13 +1,2 @@
 .DS_Store
-.netrwhist
-plugged/*
-colors/.DS_Store
-pack/*
-packer_compiled.lua
-.git/*
-startup_time*
-
-colors/.DS_Store
-.metals
-rplugin
-.luarc.json
+ToDo.md

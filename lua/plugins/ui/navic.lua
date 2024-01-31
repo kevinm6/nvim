@@ -54,7 +54,6 @@ local M = {
   end,
   config = function(_, o)
     require("nvim-navic").setup(o)
-    require "knvim.plugins.navic"
   end
 }
 

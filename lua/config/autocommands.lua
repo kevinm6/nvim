@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 03 Dec 2023, 10:45
+-- Last Modified: 25 Jan 2024, 12:39
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -184,11 +184,11 @@ autocmd({ "FileType", "BufNewFile" }, {
 vim.filetype.add {
   extension = {
     conf = "config",
-    png = "image_nvim",
-    jpg = "image_nvim",
-    jpeg = "image_nvim",
-    gif = "image_nvim",
-    webp = "image_nvim",
+    -- png = "image_nvim",
+    -- jpg = "image_nvim",
+    -- jpeg = "image_nvim",
+    -- gif = "image_nvim",
+    -- webp = "image_nvim",
     -- md = "quarto",
     ipynb = "jupyter_notebook",
     dat = "xxd"
@@ -213,9 +213,9 @@ autocmd({ "BufRead", "BufNewFile" }, {
   group = augroup("_kitty", { clear = true }),
   pattern = { "kitty.conf", "*/kitty/*.conf", "*/kitty/*.session" },
   callback = function()
-    vim.api.nvim_buf_set_option(0, "filetype", "kitty")
-    vim.api.nvim_buf_set_option(0, "comments", ":#,:#\\:")
-    vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
+    vim.api.nvim_set_option_value("filetype", "kitty", { buf = 0 })
+    vim.api.nvim_set_option_value("comments", ":#,:#\\:", { buf = 0 })
+    vim.api.nvim_set_option_value("commentstring", "# %s", { buf = 0 })
   end
 })
 
@@ -224,7 +224,7 @@ autocmd({ "FileType" }, {
   group = augroup("_pdf_reader", { clear = true }),
   pattern = { "pdf", "PDF" },
   callback = function(ev)
-    vim.api.nvim_buf_set_option(ev.buf, "readonly", true)
+    vim.api.nvim_set_option_value("readonly", true, { buf = ev.buf, scope = "local" })
     if not vim.fn.executable "pdftotext" then
       vim.notify(
         "vim-pdf: pdftotext is not found.\nStop converting...",
@@ -358,20 +358,20 @@ end, { desc = "Remove extra trailing white spaces" })
 ---Delete Current Buffer (helper function for autocmd)
 user_command("DeleteCurrentBuffer", function()
   local cBuf = vim.api.nvim_get_current_buf()
-  local bufs = vim.fn.getbufinfo({ buflisted = true })
-  if #bufs == 0 then
-    return
-  end
-
-  for idx, buf in ipairs(bufs) do
-    if buf.bufnr == cBuf then
-      if idx == #bufs then
-        vim.cmd.bprevious {}
-      else
-        vim.cmd.bnext {}
+  local bufs = vim.fn.getbufinfo({ buflisted = true }) or {}
+  if #bufs ~= 0 then
+    for idx, buf in ipairs(bufs) do
+      if buf.bufnr == cBuf then
+        if idx == #bufs then
+          vim.cmd.bprevious {}
+        else
+          vim.cmd.bnext {}
+        end
+        break
       end
-      break
     end
+  else
+    return
   end
   vim.cmd.bdelete(cBuf)
 end, { desc = "Close current buffer and go to next" })
@@ -430,7 +430,7 @@ autocmd({ "FileType" }, {
 ---Wipe all Registers
 user_command("WipeReg", function()
   local regs = vim.fn.split(
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\\zs')
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\\zs') or {}
   for _, v in pairs(regs) do
     vim.call('setreg', v, '')
   end

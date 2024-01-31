@@ -12,9 +12,9 @@ M.setup = function()
 
    local signs = {
       { name = "DiagnosticSignError", text = icons.diagnostics.Error },
-      { name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
-      { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
-      { name = "DiagnosticSignInfo", text = icons.diagnostics.Information },
+      { name = "DiagnosticSignWarn",  text = icons.diagnostics.Warning },
+      { name = "DiagnosticSignHint",  text = icons.diagnostics.Hint },
+      { name = "DiagnosticSignInfo",  text = icons.diagnostics.Information },
    }
 
    for _, sign in ipairs(signs) do
@@ -22,9 +22,17 @@ M.setup = function()
    end
 
    -- Vim LSP Diagnostic
-   vim.diagnostic.config {
-      virtual_text = true,
-      signs = { active = signs },
+   local default_diagnostic_config = {
+      signs = {
+         active = true,
+         text = {
+            [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
+            [vim.diagnostic.severity.WARN] = icons.diagnostics.Warning,
+            [vim.diagnostic.severity.INFO] = icons.diagnostics.Information,
+            [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
+         },
+      },
+      virtual_text = false,
       update_in_insert = false,
       underline = true,
       severity_sort = true,
@@ -37,6 +45,7 @@ M.setup = function()
          prefix = icons.lsp.nvim_lsp .. " ",
       },
    }
+   vim.diagnostic.config(default_diagnostic_config)
 
    vim.diagnostic.open_float = (function(orig)
       return function(bufnr, opts)
@@ -86,20 +95,8 @@ M.setup = function()
       dynamicRegistration = true
    })
 
-   -- Jump directly to the first available definition every time.
-   -- vim.lsp.handlers["textDocument/definition"] = function(_, result)
-   --   if not result or vim.tbl_isempty(result) then
-   --     vim.notify("[LSP] Could not find definition", "Info")
-   --     return
-   --   elseif vim.tbl_islist(result) then
-   --     vim.lsp.util.jump_to_location(result[1], "utf-8")
-   --   else
-   --     vim.lsp.util.jump_to_location(result, "utf-8")
-   --   end
-   -- end
-
-
-   vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(vim.lsp.handlers.workspaceFolders, {
+   vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(
+   vim.lsp.handlers.workspaceFolders, {
       library = {
          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
@@ -107,15 +104,8 @@ M.setup = function()
    })
 
    vim.lsp.handlers["textDocument/publishDiagnostics"] =
-   vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
-      signs = {
-         severity_limit = "Error",
-      },
-      underline = {
-         severity_limit = "Warning",
-      },
-      virtual_text = true,
-   })
+       vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"],
+  default_diagnostic_config)
 
    vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
       vim.lsp.handlers["textDocument/references"], {
@@ -123,45 +113,46 @@ M.setup = function()
          loclist = true,
       }
    )
-
 end
 
 M.implementation = function()
    local params = vim.lsp.util.make_position_params()
 
-   vim.lsp.buf_request(0, "textDocument/implementation", params, function(err, result, ctx, config)
-      local bufnr = ctx.bufnr
-      local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+   vim.lsp.buf_request(0, "textDocument/implementation", params,
+      function(err, result, ctx, config)
+         local bufnr = ctx.bufnr
+         local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
 
-      -- do not shiow mocks for impls in golang
-      if ft == "go" then
-         local new_result = vim.tbl_filter(function(v)
-            return not string.find(v.uri, "mock_")
-         end, result)
+         -- do not shiow mocks for impls in golang
+         if ft == "go" then
+            local new_result = vim.tbl_filter(function(v)
+               return not string.find(v.uri, "mock_")
+            end, result)
 
-         if #new_result > 0 then
-            result = new_result
+            if #new_result > 0 then
+               result = new_result
+            end
          end
-      end
 
-      vim.lsp.handlers["textDocument/implementation"](err, result, ctx, config)
-      vim.cmd [[normal! zz]]
-   end)
+         vim.lsp.handlers["textDocument/implementation"](err, result, ctx, config)
+         vim.cmd [[normal! zz]]
+      end)
 end
 
-M.code_action_listener = function()
+local function code_action_listener()
    local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
    local params = vim.lsp.util.make_range_params()
    params.context = context
    vim.lsp.buf_request(0, 'textDocument/codeAction', params, function(err)
-      if err ~= nil then vim.notify(string.format("Code Action Listener: %s", err) , vim.log.levels.ERROR) end
+      if err ~= nil then vim.notify(string.format("Code Action Listener: %s", err),
+            vim.log.levels.ERROR) end
    end)
 end
 
 vim.api.nvim_create_autocmd({ "InsertLeave" }, {
    pattern = "*",
    callback = function()
-      M.code_action_listener()
+      code_action_listener()
    end,
 })
 

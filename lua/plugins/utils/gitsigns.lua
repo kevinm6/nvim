@@ -52,8 +52,6 @@ local M = {
     vim.keymap.set("n", "<leader>gL", function() require "gitsigns".toggle_linehl() end, { desc = "Toggle Linehl" })
     vim.keymap.set("n", "<leader>gW", function() require "gitsigns".toggle_word_diff() end, { desc = "Toggle Word diff" })
     vim.keymap.set("n", "<leader>gN", function() require "gitsigns".toggle_numhl() end, { desc = "Toggle Numhl" })
-
-    require "knvim.plugins.gitsigns"
   end
 }
 return M

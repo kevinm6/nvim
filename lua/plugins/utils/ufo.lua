@@ -53,7 +53,6 @@ local M = {
     vim.keymap.set("n", "zR", function() ufo.openAllFolds() end, { desc = "Open All Folds" })
     vim.keymap.set("n", "zm", function() ufo.closeFoldsWith() end, { desc = "Folds more" })
     vim.keymap.set("n", "zM", function() ufo.closeAllFolds() end, { desc = "Close All Folds" })
-    require "knvim.plugins.ufo"
   end
 }
 

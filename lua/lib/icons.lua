@@ -134,10 +134,10 @@ return {
       Query = "󱩾"
    },
    diagnostics = {
-      Error = "",
-      Warning = "",
-      Information = "",
-      Question = "",
+      Error = "",
+      Warning = "",
+      Information = "",
+      Question = "",
       Hint = "󱧢",
       status_ok = "",
       status_not_ok = "",

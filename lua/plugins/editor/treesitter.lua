@@ -66,9 +66,12 @@ local M = {
       o.highlight = {
         enable = true, -- false will disable the whole extension
         additional_vim_regex_highlighting = { "markdown" },
-        disable = function(_, bufnr)
-          return vim.api.nvim_buf_line_count(bufnr) > 10000 or
-            #vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] > 1000
+        disable = function(_, buf)
+          local max_filesize = 100 * 1024 -- 100 KB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+
+          return ok and (stats and stats.size > max_filesize) or
+          #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
         end
       }
       o.autopairs = {
@@ -152,7 +155,12 @@ local M = {
         }
       })
 
-      require "knvim.plugins.treesitter"
+      vim.api.nvim_create_user_command("Inspect", function()
+        vim.show_pos()
+      end, { desc = "Inspect" })
+      vim.api.nvim_create_user_command("InspectTree", function()
+        vim.treesitter.inspect_tree()
+      end, { desc = "InspectTree" })
     end
   },
 }

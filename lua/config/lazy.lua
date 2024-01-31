@@ -101,9 +101,9 @@ lazy.setup({
           "matchparen",
           "netrwPlugin",
           "tarPlugin",
-          "tohtml",
+          -- "tohtml",
           "tutor",
-          "zipPlugin",
+          -- "zipPlugin",
           "spellfile"
         }
       }
@@ -116,7 +116,6 @@ local modules = {
   "config.vars",
   "config.autocommands",
   "config.keymaps",
-  -- "knvim.plugins.lazy"
 }
 
 for _, mod in ipairs(modules) do
