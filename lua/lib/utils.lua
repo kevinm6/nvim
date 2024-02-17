@@ -206,7 +206,7 @@ F.get_current_buf_lsp_capabilities = function()
                if vim.fn.has("nvim-0.10") == 1 then
                   vim.api.nvim_set_option_value("filetype", "markdown", { buf = buf, scope = 'local'})
                else
-                  vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+                  vim.api.nvim_set_option_value("filetype", "markdown", { bufnr = buf })
                end
             end,
             timeout = 14000,

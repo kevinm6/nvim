@@ -27,7 +27,7 @@ local get_sessions = function()
 end
 
 ---Delete selected session
-S.delete_session = function()
+local function delete_session()
    local sessions = get_sessions()
 
    if #sessions >= 1 then
@@ -55,7 +55,7 @@ S.delete_session = function()
 end
 
 ---Restore selected session
-S.restore_session = function()
+local function restore_session()
    local sessions = get_sessions()
 
    if #sessions >= 1 then
@@ -80,7 +80,7 @@ end
 ---Save current vim session with name.
 --- The session is saved into 'data' stdpath of nvim
 ---@see mksession |:mksession|
-S.save_session = function()
+local function save_session()
    require "telescope"
    vim.ui.input({
       prompt = "Enter session name: ",
@@ -92,6 +92,21 @@ S.save_session = function()
          vim.notify(string.format("Session < %s > created!", input), vim.log.levels.INFO)
       end
    end)
+end
+
+S.select = function(arg)
+ if arg == "save" then
+    save_session()
+ elseif arg == "restore" then
+    restore_session()
+ elseif arg == "delete" then
+    delete_session()
+ else
+    vim.notify("Invalid argument.\nUsage -> :Session [save|restore|delete]",
+      vim.log.levels.WARN,
+      { title = "Session" }
+    )
+ end
 end
 
 return S

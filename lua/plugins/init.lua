@@ -260,6 +260,8 @@ local M = {
     end
   },
 
+  "apple/pkl-neovim"
+
 }
 
 return M

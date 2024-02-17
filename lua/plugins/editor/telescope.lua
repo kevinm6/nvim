@@ -628,7 +628,7 @@ local M = {
          vim.keymap.set("n",
             "<leader>ff",
             function()
-               require("telescope.builtin").find_files()
+               require("telescope.builtin").find_files({ cwd = vim.uv.cwd() })
             end,
             { desc = "Find Files" }
          )

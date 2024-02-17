@@ -6,43 +6,43 @@
 -------------------------------------
 
 ---Auto Stop LSP client if no more buffers attached.
----@param client table client attached to buffer
----@param bufnr number buffer id of which client is attached
-local set_auto_stop_lsp = function(client, bufnr)
-  if (vim.fn.has "nvim-0.10" ~= 1) then return end
+--@param client table client attached to buffer
+--@param bufnr number buffer id of which client is attached
+-- local set_auto_stop_lsp = function(client, bufnr)
+--   if (vim.fn.has "nvim-0.10" ~= 1) then return end
 
-  vim.api.nvim_create_autocmd("BufDelete", {
-    group = vim.api.nvim_create_augroup("_lsp_timeout", { clear = false }),
-    buffer = bufnr,
-    callback = function(ev)
-      local clients = vim.lsp.get_clients({ name = client.name, bufnr = bufnr })[1] or
-      vim.lsp.get_clients({ name = client.name })[1]
-      local attached_bufs = clients.attached_buffers
-      local n_bufs = 0
-      for _, _ in pairs(attached_bufs) do
-        n_bufs = n_bufs + 1
-      end
+--   vim.api.nvim_create_autocmd("BufDelete", {
+--     group = vim.api.nvim_create_augroup("_lsp_timeout", { clear = false }),
+--     buffer = bufnr,
+--     callback = function(ev)
+--       local clients = vim.lsp.get_clients({ name = client.name, bufnr = bufnr })[1] or
+--       vim.lsp.get_clients({ name = client.name })[1]
+--       local attached_bufs = clients.attached_buffers
+--       local n_bufs = 0
+--       for _, _ in pairs(attached_bufs) do
+--         n_bufs = n_bufs + 1
+--       end
 
-      if n_bufs == 1 and attached_bufs[ev.buf] or n_bufs == 0 then
-        vim.defer_fn(function()
-          vim.lsp.stop_client(clients.id)
+--       if n_bufs == 1 and attached_bufs[ev.buf] or n_bufs == 0 then
+--         vim.defer_fn(function()
+--           vim.lsp.stop_client(clients.id)
 
-          vim.notify("No more clients attached. Stopped.",
-            vim.log.levels.INFO, {
-              title = "LSP: " .. clients.name,
-            }
-          )
-        end, 6000)
-      end
-    end
-  })
-end
+--           vim.notify("No more clients attached. Stopped.",
+--             vim.log.levels.INFO, {
+--               title = "LSP: " .. clients.name,
+--             }
+--           )
+--         end, 6000)
+--       end
+--     end
+--   })
+-- end
 
 
 --- Set buffer keymaps based on supported capabilities of the
 --- passed client and buffer id
 --- @param client any client passed to attach config
-local set_buf_keymaps = function(client, _)
+local set_buf_keymaps = function(client, bufnr)
   if client.name == "jdtls" then
     client.server_capabilities.documentHighlightProvider = false
   end
@@ -55,14 +55,14 @@ local set_buf_keymaps = function(client, _)
   -- local opts = { noremap = true, silent = true }
   map("n", "gl", function()
     vim.diagnostic.open_float()
-  end, { desc = "Open float", buffer = true })
+  end, { desc = "Open float", buffer = bufnr })
 
   map("n", "K", function()
     local winid = require("ufo").peekFoldedLinesUnderCursor()
     if not winid then
       vim.lsp.buf.hover()
     end
-  end, { desc = "Hover | PeekFold", buffer = true })
+  end, { desc = "Hover | PeekFold", buffer = bufnr })
 
   if client.server_capabilities.declarationProvider then
     map("n", "gD", function()
@@ -71,7 +71,7 @@ local set_buf_keymaps = function(client, _)
       else
         vim.lsp.buf.declaration()
       end
-    end, { desc = "LSP Declaration", buffer = true })
+    end, { desc = "LSP Declaration", buffer = bufnr })
   end
   if client.server_capabilities.definitionProvider then
     map("n", "gd", function()
@@ -80,7 +80,7 @@ local set_buf_keymaps = function(client, _)
       else
         vim.lsp.buf.definition()
       end
-    end, { desc = "LSP Definition", buffer = true })
+    end, { desc = "LSP Definition", buffer = bufnr })
 
     map("n", "<leader>ld", function()
       if has_fzf then
@@ -115,14 +115,14 @@ local set_buf_keymaps = function(client, _)
       else
         vim.lsp.buf.references()
       end
-    end, { buffer = true, desc = "LSP References" })
+    end, { buffer = bufnr, desc = "LSP References" })
     map("n", "<leader>lr", function()
       if has_fzf then
         fzf.lsp_references()
       else
         vim.lsp.buf.references()
       end
-    end, { buffer = true, desc = "LSP References" })
+    end, { buffer = bufnr, desc = "LSP References" })
   end
 
   map("n", "gs", function()
@@ -131,7 +131,7 @@ local set_buf_keymaps = function(client, _)
     else
       vim.lsp.buf.document_symbol()
     end
-  end, { buffer = true, desc = "LSP Symbols" })
+  end, { buffer = bufnr, desc = "LSP Symbols" })
 
   map("n", "<leader>ls", function()
     if has_fzf then
@@ -139,7 +139,7 @@ local set_buf_keymaps = function(client, _)
     else
       vim.lsp.buf.document_symbol()
     end
-  end, { buffer = true, desc = "LSP Symbols" })
+  end, { buffer = bufnr, desc = "LSP Symbols" })
 
   map("n", "<leader>lt", function()
     if has_fzf then
@@ -147,7 +147,7 @@ local set_buf_keymaps = function(client, _)
     else
       vim.lsp.buf.type_definition()
     end
-  end, { buffer = true, desc = "LSP TypeDef" })
+  end, { buffer = bufnr, desc = "LSP TypeDef" })
 
   map("n", "<leader>lS", function()
     if has_fzf then
@@ -155,33 +155,33 @@ local set_buf_keymaps = function(client, _)
     else
       vim.lsp.buf.workspace_symbol()
     end
-  end, { desc = "Workspace Symbols", buffer = true })
+  end, { desc = "Workspace Symbols", buffer = bufnr })
 
   map("n", "<leader>ll", function()
     vim.lsp.codelens.run()
-  end, { desc = "CodeLens Action", buffer = true })
+  end, { desc = "CodeLens Action", buffer = bufnr })
   map("n", "<leader>la", function()
     vim.lsp.buf.code_action()
-  end, { desc = "Code Action", buffer = true })
+  end, { desc = "Code Action", buffer = bufnr })
   map("n", "<leader>lI", function()
     vim.cmd.LspInfo {}
-  end, { desc = "Lsp Info", buffer = true })
+  end, { desc = "Lsp Info", buffer = bufnr })
   map("n", "<leader>lL", function()
     vim.cmd.LspLog {}
-  end, { desc = "Lsp Log", buffer = true })
+  end, { desc = "Lsp Log", buffer = bufnr })
   map("n", "<leader>r", function()
     vim.lsp.buf.rename()
-  end, { desc = "Rename", buffer = true })
+  end, { desc = "Rename", buffer = bufnr })
   map("n", "<leader>lq", function()
     vim.diagnostic.setloclist()
-  end, { desc = "Lsp QFDiagnostics", buffer = true })
+  end, { desc = "Lsp QFDiagnostics", buffer = bufnr })
   -- Diagnostics
   map("n", "<leader>dj", function()
     vim.diagnostic.goto_next { buffer = true }
-  end, { desc = "Next Diagnostic", buffer = true })
+  end, { desc = "Next Diagnostic", buffer = bufnr })
   map("n", "<leader>dk", function()
     vim.diagnostic.goto_prev { buffer = true }
-  end, { desc = "Prev Diagnostic", buffer = true })
+  end, { desc = "Prev Diagnostic", buffer = bufnr })
 end
 
 
@@ -252,7 +252,7 @@ local set_buf_funcs_for_capabilities = function(client, bufnr)
 
   if client.server_capabilities.documentRangeFormattingProvider then
     map("v", "<leader>lf", function()
-      require("lib.utils").range_format()
+      require("lib_format").lsp_format(bufnr)
     end, { desc = "Range format", buffer = true })
   end
 
@@ -399,15 +399,25 @@ local M = {
             },
           }))
         end,
-        ["sqlls"] = function()
-          vim.g.LanguageClient_serverCommands = {
-            ["sql"] = {
-              "sql-language-server",
-              "up",
-              "--method",
-              "stdio",
-            },
-          }
+        ["sqls"] = function()
+          lspconfig.sqls.setup(
+            vim.tbl_deep_extend("force", default_lsp_config, {
+              on_attach = function(client, bufnr)
+                custom_attach(client, bufnr)
+                require "sqls".on_attach(client, bufnr)
+              end,
+              -- on_new_config = function (new_config, new_root_dir)
+              --   local default_config_yml = vim.env['XDG_CONFIG_HOME'].."/sqls/config.yml"
+              --   local cwd_workspace_yml = vim.uv.cwd().."/config.yml"
+              --   local yml_to_load = default_config_yml
+
+              --   if lsputil.path.is_file(cwd_workspace_yml) then
+              --     yml_to_load = cwd_workspace_yml
+              --   end
+              --   return { "sqls", "-config", yml_to_load }
+              -- end
+          })
+          )
         end,
         ["marksman"] = function()
           lspconfig.marksman.setup(
@@ -535,6 +545,15 @@ local M = {
             end,
           }))
         end,
+        ["intelephense"] = function()
+          lspconfig.intelephense.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            root_dir = lsputil.root_pattern("composer.json", ".git") or vim.uv.cwd(),
+            init_options = {
+              globalStoragePath = vim.fn.expand "~/.local/php/"
+              -- clearCache = true
+            }
+          }))
+        end,
         -- ["erlangls"] = function()
         --   lspconfig.erlangls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
         --     docs = {
@@ -604,7 +623,7 @@ local M = {
         "vimls",
         "marksman",
         "tsserver",
-        "sqlls",
+        "sqls",
         "pyright",
         "jsonls",
         "gopls",
@@ -749,6 +768,19 @@ local M = {
     "mfussenegger/nvim-jdtls",
     dependencies = { "mfussenegger/nvim-dap" },
     ft = "java",
+  },
+
+  -- SQL
+  {
+    "nanotee/sqls.nvim",
+    ft = { "sql", "mysql" },
+    config = function()
+      vim.keymap.set("n", "<localleader>s", "<cmd>SqlsShowDatabases<cr>", { desc = "SqlsShowDatabases", buffer = 0 })
+      vim.keymap.set("n", "<localleader>S", "<cmd>SqlsShowSchemas<cr>", { desc = "SqlsShowSchemas", buffer = 0 })
+      vim.keymap.set("n", "<localleader>t", "<cmd>SqlsShowTables<cr>", { desc = "SqlsShowTables", buffer = 0 })
+      vim.keymap.set("n", "<localleader>c", "<cmd>SqlsShowConnections<cr>", { desc = "SqlsShowConnections", buffer = 0 })
+      vim.keymap.set("n", "<localleader>C", "<cmd>SqlsSwitchConnection<cr>", { desc = "SqlsSwitchConnection", buffer = 0 })
+    end
   },
 
   -- Scala

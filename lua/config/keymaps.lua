@@ -16,7 +16,7 @@ map("n", "<leader>.", function()
       timeout = 4,
     on_open = function(win)
          local buf = vim.api.nvim_win_get_buf(win)
-         vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+         vim.api.nvim_set_option_value("filetype", "markdown", { buf = buf })
       end,
    })
 end, { desc = "Set cwd from current buffer " })
@@ -32,17 +32,6 @@ map("n", "<C-u>", "<C-u>zz")
 
 map({ "n", "v" }, "<leader>R", function() end, { desc = "Run" })
 
--- Session
-map("n", "<leader>S", function() end, { desc = "Sessions" })
-map("n", "<leader>Ss", function()
-   require "lib.sessions".save_session()
-end, { desc = "Save" })
-map("n", "<leader>Sr", function()
-   require "lib.sessions".restore_session()
-end, { desc = "Restore" })
-map("n", "<leader>Sd", function()
-   require "lib.sessions".delete_session()
-end, { desc = "Delete" })
 
 -- useful maps
 map("n", "<leader>w", function()

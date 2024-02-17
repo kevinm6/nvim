@@ -59,6 +59,7 @@ local M = {
     {
       "kristijanhusak/vim-dadbod-completion",
       ft = { "sql", "mysql", "plsql" },
+      enabled = false,
     }
     -- "hrsh7th/cmp-nvim-lua",
     -- "ray-x/cmp-treesitter",
@@ -272,7 +273,13 @@ local M = {
     })
 
     cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
-      sources = { { name = "vim-dadbod-completion" } }
+      sources = {
+        -- { name = "vim-dadbod-completion" },
+        { name = "treesitter" },
+        { name = "luasnip" },
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+      }
     })
 
     cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {

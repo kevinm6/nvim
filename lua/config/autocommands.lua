@@ -224,7 +224,7 @@ autocmd({ "FileType" }, {
   group = augroup("_pdf_reader", { clear = true }),
   pattern = { "pdf", "PDF" },
   callback = function(ev)
-    vim.api.nvim_set_option_value("readonly", true, { buf = ev.buf, scope = "local" })
+    vim.api.nvim_set_option_value("readonly", true, { buf = ev.buf })
     if not vim.fn.executable "pdftotext" then
       vim.notify(
         "vim-pdf: pdftotext is not found.\nStop converting...",
@@ -440,10 +440,18 @@ end, { desc = "Wipe all Registers" })
 
 -- Config File
 user_command("NvimConfig", function()
-  local has_telescope, telescope = pcall(require, "telescope")
+  local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
   if not has_telescope then
     vim.cmd.edit "$NVIMDOTDIR"
   else
-    telescope.extensions.file_browser.file_browser { cwd = "$NVIMDOTDIR" }
+    tele_builtin.find_files { cwd = "$NVIMDOTDIR" }
   end
 end, { desc = "Neovim Config" })
+
+
+user_command("Session", function(arg)
+  require "lib.sessions".select(arg.args)
+end,{
+  nargs = 1,
+  desc = "Session Manager",
+})

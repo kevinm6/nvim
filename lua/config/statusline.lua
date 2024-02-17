@@ -50,6 +50,10 @@ local function set_color_groups()
     StatusLineLite          = { fg = "#dcdcdc", bg = "#1c1c1c" },
     StatusLineInactive      = { fg = "#5c5c5c", bg = "#2c2c2c" },
     StatuslineSymbols       = { fg = "#2c2c2c", bg = "#262626" },
+    SLDiagnosticError       = { fg = "#f44757", bg = "#2c2c2c" },
+    SLDiagnosticWarn        = { fg = "#ff8800", bg = "#2c2c2c" },
+    SLDiagnosticHint        = { fg = "#4fc1ff", bg = "#2c2c2c" },
+    SLDiagnosticInfo        = { fg = "#00ffaa", bg = "#2c2c2c" },
   }
 
   for group, settings in pairs(hls) do
@@ -63,10 +67,10 @@ local colors = {
   mode        = "%#StatusLineMode#",
   git         = "%#StatusLineGit#",
   diag        = "%#StatusLineGpsDiagnostic#",
-  diagError   = "%#DiagnosticError#",
-  diagWarn    = "%#DiagnosticWarn#",
-  diagInfo    = "%#DiagnosticInfo#",
-  diagHint    = "%#DiagnosticHint#",
+  diagError   = "%#SLDiagnosticError#",
+  diagWarn    = "%#SLDiagnosticWarn#",
+  diagInfo    = "%#SLDiagnosticInfo#",
+  diagHint    = "%#SLDiagnosticHint#",
   lspactive   = "%#StatusLineLspActive#",
   lspnoactive = "%#StatusLineLspNotActive#",
   ftype       = "%#StatusLineFileType#",

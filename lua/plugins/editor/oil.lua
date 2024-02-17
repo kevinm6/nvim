@@ -43,17 +43,17 @@ local M = {
          ["<C-j>"] = "j",
          ["<C-l>"] = "actions.select",
          ["<C-s>"] = "actions.select_split",
-         ["<C-v>"] = "actions.select_vsplit",
+         ["<C-a-s>"] = "actions.select_vsplit",
          ["<C-t>"] = "actions.select_tab",
          ["<C-p>"] = "actions.preview",
          ["<C-o>"] = "actions.open_external",
-         ["<C-T>"] = "actions.open_terminal",
+         ["<C-\\>"] = "actions.open_terminal",
          ["<C-c>"] = "actions.close",
          ["<C-b>"] = {
             desc = "Open UserDir",
             callback = function()
                require "oil".close()
-               local home_dir = tostring(vim.fn.expand "$HOME")
+               local home_dir = tostring(vim.env["HOME"])
                require("oil").open_float(home_dir)
             end
          },
@@ -67,12 +67,7 @@ local M = {
          ["<C-x>"] = "actions.cd",
          ["g\\"] = "actions.toggle_trash",
          ["~"] = "actions.tcd",
-         ["gs"] = {
-            desc = "Save",
-            callback = function()
-               require "oil".save()
-            end
-         },
+         ["gs"] = "actions.change_sort",
          ["gr"] = "actions.refresh",
          ["gd"] = {
             desc = "Toggle detail view",
