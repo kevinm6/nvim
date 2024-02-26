@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 06 Jan 2024, 09:11
+-- Last Modified: 26 Feb 2024, 21:31
 -------------------------------------
 
 ---Auto Stop LSP client if no more buffers attached.
@@ -47,8 +47,7 @@ local set_buf_keymaps = function(client, bufnr)
     client.server_capabilities.documentHighlightProvider = false
   end
 
-  -- local has_telescope, fzf.= pcall(require, "telescope.builtin")
-  local has_fzf, fzf = pcall(require, "fzf-lua")
+  local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
 
   local map = vim.keymap.set
 
@@ -66,8 +65,8 @@ local set_buf_keymaps = function(client, bufnr)
 
   if client.server_capabilities.declarationProvider then
     map("n", "gD", function()
-      if has_fzf then
-        fzf.lsp_declarations()
+      if has_telescope then
+        tele_builtin.lsp_definitions()
       else
         vim.lsp.buf.declaration()
       end
@@ -75,16 +74,16 @@ local set_buf_keymaps = function(client, bufnr)
   end
   if client.server_capabilities.definitionProvider then
     map("n", "gd", function()
-      if has_fzf then
-        fzf.lsp_definitions()
+      if has_telescope then
+        tele_builtin.lsp_definitions()
       else
         vim.lsp.buf.definition()
       end
     end, { desc = "LSP Definition", buffer = bufnr })
 
     map("n", "<leader>ld", function()
-      if has_fzf then
-        fzf.lsp_definitions()
+      if has_telescope then
+        tele_builtin.lsp_definitions()
       else
         vim.lsp.buf.definition()
       end
@@ -92,8 +91,8 @@ local set_buf_keymaps = function(client, bufnr)
   end
   if client.server_capabilities.implementationProvider then
     map("n", "gI", function()
-      if has_fzf then
-        fzf.lsp_incoming_calls()
+      if has_telescope then
+        tele_builtin.lsp_incoming_calls()
       else
         vim.lsp.buf.implementation()
       end
@@ -101,8 +100,8 @@ local set_buf_keymaps = function(client, bufnr)
   end
   if client.supports_method "callHierarchy/outgoingCalls" then
     map("n", "gC", function()
-      if has_fzf then
-        fzf.lsp_outgoing_calls()
+      if has_telescope then
+        tele_builtin.lsp_outgoing_calls()
       else
         vim.lsp.buf.outgoing_calls()
       end
@@ -110,15 +109,15 @@ local set_buf_keymaps = function(client, bufnr)
   end
   if client.server_capabilities.referencesProvider then
     map("n", "gr", function()
-      if has_fzf then
-        fzf.lsp_references()
+      if has_telescope then
+        tele_builtin.lsp_references()
       else
         vim.lsp.buf.references()
       end
     end, { buffer = bufnr, desc = "LSP References" })
     map("n", "<leader>lr", function()
-      if has_fzf then
-        fzf.lsp_references()
+      if has_telescope then
+        tele_builtin.lsp_references()
       else
         vim.lsp.buf.references()
       end
@@ -126,32 +125,32 @@ local set_buf_keymaps = function(client, bufnr)
   end
 
   map("n", "gs", function()
-    if has_fzf then
-      fzf.lsp_document_symbols()
+    if has_telescope then
+      tele_builtin.lsp_document_symbols()
     else
       vim.lsp.buf.document_symbol()
     end
   end, { buffer = bufnr, desc = "LSP Symbols" })
 
   map("n", "<leader>ls", function()
-    if has_fzf then
-      fzf.lsp_document_symbols()
+    if has_telescope then
+      tele_builtin.lsp_document_symbols()
     else
       vim.lsp.buf.document_symbol()
     end
   end, { buffer = bufnr, desc = "LSP Symbols" })
 
   map("n", "<leader>lt", function()
-    if has_fzf then
-      fzf.lsp_typedefs()
+    if has_telescope then
+      tele_builtin.lsp_typedefs()
     else
       vim.lsp.buf.type_definition()
     end
   end, { buffer = bufnr, desc = "LSP TypeDef" })
 
   map("n", "<leader>lS", function()
-    if has_fzf then
-      fzf.lsp_workspace_symbols()
+    if has_telescope then
+      tele_builtin.lsp_workspace_symbols()
     else
       vim.lsp.buf.workspace_symbol()
     end
@@ -272,8 +271,8 @@ end
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
 local custom_attach = function(client, bufnr)
-  require("plugins.lsp.handlers").setup()
   require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
+  require("plugins.lsp.handlers").setup()
 
   set_buf_keymaps(client, bufnr)
   set_buf_funcs_for_capabilities(client, bufnr)
@@ -291,6 +290,8 @@ local M = {
     config = function()
       local lspconfig = require "lspconfig"
       local lsputil = require "lspconfig.util"
+
+      require('lspconfig.ui.windows').default_options.border = 'rounded'
 
       -- Update capabilities with extended from cmp_nvim_lsp
       local ext_capabilities = nil
@@ -567,6 +568,7 @@ local M = {
         -- end,
       }
 
+
       -- sourcekit is still not available on mason-lspconfig
       lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
         cmd = {
@@ -761,6 +763,21 @@ local M = {
         null_ls.builtins.hover.printenv,
       }
     end,
+  },
+
+  -- Go
+  {
+    "ray-x/go.nvim",
+    dependencies = {  -- optional packages
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
 
   -- Java

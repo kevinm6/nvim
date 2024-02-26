@@ -2,7 +2,7 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file for manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 03 Dec 2023, 10:48
+-- Last Modified: 26 Feb 2024, 21:08
 --------------------------------------
 
 local M = {}
@@ -91,21 +91,18 @@ M.setup = function()
    --   border = "rounded",
    -- })
 
-   vim.lsp.handlers["textDocument/codeLens"] = vim.lsp.with(vim.lsp.handlers.codeLens, {
-      dynamicRegistration = true
-   })
 
    vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(
-   vim.lsp.handlers.workspaceFolders, {
-      library = {
-         [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-         [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-      },
-   })
+      vim.lsp.handlers.workspaceFolders, {
+         library = {
+            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+         },
+      })
 
    vim.lsp.handlers["textDocument/publishDiagnostics"] =
        vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"],
-  default_diagnostic_config)
+          default_diagnostic_config)
 
    vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
       vim.lsp.handlers["textDocument/references"], {
@@ -115,37 +112,39 @@ M.setup = function()
    )
 end
 
-M.implementation = function()
-   local params = vim.lsp.util.make_position_params()
+-- M.implementation = function()
+--    local params = vim.lsp.util.make_position_params()
 
-   vim.lsp.buf_request(0, "textDocument/implementation", params,
-      function(err, result, ctx, config)
-         local bufnr = ctx.bufnr
-         local ft = vim.api.nvim_get_option_value(bufnr, "filetype")
+--    vim.lsp.buf_request(0, "textDocument/implementation", params,
+--       function(err, result, ctx, config)
+--          local bufnr = ctx.bufnr
+--          local ft = vim.bo.filetype
 
-         -- do not shiow mocks for impls in golang
-         if ft == "go" then
-            local new_result = vim.tbl_filter(function(v)
-               return not string.find(v.uri, "mock_")
-            end, result)
+--          -- do not shiow mocks for impls in golang
+--          if ft == "go" then
+--             local new_result = vim.tbl_filter(function(v)
+--                return not string.find(v.uri, "mock_")
+--             end, result)
 
-            if #new_result > 0 then
-               result = new_result
-            end
-         end
+--             if #new_result > 0 then
+--                result = new_result
+--             end
+--          end
 
-         vim.lsp.handlers["textDocument/implementation"](err, result, ctx, config)
-         vim.cmd [[normal! zz]]
-      end)
-end
+--          vim.lsp.handlers["textDocument/implementation"](err, result, ctx, config)
+--          vim.cmd [[normal! zz]]
+--       end)
+-- end
 
 local function code_action_listener()
    local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
    local params = vim.lsp.util.make_range_params()
    params.context = context
    vim.lsp.buf_request(0, 'textDocument/codeAction', params, function(err)
-      if err ~= nil then vim.notify(string.format("Code Action Listener: %s", err),
-            vim.log.levels.ERROR) end
+      if err ~= nil then
+         vim.notify(string.format("Code Action Listener: %s", err),
+            vim.log.levels.ERROR)
+      end
    end)
 end
 

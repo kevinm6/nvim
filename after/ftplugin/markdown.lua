@@ -2,7 +2,7 @@
 -- File         : markdown.lua
 -- Description  : filetype markdown extra config
 -- Author       : Kevin
--- Last Modified: 12 Oct 2023, 18:45
+-- Last Modified: 26 Feb 2024, 21:11
 -------------------------------------
 
 vim.opt_local.conceallevel = 2
@@ -35,7 +35,7 @@ vim.treesitter.query.add_directive("as_devicon!", conceal_as_devicon, true)
 -- if plugin 'peek' is installed
 local has_peek, peek = pcall(require, "peek")
 if has_peek then
-   vim.keymap.set("n", "<leader>mp", function()
+   vim.keymap.set("n", "<localleader>p", function()
       if peek.is_open() then
          peek.close()
       else

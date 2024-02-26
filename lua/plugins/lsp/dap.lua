@@ -44,8 +44,8 @@ local M = {
             }
 
             o.floating = {
-               max_height = nil, -- These can be integers or a float between 0 and 1.
-               max_width = nil, -- Floats will be treated as percentage of your screen.
+               max_height = nil,   -- These can be integers or a float between 0 and 1.
+               max_width = nil,    -- Floats will be treated as percentage of your screen.
                border = "rounded", -- Border style. Can be "single", "double" or "rounded"
                mappings = {
                   close = { "q", "<Esc>" },
@@ -62,6 +62,11 @@ local M = {
    },
    config = function()
       local dap = require "dap"
+
+      dap.defaults.fallback.external_terminal = {
+         command = "/usr/bin/env kitty",
+         args = { "-e " },
+      }
 
       -- Filetype configs
       -- C
@@ -85,19 +90,14 @@ local M = {
             type = "lldb",
             request = "launch",
             program = function()
-               return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+               return vim.fn.input('Path to executable: ', vim.uv.cwd() .. '/', 'file')
             end,
             cwd = '${workspaceFolder}',
             stopOnEntry = false,
             args = {},
             runInTerminal = false,
-            postRunCommands = {'process handle -p true -s false -n false SIGWINCH'}
+            postRunCommands = { 'process handle -p true -s false -n false SIGWINCH' }
          },
-      }
-
-      dap.defaults.fallback.external_terminal = {
-         command = "/usr/bin/env kitty",
-         args = { "-e " },
       }
 
       -- C
@@ -154,7 +154,7 @@ local M = {
       }
 
       dap.adapters.python = {
-         type = 'executable';
+         type = 'executable',
          command = vim.fn.stdpath "data" .. "/nvim_python_venv/bin/python",
          args = { '-m', 'debugpy.adapter' },
       }
@@ -162,18 +162,18 @@ local M = {
 
       -- GO
       dap.adapters.go = {
-         type = 'executable';
-         command = 'node';
+         type = 'executable',
+         command = 'node',
          args = { vim.fn.stdpath "data" .. "/mason/packages/go-debug-adapter/extension/dist/debugAdapter.js" }
       }
       dap.configurations.go = {
          {
-            type = 'go';
-            name = 'Debug';
-            request = 'launch';
-            showLog = false;
-            program = "${file}";
-            dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+            type = 'go',
+            name = 'Debug',
+            request = 'launch',
+            showLog = false,
+            program = "${file}",
+            dlvToolPath = vim.fn.exepath('dlv') -- Adjust to where delve is installed
          },
       }
 
@@ -182,7 +182,7 @@ local M = {
       local js_based_languages = {
          "typescript",
          "javascript",
-         "typescriptreact";
+         "typescriptreact",
          "javascriptreact"
       }
 
@@ -246,12 +246,12 @@ local M = {
                         prompt = "Enter URL: ",
                         default = "http://localhost:3000"
                      }, function(url)
-                           if url == nil or url == "" then
-                              return
-                           else
-                              coroutine.resume(co, url)
-                           end
+                        if url == nil or url == "" then
+                           return
+                        else
+                           coroutine.resume(co, url)
                         end
+                     end
                      )
                   end)
                end,
@@ -271,19 +271,19 @@ local M = {
 
       -- Javascript / Typescript (firefox)
       dap.adapters.firefox = {
-        type = 'executable',
-        command = vim.fn.stdpath('data')..'/mason/bin/firefox-debug-adapter',
+         type = 'executable',
+         command = vim.fn.stdpath('data') .. '/mason/bin/firefox-debug-adapter',
       }
       dap.configurations.typescript = {
-        {
-        name = 'Debug with Firefox',
-        type = 'firefox',
-        request = 'launch',
-        reAttach = true,
-        url = 'http://localhost:4200', -- Write the actual URL of your project.
-        webRoot = '${workspaceFolder}',
-        firefoxExecutable = vim.fn.expand "$HOMEBREW_DIR"..'/firefox'
-        }
+         {
+            name = 'Debug with Firefox',
+            type = 'firefox',
+            request = 'launch',
+            reAttach = true,
+            url = 'http://localhost:4200', -- Write the actual URL of your project.
+            webRoot = '${workspaceFolder}',
+            firefoxExecutable = vim.fn.expand "$HOMEBREW_DIR" .. '/firefox'
+         }
       }
 
       -- PHP
@@ -303,30 +303,33 @@ local M = {
 
       -- Bash
       dap.adapters.bashdb = {
-         type = 'executable';
-         command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
-         name = 'bashdb';
+         type = 'executable',
+         command = vim.fn.stdpath("data") ..
+         '/mason/packages/bash-debug-adapter/bash-debug-adapter',
+         name = 'bashdb',
       }
 
       dap.configurations.sh = {
          {
-            type = 'bashdb';
-            request = 'launch';
-            name = "Launch file";
-            showDebugOutput = true;
-            pathBashdb = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb';
-            pathBashdbLib = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir';
-            trace = true;
-            file = "${file}";
-            program = "${file}";
-            cwd = '${workspaceFolder}';
-            pathCat = "cat";
-            pathBash = "/opt/homebrew/bin/bash";
-            pathMkfifo = "mkfifo";
-            pathPkill = "pkill";
-            args = {};
-            env = {};
-            terminalKind = "integrated";
+            type = 'bashdb',
+            request = 'launch',
+            name = "Launch file",
+            showDebugOutput = true,
+            pathBashdb = vim.fn.stdpath("data") ..
+            '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
+            pathBashdbLib = vim.fn.stdpath("data") ..
+            '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
+            trace = true,
+            file = "${file}",
+            program = "${file}",
+            cwd = '${workspaceFolder}',
+            pathCat = "cat",
+            pathBash = "/opt/homebrew/bin/bash",
+            pathMkfifo = "mkfifo",
+            pathPkill = "pkill",
+            args = {},
+            env = {},
+            terminalKind = "integrated",
          }
       }
 
@@ -334,7 +337,8 @@ local M = {
       vim.fn.sign_define('DapBreakpoint', {
          text = require("lib.icons").ui.Bug,
          texthl = 'DiagnosticSignError',
-         linehl = '', numhl=''
+         linehl = '',
+         numhl = ''
       })
 
       dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -349,18 +353,28 @@ local M = {
 
       -- set keymaps
 
-      vim.keymap.set("n", "<leader>db", function() require "dap".toggle_breakpoint() end, { desc = "Breakpoint" })
-      vim.keymap.set("n", "<leader>dc", function() require "dap".continue() end, { desc = "Run Debug" })
-      vim.keymap.set("n", "<leader>di", function() require "dap".step_into() end, { desc = "Into" })
-      vim.keymap.set("n", "<leader>do", function() require "dap".step_over() end, { desc = "Over" })
-      vim.keymap.set("n", "<leader>dO", function() require "dap".step_out() end, { desc = "Out" })
-      vim.keymap.set("n", "<leader>dr", function() require "dap".repl.toggle() end, { desc = "Repl" })
-      vim.keymap.set("n", "<leader>dl", function() require "dap".run_last() end, { desc = "Last" })
-      vim.keymap.set("n", "<leader>du", function() require "dapui".toggle {} end, { desc = "UI" })
-      vim.keymap.set("n", "<leader>dx", function() require "dap".terminate() end, { desc = "Exit" })
+      vim.keymap.set("n", "<leader>db", function() require "dap".toggle_breakpoint() end,
+         { desc = "Breakpoint" })
+      vim.keymap.set("n", "<leader>dc", function() require "dap".continue() end,
+         { desc = "Run Debug" })
+      vim.keymap.set("n", "<leader>di", function() require "dap".step_into() end,
+         { desc = "Into" })
+      vim.keymap.set("n", "<leader>do", function() require "dap".step_over() end,
+         { desc = "Over" })
+      vim.keymap.set("n", "<leader>dO", function() require "dap".step_out() end,
+         { desc = "Out" })
+      vim.keymap.set("n", "<leader>dr", function() require "dap".repl.toggle() end,
+         { desc = "Repl" })
+      vim.keymap.set("n", "<leader>dl", function() require "dap".run_last() end,
+         { desc = "Last" })
+      vim.keymap.set("n", "<leader>du", function() require "dapui".toggle {} end,
+         { desc = "UI" })
+      vim.keymap.set("n", "<leader>dx", function() require "dap".terminate() end,
+         { desc = "Exit" })
 
       vim.keymap.set("n", "<localleader>d", function() end, { desc = "Dap" })
-      vim.keymap.set("n", "<localleader>dp", function() require "dap".toggle_breakpoint() end, { desc = "Breakpoint" })
+      vim.keymap.set("n", "<localleader>dp",
+         function() require "dap".toggle_breakpoint() end, { desc = "Breakpoint" })
       vim.keymap.set("n", "<localleader>dc", function()
          if vim.fn.filereadable(".vscode/launch.json") then
             local dap_vscode = require "dap.ext.vscode"
@@ -372,13 +386,20 @@ local M = {
          end
          require "dap".continue()
       end, { desc = "Run with args" })
-      vim.keymap.set("n", "<localleader>di", function() require "dap".step_into() end, { desc = "Into" })
-      vim.keymap.set("n", "<localleader>do", function() require "dap".step_over() end, { desc = "Over" })
-      vim.keymap.set("n", "<localleader>dO", function() require "dap".step_out() end, { desc = "Out" })
-      vim.keymap.set("n", "<localleader>dr", function() require "dap".repl.toggle() end, { desc = "Repl" })
-      vim.keymap.set("n", "<localleader>dl", function() require "dap".run_last() end, { desc = "Last" })
-      vim.keymap.set("n", "<localleader>du", function() require "dapui".toggle {} end, { desc = "UI" })
-      vim.keymap.set("n", "<localleader>dx", function() require "dap".terminate() end, { desc = "Exit" })
+      vim.keymap.set("n", "<localleader>di", function() require "dap".step_into() end,
+         { desc = "Into" })
+      vim.keymap.set("n", "<localleader>do", function() require "dap".step_over() end,
+         { desc = "Over" })
+      vim.keymap.set("n", "<localleader>dO", function() require "dap".step_out() end,
+         { desc = "Out" })
+      vim.keymap.set("n", "<localleader>dr", function() require "dap".repl.toggle() end,
+         { desc = "Repl" })
+      vim.keymap.set("n", "<localleader>dl", function() require "dap".run_last() end,
+         { desc = "Last" })
+      vim.keymap.set("n", "<localleader>du", function() require "dapui".toggle {} end,
+         { desc = "UI" })
+      vim.keymap.set("n", "<localleader>dx", function() require "dap".terminate() end,
+         { desc = "Exit" })
    end
 }
 

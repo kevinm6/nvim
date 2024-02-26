@@ -41,12 +41,16 @@
   ] @conceal (#set! conceal ""))
 
 
-(fenced_code_block
-  (info_string) @devicon
-  (#as_devicon! @devicon))
+;; (fenced_code_block
+;;   (info_string) @devicon
+;;   (#as_devicon! @devicon))
 
 ([
   (block_quote_marker)
   (block_continuation)
 ] @conceal (#set! conceal "|"))
 
+(fenced_code_block
+  (info_string (language) @_language)
+  (#any-of? @_language "sh" "bash")
+  (code_fence_content) @bash)

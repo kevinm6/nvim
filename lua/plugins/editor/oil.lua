@@ -17,23 +17,34 @@ end
 local M = {
    "stevearc/oil.nvim",
    keys = {
-      { "<leader>E", function()
-         require "oil".open()
-      end, desc = "File Explorer" },
+      {
+         "<leader>E",
+         function()
+            require "oil".open()
+         end,
+         desc = "File Explorer"
+      },
 
       { "<leader>e", function() require "oil".open_float() end, desc = "File Browser" },
 
-      { "<leader>fb", function()
-         require("oil").toggle_float(vim.fn.getcwd())
-      end, desc = "File Browser (CWD)" },
+      {
+         "<leader>fb",
+         function()
+            require("oil").toggle_float(vim.fn.getcwd())
+         end,
+         desc = "File Browser (CWD)"
+      },
 
-      { "<leader>fU", function()
-          require("oil").toggle_float("~/Informatica/")
-         end, desc = "University Folder" }
+      {
+         "<leader>fU",
+         function()
+            require("oil").toggle_float("~/Informatica/")
+         end,
+         desc = "University Folder"
+      }
    },
    cmd = "Oil",
    opts = function(_, o)
-
       o.columns = default_coloumns(true)
 
       o.keymaps = {
@@ -120,7 +131,7 @@ local M = {
       }
       -- This are defaults for now, no need to override
       -- adapters = {
-      --   ["oil://"] = "files",
+      --   ["oil://"] = "file",
       --   ["oil-ssh://"] = "ssh",
       -- },
       -- When opening the parent of a file, substitute these url schemes

@@ -2,17 +2,20 @@
 -- File         : ufo.lua
 -- Description  : ufo plugin configuration (folding)
 -- Author       : Kevin
--- Last Modified: 07 Oct 2023, 10:32
+-- Last Modified: 27 Feb 2024, 10:15
 -------------------------------------
 
 local ftMap = {
   vim = "indent",
   python = "indent",
-  -- yaml = "indent",
   git = '',
   checkhealth = '',
-  alpha = ''
+  alpha = '',
+  oil = '',
+  yaml = "indent",
+  [""] = ""
 }
+
 
 local M = {
   "kevinhwang91/nvim-ufo",
@@ -21,12 +24,14 @@ local M = {
     "kevinhwang91/promise-async",
     "nvim-treesitter/nvim-treesitter",
   },
-  opts = function(_, o)
-    -- fold_virt_text_handler = handler,
+  init = function()
     vim.o.foldcolumn = 'auto'
     vim.o.foldlevel = 99
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
+  end,
+  opts = function(_, o)
+    -- fold_virt_text_handler = handler,
 
     o.open_fold_hl_timeout = 150
     o.preview = {
@@ -41,7 +46,7 @@ local M = {
       },
     }
     o.close_fold_kinds = { 'imports', 'comment' }
-    o.provider_selector = function(_, filetype, _)
+    o.provider_selector = function(bufnr, filetype, _)
       return ftMap[filetype] or { 'treesitter', 'indent' }
     end
   end,

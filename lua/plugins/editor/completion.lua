@@ -77,16 +77,16 @@ local M = {
       end
     }
 
-    -- TODO: update for nvim-0.1.0 removing deprecated code
     o.enabled = function()
-      return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+      return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt"
         or require "cmp_dap".is_dap_buffer()
     end
 
     o.mapping = {
       ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-
       ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+      ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+      ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
 
       ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
       ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
@@ -98,32 +98,18 @@ local M = {
       },
 
       ["<C-l>"] = cmp.mapping(function(fallback)
-        if cmp.visible() and not cmp.get_active_entry() then
+        if ls.expand_or_locally_jumpable() then
+          ls.expand_or_jump()
+        elseif cmp.visible() and not cmp.get_active_entry() then
           return cmp.complete_common_string()
         elseif cmp.visible() and cmp.get_active_entry() then
           cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-        elseif ls.expand_or_locally_jumpable() then
-          ls.expand_or_jump()
         else
           fallback()
         end
       end),
 
-      ["<CR>"] = cmp.mapping({
-        i = function(fallback)
-          if cmp.visible() and cmp.get_active_entry() then
-            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-          else
-            fallback()
-          end
-        end,
-        s = cmp.mapping.confirm({ select = true }),
-        -- c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
-      }),
-
-      ["<M-CR>"] = cmp.mapping(cmp.mapping.abort(), { "i", "c" }),
-
-      ["<Right>"] = cmp.mapping.confirm { select = true },
+      ["<C-y>"] = cmp.mapping.confirm { select = true },
 
       ["<Up>"] = cmp.mapping(function(fallback)
         if cmp.visible() then

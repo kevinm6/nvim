@@ -2,7 +2,7 @@
 -- File         : python.lua
 -- Description  : filetype python extra config
 -- Author       : Kevin
--- Last Modified: 25 Jun 2023, 11:16
+-- Last Modified: 26 Feb 2024, 21:09
 -------------------------------------
 
 vim.opt_local.expandtab = true
@@ -17,7 +17,7 @@ vim.api.nvim_create_user_command("Pyvenv", function(arg)
    if arg.args ~= "" then
       local venv = {
          name = vim.fn.fnamemodify(arg.args, ":t"),
-         path = string.format("%s/%s", vim.loop.cwd(), vim.fn.expand(arg.args))
+         path = string.format("%s/%s", vim.uv.cwd(), vim.fn.expand(arg.args))
       }
       require "lib.python_envs".set_venv(venv)
    else
@@ -28,4 +28,3 @@ end, {
    desc = "Python Venv",
    complete = "dir"
 })
-

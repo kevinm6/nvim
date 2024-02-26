@@ -2,7 +2,7 @@
 -- File         : java.lua
 -- Description  : java language server configuration (jdtls)
 -- Author       : Kevin
--- Last Modified: 03 Dec 2023, 10:44
+-- Last Modified: 26 Feb 2024, 10:16
 -------------------------------------
 
 local has_jdtls, jdtls = pcall(require, "jdtls")
@@ -12,8 +12,7 @@ if not has_jdtls then
 end
 
 local root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew",
-   "settings.gradle", "build.gradle" }
-if root_dir == "" then root_dir = vim.fn.getcwd() end
+   "settings.gradle", "build.gradle" } or vim.uv.cwd()
 
 local data_path = vim.fn.stdpath "data"
 
@@ -22,17 +21,14 @@ local extendedClientCapabilities = require "jdtls".extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+local project_name = vim.fn.fnamemodify(vim.uv.cwd(), ":p:h:t")
 local workspace_dir = vim.fn.stdpath "cache" .. "/java/workspace/" .. project_name
 
 local launcher_path = vim.fn.glob(
-  data_path.."/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
-  true, true)[1]
+   data_path .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", true)
 local bundles = vim.fn.glob(
-   data_path ..
-   "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
+   data_path.."/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
    true, true)
-
 
 local lombok_path = data_path .. "/mason/packages/jdtls/lombok.jar"
 
@@ -195,9 +191,9 @@ end
 
 local function set_capabilities(client, bufnr)
    if vim.lsp.inlay_hint then
-      vim.api.nvim_create_user_command("InlayHints", function ()
+      vim.api.nvim_create_user_command("InlayHints", function()
          vim.lsp.inlay_hint(bufnr)
-      end, { desc = "Toggle Inlay hints"})
+      end, { desc = "Toggle Inlay hints" })
    end
 
    -- lsp-document_highlight
@@ -393,24 +389,19 @@ local config = {
    },
    on_attach = function(client, bufnr)
       jdtls.setup_dap({ hotcodereplace = "auto" })
-      -- require "jdtls.dap".setup_dap_main_class_configs()
+      require "jdtls.dap".setup_dap_main_class_configs()
 
       set_keymaps(client, bufnr)
       set_capabilities(client, bufnr)
    end
 }
 
-
-
-
-
--- -- UI
-local finders = require 'telescope.finders'
-local sorters = require 'telescope.sorters'
-local actions = require 'telescope.actions'
-local pickers = require 'telescope.pickers'
-
 require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
+   -- -- UI
+   local finders = require 'telescope.finders'
+   local sorters = require 'telescope.sorters'
+   local actions = require 'telescope.actions'
+   local pickers = require 'telescope.pickers'
    local opts = {}
    pickers.new(opts, {
       prompt_title    = prompt,
@@ -424,7 +415,7 @@ require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
             }
          end,
       },
-      sorter          = sorters.get_generic_fuzzy_sorter(),
+      sorter = sorters.get_generic_fuzzy_sorter(),
       attach_mappings = function(prompt_bufnr)
          actions.goto_file_selection_edit:replace(function()
             local selection = actions.get_selected_entry(prompt_bufnr)
@@ -439,14 +430,6 @@ require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
 end
 
 jdtls.start_or_attach(config)
-
-vim.cmd([[
-  command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)
-  ]])
-vim.cmd([[
-  command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)
-  ]])
-
 
 -- Formatting
 vim.api.nvim_buf_create_user_command(0,

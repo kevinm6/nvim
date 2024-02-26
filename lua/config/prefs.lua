@@ -1,8 +1,8 @@
--------------------------------------
+------------------------------------
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 02 Jan 2024, 10:30
+-- Last Modified: 26 Jan 2024, 16:40
 -------------------------------------
 
 local settings = {
@@ -44,7 +44,6 @@ local settings = {
   updatecount = 0,                   -- do not create swap file
   listchars = vim.opt.listchars:append { tab = "⇥ ", eol = "↲", trail = "~", space = "_", nbsp = "␣" },
   fillchars = [[eob: ,fold:󰇘,foldopen:,foldsep: ,foldclose:]],
-  -- syntax = "off", -- using treesitter
   timeoutlen = 350,
   ttimeoutlen = 100,
   -- lazyredraw = true,

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : NeoVim configuration
 -- Author       : Kevin
--- Last Modified: 07 Oct 2023, 19:02
+-- Last Modified: 26 Feb 2024, 09:52
 --------------------------------------
 
 -- Set leader key
@@ -15,7 +15,7 @@ if not vim.fn.has "nvim" == 1 then
   return
 end
 
--- Use other Shadafile for Gui (VimR) or VSCode
+-- Use other Shadafile for VSCode
 if vim.g.vscode then
   vim.opt.shadafile = vim.fn.stdpath("cache") .. "/shada/vscnvim.shada"
 else
