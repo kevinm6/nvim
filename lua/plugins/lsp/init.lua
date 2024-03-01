@@ -400,6 +400,17 @@ local M = {
             },
           }))
         end,
+        ["yamlls"] = function()
+          lspconfig.yamlls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            settings = {
+              yaml = {
+                schemaDownload = { enable = true },
+                validate = true,
+              }
+            }
+          }))
+        end,
+
         ["sqls"] = function()
           lspconfig.sqls.setup(
             vim.tbl_deep_extend("force", default_lsp_config, {

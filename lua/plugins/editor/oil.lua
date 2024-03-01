@@ -64,7 +64,7 @@ local M = {
             desc = "Open UserDir",
             callback = function()
                require "oil".close()
-               local home_dir = tostring(vim.env["HOME"])
+               local home_dir = tostring(vim.env.HOME)
                require("oil").open_float(home_dir)
             end
          },

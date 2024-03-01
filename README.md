@@ -47,7 +47,6 @@
 - [Peek](https://github.com/toppair/peek.nvim)
 - [Alpha](https://github.com/goolord/alpha-nvim)
 - [Twilight](https://github.com/folke/twilight.nvim)
-- [Cheatsheet](https://github.com/Djancyp/cheat-sheet)
 
 ---
 
