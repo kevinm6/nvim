@@ -92,6 +92,7 @@ M.toggle = function()
     vim.api.nvim_create_autocmd({
       "CursorMoved", "ModeChanged", "BufEnter"
     }, {
+        group = vim.api.nvim_create_augroup("_winbar", { clear = true }),
         callback = function(cb)
           if vim.g.winbar ~= nil then
             if

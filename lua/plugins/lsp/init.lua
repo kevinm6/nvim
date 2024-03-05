@@ -49,140 +49,125 @@ local set_buf_keymaps = function(client, bufnr)
 
   local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
 
-  local map = vim.keymap.set
+  local map = function(keys, func, desc)
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = "[L]SP: "..desc })
+  end
 
   -- local opts = { noremap = true, silent = true }
-  map("n", "gl", function()
-    vim.diagnostic.open_float()
-  end, { desc = "Open float", buffer = bufnr })
+  map("gl", function() vim.diagnostic.open_float() end, "Open float")
 
-  map("n", "K", function()
+  map("K", function()
     local winid = require("ufo").peekFoldedLinesUnderCursor()
     if not winid then
       vim.lsp.buf.hover()
     end
-  end, { desc = "Hover | PeekFold", buffer = bufnr })
+  end, "Hover | PeekFold" )
 
   if client.server_capabilities.declarationProvider then
-    map("n", "gD", function()
+    map("gD", function()
       if has_telescope then
         tele_builtin.lsp_definitions()
       else
         vim.lsp.buf.declaration()
       end
-    end, { desc = "LSP Declaration", buffer = bufnr })
+    end, "[G]oTo [D]eclaration")
   end
   if client.server_capabilities.definitionProvider then
-    map("n", "gd", function()
+    map("gd", function()
       if has_telescope then
         tele_builtin.lsp_definitions()
       else
         vim.lsp.buf.definition()
       end
-    end, { desc = "LSP Definition", buffer = bufnr })
+    end, "[G]oTo [D]efinitions")
 
-    map("n", "<leader>ld", function()
+    map("<leader>ld", function()
       if has_telescope then
         tele_builtin.lsp_definitions()
       else
         vim.lsp.buf.definition()
       end
-    end, { desc = "LSP Definition", buffer = true })
+    end, "[G]oTo [D]efinitions")
   end
   if client.server_capabilities.implementationProvider then
-    map("n", "gI", function()
+    map("gI", function()
       if has_telescope then
         tele_builtin.lsp_incoming_calls()
       else
         vim.lsp.buf.implementation()
       end
-    end, { desc = "LSP Incoming-calls", buffer = true })
+    end, "[I]ncoming-Calls")
   end
   if client.supports_method "callHierarchy/outgoingCalls" then
-    map("n", "gC", function()
+    map("gC", function()
       if has_telescope then
         tele_builtin.lsp_outgoing_calls()
       else
         vim.lsp.buf.outgoing_calls()
       end
-    end, { desc = "LSP Outgoing-calls", buffer = true })
+    end, "Outgoing-[C]alls")
   end
   if client.server_capabilities.referencesProvider then
-    map("n", "gr", function()
+    map("gr", function()
       if has_telescope then
         tele_builtin.lsp_references()
       else
         vim.lsp.buf.references()
       end
-    end, { buffer = bufnr, desc = "LSP References" })
-    map("n", "<leader>lr", function()
+    end, "[G]oTo [R]eferences")
+    map("<leader>lr", function()
       if has_telescope then
         tele_builtin.lsp_references()
       else
         vim.lsp.buf.references()
       end
-    end, { buffer = bufnr, desc = "LSP References" })
+    end, "[G]oTo [R]eferences")
   end
 
-  map("n", "gs", function()
+  map("gs", function()
     if has_telescope then
       tele_builtin.lsp_document_symbols()
     else
       vim.lsp.buf.document_symbol()
     end
-  end, { buffer = bufnr, desc = "LSP Symbols" })
+  end, "LSP Symbols" )
 
-  map("n", "<leader>ls", function()
+  map("<leader>ls", function()
     if has_telescope then
       tele_builtin.lsp_document_symbols()
     else
       vim.lsp.buf.document_symbol()
     end
-  end, { buffer = bufnr, desc = "LSP Symbols" })
+  end, "[S]ymbols")
 
-  map("n", "<leader>lt", function()
+  map("<leader>lt", function()
     if has_telescope then
       tele_builtin.lsp_typedefs()
     else
       vim.lsp.buf.type_definition()
     end
-  end, { buffer = bufnr, desc = "LSP TypeDef" })
+  end, "[T]ypeDef")
 
-  map("n", "<leader>lS", function()
+  map("<leader>lws", function()
     if has_telescope then
       tele_builtin.lsp_workspace_symbols()
     else
       vim.lsp.buf.workspace_symbol()
     end
-  end, { desc = "Workspace Symbols", buffer = bufnr })
+  end, "[W]orkspace [S]ymbols")
 
-  map("n", "<leader>ll", function()
-    vim.lsp.codelens.run()
-  end, { desc = "CodeLens Action", buffer = bufnr })
-  map("n", "<leader>la", function()
-    vim.lsp.buf.code_action()
-  end, { desc = "Code Action", buffer = bufnr })
-  map("n", "<leader>lI", function()
-    vim.cmd.LspInfo {}
-  end, { desc = "Lsp Info", buffer = bufnr })
-  map("n", "<leader>lL", function()
-    vim.cmd.LspLog {}
-  end, { desc = "Lsp Log", buffer = bufnr })
-  map("n", "<leader>r", function()
-    vim.lsp.buf.rename()
-  end, { desc = "Rename", buffer = bufnr })
-  map("n", "<leader>lq", function()
-    vim.diagnostic.setloclist()
-  end, { desc = "Lsp QFDiagnostics", buffer = bufnr })
+  map("<leader>ll", function() vim.lsp.codelens.run() end, "CodeLens Action")
+  map("<leader>la", function() vim.lsp.buf.code_action() end, "Code [A]ction")
+  map("<leader>lI", function() vim.cmd.LspInfo {} end, "[I]nfo")
+  map("<leader>lL", function() vim.cmd.LspLog {} end, "[L]og")
+  map("<leader>r", function() vim.lsp.buf.rename() end, "[R]ename")
+  map("<leader>lq", function() vim.diagnostic.setloclist() end, "[Q]FDiagnostics")
   -- Diagnostics
-  map("n", "<leader>dj", function()
-    vim.diagnostic.goto_next { buffer = true }
-  end, { desc = "Next Diagnostic", buffer = bufnr })
-  map("n", "<leader>dk", function()
-    vim.diagnostic.goto_prev { buffer = true }
-  end, { desc = "Prev Diagnostic", buffer = bufnr })
+  map("]d", function() vim.diagnostic.goto_next { buffer = true } end, "Next [D]iagnostic")
+  map("[d", function() vim.diagnostic.goto_prev { buffer = true } end, "Prev [D]iagnostic")
+  map("<leader>dj", function() vim.diagnostic.goto_next { buffer = true } end, "Next Diagnostic")
+  map("<leader>dk", function() vim.diagnostic.goto_prev { buffer = true } end, "Prev Diagnostic")
 end
-
 
 --- Set buffer capabilities based if supported by the
 --- passed client and buffer id

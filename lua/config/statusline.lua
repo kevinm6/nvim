@@ -433,6 +433,7 @@ M.toggle = function()
       "FileType",
       "FileChangedShellPost",
     }, {
+        group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
         callback = function(cb)
           if vim.g.statusline ~= nil then
             vim.api.nvim_eval_statusline(

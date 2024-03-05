@@ -59,7 +59,7 @@ end
 
 ---Hightlight on yank
 autocmd({ "TextYankPost" }, {
-  -- group = augroup("_highlight_yank", { clear = true }),
+  group = augroup("_highlight_yank", { clear = true }),
   pattern = "*",
   callback = function()
     vim.highlight.on_yank { higroup = "TextYankPost", timeout = 80, on_macro = true }
@@ -78,6 +78,7 @@ end
 
 ---Exit on q for some filetypes
 autocmd("FileType", {
+  group = augroup("_ft_quit_on_q", { clear = true }),
   pattern = {
     "qf",
     "help",
@@ -111,6 +112,7 @@ autocmd("FileType", {
 ---Check if want to install Treesitter parser for current
 ---filetype if missing
 autocmd({ "FileType" }, {
+  group = augroup("_check_ft_ts_parser", { clear = true }),
   pattern = "*",
   callback = function(ev)
 
@@ -159,6 +161,7 @@ autocmd({ "FileType" }, {
 
 ---Jump to last < cursor-pos > in file
 autocmd({ "BufRead" }, {
+  group = augroup("_buf_last_cursor_pos", { clear = true }),
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
@@ -171,11 +174,13 @@ autocmd({ "BufRead" }, {
 
 ---Insert mode on builtin Neovim terminal
 autocmd({ "TermOpen" }, {
+  group = augroup("_startinsert_term_open", { clear = true }),
   command = 'startinsert'
 })
 
 ---Start in insert mode in Git and toggleterm files
 autocmd({ "FileType", "BufNewFile" }, {
+  group = augroup("_startinsert_git_files", { clear = true }),
   pattern = { "gitcommit", "gitrebase", "toggleterm" },
   command = 'startinsert'
 })
@@ -269,6 +274,7 @@ user_command("Scratch", function() scratch() end, { desc = "Create a Scratch buf
 ---Restores cursor and window position using save_cursor variable.
 local function auto_timestamp()
   local autocmd_id = autocmd({ "BufWritePre" }, {
+    group = augroup("_autoupdate_timestamp", { clear = true }),
     pattern = "*",
     callback = function()
       if vim.opt_local.modified:get() == true then
@@ -317,6 +323,7 @@ user_command("TrimTrailingSpaces",
 ---Auto Remove trailing spaces before saving current buffer
 local function auto_remove_trailing_spaces()
   local autocmd_id = autocmd("BufWritePre", {
+    group = augroup("_autoremove_trailing_space", { clear = true }),
     pattern = "*",
     callback = function()
       if vim.bo.filetype ~= "markdown" then
