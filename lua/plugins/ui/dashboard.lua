@@ -116,11 +116,6 @@ local M = {
       db_btn("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
       db_btn("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
       db_btn(
-        "S",
-        icons.ui.History .. " Sessions",
-        "<cmd>lua require 'lib.sessions'.restore_session()<CR>"
-      ),
-      db_btn(
         "D",
         icons.ui.Lock .. " Dotfiles",
         [[<cmd>lua require "oil".open_float(vim.fn.expand "$DOTFILES")<CR>]]

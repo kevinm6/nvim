@@ -68,6 +68,35 @@ local M = {
     end
   },
 
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",  -- latest release (not commit)
+    event = {
+      "BufReadPre "..vim.fn.expand"~".."/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
+      "BufNewFile "..vim.fn.expand"~".."/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
+      -- "BufReadPre "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/daily/*.md",
+      -- "BufNewFile "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/daily/*.md",
+      -- "BufReadPre "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni/*.md",
+      -- "BufNewFile "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni/*.md",
+    },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = function(_, o)
+      o.notes_subdir = "notes"
+      o.notes_subdir = "notes_subdir"
+
+      o.workspaces = {
+        {
+          name = "personal",
+          path =  vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/notes",
+        },
+        {
+          name = "uni",
+          path =  vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni",
+        },
+      }
+    end
+  },
+
   -- Jupyter Notebook
   {
     "GCBallesteros/jupytext.nvim",
@@ -233,16 +262,9 @@ local M = {
   -- Lua dev
   {
     "folke/neodev.nvim",
-    enabled = true,
     config = true
   },
 
-  -- focus on current code
-  {
-    "folke/twilight.nvim",
-    cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
-    config = true
-  },
 
   -- data viewer (csv, tsv ...)
   {

@@ -5,19 +5,19 @@
 --  Last Modified: 03 Dec 2023, 10:49
 -------------------------------------
 
-local F = {}
+local M = {}
 
 ---Hotloading source plugin/module
 ---@param mod any
 ---@return any, any
-F.load = function(mod)
+M.load = function(mod)
    package.loaded[mod] = nil
    return require(mod)
 end
 
 ---Remove augroup, if exists from given name
 ---@param name string name of matching augroup to remove
-F.remove_augroup = function(name)
+M.remove_augroup = function(name)
    if vim.fn.exists("#" .. name) == 1 then
       vim.cmd("au! " .. name)
    end
@@ -25,21 +25,21 @@ end
 
 ---Get lenght of current word
 ---@see cword |<cword>|
-F.get_word_length = function()
+M.get_word_length = function()
    local word = vim.fn.expand "<cword>"
    return #word
 end
 
 ---toggle_option()
 ---@param option string option to toggle value
-F.toggle_option = function(option)
+M.toggle_option = function(option)
    local value = not vim.api.nvim_get_option_value(option, {})
    vim.opt[option] = value
    vim.notify(option .. " set to " .. tostring(value), vim.log.levels.INFO)
 end
 
 ---Enable|Disable Diagnostics
-F.toggle_diagnostics = function()
+M.toggle_diagnostics = function()
    vim.g.diagnostics_status = not vim.g.diagnostics_status
    if vim.g.diagnostics_status == true then
       vim.diagnostic.show()
@@ -50,7 +50,7 @@ end
 
 
 ---Dev FOLDER
-F.dev_folder = function()
+M.dev_folder = function()
    local dev_folders = {
       vim.fn.expand "~/dev",
       vim.fn.expand "~/Documents/developer",
@@ -73,7 +73,7 @@ end
 
 
 ---Projects
-F.projects = function()
+M.projects = function()
    local projs_folders = {
       vim.fn.expand "~/Documents/developer",
       vim.fn.expand "~/dev",
@@ -106,7 +106,7 @@ end
 
 ---Create new file w/ input for filename
 ---useful for dashboard and so on
-F.new_file = function(cmd_input)
+M.new_file = function(cmd_input)
    local args = cmd_input and cmd_input.args or nil
    if args == nil or args == "" then
       vim.ui.input({
@@ -130,7 +130,7 @@ F.new_file = function(cmd_input)
 end
 
 ---Create temporary file
-F.new_tmp_file = function(cmd_input)
+M.new_tmp_file = function(cmd_input)
    local args = cmd_input and cmd_input.args or nil
    if args == nil or args == "" then
       vim.ui.input({
@@ -154,7 +154,7 @@ F.new_tmp_file = function(cmd_input)
 end
 
 
-F.workon = function()
+M.workon = function()
    local _, _ = pcall(require, "telescope")
    local config = require "lazy.core.config"
    vim.ui.select(vim.tbl_values(config.plugins), {
@@ -175,7 +175,7 @@ end
 ---Set highlights
 ---@param hls table
 ---@see nvim_set_hl |nvim_set_hl()|
-F.set_highlights = function(hls)
+M.set_highlights = function(hls)
    for group, settings in pairs(hls) do
       vim.api.nvim_set_hl(0, group, settings)
    end
@@ -184,7 +184,7 @@ end
 
 ---Get current buf lsp Capabilities
 ---@see nvim_lsp_get_active_clients |nvim_lsp_get_active_clients()|
-F.get_current_buf_lsp_capabilities = function()
+M.get_current_buf_lsp_capabilities = function()
    local curBuf = vim.api.nvim_get_current_buf()
    -- TODO: remove check for nvim-0.10 when update to it
    local clients = vim.fn.has("nvim-0.10") == 1 and vim.lsp.get_clients() or vim.lsp.get_active_clients { bufnr = curBuf }
@@ -216,4 +216,10 @@ F.get_current_buf_lsp_capabilities = function()
    end
 end
 
-return F
+
+M.usercmd_session_completion = function()
+  local args = { 'restore', 'save', 'delete' }
+  return table.concat(args, "\n")
+end
+
+return M

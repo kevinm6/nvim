@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 25 Jan 2024, 12:39
+-- Last Modified: 09 Mar 2024, 11:18
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -383,14 +383,15 @@ user_command("DeleteCurrentBuffer", function()
   vim.cmd.bdelete(cBuf)
 end, { desc = "Close current buffer and go to next" })
 
+
 ---Query CheatSH and get output in window
 user_command("CheatSH", function(args)
   require("lib.cheat_sheet").run(args)
 end, {
-    nargs = "?",
-    desc = "Cheat-Sheet",
-    complete = "filetype",
-  })
+  nargs = "?",
+  desc = "Cheat-Sheet",
+  complete = "filetype",
+})
 
 ---Compare changes in the current buffer with a related file on your disk,
 --- before it will be saved, if Git does not track this file yet
@@ -461,4 +462,5 @@ user_command("Session", function(arg)
 end,{
   nargs = 1,
   desc = "Session Manager",
+  complete = "custom,v:lua.require'lib.utils'.usercmd_session_completion"
 })

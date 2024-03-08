@@ -7,7 +7,7 @@
 
 local M = {
   {
-    "kndndrj/nvim-dbee",
+    "kevinm6/nvim-dbee",
     ft = { "sql", "mysql" },
     cmd = "Dbee",
     dependencies = {
@@ -20,32 +20,29 @@ local M = {
       require("dbee").install()
     end,
     config = function(_, o)
-      local dbee = require "dbee"
-      -- set location for stored connection config
+      o.default_connection = "default"
+
+      o.extra_helpers = {
+        ["postgres"] = {
+          ["List All"] = "select * from {{ .Table }}",
+        },
+      }
       o.sources = {
+        -- stored connection config location
         require("dbee.sources").FileSource:new(vim.fn.stdpath "state".."/dbee/connection.json")
       }
-      dbee.setup(o)
+      o. editor = {
+        -- mappings for the buffer
+        mappings = {
+          -- run what's currently selected on the active connection
+          { key = "<localleader>r", mode = "v", action = "run_selection" },
+          -- run the whole file on the active connection
+          { key = "<localleader>r", mode = "n", action = "run_file" },
+        },
+      }
 
-      vim.keymap.set("x", "<localleader>q", function()
-        local start_pos = vim.fn.getpos("'<")[2]
-        local end_pos = vim.fn.getpos("'>")[2]
-        local buf_content = vim.api.nvim_buf_get_lines(0, start_pos-1, end_pos+1, false)
-        local content_as_string = table.concat(buf_content, "\n")
-        dbee.execute(content_as_string)
-      end, { desc = "Run query" })
-
-      vim.keymap.set("n", "<localleader>q", function()
-        local buf_content = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-        local content_as_string = table.concat(buf_content, "\n")
-        dbee.execute(content_as_string)
-      end, { desc = "Run query" })
-      vim.keymap.set("n", "<leader>Rq", function()
-        local buf_content = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-        local content_as_string = table.concat(buf_content, "\n")
-        dbee.execute(content_as_string)
-      end, { desc = "Run query" })
-    end,
+      require "dbee".setup(o)
+    end
   },
   {
     "tpope/vim-dadbod",

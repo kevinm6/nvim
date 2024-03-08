@@ -2,12 +2,12 @@
 --  File         : notes.lua
 --  Description  : module to manage notes
 --  Author       : Kevin
---  Last Modified: 14 Oct 2023, 09:13
+--  Last Modified: 08 Mar 2024, 09:11
 -------------------------------------
 
-local N = {}
+local M = {}
 
----Get available sessions
+---Get available notes
 ---@private
 ---@return table
 local get_notes = function()
@@ -19,13 +19,13 @@ local get_notes = function()
       "\n",
       { trimempty = true }
    )
-   local logseq_path = vim.fn.expand "~/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents"
-   local logseq_notes = vim.split(
-      vim.fn.globpath(logseq_path, "**/*.md"),
+   local obsidian_path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents"
+   local obsidian_notes = vim.split(
+      vim.fn.globpath(obsidian_path, "**/*.md"),
       "\n",
       { trimempty = true }
    )
-   for _, note in ipairs(logseq_notes) do
+   for _, note in ipairs(obsidian_notes) do
       table.insert(notes_files, note)
    end
 
@@ -35,8 +35,8 @@ local get_notes = function()
    return notes
 end
 
----Delete selected session
-N.delete_note = function()
+---Delete selected notes
+M.delete_note = function()
    local notes = get_notes()
 
    if #notes >= 1 then
@@ -63,8 +63,8 @@ N.delete_note = function()
    end
 end
 
----Restore selected session
-N.open_note = function()
+---Restore selected notes
+M.open_note = function()
    local notes = get_notes()
 
    if #notes >= 1 then
@@ -87,4 +87,4 @@ N.open_note = function()
    end
 end
 
-return N
+return M
