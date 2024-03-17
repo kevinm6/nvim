@@ -2,11 +2,11 @@
 -- File         : markdown.lua
 -- Description  : filetype markdown extra config
 -- Author       : Kevin
--- Last Modified: 26 Feb 2024, 21:11
+-- Last Modified: 14 Mar 2024, 20:17
 -------------------------------------
 
 vim.opt_local.conceallevel = 2
-vim.opt_local.shiftwidth = 3
+vim.opt_local.shiftwidth = 2
 vim.opt_local.expandtab = true
 vim.opt_local.wrap = true
 vim.opt_local.linebreak = true

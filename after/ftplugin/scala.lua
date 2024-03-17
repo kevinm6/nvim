@@ -2,12 +2,13 @@
 -- File         : scala.lua
 -- Description  : scala language server configuration (metals)
 -- Author       : Kevin
--- Last Modified: 08 Aug 2023, 17:18
+-- Last Modified: 17 Mar 2024, 14:35
 -------------------------------------
 
-local ok, metals = pcall(require, "metals")
-if not ok then
-  vim.notify("  Error on starting metals ", vim.log.levels.ERROR)
+local has_metals, metals = pcall(require, "metals")
+if not has_metals then
+  vim.notify(" metals not found or error on starting",
+    vim.log.levels.ERROR, { title = "Metals"})
   return
 end
 

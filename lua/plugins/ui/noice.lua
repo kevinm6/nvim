@@ -1,9 +1,8 @@
----@diagnostic disable: missing-fields
 ----------------------------------------
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 03 Dec 2023, 10:49
+--  Last Modified: 18 Mar 2024, 11:28
 ----------------------------------------
 
 local M = {
@@ -75,9 +74,21 @@ local M = {
         cmdline = { icon = " " },
         search_down = { icon = " ⌄" },
         search_up = { icon = " ⌃" },
-        filter = { icon = "" },
+        -- filter = { icon = "" },
+        -- execute shell command (!command)
+        filter = { pattern = "^:%s*!", icon = "$", ft = "sh" },
+        -- replace file content with shell command output (%!command)
+        f_filter = { pattern = "^:%s*%%%s*!", icon = " $", ft = "sh"},
+        -- replace selection with shell command output (%! command on visual selection)
+        v_filter = { pattern = "^:%s*%'<,%'>%s*!", icon = " $", ft = "sh"},
         lua = { icon = " " },
         help = { icon = "" },
+        substitute = {
+          pattern = "^:%%?s/",
+          icon = " ",
+          ft = "regex",
+          opts = { border = { text = { top = " sub (old/new/) ", }, }, },
+        },
       },
     }
     o.lsp = {
@@ -104,8 +115,9 @@ local M = {
       },
     }
     o.presets = {
-      long_message_to_split = true, -- long messages will be sent to a split
-      lsp_doc_border = true,
+      long_message_to_split = true,
+      cmdline_output_to_split = true,
+      lsp_doc_border = true
     }
     o.views = {
       cmdline_popup = {
@@ -145,24 +157,13 @@ local M = {
           winhighlight = { Normal = "Normal", FloatBorder = "WinSeparator" },
         },
       },
-      mini = { win_options = { winblend = 6 } }
+      mini = {
+        timeout = 3000,
+        win_options = { winblend = 6 }
+      }
     } -- @see the section on views below
-    ---@type NoiceRouteConfig[]
     -- NOTE: https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages#messages-and-notifications-in-neovim
     o.routes = {
-      -- NOTE: reroute long notifications to split
-      -- {
-      --    filter = {
-      --       event = "msg_show",
-      --       any = { { min_height = 5 }, { min_width = 100 } },
-      --       ["not"] = {
-      --          kind = { "confirm", "confirm_sub", "return_prompt", "quickfix", "search_count" }
-      --       },
-      --       blocking = false
-      --    },
-      --    view = "messages",
-      --    opts = { stop = true }
-      -- },
       {
         filter = {
           event = "notify",
@@ -174,23 +175,22 @@ local M = {
         filter = {
           event = "lsp",
           kind = "progress",
-          find = "workspace", -- skip all progress containing 'workspace'
+          any = {
+            { find = "workspace" }, -- skip all progress containing 'workspace'
+            { find = "code_action" },
+          }
         },
         opts = { skip = true }
       },
-      -- { -- skip lsp_progress for client
-      --    filter = {
-      --      event = "lsp",
-      --      kind = "progress",
-      --      cond = function(message)
-      --        local client = vim.tbl_get(message.opts, "progress", "client")
-      --        return client == "lua_ls" -- skip lua-ls progress
-      --      end,
-      --    },
-      --    opts = { skip = true },
-      --  },
-      -- NOTE: avoid search messages (using virtualtext as default)
-      {
+      { -- disable view "mini" in insert mode
+        view = "mini",
+        filter = {
+          mode = "i",
+        },
+
+        opts = { skip = true },
+      },
+      { -- NOTE: avoid search messages (using virtualtext as default)
         filter = {
           event = "msg_show",
           kind = "search_count",
@@ -211,7 +211,8 @@ local M = {
             { find = 'fewer lines' },
             { find = 'written' },
             { find = 'E162' },
-            { find = 'E37' }
+            { find = 'E37' },
+            -- { event = "msg_show", find = '[nvim-treesitter] [%d/%d]' }
           }
         }
       },
@@ -225,14 +226,15 @@ local M = {
           },
         },
       },
-      -- NOTE: this avoid written messages
-      -- {
-      --    filter = {
-      --       event = "msg_show",
-      --       kind = "",
-      --    },
-      --    opts = { skip = true },
-      -- },
+      { -- reroute DAP messages to view "mini"
+        filter = {
+          event = "notify",
+          cond = function(message)
+            return message.opts and message.opts.title == "DAP"
+          end,
+        },
+        opts = { skip = true },
+      }
     } -- @see the section on routes below
     ---@type table<string, NoiceFilter>
     o.status = {} --@see the section on statusline components below

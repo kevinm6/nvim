@@ -203,7 +203,7 @@ local function get_lsp_diagnostic()
   return status_ok and colors.diag .. icons.diagnostics.status_ok or
     do_not_show_diag and colors.diag .. icons.diagnostics.status_not_ok or
     string.format(
-      "%s%s%s:%d %s%s:%d %s%s:%d %s%s:%d",
+      "%s%s%s %d %s%s %d %s%s %d %s%s %d",
       colors.diag,
       colors.diagError, icons.diagnostics.Error, errors,
       colors.diagWarn, icons.diagnostics.Warning, warns,

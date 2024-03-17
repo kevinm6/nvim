@@ -2,47 +2,29 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 26 Feb 2024, 21:31
+-- Last Modified: 19 Mar 2024, 09:28
 -------------------------------------
 
----Auto Stop LSP client if no more buffers attached.
---@param client table client attached to buffer
---@param bufnr number buffer id of which client is attached
--- local set_auto_stop_lsp = function(client, bufnr)
---   if (vim.fn.has "nvim-0.10" ~= 1) then return end
+--- Create capabilities and set default values
+local function init_capabilities()
+  -- Update capabilities with extended from cmp_nvim_lsp if available
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+  if has_cmp then
+    capabilities = vim.tbl_deep_extend(
+      'force', capabilities,
+      cmp_nvim_lsp.default_capabilities()
+    )
+  end
 
---   vim.api.nvim_create_autocmd("BufDelete", {
---     group = vim.api.nvim_create_augroup("_lsp_timeout", { clear = false }),
---     buffer = bufnr,
---     callback = function(ev)
---       local clients = vim.lsp.get_clients({ name = client.name, bufnr = bufnr })[1] or
---       vim.lsp.get_clients({ name = client.name })[1]
---       local attached_bufs = clients.attached_buffers
---       local n_bufs = 0
---       for _, _ in pairs(attached_bufs) do
---         n_bufs = n_bufs + 1
---       end
-
---       if n_bufs == 1 and attached_bufs[ev.buf] or n_bufs == 0 then
---         vim.defer_fn(function()
---           vim.lsp.stop_client(clients.id)
-
---           vim.notify("No more clients attached. Stopped.",
---             vim.log.levels.INFO, {
---               title = "LSP: " .. clients.name,
---             }
---           )
---         end, 6000)
---       end
---     end
---   })
--- end
-
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+end
 
 --- Set buffer keymaps based on supported capabilities of the
 --- passed client and buffer id
 --- @param client any client passed to attach config
-local set_buf_keymaps = function(client, bufnr)
+local function set_buf_keymaps(client, bufnr)
   if client.name == "jdtls" then
     client.server_capabilities.documentHighlightProvider = false
   end
@@ -50,18 +32,19 @@ local set_buf_keymaps = function(client, bufnr)
   local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
 
   local map = function(keys, func, desc)
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = "[L]SP: "..desc })
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = "LSP " .. desc })
   end
 
-  -- local opts = { noremap = true, silent = true }
-  map("gl", function() vim.diagnostic.open_float() end, "Open float")
+  map("gl",
+    function() vim.diagnostic.open_float({ bufnr = bufnr, severity_sort = true }) end,
+    "Open float")
 
   map("K", function()
     local winid = require("ufo").peekFoldedLinesUnderCursor()
     if not winid then
       vim.lsp.buf.hover()
     end
-  end, "Hover | PeekFold" )
+  end, "Hover | PeekFold")
 
   if client.server_capabilities.declarationProvider then
     map("gD", function()
@@ -70,7 +53,7 @@ local set_buf_keymaps = function(client, bufnr)
       else
         vim.lsp.buf.declaration()
       end
-    end, "[G]oTo [D]eclaration")
+    end, "[g]oTo [D]eclaration")
   end
   if client.server_capabilities.definitionProvider then
     map("gd", function()
@@ -79,7 +62,7 @@ local set_buf_keymaps = function(client, bufnr)
       else
         vim.lsp.buf.definition()
       end
-    end, "[G]oTo [D]efinitions")
+    end, "[g]oTo [d]efinitions")
 
     map("<leader>ld", function()
       if has_telescope then
@@ -87,7 +70,7 @@ local set_buf_keymaps = function(client, bufnr)
       else
         vim.lsp.buf.definition()
       end
-    end, "[G]oTo [D]efinitions")
+    end, "GoTo [d]efinitions")
   end
   if client.server_capabilities.implementationProvider then
     map("gI", function()
@@ -114,14 +97,14 @@ local set_buf_keymaps = function(client, bufnr)
       else
         vim.lsp.buf.references()
       end
-    end, "[G]oTo [R]eferences")
+    end, "[g]oTo [r]eferences")
     map("<leader>lr", function()
       if has_telescope then
         tele_builtin.lsp_references()
       else
         vim.lsp.buf.references()
       end
-    end, "[G]oTo [R]eferences")
+    end, "GoTo [r]eferences")
   end
 
   map("gs", function()
@@ -130,7 +113,7 @@ local set_buf_keymaps = function(client, bufnr)
     else
       vim.lsp.buf.document_symbol()
     end
-  end, "LSP Symbols" )
+  end, "LSP [s]ymbols")
 
   map("<leader>ls", function()
     if has_telescope then
@@ -138,7 +121,7 @@ local set_buf_keymaps = function(client, bufnr)
     else
       vim.lsp.buf.document_symbol()
     end
-  end, "[S]ymbols")
+  end, "GoTo [s]ymbols")
 
   map("<leader>lt", function()
     if has_telescope then
@@ -146,7 +129,7 @@ local set_buf_keymaps = function(client, bufnr)
     else
       vim.lsp.buf.type_definition()
     end
-  end, "[T]ypeDef")
+  end, "[t]ypeDef")
 
   map("<leader>lws", function()
     if has_telescope then
@@ -154,58 +137,60 @@ local set_buf_keymaps = function(client, bufnr)
     else
       vim.lsp.buf.workspace_symbol()
     end
-  end, "[W]orkspace [S]ymbols")
+  end, "[w]orkspace [s]ymbols")
 
   map("<leader>ll", function() vim.lsp.codelens.run() end, "CodeLens Action")
-  map("<leader>la", function() vim.lsp.buf.code_action() end, "Code [A]ction")
+  map("<leader>la", function() vim.lsp.buf.code_action() end, "Code [a]ction")
   map("<leader>lI", function() vim.cmd.LspInfo {} end, "[I]nfo")
   map("<leader>lL", function() vim.cmd.LspLog {} end, "[L]og")
-  map("<leader>r", function() vim.lsp.buf.rename() end, "[R]ename")
-  map("<leader>lq", function() vim.diagnostic.setloclist() end, "[Q]FDiagnostics")
+  map("<leader>r", function() vim.lsp.buf.rename() end, "[r]ename")
+  map("<leader>lq", function() vim.diagnostic.setloclist() end, "[q]FDiagnostics")
   -- Diagnostics
-  map("]d", function() vim.diagnostic.goto_next { buffer = true } end, "Next [D]iagnostic")
-  map("[d", function() vim.diagnostic.goto_prev { buffer = true } end, "Prev [D]iagnostic")
-  map("<leader>dj", function() vim.diagnostic.goto_next { buffer = true } end, "Next Diagnostic")
-  map("<leader>dk", function() vim.diagnostic.goto_prev { buffer = true } end, "Prev Diagnostic")
+  map("]d", function() vim.diagnostic.goto_next() end, "Next [d]iagnostic")
+  map("[d", function() vim.diagnostic.goto_prev() end, "Prev [d]iagnostic")
+  map("<leader>dj", function() vim.diagnostic.goto_next() end,
+    "Next Diagnostic")
+  map("<leader>dk", function() vim.diagnostic.goto_prev() end,
+    "Prev Diagnostic")
 end
 
 --- Set buffer capabilities based if supported by the
 --- passed client and buffer id
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
-local set_buf_funcs_for_capabilities = function(client, bufnr)
+local function set_buf_funcs_for_capabilities(client, bufnr)
   local map = vim.keymap.set
+  local autocmd = vim.api.nvim_create_autocmd
+  local usercmd = vim.api.nvim_create_user_command
 
-  if client.supports_method "textDocument/inlayHint" then
-    vim.lsp.inlay_hint.enable(bufnr, true)
-  end
   -- TODO: remove check for nvim_v0.10 after update
   if vim.lsp.inlay_hint then
     vim.api.nvim_create_user_command("InlayHints", function()
-      if vim.lsp.inlay_hint.is_enabled(bufnr) then
-        vim.lsp.inlay_hint.enable(bufnr, false)
+      if client.supports_method "textDocument/inlayHint" then
+        --   vim.lsp.inlay_hint.enable(bufnr, true)
+        if vim.lsp.inlay_hint.is_enabled(bufnr) then
+          vim.lsp.inlay_hint.enable(bufnr, false)
+        else
+          vim.lsp.inlay_hint.enable(bufnr, true)
+        end
       else
-        vim.lsp.inlay_hint.enable(bufnr, true)
+        vim.notify(
+          "inlayHints not supported by server\n" .. client.name,
+          vim.log.levels.WARN, { title = "LSP" }
+        )
       end
     end, { desc = "Toggle Inlay hints" })
   end
 
   -- lsp-document_highlight
-  if client.server_capabilities.documentHighlightProvider and
-    client.supports_method "textDocument/documentHighlight" then
-    local lsp_document_highlight =
-    vim.api.nvim_create_augroup("_lsp_document_highlight", { clear = false })
-    vim.api.nvim_clear_autocmds {
-      buffer = bufnr,
-      group = lsp_document_highlight,
-    }
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = lsp_document_highlight,
+  if client.server_capabilities.documentHighlightProvider then
+    autocmd({ "CursorHold", "CursorHoldI" }, {
+      -- group = lsp_document_highlight,
       buffer = bufnr,
       callback = vim.lsp.buf.document_highlight,
     })
-    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-      group = lsp_document_highlight,
+    autocmd({ "CursorMoved", "CursorMovedI" }, {
+      -- group = lsp_document_highlight,
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references,
     })
@@ -218,11 +203,11 @@ local set_buf_funcs_for_capabilities = function(client, bufnr)
   -- Formatting
   if client.server_capabilities.documentFormattingProvider then
     local lib_format = require "lib.format"
-    vim.api.nvim_create_user_command("LspAutoFormat", function()
+    usercmd("LspAutoFormat", function()
       lib_format.toggle_format_on_save()
     end, {})
 
-    vim.api.nvim_create_user_command("Format", function()
+    usercmd("Format", function()
       lib_format.lsp_format(bufnr)
     end, { force = true })
 
@@ -240,85 +225,165 @@ local set_buf_funcs_for_capabilities = function(client, bufnr)
     end, { desc = "Range format", buffer = true })
   end
 
-  vim.api.nvim_create_user_command("LspCapabilities", function()
+  usercmd("LspCapabilities", function()
     require("lib.utils").get_current_buf_lsp_capabilities()
   end, {})
 end
 
 -- Custom configs to apply when starting lsp
 --- @param client any client passed to attach config
-local custom_init = function(client)
+local function custom_init(client)
   client.config.flags = client.config.flags or {}
   client.config.flags.allow_incremental_sync = true
+  client.config.flags.debounce_text_changes = 150
 end
 
 --- Custom configs to apply when attaching lsp to buffer
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
-local custom_attach = function(client, bufnr)
-  require("plugins.lsp.codelens").setup_codelens_refresh(client, bufnr)
-  require("plugins.lsp.handlers").setup()
+local function custom_attach(client, bufnr)
+  require("plugins.lsp.handlers").setup(client, bufnr)
 
   set_buf_keymaps(client, bufnr)
   set_buf_funcs_for_capabilities(client, bufnr)
-  -- set_auto_stop_lsp(client, bufnr)
 end
+
+--- Set default lsp config table to be passed to every server
+local function get_default_lsp_config()
+  local capabilities = init_capabilities()
+  local default_config = {
+    on_init = custom_init,
+    on_attach = custom_attach,
+    capabilities = capabilities
+  }
+  return default_config
+end
+
 
 local M = {
   {
     "neovim/nvim-lspconfig",
-    event = "BufRead",
+    event = { "BufRead", "BufNewFile" },
     cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
+    -- Lua dev
+    dependencies = {
+      { "folke/neodev.nvim", config = true },
+      "mason.nvim",
+      "mason-lspconfig.nvim",
+    },
     keys = {
       { "<leader>l", nil, desc = "LSP" },
     },
     config = function()
       local lspconfig = require "lspconfig"
       local lsputil = require "lspconfig.util"
+      local default_lsp_config = get_default_lsp_config()
 
       require('lspconfig.ui.windows').default_options.border = 'rounded'
 
-      -- Update capabilities with extended from cmp_nvim_lsp
-      local ext_capabilities = nil
-      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-      if not has_cmp then
-        ext_capabilities = vim.lsp.protocol.make_client_capabilities()
-      else
-        ext_capabilities = cmp_nvim_lsp.default_capabilities()
-      end
+      -- sourcekit is still not available on mason-lspconfig
+      lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+        cmd = {
+          vim.fn.glob(
+            "/Applications/Xcode*.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+            true, true)[1]
+        },
+        filetypes = { "swift" },
+        root_dir = function(filename, _)
+          local git_root = lsputil.find_git_ancestor(filename)
+          return git_root
+        end
+      }))
+    end,
+  },
 
-      ext_capabilities.textDocument.completion.completionItem.snippetSupport = true
-      -- ext_capabilities.textDocument.completion.completionItem.resolveSupport = {
-      --   properties = {
-      --     "documentation",
-      --     "detail",
-      --     "additionalTextEdits"
-      --   }
-      -- }
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    opts = function(_, o)
+      local icons = require "lib.icons"
 
-      local default_lsp_config = {
-        on_init = custom_init,
-        on_attach = custom_attach,
-        capabilities = ext_capabilities,
-        flags = { debounce_text_changes = 150 },
+      o.install_root_dir = vim.fn.stdpath "data" .. "/mason"
+
+      o.ui = {
+        border = "rounded",
+        width = 0.7,
+        height = 0.7,
+        icons = {
+          package_installed = icons.package_manager.done_sym,
+          package_pending = icons.package_manager.working_sym,
+          package_uninstalled = icons.package_manager.removed_sym,
+        },
+        keymaps = {
+          -- Keymap to uninstall a server
+          uninstall_package = "D",
+        },
       }
+      o.registries = {
+        "github:mason-org/mason-registry",
+      }
+    end,
+  },
+
+  {
+    "williamboman/mason-lspconfig.nvim",
+    opts = function(_, o)
+      local icons = require "lib.icons"
+
+      o.ensure_installed = {
+        "lua_ls",
+        "vimls",
+        "marksman",
+        "tsserver",
+        "sqls",
+        "pyright",
+        "jsonls",
+        "gopls",
+        "yamlls",
+        "html",
+        "bashls",
+        "clangd",
+        "intelephense",
+        "dockerls",
+      }
+      o.automatic_installation = true
+      o.ui = {
+        border = "rounded",
+        icons = {
+          -- The list icon to use for installed servers.
+          server_installed = icons.package_manager.done_sym,
+          -- The list icon to use for servers that are pending installation.
+          server_pending = icons.package_manager.working_sym,
+          -- The list icon to use for servers that are not installed.
+          server_uninstalled = icons.package_manager.removed_sym,
+        },
+      }
+      o.pip = { install_args = {} }
+      o.log_level = vim.log.levels.INFO
+    end,
+    config = function(_, o)
+      local lspconfig = require "lspconfig"
+      local lsputil = require "lspconfig.util"
+      local default_lsp_config = get_default_lsp_config()
+      require("mason-lspconfig").setup(o)
 
       require("mason-lspconfig").setup_handlers {
         -- The first entry (without a key) will be the default handler
         -- and will be called for each installed server that doesn't have
         --- @param server_name string name of the server of which handler is being set
         function(server_name)
-          if server_name ~= "jdtls" then
-            lspconfig[server_name].setup(default_lsp_config) -- default handler (optional)
-          else
-            return
-          end
+          lspconfig[server_name].setup(default_lsp_config) -- default handler (optional)
         end,
 
-        -- Next, you can provide targeted overrides for specific servers.
-        -- Manage server with custom setup
+        -- Java LSP (jdtls) is managed via nvim-jdtls plugin and configured into
+        -- 'ftplugin/java.lua'
+        ["jdtls"] = function() end,
+
+        -- Custom setup and overrides for servers
         ["lua_ls"] = function()
-          require "neodev".setup()
+          require "neodev".setup({
+            library = { plugins = { "nvim-dap-ui" }, types = true }
+          })
 
           local runtime_path = vim.split(package.path, ";")
           table.insert(runtime_path, "lua/?.lua")
@@ -333,7 +398,16 @@ local M = {
                 diagnostics = {
                   enable = true,
                   globals = { "vim", "format", "pandoc", "quarto" },
-                  disable = {},
+                  disable = { "undefined-field" },
+                },
+                format = {
+                  enable = true,
+                  defaultConfig = {
+                    indent_style = "space",
+                    indent_size = "2",
+                    quote_style = "double",
+                    continuation_indent = 2
+                  }
                 },
                 -- completion = {
                 --    enable = true,
@@ -344,7 +418,7 @@ local M = {
                 -- },
                 workspace = {
                   library = {
-                    [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+                    vim.api.nvim_get_runtime_file("", true),
                     [vim.fn.stdpath "config" .. "/lua"] = true,
                   },
                   checkThirdParty = false,
@@ -391,11 +465,14 @@ local M = {
               yaml = {
                 schemaDownload = { enable = true },
                 validate = true,
+                schemaStore = {
+                  enable = true,
+                  url = ''
+                }
               }
             }
           }))
         end,
-
         ["sqls"] = function()
           lspconfig.sqls.setup(
             vim.tbl_deep_extend("force", default_lsp_config, {
@@ -403,17 +480,7 @@ local M = {
                 custom_attach(client, bufnr)
                 require "sqls".on_attach(client, bufnr)
               end,
-              -- on_new_config = function (new_config, new_root_dir)
-              --   local default_config_yml = vim.env['XDG_CONFIG_HOME'].."/sqls/config.yml"
-              --   local cwd_workspace_yml = vim.uv.cwd().."/config.yml"
-              --   local yml_to_load = default_config_yml
-
-              --   if lsputil.path.is_file(cwd_workspace_yml) then
-              --     yml_to_load = cwd_workspace_yml
-              --   end
-              --   return { "sqls", "-config", yml_to_load }
-              -- end
-          })
+            })
           )
         end,
         ["marksman"] = function()
@@ -432,15 +499,15 @@ local M = {
                   analysis = {
                     autoSearchPaths = true,
                     useLibraryCodeForTypes = false,
-                    diagnosticMode = "openFilesOnly",
-                  },
-                },
+                    diagnosticMode = 'workspace'
+                  }
+                }
               },
               root_dir = function(fname)
                 return lsputil.root_pattern(".git", "setup.py", "setup.cfg",
                   "pyproject.toml", "requirements.txt")(
-                    fname
-                  ) or lsputil.path.dirname(fname)
+                  fname
+                ) or lsputil.path.dirname(fname)
               end,
             })
           )
@@ -470,12 +537,12 @@ local M = {
             root_dir = function(fname)
               local Path = require "plenary.path"
 
-              local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
+              local absolute_cwd = Path:new(vim.uv.cwd()):absolute()
               local absolute_fname = Path:new(fname):absolute()
 
               if
-                string.find(absolute_cwd, "/cmd/", 1, true)
-                and string.find(absolute_fname, absolute_cwd, 1, true)
+                  string.find(absolute_cwd, "/cmd/", 1, true)
+                  and string.find(absolute_fname, absolute_cwd, 1, true)
               then
                 return absolute_cwd
               end
@@ -515,12 +582,13 @@ local M = {
         end,
         ["tsserver"] = function()
           lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            filetypes = { 'js', 'javascript', 'typescript', 'ojs' },
             root_dir = lsputil.root_pattern(
               "tsconfig.json",
               "package.json",
               "jsconfig.json",
               ".git"
-            ) or vim.loop.cwd(),
+            ) or vim.uv.cwd(),
             init_options = {
               preferences = {
                 includeCompletionsWithSnippetText = true,
@@ -563,92 +631,7 @@ local M = {
         --   }))
         -- end,
       }
-
-
-      -- sourcekit is still not available on mason-lspconfig
-      lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-        cmd = {
-          vim.fn.glob(
-            "/Applications/Xcode*.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
-            true, true)[1]
-        },
-        filetypes = { "swift" },
-        root_dir = function(filename, _)
-          local git_root = lsputil.find_git_ancestor(filename)
-          return git_root
-        end
-      }))
-    end,
-  },
-
-  {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    --- @param o table options passed to config
-    opts = function(_, o)
-      local icons = require "lib.icons"
-
-      o.install_root_dir = vim.fn.stdpath "data" .. "/mason"
-
-      o.ui = {
-        border = "rounded",
-        width = 0.7,
-        height = 0.7,
-        icons = {
-          package_installed = icons.package_manager.done_sym,
-          package_pending = icons.package_manager.working_sym,
-          package_uninstalled = icons.package_manager.removed_sym,
-        },
-        keymaps = {
-          -- Keymap to uninstall a server
-          uninstall_package = "D",
-        },
-      }
-      o.registries = {
-        "github:mason-org/mason-registry",
-      }
-    end,
-  },
-
-  {
-    "williamboman/mason-lspconfig.nvim",
-    --- @param o table options passed to config
-    opts = function(_, o)
-      local icons = require "lib.icons"
-
-      o.ensure_installed = {
-        "lua_ls",
-        "vimls",
-        "marksman",
-        "tsserver",
-        "sqls",
-        "pyright",
-        "jsonls",
-        "gopls",
-        "yamlls",
-        "html",
-        "bashls",
-        "clangd",
-        "intelephense",
-        "ocamllsp",
-        "dockerls",
-      }
-      o.automatic_installation = {}
-      o.ui = {
-        border = "rounded",
-        icons = {
-          -- The list icon to use for installed servers.
-          server_installed = icons.package_manager.done_sym,
-          -- The list icon to use for servers that are pending installation.
-          server_pending = icons.package_manager.working_sym,
-          -- The list icon to use for servers that are not installed.
-          server_uninstalled = icons.package_manager.removed_sym,
-        },
-      }
-      o.pip = { install_args = {} }
-      o.log_level = vim.log.levels.INFO
-      o.max_concurrent_installers = 2
-    end,
+    end
   },
 
   {
@@ -665,7 +648,7 @@ local M = {
         typescript = {
           "eslint_d"
         },
-        python = { "flake8" },
+        python = { "pyflakes" },
         gitcommit = { "commitlint" },
         php = { "php" },
         yaml = { "yamllint" },
@@ -685,8 +668,7 @@ local M = {
   {
     "nvimtools/none-ls.nvim",
     event = "LspAttach",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    --- @param o table options passed to config
+    dependencies = { "plenary.nvim" },
     opts = function(_, o)
       local null_ls = require "null-ls"
 
@@ -701,42 +683,42 @@ local M = {
           extra_filetypes = { "toml", "solidity" },
           extra_args = function(params)
             return params.options
-              and {
-                "--no-semi",
-                "--single-quote",
-              }
-              and params.options.tabSize
-              and { "--tab-width", params.options.tabSize }
+                and {
+                  "--no-semi",
+                  "--single-quote",
+                }
+                and params.options.tabSize
+                and { "--tab-width", params.options.tabSize }
           end,
         },
         null_ls.builtins.formatting.black.with {
           extra_args = function(params)
             return params.options
-              and { "--fast" }
-              and params.options.tabSize
-              and { "--tab-width", params.options.tabSize }
+                and { "--fast" }
+                and params.options.tabSize
+                and { "--tab-width", params.options.tabSize }
           end,
         },
-        null_ls.builtins.formatting.stylua.with {
-          extra_args = function(params)
-            return params.options
-              and params.options.tabSize
-              and { "--indent-width", params.options.tabSize }
-          end,
-        },
+        -- null_ls.builtins.formatting.stylua.with {
+        --   extra_args = function(params)
+        --     return params.options
+        --       and params.options.tabSize
+        --       and { "--indent-width", params.options.tabSize }
+        --   end,
+        -- },
         null_ls.builtins.formatting.google_java_format.with {
           extra_args = function(params)
             return params.options
-              and params.options.tabSize
-              and { "--tab-width", params.options.tabSize }
+                and params.options.tabSize
+                and { "--tab-width", params.options.tabSize }
           end,
         },
 
         null_ls.builtins.formatting.yamlfmt.with {
           extra_args = function(params)
             return params.options
-              and params.options.tabSize
-              and { "--tab-width", params.options.tabSize }
+                and params.options.tabSize
+                and { "--tab-width", params.options.tabSize }
           end,
         },
 
@@ -764,16 +746,17 @@ local M = {
   -- Go
   {
     "ray-x/go.nvim",
-    dependencies = {  -- optional packages
+    event = { "CmdlineEnter" },
+    ft = { "go", 'gomod' },
+    dependencies = { -- optional packages
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       require("go").setup()
     end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
-    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    build =
+    ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
 
   -- Java
@@ -786,13 +769,19 @@ local M = {
   -- SQL
   {
     "nanotee/sqls.nvim",
+    enabled = false,
     ft = { "sql", "mysql" },
     config = function()
-      vim.keymap.set("n", "<localleader>s", "<cmd>SqlsShowDatabases<cr>", { desc = "SqlsShowDatabases", buffer = 0 })
-      vim.keymap.set("n", "<localleader>S", "<cmd>SqlsShowSchemas<cr>", { desc = "SqlsShowSchemas", buffer = 0 })
-      vim.keymap.set("n", "<localleader>t", "<cmd>SqlsShowTables<cr>", { desc = "SqlsShowTables", buffer = 0 })
-      vim.keymap.set("n", "<localleader>c", "<cmd>SqlsShowConnections<cr>", { desc = "SqlsShowConnections", buffer = 0 })
-      vim.keymap.set("n", "<localleader>C", "<cmd>SqlsSwitchConnection<cr>", { desc = "SqlsSwitchConnection", buffer = 0 })
+      vim.keymap.set("n", "<localleader>s", "<cmd>SqlsShowDatabases<cr>",
+        { desc = "SqlsShowDatabases", buffer = 0 })
+      vim.keymap.set("n", "<localleader>S", "<cmd>SqlsShowSchemas<cr>",
+        { desc = "SqlsShowSchemas", buffer = 0 })
+      vim.keymap.set("n", "<localleader>t", "<cmd>SqlsShowTables<cr>",
+        { desc = "SqlsShowTables", buffer = 0 })
+      vim.keymap.set("n", "<localleader>c", "<cmd>SqlsShowConnections<cr>",
+        { desc = "SqlsShowConnections", buffer = 0 })
+      vim.keymap.set("n", "<localleader>C", "<cmd>SqlsSwitchConnection<cr>",
+        { desc = "SqlsSwitchConnection", buffer = 0 })
     end
   },
 
@@ -800,8 +789,9 @@ local M = {
   {
     "scalameta/nvim-metals",
     ft = "scala",
+    enabled = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      "plenary.nvim",
       "mfussenegger/nvim-dap",
     },
   },

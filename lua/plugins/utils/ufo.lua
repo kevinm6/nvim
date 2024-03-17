@@ -2,7 +2,7 @@
 -- File         : ufo.lua
 -- Description  : ufo plugin configuration (folding)
 -- Author       : Kevin
--- Last Modified: 27 Feb 2024, 10:15
+-- Last Modified: 20 Mar 2024, 09:15
 -------------------------------------
 
 local ftMap = {
@@ -22,7 +22,6 @@ local M = {
   event = "BufRead",
   dependencies = {
     "kevinhwang91/promise-async",
-    "nvim-treesitter/nvim-treesitter",
   },
   init = function()
     vim.o.foldcolumn = 'auto'
@@ -45,8 +44,8 @@ local M = {
         scrollD = "<C-f>",
       },
     }
-    o.close_fold_kinds = { 'imports', 'comment' }
-    o.provider_selector = function(bufnr, filetype, _)
+    o.close_fold_kinds_for_ft = { 'imports', 'comment' }
+    o.provider_selector = function(_, filetype, _)
       return ftMap[filetype] or { 'treesitter', 'indent' }
     end
   end,

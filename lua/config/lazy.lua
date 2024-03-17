@@ -2,7 +2,7 @@
 -- File         : lazy.lua
 -- Description  : Plugin Manager (Lazy) config
 -- Author       : Kevin
--- Last Modified: 03 Dec 2023, 10:46
+-- Last Modified: 17 Mar 2024, 19:21
 --------------------------------------
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
@@ -46,9 +46,6 @@ lazy.setup({
     dev = {
       path = vim.fn.expand "~/dev",
       fallback = false,
-    },
-    git = {
-      url_format = "git@github.com:%s.git"
     },
     install = {
       -- install missing plugins on startup. This doesn't increase startup time.

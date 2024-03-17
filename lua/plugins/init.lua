@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 03 Dec 2023, 10:48
+--  Last Modified: 20 Mar 2024, 09:45
 -------------------------------------
 
 local M = {
@@ -10,12 +10,12 @@ local M = {
   "nvim-tree/nvim-web-devicons",
 
   {
-    "kevinm6/knvim.nvim",
+    "kevinm6/kurayami.nvim",
     lazy = false,
     dev = true,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme('knvim')
+      vim.cmd.colorscheme('kurayami')
     end
   },
 
@@ -79,10 +79,18 @@ local M = {
       -- "BufReadPre "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni/*.md",
       -- "BufNewFile "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni/*.md",
     },
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "plenary.nvim" },
     opts = function(_, o)
       o.notes_subdir = "notes"
       o.notes_subdir = "notes_subdir"
+      o.preferred_link_style = "markdown"
+      o.disable_frontmatter = true
+
+      o.daily_notes = {
+        folder = "daily",
+        date_format = "%d-%M-%Y",
+        alias_format = "%-d %B, %Y"
+      }
 
       o.workspaces = {
         {
@@ -93,6 +101,21 @@ local M = {
           name = "uni",
           path =  vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni",
         },
+      }
+
+      o.mappings = {
+        ["gf"] = {
+          action = function()
+            return require("obsidian").util.gf_passthrough()
+          end,
+          opts = { noremap = false, expr = true, buffer = true }
+        },
+        ["<localleader>ch"] = {
+          action = function()
+            return require("obsidian").util.toggle_checkbox()
+          end,
+          opts = { buffer = true }
+        }
       }
     end
   },
@@ -165,34 +188,51 @@ local M = {
   },
   {
     "quarto-dev/quarto-nvim",
-    ft = { "qmd" },
+    ft = { "quarto" },
     dependencies = {
-      {
-        "jmbuhr/otter.nvim",
-        dependencies = {
-          { "neovim/nvim-lspconfig" },
-        },
-        opts = {
-          buffers = {
-            -- if set to true, the filetype of the otterbuffers will be set.
-            -- otherwise only the autocommand of lspconfig that attaches
-            -- the language server will be executed without setting the filetype
-            set_filetype = true,
-          },
-        },
-      },
+      { "jmbuhr/otter.nvim", dependencies = { "neovim/nvim-lspconfig" } }
     },
-    opts = function(_, o)
-      o.lspFeatures = {
-        languages = { "python", "bash", "lua", "html" },
-      }
+    config = function(_, o)
+      local quarto = require "quarto"
       o.codeRunner = {
         enabled = false,
         default_method = 'molten',
-        ft_runners = { python = "molten", markdown = 'molten' }, -- filetype to runner, ie. `{ python = "molten" }`.
-        -- Takes precedence over `default_method`
-        never_run = { "yaml" }, -- filetypes which are never sent to a code runner
+        ft_runners = { python = "molten", markdown = 'molten' },
+        never_run = { "yaml" }
       }
+      quarto.setup(o)
+
+      vim.keymap.set("n", "<localleader>qa", function()
+        quarto.activate()
+      end, { silent = true, desc = "[q]uarto [a]activate" })
+      vim.keymap.set("n", "<localleader>qp", function()
+        quarto.quartoPreview()
+      end, { silent = true, desc = "[q]uarto [p]review" })
+      vim.keymap.set("n", "<localleader>qP", function()
+        quarto.quartoClosePreview()
+      end, { silent = true, desc = "[q]uarto close [P]review" })
+      vim.keymap.set("n", "<localleader>qh", function()
+        quarto.searchHelp()
+      end, { silent = true, desc = "[q]uarto search [h]elp" })
+
+      vim.keymap.set("n", "<localleader>K", function()
+        require "otter".ask_hover()
+      end, { silent = true, desc = "Hover" })
+      vim.keymap.set("n", "<localleader>gd", function()
+        require "otter".ask_definition()
+      end, { silent = true, desc = "[g]oto [d]efinition " })
+      vim.keymap.set("n", "<localleader>r", function()
+        require "otter".ask_rename()
+      end, { silent = true, desc = "[g]oto [r]eferences" })
+      vim.keymap.set("n", "<localleader>gt", function()
+        require "otter".ask_type_definition()
+      end, { silent = true, desc = "[g]oto [t]ype definition" })
+      vim.keymap.set("n", "<localleader>R", function()
+        require "otter".ask_rename()
+      end, { silent = true, desc = "[R]ename" })
+      vim.keymap.set("n", "<localleader>ds", function()
+        require "otter".ask_document_symbols()
+      end, { silent = true, desc = "[d]ocument [s]ymbols" })
     end
   },
 
@@ -259,11 +299,6 @@ local M = {
     end
   },
 
-  -- Lua dev
-  {
-    "folke/neodev.nvim",
-    config = true
-  },
 
 
   -- data viewer (csv, tsv ...)
@@ -271,7 +306,7 @@ local M = {
     'vidocqh/data-viewer.nvim',
     ft = { "sqlite", "tsv", "csv" },
     cmd = { "DataViewerFocusTable", "DataViewer" },
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "plenary.nvim" },
     config = function(_, o)
       require "data-viewer".setup(o)
 
@@ -282,8 +317,10 @@ local M = {
     end
   },
 
-  "apple/pkl-neovim"
-
+  {
+    "apple/pkl-neovim",
+    ft = "pkl"
+  }
 }
 
 return M

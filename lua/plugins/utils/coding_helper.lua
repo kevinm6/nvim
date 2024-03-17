@@ -2,7 +2,7 @@
 -- File         : coding_helper.lua
 -- Description  : plugins that helps coding
 -- Author       : Kevin
--- Last Modified: 15 Jul 2023, 09:06
+-- Last Modified: 18 Mar 2024, 18:41
 -------------------------------------
 
 local M = {
@@ -36,8 +36,8 @@ local M = {
 
       npairs.add_rules {
         ---@diagnostic disable-next-line: redefined-local
-        Rule("<", ">"):with_pair(cond.before_regex "%a+"):with_move(function(opts)
-          return opts.char == ">"
+        Rule("<", ">"):with_pair(cond.before_regex "%a+"):with_move(function(o)
+          return o.char == ">"
         end),
       }
     end
@@ -96,7 +96,7 @@ local M = {
     "folke/todo-comments.nvim",
     cmd = { "TodoTelescope", "TodoLocList", "TodoQuickFix" },
     event = "BufRead",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "plenary.nvim" },
     opts = function(_, o)
       local icons = require "lib.icons"
 

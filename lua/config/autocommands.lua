@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 09 Mar 2024, 11:18
+-- Last Modified: 20 Mar 2024, 17:10
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -189,11 +189,11 @@ autocmd({ "FileType", "BufNewFile" }, {
 vim.filetype.add {
   extension = {
     conf = "config",
-    -- png = "image_nvim",
-    -- jpg = "image_nvim",
-    -- jpeg = "image_nvim",
-    -- gif = "image_nvim",
-    -- webp = "image_nvim",
+    png = "image_nvim",
+    jpg = "image_nvim",
+    jpeg = "image_nvim",
+    gif = "image_nvim",
+    webp = "image_nvim",
     -- md = "quarto",
     ipynb = "jupyter_notebook",
     dat = "xxd"
@@ -463,4 +463,12 @@ end,{
   nargs = 1,
   desc = "Session Manager",
   complete = "custom,v:lua.require'lib.utils'.usercmd_session_completion"
+})
+
+user_command("Reload", function(arg)
+  require "lib.utils".reload_module(arg.args)
+end,{
+  nargs = "?",
+  desc = "Reload file",
+  complete = "buffer"
 })

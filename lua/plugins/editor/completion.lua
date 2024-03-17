@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 03 Dec 2023, 10:47
+-- Last Modified: 17 Mar 2024, 13:53
 -------------------------------------
 
 
@@ -56,24 +56,23 @@ local M = {
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-calc",
     { "kdheepak/cmp-latex-symbols", ft = "markdown" },
-    {
-      "kristijanhusak/vim-dadbod-completion",
-      ft = { "sql", "mysql", "plsql" },
-      enabled = false,
-    }
+    -- {
+    --   "kristijanhusak/vim-dadbod-completion",
+    --   ft = { "sql", "mysql", "plsql" },
+    -- }
     -- "hrsh7th/cmp-nvim-lua",
     -- "ray-x/cmp-treesitter",
   },
   opts = function(_, o)
     local cmp = require "cmp"
-    local ls = require "luasnip"
+    local luasnip = require "luasnip"
     local icons = require "lib.icons"
     local icons_kind = icons.kind
     local context = require "cmp.config.context"
 
     o.snippet = {
       expand = function(args)
-        ls.lsp_expand(args.body)
+        luasnip.lsp_expand(args.body)
       end
     }
 
@@ -97,9 +96,16 @@ local M = {
         c = cmp.mapping.close(),
       },
 
+      ['<C-S-i>'] = cmp.mapping(function(fallback)
+        if luasnip.locally_jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
       ["<C-l>"] = cmp.mapping(function(fallback)
-        if ls.expand_or_locally_jumpable() then
-          ls.expand_or_jump()
+        if luasnip.expand_or_locally_jumpable() then
+          luasnip.expand_or_jump()
         elseif cmp.visible() and not cmp.get_active_entry() then
           return cmp.complete_common_string()
         elseif cmp.visible() and cmp.get_active_entry() then
@@ -136,8 +142,8 @@ local M = {
       end,
 
       ["<C-i>"] = cmp.mapping(function(fallback)
-        if ls.expand_or_jumpable() then
-          ls.expand_or_jump()
+        if luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
         else
           fallback()
         end

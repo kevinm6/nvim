@@ -2,7 +2,7 @@
 --  File         : databases.lua
 --  Description  : DB config and help
 --  Author       : Kevin
---  Last Modified: 12 Sep 2023, 12:09
+--  Last Modified: 17 Mar 2024, 14:32
 -------------------------------------
 
 local M = {
@@ -20,15 +20,14 @@ local M = {
       require("dbee").install()
     end,
     config = function(_, o)
-      o.default_connection = "default"
+      o.default_connection = "default" -- id of default connection to set manually on json file
 
       o.extra_helpers = {
         ["postgres"] = {
           ["List All"] = "select * from {{ .Table }}",
         },
       }
-      o.sources = {
-        -- stored connection config location
+      o.sources = { -- stored connection config location
         require("dbee.sources").FileSource:new(vim.fn.stdpath "state".."/dbee/connection.json")
       }
       o. editor = {
@@ -44,7 +43,7 @@ local M = {
       require "dbee".setup(o)
     end
   },
-  {
+  { -- disabled since I'm using < nvim-dbee >
     "tpope/vim-dadbod",
     enabled = false,
     cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
@@ -54,8 +53,7 @@ local M = {
         "kristijanhusak/vim-dadbod-ui",
         init = function()
           vim.g.dbs = {
-            -- imdb = "postgres://:@localhost/imdb",
-            -- lezione = "postgres://:@localhost/lezione",
+            -- name = "url://username:password@server/db"
           }
 
           local icons = require "lib.icons"
@@ -88,9 +86,9 @@ local M = {
             connection_error = icons.diagnostics.status_not_ok,
           }
         end
-      },
+      }
     }
-  },
+  }
 }
 
 return M

@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 03 Dec 2023, 10:48
+-- Last Modified: 18 Mar 2024, 10:18
 -------------------------------------
 
 local function parsers_to_be_installed()
@@ -68,10 +68,10 @@ local M = {
         additional_vim_regex_highlighting = { "markdown" },
         disable = function(_, buf)
           local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
 
           return ok and (stats and stats.size > max_filesize) or
-          #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
+              #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
         end
       }
       o.autopairs = {

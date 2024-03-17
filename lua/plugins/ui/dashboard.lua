@@ -2,7 +2,7 @@
 --	File: dashboard.lua
 --	Description: greeter config for Neovim (using Alpha actually)
 --	Author: Kevin
---	Last Modified: 03 Dec 2023, 10:48
+--	Last Modified: 20 Mar 2024, 11:58
 -----------------------------------
 
 ---Get date in nice style
