@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 18 Mar 2024, 18:41
+-- Last Modified: 22 Mar 2024, 18:43
 ---------------------------------------
 
 
@@ -180,8 +180,8 @@ local M = {
             ["H"] = "move_to_top",
             ["M"] = "move_to_middle",
             ["L"] = "move_to_bottom",
-            ["g"] = false,       -- disable map
-            ["h"] = false,       -- disable map
+            ["g"] = false, -- disable map
+            ["h"] = false, -- disable map
 
             ["<Down>"] = "move_selection_next",
             ["<Up>"] = "move_selection_previous",
@@ -194,7 +194,7 @@ local M = {
 
             ["<C-y>"] = action_layout.toggle_preview,
 
-            ["cd"] = function(prompt_bufnr)       -- cd to dir in normal mode
+            ["cd"] = function(prompt_bufnr) -- cd to dir in normal mode
               local selection = action_state.get_selected_entry()
               local dir = vim.fn.fnamemodify(selection.path, ":p:h")
               actions.close(prompt_bufnr)
@@ -217,8 +217,7 @@ local M = {
             prompt_position = "bottom",
             height = 0.4,
           },
-          cwd = require("lspconfig.util").find_git_ancestor(vim.fn.expand "%:p:h")
-              or vim.fn.expand "%:p:h",
+          cwd = vim.uv.cwd(),
           no_ignore = true,
           path_display = filenameFirst,
           mappings = {
@@ -503,198 +502,54 @@ local M = {
       })
 
       -- Keymaps
+      local function nmap(keys, fun, desc)
+        vim.keymap.set("n", keys, fun, { desc = desc })
+      end
 
-      vim.keymap.set("n",
-        "<leader>fF",
-        function()
-          tele_builtin.live_grep()
-        end,
-        { desc = "Find Text (LiveGrep)" }
-      )
-      vim.keymap.set("n",
-        "<leader>fH",
-        function()
-          local cword = vim.fn.expand "<cword>"
-          tele_builtin.help_tags({ default_text = cword })
-        end,
-        { desc = "Help" }
-      )
-      vim.keymap.set("n",
-        "<leader>fg",
-        function()
-          tele_builtin.git_files()
-        end,
-        { desc = "Git Files" }
-      )
-      -- vim.keymap.set("n",
-      --    "<leader>fp",
-      --    function()
-      --       telescope.extensions.project.project()
-      --    end,
-      --    { desc = "Projects" }
-      -- )
-      vim.keymap.set("n",
-        "<leader>fR",
-        function()
-          tele_builtin.registers()
-        end,
-        { desc = "Registers" }
-      )
-      vim.keymap.set("n",
-        "<leader>fq",
-        function()
-          tele_builtin.quickfix()
-        end,
-        { desc = "QuickFix" }
-      )
-      vim.keymap.set("n",
-        "<leader>fQ",
-        function()
-          tele_builtin.loclist()
-        end,
-        { desc = "LocationList" }
-      )
-      vim.keymap.set("n",
-        "<leader>fl",
-        function()
-          tele_builtin.resume()
-        end,
-        { desc = "Resume last" }
-      )
-      vim.keymap.set("n",
-        "<leader>fc",
-        function()
-          tele_builtin.current_buffer_fuzzy_find()
-        end,
-        { desc = "Line fuzzy" }
-      )
-      vim.keymap.set("n",
-        "<leader>fC",
-        function()
-          tele_builtin.commands()
-        end,
-        { desc = "Colorscheme" }
-      )
-      vim.keymap.set("n",
-        "<leader>fe",
-        function()
-          telescope.extensions.env.env()
-        end,
-        { desc = "Environment" }
-      )
-      vim.keymap.set("n",
-        "<leader>fO",
-        function()
-          require("lib.software_licenses").pick_license()
-        end,
-        { desc = "Software Licenses" }
-      )
-      -- vim.keymap.set("n",
-      --    "<leader>fE",
-      --    function()
-      --       telescope.extensions.emoji.emoji {
-      --          theme = "cursor",
-      --          initial_mode = "insert",
-      --          layout_strategy = "cursor",
-      --          layout_config = {
-      --             height = 0.4,
-      --             width = 0.5,
-      --          },
-      --       }
-      --    end,
-      --    { desc = "Emoji" }
-      -- )
+      nmap("<leader>fF", function() tele_builtin.live_grep() end, "Find Text (LiveGrep)")
 
-      -- vim.keymap.set("n",
-      --    "<leader>fb",
-      --    function()
-      --       telescope.extensions.file_browser.file_browser {
-      --          cwd = vim.fn.getcwd(),
-      --       }
-      --    end,
-      --    { desc = "File Browser (CWD)" }
-      -- )
-      vim.keymap.set("n",
-        "<leader>fs",
-        function()
-          tele_builtin.grep_string {
-            theme = "dropdown",
-            previewer = false,
-          }
-        end,
-        { desc = "Grep < cword >" }
-      )
+      nmap("<leader>fH", function()
+        local cword = vim.fn.expand "<cword>"
+        tele_builtin.help_tags({ default_text = cword })
+      end, "Help")
 
-      vim.keymap.set("n",
-        "<leader>ff",
-        function()
-          require("telescope.builtin").find_files({ cwd = vim.uv.cwd() })
-        end,
-        { desc = "Find Files" }
-      )
-      vim.keymap.set("n",
-        "<leader>fo",
-        function()
-          require("telescope.builtin").builtin()
-        end,
-        { desc = "Open Telescope" }
-      )
-      vim.keymap.set("n",
-        "<leader>fr",
-        function()
-          require("telescope.builtin").oldfiles()
-        end,
-        { desc = "Recent File" }
-      )
+      nmap("<leader>fg", function()
+        tele_builtin.git_files()
+      end, "Git Files")
+      nmap("<leader>fR", function()
+        tele_builtin.registers()
+      end, "Registers")
+      nmap("<leader>fq", function() tele_builtin.quickfix() end, "QuickFix")
+      nmap("<leader>fQ", function() tele_builtin.loclist() end, "LocationList")
+      nmap("<leader>fl", function() tele_builtin.resume() end, "Resume last")
+      nmap("<leader>fc", function() tele_builtin.current_buffer_fuzzy_find() end,
+        "Line fuzzy")
+      nmap("<leader>fC", function() tele_builtin.commands() end, "Colorscheme")
+      nmap("<leader>fe", function() telescope.extensions.env.env() end, "Environment")
+      nmap("<leader>fO", function() require("lib.software_licenses").pick_license() end,
+        "Software Licenses")
+      nmap("<leader>fs", function()
+        tele_builtin.grep_string {
+          theme = "dropdown",
+          previewer = false,
+        }
+      end, "Grep < cword >")
 
-      -- vim.keymap.set("n",
-      --    "<leader>fU",
-      --    function()
-      --       telescope.extensions.file_browser.file_browser {
-      --          cwd = "~/Informatica/",
-      --       }
-      --    end,
-      --    { desc = "University Folder" }
-      -- )
+      nmap("<leader>ff", function()
+        require("telescope.builtin").find_files { cwd = vim.uv.cwd() }
+      end, "Find Files")
+      nmap("<leader>fo", function() require("telescope.builtin").builtin() end,
+        "Open Telescope")
+      nmap("<leader>fr", function()
+        require("telescope.builtin").oldfiles()
+      end, "Recent File")
 
-      vim.keymap.set("n",
-        "<leader>gs",
-        function()
-          tele_builtin.git_status()
-        end,
-        { desc = "Git status" }
-      )
-      vim.keymap.set("n",
-        "<leader>gb",
-        function()
-          tele_builtin.git_branches()
-        end,
-        { desc = "Checkout branch" }
-      )
-      vim.keymap.set("n",
-        "<leader>gc",
-        function()
-          tele_builtin.git_commits()
-        end,
-        { desc = "Checkout commit" }
-      )
-      vim.keymap.set("n",
-        "<leader>gh",
-        function()
-          git_hunks()
-        end,
-        { desc = "Git Hunks" }
-      )
-
-      vim.keymap.set("n",
-        "<leader>lD",
-        function()
-          tele_builtin.diagnostics { bufnr = 0 }
-        end,
-        { desc = "Lsp Diagnostics" }
-      )
+      nmap("<leader>gs", function() tele_builtin.git_status() end, "Git status")
+      nmap("<leader>gb", function() tele_builtin.git_branches() end, "Checkout branch")
+      nmap("<leader>gc", function() tele_builtin.git_commits() end, "Checkout commit")
+      nmap("<leader>gh", function() git_hunks() end, "Git Hunks")
     end
-  },
+  }
 }
 
 return M

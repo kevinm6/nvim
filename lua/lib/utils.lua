@@ -2,42 +2,22 @@
 --  File         : utils.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 20 Mar 2024, 17:35
+--  Last Modified: 25 Mar 2024, 15:41
 -------------------------------------
 
-local M = {}
-
----Hot-reloading source plugin/module
----@param mod any
----@return any, any
-M.reload_module = function(mod)
-  mod = mod:gsub('/', '.'):gsub('%.lua$', '')
-  package.loaded[mod] = nil
-  return require(mod)
-end
-
+local utils = {}
 
 ---toggle_option()
 ---@param option string option to toggle value
-M.toggle_option = function(option)
+function utils.toggle_option(option)
   local value = not vim.api.nvim_get_option_value(option, {})
   vim.opt[option] = value
   vim.notify(option .. " set to " .. tostring(value), vim.log.levels.INFO)
 end
 
----Enable|Disable Diagnostics
-M.toggle_diagnostics = function()
-  vim.g.diagnostics_status = not vim.g.diagnostics_status
-  if vim.g.diagnostics_status == true then
-    vim.diagnostic.show()
-  else
-    vim.diagnostic.hide()
-  end
-end
-
 
 ---Dev FOLDER
-M.dev_folder = function()
+function utils.dev_folder()
   local dev_folders = {
     vim.fn.expand "~/dev",
     vim.fn.expand "~/Documents/developer",
@@ -59,8 +39,55 @@ M.dev_folder = function()
 end
 
 
+---Find Files
+function utils.find_files()
+  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
+  if has_tele then
+    tele_builtin.find_files()
+  else
+    local files = vim.fn.glob(vim.uv.cwd() .. "**/**", true, true)
+
+    vim.ui.select(files, {
+      prompt = " > Open file",
+      default = nil,
+    }, function(choice)
+      if choice then
+        vim.cmd.edit(choice)
+      end
+    end)
+  end
+end
+
+---Recent Files
+function utils.recent_files()
+  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
+  if has_tele then
+    tele_builtin.oldfiles()
+  else
+    local oldfiles = {}
+    local current_buffer = vim.api.nvim_get_current_buf()
+    local current_file = vim.api.nvim_buf_get_name(current_buffer)
+    for idx, file in ipairs(vim.v.oldfiles) do
+      local file_stat = vim.loop.fs_stat(file)
+      if file_stat and file_stat.type == "file" and not vim.tbl_contains(oldfiles, file) and file ~= current_file then
+        table.insert(oldfiles, file)
+      end
+      if idx > 20 then break end -- get only 20 results
+    end
+
+    vim.ui.select(oldfiles, {
+      prompt = " > Open recent files",
+      default = nil,
+    }, function(choice)
+      if choice then
+        vim.cmd.edit(choice)
+      end
+    end)
+  end
+end
+
 ---Projects
-M.projects = function()
+function utils.projects()
   local projs_folders = {
     vim.fn.expand "~/Documents/developer",
     vim.fn.expand "~/dev",
@@ -91,9 +118,31 @@ M.projects = function()
 end
 
 
+---Delete current buffer and view next
+function utils.delete_curr_buf_open_next()
+  local cBuf = vim.api.nvim_get_current_buf()
+  local bufs = vim.fn.getbufinfo({ buflisted = 1 }) or {}
+  if #bufs ~= 0 then
+    for idx, buf in ipairs(bufs) do
+      if buf.bufnr == cBuf then
+        if idx == #bufs then
+          vim.cmd.bprevious {}
+        else
+          vim.cmd.bnext {}
+        end
+        break
+      end
+    end
+  else
+    return
+  end
+  vim.cmd.bdelete(cBuf)
+end
+
 ---Create new file w/ input for filename
 ---useful for dashboard and so on
-M.new_file = function(cmd_input)
+---@param cmd_input string file name\[.ext\] that it will be passed to vim.cmd.edit
+function utils.new_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
     vim.ui.input({
@@ -117,7 +166,8 @@ M.new_file = function(cmd_input)
 end
 
 ---Create temporary file
-M.new_tmp_file = function(cmd_input)
+---@param cmd_input string file extension without dot prefixed
+function utils.new_tmp_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
     vim.ui.input({
@@ -141,7 +191,7 @@ M.new_tmp_file = function(cmd_input)
 end
 
 
-M.workon = function()
+function utils.workon()
   local _, _ = pcall(require, "telescope")
   local config = require "lazy.core.config"
   vim.ui.select(vim.tbl_values(config.plugins), {
@@ -162,53 +212,26 @@ end
 ---Set highlights
 ---@param hls table
 ---@see nvim_set_hl |nvim_set_hl()|
-M.set_highlights = function(hls)
+function utils.set_highlights(hls)
   for group, settings in pairs(hls) do
     vim.api.nvim_set_hl(0, group, settings)
   end
 end
 
 
----Get current buf lsp Capabilities
----@see nvim_lsp_get_active_clients |nvim_lsp_get_active_clients()|
-M.get_current_buf_lsp_capabilities = function()
-  local curBuf = vim.api.nvim_get_current_buf()
-  -- TODO: remove check for nvim-0.10 when update to it
-  local clients = vim.fn.has("nvim-0.10") == 1 and vim.lsp.get_clients() or
-  vim.lsp.get_active_clients { bufnr = curBuf }
+---Set 'keywordprg' based on filetype
+---@param filetype string filetype that triggered the autocmd
+---@return string | nil
+function utils.set_keywordprg(filetype)
+  local custom_keywordprg = {
+    python = 'python3 -m pydoc',
+    vim = ':help',
+    html = "open https://developer.mozilla.org/search?topic=api&topic=html&q=",
+    css = "open https://developer.mozilla.org/search?topic=api&topic=css&q=",
+    javascript = "open https://developer.mozilla.org/search?topic=api&topic=js&q="
+  }
 
-  for _, client in pairs(clients) do
-    if client.name ~= "null-ls" then
-      local capAsList = {}
-      for key, value in pairs(client.server_capabilities) do
-        if value and key:find "Provider" then
-          local capability = key:gsub("Provider$", "")
-          table.insert(capAsList, "- " .. capability)
-        end
-      end
-      table.sort(capAsList)    -- sorts alphabetically
-      local msg = "# " .. client.name .. "\n" .. table.concat(capAsList, "\n")
-      vim.notify(msg, vim.log.levels.INFO, {
-        on_open = function(win)
-          local buf = vim.api.nvim_win_get_buf(win)
-          if vim.fn.has("nvim-0.10") == 1 then
-            vim.api.nvim_set_option_value("filetype", "markdown",
-              { buf = buf, scope = 'local' })
-          else
-            vim.api.nvim_set_option_value("filetype", "markdown", { bufnr = buf })
-          end
-        end,
-        timeout = 14000,
-      })
-      vim.fn.setreg("+", "Capabilities = " .. vim.inspect(client.server_capabilities))
-    end
-  end
+  return custom_keywordprg[filetype]
 end
 
-
-M.usercmd_session_completion = function()
-  local args = { 'restore', 'save', 'delete' }
-  return table.concat(args, "\n")
-end
-
-return M
+return utils

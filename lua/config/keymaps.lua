@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 05 Dec 2023, 17:37
+-- Last Modified: 31 Mar 2024, 19:41
 -------------------------------------
 
 local map = vim.keymap.set
@@ -37,15 +37,15 @@ map({ "n", "v" }, "<leader>R", function() end, { desc = "Run" })
 map("n", "<leader>w", function()
    vim.cmd.update { bang = true }
 end, { desc = "Save buffer" })
-map("n", "<leader>H", function()
-   vim.cmd.nohlsearch()
-end, { desc = "No Highlight" })
+-- map("n", "<leader>H", function()
+--    vim.cmd.nohlsearch()
+-- end, { desc = "No Highlight" })
 map("n", "<leader>c", function()
-   vim.cmd.DeleteCurrentBuffer()
+   require("lib.utils").delete_curr_buf_open_next()
 end, { desc = "Close buffer" })
 map("n", "<leader>x", function()
    vim.cmd.update()
-   vim.cmd.DeleteCurrentBuffer()
+   require("lib.utils").delete_curr_buf_open_next()
 end, { desc = "Save and Close buffer" })
 map("n", "<leader>q", function()
    vim.cmd.bdelete()

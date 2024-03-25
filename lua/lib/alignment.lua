@@ -2,10 +2,10 @@
 --  File         : alignment.lua
 --  Description  : alignment functions
 --  Author       : Kevin
---  Last Modified: 26 Jul 2023, 09:56
+--  Last Modified: 24 Mar 2024, 13:58
 -------------------------------------
 
-local A = {}
+local alignment = {}
 
 --- align lines from pattern
 --- @private
@@ -52,11 +52,11 @@ end
 
 --- Alignment text from RegEx
 --- @param pattern string RegEx or matching text
-A.align = function(pattern)
+function alignment.align(pattern)
    local top, bot = vim.fn.getpos "'<", vim.fn.getpos "'>"
    align_lines(pattern, top[2] - 1, bot[2])
    vim.fn.setpos("'<", top)
    vim.fn.setpos("'>", bot)
 end
 
-return A
+return alignment

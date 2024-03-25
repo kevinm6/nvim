@@ -2,7 +2,7 @@
 -- File         : handlers.lua
 -- Description  : Lsp handlers file for manage various lsp behaviours config
 -- Author       : Kevin
--- Last Modified: 17 Mar 2024, 16:09
+-- Last Modified: 24 Mar 2024, 13:23
 --------------------------------------
 
 local M = {}
@@ -50,7 +50,6 @@ local function code_action_listener()
     end
   end)
 end
-
 
 
 M.setup = function(client, bufnr)
@@ -125,6 +124,5 @@ M.setup = function(client, bufnr)
     end,
   })
 end
-
 
 return M

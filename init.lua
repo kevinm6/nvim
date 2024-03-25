@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : NeoVim configuration
 -- Author       : Kevin
--- Last Modified: 26 Feb 2024, 09:52
+-- Last Modified: 31 Mar 2024, 18:39
 --------------------------------------
 
 -- Set leader key
@@ -17,9 +17,9 @@ end
 
 -- Use other Shadafile for VSCode
 if vim.g.vscode then
-  vim.opt.shadafile = vim.fn.stdpath("cache") .. "/shada/vscnvim.shada"
+  vim.opt.shadafile = vim.fn.stdpath("cache").."/shada/vscnvim.shada"
 else
-  vim.opt.shadafile = vim.fn.stdpath("cache") .. "/shada/main.shada"
+  vim.opt.shadafile = vim.fn.stdpath("cache").."/shada/main.shada"
 end
 
 require "config.lazy"

@@ -2,15 +2,15 @@
 --  File         : notes.lua
 --  Description  : module to manage notes
 --  Author       : Kevin
---  Last Modified: 08 Mar 2024, 09:11
+--  Last Modified: 24 Mar 2024, 13:32
 -------------------------------------
 
-local M = {}
+local note = {}
 
 ---Get available notes
 ---@private
 ---@return table
-local get_notes = function()
+local function get_notes()
    local notes = {}
 
    local notes_data_path = vim.fn.expand "~/Documents/notes"
@@ -25,8 +25,8 @@ local get_notes = function()
       "\n",
       { trimempty = true }
    )
-   for _, note in ipairs(obsidian_notes) do
-      table.insert(notes_files, note)
+   for _, n in ipairs(obsidian_notes) do
+      table.insert(notes_files, n)
    end
 
    for _, f in pairs(notes_files) do
@@ -36,7 +36,7 @@ local get_notes = function()
 end
 
 ---Delete selected notes
-M.delete_note = function()
+function note.delete_note()
    local notes = get_notes()
 
    if #notes >= 1 then
@@ -64,22 +64,21 @@ M.delete_note = function()
 end
 
 ---Restore selected notes
-M.open_note = function()
+function note.open_note()
    local notes = get_notes()
 
    if #notes >= 1 then
-      require "telescope"
       vim.ui.select(notes, {
          prompt = " > Select note to open",
          default = nil,
-         format_item = function(note)
-            local note_name = vim.fn.fnamemodify(note, ':t:r')
+         format_item = function(item)
+            local note_name = vim.fn.fnamemodify(item, ':t:r')
             return note_name
          end
       }, function(choice)
          local note_name = vim.fn.fnamemodify(choice, ":p:t:r")
          if choice then
-            vim.cmd.edit(choice)
+            vim.cmd.edit(note_name)
          end
       end)
    else
@@ -87,4 +86,4 @@ M.open_note = function()
    end
 end
 
-return M
+return note

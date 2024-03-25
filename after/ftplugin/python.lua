@@ -2,14 +2,14 @@
 -- File         : python.lua
 -- Description  : filetype python extra config
 -- Author       : Kevin
--- Last Modified: 26 Feb 2024, 21:09
+-- Last Modified: 31 Mar 2024, 18:38
 -------------------------------------
 
 vim.opt_local.expandtab = true
 vim.opt_local.autoindent = true
 
 -- Add custom mappings only for python files
-vim.keymap.set("n", "<leader>pv", function()
+vim.keymap.set("n", "<localleader>pv", function()
    require "lib.python_envs".pick_venv()
 end, { desc = "Pick Python Venv" })
 

@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 19 Mar 2024, 09:29
+--  Last Modified: 30 Mar 2024, 17:17
 -----------------------------------
 
 local M = {
@@ -60,9 +60,9 @@ local M = {
   -- "theHamsta/nvim-dap-virtual-text",
   {
     "mfussenegger/nvim-dap",
-    keys = {
-      { "<leader>d", function() end, desc = "Dap" },
-    },
+    -- keys = {
+    --   { "<leader>d", function() end, desc = "Dap" },
+    -- },
     config = function()
       local dap = require "dap"
 
@@ -112,26 +112,26 @@ local M = {
 
 
       -- LUA
-      dap.adapters.nlua = function(callback, config)
-        callback {
-          type = "server",
-          host = config.host,
-          port = config.port
-        }
-      end
+      -- dap.adapters.nlua = function(callback, config)
+      --   callback {
+      --     type = "server",
+      --     host = config.host,
+      --     port = config.port
+      --   }
+      -- end
 
       dap.configurations.lua = {
         {
-          type = "nlua",
-          request = "attach",
-          name = "Attach to running Neovim instance",
-          host = "127.0.0.1",
-          port = function()
-            -- local val = tonumber(vim.fn.input('Port: '))
-            -- assert(val, "Please provide a port number")
-            local p = 54231
-            return p
-          end,
+          name = 'Current file (local-lua-dbg, nlua)',
+          type = 'local-lua',
+          request = 'launch',
+          cwd = '${workspaceFolder}',
+          program = {
+            lua = '~/.luarocks/bin/nlua',
+            file = '${file}',
+          },
+          verbose = true,
+          args = {},
         },
       }
 
@@ -249,12 +249,12 @@ local M = {
                   prompt = "Enter URL: ",
                   default = "http://localhost:3000"
                 }, function(url)
-                    if url == nil or url == "" then
-                      return
-                    else
-                      coroutine.resume(co, url)
-                    end
+                  if url == nil or url == "" then
+                    return
+                  else
+                    coroutine.resume(co, url)
                   end
+                end
                 )
               end)
             end,
@@ -308,7 +308,7 @@ local M = {
       dap.adapters.bashdb = {
         type = 'executable',
         command = vim.fn.stdpath("data") ..
-          '/mason/packages/bash-debug-adapter/bash-debug-adapter',
+            '/mason/packages/bash-debug-adapter/bash-debug-adapter',
         name = 'bashdb',
       }
 
@@ -319,9 +319,9 @@ local M = {
           name = "Launch file",
           showDebugOutput = true,
           pathBashdb = vim.fn.stdpath("data") ..
-            '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
+              '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
           pathBashdbLib = vim.fn.stdpath("data") ..
-            '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
+              '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
           trace = true,
           file = "${file}",
           program = "${file}",
@@ -355,31 +355,23 @@ local M = {
       end
 
       -- set keymaps
+      local function nmap(tbl)
+        vim.keymap.set("n", tbl[1], tbl[2], { desc = "DAP • "..tbl[3] })
+      end
 
-      vim.keymap.set("n", "<leader>db", function() require "dap".toggle_breakpoint() end,
-        { desc = "Breakpoint" })
-      vim.keymap.set("n", "<leader>dc", function() require "dap".continue() end,
-        { desc = "Run Debug" })
-      vim.keymap.set("n", "<leader>di", function() require "dap".step_into() end,
-        { desc = "Into" })
-      vim.keymap.set("n", "<leader>do", function() require "dap".step_over() end,
-        { desc = "Over" })
-      vim.keymap.set("n", "<leader>dO", function() require "dap".step_out() end,
-        { desc = "Out" })
-      vim.keymap.set("n", "<leader>dr", function() require "dap".repl.toggle() end,
-        { desc = "Repl" })
-      vim.keymap.set("n", "<leader>dl", function() require "dap".run_last() end,
-        { desc = "Last" })
-      vim.keymap.set("n", "<leader>du", function() require "dapui".toggle {} end,
-        { desc = "UI" })
-      vim.keymap.set("n", "<leader>dx", function() require "dap".terminate() end,
-        { desc = "Exit" })
+      nmap { "<localleader>d", function() end, "" }
+      nmap { "<localleader>db", dap.toggle_breakpoint, "Breakpoint" }
+      -- nmap { "<leader>dc", require "dap".continue(), "Run Debug" }
+      nmap { "<localleader>di", dap.step_into, "Into" }
+      nmap { "<localleader>do", dap.step_over, "Over" }
+      nmap { "<localleader>dO", dap.step_out, "Out" }
+      nmap { "<localleader>dr", dap.repl.toggle, "Repl" }
+      nmap { "<localleader>dl", dap.run_last, "Last" }
+      nmap { "<localleader>du", require "dapui".toggle, "UI" }
+      nmap { "<localleader>dx", dap.terminate, "Exit" }
 
-      vim.keymap.set("n", "<localleader>d", function() end, { desc = "Dap" })
-      vim.keymap.set("n", "<localleader>dp",
-        function() require "dap".toggle_breakpoint() end, { desc = "Breakpoint" })
-      vim.keymap.set("n", "<localleader>dc", function()
-        if vim.fn.filereadable(".vscode/launch.json") then
+      nmap { "<localleader>dc", function()
+        if vim.fn.filereadable(".vscode/launch.json") == 1 then
           local dap_vscode = require "dap.ext.vscode"
           dap_vscode.load_launchjs(nil, {
             ["pwa-node"] = js_based_languages,
@@ -387,22 +379,8 @@ local M = {
             ["node-terminal"] = js_based_languages,
           })
         end
-        require "dap".continue()
-      end, { desc = "Run with args" })
-      vim.keymap.set("n", "<localleader>di", function() require "dap".step_into() end,
-        { desc = "Into" })
-      vim.keymap.set("n", "<localleader>do", function() require "dap".step_over() end,
-        { desc = "Over" })
-      vim.keymap.set("n", "<localleader>dO", function() require "dap".step_out() end,
-        { desc = "Out" })
-      vim.keymap.set("n", "<localleader>dr", function() require "dap".repl.toggle() end,
-        { desc = "Repl" })
-      vim.keymap.set("n", "<localleader>dl", function() require "dap".run_last() end,
-        { desc = "Last" })
-      vim.keymap.set("n", "<localleader>du", function() require "dapui".toggle {} end,
-        { desc = "UI" })
-      vim.keymap.set("n", "<localleader>dx", function() require "dap".terminate() end,
-        { desc = "Exit" })
+        dap.continue()
+      end, "Run Debug [args]" }
     end
   }
 }

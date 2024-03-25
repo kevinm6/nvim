@@ -1,10 +1,7 @@
-local M = {}
-
-function M.get_licenses()
-  return {
-    {
-      name = "agpl-3.0",
-      text = [[
+return {
+  {
+    name = "agpl-3.0",
+    text = [[
   Copyright (C) <year>  <name of author>
 
   This program is free software: you can redistribute it and/or modify
@@ -20,10 +17,10 @@ function M.get_licenses()
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ]]
-    },
-    {
-      name = "fdl-1.1",
-      text = [[
+  },
+  {
+    name = "fdl-1.1",
+    text = [[
   Copyright (c)  YEAR  YOUR NAME.
   Permission is granted to copy, distribute and/or modify this document
   under the terms of the GNU Free Documentation License, Version 1.1
@@ -33,10 +30,10 @@ function M.get_licenses()
   A copy of the license is included in the section entitled "GNU
   Free Documentation License".
   ]]
-    },
-    {
-      name = "fdl-1.2",
-      text = [[
+  },
+  {
+    name = "fdl-1.2",
+    text = [[
   Copyright (c)  YEAR  YOUR NAME.
   Permission is granted to copy, distribute and/or modify this document
   under the terms of the GNU Free Documentation License, Version 1.2
@@ -45,10 +42,10 @@ function M.get_licenses()
   A copy of the license is included in the section entitled "GNU
   Free Documentation License".
   ]]
-    },
-    {
-      name = "fdl-1.3",
-      text = [[
+  },
+  {
+    name = "fdl-1.3",
+    text = [[
   Copyright (c)  YEAR  YOUR NAME.
   Permission is granted to copy, distribute and/or modify this document
   under the terms of the GNU Free Documentation License, Version 1.3
@@ -57,10 +54,10 @@ function M.get_licenses()
   A copy of the license is included in the section entitled "GNU
   Free Documentation License".
   ]]
-    },
-    {
-      name = "gpl-1.0",
-      text = [[
+  },
+  {
+    name = "gpl-1.0",
+    text = [[
   Copyright (C) 19yy  <name of author>
 
   This program is free software; you can redistribute it and/or modify
@@ -77,10 +74,10 @@ function M.get_licenses()
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
   ]]
-    },
-    {
-      name = "gpl-2.0",
-      text = [[
+  },
+  {
+    name = "gpl-2.0",
+    text = [[
   Copyright (C) <year>  <name of author>
 
   This program is free software; you can redistribute it and/or modify
@@ -97,10 +94,10 @@ function M.get_licenses()
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
   ]]
-    },
-    {
-      name = "gpl-3.0",
-      text = [[
+  },
+  {
+    name = "gpl-3.0",
+    text = [[
   Copyright (C) <year>  <name of author>
 
   This program is free software: you can redistribute it and/or modify
@@ -116,10 +113,10 @@ function M.get_licenses()
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ]]
-    },
-    {
-      name = "lgpl-2.0",
-      text = [[
+  },
+  {
+    name = "lgpl-2.0",
+    text = [[
   Copyright (C) <year>  <name of author>
 
   This library is free software; you can redistribute it and/or
@@ -136,10 +133,10 @@ function M.get_licenses()
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
   ]]
-    },
-    {
-      name = "lgpl-2.1",
-      text = [[
+  },
+  {
+    name = "lgpl-2.1",
+    text = [[
   Copyright (C) <year>  <name of author>
 
   This library is free software; you can redistribute it and/or
@@ -156,10 +153,10 @@ function M.get_licenses()
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
   ]]
-    },
-    {
-      name = "lgpl-3.0",
-      text = [[
+  },
+  {
+    name = "lgpl-3.0",
+    text = [[
                      GNU LESSER GENERAL PUBLIC LICENSE
                          Version 3, 29 June 2007
 
@@ -326,10 +323,10 @@ function M.get_licenses()
   permanent authorization for you to choose that version for the
   Library.
   ]]
-    },
-    {
-      name = 'MIT',
-      text = [[
+  },
+  {
+    name = 'MIT',
+    text = [[
   The MIT License (MIT)
   Copyright © <year> <copyright holders>
 
@@ -351,8 +348,5 @@ function M.get_licenses()
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
   ]]
-    }
   }
-end
-
-return M
+}

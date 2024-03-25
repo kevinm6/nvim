@@ -2,7 +2,7 @@
 -- File         : markdown.lua
 -- Description  : filetype markdown extra config
 -- Author       : Kevin
--- Last Modified: 14 Mar 2024, 20:17
+-- Last Modified: 31 Mar 2024, 18:37
 -------------------------------------
 
 vim.opt_local.conceallevel = 2
@@ -19,29 +19,32 @@ vim.opt_local.comments:append { "nb:+", "nb:>", "nb:-", "nb:." }
 vim.opt.spell = false
 
 local function conceal_as_devicon(match, _, bufnr, pred, metadata)
-   if #pred == 2 then
-      -- (#as_devicon! @capture)
-      local capture_id = pred[2]
-      local lang = vim.treesitter.get_node_text(match[capture_id], bufnr)
+  if #pred == 2 then
+    -- (#as_devicon! @capture)
+    local capture_id = pred[2]
+    local lang = vim.treesitter.get_node_text(match[capture_id], bufnr)
 
-      local icon, _ = require("nvim-web-devicons").get_icon_by_filetype(lang, { default = true })
-      metadata["conceal"] = icon
-   end
+    local icon, _ = require("nvim-web-devicons").get_icon_by_filetype(lang,
+      { default = true })
+    metadata["conceal"] = icon
+  end
 end
 
-vim.treesitter.query.add_directive("as_devicon!", conceal_as_devicon, true)
+vim.treesitter.query.add_directive("as_devicon!", conceal_as_devicon,
+  { force = true, all = true })
 
 -- add custom mappings only for markdown files
 -- if plugin 'peek' is installed
 local has_peek, peek = pcall(require, "peek")
 if has_peek then
-   vim.keymap.set("n", "<localleader>p", function()
-      if peek.is_open() then
-         peek.close()
-      else
-         peek.open()
-      end
-   end, { desc = "Markdown Preview [Peek]" })
+  vim.keymap.set("n", "<localleader>p", function()
+    if peek.is_open() then
+      peek.close()
+    else
+      peek.open()
+    end
+  end, { desc = "Markdown Preview [Peek]" })
 else
-   vim.notify("Peek is not installed or loaded!\n Can't preview markdown!", vim.log.levels.WARN)
+  vim.notify("Peek is not installed or loaded!\n Can't preview markdown!",
+    vim.log.levels.WARN)
 end

@@ -1,3 +1,11 @@
+-------------------------------------
+--  File         : gh_issue.lua
+--  Description  : use github issues as completion inside neovim
+--  Author       : Kevin
+--  Source       : https://github.com/tjdevries/xdg_config/nvim
+--  Last Modified: 24 Mar 2024, 14:12
+-------------------------------------
+
 local has_plenary, Job = pcall(require, "plenary.job")
 if not has_plenary then return end
 
@@ -5,13 +13,13 @@ local source = {}
 
 local enabled = true
 
-source.new = function()
+function source.new()
   local self = setmetatable({ cache = {} }, { __index = source })
 
   return self
 end
 
-source.complete = function(self, _, callback)
+function source.complete(self, _, callback)
   if not enabled then
     return
   end
@@ -63,11 +71,11 @@ source.complete = function(self, _, callback)
   end
 end
 
-source.get_trigger_characters = function()
+function source.get_trigger_characters()
   return { "#" }
 end
 
-source.is_available = function()
+function source.is_available()
   return vim.bo.filetype == "gitcommit"
 end
 
