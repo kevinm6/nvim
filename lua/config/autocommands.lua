@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 20 Mar 2024, 17:10
+-- Last Modified: 25 Mar 2024, 13:04
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -13,49 +13,30 @@ local user_command = vim.api.nvim_create_user_command
 ---local _general_settings = augroup("_general_settings", { clear = true })
 
 ---FileTypes to exclude
----@param filetype string filetype to be matched
----@return boolean
-local function filetypes_to_exclude(filetype)
-  local special_ft = {
-    alpha = true,
-    WhichKey = true,
-    NvimTree = true,
-    lspinfo = true,
-    TelescopePrompt = true,
-    TelescopeResults = true,
-    qf = true,
-    toggleterm = true,
-    lazy = true,
-    mason = true,
-    Outline = true,
-    noice = true,
-    checkhealth = true,
-    notify = true,
-    cmpmenu = true,
-    vim = true,
-    oil = true,
-    help = true,
-    query = true,
-    man = true
-  }
+local filetypes_to_exclude = {
+  alpha = true,
+  WhichKey = true,
+  lspinfo = true,
+  TelescopePrompt = true,
+  TelescopeResults = true,
+  qf = true,
+  toggleterm = true,
+  lazy = true,
+  mason = true,
+  noice = true,
+  checkhealth = true,
+  notify = true,
+  cmpmenu = true,
+  vim = true,
+  oil = true,
+  help = true,
+  query = true,
+  man = true
+}
 
-  return special_ft[filetype]
-end
-
----Set 'keywordprg' based on filetype
----@return string | nil
-local function set_keywordprg(filetype)
-  local custom_keywordprg = {
-    python = 'python3 -m pydoc',
-    vim = ':help',
-    html = "open https://developer.mozilla.org/search?topic=api&topic=html&q=",
-    css = "open https://developer.mozilla.org/search?topic=api&topic=css&q=",
-    javascript = "open https://developer.mozilla.org/search?topic=api&topic=js&q="
-  }
-
-  return custom_keywordprg[filetype]
-end
-
+--------------------------------
+------- Auto-Commands ---------
+--------------------------------
 
 ---Hightlight on yank
 autocmd({ "TextYankPost" }, {
@@ -115,17 +96,16 @@ autocmd({ "FileType" }, {
   group = augroup("_check_ft_ts_parser", { clear = true }),
   pattern = "*",
   callback = function(ev)
-
-    if not filetypes_to_exclude(ev.match) then
+    if not filetypes_to_exclude[ev.match] then
       local has_ts, ts_parsers = pcall(require, "nvim-treesitter.parsers")
       if not has_ts then return end
 
       local lang = ts_parsers.get_buf_lang()
       local donot_ask_install = vim.g.dont_ask_install or {}
       if
-        ts_parsers.get_parser_configs()[lang]
-        and not ts_parsers.has_parser(lang)
-        and not donot_ask_install[lang] == true
+          ts_parsers.get_parser_configs()[lang]
+          and not ts_parsers.has_parser(lang)
+          and not donot_ask_install[lang] == true
       then
         vim.schedule_wrap(function()
           local msg = string.format("Install missing TS parser for < %s >?", lang)
@@ -149,11 +129,12 @@ autocmd({ "FileType" }, {
   group = augroup("_set_makefile", { clear = true }),
   pattern = "*",
   callback = function(ev)
-    if ev.match and set_keywordprg(ev.match) then
-      vim.opt_local.keywordprg = set_keywordprg(ev.match)
+    local lib_utils = require "lib.utils"
+    if ev.match and lib_utils.set_keywordprg(ev.match) then
+      vim.opt_local.keywordprg = lib_utils.set_keywordprg(ev.match)
     end
-    if ev.match and not filetypes_to_exclude(ev.match) then
-      require("lib.compilers").set_compiler(ev)
+    if ev.match and not filetypes_to_exclude[ev.match] then
+      require("lib.compiler").set_compiler(ev)
     end
   end
 })
@@ -208,7 +189,7 @@ vim.filetype.add {
     ["*.plist*"] = "xml",
     ["README.(a+)$"] = function(_, _, ext)
       return (ext == "md") and "markdown"
-        or (ext == "rst") and "rst" or "text"
+          or (ext == "rst") and "rst" or "text"
     end
   }
 }
@@ -237,10 +218,14 @@ autocmd({ "FileType" }, {
       )
       return
     end
-
     require("lib.pdf").load_pdf(ev.file)
   end
 })
+
+
+--------------------------------
+------- User-Commands ---------
+--------------------------------
 
 ---Create NewFile
 user_command("NewFile", function(args) require("lib.utils").new_file(args) end, {
@@ -258,36 +243,15 @@ user_command("NewTempFile", function(args) require("lib.utils").new_tmp_file(arg
 
 
 ---Scratch
-local function scratch()
+user_command("Scratch", function ()
   vim.cmd.new()
   vim.opt_local.buftype = "nofile"
   vim.opt_local.bufhidden = "wipe"
   vim.opt_local.buflisted = false
   vim.opt_local.swapfile = false
   vim.opt_local.filetype = "Scratch"
-end
+end, { desc = "Create a Scratch buffer" })
 
-user_command("Scratch", function() scratch() end, { desc = "Create a Scratch buffer" })
-
-
----If buffer modified, update any 'Last modified: ' in the first 10 lines.
----Restores cursor and window position using save_cursor variable.
-local function auto_timestamp()
-  local autocmd_id = autocmd({ "BufWritePre" }, {
-    group = augroup("_autoupdate_timestamp", { clear = true }),
-    pattern = "*",
-    callback = function()
-      if vim.opt_local.modified:get() == true then
-        local cursor_pos = vim.api.nvim_win_get_cursor(0)
-
-        vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
-        vim.fn.histdel("search", -1)
-        vim.api.nvim_win_set_cursor(0, cursor_pos)
-      end
-    end
-  })
-  vim.g.auto_timestamp = autocmd_id
-end
 
 user_command("AutoTimeStamp", function()
   local msg, log_level = nil, nil
@@ -302,7 +266,7 @@ user_command("AutoTimeStamp", function()
     msg = "  ON"
     log_level = "INFO"
 
-    auto_timestamp()
+    require("lib.automation").auto_timestamp()
   end
 
   vim.notify(
@@ -320,20 +284,6 @@ user_command("TrimTrailingSpaces",
   [[%s/\s\+$//e]]
   , { desc = "Remove extra trailing white spaces" })
 
----Auto Remove trailing spaces before saving current buffer
-local function auto_remove_trailing_spaces()
-  local autocmd_id = autocmd("BufWritePre", {
-    group = augroup("_autoremove_trailing_space", { clear = true }),
-    pattern = "*",
-    callback = function()
-      if vim.bo.filetype ~= "markdown" then
-        vim.cmd [[%s/\s\+$//e]]
-      end
-    end
-  })
-  vim.g.auto_remove_trail_spaces = autocmd_id
-end
-
 ---User command to toggle auto trim trailing space on save
 user_command("AutoTrimTrailingSpaces", function()
   local msg, log_level = nil, nil
@@ -345,7 +295,7 @@ user_command("AutoTrimTrailingSpaces", function()
     msg = "  OFF"
     log_level = "WARN"
   else
-    auto_remove_trailing_spaces()
+    require("lib.automation").auto_remove_trailing_spaces()
 
     msg = "  ON"
     log_level = "INFO"
@@ -360,29 +310,6 @@ user_command("AutoTrimTrailingSpaces", function()
     }
   )
 end, { desc = "Remove extra trailing white spaces" })
-
-
----Delete Current Buffer (helper function for autocmd)
-user_command("DeleteCurrentBuffer", function()
-  local cBuf = vim.api.nvim_get_current_buf()
-  local bufs = vim.fn.getbufinfo({ buflisted = true }) or {}
-  if #bufs ~= 0 then
-    for idx, buf in ipairs(bufs) do
-      if buf.bufnr == cBuf then
-        if idx == #bufs then
-          vim.cmd.bprevious {}
-        else
-          vim.cmd.bnext {}
-        end
-        break
-      end
-    end
-  else
-    return
-  end
-  vim.cmd.bdelete(cBuf)
-end, { desc = "Close current buffer and go to next" })
-
 
 ---Query CheatSH and get output in window
 user_command("CheatSH", function(args)
@@ -446,7 +373,17 @@ user_command("WipeReg", function()
 end, { desc = "Wipe all Registers" })
 
 
--- Config File
+---Sessions
+user_command("Session", function(arg)
+  require "lib.session".select(arg.args)
+end, {
+  nargs = 1,
+  desc = "Session Manager",
+  complete = "custom,v:lua.require'lib.session'.usercmd_session_completion"
+})
+
+
+---Config File
 user_command("NvimConfig", function()
   local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
   if not has_telescope then
@@ -456,19 +393,24 @@ user_command("NvimConfig", function()
   end
 end, { desc = "Neovim Config" })
 
+---Dotfiles
+user_command("Dotfiles", function()
+  local has_oil, oil = pcall(require, "oil")
+  local dotfiles_dir = vim.env.DOTFILES or vim.fn.expand "~/.MacDotfiles"
+  if not has_oil then
+    vim.cmd.edit(dotfiles_dir)
+  else
+    oil.open_float(dotfiles_dir)
+  end
+end, { desc = "Open Dotfiles dir" })
 
-user_command("Session", function(arg)
-  require "lib.sessions".select(arg.args)
-end,{
-  nargs = 1,
-  desc = "Session Manager",
-  complete = "custom,v:lua.require'lib.utils'.usercmd_session_completion"
-})
-
-user_command("Reload", function(arg)
-  require "lib.utils".reload_module(arg.args)
-end,{
-  nargs = "?",
-  desc = "Reload file",
-  complete = "buffer"
-})
+---University
+user_command("University", function()
+  local has_oil, oil = pcall(require, "oil")
+  local university_dir = vim.env.CS or vim.fn.expand "~/Informatica/"
+  if not has_oil then
+    vim.cmd.edit(university_dir)
+  else
+    oil.open_float(university_dir)
+  end
+end, { desc = "Open Dotfiles dir" })

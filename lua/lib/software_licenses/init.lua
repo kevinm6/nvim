@@ -2,7 +2,7 @@
 --  File         : pick_license.lua
 --  Description  : helper module to get licenses
 --  Author       : Kevin
---  Last Modified: 23 Jun 2023, 09:50
+--  Last Modified: 24 Mar 2024, 14:01
 -------------------------------------
 
 local M = {}
@@ -10,7 +10,7 @@ local M = {}
 -- Software Licenses
 --    @type <table>
 --    @param telescope options
-M.pick_license = function(telescope_opts)
+function M.pick_license(telescope_opts)
    local pickers = require "telescope.pickers"
    local finders = require "telescope.finders"
    local conf = require("telescope.config").values
@@ -29,7 +29,7 @@ M.pick_license = function(telescope_opts)
       return fields
    end
 
-   local licenses = require "lib.software_licenses.licenses".get_licenses()
+   local licenses = require "lib.software_licenses.licenses"
    for _, license in ipairs(licenses) do
       local name = license.name
       local text = split(license.text)

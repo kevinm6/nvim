@@ -3,15 +3,15 @@
 --  Description  : edit hex files
 --  Author       : Kevin
 --  Source       : https://github.com/RaafatTurki/hex.nvim/tree/master/lua
---  Last Modified: 28 May 2023, 19:56
+--  Last Modified: 24 Mar 2024, 14:08
 -------------------------------------
 
-local u = require 'lib.hex.utils'
+local utils = require 'lib.hex.utils'
 local augroup_hex_editor = vim.api.nvim_create_augroup('hex_editor', { clear = true })
 
-local M = {}
+local hex = {}
 
-M.cfg = {
+local cfg = {
   dump_cmd = 'xxd -g 1 -u',
   assemble_cmd = 'xxd -r',
   is_file_binary_pre_read = function()
@@ -34,74 +34,74 @@ M.cfg = {
   end,
 }
 
-M.dump = function()
+function hex.dump()
   if not vim.b['hex'] then
-    u.dump_to_hex(M.cfg.dump_cmd)
+    utils.dump_to_hex(cfg.dump_cmd)
   else
     vim.notify('already dumped!', vim.log.levels.WARN)
   end
 end
 
-M.assemble = function()
+function hex.assemble()
   if vim.b['hex'] then
-    u.assemble_from_hex(M.cfg.assemble_cmd)
+    utils.assemble_from_hex(cfg.assemble_cmd)
   else
     vim.notify('already assembled!', vim.log.levels.WARN)
   end
 end
 
-M.toggle = function()
+function hex.toggle()
   if not vim.b['hex'] then
-    M.dump()
+    hex.dump()
   else
-    M.assemble()
+    hex.assemble()
   end
 end
 
-local setup_auto_cmds = function()
+local function setup_auto_cmds()
   vim.api.nvim_create_autocmd({ 'BufReadPre' }, { group = augroup_hex_editor, callback = function()
-    if M.cfg.is_file_binary_pre_read() then
+    if cfg.is_file_binary_pre_read() then
       vim.b['hex'] = true
     end
   end })
 
   vim.api.nvim_create_autocmd({ 'BufReadPost' }, { group = augroup_hex_editor, callback = function()
     if vim.b.hex then
-      u.dump_to_hex(M.cfg.dump_cmd)
-    elseif M.cfg.is_file_binary_post_read() then
+      utils.dump_to_hex(cfg.dump_cmd)
+    elseif cfg.is_file_binary_post_read() then
       vim.b['hex'] = true
-      u.dump_to_hex(M.cfg.dump_cmd)
+      utils.dump_to_hex(cfg.dump_cmd)
     end
   end })
 
   vim.api.nvim_create_autocmd({ 'BufWritePre' }, { group = augroup_hex_editor, callback = function()
     if vim.b.hex then
-      u.begin_patch_from_hex(M.cfg.assemble_cmd)
+      utils.begin_patch_from_hex(cfg.assemble_cmd)
     end
   end })
 
   vim.api.nvim_create_autocmd({ 'BufWritePost' }, { group = augroup_hex_editor, callback = function()
     if vim.b.hex then
-      u.finish_patch_from_hex(M.cfg.dump_cmd)
+      utils.finish_patch_from_hex(cfg.dump_cmd)
     end
   end })
 end
 
 -- TODO: improve setup
-M.setup = function(args)
-  M.cfg = vim.tbl_deep_extend("force", M.cfg, args or {})
+function hex.setup(args)
+  cfg = vim.tbl_deep_extend("force", cfg, args or {})
 
-  local dump_program = vim.fn.split(M.cfg.dump_cmd)[1]
-  local assemble_program = vim.fn.split(M.cfg.assemble_cmd)[1]
+  local dump_program = vim.fn.split(cfg.dump_cmd)[1]
+  local assemble_program = vim.fn.split(cfg.assemble_cmd)[1]
 
-  if not u.is_program_executable(dump_program) then return end
-  if not u.is_program_executable(assemble_program) then return end
+  if not utils.is_program_executable(dump_program) then return end
+  if not utils.is_program_executable(assemble_program) then return end
 
-  vim.api.nvim_create_user_command('HexDump', M.dump, {})
-  vim.api.nvim_create_user_command('HexAssemble', M.assemble, {})
-  vim.api.nvim_create_user_command('HexToggle', M.toggle, {})
+  vim.api.nvim_create_user_command('HexDump', hex.dump, {})
+  vim.api.nvim_create_user_command('HexAssemble', hex.assemble, {})
+  vim.api.nvim_create_user_command('HexToggle', hex.toggle, {})
 
   setup_auto_cmds()
 end
 
-return M
+return hex

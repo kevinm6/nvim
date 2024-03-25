@@ -28,10 +28,10 @@ local M = {
         height = 0.8, -- height of the Zen window
         width = 0.85,
         options = {
-          signcolumn = "no", -- disable signcolumn
-          number = false, -- disable number column
+          signcolumn = "no",      -- disable signcolumn
+          number = false,         -- disable number column
           relativenumber = false, -- disable relative numbers
-          cursorline = true, -- disable cursorline
+          cursorline = true,      -- disable cursorline
         },
       }
       o.plugins = {
@@ -44,14 +44,16 @@ local M = {
 
   {
     "3rd/image.nvim",
-    ft = { "markdown", "vimwiki", "image_nvim", "png", "jpeg", "jpg",  "image_nvim"  },
+    ft = { "markdown", "vimwiki", "image_nvim", "png", "jpeg", "jpg", "image_nvim" },
     init = function()
-      package.path = package.path..";"..vim.env.HOME.."/.luarocks/share/lua/5.1/?/init.lua"
-      package.path = package.path..";"..vim.env.HOME.."/.luarocks/share/lua/5.1/?.lua"
+      package.path = package.path ..
+      ";" .. vim.env.HOME .. "/.luarocks/share/lua/5.1/?/init.lua"
+      package.path = package.path .. ";" .. vim.env.HOME ..
+      "/.luarocks/share/lua/5.1/?.lua"
     end,
     opts = function(_, o)
       o.backend = "kitty"
-      o.window_overlap_clear_enabled = true -- toggles images when windows are overlapped
+      o.window_overlap_clear_enabled = true    -- toggles images when windows are overlapped
       o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
       o.window_overlap_clear_ft_ignore = {}
       o.integrations = {
@@ -70,10 +72,14 @@ local M = {
 
   {
     "epwalsh/obsidian.nvim",
-    version = "*",  -- latest release (not commit)
+    version = "*", -- latest release (not commit)
     event = {
-      "BufReadPre "..vim.fn.expand"~".."/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
-      "BufNewFile "..vim.fn.expand"~".."/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
+      "BufReadPre " ..
+      vim.fn.expand "~" ..
+      "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
+      "BufNewFile " ..
+      vim.fn.expand "~" ..
+      "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
       -- "BufReadPre "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/daily/*.md",
       -- "BufNewFile "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/daily/*.md",
       -- "BufReadPre "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni/*.md",
@@ -95,11 +101,11 @@ local M = {
       o.workspaces = {
         {
           name = "personal",
-          path =  vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/notes",
+          path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/notes",
         },
         {
           name = "uni",
-          path =  vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni",
+          path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni",
         },
       }
 
@@ -159,7 +165,7 @@ local M = {
       vim.g.molten_output_win_max_height = 20
       vim.g.molten_auto_open_output = true
     end,
-    config = function ()
+    config = function()
       -- local venv = os.getenv "VIRTUAL_ENV" or vim.fn.stdpath "data".."/python_nvim_venv/bin/python3"
       -- if venv ~= nil and not vim.g.molten_initialized then
       --    venv = tostring(vim.fn.fnamemodify(venv, ":t"))
@@ -176,22 +182,66 @@ local M = {
         { silent = true, noremap = true, desc = "evaluate visual selection" })
 
       vim.keymap.set("n", "<leader>M", function() end, { desc = "Molten" })
-      vim.keymap.set("n", "<leader>MI", function() vim.cmd.MoltenInfo() end, { desc = "MoltenInfo" })
-      vim.keymap.set("n", "<leader>Ml", function() vim.cmd.MoltenEvaluateLine() end, { desc = "MoltenEvaluateLine" })
-      vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv", { desc = "MoltenEvaluateVisual" })
-      vim.keymap.set("n", "<leader>Ma", function() vim.cmd.MoltenEvaluateArgument() end, { desc = "MoltenEvaluateArgument" })
-      vim.keymap.set("n", "<leader>Mo", function() vim.cmd.MoltenEvaluateOperator() end, { desc = "MoltenEvaluateOperator" })
-      vim.keymap.set("n", "<leader>Mc", function() vim.cmd.MoltenReevaluateCell() end, { desc = "MoltenReevaluateCell" })
+      vim.keymap.set("n", "<leader>MI", function() vim.cmd.MoltenInfo() end,
+        { desc = "MoltenInfo" })
+      vim.keymap.set("n", "<leader>Ml", function() vim.cmd.MoltenEvaluateLine() end,
+        { desc = "MoltenEvaluateLine" })
+      vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv",
+        { desc = "MoltenEvaluateVisual" })
+      vim.keymap.set("n", "<leader>Ma", function() vim.cmd.MoltenEvaluateArgument() end,
+        { desc = "MoltenEvaluateArgument" })
+      vim.keymap.set("n", "<leader>Mo", function() vim.cmd.MoltenEvaluateOperator() end,
+        { desc = "MoltenEvaluateOperator" })
+      vim.keymap.set("n", "<leader>Mc", function() vim.cmd.MoltenReevaluateCell() end,
+        { desc = "MoltenReevaluateCell" })
 
       -- vim.g.molten_initialized = true
     end
   },
   {
+    "jmbuhr/otter.nvim",
+    ft = { "quarto", "html", "javascript", "typescript" },
+    dependencies = { "nvim-lspconfig" },
+    config = function(_, o)
+      require("otter").setup(o)
+
+      vim.api.nvim_create_autocmd("Filetype", {
+        pattern = "html",
+        callback = function()
+          require("otter").activate({ 'javascript', 'php', 'css' })
+        end
+      })
+      vim.api.nvim_create_autocmd("Filetype", {
+        pattern = "javascript",
+        callback = function()
+          require("otter").activate({ 'html', 'php', 'regex' })
+        end
+      })
+      vim.api.nvim_create_autocmd("Filetype", {
+        pattern = "php",
+        callback = function()
+          require("otter").activate({ 'html', 'javascript' })
+        end
+      })
+
+      local nmap = function(tbl)
+        vim.keymap.set("n", tbl[1], tbl[2], { desc = "otter:"..tbl[3], buffer = true })
+      end
+      nmap { "<localleader>K", require "otter".ask_hover, "Hover" }
+      nmap { "<localleader>r", require "otter".ask_references, "[r]eferences" }
+      nmap { "<localleader>R", require "otter".ask_rename, "[R]ename" }
+      nmap { "<localleader>d", require "otter".ask_definition, "[d]efinition" }
+      nmap { "<localleader>s", require "otter".ask_type_definition, "[t]ype-definition" }
+      nmap { "<localleader>f", require "otter".ask_format, "[f]ormat" }
+
+      nmap { "<localleader>ee", require "otter".export, "[e]xport" }
+      nmap { "<localleader>ea", require "otter".export_otter_as, "[e]xport otter [a]s" }
+    end
+  },
+  {
     "quarto-dev/quarto-nvim",
     ft = { "quarto" },
-    dependencies = {
-      { "jmbuhr/otter.nvim", dependencies = { "neovim/nvim-lspconfig" } }
-    },
+    dependencies = { "otter.nvim" },
     config = function(_, o)
       local quarto = require "quarto"
       o.codeRunner = {
@@ -295,7 +345,8 @@ local M = {
         Operator = { icon = icons.kind.Operator, hl = "@operator" },
         TypeParameter = { icon = icons.kind.TypeParameter, hl = "@parameter" },
         Component = { icon = icons.kind.Field, hl = "@function" },
-        Fragment = { icon = icons.kind.Field, hl = "@constant" }, }
+        Fragment = { icon = icons.kind.Field, hl = "@constant" },
+      }
     end
   },
 

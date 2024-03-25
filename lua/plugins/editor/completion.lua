@@ -2,7 +2,7 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 17 Mar 2024, 13:53
+-- Last Modified: 24 Mar 2024, 14:16
 -------------------------------------
 
 
@@ -51,7 +51,7 @@ local M = {
       end,
     },
     "hrsh7th/cmp-buffer",
-    { "rcarriga/cmp-dap", ft = { "dap-repl", "dapui_watches", "dapui_hover" } },
+    { "rcarriga/cmp-dap",           ft = { "dap-repl", "dapui_watches", "dapui_hover" } },
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-calc",
@@ -78,7 +78,7 @@ local M = {
 
     o.enabled = function()
       return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt"
-        or require "cmp_dap".is_dap_buffer()
+          or require "cmp_dap".is_dap_buffer()
     end
 
     o.mapping = {
@@ -160,9 +160,9 @@ local M = {
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
           luasnip = '[Snip]',
-          nvim_lua = '[NvLua]',
           buffer = '[Buf]',
           -- treesitter = '[TS]',
+          otter = '[otter]'
         })[entry.source.name]
 
         vim_item.dup = ({
@@ -177,13 +177,7 @@ local M = {
     }
 
     o.sources = {
-      {
-        name = "nvim_lsp",
-        filter = function(_, _)
-          return not context.in_syntax_group "Comment"
-            or not context.in_treesitter_capture "comment"
-        end,
-      },
+      { name = "nvim_lsp", },
       { name = "otter" },
       {
         name = "buffer",
@@ -193,14 +187,13 @@ local M = {
         name = "luasnip",
         filter = function(_, _)
           return not context.in_syntax_group "Comment"
-            or not context.in_treesitter_capture "comment"
+              or not context.in_treesitter_capture "comment"
         end,
       },
-      { name = "nvim_lua" },
       { name = "treesitter" },
-      { name = "path",          option = { trailing_slash = true } },
-      { name = "latex_symbols", keyword_length = 2,                priority = 2 },
-      { name = "calc",          keyword_length = 3 },
+      { name = "path", option = { trailing_slash = true } },
+      { name = "latex_symbols", keyword_length = 2, priority = 2 },
+      { name = "calc", keyword_length = 3 },
     }
 
     o.confirm_opts = {
@@ -260,8 +253,8 @@ local M = {
       sources = cmp.config.sources({
         { name = 'path', option = { trailing_slash = true } },
       }, {
-          { name = 'cmdline', length = 3 }
-        })
+        { name = 'cmdline', length = 3 }
+      })
     })
 
     cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
@@ -278,6 +271,10 @@ local M = {
       sources = {
         { name = "dap" },
       },
+    })
+
+    cmp.setup.filetype("gitcommit", {
+      sources = { { name = "gh_issues" } }
     })
 
     cmp.setup(o)

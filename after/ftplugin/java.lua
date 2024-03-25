@@ -49,13 +49,13 @@ vim.list_extend(bundles,
 
 
 local function set_keymaps(client, bufnr)
-  local nmap = function(keys, fun, desc)
+  local function nmap(keys, fun, desc)
     vim.keymap.set("n", keys, fun, { desc = desc, buffer = bufnr })
   end
-  local vmap = function(keys, fun, desc)
+  local function vmap(keys, fun, desc)
     vim.keymap.set("v", keys, fun, { desc = desc, buffer = bufnr })
   end
-  local nvmap = function(keys, fun, desc)
+  local function nvmap(keys, fun, desc)
     vim.keymap.set({ "n", "v" }, keys, fun, { desc = desc, buffer = bufnr })
   end
 

@@ -22,6 +22,14 @@ local M = {
     config = function(_, o)
       o.default_connection = "default" -- id of default connection to set manually on json file
 
+      o.drawer = {
+        disable_help = true,
+        -- mappings = {
+          -- { key = "<cr>", mode = "n", action = "action_1" },
+          -- { key = "<C-l>", mode = "n", action = "action_1" },
+          -- { key = "<space>", mode = "n", action = "toggle" },
+        -- }
+      }
       o.extra_helpers = {
         ["postgres"] = {
           ["List All"] = "select * from {{ .Table }}",
@@ -39,7 +47,26 @@ local M = {
           { key = "<localleader>r", mode = "n", action = "run_file" },
         },
       }
+      o.result = {
+        page_size = 30,
+        { key = "L", mode = "", action = "page_next" },
+        { key = "H", mode = "", action = "page_prev" },
+        { key = "<C-n>", mode = "", action = "page_next" },
+        { key = "<C-p>", mode = "", action = "page_prev" },
+        { key = "G", mode = "", action = "page_last" },
+        { key = "gg", mode = "", action = "page_first" },
+      }
 
+      o.call_log = {
+        -- mappings for the buffer
+        mappings = {
+          -- show the result of the currently selected call record
+          { key = "<CR>", mode = "", action = "show_result" },
+          { key = "<C-l>", mode = "", action = "show_result" },
+          -- cancel the currently selected call (if its still executing)
+          { key = "<C-c>", mode = "", action = "cancel_call" },
+        }
+      }
       require "dbee".setup(o)
     end
   },

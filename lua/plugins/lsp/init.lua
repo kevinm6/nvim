@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 19 Mar 2024, 09:28
+-- Last Modified: 24 Mar 2024, 13:27
 -------------------------------------
 
 --- Create capabilities and set default values
@@ -25,133 +25,53 @@ end
 --- passed client and buffer id
 --- @param client any client passed to attach config
 local function set_buf_keymaps(client, bufnr)
-  if client.name == "jdtls" then
-    client.server_capabilities.documentHighlightProvider = false
+  local _, tele_builtin = pcall(require, "telescope.builtin")
+
+  local nmap = function(tbl)
+    vim.keymap.set('n', tbl[1], tbl[2], { buffer = bufnr, desc = "LSP:" .. tbl[3] })
   end
 
-  local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
+  nmap { "K", function()
+    return require("ufo").peekFoldedLinesUnderCursor() or
+        vim.lsp.buf.hover()
+  end, "Hover | PeekFold" }
 
-  local map = function(keys, func, desc)
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = "LSP " .. desc })
-  end
-
-  map("gl",
-    function() vim.diagnostic.open_float({ bufnr = bufnr, severity_sort = true }) end,
-    "Open float")
-
-  map("K", function()
-    local winid = require("ufo").peekFoldedLinesUnderCursor()
-    if not winid then
-      vim.lsp.buf.hover()
-    end
-  end, "Hover | PeekFold")
+  nmap { "<leader>lr", vim.lsp.buf.rename, "[r]ename" }
 
   if client.server_capabilities.declarationProvider then
-    map("gD", function()
-      if has_telescope then
-        tele_builtin.lsp_definitions()
-      else
-        vim.lsp.buf.declaration()
-      end
-    end, "[g]oTo [D]eclaration")
+    nmap { "gD", vim.lsp.buf.declaration, "[g]oTo [D]eclaration" }
   end
   if client.server_capabilities.definitionProvider then
-    map("gd", function()
-      if has_telescope then
-        tele_builtin.lsp_definitions()
-      else
-        vim.lsp.buf.definition()
-      end
-    end, "[g]oTo [d]efinitions")
-
-    map("<leader>ld", function()
-      if has_telescope then
-        tele_builtin.lsp_definitions()
-      else
-        vim.lsp.buf.definition()
-      end
-    end, "GoTo [d]efinitions")
+    nmap { "gd", tele_builtin.lsp_definitions or vim.lsp.buf.definition, "[g]oTo [d]efinitions" }
   end
   if client.server_capabilities.implementationProvider then
-    map("gI", function()
-      if has_telescope then
-        tele_builtin.lsp_incoming_calls()
-      else
-        vim.lsp.buf.implementation()
-      end
-    end, "[I]ncoming-Calls")
+    nmap { "<leader>li", vim.lsp.buf.implementation, "[I]ncoming-Calls" }
+  end
+  if client.supports_method "callHierarchy/incomingCalls" then
+    nmap { "<leader>li", vim.lsp.buf.outgoing_calls, "[I]ncoming-Calls" }
   end
   if client.supports_method "callHierarchy/outgoingCalls" then
-    map("gC", function()
-      if has_telescope then
-        tele_builtin.lsp_outgoing_calls()
-      else
-        vim.lsp.buf.outgoing_calls()
-      end
-    end, "Outgoing-[C]alls")
+    nmap { "<leader>lo", vim.lsp.buf.outgoing_calls, "[O]utgoing-Calls" }
   end
   if client.server_capabilities.referencesProvider then
-    map("gr", function()
-      if has_telescope then
-        tele_builtin.lsp_references()
-      else
-        vim.lsp.buf.references()
-      end
-    end, "[g]oTo [r]eferences")
-    map("<leader>lr", function()
-      if has_telescope then
-        tele_builtin.lsp_references()
-      else
-        vim.lsp.buf.references()
-      end
-    end, "GoTo [r]eferences")
+    nmap { "gr", tele_builtin.lsp_references or vim.lsp.buf.references, "[g]oTo [r]eferences" }
   end
 
-  map("gs", function()
-    if has_telescope then
-      tele_builtin.lsp_document_symbols()
-    else
-      vim.lsp.buf.document_symbol()
-    end
-  end, "LSP [s]ymbols")
+  nmap { "<leader>lt", tele_builtin.lsp_type_definitions or vim.lsp.buf.type_definition, "[t]ypeDef" }
 
-  map("<leader>ls", function()
-    if has_telescope then
-      tele_builtin.lsp_document_symbols()
-    else
-      vim.lsp.buf.document_symbol()
-    end
-  end, "GoTo [s]ymbols")
+  nmap { "<leader>ls", tele_builtin.lsp_document_symbols or vim.lsp.buf.document_symbol, "[w]orkspace [s]ymbols" }
+  nmap { "<leader>lws", tele_builtin.lsp_workspace_symbols or vim.lsp.buf.workspace_symbol, "[w]orkspace [s]ymbols" }
+  nmap { "<leader>lwa", vim.lsp.buf.add_workspace_folder, "[w]orkspace [a]dd folder" }
+  nmap { "<leader>lwr", vim.lsp.buf.remove_workspace_folder, "[w]orkspace [r]emove folder" }
+  nmap { "<leader>lwl", function()
+    vim.print(vim.lsp.buf.list_workspace_folders())
+  end, "[w]orkspace [r]emove folder" }
 
-  map("<leader>lt", function()
-    if has_telescope then
-      tele_builtin.lsp_typedefs()
-    else
-      vim.lsp.buf.type_definition()
-    end
-  end, "[t]ypeDef")
+  nmap { "<leader>ll", vim.lsp.codelens.run, "CodeLens Action" }
+  nmap { "<leader>la", vim.lsp.buf.code_action, "Code [a]ction" }
 
-  map("<leader>lws", function()
-    if has_telescope then
-      tele_builtin.lsp_workspace_symbols()
-    else
-      vim.lsp.buf.workspace_symbol()
-    end
-  end, "[w]orkspace [s]ymbols")
-
-  map("<leader>ll", function() vim.lsp.codelens.run() end, "CodeLens Action")
-  map("<leader>la", function() vim.lsp.buf.code_action() end, "Code [a]ction")
-  map("<leader>lI", function() vim.cmd.LspInfo {} end, "[I]nfo")
-  map("<leader>lL", function() vim.cmd.LspLog {} end, "[L]og")
-  map("<leader>r", function() vim.lsp.buf.rename() end, "[r]ename")
-  map("<leader>lq", function() vim.diagnostic.setloclist() end, "[q]FDiagnostics")
-  -- Diagnostics
-  map("]d", function() vim.diagnostic.goto_next() end, "Next [d]iagnostic")
-  map("[d", function() vim.diagnostic.goto_prev() end, "Prev [d]iagnostic")
-  map("<leader>dj", function() vim.diagnostic.goto_next() end,
-    "Next Diagnostic")
-  map("<leader>dk", function() vim.diagnostic.goto_prev() end,
-    "Prev Diagnostic")
+  -- Enable completion on <c-x><c-o>
+  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 end
 
 --- Set buffer capabilities based if supported by the
@@ -159,27 +79,22 @@ end
 --- @param client any client passed to attach config
 --- @param bufnr any|integer buffer id passed to attach config
 local function set_buf_funcs_for_capabilities(client, bufnr)
-  local map = vim.keymap.set
   local autocmd = vim.api.nvim_create_autocmd
   local usercmd = vim.api.nvim_create_user_command
 
-  -- TODO: remove check for nvim_v0.10 after update
-  if vim.lsp.inlay_hint then
-    vim.api.nvim_create_user_command("InlayHints", function()
-      if client.supports_method "textDocument/inlayHint" then
+  -- InlayHints
+  if client.supports_method "textDocument/inlayHint" then
+    -- TODO: remove check for nvim_v0.10 after update
+    if vim.lsp.inlay_hint then
+      vim.api.nvim_create_user_command("InlayHints", function()
         --   vim.lsp.inlay_hint.enable(bufnr, true)
         if vim.lsp.inlay_hint.is_enabled(bufnr) then
           vim.lsp.inlay_hint.enable(bufnr, false)
         else
           vim.lsp.inlay_hint.enable(bufnr, true)
         end
-      else
-        vim.notify(
-          "inlayHints not supported by server\n" .. client.name,
-          vim.log.levels.WARN, { title = "LSP" }
-        )
-      end
-    end, { desc = "Toggle Inlay hints" })
+      end, { desc = "Toggle Inlay hints" })
+    end
   end
 
   -- lsp-document_highlight
@@ -211,17 +126,18 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
       lib_format.lsp_format(bufnr)
     end, { force = true })
 
-    map("n", "<leader>lf", function()
+    vim.keymap.set("n", "<leader>lf", function()
       lib_format.lsp_format(bufnr)
     end, { desc = "Format", buffer = true })
-    map("n", "<leader>lF", function()
+    vim.keymap.set("n", "<leader>lF", function()
       vim.cmd.LspToggleAutoFormat()
     end, { desc = "Toggle AutoFormat", buffer = true })
   end
 
   if client.server_capabilities.documentRangeFormattingProvider then
-    map("v", "<leader>lf", function()
-      require("lib_format").lsp_format(bufnr)
+    local lib_format = require "lib.format"
+    vim.keymap.set("v", "<leader>lf", function()
+      lib_format.lsp_format(bufnr)
     end, { desc = "Range format", buffer = true })
   end
 
@@ -271,9 +187,9 @@ local M = {
       "mason.nvim",
       "mason-lspconfig.nvim",
     },
-    keys = {
-      { "<leader>l", nil, desc = "LSP" },
-    },
+    -- keys = {
+    --   { "<leader>l", nil, desc = "LSP" },
+    -- },
     config = function()
       local lspconfig = require "lspconfig"
       local lsputil = require "lspconfig.util"
@@ -294,6 +210,15 @@ local M = {
           return git_root
         end
       }))
+
+      vim.keymap.set("n", "<leader>l", function() end, { desc = "LSP" })
+      -- Global Diagnostics keymaps
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next [d]iagnostic" })
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev [d]iagnostic" })
+      vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Open float" })
+      vim.keymap.set("n", "<leader>ld",
+        require("telescope.builtin").diagnostics or vim.diagnostic.setloclist
+        , { desc = "QF [d]iagnostics" })
     end,
   },
 
@@ -302,8 +227,6 @@ local M = {
     cmd = "Mason",
     opts = function(_, o)
       local icons = require "lib.icons"
-
-      o.install_root_dir = vim.fn.stdpath "data" .. "/mason"
 
       o.ui = {
         border = "rounded",
@@ -315,14 +238,10 @@ local M = {
           package_uninstalled = icons.package_manager.removed_sym,
         },
         keymaps = {
-          -- Keymap to uninstall a server
           uninstall_package = "D",
-        },
+        }
       }
-      o.registries = {
-        "github:mason-org/mason-registry",
-      }
-    end,
+    end
   },
 
   {
@@ -464,6 +383,7 @@ local M = {
             settings = {
               yaml = {
                 schemaDownload = { enable = true },
+                schemas = require('schemastore').yaml.schemas(),
                 validate = true,
                 schemaStore = {
                   enable = true,
@@ -473,16 +393,16 @@ local M = {
             }
           }))
         end,
-        ["sqls"] = function()
-          lspconfig.sqls.setup(
-            vim.tbl_deep_extend("force", default_lsp_config, {
-              on_attach = function(client, bufnr)
-                custom_attach(client, bufnr)
-                require "sqls".on_attach(client, bufnr)
-              end,
-            })
-          )
-        end,
+        -- ["sqls"] = function()
+        --   lspconfig.sqls.setup(
+        --     vim.tbl_deep_extend("force", default_lsp_config, {
+        --       on_attach = function(client, bufnr)
+        --         custom_attach(client, bufnr)
+        --         require "sqls".on_attach(client, bufnr)
+        --       end,
+        --     })
+        --   )
+        -- end,
         ["marksman"] = function()
           lspconfig.marksman.setup(
             vim.tbl_deep_extend("force", default_lsp_config, {
@@ -748,9 +668,10 @@ local M = {
     "ray-x/go.nvim",
     event = { "CmdlineEnter" },
     ft = { "go", 'gomod' },
+    enabled = false,
     dependencies = { -- optional packages
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
+      "nvim-lspconfig",
+      "nvim-treesitter",
     },
     config = function()
       require("go").setup()
@@ -762,27 +683,27 @@ local M = {
   -- Java
   {
     "mfussenegger/nvim-jdtls",
-    dependencies = { "mfussenegger/nvim-dap" },
+    dependencies = { "nvim-dap" },
     ft = "java",
   },
 
   -- SQL
   {
     "nanotee/sqls.nvim",
-    enabled = false,
+    enabled = false, -- disabled for now (using nvim-dbee for manage DBs)
     ft = { "sql", "mysql" },
-    config = function()
-      vim.keymap.set("n", "<localleader>s", "<cmd>SqlsShowDatabases<cr>",
-        { desc = "SqlsShowDatabases", buffer = 0 })
-      vim.keymap.set("n", "<localleader>S", "<cmd>SqlsShowSchemas<cr>",
-        { desc = "SqlsShowSchemas", buffer = 0 })
-      vim.keymap.set("n", "<localleader>t", "<cmd>SqlsShowTables<cr>",
-        { desc = "SqlsShowTables", buffer = 0 })
-      vim.keymap.set("n", "<localleader>c", "<cmd>SqlsShowConnections<cr>",
-        { desc = "SqlsShowConnections", buffer = 0 })
-      vim.keymap.set("n", "<localleader>C", "<cmd>SqlsSwitchConnection<cr>",
-        { desc = "SqlsSwitchConnection", buffer = 0 })
-    end
+    -- config = function()
+    --   vim.keymap.set("n", "<localleader>s", "<cmd>SqlsShowDatabases<cr>",
+    --     { desc = "SqlsShowDatabases", buffer = 0 })
+    --   vim.keymap.set("n", "<localleader>S", "<cmd>SqlsShowSchemas<cr>",
+    --     { desc = "SqlsShowSchemas", buffer = 0 })
+    --   vim.keymap.set("n", "<localleader>t", "<cmd>SqlsShowTables<cr>",
+    --     { desc = "SqlsShowTables", buffer = 0 })
+    --   vim.keymap.set("n", "<localleader>c", "<cmd>SqlsShowConnections<cr>",
+    --     { desc = "SqlsShowConnections", buffer = 0 })
+    --   vim.keymap.set("n", "<localleader>C", "<cmd>SqlsSwitchConnection<cr>",
+    --     { desc = "SqlsSwitchConnection", buffer = 0 })
+    -- end
   },
 
   -- Scala
@@ -792,14 +713,14 @@ local M = {
     enabled = false,
     dependencies = {
       "plenary.nvim",
-      "mfussenegger/nvim-dap",
+      "nvim-dap",
     },
   },
 
   -- Json
   {
     "b0o/SchemaStore.nvim",
-    ft = "json",
+    ft = { "json", "yml" },
   }
 }
 

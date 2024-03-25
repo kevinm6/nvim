@@ -1,44 +1,44 @@
-local M = {}
+local hex_utils = {}
 
-function M.drop_undo_history()
+function hex_utils.drop_undo_history()
   local undolevels = vim.o.undolevels
   vim.o.undolevels = -1
   vim.cmd [[exe "normal a \<BS>\<Esc>"]]
   vim.o.undolevels = undolevels
 end
 
-function M.dump_to_hex(hex_dump_cmd)
+function hex_utils.dump_to_hex(hex_dump_cmd)
   vim.b['hex'] = true
   -- vim.cmd([[%! ]] .. hex_dump_cmd)
   vim.cmd([[%! ]] .. hex_dump_cmd .. " \"" .. vim.fn.expand('%:p') .. "\"")
   vim.b['hex_ft'] = vim.bo.ft
   vim.bo.ft = 'xxd'
-  M.drop_undo_history()
-  M.dettach_all_lsp_clients_from_current_buf()
+  hex_utils.drop_undo_history()
+  hex_utils.dettach_all_lsp_clients_from_current_buf()
   vim.cmd [[LspStop]]
   vim.bo.mod = false
 end
 
-function M.assemble_from_hex(hex_assemble_cmd)
+function hex_utils.assemble_from_hex(hex_assemble_cmd)
   vim.cmd([[%! ]] .. hex_assemble_cmd)
   vim.bo.ft = vim.b['hex_ft']
-  M.drop_undo_history()
+  hex_utils.drop_undo_history()
   vim.bo.mod = false
   vim.b['hex'] = false
 end
 
-function M.begin_patch_from_hex(hex_assemble_cmd)
+function hex_utils.begin_patch_from_hex(hex_assemble_cmd)
   vim.b['hex_cur_pos'] = vim.fn.getcurpos()
   vim.cmd([[%! ]] .. hex_assemble_cmd)
 end
 
-function M.finish_patch_from_hex(hex_dump_cmd)
+function hex_utils.finish_patch_from_hex(hex_dump_cmd)
   vim.cmd([[%! ]] .. hex_dump_cmd)
   vim.fn.setpos('.', vim.b.hex_cur_pos)
   vim.bo.mod = true
 end
 
-function M.is_program_executable(program)
+function hex_utils.is_program_executable(program)
   if vim.fn.executable(program) == 1 then
     return true
   else
@@ -48,7 +48,8 @@ function M.is_program_executable(program)
   end
 end
 
-function M.dettach_all_lsp_clients_from_current_buf()
+function hex_utils.dettach_all_lsp_clients_from_current_buf()
+  -- TODO: remove check after update to nvim-0.10
   local attached_servers = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
   or vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })
   for _, attached_server in ipairs(attached_servers) do
@@ -56,4 +57,4 @@ function M.dettach_all_lsp_clients_from_current_buf()
   end
 end
 
-return M
+return hex_utils

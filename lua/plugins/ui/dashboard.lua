@@ -98,9 +98,9 @@ local M = {
       db_btn(
         "f",
         icons.documents.Files .. " Find file",
-        "<cmd>lua require 'telescope.builtin'.find_files()<CR>"
+        "<cmd>lua require 'lib.utils'.find_files()<CR>"
       ),
-      db_btn("r", icons.ui.History .. " Recent files", "<cmd>lua require 'telescope.builtin'.oldfiles()<CR>"),
+      db_btn("r", icons.ui.History .. " Recent files", "<cmd>lua require 'lib.utils'.recent_files()<CR>"),
       db_btn(
         "R",
         icons.git.Repo .. " Find project",
@@ -108,18 +108,8 @@ local M = {
       ),
       db_btn("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "lib.utils".dev_folder()<CR>]]),
       db_btn("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
-      db_btn(
-        "P",
-        icons.ui.Plugin .. " Plugins config",
-        [[<cmd>lua require "oil".open_float(vim.fn.expand "$NVIMDOTDIR/lua/plugins")<CR>]]
-      ),
       db_btn("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
       db_btn("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
-      db_btn(
-        "D",
-        icons.ui.Lock .. " Dotfiles",
-        [[<cmd>lua require "oil".open_float(vim.fn.expand "$DOTFILES")<CR>]]
-      ),
       db_btn("H", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
       db_btn("c", icons.documents.Files .. " Close", "<cmd>Alpha<CR>"),
       db_btn("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),
