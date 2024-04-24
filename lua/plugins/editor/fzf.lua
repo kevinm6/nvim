@@ -8,8 +8,8 @@
 
 local M = {
   "ibhagwan/fzf-lua",
-  cmd =  "FzfLua" ,
-  enabled = false,
+  cmd = "FzfLua",
+  -- enabled = false,
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
     {
@@ -35,62 +35,62 @@ local M = {
       -- "aboveleft vnew   : split left
       -- Only valid when using a float window
       -- (i.e. when 'split' is not defined, default)
-      height           = 0.85,            -- window height
-      width            = 0.80,            -- window width
-      row              = 0.35,            -- window row position (0=top, 1=bottom)
-      col              = 0.50,            -- window col position (0=left, 1=right)
+      height     = 0.85,       -- window height
+      width      = 0.80,       -- window width
+      row        = 0.35,       -- window row position (0=top, 1=bottom)
+      col        = 0.50,       -- window col position (0=left, 1=right)
       -- border argument passthrough to nvim_open_win(), also used
       -- to manually draw the border characters around the preview
       -- window, can be set to 'false' to remove all borders or to
       -- 'none', 'single', 'double', 'thicc' (+cc) or 'rounded' (default)
-      border           = "rounded",
+      border     = 'rounded',
       -- border           = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
       -- requires neovim > v0.9.0, passed as is to `nvim_open_win`
       -- can be sent individually to any provider to set the win title
-      -- title         = "Title",
-      -- title_pos     = "center",    -- 'left', 'center' or 'right'
-      fullscreen       = false,           -- start fullscreen?
-      preview = {
+      title      = "Fzf",
+      title_pos  = "center",    -- 'left', 'center' or 'right'
+      fullscreen = false,       -- start fullscreen?
+      preview    = {
         -- default     = 'bat',           -- override the default previewer?
         -- default uses the 'builtin' previewer
-        border         = 'border',        -- border|noborder, applies only to
+        border       = 'border',      -- border|noborder, applies only to
         -- native fzf previewers (bat/cat/git/etc)
-        wrap           = 'nowrap',        -- wrap|nowrap
-        hidden         = 'hidden',      -- hidden|nohidden
-        vertical       = 'up:45%',      -- up|down:size
-        horizontal     = 'right:50%',     -- right|left:size
-        layout         = 'flex',          -- horizontal|vertical|flex
-        flip_columns   = 120,             -- #cols to switch to horizontal on flex
+        wrap         = 'nowrap',      -- wrap|nowrap
+        hidden       = 'hidden',      -- hidden|nohidden
+        vertical     = 'up:45%',      -- up|down:size
+        horizontal   = 'right:50%',   -- right|left:size
+        layout       = 'flex',        -- horizontal|vertical|flex
+        flip_columns = 120,           -- #cols to switch to horizontal on flex
         -- Only used with the builtin previewer:
-        title          = true,            -- preview border title (file/buf)?
-        title_pos      = "center",        -- left|center|right, title alignment
-        scrollbar      = false,         -- `false` or string:'float|border'
+        title        = true,          -- preview border title (file/buf)?
+        title_pos    = "center",      -- left|center|right, title alignment
+        scrollbar    = false,         -- `false` or string:'float|border'
         -- float:  in-window floating border
         -- border: in-border chars (see below)
-        scrolloff      = '-2',            -- float scrollbar offset from right
+        scrolloff    = '-2', -- float scrollbar offset from right
         -- applies only when scrollbar = 'float'
-        scrollchars    = {'█', '' },      -- scrollbar chars ({ <full>, <empty> }
+        scrollchars  = { '█', '' }, -- scrollbar chars ({ <full>, <empty> }
         -- applies only when scrollbar = 'border'
-        delay          = 100,             -- delay(ms) displaying the preview
+        delay        = 100, -- delay(ms) displaying the preview
         -- prevents lag on fast scrolling
-        winopts = {                       -- builtin previewer window options
-          number            = true,
-          relativenumber    = false,
-          cursorline        = true,
-          cursorlineopt     = 'both',
-          cursorcolumn      = false,
-          signcolumn        = 'no',
-          list              = false,
-          foldenable        = false,
-          foldmethod        = 'manual',
+        winopts      = { -- builtin previewer window options
+          number         = true,
+          relativenumber = false,
+          cursorline     = true,
+          cursorlineopt  = 'both',
+          cursorcolumn   = false,
+          signcolumn     = 'no',
+          list           = false,
+          foldenable     = false,
+          foldmethod     = 'manual',
         },
       },
-      on_create = function()
+      on_create  = function()
         -- called once upon creation of the fzf main window
         -- can be used to add custom fzf-lua mappings, e.g:
-          vim.keymap.set("t", "<C-k>", "<Up>", { silent = true, buffer = true })
-          vim.keymap.set("t", "<C-j>", "<Down>", { silent = true, buffer = true })
-          -- vim.keymap.set("t", "<Esc>", "<Esc>", { silent = true, buffer = true })
+        vim.keymap.set("t", "<C-k>", "<Up>", { silent = true, buffer = true })
+        vim.keymap.set("t", "<C-j>", "<Down>", { silent = true, buffer = true })
+        -- vim.keymap.set("t", "<Esc>", "<Esc>", { silent = true, buffer = true })
       end,
       -- called once *after* the fzf interface is closed
       -- on_close = function() ... end
@@ -102,32 +102,32 @@ local M = {
       -- delete or modify is sufficient
       builtin = {
         -- neovim `:tmap` mappings for the fzf win
-        ["?"]                                        = "toggle-help",
-        ["<F2>"]                                     = "toggle-fullscreen",
+        ["?"]     = "toggle-help",
+        ["<F2>"]  = "toggle-fullscreen",
         -- Only valid with the 'builtin' previewer
-        ["<F3>"]                                     = "toggle-preview-wrap",
-        ["<C-y>"]                                    = "toggle-preview",
+        ["<F3>"]  = "toggle-preview-wrap",
+        ["<C-y>"] = "toggle-preview",
         -- Rotate preview clockwise/counter-clockwise
-        ["<F5>"]                                     = "toggle-preview-ccw",
-        ["<F6>"]                                     = "toggle-preview-cw",
-        ["<C-f>"]                                    = "preview-page-down",
-        ["<C-b>"]                                    = "preview-page-up",
+        ["<F5>"]  = "toggle-preview-ccw",
+        ["<F6>"]  = "toggle-preview-cw",
+        ["<C-f>"] = "preview-page-down",
+        ["<C-b>"] = "preview-page-up",
       },
       fzf = {
         -- fzf '--bind=' options
-        ["ctrl-l"]      = "accept",
-        ["ctrl-e"]      = "abort",
-        ["ctrl-u"]      = "unix-line-discard",
-        ["ctrl-f"]      = "half-page-down",
-        ["ctrl-b"]      = "half-page-up",
-        ["alt-a"]       = "toggle-all",
+        ["ctrl-l"]    = "accept",
+        ["ctrl-e"]    = "abort",
+        ["ctrl-u"]    = "unix-line-discard",
+        ["ctrl-f"]    = "half-page-down",
+        ["ctrl-b"]    = "half-page-up",
+        ["alt-a"]     = "toggle-all",
         -- Only valid with fzf previewers (bat/cat/git/etc)
-        ["f3"]          = "toggle-preview-wrap",
-        ["ctrl-y"]      = "toggle-preview",
-        ["ctrl-F"]      = "preview-page-down",
-        ["ctrl-B"]      = "preview-page-up",
-        ["shift-tab"]   = "toggle+up",
-        tab             = "toggle+down"
+        ["f3"]        = "toggle-preview-wrap",
+        ["ctrl-y"]    = "toggle-preview",
+        ["ctrl-F"]    = "preview-page-down",
+        ["ctrl-B"]    = "preview-page-up",
+        ["shift-tab"] = "toggle+up",
+        tab           = "toggle+down"
       },
     }
     o.actions = {
@@ -143,23 +143,25 @@ local M = {
         -- or sends multiple selection to quickfix
         -- replace the default action with the below
         -- to open all files whether single or multiple
-        ["default"]     = actions.file_edit_or_qf,
-        ["ctrl-l"]      = actions.file_edit_or_qf,
-        ["ctrl-s"]      = actions.file_split,
-        ["ctrl-v"]      = actions.file_vsplit,
-        ["ctrl-t"]      = actions.file_tabedit,
-        ["alt-q"]       = actions.file_sel_to_qf,
-        ["alt-l"]       = actions.file_sel_to_ll,
+        ["default"] = actions.file_edit_or_qf,
+        ["ctrl-l"]  = actions.file_edit_or_qf,
+        ["ctrl-s"]  = actions.file_split,
+        ["ctrl-v"]  = actions.file_vsplit,
+        ["ctrl-t"]  = actions.file_tabedit,
+        ["ctrl-q"]  = actions.file_sel_to_qf,
+        ["alt-q"]   = actions.file_sel_to_qf,
+        ["alt-l"]   = actions.file_sel_to_ll,
       },
       buffers = {
         -- providers that inherit these actions:
         --   buffers, tabs, lines, blines
-        ["default"]     = actions.buf_edit,
-        ["ctrl-l"]      = actions.buf_edit,
-        ["ctrl-s"]      = actions.buf_split,
-        ["ctrl-v"]      = actions.buf_vsplit,
-        ["ctrl-t"]      = actions.buf_tabedit,
-        ["ctrl-x"]      = actions.buf_del,
+        ["default"] = actions.buf_edit,
+        ["ctrl-l"]  = actions.buf_edit,
+        ["ctrl-s"]  = actions.buf_split,
+        ["ctrl-v"]  = actions.buf_vsplit,
+        ["ctrl-t"]  = actions.buf_tabedit,
+        ["ctrl-q"]  = actions.file_sel_to_qf,
+        ["ctrl-x"]  = actions.buf_del,
       }
     }
     o.fzf_opts = {
@@ -168,10 +170,10 @@ local M = {
       -- set to '' for a non-value flag
       -- for raw args use `fzf_args` instead
       -- ["--ansi"]        = "",
-      ["--info"]        = "inline",
+      ["--info"]   = "inline",
       -- ["--height"]      = "60%",
-      ["--layout"]      = "default",
-      ["--border"]      = "none",
+      ["--layout"] = "default",
+      ["--border"] = "none",
     }
     -- Only used when fzf_bin = "fzf-tmux", by default opens as a
     -- popup 80% width, 80% height (note `-p` requires tmux > 3.2)
@@ -195,38 +197,38 @@ local M = {
   }, ]]
     o.previewers = {
       cat = {
-        cmd             = "cat",
-        args            = "--number",
+        cmd  = "cat",
+        args = "--number",
       },
       bat = {
-        cmd             = "bat",
-        args            = "--color=always --style=numbers,changes",
+        cmd  = "bat",
+        args = "--color=auto --style=numbers,changes",
         -- uncomment to set a bat theme, `bat --list-themes`
         -- theme           = 'Coldark-Dark',
       },
       head = {
-        cmd             = "head",
-        args            = nil,
+        cmd  = "head",
+        args = nil,
       },
       git_diff = {
         -- if required, use `{file}` for argument positioning
         -- e.g. `cmd_modified = "git diff --color HEAD {file} | cut -c -30"`
-        cmd_deleted     = "git diff --color HEAD --",
-        cmd_modified    = "git diff --color HEAD",
-        cmd_untracked   = "git diff --color --no-index /dev/null",
+        cmd_deleted   = "git diff --color HEAD --",
+        cmd_modified  = "git diff --color HEAD",
+        cmd_untracked = "git diff --color --no-index /dev/null",
         -- git-delta is automatically detected as pager, set `pager=false`
         -- to disable, can also be set under 'git.status.preview_pager'
       },
       man = {
         -- NOTE: remove the `-c` flag when using man-db
         -- replace with `man -P cat %s | col -bx` on OSX
-        cmd             = "man -P cat %s | col -bx",
+        cmd = "man -P cat %s | col -bx",
       },
       builtin = {
         syntax          = true,         -- preview syntax highlight?
         syntax_limit_l  = 0,            -- syntax limit (lines), 0=nolimit
-        syntax_limit_b  = 1024*1024,    -- syntax limit (bytes), 0=nolimit
-        limit_b         = 1024*1024*10, -- preview limit (bytes), 0=nolimit
+        syntax_limit_b  = 1024 * 1024,  -- syntax limit (bytes), 0=nolimit
+        limit_b         = 1024 * 1024 * 10, -- preview limit (bytes), 0=nolimit
         -- previewer treesitter options:
         -- enable specific filetypes with: `{ enable = { "lua" } }
         -- exclude specific filetypes with: `{ disable = { "lua" } }
@@ -242,15 +244,15 @@ local M = {
         -- preview extensions using a custom shell command:
         -- for example, use `viu` for image previews
         -- will do nothing if `viu` isn't executable
-        -- extensions      = {
-        --   BUG: kitty not working due to: https://github.com/kovidgoyal/kitty/issues/413
-        --
-        --   -- neovim terminal only supports `viu` block output
-        --   -- by default the filename is added as last argument
-        --   -- if required, use `{file}` for argument positioning
-        --   ["png"]       = { "kitty +kitten icat" },
-        --   ["jpg"]       = { "kitty +kitten icat" },
-        -- },
+        extensions      = {
+          --   BUG: kitty not working due to: https://github.com/kovidgoyal/kitty/issues/413
+          --
+          --   -- neovim terminal only supports `viu` block output
+          --   -- by default the filename is added as last argument
+          --   -- if required, use `{file}` for argument positioning
+          ["png"] = { "kitty +kitten icat" },
+          ["jpg"] = { "kitty +kitten icat" },
+        },
         -- if using `ueberzug` in the above extensions map
         -- set the default image scaler, possible scalers:
         --   false (none), "crop", "distort", "fit_contain",
@@ -294,30 +296,24 @@ local M = {
       -- previewer      = "bat",          -- uncomment to override previewer
       -- (name from 'previewers' table)
       -- set to 'false' to disable
-      prompt            = icons.lsp.buffer..' Files❯ ',
-      multiprocess      = true,           -- run command in a separate process
-      git_icons         = false,           -- show git icons?
-      file_icons        = true,           -- show file icons?
-      color_icons       = true,           -- colorize file|git icons
+      prompt             = icons.documents.Files .. ' Files❯ ',
+      -- git_icons         = false,           -- show git icons?
       -- path_shorten   = 1,              -- 'true' or number, shorten path?
       -- executed command priority is 'cmd' (if exists)
       -- otherwise auto-detect prioritizes `fd`:`rg`:`find`
       -- default options are controlled by 'fd|rg|find|_opts'
       -- NOTE: 'find -printf' requires GNU find
       -- cmd            = "find . -type f -printf '%P\n'",
-      find_opts         = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
-      rg_opts           = "--color=never --files --hidden --follow -g '!.git'",
-      fd_opts           = "--color=never --type f --hidden --follow --exclude .git",
+      -- find_opts         = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
+      -- rg_opts           = "--color=never --files --hidden --follow -g '!.git'",
+      fd_opts            = [[--color=never --type f --hidden --follow --exclude 'Icon?' '.DS_Store']],
       -- by default, cwd appears in the header only if {opts} contain a cwd
       -- parameter to a different folder than the current working directory
       -- uncomment if you wish to force display of the cwd as part of the
       -- query prompt string (fzf.vim style), header line or both
-      -- cwd_header = true,
-      cwd_prompt             = true,
-      cwd_prompt_shorten_len = 32,        -- shorten prompt beyond this length
-      cwd_prompt_shorten_val = 1,         -- shortened path parts length
-      toggle_ignore_flag = "--no-ignore", -- flag toggled in `actions.toggle_ignore`
-      actions = {
+      -- cwd_header             = false,
+      toggle_ignore_flag = "--no-ignore",     -- flag toggled in `actions.toggle_ignore`
+      actions            = {
         -- inherits from 'actions.files', here we can override
         -- or set bind to 'false' to disable a default action
         -- ["default"]   = actions.file_edit,
@@ -328,41 +324,50 @@ local M = {
         -- custom actions are available too
         -- ["ctrl-y"]    = function(selected) print(selected[1]) end,
         -- action to toggle `--no-ignore`, requires fd or rg installed
-        ["ctrl-l"]    = function(selected) print(selected[1]) end,
-        ["ctrl-g"]    = { actions.toggle_ignore },
+        ["ctrl-l"] = actions.file_edit,
+        ["ctrl-g"] = { actions.toggle_ignore },
+      },
+      winopts            = {
+        title = "FindFiles❯ ",
+        height = 0.4,
       }
     }
     o.git = {
       files = {
-        prompt        = 'GitFiles❯ ',
-        cmd           = 'git ls-files --exclude-standard',
-        multiprocess  = true,           -- run command in a separate process
-        git_icons     = true,           -- show git icons?
-        file_icons    = true,           -- show file icons?
-        color_icons   = true,           -- colorize file|git icons
+        prompt       = 'GitFiles❯ ',
+        prompt_pos   = "center",
+        cmd          = 'git ls-files --exclude-standard',
+        multiprocess = true,  -- run command in a separate process
+        git_icons    = true,  -- show git icons?
+        file_icons   = true,  -- show file icons?
+        color_icons  = true,  -- colorize file|git icons
         -- force display the cwd header line regardles of your current working
         -- directory can also be used to hide the header when not wanted
         -- cwd_header = true
-        winopts = { height = 0.8, width = 0.6 }
+        winopts      = {
+          title = 'GitFiles',
+          height = 0.8,
+          width = 0.6
+        }
       },
       status = {
-        prompt        = 'GitStatus❯ ',
-        cmd           = "git -c color.status=false status -su",
-        multiprocess  = true,           -- run command in a separate process
-        file_icons    = true,
-        git_icons     = true,
-        color_icons   = true,
-        previewer     = "git_diff",
+        prompt       = 'GitStatus❯ ',
+        cmd          = "git -c color.status=false status -su",
+        multiprocess = true,  -- run command in a separate process
+        file_icons   = true,
+        git_icons    = true,
+        color_icons  = true,
+        previewer    = "git_diff",
         -- git-delta is automatically detected as pager, uncomment to disable
         -- preview_pager = false,
-        actions = {
+        actions      = {
           -- actions inherit from 'actions.files' and merge
           ["right"]  = { fn = actions.git_unstage, reload = true },
           ["left"]   = { fn = actions.git_stage, reload = true },
           ["ctrl-x"] = { fn = actions.git_reset, reload = true },
-          ["ctrl-s"]  = { fn = actions.git_stage_unstage, reload = true },
+          ["ctrl-s"] = { fn = actions.git_stage_unstage, reload = true },
         },
-        winopts = { height = 0.8, width = 0.6 }
+        winopts      = { height = 0.8, width = 0.6 }
         -- If you wish to use a single stage|unstage toggle instead
         -- using 'ctrl-s' modify the 'actions' table as shown below
         -- actions = {
@@ -373,9 +378,10 @@ local M = {
         -- },
       },
       commits = {
-        prompt        = 'Commits❯ ',
-        cmd           = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset'",
-        preview       = "git show --color {1}",
+        prompt  = 'Commits❯ ',
+        cmd     =
+        "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset'",
+        preview = "git show --color {1}",
         -- git-delta is automatically detected as pager, uncomment to disable
         -- preview_pager = false,
         actions = {
@@ -386,14 +392,15 @@ local M = {
         winopts = { height = 0.8, width = 0.6 }
       },
       bcommits = {
-        prompt        = 'BCommits❯ ',
+        prompt  = 'BCommits❯ ',
         -- default preview shows a git diff vs the previous commit
         -- if you prefer to see the entire commit you can use:
         --   git show --color {1} --rotate-to={file}
         --   {1}    : commit SHA (fzf field index expression)
         --   {file} : filepath placement within the commands
-        cmd           = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' {file}",
-        preview       = "git show --color {1} -- {file}",
+        cmd     =
+        "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' {file}",
+        preview = "git show --color {1} -- {file}",
         -- git-delta is automatically detected as pager, uncomment to disable
         -- preview_pager = false,
         actions = {
@@ -405,10 +412,10 @@ local M = {
         },
       },
       branches = {
-        prompt   = 'Branches❯ ',
-        cmd      = "git branch --all --color",
-        preview  = "git log --graph --pretty=oneline --abbrev-commit --color {1}",
-        actions  = {
+        prompt  = icons.git.Branch .. ' Branches❯ ',
+        cmd     = "git branch --all --color",
+        preview = "git log --graph --pretty=oneline --abbrev-commit --color {1}",
+        actions = {
           ["default"] = actions.git_switch,
         },
         winopts = { height = 0.4, width = 0.5 }
@@ -416,21 +423,21 @@ local M = {
       tags = {
         prompt   = "Tags> ",
         cmd      = "git for-each-ref --color --sort=-taggerdate --format "
-          .. "'%(color:yellow)%(refname:short)%(color:reset) "
-          .. "%(color:green)(%(taggerdate:relative))%(color:reset)"
-          .. " %(subject) %(color:blue)%(taggername)%(color:reset)' refs/tags",
+            .. "'%(color:yellow)%(refname:short)%(color:reset) "
+            .. "%(color:green)(%(taggerdate:relative))%(color:reset)"
+            .. " %(subject) %(color:blue)%(taggername)%(color:reset)' refs/tags",
         preview  = "git log --graph --color --pretty=format:'%C(yellow)%h%Creset "
-          .. "%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' {1}",
+            .. "%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' {1}",
         fzf_opts = { ["--no-multi"] = "" },
         actions  = { ["default"] = actions.git_checkout },
       },
       stash = {
-        prompt          = 'Stash> ',
-        cmd             = "git --no-pager stash list",
-        preview         = "git --no-pager stash show --patch --color {1}",
-        actions = {
-          ["default"]   = actions.git_stash_apply,
-          ["ctrl-x"]    = { fn = actions.git_stash_drop, reload = true },
+        prompt   = 'Stash> ',
+        cmd      = "git --no-pager stash list",
+        preview  = "git --no-pager stash show --patch --color {1}",
+        actions  = {
+          ["default"] = actions.git_stash_apply,
+          ["ctrl-x"]  = { fn = actions.git_stash_drop, reload = true },
         },
         fzf_opts = {
           ["--no-multi"]  = '',
@@ -438,13 +445,13 @@ local M = {
         },
       },
       icons = {
-        ["M"]           = { icon = "M", color = "yellow" },
-        ["D"]           = { icon = "D", color = "red" },
-        ["A"]           = { icon = "A", color = "green" },
-        ["R"]           = { icon = "R", color = "yellow" },
-        ["C"]           = { icon = "C", color = "yellow" },
-        ["T"]           = { icon = "T", color = "magenta" },
-        ["?"]           = { icon = "?", color = "magenta" },
+        ["M"] = { icon = icons.git.unstaged, color = "yellow" },
+        ["D"] = { icon = icons.git.deleted, color = "red" },
+        ["A"] = { icon = icons.git.staged, color = "green" },
+        ["R"] = { icon = icons.git.Rename, color = "yellow" },
+        ["C"] = { icon = "C", color = "yellow" },
+        ["T"] = { icon = "T", color = "magenta" },
+        ["?"] = { icon = icons.git.untracked, color = "magenta" },
         -- override git icons?
         -- ["M"]        = { icon = "★", color = "red" },
         -- ["D"]        = { icon = "✗", color = "red" },
@@ -452,24 +459,25 @@ local M = {
       },
     }
     o.grep = {
-      prompt            = 'Rg❯ ',
-      input_prompt      = 'Grep For❯ ',
-      multiprocess      = true,           -- run command in a separate process
-      git_icons         = true,           -- show git icons?
-      file_icons        = true,           -- show file icons?
-      color_icons       = true,           -- colorize file|git icons
+      prompt       = 'Rg❯ ',
+      input_prompt = 'Grep For❯ ',
+      git_icons    = true,      -- show git icons?
+      file_icons   = true,      -- show file icons?
+      color_icons  = true,      -- colorize file|git icons
       -- executed command priority is 'cmd' (if exists)
       -- otherwise auto-detect prioritizes `rg` over `grep`
       -- default options are controlled by 'rg|grep_opts'
       -- cmd            = "rg --vimgrep",
-      grep_opts         = "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e",
-      rg_opts           = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+      grep_opts    =
+      "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e",
+      rg_opts      =
+      "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
       -- set to 'true' to always parse globs in both 'grep' and 'live_grep'
       -- search strings will be split using the 'glob_separator' and translated
       -- to '--iglob=' arguments, requires 'rg'
       -- can still be used when 'false' by calling 'live_grep_glob' directly
-      rg_glob           = false,        -- default to glob parsing?
-      glob_flag         = "--iglob",    -- for case sensitive globs use '--glob' glob_separator    = "%s%-%-",     -- query separator pattern (lua): ' --'
+      rg_glob      = false,          -- default to glob parsing?
+      glob_flag    = "--iglob",      -- for case sensitive globs use '--glob' glob_separator    = "%s%-%-",     -- query separator pattern (lua): ' --'
       -- advanced usage: for custom argument parsing define
       -- 'rg_glob_fn' to return a pair:
       --   first returned argument is the new search query
@@ -478,81 +486,86 @@ local M = {
       --   ...
       --   return new_query, flags
       -- end,
-      actions = {
+      actions      = {
         -- actions inherit from 'actions.files' and merge
         -- this action toggles between 'grep' and 'live_grep'
-        ["ctrl-g"]      = { actions.grep_lgrep }
+        ["ctrl-g"] = { actions.grep_lgrep }
       },
-      no_header             = false,    -- hide grep|cwd header?
-      no_header_i           = false,    -- hide interactive header?
+      no_header    = false,          -- hide grep|cwd header?
+      no_header_i  = false,          -- hide interactive header?
     }
     o.args = {
-      prompt            = 'Args❯ ',
-      files_only        = true,
+      prompt     = 'Args❯ ',
+      files_only = true,
       -- actions inherit from 'actions.files' and merge
-      actions           = { ["ctrl-x"] = { fn = actions.arg_del, reload = true } },
+      actions    = { ["ctrl-x"] = { fn = actions.arg_del, reload = true } },
     }
     o.oldfiles = {
-      prompt            = icons.package_manager.working_sym..' OldFiles❯ ',
-      cwd_only          = false,
-      stat_file         = true,         -- verify files exist on disk
-      include_current_session = false,  -- include bufs from current session
-      -- actions = {
-      --   ["enter"]      = "file-edit-or-qf",
-      --   ["<C-l>"]      = "file-edit-or-qf"
-      -- }
+      prompt                  = icons.package_manager.working_sym .. ' OldFiles❯ ',
+      cwd_only                = false,
+      stat_file               = true,  -- verify files exist on disk
+      include_current_session = false, -- include bufs from current session
+      actions                 = {
+        -- ["enter"]      = "file-edit-or-qf",
+        ["ctrl-l"] = "file-edit-or-qf"
+      },
+      winopts                 = {
+        height = 0.8,
+        width = 0.6,
+      }
     }
     o.buffers = {
-      prompt            = icons.ui.List..' Buffers❯ ',
-      file_icons        = true,         -- show file icons?
-      color_icons       = true,         -- colorize file|git icons
-      sort_lastused     = true,         -- sort buffers() by last used
-      show_unloaded     = true,         -- show unloaded buffers
-      cwd_only          = false,        -- buffers for the cwd only
-      cwd               = nil,          -- buffers list for a given dir
-      actions = {
+      -- prompt            = icons.ui.List..' Buffers❯ ',
+      promp_header          = false,
+      -- show_unloaded     = false,         -- show unloaded buffers
+      ignore_current_buffer = true,
+      cwd_only              = false, -- buffers for the cwd only
+      cwd                   = nil, -- buffers list for a given dir
+      actions               = {
         -- actions inherit from 'actions.buffers' and merge
         -- by supplying a table of functions we're telling
         -- fzf-lua to not close the fzf window, this way we
         -- can resume the buffers picker on the same window
         -- eliminating an otherwise unaesthetic win "flash"
-        ["ctrl-x"]      = { fn = actions.buf_del, reload = true },
-        -- ["ctrl-l"]      = actions.buf_edit_or_qf
+        ["ctrl-x"] = { fn = actions.buf_del, reload = true },
+        ["ctrl-l"] = actions.buf_edit_or_qf
       },
-      winopts = {
+      winopts               = {
+        title = icons.ui.List .. ' Buffers',
         height = 0.4,
         width = 0.4
       }
     }
     o.tabs = {
-      prompt            = icons.ui.Table..' Tabs❯ ',
-      tab_title         = "Tab",
-      tab_marker        = "<<",
-      file_icons        = true,         -- show file icons?
-      color_icons       = true,         -- colorize file|git icons
-      actions = {
+      prompt      = icons.ui.Table .. ' Tabs❯ ',
+      tab_title   = "Tab",
+      tab_marker  = "<<",
+      file_icons  = true,       -- show file icons?
+      color_icons = true,       -- colorize file|git icons
+      actions     = {
         -- actions inherit from 'actions.buffers' and merge
-        ["default"]     = actions.buf_switch,
-        ["ctrl-l"]      = actions.buf_switch,
-        ["ctrl-x"]      = { fn = actions.buf_del, reload = true },
+        ["default"] = actions.buf_switch,
+        ["ctrl-l"]  = actions.buf_switch,
+        ["ctrl-x"]  = { fn = actions.buf_del, reload = true },
       },
-      fzf_opts = {
+      fzf_opts    = {
         -- hide tabnr
         ['--delimiter'] = "'[\\):]'",
         ["--with-nth"]  = '2..',
       },
-      winopts = {
+      winopts     = {
+        title = icons.ui.List .. ' Tabs',
         height = 0.4,
         width = 0.4
       }
     }
     o.lines = {
-      previewer         = "builtin",    -- set to 'false' to disable
-      prompt            = 'Lines❯ ',
-      show_unloaded     = true,         -- show unloaded buffers
-      show_unlisted     = false,        -- exclude 'help' buffers
-      no_term_buffers   = true,         -- exclude 'term' buffers
-      fzf_opts = {
+      previewer       = "builtin",   -- set to 'false' to disable
+      prompt          = 'Lines❯ ',
+      show_unloaded   = true,        -- show unloaded buffers
+      show_unlisted   = false,       -- exclude 'help' buffers
+      no_term_buffers = true,        -- exclude 'term' buffers
+      fzf_opts        = {
         -- do not include bufnr in fuzzy matching
         -- tiebreak by line no.
         ['--delimiter'] = "'[\\]:]'",
@@ -561,20 +574,20 @@ local M = {
         ["--tabstop"]   = "1",
       },
       -- actions inherit from 'actions.buffers' and merge
-      actions = {
-        ["default"]     = actions.buf_edit_or_qf,
-        ["ctrl-l"]     = actions.buf_edit_or_qf,
-        ["alt-q"]       = actions.buf_sel_to_qf,
-        ["alt-l"]       = actions.buf_sel_to_ll
+      actions         = {
+        ["default"] = actions.buf_edit_or_qf,
+        ["ctrl-l"]  = actions.buf_edit_or_qf,
+        ["alt-q"]   = actions.buf_sel_to_qf,
+        ["alt-l"]   = actions.buf_sel_to_ll
       },
     }
     o.blines = {
-      previewer         = "builtin",    -- set to 'false' to disable
-      prompt            = 'BLines❯ ',
-      show_unlisted     = true,         -- include 'help' buffers
-      no_term_buffers   = false,        -- include 'term' buffers
+      previewer       = "builtin",   -- set to 'false' to disable
+      prompt          = 'BLines❯ ',
+      show_unlisted   = true,        -- include 'help' buffers
+      no_term_buffers = false,       -- include 'term' buffers
       -- start          = "cursor"      -- start display from cursor?
-      fzf_opts = {
+      fzf_opts        = {
         -- hide filename, tiebreak by line no.
         ["--delimiter"] = "'[:]'",
         ["--with-nth"]  = '2..',
@@ -582,49 +595,51 @@ local M = {
         ["--tabstop"]   = "1",
       },
       -- actions inherit from 'actions.buffers' and merge
-      actions = {
-        ["default"]     = actions.buf_edit_or_qf,
-        ["ctrl-l"]     = actions.buf_edit_or_qf,
-        ["alt-q"]       = actions.buf_sel_to_qf,
-        ["alt-l"]       = actions.buf_sel_to_ll
+      actions         = {
+        ["default"] = actions.buf_edit_or_qf,
+        ["ctrl-l"]  = actions.buf_edit_or_qf,
+        ["alt-q"]   = actions.buf_sel_to_qf,
+        ["alt-l"]   = actions.buf_sel_to_ll
       },
     }
     o.tags = {
-      prompt                = 'Tags❯ ',
-      ctags_file            = nil,      -- auto-detect from tags-option
-      multiprocess          = true,
-      file_icons            = true,
-      git_icons             = true,
-      color_icons           = true,
+      prompt      = 'Tags❯ ',
+      ctags_file  = nil,           -- auto-detect from tags-option
+      file_icons  = true,
+      git_icons   = true,
+      color_icons = true,
       -- 'tags_live_grep' options, `rg` prioritizes over `grep`
-      rg_opts               = "--no-heading --color=always --smart-case",
-      grep_opts             = "--color=auto --perl-regexp",
-      fzf_opts              = { ["--info"] = "default", ["--tiebreak"] = "begin" },
-      actions = {
+      rg_opts     = "--no-heading --color=always --smart-case",
+      grep_opts   = "--color=auto --perl-regexp",
+      fzf_opts    = { ["--info"] = "default", ["--tiebreak"] = "begin" },
+      actions     = {
         -- actions inherit from 'actions.files' and merge
         -- this action toggles between 'grep' and 'live_grep'
-        ["ctrl-g"]          = { actions.grep_lgrep }
+        ["ctrl-g"] = { actions.grep_lgrep }
       },
-      no_header             = false,    -- hide grep|cwd header?
-      no_header_i           = false,    -- hide interactive header?
+      no_header   = false,           -- hide grep|cwd header?
+      no_header_i = false,           -- hide interactive header?
     }
     o.btags = {
-      prompt                = 'BTags❯ ',
-      ctags_file            = nil,      -- auto-detect from tags-option
-      ctags_autogen         = false,    -- dynamically generate ctags each call
-      multiprocess          = true,
-      file_icons            = false,
-      git_icons             = false,
-      rg_opts               = "--color=never --no-heading",
-      grep_opts             = "--color=never --perl-regexp",
-      fzf_opts              = { ["--info"] = "default", ["--tiebreak"] = "begin" },
+      prompt        = 'BTags❯ ',
+      ctags_file    = nil,           -- auto-detect from tags-option
+      ctags_autogen = false,         -- dynamically generate ctags each call
+      file_icons    = false,
+      git_icons     = false,
+      rg_opts       = "--color=never --no-heading",
+      grep_opts     = "--color=never --perl-regexp",
+      fzf_opts      = { ["--info"] = "default", ["--tiebreak"] = "begin" },
       -- actions inherit from 'actions.files'
     }
     o.colorschemes = {
-      prompt            = 'Colorschemes❯ ',
-      live_preview      = true,       -- apply the colorscheme on preview?
-      actions           = { ["default"] = actions.colorscheme, },
-      winopts           = { height = 0.55, width = 0.30, },
+      prompt       = 'Colorschemes❯ ',
+      live_preview = true,      -- apply the colorscheme on preview?
+      actions      = { ["default"] = actions.colorscheme, },
+      winopts      = {
+        title = 'Colorschemes',
+        height = 0.55,
+        width = 0.30
+      },
       -- uncomment to ignore colorschemes names (lua patterns)
       -- ignore_patterns   = { "^delek$", "^blue$" },
       -- uncomment to execute a callback after interface is closed
@@ -632,42 +647,42 @@ local M = {
       -- post_reset_cb     = function() ... end,
     }
     o.keymaps = {
-      prompt            = "Keymaps> ",
-      winopts           = { preview = { layout = "vertical" } },
-      fzf_opts          = { ["--tiebreak"] = "index", },
+      prompt          = "Keymaps> ",
+      winopts         = { preview = { layout = "vertical" } },
+      fzf_opts        = { ["--tiebreak"] = "index", },
       -- by default, we ignore <Plug> and <SNR> mappings
       -- set `ignore_patterns = false` to disable filtering
-      ignore_patterns   = { "^<SNR>", "^<Plug>" },
-      actions           = {
-        ["default"]     = actions.keymap_apply,
-        ["ctrl-s"]      = actions.keymap_split,
-        ["ctrl-v"]      = actions.keymap_vsplit,
-        ["ctrl-t"]      = actions.keymap_tabedit,
-        ["ctrl-l"]      = actions.keymap_apply,
+      ignore_patterns = { "^<SNR>", "^<Plug>" },
+      actions         = {
+        ["default"] = actions.keymap_apply,
+        ["ctrl-s"]  = actions.keymap_split,
+        ["ctrl-v"]  = actions.keymap_vsplit,
+        ["ctrl-t"]  = actions.keymap_tabedit,
+        ["ctrl-l"]  = actions.keymap_apply,
       },
     }
     o.quickfix = {
-      file_icons        = true,
-      git_icons         = true,
+      file_icons = true,
+      git_icons  = true,
     }
     o.quickfix_stack = {
       prompt = "Quickfix Stack> ",
-      marker = ">",                   -- current list marker
+      marker = ">", -- current list marker
     }
     o.lsp = {
-      prompt_postfix    = '❯ ',       -- will be appended to the LSP label
+      prompt_postfix     = '❯ ', -- will be appended to the LSP label
       -- to override use 'prompt' instead
-      cwd_only          = false,      -- LSP/diagnostics for cwd only?
-      async_or_timeout  = 5000,       -- timeout(ms) or 'true' for async calls
-      file_icons        = true,
-      git_icons         = false,
+      cwd_only           = false, -- LSP/diagnostics for cwd only?
+      async_or_timeout   = 5000, -- timeout(ms) or 'true' for async calls
+      file_icons         = true,
+      git_icons          = false,
       -- The equivalent of using `includeDeclaration` in lsp buf calls, e.g:
       -- :lua vim.lsp.buf.references({includeDeclaration = false})
-      includeDeclaration = true,      -- include current declaration in LSP context
+      includeDeclaration = true, -- include current declaration in LSP context
       -- settings for 'lsp_{document|workspace|lsp_live_workspace}_symbols'
-      symbols = {
-        async_or_timeout  = true,       -- symbols are async by default
-        symbol_style      = 1,          -- style for document/workspace symbols
+      symbols            = {
+        async_or_timeout = true,  -- symbols are async by default
+        symbol_style     = 1,     -- style for document/workspace symbols
         -- false: disable,    1: icon+kind
         --     2: icon only,  3: kind only
         -- NOTE: icons are extracted from
@@ -705,41 +720,41 @@ local M = {
         },
         -- colorize using Treesitter '@' highlight groups ("@function", etc).
         -- or 'false' to disable highlighting
-        symbol_hl         = function(s) return "@" .. s:lower() end,
+        symbol_hl        = function(s) return "@" .. s:lower() end,
         -- additional symbol formatting, works with or without style
-        symbol_fmt        = function(s, opts) return "[" .. s .. "]" end,
+        symbol_fmt       = function(s, opts) return "[" .. s .. "]" end,
         -- prefix child symbols. set to any string or `false` to disable
-        child_prefix      = true,
-        fzf_opts          = {
+        child_prefix     = true,
+        fzf_opts         = {
           ["--tiebreak"] = "begin",
           ["--info"]     = "default",
         },
       },
-      code_actions = {
-        prompt            = 'Code Actions> ',
-        async_or_timeout  = 5000,
+      code_actions       = {
+        prompt           = 'Code Actions> ',
+        async_or_timeout = 5000,
         -- when git-delta is installed use "codeaction_native" for beautiful diffs
         -- try it out with `:FzfLua lsp_code_actions previewer=codeaction_native`
         -- scroll up to `previewers.codeaction{_native}` for more previewer options
         previewer        = "codeaction",
-        winopts = {
+        winopts          = {
           width = 0.5,
           height = 0.4
         }
       },
-      finder = {
-        prompt      = icons.ui.Search.."LSP Finder> ",
-        fzf_opts    = { ["--info"] = "default" },
-        file_icons  = true,
-        color_icons = true,
-        git_icons   = false,
-        async       = true,         -- async by default
-        silent      = true,         -- suppress "not found"
-        separator   = "| ",         -- separator after provider prefix, `false` to disable
-        includeDeclaration = true,  -- include current declaration in LSP context
+      finder             = {
+        prompt             = icons.ui.Search .. "LSP Finder> ",
+        fzf_opts           = { ["--info"] = "default" },
+        file_icons         = true,
+        color_icons        = true,
+        git_icons          = false,
+        async              = true, -- async by default
+        silent             = true, -- suppress "not found"
+        separator          = "| ", -- separator after provider prefix, `false` to disable
+        includeDeclaration = true, -- include current declaration in LSP context
         -- by default display all LSP locations
         -- to customize, duplicate table and delete unwanted providers
-        providers   = {
+        providers          = {
           { "references",      prefix = require("fzf-lua").utils.ansi_codes.blue("ref ") },
           { "definitions",     prefix = require("fzf-lua").utils.ansi_codes.green("def ") },
           { "declarations",    prefix = require("fzf-lua").utils.ansi_codes.magenta("decl") },
@@ -751,14 +766,14 @@ local M = {
       }
     }
     o.diagnostics = {
-      prompt            = 'Diagnostics❯ ',
-      cwd_only          = false,
-      file_icons        = true,
-      git_icons         = false,
-      diag_icons        = true,
-      diag_source       = true,   -- display diag source (e.g. [pycodestyle])
-      icon_padding      = '',     -- add padding for wide diagnostics signs
-      multiline         = true,   -- concatenate multi-line diags into a single line
+      prompt       = 'Diagnostics❯ ',
+      cwd_only     = false,
+      file_icons   = true,
+      git_icons    = false,
+      diag_icons   = true,
+      diag_source  = true,      -- display diag source (e.g. [pycodestyle])
+      icon_padding = '',        -- add padding for wide diagnostics signs
+      multiline    = true,      -- concatenate multi-line diags into a single line
       -- set to `false` to display the first line only
       -- by default icons and highlights are extracted from 'DiagnosticSignXXX'
       -- and highlighted by a highlight group of the same name (which is usually
@@ -767,7 +782,7 @@ local M = {
       --   :help hl-DiagnosticSignHint'
       -- only uncomment below if you wish to override the signs/highlights
       -- define only text, texthl or both (':help sign_define()' for more info)
-      signs = {
+      signs        = {
         ["Error"] = { text = icons.diagnostics.Error, texthl = "DiagnosticError" },
         ["Warn"]  = { text = icons.diagnostics.Warning, texthl = "DiagnosticWarn" },
         ["Info"]  = { text = icons.diagnostics.Information, texthl = "DiagnosticInfo" },
@@ -783,18 +798,18 @@ local M = {
       -- severity_bound:  keep any equal or less severe (higher)
     }
     o.complete_path = {
-      cmd          = nil, -- default: auto detect fd|rg|find
-      complete     = { ["default"] = actions.complete },
+      cmd      = nil,     -- default: auto detect fd|rg|find
+      complete = { ["default"] = actions.complete },
     }
     o.complete_file = {
-      cmd          = nil, -- default: auto detect rg|fd|find
-      file_icons   = true,
-      color_icons  = true,
-      git_icons    = false,
+      cmd         = nil,  -- default: auto detect rg|fd|find
+      file_icons  = true,
+      color_icons = true,
+      git_icons   = false,
       -- actions inherit from 'actions.files' and merge
-      actions      = { ["default"] = actions.complete },
+      actions     = { ["default"] = actions.complete },
       -- previewer hidden by default
-      winopts      = { preview = { hidden = "hidden" } },
+      winopts     = { preview = { hidden = "hidden" } },
     }
     -- uncomment to use fzf native previewers
     -- (instead of using a neovim floating window)
@@ -810,7 +825,7 @@ local M = {
     }
     -- padding can help kitty term users with
     -- double-width icon rendering
-    o.file_icon_padding = ''
+    o.file_icon_padding = ' '
     -- uncomment if your terminal/font does not support unicode character
     -- 'EN SPACE' (U+2002), the below sets it to 'NBSP' (U+00A0) instead
     -- nbsp = '\xc2\xa0',
@@ -1026,6 +1041,7 @@ local M = {
       return { winopts = { height = h, width = 0.60, row = 0.40 } }
     end)
 
+    -- Redraw Fzf when resizing Vim
     vim.api.nvim_create_autocmd("VimResized", {
       pattern = '*',
       callback = function() fzf.redraw() end
