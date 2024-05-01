@@ -2,10 +2,10 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 30 Mar 2024, 17:17
+--  Last Modified: 01 May 2024, 12:36
 -----------------------------------
 
-local M = {
+return {
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
@@ -60,9 +60,6 @@ local M = {
   -- "theHamsta/nvim-dap-virtual-text",
   {
     "mfussenegger/nvim-dap",
-    -- keys = {
-    --   { "<leader>d", function() end, desc = "Dap" },
-    -- },
     config = function()
       local dap = require "dap"
 
@@ -181,7 +178,7 @@ local M = {
       }
 
 
-      -- JavaScript
+      -- Javascript / Typescript (firefox)
       local js_based_languages = {
         "typescript",
         "javascript",
@@ -272,7 +269,6 @@ local M = {
         }
       end
 
-      -- Javascript / Typescript (firefox)
       dap.adapters.firefox = {
         type = 'executable',
         command = vim.fn.stdpath('data') .. '/mason/bin/firefox-debug-adapter',
@@ -336,9 +332,10 @@ local M = {
         }
       }
 
+      local icons_dap = require "lib.icons".debug
 
       vim.fn.sign_define('DapBreakpoint', {
-        text = require("lib.icons").ui.Bug,
+        text = icons_dap.breakpoint,
         texthl = 'DiagnosticSignError',
         linehl = '',
         numhl = ''
@@ -356,19 +353,19 @@ local M = {
 
       -- set keymaps
       local function nmap(tbl)
-        vim.keymap.set("n", tbl[1], tbl[2], { desc = "DAP • "..tbl[3] })
+        vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
       end
 
-      nmap { "<localleader>d", function() end, "" }
-      nmap { "<localleader>db", dap.toggle_breakpoint, "Breakpoint" }
+      nmap { "<localleader>d", function() end, ' DAP' }
+      nmap { "<localleader>db", dap.toggle_breakpoint, icons_dap.breakpoint .. ' Breakpoint' }
       -- nmap { "<leader>dc", require "dap".continue(), "Run Debug" }
-      nmap { "<localleader>di", dap.step_into, "Into" }
-      nmap { "<localleader>do", dap.step_over, "Over" }
-      nmap { "<localleader>dO", dap.step_out, "Out" }
-      nmap { "<localleader>dr", dap.repl.toggle, "Repl" }
-      nmap { "<localleader>dl", dap.run_last, "Last" }
-      nmap { "<localleader>du", require "dapui".toggle, "UI" }
-      nmap { "<localleader>dx", dap.terminate, "Exit" }
+      nmap { "<localleader>di", dap.step_into, icons_dap.into .. ' Into' }
+      nmap { "<localleader>do", dap.step_over, icons_dap.over .. 'Over' }
+      nmap { "<localleader>dO", dap.step_out, icons_dap.out .. ' Out' }
+      nmap { "<localleader>dr", dap.repl.toggle, icons_dap.repl .. 'Repl' }
+      nmap { "<localleader>dl", dap.run_last, icons_dap.rerun .. 'Last' }
+      nmap { "<localleader>du", require "dapui".toggle, 'UI' }
+      nmap { "<localleader>dx", dap.terminate, icons_dap.stop .. 'Exit' }
 
       nmap { "<localleader>dc", function()
         if vim.fn.filereadable(".vscode/launch.json") == 1 then
@@ -380,9 +377,7 @@ local M = {
           })
         end
         dap.continue()
-      end, "Run Debug [args]" }
+      end, icons_dap.continue .. "Run Debug [args]" }
     end
   }
 }
-
-return M

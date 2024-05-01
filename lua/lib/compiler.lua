@@ -171,11 +171,17 @@ end
 ---In this way, only if user wants to compile/run the file, prompt the selection
 ---@param buf any bufId for which set keymap
 local function set_keymaps(buf)
+  local icons = require "lib.icons"
+  local function nmap(tbl)
+    vim.keymap.set("n", tbl[1], tbl[2],
+      { buffer = buf, desc = "Run❭ "..tbl[3] })
+  end
+
   vim.keymap.set(
     { "n", "v" },
     "<leader>R",
     function() end,
-    { buffer = buf, desc = "Run" }
+    { buffer = buf, desc = icons.debug.run .. " Run" }
   )
 
   local function run_file_cmd()
@@ -190,38 +196,38 @@ local function set_keymaps(buf)
     end
   end
 
-  vim.keymap.set("n", "<leader>Rr", function()
+  nmap { "<leader>Rr", function()
     local cmd = run_file_cmd()
     if run_file_cmd() then
       run_in_terminal(cmd, 'horizontal')
     end
-  end, { buffer = buf, desc = "Run File" })
+  end, "File" }
 
-  vim.keymap.set("n", "<leader>Rf", function()
+  nmap { "<leader>Rf", function()
     local cmd = run_file_cmd()
     if run_file_cmd() then
       run_in_terminal(cmd, 'float')
     end
-  end, { buffer = buf, desc = "Run in float" })
+  end, "[f]loat" }
 
-  vim.keymap.set("n", "<leader>Rv", function()
+  nmap { "<leader>Rv", function()
     local cmd = run_file_cmd()
     if run_file_cmd() then
       run_in_terminal(cmd, 'vertical')
     end
-  end, { buffer = buf, desc = "Run vertical" })
+  end, "[v]ertical" }
 
-  vim.keymap.set("n", "<leader>Rt", function()
+  nmap { "<leader>Rt", function()
     local cmd = run_file_cmd()
     if run_file_cmd() then
       run_in_terminal(cmd, 'tab')
     end
-  end, { buffer = buf, desc = "Run in tab" })
+  end, "[t]ab" }
 
-  vim.keymap.set("n", "<leader>Rc", function()
+  nmap { "<leader>Rc", function()
     vim.cmd.make()
     vim.cmd.copen()
-  end, { buffer = buf, desc = "Compile File" })
+  end, "[c]ompile File" }
 end
 
 
@@ -272,6 +278,22 @@ function compiler.set_compiler(ev)
   end
 
   set_keymaps(buf)
+end
+
+
+---Set 'keywordprg' based on filetype
+---@param filetype string filetype that triggered the autocmd
+---@return string | nil
+function compiler.set_keywordprg(filetype)
+  local custom_keywordprg = {
+    python = 'python3 -m pydoc',
+    vim = ':help',
+    html = "open https://developer.mozilla.org/search?topic=api&topic=html&q=",
+    css = "open https://developer.mozilla.org/search?topic=api&topic=css&q=",
+    javascript = "open https://developer.mozilla.org/search?topic=api&topic=js&q="
+  }
+
+  return custom_keywordprg[filetype]
 end
 
 return compiler

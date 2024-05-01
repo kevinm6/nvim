@@ -2,7 +2,7 @@
 -- File         : cheat_sheet.lua
 -- Description  : query < https://cht.sh > to get result in Neovim
 -- Author       : Kevin
--- Last Modified: 24 Mar 2024, 13:58
+-- Last Modified: 26 Apr 2024, 20:43
 -----------------------------------
 
 local cheat_sheet = {}
@@ -20,7 +20,6 @@ local opts = {
   },
 }
 
----TODO: to improve and remove deprecated code after update to nvim-0.10
 function cheat_sheet.setup(user_conf)
   opts = vim.tbl_deep_extend("force", opts, user_conf or {})
 end
@@ -103,16 +102,16 @@ function cheat_sheet.open_preview(args)
   })
 
   api.nvim_set_current_win(cheat_sheet.main_win)
-  api.nvim_win_set_option(cheat_sheet.main_win, "cursorline", true)
+  api.nvim_set_option_value('cursorline', true, { win = cheat_sheet.main_win })
   -- set background color for the window
-  api.nvim_win_set_option(cheat_sheet.main_win, "winhighlight", "Normal:CursorLine")
-  api.nvim_buf_set_option(cheat_sheet.main_buf, "filetype", filetype)
+  api.nvim_set_option_value('winhighlight', 'Normal:CursorLine', { win = cheat_sheet.main_win })
+  api.nvim_set_option_value('filetype', filetype, { buf = cheat_sheet.main_buf })
   for _, line in ipairs(output) do
     line = line:gsub("[^m]*m", "")
     api.nvim_buf_set_lines(cheat_sheet.main_buf, -1, -1, true, { line })
   end
 
-  api.nvim_buf_set_option(cheat_sheet.main_buf, "modifiable", false)
+  api.nvim_set_option_value('modifiable', false, { buf = cheat_sheet.main_buf })
 end
 
 return cheat_sheet

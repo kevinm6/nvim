@@ -2,7 +2,7 @@
 -- File         : ufo.lua
 -- Description  : ufo plugin configuration (folding)
 -- Author       : Kevin
--- Last Modified: 31 Mar 2024, 19:19
+-- Last Modified: 01 May 2024, 12:31
 -------------------------------------
 
 local ftMap = {
@@ -16,39 +16,10 @@ local ftMap = {
   [""] = ""
 }
 
-local function handler(virtText, lnum, endLnum, width, truncate)
-  local newVirtText = {}
-  local suffix = string.format(' 󰁂 %d ', endLnum - lnum)
-  local sufWidth = vim.fn.strdisplaywidth(suffix)
-  local targetWidth = width - sufWidth
-  local curWidth = 0
-  for _, chunk in ipairs(virtText) do
-    local chunkText = chunk[1]
-    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-    if targetWidth > curWidth + chunkWidth then
-      table.insert(newVirtText, chunk)
-    else
-      chunkText = truncate(chunkText, targetWidth - curWidth)
-      local hlGroup = chunk[2]
-      table.insert(newVirtText, { chunkText, hlGroup })
-      chunkWidth = vim.fn.strdisplaywidth(chunkText)
-      -- str width returned from truncate() may less than 2nd argument, need padding
-      if curWidth + chunkWidth < targetWidth then
-        suffix = suffix .. string.rep(' ', targetWidth - curWidth - chunkWidth)
-      end
-      break
-    end
-    curWidth = curWidth + chunkWidth
-  end
-  table.insert(newVirtText, { suffix, 'MoreMsg' })
-  return newVirtText
-end
-
-
-local M = {
+return {
   "kevinhwang91/nvim-ufo",
   event = "BufRead",
-  dependencies = { "luarocks" },
+  dependencies = "luarocks.nvim",
   init = function()
     vim.o.foldcolumn = 'auto'
     vim.o.foldlevel = 99
@@ -56,7 +27,7 @@ local M = {
     vim.o.foldenable = true
   end,
   opts = function(_, o)
-    o.fold_virt_text_handler = handler
+    -- o.fold_virt_text_handler = handler
 
     o.open_fold_hl_timeout = 150
     o.preview = {
@@ -88,5 +59,3 @@ local M = {
       { desc = "Close All Folds" })
   end
 }
-
-return M

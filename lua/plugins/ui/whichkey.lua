@@ -2,13 +2,12 @@
 -- File         : whichkey.lua
 -- Descriptions : WhichKey plugin config
 -- Author       : Kevin
--- Last Modified: 25 Oct 2023, 10:25
+-- Last Modified: 01 May 2024, 13:23
 -------------------------------------
 
-
-local M = {
+return {
   "folke/which-key.nvim",
-  event = "VeryLazy",
+  event = 'VeryLazy',
   opts = function(_, o)
     local icons = require "lib.icons"
 
@@ -25,8 +24,8 @@ local M = {
       group = icons.ui.List .. " ",
     }
     o.window = {
-      border = "rounded",
-      position = "bottom",
+      border = 'rounded',
+      position = 'bottom',
       margin = { 0, 3, 1, 3 }, -- extra window margin [top, right, bottom, left]
       padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
       winblend = 8,
@@ -35,10 +34,8 @@ local M = {
       height = { min = 4, max = 24 },
       width = { min = 20, max = 46 },
       spacing = 3,
-      align = "center",
+      align = 'center',
     }
     o.show_help = false
-  end,
+  end
 }
-
-return M

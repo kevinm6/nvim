@@ -8,14 +8,16 @@ function hex_utils.drop_undo_history()
 end
 
 function hex_utils.dump_to_hex(hex_dump_cmd)
-  vim.b['hex'] = true
+  vim.bo.bin = true
+  vim.b.hex = true
   -- vim.cmd([[%! ]] .. hex_dump_cmd)
   vim.cmd([[%! ]] .. hex_dump_cmd .. " \"" .. vim.fn.expand('%:p') .. "\"")
   vim.b['hex_ft'] = vim.bo.ft
+
   vim.bo.ft = 'xxd'
   hex_utils.drop_undo_history()
-  hex_utils.dettach_all_lsp_clients_from_current_buf()
-  vim.cmd [[LspStop]]
+
+  vim.lsp.stop_client(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() }))
   vim.bo.mod = false
 end
 
@@ -24,7 +26,7 @@ function hex_utils.assemble_from_hex(hex_assemble_cmd)
   vim.bo.ft = vim.b['hex_ft']
   hex_utils.drop_undo_history()
   vim.bo.mod = false
-  vim.b['hex'] = false
+  vim.b.hex = false
 end
 
 function hex_utils.begin_patch_from_hex(hex_assemble_cmd)
@@ -45,15 +47,6 @@ function hex_utils.is_program_executable(program)
     vim.notify(program .. " is not installed on this system, aborting!",
       vim.log.levels.WARN)
     return false
-  end
-end
-
-function hex_utils.dettach_all_lsp_clients_from_current_buf()
-  -- TODO: remove check after update to nvim-0.10
-  local attached_servers = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
-  or vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })
-  for _, attached_server in ipairs(attached_servers) do
-    attached_server.stop()
   end
 end
 

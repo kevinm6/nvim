@@ -2,15 +2,14 @@
 -- File         : gitsigns.lua
 -- Description  : Lua K NeoVim & VimR gitsigns config
 -- Author       : Kevin
--- Last Modified: 02 Jul 2023, 10:41
+-- Last Modified: 01 May 2024, 12:32
 -------------------------------------
 
-
-local M = {
+return {
   "lewis6991/gitsigns.nvim",
   event = "BufRead",
   keys = {
-    { "<leader>g", nil, mode = { "v", "n" }, desc = "Git" },
+    { "<leader>g", nil, mode = { "v", "n" }, desc = require "lib.icons".git.Branch .. "Git" },
   },
   opts = function(_, o)
     o.signs = {
@@ -37,21 +36,27 @@ local M = {
     }
   end,
   config = function(_, o)
-    require "gitsigns".setup(o)
+    local gitsigns = require 'gitsigns'
+    gitsigns.setup(o)
 
-    vim.keymap.set("n", "<leader>gj", function() require "gitsigns".next_hunk() end, { desc = "Next Hunk" })
-    vim.keymap.set("n", "<leader>gk", function() require "gitsigns".prev_hunk() end, { desc = "Prev Hunk" })
-    vim.keymap.set("n", "<leader>gl", function() require "gitsigns".blame_line() end, { desc = "Blame" })
-    vim.keymap.set("n", "<leader>gp", function() require "gitsigns".preview_hunk() end, { desc = "Preview Hunk" })
-    vim.keymap.set("n", "<leader>gr", function() require "gitsigns".reset_hunk() end, { desc = "Reset Hunk" })
-    vim.keymap.set("n", "<leader>gR", function() require "gitsigns".reset_buffer() end, { desc = "Reset Buffer" })
-    vim.keymap.set("n", "<leader>gS", function() require "gitsigns".stage_hunk() end, { desc = "Stage Hunk" })
-    vim.keymap.set("n", "<leader>gu", function() require "gitsigns".undo_stage_hunk() end, { desc = "Undo Stage Hunk" })
-    vim.keymap.set({ "n", "v" }, "<leader>gd", function() require "gitsigns".diff_this() end, { desc = "Diff" })
-    vim.keymap.set("n", "<leader>gt", function() require "gitsigns".toggle_current_line_blame() end, { desc = "Toggle Diff" })
-    vim.keymap.set("n", "<leader>gL", function() require "gitsigns".toggle_linehl() end, { desc = "Toggle Linehl" })
-    vim.keymap.set("n", "<leader>gW", function() require "gitsigns".toggle_word_diff() end, { desc = "Toggle Word diff" })
-    vim.keymap.set("n", "<leader>gN", function() require "gitsigns".toggle_numhl() end, { desc = "Toggle Numhl" })
+    -- Keymaps
+    local function nmap(tbl)
+      vim.keymap.set("n", tbl[1], tbl[2],
+        { desc = require "lib.icons".git.Branch .. tbl[3] })
+    end
+
+    nmap { "<leader>gj", function() gitsigns.next_hunk() end, "Next Hunk" }
+    nmap { "<leader>gk", function() gitsigns.prev_hunk() end, "Prev Hunk" }
+    nmap { "<leader>gl", function() gitsigns.blame_line() end, "Blame" }
+    nmap { "<leader>gp", function() gitsigns.preview_hunk() end, "Preview Hunk" }
+    nmap { "<leader>gr", function() gitsigns.reset_hunk() end, "Reset Hunk" }
+    nmap { "<leader>gR", function() gitsigns.reset_buffer() end, "Reset Buffer" }
+    nmap { "<leader>gS", function() gitsigns.stage_hunk() end, "Stage Hunk" }
+    nmap { "<leader>gu", function() gitsigns.undo_stage_hunk() end, "Undo Stage Hunk" }
+    nmap { "<leader>gd", function() gitsigns.diffthis() end, "Diff" }
+    nmap { "<leader>gt", function() gitsigns.toggle_current_line_blame() end, "Toggle Diff" }
+    nmap { "<leader>gL", function() gitsigns.toggle_linehl() end, "Toggle Linehl" }
+    nmap { "<leader>gW", function() gitsigns.toggle_word_diff() end, "Toggle Word diff" }
+    nmap { "<leader>gN", function() gitsigns.toggle_numhl() end, "Toggle Numhl" }
   end
 }
-return M

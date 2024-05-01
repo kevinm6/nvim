@@ -1,15 +1,15 @@
 -------------------------------------
---  File         : utils.lua
+--  File         : init.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 25 Mar 2024, 15:41
+--  Last Modified: 30 Apr 2024, 12:50
 -------------------------------------
 
-local utils = {}
+local M = {}
 
 ---toggle_option()
 ---@param option string option to toggle value
-function utils.toggle_option(option)
+function M.toggle_option(option)
   local value = not vim.api.nvim_get_option_value(option, {})
   vim.opt[option] = value
   vim.notify(option .. " set to " .. tostring(value), vim.log.levels.INFO)
@@ -17,18 +17,18 @@ end
 
 
 ---Dev FOLDER
-function utils.dev_folder()
+function M.dev_folder()
   local dev_folders = {
     vim.fn.expand "~/dev",
     vim.fn.expand "~/Documents/developer",
   }
-  local _, _ = pcall(require, "telescope")
+  pcall(require, 'telescope')
   vim.ui.select(dev_folders, {
     prompt = " > Select dev folder",
     default = nil,
   }, function(choice)
     if choice then
-      local has_oil, oil = pcall(require, "oil")
+      local has_oil, oil = pcall(require, 'oil')
       if has_oil then
         oil.open_float(choice)
       else
@@ -40,8 +40,8 @@ end
 
 
 ---Find Files
-function utils.find_files()
-  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
+function M.find_files()
+  local has_tele, tele_builtin = pcall(require, 'telescope.builtin')
   if has_tele then
     tele_builtin.find_files()
   else
@@ -59,8 +59,8 @@ function utils.find_files()
 end
 
 ---Recent Files
-function utils.recent_files()
-  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
+function M.recent_files()
+  local has_tele, tele_builtin = pcall(require, 'telescope.builtin')
   if has_tele then
     tele_builtin.oldfiles()
   else
@@ -87,7 +87,7 @@ function utils.recent_files()
 end
 
 ---Projects
-function utils.projects()
+function M.projects()
   local projs_folders = {
     vim.fn.expand "~/Documents/developer",
     vim.fn.expand "~/dev",
@@ -98,7 +98,7 @@ function utils.projects()
     vim.list_extend(projects, vim.split(vim.fn.glob(value .. "/*", true), "\n"))
   end
 
-  local _, _ = pcall(require, "telescope")
+  pcall(require, 'telescope')
   vim.ui.select(projects, {
     prompt = " > Select project",
     default = nil,
@@ -107,7 +107,7 @@ function utils.projects()
     end
   }, function(choice)
     if choice then
-      local has_oil, oil = pcall(require, "oil")
+      local has_oil, oil = pcall(require, 'oil')
       if has_oil then
         oil.open_float(choice)
       else
@@ -119,7 +119,7 @@ end
 
 
 ---Delete current buffer and view next
-function utils.delete_curr_buf_open_next()
+function M.delete_curr_buf_open_next()
   local cBuf = vim.api.nvim_get_current_buf()
   local bufs = vim.fn.getbufinfo({ buflisted = 1 }) or {}
   if #bufs ~= 0 then
@@ -142,13 +142,13 @@ end
 ---Create new file w/ input for filename
 ---useful for dashboard and so on
 ---@param cmd_input string file name\[.ext\] that it will be passed to vim.cmd.edit
-function utils.new_file(cmd_input)
+function M.new_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
     vim.ui.input({
       prompt = "Enter name[{ext}] for newfile: ",
       default = nil,
-      completion = 'filetype'
+      completion = 'dir'
     }, function(input)
       if input then
         vim.cmd.enew()
@@ -167,7 +167,7 @@ end
 
 ---Create temporary file
 ---@param cmd_input string file extension without dot prefixed
-function utils.new_tmp_file(cmd_input)
+function M.new_tmp_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
     vim.ui.input({
@@ -176,14 +176,14 @@ function utils.new_tmp_file(cmd_input)
       completion = 'filetype'
     }, function(input)
       if input then
-        local temp_file = ("%s.%s"):format(vim.fn.tempname(), input)
+        local temp_file = string.format("%s.%s", vim.fn.tempname(), input)
         vim.cmd.edit(temp_file)
         vim.cmd.write(temp_file)
         vim.cmd.startinsert()
       end
     end)
   else
-    local temp_file = ("%s.%s"):format(vim.fn.tempname(), args)
+    local temp_file = string.format("%s.%s", vim.fn.tempname(), args)
     vim.cmd.edit(temp_file)
     vim.cmd.write(temp_file)
     vim.cmd.startinsert()
@@ -191,8 +191,8 @@ function utils.new_tmp_file(cmd_input)
 end
 
 
-function utils.workon()
-  local _, _ = pcall(require, "telescope")
+function M.workon()
+  pcall(require, 'telescope')
   local config = require "lazy.core.config"
   vim.ui.select(vim.tbl_values(config.plugins), {
     prompt = "lcd to:",
@@ -212,26 +212,23 @@ end
 ---Set highlights
 ---@param hls table
 ---@see nvim_set_hl |nvim_set_hl()|
-function utils.set_highlights(hls)
+function M.set_highlights(hls)
   for group, settings in pairs(hls) do
     vim.api.nvim_set_hl(0, group, settings)
   end
 end
 
-
----Set 'keywordprg' based on filetype
----@param filetype string filetype that triggered the autocmd
----@return string | nil
-function utils.set_keywordprg(filetype)
-  local custom_keywordprg = {
-    python = 'python3 -m pydoc',
-    vim = ':help',
-    html = "open https://developer.mozilla.org/search?topic=api&topic=html&q=",
-    css = "open https://developer.mozilla.org/search?topic=api&topic=css&q=",
-    javascript = "open https://developer.mozilla.org/search?topic=api&topic=js&q="
-  }
-
-  return custom_keywordprg[filetype]
+---Shift registers
+---@param reg Register Parameter description.
+function M.shift_reg(reg)
+  ---@class Register
+  ---@field val string
+  ---@field typ string
+  for i = 8, 1, -1 do
+    local str_reg = tostring(i)
+    vim.fn.setreg(i + 1, vim.fn.getreg(str_reg), vim.fn.getregtype(str_reg))
+  end
+  vim.fn.setreg("1", reg.val, reg.typ)
 end
 
-return utils
+return M

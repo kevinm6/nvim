@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 18 Mar 2024, 10:18
+-- Last Modified: 01 May 2024, 13:23
 -------------------------------------
 
 local function parsers_to_be_installed()
@@ -10,53 +10,26 @@ local function parsers_to_be_installed()
     return {}
   else
     return {
-      "c", "comment", "cpp", "css", "dot", "dockerfile", "bash", "gitignore",
-      "gitattributes", "gitcommit", "git_rebase", "go", "vimdoc", "html", "http",
-      "json", "json5", "jsdoc", "latex", "erlang", "ruby", "lua", "java", "javascript",
-      "markdown", "markdown_inline", "ocaml", "php",
-      "python", "regex", "python", "phpdoc", "scheme", "sql", "swift",
-      "todotxt", "vim", "yaml", "ini",
+      'c', 'comment', 'cpp', 'css', 'dot', 'dockerfile', 'bash', 'gitignore',
+      'gitattributes', 'gitcommit', 'git_rebase', 'go', 'vimdoc', 'html', 'http',
+      'json', 'json5', 'jsdoc', 'latex', 'erlang', 'ruby', 'lua', 'java', 'javascript',
+      'markdown', 'markdown_inline', 'ocaml', 'php',
+      'python', 'regex', 'python', 'phpdoc', 'scheme', 'sql', 'swift',
+      'todotxt', 'vim', 'yaml', 'ini',
     }
   end
 end
 
-local M = {
+return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "BufRead",
-    build = ":TSUpdate",
-    cmd = { "Inspect", "InspectTree" },
+    event = 'BufRead',
+    build = ':TSUpdate',
+    cmd = { 'Inspect', 'InspectTree' },
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-refactor",
       "nvim-treesitter/nvim-treesitter-context",
-      -- "windwp/nvim-ts-autotag",
-      {
-        "HiPhish/rainbow-delimiters.nvim",
-        config = function()
-          local rainbow_delimiters = require "rainbow-delimiters"
-          vim.g.rainbow_delimiters = {
-            strategy = {
-              [""] = rainbow_delimiters.strategy["global"],
-              vim = rainbow_delimiters.strategy["local"],
-            },
-            query = {
-              [""] = "rainbow-delimiters",
-              -- lua = "rainbow-blocks",
-            },
-            highlight = {
-              "RainbowDelimiterRed",
-              "RainbowDelimiterYellow",
-              "RainbowDelimiterBlue",
-              "RainbowDelimiterOrange",
-              "RainbowDelimiterGreen",
-              "RainbowDelimiterViolet",
-              "RainbowDelimiterCyan",
-            },
-            blacklist = { "html" },
-          }
-        end
-      },
+      "rainbow-delimiters.nvim"
     },
     opts = function(_, o)
       o.ensure_installed = parsers_to_be_installed()
@@ -74,9 +47,11 @@ local M = {
               #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
         end
       }
+
       o.autopairs = {
         enable = true,
       }
+
       o.incremental_selection = {
         enable = true,
         keymaps = {
@@ -85,19 +60,17 @@ local M = {
           scope_incremental = "<S-CR>",
           node_decremental = "<BS>",
         },
+        disable = { 'vim' } -- useful for cedit
       }
+
       o.indent = {
         enable = true,
         disable = {
-          -- "css",
           "python",
-          -- "yaml",
-        },
+          "yaml"
+        }
       }
-      o.autotag = {
-        enable = false,
-        disable = {},
-      }
+
       o.refactor = {
         highlight_definitions = {
           enable = true,
@@ -120,9 +93,10 @@ local M = {
             list_definitions_toc = "gO",
             goto_next_usage = "<C-n>",
             goto_previous_usage = "<C-p>",
-          },
-        },
+          }
+        }
       }
+
       o.playground = {
         enable = true,
         disable = {},
@@ -139,21 +113,14 @@ local M = {
           unfocus_language = "F",
           update = "R",
           goto_node = "<cr>",
-          show_help = "?",
-        },
+          show_help = "?"
+        }
       }
     end,
 
     config = function(_, o)
-      require("nvim-treesitter.install").prefer_git = true
-      require("nvim-treesitter.configs").setup(o)
-
-      require("ts_context_commentstring").setup({
-        enable_autocmd = false,
-        languages = {
-          css = "/* %s */",
-        }
-      })
+      require "nvim-treesitter.install".prefer_git = true
+      require "nvim-treesitter.configs".setup(o)
 
       vim.api.nvim_create_user_command("Inspect", function()
         vim.show_pos()
@@ -163,6 +130,30 @@ local M = {
       end, { desc = "InspectTree" })
     end
   },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    config = function()
+      local rainbow_delimiters = require "rainbow-delimiters"
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [""] = rainbow_delimiters.strategy["global"],
+          vim = rainbow_delimiters.strategy["local"],
+        },
+        query = {
+          [""] = "rainbow-delimiters",
+          -- lua = "rainbow-blocks",
+        },
+        highlight = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
+          "RainbowDelimiterCyan",
+        },
+        blacklist = { "html" },
+      }
+    end
+  }
 }
-
-return M

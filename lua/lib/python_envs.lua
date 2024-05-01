@@ -2,14 +2,26 @@
 --  File         : python_envs.lua
 --  Description  : helper module to get and manage python_envs
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 13:34
+--  Last Modified: 10 Apr 2024, 10:43
 -------------------------------------
 
 ---Python envs
 --- Available funcs:
 ---   - get_current_venv
 ---   - pick_venv
-local pyvenv = {}
+local pyvenv = {
+  preset = {
+    {
+      name = "audioToText",
+      path = vim.fn.expand "~/dev/audioToText-bot/.venv"
+    },
+    {
+      name = "nvim",
+      path = vim.fn.stdpath "data" .. "/.venv"
+    }
+  }
+}
+
 
 ---Set Python venv
 ---@private
@@ -35,30 +47,17 @@ end
 
 ---Get Python venvs from given paths
 ---@private
----@param venvs_path table list of paths of python venvs
 ---@return table
-local function get_venvs(venvs_path)
-  local paths = venvs_path
-  local venvs = {}
-  for _, path in ipairs(paths) do
-    table.insert(venvs, {
-      name = vim.fn.fnamemodify(path, ":~"),
-      path = path,
-    })
-  end
-  return venvs
+local function get_venvs()
+  return pyvenv.preset
 end
 
 ---Show a picker for select Python venv
 ---and make it active
 function pyvenv.pick_venv()
-  local venvs_paths = {
-    vim.fn.expand "~/dev/audioToText-bot",
-    vim.fn.stdpath "data" .. "/nvim_python_venv",
-  }
+  local venvs = get_venvs()
 
-  local venvs = get_venvs(venvs_paths)
-  if not next(get_venvs(venvs_paths)) then
+  if not next(venvs) then
     vim.notify("Warning: no virtual_envs found.",
       vim.log.levels.WARN,
       { title = "Py-venvs" })
@@ -67,8 +66,7 @@ function pyvenv.pick_venv()
   vim.ui.select(venvs, {
     prompt = "Select Python venv",
     format_item = function(item)
-      local name = vim.fn.fnamemodify(item.name, ":t")
-      return ("%s (%s)"):format(name, item.path)
+      return ("%s (%s)"):format(item.name, vim.fn.fnamemodify(item.path, ':~'))
     end,
   }, function(choice)
     if not choice then
@@ -76,6 +74,15 @@ function pyvenv.pick_venv()
     end
     pyvenv.set_venv(choice)
   end)
+end
+
+---Helper function to usercmd completion
+function pyvenv.usercmd_pyenv_completion()
+  local venvs = {}
+  for _, v in pairs(get_venvs()) do
+    table.insert(venvs, v.name)
+  end
+  return table.concat(venvs, "\n")
 end
 
 return pyvenv

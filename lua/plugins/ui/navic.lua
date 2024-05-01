@@ -2,10 +2,10 @@
 --	File         : navic.lua
 --	Description  : gps-like plugin config
 --	Author       : Kevin
---	Last Modified: 02 Jul 2023, 10:44
+--	Last Modified: 01 May 2024, 12:33
 -----------------------------------
 
-local M = {
+return {
   "SmiteshP/nvim-navic",
   event = { "BufReadPre", "BufNewFile" },
   init = function()
@@ -48,13 +48,8 @@ local M = {
     }
     o.highlight = true
 
-    o.separator = " "..icons.ui.ChevronRight.." "
+    o.separator = string.format(" %s ", icons.ui.ChevronRightMedium)
 
     o.safe_output = false
-  end,
-  config = function(_, o)
-    require("nvim-navic").setup(o)
   end
 }
-
-return M

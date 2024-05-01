@@ -2,7 +2,7 @@
 --	File: dashboard.lua
 --	Description: greeter config for Neovim (using Alpha actually)
 --	Author: Kevin
---	Last Modified: 20 Mar 2024, 11:58
+--	Last Modified: 01 May 2024, 12:33
 -----------------------------------
 
 ---Get date in nice style
@@ -16,7 +16,7 @@ end
 local function get_nvim_version()
   local icons = require "lib.icons"
   local v = vim.version()
-  local v_info = string.format("%s v%s.%s.%s", icons.ui.Version, v.major, v.minor, v.patch)
+  local v_info = string.format("%s v%d.%d.%d", icons.ui.Version, v.major, v.minor, v.patch)
   return v_info
 end
 
@@ -54,12 +54,9 @@ local function footer()
 end
 
 
-local M = {
+return {
   "goolord/alpha-nvim",
   event = "VimEnter",
-  keys = {
-    { "<leader>a", function() vim.cmd.Alpha() end, desc = "Dashboard" }
-  },
   config = function()
     local alpha = require "alpha"
     local db = require "alpha.themes.dashboard"
@@ -87,26 +84,26 @@ local M = {
 
     local db_btn = db.button
     db.section.buttons.val = {
-      db_btn("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'lib.utils'.new_file()<CR>"),
+      db_btn("n", icons.ui.NewFile .. " New file", "<cmd>lua require 'lib'.new_file()<CR>"),
       db_btn(
         "t",
         icons.ui.NewFile .. " New temp file",
-        "<cmd>lua require 'lib.utils'.new_tmp_file()<CR>"
+        "<cmd>lua require 'lib'.new_tmp_file()<CR>"
       ),
       db_btn("o", icons.ui.Note .. " Notes", [[<cmd>lua require "lib.notes".open_note()<CR>]]),
 
       db_btn(
         "f",
         icons.documents.Files .. " Find file",
-        "<cmd>lua require 'lib.utils'.find_files()<CR>"
+        "<cmd>lua require 'lib'.find_files()<CR>"
       ),
-      db_btn("r", icons.ui.History .. " Recent files", "<cmd>lua require 'lib.utils'.recent_files()<CR>"),
+      db_btn("r", icons.ui.History .. " Recent files", "<cmd>lua require 'lib'.recent_files()<CR>"),
       db_btn(
         "R",
         icons.git.Repo .. " Find project",
-        "<cmd>lua require 'lib.utils'.projects()<CR>"
+        "<cmd>lua require 'lib'.projects()<CR>"
       ),
-      db_btn("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "lib.utils".dev_folder()<CR>]]),
+      db_btn("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "lib".dev_folder()<CR>]]),
       db_btn("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
       db_btn("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
       db_btn("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
@@ -126,5 +123,3 @@ local M = {
     alpha.setup(db.opts)
   end
 }
-
-return M

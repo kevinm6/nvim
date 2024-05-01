@@ -2,22 +2,28 @@
 -- File         : cmp.lua
 -- Description  : Lua K NeoVim & VimR cmp config
 -- Author       : Kevin
--- Last Modified: 24 Mar 2024, 14:16
+-- Last Modified: 01 May 2024, 13:25
 -------------------------------------
 
-
-local M = {
+return {
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
+  event = 'InsertEnter',
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     "saadparwaiz1/cmp_luasnip",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-calc",
+    {
+      "rcarriga/cmp-dap",
+      ft = { 'dap-repl', 'dapui_watches', 'dapui_hover' }
+    },
+    "hrsh7th/cmp-cmdline",
+    { "kdheepak/cmp-latex-symbols", ft = 'markdown' },
     {
       "L3MON4D3/LuaSnip",
-      dependencies = {
-        { "kevinm6/the-snippets", dev = true },
-        -- "rafamadriz/friendly-snippets",
-      },
+      build = "make install_jsregexp",
+      dependencies = { "kevinm6/the-snippets", dev = true },
       -- Luasnip Configuration
       opts = function(_, o)
         o.history = true
@@ -28,51 +34,34 @@ local M = {
       end,
       config = function(_, opts)
         -- Sources for snippets
-        if opts then require("luasnip").config.setup(opts) end
+        if opts then require 'luasnip'.config.setup(opts) end
         vim.tbl_map(
           function(type) require("luasnip.loaders.from_" .. type).lazy_load() end,
-          { "vscode", "lua" }
+          { 'vscode', 'lua' }
         )
-        require("luasnip").filetype_extend("typescript", { "tsdoc" })
-        require("luasnip").filetype_extend("javascript", { "jsdoc" })
-        require("luasnip").filetype_extend("lua", { "luadoc" })
-        require("luasnip").filetype_extend("python", { "python-docstring" })
-        require("luasnip").filetype_extend("rust", { "rustdoc" })
-        require("luasnip").filetype_extend("cs", { "csharpdoc" })
-        require("luasnip").filetype_extend("java", { "javadoc" })
-        require("luasnip").filetype_extend("sh", { "shelldoc" })
-        require("luasnip").filetype_extend("c", { "cdoc" })
-        require("luasnip").filetype_extend("cpp", { "cppdoc" })
-        require("luasnip").filetype_extend("php", { "phpdoc" })
-        require("luasnip").filetype_extend("kotlin", { "kdoc" })
-        require("luasnip").filetype_extend("ruby", { "rdoc" })
-        require("luasnip").filetype_extend("quarto", { "markdown" })
-        require("luasnip").filetype_extend("rmarkdown", { "markdown" })
+        require 'luasnip'.filetype_extend('typescript', { 'tsdoc' })
+        require 'luasnip'.filetype_extend('javascript', { 'jsdoc' })
+        require 'luasnip'.filetype_extend('lua', { 'luadoc' })
+        require 'luasnip'.filetype_extend('python', { 'python-docstring' })
+        require 'luasnip'.filetype_extend('java', { 'javadoc' })
+        require 'luasnip'.filetype_extend('sh', { 'shelldoc' })
+        require 'luasnip'.filetype_extend('php', { 'phpdoc' })
+        require 'luasnip'.filetype_extend('ruby', { 'rdoc' })
+        require 'luasnip'.filetype_extend('quarto', { 'markdown' })
+        require 'luasnip'.filetype_extend('rmarkdown', { 'markdown' })
       end,
     },
-    "hrsh7th/cmp-buffer",
-    { "rcarriga/cmp-dap",           ft = { "dap-repl", "dapui_watches", "dapui_hover" } },
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-calc",
-    { "kdheepak/cmp-latex-symbols", ft = "markdown" },
-    -- {
-    --   "kristijanhusak/vim-dadbod-completion",
-    --   ft = { "sql", "mysql", "plsql" },
-    -- }
-    -- "hrsh7th/cmp-nvim-lua",
-    -- "ray-x/cmp-treesitter",
   },
   opts = function(_, o)
-    local cmp = require "cmp"
-    local luasnip = require "luasnip"
+    local cmp = require 'cmp'
+    local ls = require 'luasnip'
     local icons = require "lib.icons"
     local icons_kind = icons.kind
     local context = require "cmp.config.context"
 
     o.snippet = {
       expand = function(args)
-        luasnip.lsp_expand(args.body)
+        ls.lsp_expand(args.body)
       end
     }
 
@@ -82,30 +71,17 @@ local M = {
     end
 
     o.mapping = {
-      ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-      ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
-      ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-      ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+      ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+      ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+      ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+      ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
 
-      ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
-      ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
-      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
 
-      ["<C-e>"] = cmp.mapping {
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      },
-
-      ['<C-S-i>'] = cmp.mapping(function(fallback)
-        if luasnip.locally_jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-      ["<C-l>"] = cmp.mapping(function(fallback)
-        if luasnip.expand_or_locally_jumpable() then
-          luasnip.expand_or_jump()
+      -- jump to next porition after modify or complete
+      ['<C-l>'] = cmp.mapping(function(fallback)
+        if ls.expand_or_locally_jumpable() then
+          ls.expand_or_jump()
         elseif cmp.visible() and not cmp.get_active_entry() then
           return cmp.complete_common_string()
         elseif cmp.visible() and cmp.get_active_entry() then
@@ -115,24 +91,37 @@ local M = {
         end
       end),
 
-      ["<C-y>"] = cmp.mapping.confirm { select = true },
-
-      ["<Up>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
+      -- next position of snippet $x -> $x+1
+      ['<C-i>'] = cmp.mapping(function(fallback)
+        if ls.expand_or_jumpable() then
+          ls.expand_or_jump()
         else
           fallback()
         end
-      end, { "i" }),
+      end, { 'i', 's' }),
 
-      ["<Down>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
+      -- prev position of snippet $x -> $x-1
+      ['<C-S-i>'] = cmp.mapping(function(fallback)
+        if ls.locally_jumpable(-1) then
+          ls.jump(-1)
         else
           fallback()
         end
-      end, { "i" }),
+      end, { 'i', 's' }),
 
+      -- abort completion
+      ['<C-e>'] = cmp.mapping {
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      },
+
+      -- confirm completion
+      ['<C-y>'] = cmp.mapping.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace },
+
+      -- docs
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
+      -- toggle docs on completion
       ['<C-g>'] = function()
         if cmp.visible_docs() then
           cmp.close_docs()
@@ -140,18 +129,10 @@ local M = {
           cmp.open_docs()
         end
       end,
-
-      ["<C-i>"] = cmp.mapping(function(fallback)
-        if luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
     }
 
     o.formatting = {
-      fields = { "abbr", "kind", "menu" },
+      fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
         -- Kind icons
         vim_item.kind = string.format("%s %s", icons_kind[vim_item.kind], vim_item
@@ -177,23 +158,23 @@ local M = {
     }
 
     o.sources = {
-      { name = "nvim_lsp", },
-      { name = "otter" },
+      { name = 'nvim_lsp', },
+      { name = 'otter' },
       {
-        name = "buffer",
+        name = 'buffer',
         option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
       },
       {
-        name = "luasnip",
+        name = 'luasnip',
         filter = function(_, _)
           return not context.in_syntax_group "Comment"
               or not context.in_treesitter_capture "comment"
         end,
       },
-      { name = "treesitter" },
-      { name = "path", option = { trailing_slash = true } },
-      { name = "latex_symbols", keyword_length = 2, priority = 2 },
-      { name = "calc", keyword_length = 3 },
+      { name = 'treesitter' },
+      { name = 'path',          option = { trailing_slash = true } },
+      { name = 'latex_symbols', keyword_length = 2,                priority = 2 },
+      { name = 'calc',          keyword_length = 3 },
     }
 
     o.confirm_opts = {
@@ -209,41 +190,41 @@ local M = {
     o.experimental = {
       ghost_text = {
         enable = true,
-        hl_group = "Comment",
+        hl_group = 'Comment',
       },
     }
   end,
   config = function(_, o)
     -- Cmp Configuration
-    local cmp = require "cmp"
+    local cmp = require 'cmp'
 
     -- per-filetype config
-    cmp.setup.filetype({ "markdown", "latex", "text", "quarto" }, {
+    cmp.setup.filetype({ 'markdown', 'latex', 'text', 'quarto' }, {
       sources = cmp.config.sources {
-        { name = "otter" },
+        { name = 'otter' },
         {
-          name = "buffer",
+          name = 'buffer',
           option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
         },
-        { name = "treesitter" },
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "path",          option = { trailing_slash = true } },
-        { name = "latex_symbols", keyword_length = 3 },
-        { name = "calc",          keyword_length = 3 },
+        { name = 'treesitter' },
+        { name = 'luasnip' },
+        { name = 'nvim_lsp' },
+        { name = 'path',          option = { trailing_slash = true } },
+        { name = 'latex_symbols', keyword_length = 3 },
+        { name = 'calc',          keyword_length = 3 },
       },
     })
 
-    cmp.setup.filetype("help", {
+    cmp.setup.filetype('help', {
       window = {
         documentation = cmp.config.disable,
       },
     })
 
-    cmp.setup.cmdline("/", {
+    cmp.setup.cmdline('/', {
       autocomplete = { cmp.TriggerEvent.TextChanged },
       sources = cmp.config.sources({
-        { name = "buffer" },
+        { name = 'buffer' },
       }),
     })
 
@@ -257,24 +238,23 @@ local M = {
       })
     })
 
-    cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
+    cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
       sources = {
-        -- { name = "vim-dadbod-completion" },
-        { name = "treesitter" },
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "buffer" },
+        { name = 'nvim_lsp' },
+        { name = 'treesitter' },
+        { name = 'luasnip' },
+        { name = 'buffer' },
       }
     })
 
-    cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+    cmp.setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
       sources = {
-        { name = "dap" },
+        { name = 'dap' },
       },
     })
 
-    cmp.setup.filetype("gitcommit", {
-      sources = { { name = "gh_issues" } }
+    cmp.setup.filetype('gitcommit', {
+      sources = { { name = 'gh_issues' } }
     })
 
     cmp.setup(o)
@@ -285,5 +265,3 @@ local M = {
     )
   end
 }
-
-return M

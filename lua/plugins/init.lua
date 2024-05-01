@@ -2,23 +2,54 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 02 Apr 2024, 09:22
+--  Last Modified: 11 May 2024, 11:50
 -------------------------------------
 
 local M = {
   "nvim-lua/plenary.nvim",
   "nvim-tree/nvim-web-devicons",
 
+  ---Colorscheme
   {
     "kevinm6/kurayami.nvim",
     lazy = false,
     dev = true,
     priority = 1000,
+    cond = function()
+      return not vim.g.vscode
+    end,
     config = function()
-      vim.cmd.colorscheme('kurayami')
+      vim.cmd.colorscheme 'kurayami'
     end
   },
 
+  ---Statusline
+  {
+    dir = vim.fn.stdpath 'config' .. "/lua/lib/ui/statusline.lua",
+    event = 'VeryLazy',
+    cmd = "ToggleStatusline",
+    cond = function()
+      return not vim.g.vscode
+    end,
+    config = function()
+      require "lib.ui.statusline".toggle()
+    end
+  },
+
+  ---Winbar
+  {
+    dir = vim.fn.stdpath 'config' .. "/lua/lib/ui/winbar.lua",
+    event = { "BufReadPre", "BufNewFile" },
+    cmd = 'ToggleWinbar',
+    config = function()
+      require "lib.ui.winbar".toggle()
+    end
+  },
+
+  ---UI-lib used by other plugins
+  "MunifTanjim/nui.nvim",
+
+  ---ZenMode
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -31,31 +62,37 @@ local M = {
           signcolumn = "no",      -- disable signcolumn
           number = false,         -- disable number column
           relativenumber = false, -- disable relative numbers
-          cursorline = true,      -- disable cursorline
-        },
+          cursorline = true       -- disable cursorline
+        }
       }
       o.plugins = {
         gitsigns = { enabled = false }, -- disables git signs
         tmux = { enabled = false },
-        twilight = { enabled = true },
+        twilight = { enabled = true }
       }
     end,
   },
 
-  { -- integrate luarocks into neovim
+  ---Luarocks
+  ---integrate luarocks into neovim
+  {
     "vhyrro/luarocks.nvim",
-    name = "luarocks",
+    event = { 'BufReadPre', 'BufNewFile' },
     opts = {
-      rocks = { "lua-curl", "magick", "promise-async" }
+      --NOTE: for macOS replace into
+      -- ~/.local/share/nvim/lazy/luarocks.nvim/.rocks/share/lua/5.1/magick/wand/lib.lua:220
+      --  lib = try_to_load("/opt/homebrew/lib/libMagickWand-7.Q16HDRI.dylib", function()
+      rocks = { "magick", "xml2lua", "mimetypes", "lua-curl", "promise-async" }
     }
   },
 
+  ---Image in NeoVim
   {
     "3rd/image.nvim",
-    ft = { "markdown", "vimwiki", "image_nvim", "png", "jpeg", "jpg", "image_nvim" },
-    dependencies = { "luarocks" },
+    ft = { 'markdown', 'vimwiki', 'png', 'jpeg', 'jpg', 'image_nvim' },
+    dependencies = 'luarocks.nvim',
     opts = function(_, o)
-      o.backend = "kitty"
+      o.backend = 'kitty'
       o.window_overlap_clear_enabled = true    -- toggles images when windows are overlapped
       o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
       o.window_overlap_clear_ft_ignore = {}
@@ -69,13 +106,14 @@ local M = {
           filetypes = { "markdown", "vimwiki", "quarto" }
         }
       }
-      o.hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" } -- render image files as images when opened
+      o.hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp' } -- render image files as images when opened
     end
   },
 
+  ---Obsidian
   {
     "epwalsh/obsidian.nvim",
-    version = "*", -- latest release (not commit)
+    version = '*', -- latest release (not commit)
     event = {
       "BufReadPre " ..
       vim.fn.expand "~" ..
@@ -83,10 +121,6 @@ local M = {
       "BufNewFile " ..
       vim.fn.expand "~" ..
       "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
-      -- "BufReadPre "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/daily/*.md",
-      -- "BufNewFile "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/daily/*.md",
-      -- "BufReadPre "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni/*.md",
-      -- "BufNewFile "..vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni/*.md",
     },
     dependencies = { "plenary.nvim" },
     opts = function(_, o)
@@ -132,49 +166,54 @@ local M = {
   -- Jupyter Notebook
   {
     "GCBallesteros/jupytext.nvim",
-    lazy = false,
-    -- config = true,
-    event = { "VeryLazy", "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
+    event = { "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
+    init = function(p)
+      if vim.fn.argc() == 1 then
+        local argv = tostring(vim.fn.argv(0))
+        local stat = vim.uv.fs_stat(argv)
+
+        local jupyter_notebooks = vim.endswith(argv, 'ipynb')
+        if stat or jupyter_notebooks then
+          require "lazy".load { plugins = { p.name } }
+        end
+      end
+      if not require("lazy.core.config").plugins[p.name]._.loaded then
+        vim.api.nvim_create_autocmd('BufNew', {
+          pattern = '*.ipynb',
+          callback = function()
+            require "lazy".load { plugins = { p.name } }
+          end,
+        })
+      end
+    end,
     config = function(_, o)
       o.custom_language_formatting = {
         python = {
-          extension = "qmd",
-          style = "quarto",
+          extension = 'qmd',
+          style = 'quarto',
           force_ft = true
         }
       }
       require "jupytext".setup(o)
     end
-    -- "goerz/jupytext.vim",
-    -- lazy = false,
-    -- ft = { "jupyter_notebook" },
-    -- init = function()
-    --    vim.g.jupytext_enable = 1
-    --    vim.g.jupytext_command = 'jupytext'
-    --    vim.g.jupytext_fmt = 'md'
-    --    vim.g.jupytext_to_ipynb_opts = '--to=ipynb --update'
-    -- end
   },
+
+  ---Molten
   {
     "benlubas/molten-nvim",
-    -- event = { "BufWriteFile ".. vim.fn.expand (vim.b.jupyter_file) },
-    event = { "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
-    ft = { "qmd", "jupyter_notebook" },
+    ft = { "qmd", "jupyter_notebook", "quarto" },
     version = "^1.0.0",
     build = ":UpdateRemotePlugins",
-    dependencies = { "3rd/image.nvim" },
+    dependencies = { "image.nvim" },
     init = function()
+      vim.g.python_host_prog = vim.env.VIRTUAL_ENV or
+          vim.fn.stdpath 'data' .. "/.venv/bin"
+
       vim.g.molten_image_provider = "image.nvim"
       vim.g.molten_output_win_max_height = 20
       vim.g.molten_auto_open_output = true
     end,
     config = function()
-      -- local venv = os.getenv "VIRTUAL_ENV" or vim.fn.stdpath "data".."/python_nvim_venv/bin/python3"
-      -- if venv ~= nil and not vim.g.molten_initialized then
-      --    venv = tostring(vim.fn.fnamemodify(venv, ":t"))
-      --    vim.cmd(string.format("MoltenInit %s", venv))
-      -- end
-
       vim.keymap.set("n", "<localleader>R", ":MoltenEvaluateOperator<CR>",
         { silent = true, noremap = true, desc = "run operator selection" })
       vim.keymap.set("n", "<localleader>rl", ":MoltenEvaluateLine<CR>",
@@ -197,15 +236,18 @@ local M = {
         { desc = "MoltenEvaluateOperator" })
       vim.keymap.set("n", "<leader>Mc", function() vim.cmd.MoltenReevaluateCell() end,
         { desc = "MoltenReevaluateCell" })
-
-      -- vim.g.molten_initialized = true
     end
   },
+
+  ---Otter
+  ---spawns lsp-server for injected languages
   {
     "jmbuhr/otter.nvim",
     ft = { "quarto", "html", "javascript", "typescript" },
     dependencies = { "nvim-lspconfig" },
     config = function(_, o)
+      o.buffers = { set_filetype = true }
+
       require("otter").setup(o)
 
       vim.api.nvim_create_autocmd("Filetype", {
@@ -228,7 +270,7 @@ local M = {
       })
 
       local nmap = function(tbl)
-        vim.keymap.set("n", tbl[1], tbl[2], { desc = "otter:"..tbl[3], buffer = true })
+        vim.keymap.set("n", tbl[1], tbl[2], { desc = "otter:" .. tbl[3] })
       end
       nmap { "<localleader>K", require "otter".ask_hover, "Hover" }
       nmap { "<localleader>r", require "otter".ask_references, "[r]eferences" }
@@ -241,6 +283,8 @@ local M = {
       nmap { "<localleader>ea", require "otter".export_otter_as, "[e]xport otter [a]s" }
     end
   },
+
+  ---Quarto
   {
     "quarto-dev/quarto-nvim",
     ft = { "quarto" },
@@ -289,6 +333,7 @@ local M = {
     end
   },
 
+  ---Color Picker
   {
     "ziontee113/color-picker.nvim",
     cmd = { "PickColor", "PickColorInsert" },
@@ -298,62 +343,12 @@ local M = {
     },
   },
 
+  ---Nvim colorizer
   {
     "NvChad/nvim-colorizer.lua",
     cmd = "ColorizerToggle",
     config = true,
   },
-
-  {
-    "simrat39/symbols-outline.nvim",
-    enabled = false,
-    event = "LspAttach",
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
-    keys = {
-      {
-        "<leader>lO",
-        function()
-          require("symbols-outline").toggle_outline()
-        end,
-        desc = "Symbols Outline",
-      },
-    },
-    opts = function(_, o)
-      local icons = require "lib.icons"
-      o.symbols = {
-        File = { icon = icons.kind.File, hl = "@text.uri" },
-        Module = { icon = icons.kind.Module, hl = "@namespace" },
-        Namespace = { icon = icons.kind.Namespace, hl = "@namespace" },
-        Package = { icon = icons.ui.Package, hl = "@namespace" },
-        Class = { icon = icons.kind.Class, hl = "@type" },
-        Method = { icon = icons.kind.Method, hl = "@method" },
-        Property = { icon = icons.kind.Property, hl = "@method" },
-        Field = { icon = icons.kind.Field, hl = "@field" },
-        Constructor = { icon = icons.kind.Constructor, hl = "@constructor" },
-        Enum = { icon = icons.kind.Enum, hl = "@type" },
-        Interface = { icon = icons.kind.Interface, hl = "@type" },
-        Function = { icon = icons.kind.Function, hl = "@function" },
-        Variable = { icon = icons.kind.Variable, hl = "@constant" },
-        Constant = { icon = icons.kind.Constant, hl = "@constant" },
-        String = { icon = icons.type.String, hl = "@string" },
-        Number = { icon = icons.type.Number, hl = "@number" },
-        Boolean = { icon = icons.type.Boolean, hl = "@boolean" },
-        Array = { icon = icons.type.Array, hl = "@constant" },
-        Object = { icon = icons.type.Object, hl = "@type" },
-        Key = { icon = icons.kind.Keyword, hl = "@type" },
-        Null = { icon = icons.kind.Null, hl = "@type" },
-        EnumMember = { icon = icons.kind.EnumMember, hl = "@field" },
-        Struct = { icon = icons.kind.Struct, hl = "@type" },
-        Event = { icon = icons.kind.Event, hl = "@type" },
-        Operator = { icon = icons.kind.Operator, hl = "@operator" },
-        TypeParameter = { icon = icons.kind.TypeParameter, hl = "@parameter" },
-        Component = { icon = icons.kind.Field, hl = "@function" },
-        Fragment = { icon = icons.kind.Field, hl = "@constant" },
-      }
-    end
-  },
-
-
 
   -- data viewer (csv, tsv ...)
   {
@@ -371,10 +366,10 @@ local M = {
     end
   },
 
-  {
-    "apple/pkl-neovim",
-    ft = "pkl"
-  }
+  -- {
+  --   "apple/pkl-neovim",
+  --   ft = "pkl",
+  -- }
 }
 
 return M

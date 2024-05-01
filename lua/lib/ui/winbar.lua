@@ -2,10 +2,11 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config w/ navic
 -- Author       : Kevin Manca
--- Last Modified: 26 Mar 2024, 12:58
+-- Last Modified: 11 May 2024, 11:44
 -----------------------------------------
 
 local winbar = {
+  ---filetypes to exclude
   to_exclude = {
     dashboard = true,
     alpha = true,
@@ -29,10 +30,21 @@ local winbar = {
   }
 }
 
+---Check string is empty
+---@param s string|nil
+---@return boolean not_empty false for empty string | true otherwise
 local function is_not_empty(s)
   return s ~= nil and s ~= ""
 end
 
+---Set highlights groups for WinBar
+local function set_color_groups()
+  vim.api.nvim_set_hl(0, "WinBar", { fg = "#6c6c6c", bg = "#1c1c1c", bold = true })
+  vim.api.nvim_set_hl(0, "WinBarNC", { fg = "#3c3c3c", bg = "#1c1c1c", italic = true })
+end
+
+---Get Filename of current buffer
+---@return string filename file name formatted with icon if available
 local function get_filename()
   local default_file_icon = require "lib.icons".kind.File
   local filename = vim.fn.expand "%:t"
@@ -41,11 +53,13 @@ local function get_filename()
     local file_icon = ""
     local extension = vim.fn.expand "%:e"
 
-    file_icon, _ = require("nvim-web-devicons").get_icon_color(
+    local has_devicons, dev_icons = pcall(require, "nvim-web-devicons")
+
+    file_icon, _ = has_devicons and dev_icons.get_icon_color(
       filename,
       extension,
       { default = not is_not_empty(extension) or false }
-    )
+    ) or filename, nil
 
     return string.format(
       "%%#FileIconColor%s#%s%%* %s",
@@ -54,27 +68,23 @@ local function get_filename()
       filename
     )
   end
+  return ''
 end
 
+---Get winbar with highlights and icons
+---@return string winbar formatted and with relative highlights
 local function get_winbar()
-  local icons = require "lib.icons"
   local has_navic, navic = pcall(require, "nvim-navic")
   local location = has_navic and navic.get_location() or nil
 
-  -- WinBar = { fg = "#6c6c6c", bg = "#1c1c1c", italic = true },
-  -- WinBarNC = { fg = "#3c3c3c", bg = "#1c1c1c" },
-  local retval = get_filename()
+  local fname = get_filename()
 
   return is_not_empty(location)
-      and string.format(
-        "%s %%#NavicSeparator# %s %%* %s",
-        retval,
-        icons.ui.ChevronRight,
-        location
-      )
-      or retval
+      and string.format("%s %%#NavicSeparator#|%%* %s", fname, location)
+      or fname
 end
 
+---Define autocmds for load winbar module and initialize
 function winbar.toggle()
   if vim.g.winbar ~= nil then
     vim.api.nvim_del_autocmd(vim.g.winbar)
@@ -94,9 +104,7 @@ function winbar.toggle()
             vim.wo.winbar = get_winbar()
           end
         else
-          vim.api.nvim_set_hl(0, "WinBar",
-            { fg = "#6c6c6c", bg = "#1c1c1c", italic = true })
-          vim.api.nvim_set_hl(0, "WinBarNC", { fg = "#3c3c3c", bg = "#1c1c1c" })
+          set_color_groups()
           vim.g.winbar = cb.id
         end
       end
@@ -104,7 +112,7 @@ function winbar.toggle()
   end
 end
 
-vim.api.nvim_create_user_command("ToggleWinbar", function()
+vim.api.nvim_create_user_command('ToggleWinbar', function()
   winbar.toggle()
 end, { desc = "Toggle Winbar" })
 

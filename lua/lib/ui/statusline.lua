@@ -2,11 +2,13 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 02 Apr 2024, 14:00
+-- Last Modified: 11 May 2024, 11:39
 -----------------------------------------
 
-local statusline = {
-  session_name = "",
+local sl = {
+  ---name of the session
+  session_name = '',
+  ---filetypes to exclude
   to_exclude = {
     alpha           = true,
     dashboard       = true,
@@ -21,8 +23,9 @@ local statusline = {
     WhichKey        = true,
     query           = true,
     oil             = true,
-    httpResult = true
+    httpResult      = true
   },
+  ---width values used to display info if win-size is between
   preset_width = setmetatable({
     filename = 60,
     git_branch = 60,
@@ -35,32 +38,33 @@ local statusline = {
       return 80
     end
   }),
+  ---highlights value
   colors = {
-    inactive    = "%#StatusLineInactive#",
-    mode        = "%#StatusLineMode#",
-    git         = "%#StatusLineGit#",
-    diag        = "%#StatusLineGpsDiagnostic#",
-    diagError   = "%#SLDiagnosticError#",
-    diagWarn    = "%#SLDiagnosticWarn#",
-    diagInfo    = "%#SLDiagnosticInfo#",
-    diagHint    = "%#SLDiagnosticHint#",
-    lspactive   = "%#StatusLineLspActive#",
-    lspnoactive = "%#StatusLineLspNotActive#",
-    ftype       = "%#StatusLineFileType#",
-    empty       = "%#StatusLineEmptyspace#",
-    lite        = "%#StatusLineLite#",
-    name        = "%#StatusLineFileName#",
-    encoding    = "%#StatusLineFileEncoding#",
-    fformatloc  = "%#StatusLineFileFormatLocation#",
-    session     = "%#StatusLineSession#",
-    inverted    = "%#StatusLineInverted#",
-    symbols     = "%#StatuslineSymbols#",
-    Nmode       = "%#Nmode#",
-    Vmode       = "%#Vmode#",
-    Imode       = "%#Imode#",
-    Cmode       = "%#Cmode#",
-    Tmode       = "%#Tmode#",
-    ShellMode   = "%#Tmode#",
+    inactive    = '%#StatusLineInactive#',
+    mode        = '%#StatusLineMode#',
+    git         = '%#StatusLineGit#',
+    diag        = '%#StatusLineGpsDiagnostic#',
+    diagError   = '%#SLDiagnosticError#',
+    diagWarn    = '%#SLDiagnosticWarn#',
+    diagInfo    = '%#SLDiagnosticInfo#',
+    diagHint    = '%#SLDiagnosticHint#',
+    lspactive   = '%#StatusLineLspActive#',
+    lspnoactive = '%#StatusLineLspNotActive#',
+    ftype       = '%#StatusLineFileType#',
+    empty       = '%#StatusLineEmptyspace#',
+    lite        = '%#StatusLineLite#',
+    name        = '%#StatusLineFileName#',
+    encoding    = '%#StatusLineFileEncoding#',
+    fformatloc  = '%#StatusLineFileFormatLocation#',
+    session     = '%#StatusLineSession#',
+    inverted    = '%#StatusLineInverted#',
+    symbols     = '%#StatuslineSymbols#',
+    Nmode       = '%#Nmode#',
+    Vmode       = '%#Vmode#',
+    Imode       = '%#Imode#',
+    Cmode       = '%#Cmode#',
+    Tmode       = '%#Tmode#',
+    ShellMode   = '%#Tmode#',
   }
 }
 
@@ -102,12 +106,14 @@ local function set_color_groups()
 end
 
 
+---Get active Nvim mode and the highlight group
+---@return string mode colorful mode or mode_code
 local function get_mode()
-  local nmode = statusline.colors.Nmode
-  local vmode = statusline.colors.Vmode
-  local cmode = statusline.colors.Cmode
-  local tmode = statusline.colors.Tmode
-  local imode = statusline.colors.Imode
+  local nmode = sl.colors.Nmode
+  local vmode = sl.colors.Vmode
+  local cmode = sl.colors.Cmode
+  local tmode = sl.colors.Tmode
+  local imode = sl.colors.Imode
 
   local mode = {
     ['n']     = nmode .. 'N',
@@ -144,7 +150,7 @@ local function get_mode()
     ['r']     = tmode .. 'R',
     ['rm']    = nmode .. 'M',
     ['r?']    = nmode .. 'C',
-    ['!']     = statusline.colors.ShellMode .. 'S',
+    ['!']     = sl.colors.ShellMode .. 'S',
     ['t']     = tmode .. 'T',
   }
 
@@ -168,63 +174,61 @@ end
 
 
 ---Get location in current buffer (current row on total rows)
+---@return string line number on total number
 local function get_line_onTot()
-  return win_is_smaller(statusline.preset_width.row_onTot) and
-      string.format(" %s%%l%s+%%L ", statusline.colors.git, statusline.colors.fformatloc)
-      or statusline.colors.fformatloc .. " row " .. statusline.colors.git .. "%l" .. statusline.colors.fformatloc .. "÷%L "
+  return win_is_smaller(sl.preset_width.row_onTot) and
+      string.format(" %s%%l%s/%%L ", sl.colors.git, sl.colors.fformatloc)
+      or
+      sl.colors.fformatloc ..
+      ' row ' .. sl.colors.git .. '%l' .. sl.colors.fformatloc .. '/%L '
 end
 
 ---Get file name
+---@return string filename name of the current file
 local function get_filename()
   local cols = vim.o.columns
   local fname = tostring(vim.fn.expand "%f ")
-  local to_trunc = #fname >= statusline.preset_width.filename or #fname >= (cols * 0.26)
-  local truncated_name = "..." .. string.sub(fname, #fname - (cols * 0.20), -1)
+  local to_trunc = #fname >= sl.preset_width.filename or #fname >= (cols * 0.26)
+  local truncated_name = '...' .. string.sub(fname, #fname - (cols * 0.20), -1)
 
   return to_trunc and truncated_name or fname
 end
 
 
 ---Get lsp diagnostics data
+---@return string diagnostic diagnostic formatted data
 local function get_lsp_diagnostic()
-  local do_not_show_diag = win_is_smaller(80)
+  local do_not_show_diag            = win_is_smaller(80)
 
-  local diagnostics, errors, warns, infos, hints = nil, 0, 0, 0, 0
-  local status_ok = false
+  local diagnostics                 = nil
+  local errors, warns, infos, hints = 0, 0, 0, 0
+  local status_ok                   = false
 
-  -- remove check when has nvim-0.10
-  if vim.diagnostic.count ~= nil then
-    diagnostics = vim.diagnostic.count(0)
-    errors      = diagnostics[vim.diagnostic.severity.ERROR] or 0
-    warns       = diagnostics[vim.diagnostic.severity.WARN] or 0
-    infos       = diagnostics[vim.diagnostic.severity.INFO] or 0
-    hints       = diagnostics[vim.diagnostic.severity.HINT] or 0
-    status_ok   = #diagnostics == 0
-  else
-    -- assign to relative vars the count of diagnostics
-    errors    = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.ERROR } })
-    warns     = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.WARN } })
-    infos     = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.INFO } })
-    hints     = #vim.diagnostic.get(0, { severity = { vim.diagnostic.severity.HINT } })
-    status_ok = (errors + warns + infos + hints) == 0
-  end
+  diagnostics                       = vim.diagnostic.count(0)
+  errors                            = diagnostics[vim.diagnostic.severity.ERROR] or 0
+  warns                             = diagnostics[vim.diagnostic.severity.WARN] or 0
+  infos                             = diagnostics[vim.diagnostic.severity.INFO] or 0
+  hints                             = diagnostics[vim.diagnostic.severity.HINT] or 0
+  status_ok                         = #diagnostics == 0
 
-  local icons = require "lib.icons"
+  local icons                       = require 'lib.icons'
 
   -- display values only if there are any
-  return status_ok and statusline.colors.diag .. icons.diagnostics.status_ok or
-      do_not_show_diag and statusline.colors.diag .. icons.diagnostics.status_not_ok or
+  return status_ok and sl.colors.diag .. icons.diagnostics.status_ok or
+      do_not_show_diag and sl.colors.diag .. icons.diagnostics.status_not_ok or
       string.format(
         "%s%s%s %d %s%s %d %s%s %d %s%s %d",
-        statusline.colors.diag,
-        statusline.colors.diagError, icons.diagnostics.Error, errors,
-        statusline.colors.diagWarn, icons.diagnostics.Warning, warns,
-        statusline.colors.diagInfo, icons.diagnostics.Information, infos,
-        statusline.colors.diagHint, icons.diagnostics.Hint, hints
+        sl.colors.diag,
+        sl.colors.diagError, icons.diagnostics.Error, errors,
+        sl.colors.diagWarn, icons.diagnostics.Warning, warns,
+        sl.colors.diagInfo, icons.diagnostics.Information, infos,
+        sl.colors.diagHint, icons.diagnostics.Hint, hints
       )
 end
 
----Get git status with gitsigns
+---Get git status with `gitsigns` plugin
+---and display data depending on available window width
+---@return string git_status git formatted data
 local function get_git_status()
   local signs = vim.b['gitsigns_status_dict'] or nil
   if not signs then return "" end
@@ -238,25 +242,26 @@ local function get_git_status()
   if signs.head ~= nil then
     local head = signs.head
 
-    if win_is_smaller(statusline.preset_width.git_branch) then
-      return "• "
-    elseif win_is_smaller(statusline.preset_width.git_branch, statusline.preset_width.git_status_full) or no_changes then
+    if win_is_smaller(sl.preset_width.git_branch) then
+      return '• '
+    elseif win_is_smaller(sl.preset_width.git_branch, sl.preset_width.git_status_full) or no_changes then
       return string.format(" %s ", head)
     else
       return string.format("+%s ~%s -%s |  %s ", add, change, remove, head)
     end
   else
-    return "•"
+    return '•'
   end
 end
 
 ---Get filetype with icon if available
+---@return table filetype icon? and filetype
 local function get_filetype()
   local file_name, file_ext = vim.fn.expand "%:t", vim.fn.expand "%:e"
   local has_devicons, devicons = pcall(require, "nvim-web-devicons")
-  local icons, icon = require "lib.icons", ""
+  local icons, icon = require 'lib.icons', nil
 
-  if has_devicons ~= nil then
+  if has_devicons then
     icon = devicons.get_icon(file_name, file_ext)
   end
   local file_type = vim.bo.filetype
@@ -267,26 +272,31 @@ local function get_filetype()
 end
 
 ---Get file encoding
+---@return string file_encoding current buf file-encoding or empty string
 local function get_fencoding()
-  return not win_is_smaller(76) and " %{&fileencoding?&fileencoding:&encoding} " or ""
+  return not win_is_smaller(76) and " %{&fileencoding?&fileencoding:&encoding} " or ''
 end
 
 ---Get file format
+---@return string file_format current buf file-format or empty string
 local function get_fformat()
-  return not win_is_smaller(76) and "%{&ff}" or ""
+  return not win_is_smaller(76) and "%{&ff}" or ''
 end
 
 ---Get session name if active
+---@return string session_name name of the active session or empty string
 local function session_name()
-  return statusline.session_name ~= "" and
-      string.format("Session: %s%s", statusline.colors.session, statusline.session_name) or ""
+  return sl.session_name ~= '' and
+      string.format("Session: %s%s", sl.colors.session, sl.session_name) or
+      ''
 end
 
 ---Get python virtual-env if is active and in python file
+---@return string env_name name of python env or empty string
 local function get_python_env()
   -- if vim.bo.filetype == "python" then
-  if not win_is_smaller(statusline.preset_width.git_branch) then
-    local venv = os.getenv "VIRTUAL_ENV"
+  if not win_is_smaller(sl.preset_width.git_branch) then
+    local venv = os.getenv 'VIRTUAL_ENV'
     if venv then
       if string.find(venv, "/") then
         local final_venv = venv
@@ -299,18 +309,15 @@ local function get_python_env()
     end
   end
   -- end
-  return ""
+  return ''
 end
 
 ---Get lsp status and if active get names of server running
+---@return string lsp_status
 local function get_lsp_info()
-  -- TODO: remove when update to nvim-0.10
-  local buf_clients = vim.fn.has("nvim-0.10") == 1 and vim.lsp.get_clients() or
-      vim.lsp.get_active_clients { bufnr = 0 }
-
-  return #buf_clients ~= 0 and
-      string.format("%s• ", statusline.colors.name) or
-      string.format("%s• ", statusline.colors.lspnoactive)
+  return #vim.lsp.get_clients() ~= 0 and
+      string.format("%s• ", sl.colors.name) or
+      string.format("%s• ", sl.colors.lspnoactive)
 end
 
 ---Statusline disabled that display only filetype and current mode
@@ -342,17 +349,17 @@ local function disable_statusline()
   }
   local custom_ft = special_filetypes[vim.bo.filetype]
 
-  return table.concat({
-    statusline.colors.mode,
+  return table.concat {
+    sl.colors.mode,
     get_mode(),
     modifiedReadOnlyFlags,
-    statusline.colors.inverted,
+    sl.colors.inverted,
     icons.ui.SlArrowRight,
     sideSep,
-    statusline.colors.inactive,
+    sl.colors.inactive,
     custom_ft or ftype_name,
     sideSep
-  })
+  }
 end
 
 
@@ -365,15 +372,15 @@ local function enable_statusline()
 
   local icons = require "lib.icons"
 
-  local sl = {
+  sl.cached = {
     -- LeftSide
-    statusline.colors.mode, get_mode(),
-    statusline.colors.inverted, icons.ui.SlArrowRight,
+    sl.colors.mode, get_mode(),
+    sl.colors.inverted, icons.ui.SlArrowRight,
     modifiedReadOnlyFlags, space,
-    statusline.colors.git, get_git_status(),
-    statusline.colors.name, get_filename(),
-    statusline.colors.symbols, icons.ui.SlArrowRight,
-    statusline.colors.empty,
+    sl.colors.git, get_git_status(),
+    sl.colors.name, get_filename(),
+    sl.colors.symbols, icons.ui.SlArrowRight,
+    sl.colors.empty,
     session_name(),
     get_python_env(),
 
@@ -383,30 +390,31 @@ local function enable_statusline()
     space,
 
     -- Right Side
-    statusline.colors.symbols, icons.ui.SlArrowLeft, get_lsp_info(),
-    statusline.colors.ftype, get_filetype().icon or "",
+    sl.colors.symbols, icons.ui.SlArrowLeft, get_lsp_info(),
+    sl.colors.ftype, get_filetype().icon or "",
     space,
     get_filetype().name,
-    statusline.colors.encoding, get_fencoding(),
-    statusline.colors.fformatloc, get_fformat(),
+    sl.colors.encoding, get_fencoding(),
+    sl.colors.fformatloc, get_fformat(),
     get_line_onTot(),
-    statusline.colors.inverted, icons.ui.SlArrowLeft
+    sl.colors.inverted, icons.ui.SlArrowLeft
   }
 
-  return table.concat(sl)
+  return table.concat(sl.cached)
 end
 
 ---Set statusline based on filetype of current buffer
-function statusline.set()
+function sl.set()
   if not vim.g.statusline_color then set_color_groups() end
-  if not statusline.to_exclude[vim.bo.filetype] then
+  if not sl.to_exclude[vim.bo.filetype] then
     vim.wo.statusline = enable_statusline()
   else
     vim.wo.statusline = disable_statusline()
   end
 end
 
-function statusline.toggle()
+---Define autocmds for load winbar module and initialize
+function sl.toggle()
   if vim.g.statusline ~= nil then
     vim.api.nvim_del_autocmd(vim.g.statusline)
     vim.wo.statusline = ""
@@ -423,18 +431,17 @@ function statusline.toggle()
       group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
       callback = function(cb)
         if vim.g.statusline ~= nil then
-          vim.api.nvim_eval_statusline(
-            "%!v:lua.require'config.statusline'.set()", {})
+          vim.api.nvim_eval_statusline("%!v:lua.require'lib.ui.statusline'.set()", {})
         else
           vim.g.statusline = cb.id
         end
       end
     })
+    vim.api.nvim_eval_statusline("%!v:lua.require'lib.ui.statusline'.set()", {})
   end
 end
 
-vim.api.nvim_create_user_command("ToggleStatusline", function()
-  statusline.toggle()
-end, { desc = "Toggle StatuLine" })
+vim.api.nvim_create_user_command("ToggleStatusline", sl.toggle,
+  { desc = "Toggle Statusline" })
 
-return statusline
+return sl

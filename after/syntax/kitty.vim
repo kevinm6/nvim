@@ -1,6 +1,6 @@
 " Vim syntax file
 " Language         : Kitty
-" Last Change      : 19/01/2024 - 17:54
+" Last Modified    : 13/05/2024 - 10:56
 " Source           : https://github.com/fladson/vim-kitty/tree/main/syntax
 
 syn region kittyKeybind start=' ' end=' ' contains=kittyMod,kittyKey,kittyKeyComb contained nextgroup=kittyActionKW
@@ -10,6 +10,7 @@ syn region kittyString start=+'+ skip=+\\\\\|\\'+ end=+'+ oneline
 " the order here matters
 syn match kittySt '.*$' contains=kittyNumber,kittyColor
 syn match kittyColor '#\x\{3,8}' contained
+syn match kittyContinue '^\(\s\+\)\?\\'
 syn match kittyNumber '\s[+-]\?\d\+\.\?\d*\(%\|px\|pt\|em\)\?'ms=s+1 contained contains=kittyUnit
 syn match kittyUnit '\(px\|pt\|em\)' contained
 syn match kittyKW '^\s*\S*' contains=kittyKeyword,kittyInvalidKeyword nextgroup=kittySt
@@ -35,6 +36,7 @@ hi def link kittyNumber Number
 hi def link kittyString String
 hi def link kittyTodo Todo
 hi def link kittyUnit Type
+hi def link kittyContinue kittySt
 
 let b:current_syntax = "kitty"
 
@@ -89,14 +91,15 @@ syn keyword kittyKeyword contained
  \ macos_show_window_title_in macos_thicken_font macos_titlebar_color macos_traditional_fullscreen macos_window_resizable map mark1_background mark1_foreground
  \ mark2_background mark2_foreground mark3_background mark3_foreground menu_map modify_font mouse_hide_wait mouse_map
  \ narrow_symbols notify_on_cmd_finish open_url_with paste_actions placement_strategy pointer_shape_when_dragging pointer_shape_when_grabbed remember_window_size
- \ remote_control_password repaint_delay resize_debounce_time resize_in_steps scrollback_fill_enlarged_window scrollback_lines scrollback_pager scrollback_pager_history_size
- \ select_by_word_characters select_by_word_characters_forward selection_background selection_foreground shell shell_integration show_hyperlink_targets single_window_margin_width
- \ single_window_padding_width startup_session strip_trailing_spaces symbol_map sync_to_monitor tab_activity_symbol tab_bar_align tab_bar_background
- \ tab_bar_edge tab_bar_margin_color tab_bar_margin_height tab_bar_margin_width tab_bar_min_tabs tab_bar_style tab_fade tab_powerline_style
- \ tab_separator tab_switch_strategy tab_title_max_length tab_title_template term text_composition_strategy text_fg_override_threshold touch_scroll_multiplier
- \ undercurl_style underline_hyperlinks update_check_interval url_color url_excluded_characters url_prefixes url_style visual_bell_color
- \ visual_bell_duration visual_window_select_characters watcher wayland_titlebar_color wheel_scroll_min_lines wheel_scroll_multiplier window_alert_on_bell window_border_width
- \ window_logo_alpha window_logo_path window_logo_position window_margin_width window_padding_width window_resize_step_cells window_resize_step_lines
+ \ remote_control_password repaint_delay resize_debounce_time resize_in_steps scrollback_fill_enlarged_window scrollback_indicator_opacity scrollback_lines scrollback_pager
+ \ scrollback_pager_history_size select_by_word_characters select_by_word_characters_forward selection_background selection_foreground shell shell_integration show_hyperlink_targets
+ \ single_window_margin_width single_window_padding_width startup_session strip_trailing_spaces symbol_map sync_to_monitor tab_activity_symbol tab_bar_align
+ \ tab_bar_background tab_bar_edge tab_bar_margin_color tab_bar_margin_height tab_bar_margin_width tab_bar_min_tabs tab_bar_style tab_fade
+ \ tab_powerline_style tab_separator tab_switch_strategy tab_title_max_length tab_title_template term terminfo_type text_composition_strategy
+ \ text_fg_override_threshold touch_scroll_multiplier undercurl_style underline_hyperlinks update_check_interval url_color url_excluded_characters url_prefixes
+ \ url_style visual_bell_color visual_bell_duration visual_window_select_characters watcher wayland_enable_ime wayland_titlebar_color wheel_scroll_min_lines
+ \ wheel_scroll_multiplier window_alert_on_bell window_border_width window_logo_alpha window_logo_path window_logo_position window_margin_width window_padding_width
+ \ window_resize_step_cells window_resize_step_lines
 syn keyword kittyAction contained
  \ change_font_size clear_selection clear_terminal close_os_window close_other_os_windows close_other_tabs_in_os_window close_other_windows_in_tab close_shared_ssh_connections
  \ close_tab close_window close_window_with_confirmation combine copy_and_clear_or_interrupt copy_ansi_to_clipboard copy_or_interrupt copy_to_buffer

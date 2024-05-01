@@ -2,46 +2,11 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 22 Mar 2024, 18:43
+-- Last Modified: 08 May 2024, 11:59
 ---------------------------------------
 
-
-local function git_hunks()
-  require("telescope.pickers")
-      .new({
-        finder = require("telescope.finders").new_oneshot_job(
-          { "git", "jump", "--stdout", "diff" },
-          {
-            entry_maker = function(line)
-              local filename, lnum_string = line:match "([^:]+):(%d+).*"
-
-              -- I couldn't find a way to use grep in new_oneshot_job so we have to filter here.
-              -- return nil if filename is /dev/null because this means the file was deleted.
-              if filename:match "^/dev/null" then
-                return nil
-              end
-
-              return {
-                value = filename,
-                display = line,
-                ordinal = line,
-                filename = filename,
-                lnum = tonumber(lnum_string),
-              }
-            end,
-          }
-        ),
-        sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
-        previewer = require("telescope.config").values.grep_previewer {},
-        results_title = "Git hunks",
-        prompt_title = "Git hunks",
-        layout_strategy = "flex",
-      }, {})
-      :find()
-end
-
-
-local select_one_or_multi = function(prompt_bufnr, action)
+local function select_one_or_multi(prompt_bufnr, action)
+  local tele_actions = require "telescope.actions"
   local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
   local multi = picker:get_multi_selection()
   if not vim.tbl_isempty(multi) then
@@ -52,64 +17,38 @@ local select_one_or_multi = function(prompt_bufnr, action)
       end
     end
   else
-    if action == 'edit' then
-      require('telescope.actions').select_default(prompt_bufnr)
-    elseif action == 'sp' then
-      require('telescope.actions').select_horizontal(prompt_bufnr)
-    elseif action == 'vsp' then
-      require('telescope.actions').select_vertical(prompt_bufnr)
-    elseif action == 'tabe' then
-      require('telescope.actions').select_tab(prompt_bufnr)
+    local action_map = {
+      edit = tele_actions.select_default,
+      sp = tele_actions.select_horizontal,
+      vsp = tele_actions.select_vertical,
+      tabe = tele_actions.select_tab
+    }
+    if not action_map[action] then
+      vim.notify("action passed not found: " .. action)
+      return
     end
+
+    action_map[action](prompt_bufnr)
   end
 end
 
-
-local function filenameFirst(_, path)
-  local tail = vim.fs.basename(path)
-  local parent = vim.fs.dirname(path)
-  if parent == "." then return tail end
-  return string.format("%s\t\t%s", tail, parent)
-end
-
-local M = {
+return {
+  ---Telescope
   {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
-    dependencies = {
-      "plenary.nvim",
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make"
-      },
-      "benfowler/telescope-luasnip.nvim",
-      "LinArcX/telescope-env.nvim",
-      "nvim-telescope/telescope-ui-select.nvim",
-      -- "nvim-telescope/telescope-file-browser.nvim",
-    },
-    keys = {
-      {
-        "<leader>b",
-        function()
-          require("telescope.builtin").buffers()
-        end,
-        desc = "Buffers",
-      },
-      { "<leader>f", nil, desc = "Telescope", },
-    },
     opts = function(_, o)
       local icons = require "lib.icons"
 
       local actions = require "telescope.actions"
       local action_layout = require "telescope.actions.layout"
-      -- local fb_actions = require("telescope").extensions.file_browser.actions
       local action_state = require "telescope.actions.state"
 
       o.defaults = {
         preview = { hide_on_startup = true },
         initial_mode = "insert",
         prompt_prefix = icons.ui.Telescope .. "  ",
-        selection_caret = "> ",
+        selection_caret = "❭ ",
         entry_prefix = "   ",
         path_display = { "smart" },
         file_ignore_patterns = { "Icon?", ".DS_Store" },
@@ -136,8 +75,8 @@ local M = {
             ["<C-v>"] = function(pb) select_one_or_multi(pb, 'vsp') end,
             ["<C-t>"] = function(pb) select_one_or_multi(pb, 'tabe') end,
 
-            ["<C-p>"] = "preview_scrolling_up",
-            ["<C-n>"] = "preview_scrolling_down",
+            ["<C-b>"] = "preview_scrolling_up",
+            ["<C-f>"] = "preview_scrolling_down",
 
             ["<PageUp>"] = "results_scrolling_up",
             ["<PageDown>"] = "results_scrolling_down",
@@ -186,8 +125,8 @@ local M = {
             ["<Down>"] = "move_selection_next",
             ["<Up>"] = "move_selection_previous",
 
-            ["<C-p>"] = "preview_scrolling_up",
-            ["<C-n>"] = "preview_scrolling_down",
+            ["<C-b>"] = "preview_scrolling_up",
+            ["<C-f>"] = "preview_scrolling_down",
 
             ["<PageUp>"] = "results_scrolling_up",
             ["<PageDown>"] = "results_scrolling_down",
@@ -203,23 +142,24 @@ local M = {
             end,
 
             ["?"] = "which_key",
-          },
-        },
+          }
+        }
       }
 
       o.pickers = {
         find_files = {
           theme = "dropdown",
-          previewer = false,
           sorting_strategy = "descending",
           layout_strategy = "center",
           layout_config = {
             prompt_position = "bottom",
-            height = 0.4,
+            height = 0.4
           },
           cwd = vim.uv.cwd(),
           no_ignore = true,
-          path_display = filenameFirst,
+          path_display = {
+            filename_first = { reverse_directories = false }
+          },
           mappings = {
             n = {
               ["."] = function(prompt_bufnr)
@@ -247,7 +187,7 @@ local M = {
 
                 require("telescope.actions").close(prompt_bufnr)
                 require("telescope.builtin").resume(opts)
-              end,
+              end
             },
             i = {
               ["<C-.>"] = function(prompt_bufnr)
@@ -275,9 +215,9 @@ local M = {
 
                 require("telescope.actions").close(prompt_bufnr)
                 require("telescope.builtin").find_files(opts)
-              end,
-            },
-          },
+              end
+            }
+          }
         },
         buffers = {
           theme = "dropdown",
@@ -286,7 +226,9 @@ local M = {
           previewer = false,
           initial_mode = "insert",
           sorting_strategy = "descending",
-          path_display = filenameFirst,
+          path_display = {
+            filename_first = { reverse_directories = false }
+          },
           layout_config = {
             prompt_position = "bottom",
           },
@@ -296,12 +238,11 @@ local M = {
             },
             n = {
               ["x"] = "delete_buffer",
-            },
-          },
+            }
+          }
         },
         oldfiles = {
           previewer = false,
-          cwd_only = false,
           initial_mode = "insert",
           sorting_strategy = "descending",
           layout_strategy = "vertical",
@@ -312,46 +253,48 @@ local M = {
             prompt_position = "bottom",
             height = 0.8,
             width = 0.6,
-          },
+          }
         },
         live_grep = {
           initial_mode = "insert",
           sorting_strategy = "descending",
           layout_strategy = "bottom_pane",
-          path_display = filenameFirst,
+          path_display = {
+            filename_first = { reverse_directories = false }
+          },
           debounce = 400,
           layout_config = {
             prompt_position = "bottom",
             height = 0.7,
-          },
+          }
         },
         git_files = {
-          previewer = false,
-          cwd_only = false,
-          initial_mode = "insert",
+          -- initial_mode = "insert",
           sorting_strategy = "descending",
           layout_strategy = "vertical",
-          path_display = filenameFirst,
+          path_display = {
+            filename_first = { reverse_directories = false }
+          },
           layout_config = {
             prompt_position = "bottom",
             height = 0.8,
             width = 0.6,
-          },
+          }
         },
         git_status = {
           theme = "dropdown",
-          previewer = false,
+          -- previewer = false,
           initial_mode = "normal",
           sorting_strategy = "descending",
           layout_strategy = "vertical",
           layout_config = {
             prompt_position = "bottom",
             vertical = { width = 0.6, height = 0.4 },
-          },
+          }
         },
         git_branches = {
           theme = "dropdown",
-          previewer = false,
+          -- previewer = false,
           initial_mode = "normal",
           sorting_strategy = "descending",
           layout_strategy = "vertical",
@@ -359,30 +302,17 @@ local M = {
             prompt_position = "bottom",
             width = 0.6,
             height = 0.4,
-          },
-        },
-        commands = {
-          theme = "dropdown",
-          previewer = false,
-          initial_mode = "normal",
-          sorting_strategy = "descending",
-          layout_strategy = "vertical",
-          layout_config = {
-            prompt_position = "bottom",
-            width = 0.6,
-            height = 0.4,
-          },
+          }
         },
         diagnostics = {
           bufnr = 0,
           previewer = true,
-          initial_mode = "normal",
           sorting_strategy = "descending",
           layout_strategy = "vertical",
           layout_config = {
             prompt_position = "bottom",
             vertical = { width = 0.6, height = 0.6 },
-          },
+          }
         },
         lsp_references = {
           previewer = true,
@@ -400,7 +330,7 @@ local M = {
           sorting_strategy = "descending",
           layout_config = {
             vertical = { width = 0.7, height = 0.6 },
-          },
+          }
         },
         lsp_type_definitions = {
           previewer = true,
@@ -409,7 +339,7 @@ local M = {
           sorting_strategy = "descending",
           layout_config = {
             vertical = { width = 0.7, height = 0.6 },
-          },
+          }
         },
         lsp_declarations = {
           previewer = true,
@@ -418,7 +348,7 @@ local M = {
           sorting_strategy = "descending",
           layout_config = {
             vertical = { width = 0.7, height = 0.6 },
-          },
+          }
         },
         lsp_implementations = {
           previewer = true,
@@ -427,7 +357,7 @@ local M = {
           sorting_strategy = "descending",
           layout_config = {
             vertical = { width = 0.7, height = 0.6 },
-          },
+          }
         },
         lsp_document_symbols = {
           previewer = true,
@@ -436,7 +366,7 @@ local M = {
           sorting_strategy = "descending",
           layout_config = {
             vertical = { width = 0.7, height = 0.6 },
-          },
+          }
         },
         lsp_dynamic_workspace_symbols = {
           previewer = true,
@@ -445,27 +375,35 @@ local M = {
           sorting_strategy = "descending",
           layout_config = {
             vertical = { width = 0.7, height = 0.6 },
-          },
+          }
         },
         registers = {
-          theme = "dropdown",
-          initial_mode = "normal",
-          layout_strategy = "center",
+          initial_mode = 'insert',
+          layout_strategy = 'vertical',
           layout_config = {
+            anchor = 'S',
             prompt_position = "bottom",
-            vertical = { width = 0.7, height = 0.5 },
-          },
+            vertical = { width = 0.9, height = 0.6 },
+          }
         },
         keymaps = {
-          theme = "dropdown",
-          previewer = false,
-          initial_mode = "insert",
-          layout_strategy = "center",
+          initial_mode = 'insert',
+          layout_strategy = 'vertical',
           layout_config = {
+            anchor = 'S',
             prompt_position = "bottom",
-            vertical = { width = 0.8, height = 0.6 },
-          },
+            vertical = { width = 0.9, height = 0.4 },
+          }
         },
+        commands = {
+          initial_mode = 'insert',
+          layout_strategy = 'vertical',
+          layout_config = {
+            anchor = 'S',
+            prompt_position = "bottom",
+            vertical = { width = 0.9, height = 0.4 },
+          }
+        }
       }
 
       o.extensions = {
@@ -487,9 +425,8 @@ local M = {
 
       local tele_builtin = require "telescope.builtin"
 
-      telescope.load_extension "fzf"
-      telescope.load_extension "ui-select"
-      -- telescope.load_extension "file_browser"
+      pcall(telescope.load_extension, 'fzf')
+      pcall(telescope.load_extension, 'ui-select')
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "TelescopeResults",
@@ -502,54 +439,67 @@ local M = {
       })
 
       -- Keymaps
-      local function nmap(keys, fun, desc)
-        vim.keymap.set("n", keys, fun, { desc = desc })
+      local function nmap(tbl)
+        vim.keymap.set("n", tbl[1], tbl[2],
+          { desc = require "lib.icons".ui.Telescope .. tbl[3] })
       end
+      nmap { "<leader><leader>", tele_builtin.buffers, " Buffers" }
 
-      nmap("<leader>fF", function() tele_builtin.live_grep() end, "Find Text (LiveGrep)")
+      nmap { "<leader>fF", tele_builtin.live_grep, "Find Text (LiveGrep)" }
 
-      nmap("<leader>fH", function()
+      nmap { "<leader>fh", function()
         local cword = vim.fn.expand "<cword>"
         tele_builtin.help_tags({ default_text = cword })
-      end, "Help")
+      end, "Help" }
 
-      nmap("<leader>fg", function()
+      nmap { "<leader>fg", function()
         tele_builtin.git_files()
-      end, "Git Files")
-      nmap("<leader>fR", function()
+      end, "Git Files" }
+      nmap { "<leader>fR", function()
         tele_builtin.registers()
-      end, "Registers")
-      nmap("<leader>fq", function() tele_builtin.quickfix() end, "QuickFix")
-      nmap("<leader>fQ", function() tele_builtin.loclist() end, "LocationList")
-      nmap("<leader>fl", function() tele_builtin.resume() end, "Resume last")
-      nmap("<leader>fc", function() tele_builtin.current_buffer_fuzzy_find() end,
-        "Line fuzzy")
-      nmap("<leader>fC", function() tele_builtin.commands() end, "Colorscheme")
-      nmap("<leader>fe", function() telescope.extensions.env.env() end, "Environment")
-      nmap("<leader>fO", function() require("lib.software_licenses").pick_license() end,
-        "Software Licenses")
-      nmap("<leader>fs", function()
+      end, "Registers" }
+      nmap { "<leader>fq", tele_builtin.quickfix, "QuickFix" }
+      nmap { "<leader>fQ", tele_builtin.loclist, "LocationList" }
+      nmap { "<leader>fl", tele_builtin.resume, "Resume last" }
+      nmap { "<leader>fk", tele_builtin.keymaps, "Keymaps" }
+      nmap { "<leader>fc", tele_builtin.current_buffer_fuzzy_find, "Line fuzzy" }
+      nmap { "<leader>fC", tele_builtin.commands, "Colorscheme" }
+      nmap { "<leader>fe", function() require "lib.env".show_vars() end, "Environment" }
+      nmap { "<leader>fO", require "lib.software_licenses".pick_license, "Software Licenses" }
+      nmap { "<leader>fw", function()
         tele_builtin.grep_string {
           theme = "dropdown",
           previewer = false,
         }
-      end, "Grep < cword >")
+      end, "Grep < cword >" }
+      nmap { "<leader>fW", function()
+        local word = vim.fn.expand("<cWORD>")
+        tele_builtin.grep_string {
+          theme = "dropdown",
+          previewer = false,
+          search = word
+        }
+      end, "Grep <cword>" }
 
-      nmap("<leader>ff", function()
-        require("telescope.builtin").find_files { cwd = vim.uv.cwd() }
-      end, "Find Files")
-      nmap("<leader>fo", function() require("telescope.builtin").builtin() end,
-        "Open Telescope")
-      nmap("<leader>fr", function()
-        require("telescope.builtin").oldfiles()
-      end, "Recent File")
+      nmap { "<leader>ff", function()
+        tele_builtin.find_files { cwd = vim.uv.cwd() }
+      end, "Find Files" }
+      nmap { "<leader>fo", tele_builtin.builtin,
+        "Open Telescope" }
+      nmap { "<leader>fr", tele_builtin.oldfiles, "Recent File" }
 
-      nmap("<leader>gs", function() tele_builtin.git_status() end, "Git status")
-      nmap("<leader>gb", function() tele_builtin.git_branches() end, "Checkout branch")
-      nmap("<leader>gc", function() tele_builtin.git_commits() end, "Checkout commit")
-      nmap("<leader>gh", function() git_hunks() end, "Git Hunks")
+      nmap { "<leader>gs", tele_builtin.git_status, "Git status" }
+      nmap { "<leader>gb", tele_builtin.git_branches, "Checkout branch" }
+      nmap { "<leader>gc", tele_builtin.git_commits, "Checkout commit" }
     end
-  }
-}
+  },
 
-return M
+  ---Fzf-native
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "make"
+  },
+
+  ---UI-select
+  "nvim-telescope/telescope-ui-select.nvim"
+}

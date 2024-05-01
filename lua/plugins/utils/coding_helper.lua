@@ -2,10 +2,11 @@
 -- File         : coding_helper.lua
 -- Description  : plugins that helps coding
 -- Author       : Kevin
--- Last Modified: 18 Mar 2024, 18:41
+-- Last Modified: 01 May 2024, 12:32
 -------------------------------------
 
-local M = {
+return {
+  ---Autopairs
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
@@ -42,48 +43,8 @@ local M = {
       }
     end
   },
-  {
-    "numToStr/Comment.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    -- keys = {
-    --    { "gc", mode = { "n", "v" } },
-    --    { "gb", mode = { "n", "v" } },
-    -- },
-    opts = function(_, o)
-      o.ignore = "^$"
 
-      o.pre_hook = function(ctx)
-        require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
-        local javascript_filetypes = {
-          typescriptreact = true,
-          javascriptreact = true,
-          javascript = true,
-          typescript = true,
-        }
-
-        if javascript_filetypes[vim.bo.filetype] then
-          local U = require "Comment.utils"
-
-          -- Determine whether to use linewise or blockwise commentstring
-          local type = ctx.ctype == U.ctype.linewise and "__default" or "__multiline"
-
-          -- Determine the location where to calculate commentstring from
-          local location = nil
-          if ctx.ctype == U.ctype.blockwise then
-            location = require("ts_context_commentstring.utils").get_cursor_location()
-          elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-            location = require("ts_context_commentstring.utils")
-            .get_visual_start_location()
-          end
-
-          return require("ts_context_commentstring.internal").calculate_commentstring {
-            key = type,
-            location = location,
-          }
-        end
-      end
-    end
-  },
+  ---MiniSurround
   {
     'echasnovski/mini.surround',
     version = '*', -- stable version
@@ -92,12 +53,14 @@ local M = {
       require('mini.surround').setup(o)
     end
   },
+
+  ---TodoComments
   {
     "folke/todo-comments.nvim",
+    enabled = false,
     cmd = { "TodoTelescope", "TodoLocList", "TodoQuickFix" },
     event = "BufRead",
-    dependencies = { "plenary.nvim" },
-    opts = function(_, o)
+    config = function(_, o)
       local icons = require "lib.icons"
 
       local error_red = "#F44747"
@@ -107,10 +70,9 @@ local M = {
       local perf_purple = "#7C3AED"
       o.keywords = {
         FIX = {
-          icon = icons.ui.Bug,                     -- icon used for the sign, and in search results
-          color = error_red,                       -- can be a hex color, or a named color (see below)
-          alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-          -- signs = false, -- configure signs for some keywords individually
+          icon = icons.ui.Bug,
+          color = error_red,
+          alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
         },
         TODO = { icon = icons.ui.Check, color = hint_blue, alt = { "TIP" } },
         HACK = { icon = icons.ui.Fire, color = warning_orange },
@@ -118,23 +80,19 @@ local M = {
         PERF = { icon = icons.ui.Dashboard, color = perf_purple, alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
         NOTE = { icon = icons.ui.Note, color = info_yellow, alt = { "INFO" } },
       }
-    end,
-    config = function(_, o)
+
       local todo_comments = require "todo-comments"
       todo_comments.setup(o)
 
-      vim.keymap.set("n", "]t", function() todo_comments.jump_next() end,
-        { desc = "Next todo comment" })
-      vim.keymap.set("n", "[t", function() todo_comments.jump_prev() end,
-        { desc = "Prev todo comment" })
-      vim.keymap.set("n", "<leader>ftt", function() vim.cmd.TodoTelescope() end,
-        { desc = "ToDo Telescope" })
-      vim.keymap.set("n", "<leader>ftq", function() vim.cmd.TodoQuickFix() end,
-        { desc = "ToDo QuickFix" })
-      vim.keymap.set("n", "<leader>ftl", function() vim.cmd.TodoLocList() end,
-        { desc = "ToDo LocList" })
+      local function nmap(tbl)
+        vim.keymap.set("n", tbl[1], tbl[2], { desc = "ToDo❭ "..tbl[3] })
+      end
+
+      nmap { "]t", todo_comments.jump_next, "Next" }
+      nmap { "[t", todo_comments.jump_prev, "Prev" }
+      nmap { "<leader>ftt", vim.cmd.TodoTelescope, "Telescope" }
+      nmap { "<leader>ftq", vim.cmd.TodoQuickFix, "QuickFix" }
+      nmap { "<leader>ftl", vim.cmd.TodoLocList, "LocList" }
     end
   }
 }
-
-return M

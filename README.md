@@ -1,4 +1,4 @@
-# <p align="center" style="color: #015A60">NeoVim config</p>
+# <p align="center" style="color: #015A60">NeoVim config <p align="center" style="font-size:16px;color:grey">v0.10</p></p>
 
 <p align="center">
 <img alt="Lua"
