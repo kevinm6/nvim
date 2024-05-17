@@ -9,7 +9,6 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
-      "nvim-dap",
       "nvim-neotest/nvim-nio"
     },
     opts = function(_, o)

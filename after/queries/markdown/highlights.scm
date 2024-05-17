@@ -48,7 +48,7 @@
 ([
   (block_quote_marker)
   (block_continuation)
-] @conceal (#set! conceal "|"))
+] @conceal (#set! conceal "▋"))
 
 (fenced_code_block
   (info_string (language) @_language)

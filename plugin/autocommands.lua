@@ -33,7 +33,7 @@ local filetypes_to_exclude = {
   query = true,
   man = true,
   lazy_backdrop = true,
-  cmp_docs = true
+  cmp_docs = true,
 }
 
 --------------------------------
@@ -41,17 +41,16 @@ local filetypes_to_exclude = {
 --------------------------------
 
 ---Hightlight on yank
-autocmd({ "TextYankPost" }, {
+autocmd("TextYankPost", {
   group = augroup("_highlight_yank", { clear = true }),
   pattern = "*",
   callback = function()
-    if vim.v.event.operator == 'y' and vim.v.event.regname == '' then
+    if vim.v.event.operator == "y" then
       vim.highlight.on_yank { higroup = "TextYankPost", timeout = 80, on_macro = true }
-      require 'lib'.shift_reg({ val = vim.fn.getreg("0"), typ = vim.fn.getregtype("0") })
+      require("lib").shift_reg { val = vim.fn.getreg "0", typ = vim.fn.getregtype "0" }
     end
-  end
+  end,
 })
-
 
 ---Exit on q for some filetypes
 autocmd("FileType", {
@@ -82,7 +81,7 @@ autocmd("FileType", {
         vim.cmd.quit { bang = true }
       end, { buffer = ev.buf, silent = true })
     end
-  end
+  end,
 })
 
 ---QuickFixList keymaps
@@ -99,9 +98,8 @@ autocmd("FileType", {
     vim.keymap.set("n", "<esc>", function()
       vim.cmd.quit { bang = true }
     end, { buffer = true, silent = true })
-  end
+  end,
 })
-
 
 ---Autocmd for `NNN` cli tools useful
 --- to quit buffer used by it for help and similar things
@@ -115,9 +113,8 @@ autocmd({ "BufNewFile", "BufRead" }, {
     vim.keymap.set("n", "<esc>", function()
       vim.cmd.quit { bang = true }
     end, { buffer = true })
-  end
+  end,
 })
-
 
 ---Check if want to install Treesitter parser for current
 ---filetype if missing
@@ -127,14 +124,16 @@ autocmd("FileType", {
   callback = function(ev)
     if not filetypes_to_exclude[ev.match] then
       local has_ts, ts_parsers = pcall(require, "nvim-treesitter.parsers")
-      if not has_ts then return end
+      if not has_ts then
+        return
+      end
 
       local lang = ts_parsers.get_buf_lang()
       local donot_ask_install = vim.g.dont_ask_install or {}
       if
-          ts_parsers.get_parser_configs()[lang]
-          and not ts_parsers.has_parser(lang)
-          and not donot_ask_install[lang] == true
+        ts_parsers.get_parser_configs()[lang]
+        and not ts_parsers.has_parser(lang)
+        and not donot_ask_install[lang] == true
       then
         vim.schedule_wrap(function()
           local msg = string.format("Install missing TS parser for < %s >?", lang)
@@ -149,12 +148,11 @@ autocmd("FileType", {
         end)()
       end
     end
-  end
+  end,
 })
 
-
 ---Set makeprg and keywordprg for filetype (using default compiler when available)
-autocmd({ "FileType" }, {
+autocmd("FileType", {
   group = augroup("_set_makefile", { clear = true }),
   pattern = "*",
   callback = function(ev)
@@ -165,12 +163,11 @@ autocmd({ "FileType" }, {
     if ev.match and not filetypes_to_exclude[ev.match] then
       lib_compiler.set_compiler(ev)
     end
-  end
+  end,
 })
 
-
 ---Jump to last < cursor-pos > in file
-autocmd({ 'BufRead' }, {
+autocmd("BufRead", {
   group = augroup("_buf_last_cursor_pos", { clear = true }),
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -178,21 +175,20 @@ autocmd({ 'BufRead' }, {
     if mark[1] > 0 and mark[1] <= lcount then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
-  end
+  end,
 })
 
-
 ---Insert mode on builtin Neovim terminal
-autocmd({ 'TermOpen' }, {
+autocmd("TermOpen", {
   group = augroup("_startinsert_term_open", { clear = true }),
-  command = 'startinsert'
+  command = "startinsert",
 })
 
 ---Start in insert mode in Git and toggleterm files
-autocmd({ 'FileType', 'BufNewFile' }, {
+autocmd({ "FileType", "BufNewFile" }, {
   group = augroup("_startinsert_git_files", { clear = true }),
-  pattern = { 'gitcommit', 'gitrebase', 'toggleterm' },
-  command = 'startinsert'
+  pattern = { "gitcommit", "gitrebase", "toggleterm" },
+  command = "startinsert",
 })
 
 ---Match FileTypes
@@ -211,53 +207,50 @@ vim.filetype.add {
     WEBP = "image_nvim",
     -- md = "quarto",
     ipynb = "jupyter_notebook",
-    dat = "xxd"
+    dat = "xxd",
   },
   pattern = {
     ["*.python"] = "python",
     ["*.psql*"] = "sql",
     ["*.plist*"] = "xml",
     ["README.(a+)$"] = function(_, _, ext)
-      return (ext == "md") and "markdown"
-          or (ext == "rst") and "rst" or "text"
-    end
-  }
+      return (ext == "md") and "markdown" or (ext == "rst") and "rst" or "text"
+    end,
+  },
 }
 
 ---Kitty conf files
-autocmd({ 'BufRead', 'BufNewFile' }, {
+autocmd({ "BufRead", "BufNewFile" }, {
   group = augroup("_kitty", { clear = true }),
   pattern = { "*/kitty/*.conf" },
   callback = function()
     vim.api.nvim_set_option_value("filetype", "kitty", { buf = 0 })
     vim.api.nvim_set_option_value("comments", ":#,:#\\:", { buf = 0 })
     vim.api.nvim_set_option_value("commentstring", "# %s", { buf = 0 })
-  end
+  end,
 })
 
 ---Read PDF into neovim, using pdftotext binary
-autocmd({ 'FileType' }, {
+autocmd("FileType", {
   group = augroup("_pdf_reader", { clear = true }),
   pattern = { "pdf", "PDF" },
   callback = function(ev)
     vim.api.nvim_set_option_value("readonly", true, { buf = ev.buf })
     if not vim.fn.executable "pdftotext" then
-      vim.notify(
-        "vim-pdf: pdftotext is not found.\nStop converting...",
-        vim.log.levels.ERROR
-      )
+      vim.notify("vim-pdf: pdftotext is not found.\nStop converting...", vim.log.levels.ERROR)
       return
     end
     require("lib.pdf").load_pdf(ev.file)
-  end
+  end,
 })
 
-autocmd('FileType', {
-  group = augroup('_hex_files', { clear = true }),
-  pattern = { 'xxd', 'stata', 'bin' },
+---Hex
+autocmd("FileType", {
+  group = augroup("_hex_files", { clear = true }),
+  pattern = { "xxd", "stata", "bin" },
   callback = function()
-    require "lib.hex".setup()
-  end
+    require("lib.hex").setup()
+  end,
 })
 
 --------------------------------
@@ -265,21 +258,25 @@ autocmd('FileType', {
 --------------------------------
 
 ---Create NewFile
-user_command('NewFile', function(args) require "lib".new_file(args) end, {
+user_command("NewFile", function(args)
+  require("lib").new_file(args)
+end, {
   desc = "Create new File",
-  nargs = '?',
-  complete = 'filetype',
+  nargs = "?",
+  complete = "filetype",
 })
 
 ---Create NewTempFile
-user_command('NewTempFile', function(args) require "lib".new_tmp_file(args) end, {
+user_command("NewTempFile", function(args)
+  require("lib").new_tmp_file(args)
+end, {
   desc = "Create new temp File",
-  nargs = '?',
-  complete = 'filetype',
+  nargs = "?",
+  complete = "filetype",
 })
 
 ---Scratch
-user_command('Scratch', function()
+user_command("Scratch", function()
   vim.cmd.new()
   vim.opt_local.buftype = "nofile"
   vim.opt_local.bufhidden = "wipe"
@@ -288,8 +285,8 @@ user_command('Scratch', function()
   vim.opt_local.filetype = "Scratch"
 end, { desc = "Create a Scratch buffer" })
 
-
-user_command('AutoTimeStamp', function()
+---Update `Last Modified` date if found in first 10 row of file
+user_command("ToggleAutoTimeStamp", function()
   local msg, log_level = nil, nil
 
   if vim.g.auto_timestamp then
@@ -302,26 +299,20 @@ user_command('AutoTimeStamp', function()
     msg = "  ON"
     log_level = "INFO"
 
-    require "lib.automation".auto_timestamp()
+    require("lib.automation").auto_timestamp()
   end
 
-  vim.notify(
-    msg,
-    vim.log.levels[log_level],
-    {
-      render = "wrapped-compact",
-      title = "Auto Update TimeStamp"
-    }
-  )
+  vim.notify(msg, vim.log.levels[log_level], {
+    render = "wrapped-compact",
+    title = "Auto Update TimeStamp",
+  })
 end, { desc = "Update TimeStamp on save" })
 
 ---Trim extra trailing spaces in current buffer
-user_command('TrimTrailingSpaces',
-  [[%s/\s\+$//e]]
-  , { desc = "Remove extra trailing white spaces" })
+user_command("TrimTrailingSpaces", [[%s/\s\+$//e]], { desc = "Remove extra trailing white spaces" })
 
 ---User command to toggle auto trim trailing space on save
-user_command('AutoTrimTrailingSpaces', function()
+user_command("ToggleAutoTrimTrailingSpaces", function()
   local msg, log_level = nil, nil
 
   if vim.g.auto_remove_trail_spaces then
@@ -331,100 +322,58 @@ user_command('AutoTrimTrailingSpaces', function()
     msg = "  OFF"
     log_level = "WARN"
   else
-    require "lib.automation".auto_remove_trailing_spaces()
+    require("lib.automation").auto_remove_trailing_spaces()
 
     msg = "  ON"
     log_level = "INFO"
   end
 
-  vim.notify(
-    msg,
-    vim.log.levels[log_level],
-    {
-      render = "wrapped-compact",
-      title = "Auto Remove trailing spaces"
-    }
-  )
+  vim.notify(msg, vim.log.levels[log_level], {
+    render = "wrapped-compact",
+    title = "Auto Remove trailing spaces",
+  })
 end, { desc = "Remove extra trailing white spaces" })
 
 ---Query CheatSH and get output in window
-user_command('CheatSH', function(args)
-  require "lib.cheat_sheet".run(args)
+user_command("CheatSH", function(args)
+  require("lib.cheat_sheet").run(args)
 end, {
-  nargs = '?',
+  nargs = "?",
   desc = "Cheat-Sheet",
-  complete = 'filetype',
+  complete = "filetype",
 })
 
----Compare changes in the current buffer with a related file on your disk,
---- before it will be saved, if Git does not track this file yet
----@see help | :h usr_05.txt |
-user_command('DiffOrig', function()
-  ---Get start buffer
-  local start = vim.api.nvim_get_current_buf()
-
-  ---`vnew` - Create empty vertical split window
-  ---`set buftype=nofile` - Buffer is not related to a file, will not be written
-  ---`0d_` - Remove an extra empty start row
-  ---`diffthis` - Set diff mode to a new vertical split
-  vim.cmd "vnew | set buftype=nofile | read ++edit # | 0d_ | diffthis"
-
-  ---Get scratch buffer
-  local scratch_buf = vim.api.nvim_get_current_buf()
-
-  ---`wincmd p` - Go to the start window
-  ---`diffthis` - Set diff mode to a start window
-  vim.cmd "wincmd p | diffthis"
-
-  ---Map `q` for both buffers to exit diff view and delete scratch buffer
-  for _, buf in ipairs { scratch_buf, start } do
-    vim.keymap.set('n', 'q', function()
-      vim.api.nvim_buf_delete(scratch_buf, { force = true })
-      vim.keymap.del('n', 'q', { buffer = start })
-    end, { buffer = buf })
-  end
-end, {})
-
----Hex Dump
--- user_command('HexToggle', function()
---   require "lib.hex".setup()
--- end, { desc = "Toggle HEXadecimal view" })
-
-
 ---Wipe all Registers
-user_command('WipeReg', function()
-  local regs = vim.fn.split(
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\\zs') or {}
+user_command("WipeReg", function()
+  local regs = vim.fn.split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', "\\zs") or {}
   for _, v in pairs(regs) do
-    vim.call('setreg', v, '')
+    vim.call("setreg", v, "")
   end
   vim.notify("All Registers wiped", vim.log.levels.INFO, { title = "Registers" })
 end, { desc = "Wipe all Registers" })
 
-
 ---Sessions
-user_command('Session', function(arg)
-  require "lib.session".select(arg.args)
+user_command("Session", function(arg)
+  require("lib.session").select(arg.args)
 end, {
   nargs = 1,
   desc = "Session Manager",
-  complete = "custom,v:lua.require'lib.session'.usercmd_session_completion"
+  complete = "custom,v:lua.require'lib.session'.usercmd_session_completion",
 })
 
-
 ---Config File
-user_command('NvimConfig', function()
+user_command("NvimConfig", function()
   local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
   if not has_telescope then
-    vim.cmd.edit '$NVIMDOTDIR'
+    vim.cmd.edit "$NVIMDOTDIR"
   else
     tele_builtin.find_files { cwd = "$NVIMDOTDIR" }
   end
-end, { desc = "Neovim Config", })
+end, { desc = "Neovim Config" })
 
 ---Dotfiles
-user_command('Dotfiles', function()
-  local has_oil, oil = pcall(require, 'oil')
+user_command("Dotfiles", function()
+  local has_oil, oil = pcall(require, "oil")
   local dotfiles_dir = vim.env.DOTFILES or vim.fn.expand "~/.MacDotfiles"
   if not has_oil then
     vim.cmd.edit(dotfiles_dir)
@@ -434,7 +383,7 @@ user_command('Dotfiles', function()
 end, { desc = "Open Dotfiles dir" })
 
 ---University
-user_command('University', function()
+user_command("University", function()
   local has_oil, oil = pcall(require, "oil")
   local university_dir = vim.env.CS or vim.fn.expand "~/Informatica/"
   if not has_oil then
@@ -445,11 +394,11 @@ user_command('University', function()
 end, { desc = "Open Dotfiles dir" })
 
 ---University
-user_command('Notes', function()
-  require "lib.notes".open_note()
+user_command("Notes", function()
+  require("lib.notes").open_note()
 end, { desc = "Open notes" })
 
 ---Export to PDF
-user_command('TOpdf', function()
-  require "lib.pdf".convert_md_to_pdf()
+user_command("TOpdf", function()
+  require("lib.pdf").convert_md_to_pdf()
 end, { desc = "Export markdown to pdf" })

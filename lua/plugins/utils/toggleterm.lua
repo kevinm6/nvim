@@ -20,27 +20,6 @@ return {
   keys = {
     { "<leader>t", desc = require 'lib.icons'.ui.term .. 'Terminal' },
     {
-      "<leader>tt",
-      function()
-        vim.cmd.Htop()
-      end,
-      desc = require 'lib.icons'.ui.proc .. 'H[t]op',
-    },
-    {
-      "<leader>tl",
-      function()
-        vim.cmd.Git()
-      end,
-      desc = require 'lib.icons'.git.Branch .. '[l]azygit',
-    },
-    {
-      "<leader>tn",
-      function()
-        vim.cmd.Ncdu()
-      end,
-      desc = require 'lib.icons'.ui.disc .. ' [n]cdu',
-    },
-    {
       "<leader>tf",
       function()
         vim.cmd.ToggleTerm 'direction=float'
@@ -60,14 +39,6 @@ return {
         vim.cmd.ToggleTerm 'direction=vertical'
       end,
       desc = '[v]ertical',
-    },
-    {
-      "<leader>ts",
-      function()
-        vim.cmd.ToggleTermSendCurrentLine()
-      end,
-      desc = " [s]end current line",
-      noremap = true,
     },
   },
   opts = function(_, o)
@@ -120,7 +91,8 @@ return {
     }
   end,
   config = function(_, o)
-    require 'toggleterm'.setup(o)
+    local toggle_term = require 'toggleterm'
+    toggle_term.setup(o)
 
     local Terminal = require 'toggleterm.terminal'.Terminal
 
@@ -198,13 +170,19 @@ return {
     })
 
     local function nmap(tbl)
-      vim.keymap.set("n", tbl[1], tbl[2],
-        { desc = require "lib.icons".ui.term .. tbl[3] })
+      vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
     end
 
-    nmap { "<leader>t1", function() vim.cmd "1ToggleTerm" end, 'Term 1' }
-    nmap { "<leader>t2", function() vim.cmd "2ToggleTerm" end, 'Term 2' }
-    nmap { "<leader>t3", function() vim.cmd "3ToggleTerm" end, 'Term 3' }
-    nmap { "<leader>t4", function() vim.cmd "4ToggleTerm" end, 'Term 4' }
+    local icons = require "lib.icons"
+    nmap { "<leader>t1", function() vim.cmd "1ToggleTerm" end, icons.ui.term.. ' Term 1' }
+    nmap { "<leader>t2", function() vim.cmd "2ToggleTerm" end, icons.ui.term.. ' Term 2' }
+    nmap { "<leader>t3", function() vim.cmd "3ToggleTerm" end, icons.ui.term.. ' Term 3' }
+    nmap { "<leader>t4", function() vim.cmd "4ToggleTerm" end, icons.ui.term.. ' Term 4' }
+    nmap { "<leader>tt", function() htop:toggle() end, icons.ui.proc .. 'H[t]op' }
+    nmap { "<leader>tl", function() lazygit:toggle() end, icons.git.Branch .. '[l]azygit' }
+    nmap { "<leader>tn", function() ncdu:toggle() end, icons.ui.disc .. ' [n]cdu' }
+    vim.keymap.set({ "n", "v" }, "<leader>ts", function()
+        toggle_term.send_lines_to_terminal("single_line", false, { args = vim.v.count })
+    end, { desc = " [s]end current line" } )
   end
 }

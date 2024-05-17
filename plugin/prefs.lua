@@ -89,6 +89,8 @@ local settings = {
   smartcase = true,
   ignorecase = true,
 
+  inccommand = 'split',
+
   whichwrap = vim.opt.whichwrap:append "<,>,[,],h,l",
 
   -- SESSION

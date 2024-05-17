@@ -31,13 +31,9 @@ function lsp.get_current_buf_lsp_capabilities(client, _)
 end
 
 ---Enable|Disable Diagnostics
-function lsp.toggle_diagnostics()
-  vim.g.diagnostics_status = not vim.g.diagnostics_status
-  if vim.g.diagnostics_status == true then
-    vim.diagnostic.show()
-  else
-    vim.diagnostic.hide()
-  end
+---@param buf number int id of buffer
+function lsp.toggle_diagnostics(buf)
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = buf }), { bufnr = buf })
 end
 
 return lsp

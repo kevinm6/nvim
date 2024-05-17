@@ -11,24 +11,26 @@ return {
     cmd = 'Noice',
     event = { 'VeryLazy', 'CmdLineEnter' },
     opts = function(_, o)
+      local icons = require 'lib.icons'
+
       o.cmdline = {
         opts = { buf_options = { filetype = 'vim' } }, -- enable syntax highlighting in the cmdline
         icons = {
-          ['/'] = { icon = ' ', hl_group = 'DiagnosticWarn' },
-          ['?'] = { icon = ' ', hl_group = 'DiagnosticWarn' },
-          [':'] = { icon = ' ', hl_group = 'DiagnosticInfo', firstc = false },
+          ['/'] = { icon = icons.ui.Search, hl_group = 'DiagnosticWarn' },
+          ['?'] = { icon = icons.ui.Search, hl_group = 'DiagnosticWarn' },
+          [':'] = { icon = icons.ui.term, hl_group = 'DiagnosticInfo', firstc = false },
         },
         format = {
-          cmdline = { icon = " " },
-          search_down = { icon = " ⌄" },
-          search_up = { icon = " ⌃" },
+          cmdline = { icon = icons.ui.term },
+          search_down = { icon = icons.ui.Search.."⌄" },
+          search_up = { icon = icons.ui.Search.."⌃" },
           -- execute shell command (!command)
           filter = { pattern = "^:%s*!", icon = "$", ft = "sh" },
           -- replace file content with shell command output (%!command)
-          f_filter = { pattern = "^:%s*%%%s*!", icon = " $", ft = "sh" },
+          f_filter = { pattern = "^:%s*%%%s*!", icon = icons.documents.File.."$", ft = "sh" },
           -- replace selection with shell command output (%! command on visual selection)
           v_filter = { pattern = "^:%s*%'<,%'>%s*!", icon = " $", ft = "sh" },
-          lua = { icon = " " },
+          lua = { icon = ' ' },
           help = { icon = "" },
           substitute = {
             pattern = { "^:%%?s/", "'<,'>s/" }, -- range substitute
@@ -39,7 +41,7 @@ return {
         }
       }
       o.lsp = {
-        progresr = {
+        progress = {
           format_done = {
             { '✓ ', hl_group = 'NoiceLrpProgressSpinner' },
             { "{data.progress.title} ", hl_group = 'NoiceLspProgressTitle' },
@@ -71,28 +73,6 @@ return {
             height = 'auto',
           }
         },
-        popupmenu = {
-          relative = 'editor',
-          position = {
-            row = '83%',
-            col = '50%',
-          },
-          size = {
-            width = 60,
-            height = 10,
-          },
-          border = {
-            style = 'rounded',
-            padding = {
-              bottom = -1,
-              left = 1,
-              right = 1
-            }
-          },
-          win_options = {
-            winhighlight = { Normal = 'Normal', FloatBorder = 'WinSeparator' },
-          },
-        },
         split = {
           win_options = {
             winhighlight = { Normal = 'Normal', FloatBorder = 'WinSeparator' },
@@ -100,7 +80,7 @@ return {
         },
         mini = {
           timeout = 3000,
-          win_options = { winblend = 6 }
+          win_options = { winblend = 8 }
         }
       } -- @see the section on views below
       -- NOTE: https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages#messages-and-notifications-in-neovim
@@ -108,7 +88,7 @@ return {
         {
           filter = {
             event = 'notify',
-            min_height = 4
+            min_height = 6
           },
           view = 'split'
         },
@@ -175,23 +155,12 @@ return {
         }
       }
       o.format = {
-        -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
-        -- view: (default is cmdline view)
-        -- opts: any options passed to the view
-        -- icon_hl_group: optional hl_group for the icon
-        -- title: set to anything or empty string to hide
-        default = { '{level} ', '{title} ', '{message}' },
-        notify = { '{message}' },
-        level = { icons = { error = " ", warn = " ", info = " " } },
-        details = {
-          "{level} ",
-          "{date} ",
-          "{event}",
-          { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } },
-          " ",
-          "{title} ",
-          "{cmdline} ",
-          "{message}",
+        level = {
+          icons = {
+            error = icons.diagnostics.Error,
+            warn = icons.diagnostics.Warning,
+            info = icons.diagnostics.Information
+          }
         },
         cmdline = {
           pattern = "^:",
@@ -213,30 +182,33 @@ return {
         filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
         lua = {
           pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" },
-          icon = "",
+          icon = " ",
           lang = "lua",
         },
         help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
-        input = {}, -- Used by input()
-        -- lua = false, -- to disable a format, set to `false`
-      }             -- @see section on formatting
+      }
     end,
     config = function(_, o)
       local noice = require 'noice'
       noice.setup(o)
 
       -- Keymaps
-      vim.keymap.set({ 'n', 's' }, '<C-f>', function()
+      local function nsmap(tbl)
+        vim.keymap.set({ "n", "s" }, tbl[1], tbl[2],
+          { silent = true, expr = true })
+      end
+
+      nsmap { '<C-f>', function()
         if not require("noice.lsp").scroll(4) then
           return '<C-f>'
         end
-      end, { silent = true, expr = true })
+      end }
 
-      vim.keymap.set({ 'n', 's' }, '<C-b>', function()
+      nsmap { '<C-b>', function()
         if not require("noice.lsp").scroll(-4) then
           return '<C-b>'
         end
-      end, { silent = true, expr = true })
+      end }
 
       local function nmap(tbl)
         vim.keymap.set("n", tbl[1], tbl[2],
