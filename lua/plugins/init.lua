@@ -279,8 +279,8 @@ local M = {
       nmap { "<localleader>s", require "otter".ask_type_definition, "[t]ype-definition" }
       nmap { "<localleader>f", require "otter".ask_format, "[f]ormat" }
 
-      nmap { "<localleader>ee", require "otter".export, "[e]xport" }
-      nmap { "<localleader>ea", require "otter".export_otter_as, "[e]xport otter [a]s" }
+      nmap { "<localleader>Ee", require "otter".export, "[e]xport" }
+      nmap { "<localleader>Ea", require "otter".export_otter_as, "[e]xport otter [a]s" }
     end
   },
 

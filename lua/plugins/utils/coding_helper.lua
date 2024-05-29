@@ -8,7 +8,19 @@
 return {
   ---Autopairs
   {
+    "echasnovski/mini.pairs",
+    version = "*",
+    event = "InsertEnter",
+    opts = function(_, o)
+      o.mappings = {
+        ["<"] = { action = "open", pair = "<>", neigh_pattern = "^r.", register = { cr = false } },
+        [">"] = { action = "close", pair = "<>", register = { cr = false } },
+      }
+    end,
+  },
+  {
     "windwp/nvim-autopairs",
+    enabled = false,
     event = "InsertEnter",
     opts = function(_, o)
       o.check_ts = true
@@ -44,7 +56,7 @@ return {
     end,
   },
 
-  ---MiniSurround
+  ---Surround
   {
     "echasnovski/mini.surround",
     version = "*", -- stable version

@@ -106,7 +106,7 @@ return {
       db_btn("d", icons.ui.Dev .. " Developer", [[<cmd>lua require "lib".dev_folder()<CR>]]),
       db_btn("L", icons.ui.PluginManager .. " Plugin Manager", "<cmd>Lazy<CR>"),
       db_btn("m", icons.ui.List .. " Package Manager", "<cmd>Mason<CR>"),
-      db_btn("g", icons.ui.Git .. " Git", "<cmd>Git <CR>"),
+      db_btn("g", icons.ui.Git .. " Git", "<cmd>Lazygit<CR>"),
       db_btn("H", icons.ui.Health .. " Health", "<cmd>checkhealth<CR>"),
       db_btn("c", icons.documents.Files .. " Close", "<cmd>Alpha<CR>"),
       db_btn("q", icons.diagnostics.Error .. " Quit", "<cmd>qa<CR>"),

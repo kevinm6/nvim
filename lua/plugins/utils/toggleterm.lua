@@ -9,7 +9,7 @@ return {
   "akinsho/toggleterm.nvim",
   cmd = {
     'ToggleTerm',
-    'Git',
+    'Lazygit',
     'TermExec',
     'TermSelect',
     'ToggleTermToggleAll',
@@ -113,7 +113,7 @@ return {
         pcall(vim.keymap.del, 't', '<esc>')
       end
     }
-    vim.api.nvim_create_user_command("Git", function() lazygit:toggle() end, {
+    vim.api.nvim_create_user_command("Lazygit", function() lazygit:toggle() end, {
       desc = "LazyGit",
       force = true,
     })
@@ -178,6 +178,7 @@ return {
     nmap { "<leader>t2", function() vim.cmd "2ToggleTerm" end, icons.ui.term.. ' Term 2' }
     nmap { "<leader>t3", function() vim.cmd "3ToggleTerm" end, icons.ui.term.. ' Term 3' }
     nmap { "<leader>t4", function() vim.cmd "4ToggleTerm" end, icons.ui.term.. ' Term 4' }
+    nmap { "<leader>te", [[:TermExec cmd=""<left>]], icons.debug.run.. ' TermExec' }
     nmap { "<leader>tt", function() htop:toggle() end, icons.ui.proc .. 'H[t]op' }
     nmap { "<leader>tl", function() lazygit:toggle() end, icons.git.Branch .. '[l]azygit' }
     nmap { "<leader>tn", function() ncdu:toggle() end, icons.ui.disc .. ' [n]cdu' }

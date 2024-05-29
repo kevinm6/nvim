@@ -95,6 +95,10 @@ local settings = {
 
   -- SESSION
   sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal",
+
+  -- SPELL
+  spelllang = "en,uk,it",
+  spelloptions = "camel"
 }
 
 for k, o in pairs(settings) do

@@ -10,12 +10,45 @@ local function parsers_to_be_installed()
     return {}
   else
     return {
-      'c', 'comment', 'cpp', 'css', 'dot', 'dockerfile', 'bash', 'gitignore',
-      'gitattributes', 'gitcommit', 'git_rebase', 'go', 'vimdoc', 'html', 'http',
-      'json', 'json5', 'jsdoc', 'latex', 'erlang', 'ruby', 'lua', 'java', 'javascript',
-      'markdown', 'markdown_inline', 'ocaml', 'php',
-      'python', 'regex', 'python', 'phpdoc', 'scheme', 'sql', 'swift',
-      'todotxt', 'vim', 'yaml', 'ini',
+      "c",
+      "comment",
+      "cpp",
+      "css",
+      "dot",
+      "dockerfile",
+      "bash",
+      "gitignore",
+      "gitattributes",
+      "gitcommit",
+      "git_rebase",
+      "go",
+      "vimdoc",
+      "html",
+      "http",
+      "json",
+      "json5",
+      "jsdoc",
+      "latex",
+      "erlang",
+      "ruby",
+      "lua",
+      "java",
+      "javascript",
+      "markdown",
+      "markdown_inline",
+      "ocaml",
+      "php",
+      "python",
+      "regex",
+      "python",
+      "phpdoc",
+      "scheme",
+      "sql",
+      "swift",
+      "todotxt",
+      "vim",
+      "yaml",
+      "ini",
     }
   end
 end
@@ -23,13 +56,13 @@ end
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = 'BufRead',
-    build = ':TSUpdate',
-    cmd = { 'Inspect', 'InspectTree' },
+    event = "BufRead",
+    build = ":TSUpdate",
+    cmd = { "Inspect", "InspectTree" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-refactor",
       "nvim-treesitter/nvim-treesitter-context",
-      "rainbow-delimiters.nvim"
+      "rainbow-delimiters.nvim",
     },
     opts = function(_, o)
       o.ensure_installed = parsers_to_be_installed()
@@ -43,9 +76,8 @@ return {
           local max_filesize = 100 * 1024 -- 100 KB
           local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
 
-          return ok and (stats and stats.size > max_filesize) or
-              #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
-        end
+          return ok and (stats and stats.size > max_filesize) or #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
+        end,
       }
 
       o.autopairs = {
@@ -60,15 +92,15 @@ return {
           scope_incremental = "<S-CR>",
           node_decremental = "<BS>",
         },
-        disable = { 'vim' } -- useful for cedit
+        disable = { "vim" }, -- useful for cedit
       }
 
       o.indent = {
         enable = true,
         disable = {
           "python",
-          "yaml"
-        }
+          "yaml",
+        },
       }
 
       o.refactor = {
@@ -93,8 +125,8 @@ return {
             list_definitions_toc = "gO",
             goto_next_usage = "<C-n>",
             goto_previous_usage = "<C-p>",
-          }
-        }
+          },
+        },
       }
 
       o.playground = {
@@ -113,14 +145,14 @@ return {
           unfocus_language = "F",
           update = "R",
           goto_node = "<cr>",
-          show_help = "?"
-        }
+          show_help = "?",
+        },
       }
     end,
 
     config = function(_, o)
-      require "nvim-treesitter.install".prefer_git = true
-      require "nvim-treesitter.configs".setup(o)
+      require("nvim-treesitter.install").prefer_git = true
+      require("nvim-treesitter.configs").setup(o)
 
       vim.api.nvim_create_user_command("Inspect", function()
         vim.show_pos()
@@ -128,7 +160,7 @@ return {
       vim.api.nvim_create_user_command("InspectTree", function()
         vim.treesitter.inspect_tree()
       end, { desc = "InspectTree" })
-    end
+    end,
   },
   {
     "HiPhish/rainbow-delimiters.nvim",
@@ -154,6 +186,6 @@ return {
         },
         blacklist = { "html" },
       }
-    end
-  }
+    end,
+  },
 }

@@ -6,12 +6,13 @@
 -----------------------------------
 
 return {
+  -- "theHamsta/nvim-dap-virtual-text",
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
-      "nvim-neotest/nvim-nio"
+      "nvim-neotest/nvim-nio",
     },
-    opts = function(_, o)
+    config = function(_, o)
       o.icons = { expanded = "▾", collapsed = "►" }
       o.mappings = {
         -- Use a table to apply multiple mappings
@@ -45,8 +46,8 @@ return {
       }
 
       o.floating = {
-        max_height = nil,   -- These can be integers or a float between 0 and 1.
-        max_width = nil,    -- Floats will be treated as percentage of your screen.
+        max_height = nil, -- These can be integers or a float between 0 and 1.
+        max_width = nil, -- Floats will be treated as percentage of your screen.
         border = "rounded", -- Border style. Can be "single", "double" or "rounded"
         mappings = {
           close = { "q", "<Esc>" },
@@ -54,9 +55,12 @@ return {
       }
 
       o.windows = { indent = 1 }
-    end
+
+      local dapui = require "dapui"
+      dapui.setup(o)
+      vim.keymap.set("n", "<leader>de", function() end)
+    end,
   },
-  -- "theHamsta/nvim-dap-virtual-text",
   {
     "mfussenegger/nvim-dap",
     config = function()
@@ -89,48 +93,37 @@ return {
           type = "lldb",
           request = "launch",
           program = function()
-            return vim.fn.input('Path to executable: ', vim.uv.cwd() .. '/', 'file')
+            return vim.fn.input("Path to executable: ", vim.uv.cwd() .. "/", "file")
           end,
-          cwd = '${workspaceFolder}',
+          cwd = "${workspaceFolder}",
           stopOnEntry = false,
           args = {},
           runInTerminal = false,
-          postRunCommands = { 'process handle -p true -s false -n false SIGWINCH' }
+          postRunCommands = { "process handle -p true -s false -n false SIGWINCH" },
         },
       }
 
       -- C
       dap.configurations.c = dap.configurations.cpp
 
-
       -- RUST
       dap.configurations.rust = dap.configurations.cpp
 
-
       -- LUA
-      -- dap.adapters.nlua = function(callback, config)
-      --   callback {
-      --     type = "server",
-      --     host = config.host,
-      --     port = config.port
-      --   }
-      -- end
-
       dap.configurations.lua = {
         {
-          name = 'Current file (local-lua-dbg, nlua)',
-          type = 'local-lua',
-          request = 'launch',
-          cwd = '${workspaceFolder}',
+          name = "Current file (local-lua-dbg, nlua)",
+          type = "local-lua",
+          request = "launch",
+          cwd = "${workspaceFolder}",
           program = {
-            lua = '~/.luarocks/bin/nlua',
-            file = '${file}',
+            lua = vim.env.HOME.."/.luarocks/bin/nlua",
+            file = "${file}",
           },
           verbose = true,
           args = {},
         },
       }
-
 
       -- PYTHON
       dap.configurations.python = {
@@ -153,36 +146,34 @@ return {
       }
 
       dap.adapters.python = {
-        type = 'executable',
+        type = "executable",
         command = vim.fn.stdpath "data" .. "/nvim_python_venv/bin/python",
-        args = { '-m', 'debugpy.adapter' },
+        args = { "-m", "debugpy.adapter" },
       }
-
 
       -- GO
       dap.adapters.go = {
-        type = 'executable',
-        command = 'node',
-        args = { vim.fn.stdpath "data" .. "/mason/packages/go-debug-adapter/extension/dist/debugAdapter.js" }
+        type = "executable",
+        command = "node",
+        args = { vim.fn.stdpath "data" .. "/mason/packages/go-debug-adapter/extension/dist/debugAdapter.js" },
       }
       dap.configurations.go = {
         {
-          type = 'go',
-          name = 'Debug',
-          request = 'launch',
+          type = "go",
+          name = "Debug",
+          request = "launch",
           showLog = false,
           program = "${file}",
-          dlvToolPath = vim.fn.exepath('dlv') -- Adjust to where delve is installed
+          dlvToolPath = vim.fn.exepath "dlv", -- Adjust to where delve is installed
         },
       }
-
 
       -- Javascript / Typescript (firefox)
       local js_based_languages = {
         "typescript",
         "javascript",
         "typescriptreact",
-        "javascriptreact"
+        "javascriptreact",
       }
 
       dap.adapters["pwa-node"] = {
@@ -191,8 +182,11 @@ return {
         port = "${port}",
         executable = {
           command = "node",
-          args = { vim.fn.stdpath "data" .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js", "${port}" },
-        }
+          args = {
+            vim.fn.stdpath "data" .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+            "${port}",
+          },
+        },
       }
 
       for _, lang in pairs(js_based_languages) do
@@ -204,34 +198,34 @@ return {
             program = "${file}",
             cwd = "${workspaceFolder}",
             sourceMaps = true,
-            runtimeExecutable = 'node',
+            runtimeExecutable = "node",
             -- resolve source maps in nested locations while ignoring node_modules
             resolveSourceMapLocations = {
-              '${workspaceFolder}/**',
-              '!**/node_modules/**',
+              "${workspaceFolder}/**",
+              "!**/node_modules/**",
             },
             -- we don't want to debug code inside node_modules, so skip it!
             skipFiles = {
-              '<node_internals>/**',
-              'node_modules/**',
+              "<node_internals>/**",
+              "node_modules/**",
             },
           },
           { -- debug nodejs process (need --inspect flag to get the processId)
             type = "pwa-node",
             request = "attach",
             name = "Attach",
-            processId = require "dap.utils".pick_process,
+            processId = require("dap.utils").pick_process,
             cwd = "${workspaceFolder}",
             sourceMaps = true,
             -- resolve source maps in nested locations while ignoring node_modules
             resolveSourceMapLocations = {
-              '${workspaceFolder}/**',
-              '!**/node_modules/**',
+              "${workspaceFolder}/**",
+              "!**/node_modules/**",
             },
             -- we don't want to debug code inside node_modules, so skip it!
             skipFiles = {
-              '<node_internals>/**',
-              'node_modules/**',
+              "<node_internals>/**",
+              "node_modules/**",
             },
           },
           {
@@ -243,84 +237,82 @@ return {
               return coroutine.create(function()
                 vim.ui.input({
                   prompt = "Enter URL: ",
-                  default = "http://localhost:3000"
+                  default = "http://localhost:3000",
                 }, function(url)
                   if url == nil or url == "" then
                     return
                   else
                     coroutine.resume(co, url)
                   end
-                end
-                )
+                end)
               end)
             end,
             webRoot = "${workspaceFolder}",
             skipFiles = { "<node_internals>/**/*.js" },
             protocol = "inspector",
             sourceMaps = true,
-            userDataDir = false
+            userDataDir = false,
           },
           {
             name = "---- ↓ launch.json configs ↓ ----",
             type = "",
-            request = "launch"
-          }
+            request = "launch",
+          },
         }
       end
 
       dap.adapters.firefox = {
-        type = 'executable',
-        command = vim.fn.stdpath('data') .. '/mason/bin/firefox-debug-adapter',
+        type = "executable",
+        command = vim.fn.stdpath "data" .. "/mason/bin/firefox-debug-adapter",
       }
       dap.configurations.typescript = {
         {
-          name = 'Debug with Firefox',
-          type = 'firefox',
-          request = 'launch',
+          name = "Debug with Firefox",
+          type = "firefox",
+          request = "launch",
           reAttach = true,
-          url = 'http://localhost:4200', -- Write the actual URL of your project.
-          webRoot = '${workspaceFolder}',
-          firefoxExecutable = vim.fn.expand "$HOMEBREW_DIR" .. '/firefox'
-        }
+          url = "http://localhost:4200", -- Write the actual URL of your project.
+          webRoot = "${workspaceFolder}",
+          firefoxExecutable = vim.fn.expand "$HOMEBREW_DIR" .. "/firefox",
+        },
       }
 
       -- PHP
       dap.adapters.php = {
-        type = 'executable',
-        command = vim.fn.stdpath("data") .. '/mason/bin/php-debug-adapter',
+        type = "executable",
+        command = "node",
+        args = {
+          vim.fn.stdpath "data" .. "~/.local/share/nvim/mason/packages/php-debug-adapter/extension/out/phpDebug.js",
+        },
       }
       dap.configurations.php = {
         {
-          type = 'php',
-          request = 'launch',
-          name = 'Listen for Xdebug',
-          port = 9000
-        }
+          type = "php",
+          request = "launch",
+          name = "Listen for Xdebug",
+          port = 9000,
+        },
       }
-
 
       -- Bash
       dap.adapters.bashdb = {
-        type = 'executable',
-        command = vim.fn.stdpath("data") ..
-            '/mason/packages/bash-debug-adapter/bash-debug-adapter',
-        name = 'bashdb',
+        type = "executable",
+        command = vim.fn.stdpath "data" .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
+        name = "bashdb",
       }
 
       dap.configurations.sh = {
         {
-          type = 'bashdb',
-          request = 'launch',
+          type = "bashdb",
+          request = "launch",
           name = "Launch file",
           showDebugOutput = true,
-          pathBashdb = vim.fn.stdpath("data") ..
-              '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
-          pathBashdbLib = vim.fn.stdpath("data") ..
-              '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
+          pathBashdb = vim.fn.stdpath "data" .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
+          pathBashdbLib = vim.fn.stdpath "data" .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
           trace = true,
           file = "${file}",
           program = "${file}",
-          cwd = '${workspaceFolder}',
+          cwd = "${workspaceFolder}",
           pathCat = "cat",
           pathBash = "/opt/homebrew/bin/bash",
           pathMkfifo = "mkfifo",
@@ -328,16 +320,16 @@ return {
           args = {},
           env = {},
           terminalKind = "integrated",
-        }
+        },
       }
 
-      local icons_dap = require "lib.icons".debug
+      local icons_dap = require("lib.icons").debug
 
-      vim.fn.sign_define('DapBreakpoint', {
+      vim.fn.sign_define("DapBreakpoint", {
         text = icons_dap.breakpoint,
-        texthl = 'DiagnosticSignError',
-        linehl = '',
-        numhl = ''
+        texthl = "DiagnosticSignError",
+        linehl = "",
+        numhl = "",
       })
 
       dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -355,28 +347,63 @@ return {
         vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
       end
 
-      nmap { "<localleader>d", function() end, ' DAP' }
-      nmap { "<localleader>db", dap.toggle_breakpoint, icons_dap.breakpoint .. ' Breakpoint' }
+      nmap { "<localleader>d", function() end, " DAP" }
+      nmap { "<localleader>db", dap.toggle_breakpoint, icons_dap.breakpoint .. " Breakpoint" }
       -- nmap { "<leader>dc", require "dap".continue(), "Run Debug" }
-      nmap { "<localleader>di", dap.step_into, icons_dap.into .. ' Into' }
-      nmap { "<localleader>do", dap.step_over, icons_dap.over .. 'Over' }
-      nmap { "<localleader>dO", dap.step_out, icons_dap.out .. ' Out' }
-      nmap { "<localleader>dr", dap.repl.toggle, icons_dap.repl .. 'Repl' }
-      nmap { "<localleader>dl", dap.run_last, icons_dap.rerun .. 'Last' }
-      nmap { "<localleader>du", require "dapui".toggle, 'UI' }
-      nmap { "<localleader>dx", dap.terminate, icons_dap.stop .. 'Exit' }
+      nmap { "<localleader>di", dap.step_into, icons_dap.into .. " [i]nto" }
+      nmap { "<localleader>do", dap.step_over, icons_dap.over .. " [o]ver" }
+      nmap { "<localleader>dO", dap.step_out, icons_dap.out .. " [O]ut" }
+      nmap { "<localleader>dr", dap.repl.toggle, icons_dap.repl .. " [r]epl" }
+      nmap { "<localleader>dl", dap.run_last, icons_dap.rerun .. "[l]ast" }
+      nmap { "<localleader>du", require("dapui").toggle, "[u]i" }
+      nmap { "<localleader>dx", dap.terminate, icons_dap.stop .. " E[x]it" }
+      nmap { "<localleader>dc", dap.continue, icons_dap.continue .. "Run Debug" }
 
-      nmap { "<localleader>dc", function()
-        if vim.fn.filereadable(".vscode/launch.json") == 1 then
-          local dap_vscode = require "dap.ext.vscode"
-          dap_vscode.load_launchjs(nil, {
-            ["pwa-node"] = js_based_languages,
-            ["node"] = js_based_languages,
-            ["node-terminal"] = js_based_languages,
-          })
+      nmap {
+        "<localleader>de",
+        function()
+          ---@diagnostic disable-next-line: missing-fields
+          require("dapui").eval(nil, { enter = true })
+        end,
+        icons_dap.eval .. " [e]val",
+      }
+
+      nmap {
+        "<localleader>dC",
+        function()
+          package.loaded["plugins.lsp.dap"] = nil
+          require "plugins.lsp.dap"
+          dap.continue()
+        end,
+        icons_dap.reload_continue .. " reload and [C]ontinue",
+      }
+
+      require("dap.ext.vscode").load_launchjs()
+
+      -- map <localleader>K dap.hover
+      local api = vim.api
+      local keymap_restore = {}
+      dap.listeners.after["event_initialized"]["me"] = function()
+        for _, buf in pairs(api.nvim_list_bufs()) do
+          local keymaps = api.nvim_buf_get_keymap(buf, "n")
+          for _, keymap in pairs(keymaps) do
+            if keymap.lhs == "<localleader>K" then
+              table.insert(keymap_restore, keymap)
+              vim.keymap.del("n", "<localleader>k", { buffer = buf })
+            end
+          end
         end
-        dap.continue()
-      end, icons_dap.continue .. "Run Debug [args]" }
-    end
-  }
+        vim.keymap.set("n", "<localleader>k", function()
+          require("dap.ui.widgets").hover()
+        end, { silent = true })
+      end
+
+      dap.listeners.after["event_terminated"]["me"] = function()
+        for _, keymap in pairs(keymap_restore) do
+          vim.keymap.set(keymap.mode, keymap.lhs, keymap.rhs, { silent = keymap.silent == 1 })
+        end
+        keymap_restore = {}
+      end
+    end,
+  },
 }

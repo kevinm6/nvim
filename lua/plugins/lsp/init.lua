@@ -119,24 +119,20 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
   local usercmd = vim.api.nvim_create_user_command
 
   -- InlayHints
-  if client.supports_method "textDocument/inlayHint" then
-    if vim.lsp.inlay_hint then
-      usercmd("ToggleInlayHints", function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 })
-      end, { desc = "Toggle Inlay hints" })
-    end
-  end
+  usercmd("ToggleInlayHints", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
+  end, { desc = "Toggle Inlay hints" })
 
   -- lsp-document_highlight
-  if client.supports_method "textDocument/documentHighlight" then
-    local _lsp_highlight_group = vim.api.nvim_create_augroup("_lsp_highlight_group", { clear = true })
+  if client.server_capabilities.documentHighlightProvider then
+    local _lsp_hi_group = vim.api.nvim_create_augroup("_lsp_highlight_group", { clear = true })
     autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = _lsp_highlight_group,
+      group = _lsp_hi_group,
       buffer = bufnr,
       callback = vim.lsp.buf.document_highlight,
     })
     autocmd({ "CursorMoved", "CursorMovedI" }, {
-      group = _lsp_highlight_group,
+      group = _lsp_hi_group,
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references,
     })
@@ -145,7 +141,7 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
       group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
       callback = function()
         vim.lsp.buf.clear_references()
-        vim.api.nvim_clear_autocmds { group = _lsp_highlight_group, buffer = bufnr }
+        vim.api.nvim_clear_autocmds { group = _lsp_hi_group, buffer = bufnr }
       end,
     })
   end
@@ -244,7 +240,9 @@ return {
   {
     "folke/neodev.nvim",
     ft = "lua",
-    config = true,
+    opts = {
+      library = { plugins = { "nvim-dap-ui" }, types = true },
+    },
   },
 
   ---Mason
@@ -610,9 +608,14 @@ return {
       o.formatters_by_ft = {
         lua = { "stylua" },
         python = { "black" },
-        javascript = { "prettier" },
         bash = { "beautysh" },
         zsh = { "beautysh" },
+        css = { "prettier" },
+        javascript = { "prettier" },
+        html = { "prettier" },
+        json = { "prettier" },
+        yaml = { { "yamlfmt", "prettier" } },
+        -- java = { "google-java-format" },
       }
 
       o.format_on_save = function(bufnr)
@@ -702,6 +705,9 @@ return {
 
   -- expose functions below to special servers
   -- that adds custom features to LSP (like nvim-jdtls & nvim-metals)
-  set_buf_keymaps = set_buf_keymaps,
-  set_buf_funcs_for_capabilities = set_buf_funcs_for_capabilities,
+  -- set_buf_keymaps = set_buf_keymaps,
+  -- set_buf_funcs_for_capabilities = set_buf_funcs_for_capabilities,
+  capabilities = init_capabilities,
+  on_init = custom_init,
+  on_attach = custom_attach,
 }

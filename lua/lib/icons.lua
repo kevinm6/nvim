@@ -195,6 +195,7 @@ local icons = setmetatable({
   debug = {
     run = '',
     continue = ' ',
+    reload_continue = ' ',
     pause = '',
     stop = ' ',
     breakpoint = '',
@@ -204,7 +205,8 @@ local icons = setmetatable({
     over = ' ',
     out = '󰆸',
     repl = ' ',
-    rerun = ' '
+    rerun = ' ',
+    eval = ' '
   }
 }, {
     __index = function()
