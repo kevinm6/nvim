@@ -15,20 +15,19 @@ function M.toggle_option(option)
   vim.notify(option .. " set to " .. tostring(value), vim.log.levels.INFO)
 end
 
-
 ---Dev FOLDER
 function M.dev_folder()
   local dev_folders = {
     vim.fn.expand "~/dev",
     vim.fn.expand "~/Documents/developer",
   }
-  pcall(require, 'telescope')
+  pcall(require, "telescope")
   vim.ui.select(dev_folders, {
     prompt = " > Select dev folder",
     default = nil,
   }, function(choice)
     if choice then
-      local has_oil, oil = pcall(require, 'oil')
+      local has_oil, oil = pcall(require, "oil")
       if has_oil then
         oil.open_float(choice)
       else
@@ -38,10 +37,9 @@ function M.dev_folder()
   end)
 end
 
-
 ---Find Files
 function M.find_files()
-  local has_tele, tele_builtin = pcall(require, 'telescope.builtin')
+  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
   if has_tele then
     tele_builtin.find_files()
   else
@@ -60,7 +58,7 @@ end
 
 ---Recent Files
 function M.recent_files()
-  local has_tele, tele_builtin = pcall(require, 'telescope.builtin')
+  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
   if has_tele then
     tele_builtin.oldfiles()
   else
@@ -72,7 +70,9 @@ function M.recent_files()
       if file_stat and file_stat.type == "file" and not vim.tbl_contains(oldfiles, file) and file ~= current_file then
         table.insert(oldfiles, file)
       end
-      if idx > 20 then break end -- get only 20 results
+      if idx > 20 then
+        break
+      end -- get only 20 results
     end
 
     vim.ui.select(oldfiles, {
@@ -98,16 +98,16 @@ function M.projects()
     vim.list_extend(projects, vim.split(vim.fn.glob(value .. "/*", true), "\n"))
   end
 
-  pcall(require, 'telescope')
+  pcall(require, "telescope")
   vim.ui.select(projects, {
     prompt = " > Select project",
     default = nil,
     format_item = function(item)
       return not vim.endswith(item, "Icon\r") and vim.fn.fnamemodify(item, ":t")
-    end
+    end,
   }, function(choice)
     if choice then
-      local has_oil, oil = pcall(require, 'oil')
+      local has_oil, oil = pcall(require, "oil")
       if has_oil then
         oil.open_float(choice)
       else
@@ -117,11 +117,10 @@ function M.projects()
   end)
 end
 
-
 ---Delete current buffer and view next
 function M.delete_curr_buf_open_next()
   local cBuf = vim.api.nvim_get_current_buf()
-  local bufs = vim.fn.getbufinfo({ buflisted = 1 }) or {}
+  local bufs = vim.fn.getbufinfo { buflisted = 1 } or {}
   if #bufs ~= 0 then
     for idx, buf in ipairs(bufs) do
       if buf.bufnr == cBuf then
@@ -146,10 +145,14 @@ function M.new_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
     vim.ui.input({
-      prompt = "Enter name[{ext}] for newfile: ",
+      prompt = "Enter name[.ext] for newfile: ",
       default = nil,
-      completion = 'dir'
+      completion = "dir",
     }, function(input)
+      if not input then
+        return
+      end
+
       if input then
         vim.cmd.enew()
         vim.cmd.edit(input)
@@ -173,26 +176,29 @@ function M.new_tmp_file(cmd_input)
     vim.ui.input({
       prompt = "Enter ext for temp file: ",
       default = nil,
-      completion = 'filetype'
+      completion = "filetype",
     }, function(input)
-      if input then
-        local temp_file = string.format("%s.%s", vim.fn.tempname(), input)
-        vim.cmd.edit(temp_file)
-        vim.cmd.write(temp_file)
-        vim.cmd.startinsert()
+      if not input then
+        return
       end
+      local temp_file = nil
+      local f_string = input ~= "" and "%s_f.%s" or "%s_f"
+
+      temp_file = string.format(f_string, vim.fn.tempname(), input)
+      vim.cmd.edit(temp_file)
+      vim.cmd.write(temp_file)
+      vim.cmd.startinsert()
     end)
   else
-    local temp_file = string.format("%s.%s", vim.fn.tempname(), args)
+    local temp_file = string.format("%s_f.%s", vim.fn.tempname(), args)
     vim.cmd.edit(temp_file)
     vim.cmd.write(temp_file)
     vim.cmd.startinsert()
   end
 end
 
-
 function M.workon()
-  pcall(require, 'telescope')
+  pcall(require, "telescope")
   local config = require "lazy.core.config"
   vim.ui.select(vim.tbl_values(config.plugins), {
     prompt = "lcd to:",
@@ -219,16 +225,85 @@ function M.set_highlights(hls)
 end
 
 ---Shift registers
----@param reg Register Parameter description.
+---@param reg Register
+---@class Register
 function M.shift_reg(reg)
-  ---@class Register
-  ---@field val string
-  ---@field typ string
   for i = 8, 1, -1 do
     local str_reg = tostring(i)
-    vim.fn.setreg(i + 1, vim.fn.getreg(str_reg), vim.fn.getregtype(str_reg))
+    vim.fn.setreg(tostring(i + 1), vim.fn.getreg(str_reg), vim.fn.getregtype(str_reg))
   end
   vim.fn.setreg("1", reg.val, reg.typ)
+end
+
+---Create a toggle user command
+---@param name string name of the user_command
+---@param var_name string variable passed to `vim.g` and `vim.b`
+---@param opts? table { desc?, title?, fun on_enable?, fun on_disable? }
+function M.user_command_toggle(name, var_name, opts)
+  vim.api.nvim_create_user_command(name, function(args)
+    local enabled, action = nil, nil
+
+    -- this is for match variables names with `disable` logic
+    local var_name_disable = string.match(var_name, "disable")
+
+    -- ToggleAutoPairs! will disable pairs just for this buffer
+    if args.bang then
+      local buf = vim.api.nvim_get_current_buf()
+
+      vim.b[buf][var_name] = not vim.b[buf][var_name]
+
+      local buf_name_tail = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
+      action = string.format("%s < %s >", action, buf_name_tail)
+
+      -- if (var_name_disable*) -> ON = not enabled, OFF = enabled
+      -- This is a tricky variable, especially when variable names contains 'disable'
+      -- I use it for run functions on toggle{on,off} and display relative notification
+      enabled = false
+      if vim.b[buf][var_name] then -- var -> ON
+        if not var_name_disable then
+          enabled = true
+        end
+      else -- var -> OFF
+        if var_name_disable then
+          enabled = true
+        end
+      end
+    else
+      vim.g[var_name] = not vim.g[var_name]
+
+      enabled = false
+      if vim.g[var_name] then -- var -> ON
+        if not var_name_disable then
+          enabled = true
+        end
+      else -- var -> OFF
+        if var_name_disable then
+          enabled = true
+        end
+      end
+    end
+
+    if enabled and opts and opts.on_enable then
+      if type(opts.on_enable) == "function" then
+        opts.on_enable()
+      end
+    elseif not enabled and opts and opts.on_disable then
+      if type(opts.on_disable) == "function" then
+        opts.on_disable()
+      end
+    end
+
+    action = enabled and "  ON" or "  OFF"
+    local log_level = enabled and vim.log.levels.INFO or vim.log.levels.WARN
+
+    vim.notify(action, log_level, {
+      render = "wrapped-compact",
+      title = opts and opts.title,
+    })
+  end, {
+    desc = opts and opts.desc,
+    bang = true,
+  })
 end
 
 return M

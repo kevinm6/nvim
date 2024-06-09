@@ -10,7 +10,7 @@ local automation = {}
 ---If buffer modified, update any 'Last modified: ' in the first 10 lines.
 ---Restores cursor and window position using save_cursor variable.
 function automation.auto_timestamp()
-  local autocmd_id = vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoupdate_timestamp", { clear = true }),
     pattern = "*",
     callback = function()
@@ -21,23 +21,21 @@ function automation.auto_timestamp()
         vim.fn.histdel("search", -1)
         vim.api.nvim_win_set_cursor(0, cursor_pos)
       end
-    end
+    end,
   })
-  vim.g.auto_timestamp = autocmd_id
 end
 
 ---Auto Remove trailing spaces before saving current buffer
 function automation.auto_remove_trailing_spaces()
-  local autocmd_id = vim.api.nvim_create_autocmd("BufWritePre", {
+  vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoremove_trailing_space", { clear = true }),
     pattern = "*",
     callback = function()
       if vim.bo.filetype ~= "markdown" then
         vim.cmd [[%s/\s\+$//e]]
       end
-    end
+    end,
   })
-  vim.g.auto_remove_trail_spaces = autocmd_id
 end
 
 return automation

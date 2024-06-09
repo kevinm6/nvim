@@ -11,9 +11,6 @@ if not has_jdtls then
   return
 end
 
--- local root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew",
---   "settings.gradle", "build.gradle" } or vim.uv.cwd()
-
 local data_path = vim.fn.stdpath "data"
 
 local capabilities = require("plugins.lsp").capabilities()
@@ -22,8 +19,8 @@ local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
-local project_name = vim.fn.fnamemodify(vim.uv.cwd() or vim.fn.expand "%:p", ":p:h:t")
-local workspace_dir = string.format("%s/java/workspace/%s", vim.fn.stdpath "cache", project_name)
+local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew" }) or vim.uv.cwd()
+local workspace_dir = string.format("%s/java/workspace/%s", vim.fn.stdpath "cache", vim.fn.fnamemodify(root_dir, ":t"))
 
 local launcher_path = vim.fn.glob(data_path .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", true)
 local bundles = vim.fn.glob(
@@ -197,9 +194,10 @@ local config = {
     ["language/status"] = function() end,
   },
   on_attach = function(client, bufnr)
-    jdtls.setup_dap { hotcodereplace = "auto" }
-    pcall(require("jdtls.dap").setup_dap_main_class_configs, {})
-    require("jdtls.setup").add_commands()
+    jdtls.setup_dap { config_overrides = {}, hotcodereplace = "auto" }
+    vim.schedule(function()
+      require("jdtls.dap").setup_dap_main_class_configs {}
+    end)
 
     require("plugins.lsp").on_attach(client, bufnr)
 
@@ -242,7 +240,7 @@ local config = {
       "v",
       "crm",
       function()
-        jdtls.extract_method(true)
+        jdtls.extract_method { visual = true }
       end,
       "ext[r]act [m]ethod",
     }
@@ -254,7 +252,15 @@ local config = {
       function()
         jdtls.test_class()
       end,
-      "Test class",
+      "[t]est class",
+    }
+    map {
+      "n",
+      "<localleader>dp",
+      function()
+        jdtls.pick_test()
+      end,
+      "[p]ick test",
     }
     map {
       "n",
@@ -269,79 +275,7 @@ local config = {
   end,
 }
 
-require("jdtls.ui").pick_one_async = function(items, prompt, label_fn, cb)
-  -- UI
-  local finders = require "telescope.finders"
-  local sorters = require "telescope.sorters"
-  local actions = require "telescope.actions"
-  local pickers = require "telescope.pickers"
-  local opts = {}
-  pickers
-    .new(opts, {
-      prompt_title = prompt,
-      finder = finders.new_table {
-        results = items,
-        entry_maker = function(entry)
-          return {
-            value = entry,
-            display = label_fn(entry),
-            ordinal = label_fn(entry),
-          }
-        end,
-      },
-      sorter = sorters.get_generic_fuzzy_sorter(),
-      attach_mappings = function(prompt_bufnr)
-        actions.goto_file_selection_edit:replace(function()
-          local selection = actions.get_selected_entry(prompt_bufnr)
-          actions.close(prompt_bufnr)
-
-          cb(selection.value)
-        end)
-
-        return true
-      end,
-    })
-    :find()
-end
-
--- local icons = require "lib.icons"
-
----LSP•Diagnostic
--- vim.diagnostic.config {
---   signs = {
---     active = true,
---     text = {
---       [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
---       [vim.diagnostic.severity.WARN] = icons.diagnostics.Warning,
---       [vim.diagnostic.severity.INFO] = icons.diagnostics.Information,
---       [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
---     },
---     numhl = {
---       [vim.diagnostic.severity.ERROR] = "ErrorMsg",
---       [vim.diagnostic.severity.WARN] = "WarningMsg",
---     },
---   },
---   virtual_text = false,
---   update_in_insert = false,
---   underline = true,
---   float = {
---     focusable = true,
---     style = "minimal",
---     border = "rounded",
---     source = "if_many",
---     header = "",
---     title = "LSP • Diagnostic",
---     prefix = icons.lsp.nvim_lsp .. " ",
---     winblend = 8,
---   },
--- }
-
 jdtls.start_or_attach(config)
-
--- Formatting
--- vim.api.nvim_buf_create_user_command(0,
---   "Format", function() vim.lsp.buf.formatting() end, { force = true }
--- )
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   pattern = { "*.java" },

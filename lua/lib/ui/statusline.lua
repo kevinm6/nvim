@@ -24,6 +24,8 @@ local sl = {
     query = true,
     oil = true,
     httpResult = true,
+    dapui_hover = true,
+    ["dap-float"] = true,
   },
   ---width values used to display info if win-size is between
   preset_width = setmetatable({
@@ -346,6 +348,8 @@ local function disable_statusline()
     query = icons.ui.Query .. " Query",
     dbui = icons.ui.Db .. " Database",
     httpResult = icons.ui.Web .. " Http",
+    dapui_hover = icons.debug.eval .. " DapUI•Hover",
+    ["dap-float"] = icons.debug.eval .. " DapUI•Hover",
   }
   local custom_ft = special_filetypes[vim.bo.filetype]
 

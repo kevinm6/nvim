@@ -7,6 +7,7 @@
 
 return {
   -- "theHamsta/nvim-dap-virtual-text",
+  ---DAP-UI
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
@@ -32,23 +33,23 @@ return {
             "stacks",
             "watches",
           },
-          size = 40,
-          position = "right",
+          size = 0.2,
+          position = "left",
         },
         {
           elements = {
             "repl",
             "console",
           },
-          size = 10,
+          size = 0.25,
           position = "bottom",
         },
       }
 
       o.floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
-        border = "rounded", -- Border style. Can be "single", "double" or "rounded"
+        max_height = nil,
+        max_width = nil,
+        border = "rounded",
         mappings = {
           close = { "q", "<Esc>" },
         },
@@ -58,9 +59,10 @@ return {
 
       local dapui = require "dapui"
       dapui.setup(o)
-      vim.keymap.set("n", "<leader>de", function() end)
+      -- vim.keymap.set("n", "<leader>de", function() end)
     end,
   },
+  ---DAP
   {
     "mfussenegger/nvim-dap",
     config = function()
@@ -117,7 +119,7 @@ return {
           request = "launch",
           cwd = "${workspaceFolder}",
           program = {
-            lua = vim.env.HOME.."/.luarocks/bin/nlua",
+            lua = vim.env.HOME .. "/.luarocks/bin/nlua",
             file = "${file}",
           },
           verbose = true,
@@ -126,6 +128,11 @@ return {
       }
 
       -- PYTHON
+      dap.adapters.python = {
+        type = "executable",
+        command = vim.fn.stdpath "data" .. "/nvim_python_venv/bin/python",
+        args = { "-m", "debugpy.adapter" },
+      }
       dap.configurations.python = {
         {
           type = "python",
@@ -143,12 +150,6 @@ return {
           args = {},
           console = "integratedTerminal",
         },
-      }
-
-      dap.adapters.python = {
-        type = "executable",
-        command = vim.fn.stdpath "data" .. "/nvim_python_venv/bin/python",
-        args = { "-m", "debugpy.adapter" },
       }
 
       -- GO
@@ -332,43 +333,56 @@ return {
         numhl = "",
       })
 
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        require("dapui").open()
+      local dapui = require "dapui"
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
       end
-      -- dap.listeners.before.event_terminated["dapui_config"] = function()
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      -- dap.listeners.before.event_terminated.dapui_config = function()
       --   dapui.close()
       -- end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        require("dapui").close()
-      end
+      -- dap.listeners.before.event_exited.dapui_config = function()
+      --   dapui.close()
+      -- end
 
       -- set keymaps
-      local function nmap(tbl)
-        vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
+      local function map(tbl)
+        vim.keymap.set(tbl.mode or "n", tbl[1], tbl[2], { desc = tbl[3] })
       end
 
-      nmap { "<localleader>d", function() end, " DAP" }
-      nmap { "<localleader>db", dap.toggle_breakpoint, icons_dap.breakpoint .. " Breakpoint" }
-      -- nmap { "<leader>dc", require "dap".continue(), "Run Debug" }
-      nmap { "<localleader>di", dap.step_into, icons_dap.into .. " [i]nto" }
-      nmap { "<localleader>do", dap.step_over, icons_dap.over .. " [o]ver" }
-      nmap { "<localleader>dO", dap.step_out, icons_dap.out .. " [O]ut" }
-      nmap { "<localleader>dr", dap.repl.toggle, icons_dap.repl .. " [r]epl" }
-      nmap { "<localleader>dl", dap.run_last, icons_dap.rerun .. "[l]ast" }
-      nmap { "<localleader>du", require("dapui").toggle, "[u]i" }
-      nmap { "<localleader>dx", dap.terminate, icons_dap.stop .. " E[x]it" }
-      nmap { "<localleader>dc", dap.continue, icons_dap.continue .. "Run Debug" }
-
-      nmap {
-        "<localleader>de",
+      map { "<localleader>d", function() end, " DAP" }
+      map { "<localleader>db", dap.toggle_breakpoint, icons_dap.breakpoint .. " [b]reakpoint" }
+      map {
+        "<localleader>dB",
         function()
-          ---@diagnostic disable-next-line: missing-fields
-          require("dapui").eval(nil, { enter = true })
+          dap.set_breakpoint(vim.fn.input(icons_dap.breakpoint .. " Breakpoint condition: "))
+        end,
+        icons_dap.breakpoint .. " [B]reakpoint condition",
+      }
+      -- nmap { "<leader>dc", require "dap".continue(), "Run Debug" }
+      map { "<localleader>di", dap.step_into, icons_dap.into .. " [i]nto" }
+      map { "<localleader>do", dap.step_over, icons_dap.over .. " [o]ver" }
+      map { "<F9>", dap.step_over, icons_dap.over .. " [o]ver" }
+      map { "<localleader>dO", dap.step_out, icons_dap.out .. " [O]ut" }
+      map { "<localleader>dr", dap.repl.toggle, icons_dap.repl .. " [r]epl" }
+      map { "<localleader>dl", dap.run_last, icons_dap.rerun .. "[l]ast" }
+      map { "<localleader>du", require("dapui").toggle, "[u]i" }
+      map { "<localleader>dx", dap.terminate, icons_dap.stop .. " E[x]it" }
+      map { "<localleader>dc", dap.continue, icons_dap.continue .. "Run Debug" }
+      map { "<F8>", dap.continue, icons_dap.continue .. "Run Debug" }
+
+      map {
+        mode = { "v", "x" },
+        "K",
+        function()
+          dapui.eval()
         end,
         icons_dap.eval .. " [e]val",
       }
 
-      nmap {
+      map {
         "<localleader>dC",
         function()
           package.loaded["plugins.lsp.dap"] = nil
@@ -378,9 +392,7 @@ return {
         icons_dap.reload_continue .. " reload and [C]ontinue",
       }
 
-      require("dap.ext.vscode").load_launchjs()
-
-      -- map <localleader>K dap.hover
+      -- map <localleader>{k,K} dap.hover & dapui.eval
       local api = vim.api
       local keymap_restore = {}
       dap.listeners.after["event_initialized"]["me"] = function()
@@ -396,6 +408,9 @@ return {
         vim.keymap.set("n", "<localleader>k", function()
           require("dap.ui.widgets").hover()
         end, { silent = true })
+        vim.keymap.set("n", "<localleader>K", function()
+          dapui.eval()
+        end, { silent = true })
       end
 
       dap.listeners.after["event_terminated"]["me"] = function()
@@ -404,6 +419,13 @@ return {
         end
         keymap_restore = {}
       end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "dap-repl",
+        callback = function()
+          require("dap.ext.autocompl").attach()
+        end,
+      })
     end,
   },
 }

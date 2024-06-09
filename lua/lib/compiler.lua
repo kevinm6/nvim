@@ -2,7 +2,7 @@
 --  File         : compiler.lua
 --  Description  : set compilers for filetype
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 13:58
+--  Last Modified: 06 Jun 2024, 10:53
 -------------------------------------
 
 local compiler = {
@@ -38,48 +38,42 @@ local compiler = {
     javascript = "node $file",
     ocaml = "ocaml $file",
     swift = {
-      prg =
-      "xcodebuild -scheme $dName -destination 'platform=iPhone Simulator,name=iPhone 14,os=16.4'",
-      efmt = "%f:%l:%c:\\ %t%*[^:]:\\ %m"
-    }
-  }
+      prg = "xcodebuild -scheme $dName -destination 'platform=iPhone Simulator,name=iPhone 14,os=16.4'",
+      efmt = "%f:%l:%c:\\ %t%*[^:]:\\ %m",
+    },
+  },
 }
 
 ---Get matching compiler from current filetype
 ---@return any compilers all compilers available w/ Vim
 local function get_matching_compiler(filetype)
-  local vim_compilers = vim.fn.globpath("$VIMRUNTIME/compiler", filetype .. ".vim", false,
-    0)
+  local vim_compilers = vim.fn.globpath("$VIMRUNTIME/compiler", filetype .. ".vim", false, 0)
 
   return #vim_compilers > 0 and vim.fn.fnamemodify(vim_compilers, ":t:r") or nil
 end
 
-
 ---Get command and replace placeholders < $varName >
 ---@param command any command to be parsed
 local function getCommand(command)
-  local filepath = vim.fn.expand("%:p")
+  local filepath = vim.fn.expand "%:p"
   local clean_cmd = command
 
   command = command:gsub("$fileNameWithoutExt", vim.fn.fnamemodify(filepath, ":t:r"))
   command = command:gsub("$fileName", vim.fn.fnamemodify(filepath, ":t"))
   command = command:gsub("$file", filepath)
   command = command:gsub("$dir", vim.fn.fnamemodify(filepath, ":p:h"))
-  command = command:gsub("$dName",
-    vim.fn.fnamemodify(vim.uv.cwd() or vim.loop.cwd() or "", ":t"))
+  command = command:gsub("$dName", vim.fn.fnamemodify(vim.uv.cwd() or vim.loop.cwd() or "", ":t"))
   command = command:gsub("$end", "")
 
   return (command == clean_cmd) and command or string.format("%s %s", command, filepath)
 end
-
 
 ---Select compiler from vimruntime compilers
 ---or enter a custom command to compile the current file.
 ---If a custom command is entered, the same filetypes open
 ---in the same nvim session will use the same command.
 local function select_compiler()
-  local vim_compilers = vim.fn.globpath(vim.fn.expand "$VIMRUNTIME/compiler", "*.vim", true,
-    1)
+  local vim_compilers = vim.fn.globpath(vim.fn.expand "$VIMRUNTIME/compiler", "*.vim", true, 1)
   table.insert(vim_compilers, 1, "CUSTOM")
   vim.ui.select(vim_compilers, {
     prompt = "  Select compiler",
@@ -107,21 +101,20 @@ local function select_compiler()
   end)
 end
 
-
 ---Open terminal in a float window.
 ---@param command string command runned by the spawned shell
 local function float_terminal(command)
   local cols, lines = vim.o.columns, vim.o.lines
   local opts = {
-    relative = 'editor',
+    relative = "editor",
     row = math.floor(lines * 6 / 20),
     col = math.floor(cols * 4 / 20),
     width = math.floor(cols * 0.6),
     height = math.floor(lines * 0.4),
-    style = 'minimal',
-    border = 'rounded',
-    title = 'Run File in Terminal',
-    title_pos = 'center'
+    style = "minimal",
+    border = "rounded",
+    title = "Run File in Terminal",
+    title_pos = "center",
   }
 
   local bufnr = vim.api.nvim_create_buf(false, true)
@@ -129,11 +122,10 @@ local function float_terminal(command)
   vim.fn.termopen(command)
 
   vim.wo.winblend = 16
-  vim.bo.bufhidden = 'hide'
-  vim.wo.signcolumn = 'no'
+  vim.bo.bufhidden = "hide"
+  vim.wo.signcolumn = "no"
   vim.bo.buflisted = false
 end
-
 
 ---Open Terminal and run command passed as param.
 ---The default terminal spawned is toggleterm if is available, instead default
@@ -145,25 +137,26 @@ local function run_in_terminal(command, direction)
 
   local has_toggleterm, toggleterm = pcall(require, "toggleterm.terminal")
   if has_toggleterm then
-    toggleterm.Terminal:new {
-      cmd = full_command,
-      direction = direction,
-      close_on_exit = false
-    }:toggle()
+    toggleterm.Terminal
+      :new({
+        cmd = full_command,
+        direction = direction,
+        close_on_exit = false,
+      })
+      :toggle()
   else
-    if direction == 'horizontal' then
+    if direction == "horizontal" then
       vim.cmd(("split | resize 14 | terminal '%s'"):format(full_command))
-    elseif direction == 'vertical' then
+    elseif direction == "vertical" then
       vim.cmd(("vsplit | vertical resize 80 | terminal '%s'"):format(full_command))
-    elseif direction == 'float' then
+    elseif direction == "float" then
       float_terminal(full_command)
-    elseif direction == 'tab' then
+    elseif direction == "tab" then
       vim.cmd.tabnew()
       vim.fn.termopen(full_command)
     end
   end
 end
-
 
 ---Set keymap for compile and run file.
 ---I do some check in the keymap to avoid asking user to choose a compiler if
@@ -172,64 +165,77 @@ end
 ---@param buf any bufId for which set keymap
 local function set_keymaps(buf)
   local icons = require "lib.icons"
-  local function nmap(tbl)
-    vim.keymap.set("n", tbl[1], tbl[2],
-      { buffer = buf, desc = "Run❭ "..tbl[3] })
+  local function map(tbl)
+    vim.keymap.set("n", tbl[1], tbl[2], { buffer = buf, desc = "Run❭ " .. tbl[3] })
   end
 
-  vim.keymap.set(
-    { "n", "v" },
-    "<leader>R",
-    function() end,
-    { buffer = buf, desc = icons.debug.run .. " Run" }
-  )
+  vim.keymap.set({ "n", "v" }, "<leader>R", function() end, { buffer = buf, desc = icons.debug.run .. " Run" })
 
   local function run_file_cmd()
     if not compiler.compilers[vim.bo.filetype] then
       select_compiler()
     else
       local command = compiler.compilers[vim.bo.filetype]
-      if type(command) == 'table' then
+      if type(command) == "table" then
         command = compiler.compilers[vim.bo.filetype].prg
       end
       return command
     end
   end
 
-  nmap { "<leader>Rr", function()
-    local cmd = run_file_cmd()
-    if run_file_cmd() then
-      run_in_terminal(cmd, 'horizontal')
-    end
-  end, "File" }
+  map {
+    "<leader>Rr",
+    function()
+      local cmd = run_file_cmd()
+      if run_file_cmd() then
+        run_in_terminal(cmd, "horizontal")
+      end
+    end,
+    "File",
+  }
 
-  nmap { "<leader>Rf", function()
-    local cmd = run_file_cmd()
-    if run_file_cmd() then
-      run_in_terminal(cmd, 'float')
-    end
-  end, "[f]loat" }
+  map {
+    "<leader>Rf",
+    function()
+      local cmd = run_file_cmd()
+      if run_file_cmd() then
+        run_in_terminal(cmd, "float")
+      end
+    end,
+    "[f]loat",
+  }
 
-  nmap { "<leader>Rv", function()
-    local cmd = run_file_cmd()
-    if run_file_cmd() then
-      run_in_terminal(cmd, 'vertical')
-    end
-  end, "[v]ertical" }
+  map {
+    "<leader>Rv",
+    function()
+      local cmd = run_file_cmd()
+      if run_file_cmd() then
+        run_in_terminal(cmd, "vertical")
+      end
+    end,
+    "[v]ertical",
+  }
 
-  nmap { "<leader>Rt", function()
-    local cmd = run_file_cmd()
-    if run_file_cmd() then
-      run_in_terminal(cmd, 'tab')
-    end
-  end, "[t]ab" }
+  map {
+    "<leader>Rt",
+    function()
+      local cmd = run_file_cmd()
+      if run_file_cmd() then
+        run_in_terminal(cmd, "tab")
+      end
+    end,
+    "[t]ab",
+  }
 
-  nmap { "<leader>Rc", function()
-    vim.cmd.make()
-    vim.cmd.copen()
-  end, "[c]ompile File" }
+  map {
+    "<leader>Rc",
+    function()
+      vim.cmd.make()
+      vim.cmd.copen()
+    end,
+    "[c]ompile File",
+  }
 end
-
 
 ---Set compiler based on filetype.
 ---If custom_compiler is not specified the default one is used ($VIMRUNTIME/compiler/)
@@ -239,7 +245,9 @@ function compiler.set_compiler(ev)
   local buf = ev.buf
 
   local custom_compiler = compiler.compilers[filetype]
-  if custom_compiler == 0 then return end
+  if custom_compiler == 0 then
+    return
+  end
 
   if custom_compiler then
     if type(custom_compiler) == "table" then
@@ -256,10 +264,7 @@ function compiler.set_compiler(ev)
     local default_compiler = get_matching_compiler(filetype)
 
     vim.schedule_wrap(function()
-      local prompt = ("Use < %s > as compiler for current filetype (%s)?"):format(
-        default_compiler,
-        filetype
-      )
+      local prompt = ("Use < %s > as compiler for current filetype (%s)?"):format(default_compiler, filetype)
       local choice = vim.fn.confirm(prompt, "&Yes\n&No\n&Enter input")
       if choice == 1 then
         vim.cmd.compiler(default_compiler)
@@ -280,17 +285,16 @@ function compiler.set_compiler(ev)
   set_keymaps(buf)
 end
 
-
 ---Set 'keywordprg' based on filetype
 ---@param filetype string filetype that triggered the autocmd
 ---@return string | nil
 function compiler.set_keywordprg(filetype)
   local custom_keywordprg = {
-    python = 'python3 -m pydoc',
-    vim = ':help',
+    python = "python3 -m pydoc",
+    vim = ":help",
     html = "open https://developer.mozilla.org/search?topic=api&topic=html&q=",
     css = "open https://developer.mozilla.org/search?topic=api&topic=css&q=",
-    javascript = "open https://developer.mozilla.org/search?topic=api&topic=js&q="
+    javascript = "open https://developer.mozilla.org/search?topic=api&topic=js&q=",
   }
 
   return custom_keywordprg[filetype]

@@ -24,7 +24,6 @@ return {
 
       o.enabled = function()
         return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt"
-          or not require("cmp_dap").is_dap_buffer()
       end
 
       o.mapping = {
@@ -124,15 +123,10 @@ return {
           name = "buffer",
           option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
         },
-        -- {
-        --   name = "luasnip",
-        --   filter = function(_, _)
-        --     return not context.in_syntax_group "Comment" or not context.in_treesitter_capture "comment"
-        --   end,
-        -- },
         {
           name = "snippets",
-          filter = function(_, _)
+          filter = function()
+            vim.print "Called filter"
             return not context.in_syntax_group "Comment" or not context.in_treesitter_capture "comment"
           end,
         },
@@ -164,8 +158,21 @@ return {
       local cmp = require "cmp"
 
       -- per-filetype config
+      cmp.setup.filetype("lua", {
+        { name = "nvim_lsp" },
+        { name = "lazydev", group_index = 0 },
+        {
+          name = "buffer",
+          option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
+        },
+        { name = "snippets" },
+        { name = "treesitter" },
+        { name = "path", option = { trailing_slash = true } },
+        { name = "calc", keyword_length = 3 },
+      })
+
       cmp.setup.filetype({ "markdown", "latex", "text", "quarto" }, {
-        sources = cmp.config.sources {
+        sources = {
           { name = "otter" },
           {
             name = "buffer",
@@ -173,7 +180,6 @@ return {
           },
           { name = "treesitter" },
           { name = "snippets" },
-          -- { name = "luasnip" },
           { name = "nvim_lsp" },
           { name = "path", option = { trailing_slash = true } },
           { name = "latex_symbols", keyword_length = 3 },
@@ -183,7 +189,7 @@ return {
 
       cmp.setup.filetype("help", {
         window = {
-          documentation = cmp.config.disable,
+          documentation = nil,
         },
       })
 
@@ -192,7 +198,6 @@ return {
           { name = "nvim_lsp" },
           { name = "treesitter" },
           { name = "snippets" },
-          -- { name = "luasnip" },
           { name = "buffer" },
         },
       })
@@ -207,13 +212,10 @@ return {
         sources = {
           { name = "gh_issues" },
           { name = "snippets" },
-          -- { name = "luasnip" },
         },
       })
 
       cmp.setup(o)
-      -- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-      -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
   { "hrsh7th/cmp-nvim-lsp", event = "LspAttach" },
@@ -247,12 +249,12 @@ return {
   { "hrsh7th/cmp-path", event = "BufRead" },
   { "hrsh7th/cmp-calc", event = "BufRead" },
   {
-    "rcarriga/cmp-dap",
-    ft = { "dap-repl", "dapui_watches", "dapui_hover" },
-  },
-  {
     "kdheepak/cmp-latex-symbols",
     ft = "markdown",
+  },
+  {
+    "rcarriga/cmp-dap",
+    ft = { "dap-repl", "dapui_watches", "dapui_hover" },
   },
   {
     "garymjr/nvim-snippets",
@@ -263,7 +265,7 @@ return {
         typescript = { "javascript", "tsdoc" },
         javascript = { "jsdoc" },
         html = { "css", "javascript" },
-        lua = { "luadoc" },
+        lua = { "luadoc", "nvim_lua" },
         python = { "python-docstring" },
         java = { "javadoc", "java-testing" },
         sh = { "shelldoc" },

@@ -135,5 +135,10 @@ return {
       end,
       "Toggle Numhl",
     }
+
+    vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#73C990", bg = "NONE" })
+    vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#E1C08C", bg = "NONE" })
+    vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#b2555b", bg = "NONE" })
+    vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { link = "NonText" })
   end,
 }

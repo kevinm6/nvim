@@ -19,31 +19,31 @@ local M = {
       return not vim.g.vscode
     end,
     config = function()
-      vim.cmd.colorscheme 'kurayami'
-    end
+      vim.cmd.colorscheme "kurayami"
+    end,
   },
 
   ---Statusline
   {
-    dir = vim.fn.stdpath 'config' .. "/lua/lib/ui/statusline.lua",
-    event = 'VeryLazy',
+    dir = vim.fn.stdpath "config" .. "/lua/lib/ui/statusline.lua",
+    event = "VeryLazy",
     cmd = "ToggleStatusline",
     cond = function()
       return not vim.g.vscode
     end,
     config = function()
-      require "lib.ui.statusline".toggle()
-    end
+      require("lib.ui.statusline").toggle()
+    end,
   },
 
   ---Winbar
   {
-    dir = vim.fn.stdpath 'config' .. "/lua/lib/ui/winbar.lua",
+    dir = vim.fn.stdpath "config" .. "/lua/lib/ui/winbar.lua",
     event = { "BufReadPre", "BufNewFile" },
-    cmd = 'ToggleWinbar',
+    cmd = "ToggleWinbar",
     config = function()
-      require "lib.ui.winbar".toggle()
-    end
+      require("lib.ui.winbar").toggle()
+    end,
   },
 
   ---UI-lib used by other plugins
@@ -59,16 +59,16 @@ local M = {
         height = 0.8, -- height of the Zen window
         width = 0.85,
         options = {
-          signcolumn = "no",      -- disable signcolumn
-          number = false,         -- disable number column
+          signcolumn = "no", -- disable signcolumn
+          number = false, -- disable number column
           relativenumber = false, -- disable relative numbers
-          cursorline = true       -- disable cursorline
-        }
+          cursorline = true, -- disable cursorline
+        },
       }
       o.plugins = {
         gitsigns = { enabled = false }, -- disables git signs
         tmux = { enabled = false },
-        twilight = { enabled = true }
+        twilight = { enabled = true },
       }
     end,
   },
@@ -77,23 +77,23 @@ local M = {
   ---integrate luarocks into neovim
   {
     "vhyrro/luarocks.nvim",
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       --NOTE: for macOS replace into
       -- ~/.local/share/nvim/lazy/luarocks.nvim/.rocks/share/lua/5.1/magick/wand/lib.lua:220
       --  lib = try_to_load("/opt/homebrew/lib/libMagickWand-7.Q16HDRI.dylib", function()
-      rocks = { "magick", "xml2lua", "mimetypes", "lua-curl", "promise-async" }
-    }
+      rocks = { "magick", "xml2lua", "mimetypes", "lua-curl", "promise-async" },
+    },
   },
 
   ---Image in NeoVim
   {
     "3rd/image.nvim",
-    ft = { 'markdown', 'vimwiki', 'png', 'jpeg', 'jpg', 'image_nvim' },
-    dependencies = 'luarocks.nvim',
+    ft = { "markdown", "vimwiki", "png", "jpeg", "jpg", "image_nvim" },
+    dependencies = "luarocks.nvim",
     opts = function(_, o)
-      o.backend = 'kitty'
-      o.window_overlap_clear_enabled = true    -- toggles images when windows are overlapped
+      o.backend = "kitty"
+      o.window_overlap_clear_enabled = true -- toggles images when windows are overlapped
       o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
       o.window_overlap_clear_ft_ignore = {}
       o.integrations = {
@@ -103,24 +103,20 @@ local M = {
           download_remote_images = true,
           clear_in_insert_mode = true,
           only_render_image_at_cursor = true,
-          filetypes = { "markdown", "vimwiki", "quarto" }
-        }
+          filetypes = { "markdown", "vimwiki", "quarto" },
+        },
       }
-      o.hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp' } -- render image files as images when opened
-    end
+      o.hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" } -- render image files as images when opened
+    end,
   },
 
   ---Obsidian
   {
     "epwalsh/obsidian.nvim",
-    version = '*', -- latest release (not commit)
+    version = "*", -- latest release (not commit)
     event = {
-      "BufReadPre " ..
-      vim.fn.expand "~" ..
-      "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
-      "BufNewFile " ..
-      vim.fn.expand "~" ..
-      "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
+      "BufReadPre " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
+      "BufNewFile " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
     },
     dependencies = { "plenary.nvim" },
     opts = function(_, o)
@@ -132,7 +128,7 @@ local M = {
       o.daily_notes = {
         folder = "daily",
         date_format = "%d-%M-%Y",
-        alias_format = "%-d %B, %Y"
+        alias_format = "%-d %B, %Y",
       }
 
       o.workspaces = {
@@ -151,16 +147,16 @@ local M = {
           action = function()
             return require("obsidian").util.gf_passthrough()
           end,
-          opts = { noremap = false, expr = true, buffer = true }
+          opts = { noremap = false, expr = true, buffer = true },
         },
         ["<localleader>ch"] = {
           action = function()
             return require("obsidian").util.toggle_checkbox()
           end,
-          opts = { buffer = true }
-        }
+          opts = { buffer = true },
+        },
       }
-    end
+    end,
   },
 
   -- Jupyter Notebook
@@ -172,16 +168,16 @@ local M = {
         local argv = tostring(vim.fn.argv(0))
         local stat = vim.uv.fs_stat(argv)
 
-        local jupyter_notebooks = vim.endswith(argv, 'ipynb')
+        local jupyter_notebooks = vim.endswith(argv, "ipynb")
         if stat or jupyter_notebooks then
-          require "lazy".load { plugins = { p.name } }
+          require("lazy").load { plugins = { p.name } }
         end
       end
       if not require("lazy.core.config").plugins[p.name]._.loaded then
-        vim.api.nvim_create_autocmd('BufNew', {
-          pattern = '*.ipynb',
+        vim.api.nvim_create_autocmd("BufNew", {
+          pattern = "*.ipynb",
           callback = function()
-            require "lazy".load { plugins = { p.name } }
+            require("lazy").load { plugins = { p.name } }
           end,
         })
       end
@@ -189,13 +185,13 @@ local M = {
     config = function(_, o)
       o.custom_language_formatting = {
         python = {
-          extension = 'qmd',
-          style = 'quarto',
-          force_ft = true
-        }
+          extension = "qmd",
+          style = "quarto",
+          force_ft = true,
+        },
       }
-      require "jupytext".setup(o)
-    end
+      require("jupytext").setup(o)
+    end,
   },
 
   ---Molten
@@ -206,37 +202,56 @@ local M = {
     build = ":UpdateRemotePlugins",
     dependencies = { "image.nvim" },
     init = function()
-      vim.g.python_host_prog = vim.env.VIRTUAL_ENV or
-          vim.fn.stdpath 'data' .. "/.venv/bin"
+      vim.g.python_host_prog = vim.env.VIRTUAL_ENV or vim.fn.stdpath "data" .. "/.venv/bin"
 
       vim.g.molten_image_provider = "image.nvim"
       vim.g.molten_output_win_max_height = 20
       vim.g.molten_auto_open_output = true
     end,
     config = function()
-      vim.keymap.set("n", "<localleader>R", ":MoltenEvaluateOperator<CR>",
-        { silent = true, noremap = true, desc = "run operator selection" })
-      vim.keymap.set("n", "<localleader>rl", ":MoltenEvaluateLine<CR>",
-        { silent = true, noremap = true, desc = "evaluate line" })
-      vim.keymap.set("n", "<localleader>rc", ":MoltenReevaluateCell<CR>",
-        { silent = true, noremap = true, desc = "re-evaluate cell" })
-      vim.keymap.set("v", "<localleader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
-        { silent = true, noremap = true, desc = "evaluate visual selection" })
+      vim.keymap.set(
+        "n",
+        "<localleader>R",
+        ":MoltenEvaluateOperator<CR>",
+        { silent = true, noremap = true, desc = "run operator selection" }
+      )
+      vim.keymap.set(
+        "n",
+        "<localleader>rl",
+        ":MoltenEvaluateLine<CR>",
+        { silent = true, noremap = true, desc = "evaluate line" }
+      )
+      vim.keymap.set(
+        "n",
+        "<localleader>rc",
+        ":MoltenReevaluateCell<CR>",
+        { silent = true, noremap = true, desc = "re-evaluate cell" }
+      )
+      vim.keymap.set(
+        "v",
+        "<localleader>r",
+        ":<C-u>MoltenEvaluateVisual<CR>gv",
+        { silent = true, noremap = true, desc = "evaluate visual selection" }
+      )
 
       vim.keymap.set("n", "<leader>M", function() end, { desc = "Molten" })
-      vim.keymap.set("n", "<leader>MI", function() vim.cmd.MoltenInfo() end,
-        { desc = "MoltenInfo" })
-      vim.keymap.set("n", "<leader>Ml", function() vim.cmd.MoltenEvaluateLine() end,
-        { desc = "MoltenEvaluateLine" })
-      vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv",
-        { desc = "MoltenEvaluateVisual" })
-      vim.keymap.set("n", "<leader>Ma", function() vim.cmd.MoltenEvaluateArgument() end,
-        { desc = "MoltenEvaluateArgument" })
-      vim.keymap.set("n", "<leader>Mo", function() vim.cmd.MoltenEvaluateOperator() end,
-        { desc = "MoltenEvaluateOperator" })
-      vim.keymap.set("n", "<leader>Mc", function() vim.cmd.MoltenReevaluateCell() end,
-        { desc = "MoltenReevaluateCell" })
-    end
+      vim.keymap.set("n", "<leader>MI", function()
+        vim.cmd.MoltenInfo()
+      end, { desc = "MoltenInfo" })
+      vim.keymap.set("n", "<leader>Ml", function()
+        vim.cmd.MoltenEvaluateLine()
+      end, { desc = "MoltenEvaluateLine" })
+      vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv", { desc = "MoltenEvaluateVisual" })
+      vim.keymap.set("n", "<leader>Ma", function()
+        vim.cmd.MoltenEvaluateArgument()
+      end, { desc = "MoltenEvaluateArgument" })
+      vim.keymap.set("n", "<leader>Mo", function()
+        vim.cmd.MoltenEvaluateOperator()
+      end, { desc = "MoltenEvaluateOperator" })
+      vim.keymap.set("n", "<leader>Mc", function()
+        vim.cmd.MoltenReevaluateCell()
+      end, { desc = "MoltenReevaluateCell" })
+    end,
   },
 
   ---Otter
@@ -253,35 +268,35 @@ local M = {
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "html",
         callback = function()
-          require("otter").activate({ 'javascript', 'php', 'css' })
-        end
+          require("otter").activate { "javascript", "php", "css" }
+        end,
       })
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "javascript",
         callback = function()
-          require("otter").activate({ 'html', 'php', 'regex' })
-        end
+          require("otter").activate { "html", "php", "regex" }
+        end,
       })
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "php",
         callback = function()
-          require("otter").activate({ 'html', 'javascript' })
-        end
+          require("otter").activate { "html", "javascript" }
+        end,
       })
 
       local nmap = function(tbl)
         vim.keymap.set("n", tbl[1], tbl[2], { desc = "otter:" .. tbl[3] })
       end
-      nmap { "<localleader>K", require "otter".ask_hover, "Hover" }
-      nmap { "<localleader>r", require "otter".ask_references, "[r]eferences" }
-      nmap { "<localleader>R", require "otter".ask_rename, "[R]ename" }
-      nmap { "<localleader>d", require "otter".ask_definition, "[d]efinition" }
-      nmap { "<localleader>s", require "otter".ask_type_definition, "[t]ype-definition" }
-      nmap { "<localleader>f", require "otter".ask_format, "[f]ormat" }
+      nmap { "<localleader>K", require("otter").ask_hover, "Hover" }
+      nmap { "<localleader>r", require("otter").ask_references, "[r]eferences" }
+      nmap { "<localleader>R", require("otter").ask_rename, "[R]ename" }
+      nmap { "<localleader>d", require("otter").ask_definition, "[d]efinition" }
+      nmap { "<localleader>s", require("otter").ask_type_definition, "[t]ype-definition" }
+      nmap { "<localleader>f", require("otter").ask_format, "[f]ormat" }
 
-      nmap { "<localleader>Ee", require "otter".export, "[e]xport" }
-      nmap { "<localleader>Ea", require "otter".export_otter_as, "[e]xport otter [a]s" }
-    end
+      nmap { "<localleader>Ee", require("otter").export, "[e]xport" }
+      nmap { "<localleader>Ea", require("otter").export_otter_as, "[e]xport otter [a]s" }
+    end,
   },
 
   ---Quarto
@@ -293,9 +308,9 @@ local M = {
       local quarto = require "quarto"
       o.codeRunner = {
         enabled = false,
-        default_method = 'molten',
-        ft_runners = { python = "molten", markdown = 'molten' },
-        never_run = { "yaml" }
+        default_method = "molten",
+        ft_runners = { python = "molten", markdown = "molten" },
+        never_run = { "yaml" },
       }
       quarto.setup(o)
 
@@ -313,24 +328,24 @@ local M = {
       end, { silent = true, desc = "[q]uarto search [h]elp" })
 
       vim.keymap.set("n", "<localleader>K", function()
-        require "otter".ask_hover()
+        require("otter").ask_hover()
       end, { silent = true, desc = "Hover" })
       vim.keymap.set("n", "<localleader>gd", function()
-        require "otter".ask_definition()
+        require("otter").ask_definition()
       end, { silent = true, desc = "[g]oto [d]efinition " })
       vim.keymap.set("n", "<localleader>r", function()
-        require "otter".ask_rename()
+        require("otter").ask_rename()
       end, { silent = true, desc = "[g]oto [r]eferences" })
       vim.keymap.set("n", "<localleader>gt", function()
-        require "otter".ask_type_definition()
+        require("otter").ask_type_definition()
       end, { silent = true, desc = "[g]oto [t]ype definition" })
       vim.keymap.set("n", "<localleader>R", function()
-        require "otter".ask_rename()
+        require("otter").ask_rename()
       end, { silent = true, desc = "[R]ename" })
       vim.keymap.set("n", "<localleader>ds", function()
-        require "otter".ask_document_symbols()
+        require("otter").ask_document_symbols()
       end, { silent = true, desc = "[d]ocument [s]ymbols" })
-    end
+    end,
   },
 
   ---Color Picker
@@ -352,18 +367,18 @@ local M = {
 
   -- data viewer (csv, tsv ...)
   {
-    'vidocqh/data-viewer.nvim',
+    "vidocqh/data-viewer.nvim",
     ft = { "sqlite", "tsv", "csv" },
     cmd = { "DataViewerFocusTable", "DataViewer" },
     dependencies = { "plenary.nvim" },
     config = function(_, o)
-      require "data-viewer".setup(o)
+      require("data-viewer").setup(o)
 
       vim.api.nvim_set_hl(0, "DataViewerColumn0", { fg = "#4fc1ff", bold = true })
       vim.api.nvim_set_hl(0, "DataViewerColumn1", { fg = "#6c7986" })
       vim.api.nvim_set_hl(0, "DataViewerColumn2", { fg = "#626262" })
       vim.api.nvim_set_hl(0, "DataViewerFocusTable", { fg = "#00ff87", bold = true })
-    end
+    end,
   },
 
   -- {

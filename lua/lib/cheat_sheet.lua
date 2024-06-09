@@ -31,10 +31,12 @@ local api = vim.api
 
 function cheat_sheet.run(input)
   local ui = api.nvim_list_uis()[1]
+  local min_width = math.floor(ui.width * 0.8)
+  local min_height = math.floor(ui.height * 0.46)
   cheat_sheet.main_win = nil
   cheat_sheet.main_buf = nil
-  cheat_sheet.main_win_width = math.floor(ui.width * 0.8)
-  cheat_sheet.main_win_height = math.floor(ui.height * 0.46)
+  cheat_sheet.main_win_width = min_width > 0 and min_width or vim.o.columns * 0.5
+  cheat_sheet.main_win_height = min_height > 0 and min_height or vim.o.lines * 0.5
   cheat_sheet.main_win_style = cheat_sheet.opts.main_win.style
   cheat_sheet.main_win_relative = "win"
   cheat_sheet.main_win_border = cheat_sheet.opts.main_win.border

@@ -31,7 +31,7 @@ return {
     {
       "<leader>e",
       function()
-        require("oil").open_float()
+        require("oil").toggle_float()
       end,
       desc = require("lib.icons").documents.Files .. " File Browser",
     },
@@ -45,6 +45,7 @@ return {
   },
   cmd = "Oil",
   opts = function(_, o)
+    local oil = require "oil"
     o.columns = default_coloumns(true)
 
     o.keymaps = {
@@ -57,15 +58,27 @@ return {
       ["<C-a-s>"] = "actions.select_vsplit",
       ["<C-t>"] = "actions.select_tab",
       ["<M-p>"] = "actions.preview",
+      ["<M-o>"] = {
+        desc = "View File",
+        callback = function()
+          local dir = oil.get_current_dir()
+          local file = oil.get_cursor_entry().name
+          if not dir or not file then
+            return
+          end
+          oil.close() -- avoid that opens file in Oil window
+          vim.cmd.view(dir .. file)
+        end,
+      },
       ["<C-o>"] = "actions.open_external",
       ["<C-\\>"] = "actions.open_terminal",
       ["<C-c>"] = "actions.close",
       ["<C-b>"] = {
         desc = "Open UserDir",
         callback = function()
-          require("oil").close()
+          oil.close()
           local home_dir = tostring(vim.env.HOME)
-          require("oil").open_float(home_dir)
+          oil.open_float(home_dir)
         end,
       },
       ["q"] = "actions.close",
@@ -85,7 +98,6 @@ return {
       ["gd"] = {
         desc = "Toggle detail view",
         callback = function()
-          local oil = require "oil"
           local config = require "oil.config"
           if #config.columns == #default_coloumns(false) then
             oil.set_columns(default_coloumns(true))
@@ -115,7 +127,7 @@ return {
       max_height = 16,
       border = "rounded",
       win_options = {
-        winblend = 8,
+        winblend = 3,
       },
       override = function(conf)
         conf.row = (vim.o.lines - conf.height - 3)
@@ -125,7 +137,7 @@ return {
 
     o.progress = {
       win_options = {
-        winblend = 6,
+        winblend = 8,
       },
     }
     -- HACK Using this to remap url-scheme from args with oil-ssh schemes

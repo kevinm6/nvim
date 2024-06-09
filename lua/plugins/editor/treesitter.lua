@@ -29,7 +29,6 @@ local function parsers_to_be_installed()
       "json5",
       "jsdoc",
       "latex",
-      "erlang",
       "ruby",
       "lua",
       "java",
@@ -56,7 +55,7 @@ end
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "BufRead",
+    event = { "BufRead", "BufNewFile", "CmdlineEnter" },
     build = ":TSUpdate",
     cmd = { "Inspect", "InspectTree" },
     dependencies = {

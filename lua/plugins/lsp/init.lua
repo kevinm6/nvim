@@ -124,12 +124,14 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
   end, { desc = "Toggle Inlay hints" })
 
   -- lsp-document_highlight
-  if client.server_capabilities.documentHighlightProvider then
+  if client.supports_method "textDocument/documentHighlight" then
     local _lsp_hi_group = vim.api.nvim_create_augroup("_lsp_highlight_group", { clear = true })
     autocmd({ "CursorHold", "CursorHoldI" }, {
       group = _lsp_hi_group,
       buffer = bufnr,
-      callback = vim.lsp.buf.document_highlight,
+      callback = function()
+        return vim.lsp.buf.document_highlight()
+      end,
     })
     autocmd({ "CursorMoved", "CursorMovedI" }, {
       group = _lsp_hi_group,
@@ -236,13 +238,11 @@ return {
     end,
   },
 
-  ---Neodev
+  ---NeovimDevelopment
   {
-    "folke/neodev.nvim",
+    "folke/lazydev.nvim",
     ft = "lua",
-    opts = {
-      library = { plugins = { "nvim-dap-ui" }, types = true },
-    },
+    config = true,
   },
 
   ---Mason
@@ -310,10 +310,6 @@ return {
 
         -- Custom setup and overrides for servers
         lua_ls = function()
-          pcall(require("neodev").setup, {
-            library = { plugins = { "nvim-dap-ui" }, types = true },
-          })
-
           local runtime_path = vim.split(package.path, ";")
           table.insert(runtime_path, "lua/?.lua")
           table.insert(runtime_path, "lua/?/init.lua")
@@ -339,17 +335,17 @@ return {
                     call_arg_parentheses = "remove",
                   },
                 },
-                -- completion = {
-                --    enable = true,
-                --    autoRequire = true,
-                --    keywordSnippet = "Both",
-                --    callSnippet = "Both",
-                --    displayContext = 2,
-                -- },
+                completion = {
+                  enable = true,
+                  autoRequire = true,
+                  keywordSnippet = "Both",
+                  callSnippet = "Both",
+                  displayContext = 2,
+                },
                 workspace = {
                   library = {
                     vim.api.nvim_get_runtime_file("", true),
-                    [vim.fn.stdpath "config" .. "/lua"] = true,
+                    vim.fn.stdpath "config" .. "/lua",
                   },
                   checkThirdParty = false,
                 },
@@ -372,7 +368,8 @@ return {
           lspconfig.jsonls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
             settings = {
               json = {
-                schemas = require("schemastore").json.schemas() or nil,
+                schemas = require("schemastore").json.schemas(),
+                validate = { enable = true },
               },
             },
             setup = {
@@ -395,7 +392,7 @@ return {
                 schemas = require("schemastore").yaml.schemas(),
                 validate = true,
                 schemaStore = {
-                  enable = true,
+                  enable = false,
                   url = "",
                 },
               },
@@ -619,9 +616,10 @@ return {
       }
 
       o.format_on_save = function(bufnr)
-        if vim.g.toggle_autoformat or vim.b[bufnr].toggle_autoformat then
-          return { timeout_ms = 500, lsp_fallback = true }
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
         end
+        return { timeout_ms = 500, lsp_fallback = true }
       end
 
       o.formatters = {
@@ -653,33 +651,9 @@ return {
         conform.format { async = true, lsp_fallback = true, range = range }
       end, { range = true })
 
-      vim.api.nvim_create_user_command("ToggleAutoFormat", function(args)
-        local buf = vim.api.nvim_get_current_buf()
-        local enabled = nil
-
-        -- FormatDisable! will disable formatting just for this buffer
-        if args.bang then
-          vim.b[buf].toggle_autoformat = not vim.b[buf].toggle_autoformat
-          enabled = vim.b[buf].toggle_autoformat
-        else
-          vim.g.toggle_autoformat = not vim.g.toggle_autoformat
-          enabled = vim.g.toggle_autoformat
-        end
-
-        local action = enabled and "  ON" or "  OFF"
-        local log_level = enabled and "INFO" or "WARN"
-        if args.bang then
-          local buf_name_tail = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
-          action = string.format("%s < %s >", action, buf_name_tail)
-        end
-
-        vim.notify(action, vim.log.levels[log_level], {
-          render = "wrapped-compact",
-          title = "Auto-Format (on-save)",
-        })
-      end, {
+      require("lib").user_command_toggle("ToggleAutoFormat", "disable_autoformat", {
+        title = "Auto-Format (on-save)",
         desc = "AutoFormat (on-save)",
-        bang = true,
       })
     end,
   },
@@ -687,7 +661,6 @@ return {
   ---Java
   {
     "mfussenegger/nvim-jdtls",
-    -- dependencies = { 'nvim-dap' },
     ft = "java",
   },
 
@@ -703,8 +676,8 @@ return {
     ft = { "json", "yml" },
   },
 
-  -- expose functions below to special servers
-  -- that adds custom features to LSP (like nvim-jdtls & nvim-metals)
+  -- expose functions below to special servers that uses ad-hoc-plugin
+  -- and adds custom features to LSP (like nvim-jdtls & nvim-metals)
   -- set_buf_keymaps = set_buf_keymaps,
   -- set_buf_funcs_for_capabilities = set_buf_funcs_for_capabilities,
   capabilities = init_capabilities,

@@ -26,8 +26,10 @@ local winbar = {
     oil = true,
     help = true,
     query = true,
-    httpResult = true
-  }
+    httpResult = true,
+    dapui_hover = true,
+    ["dap-float"] = true,
+  },
 }
 
 ---Check string is empty
@@ -46,7 +48,7 @@ end
 ---Get Filename of current buffer
 ---@return string filename file name formatted with icon if available
 local function get_filename()
-  local default_file_icon = require "lib.icons".kind.File
+  local default_file_icon = require("lib.icons").kind.File
   local filename = vim.fn.expand "%:t"
 
   if is_not_empty(filename) then
@@ -55,20 +57,14 @@ local function get_filename()
 
     local has_devicons, dev_icons = pcall(require, "nvim-web-devicons")
 
-    file_icon, _ = has_devicons and dev_icons.get_icon_color(
-      filename,
-      extension,
-      { default = not is_not_empty(extension) or false }
-    ) or filename, nil
+    file_icon, _ =
+      has_devicons and dev_icons.get_icon_color(filename, extension, { default = not is_not_empty(extension) or false })
+        or filename,
+      nil
 
-    return string.format(
-      "%%#FileIconColor%s#%s%%* %s",
-      extension,
-      file_icon or default_file_icon,
-      filename
-    )
+    return string.format("%%#FileIconColor%s#%s%%* %s", extension, file_icon or default_file_icon, filename)
   end
-  return ''
+  return ""
 end
 
 ---Get winbar with highlights and icons
@@ -79,9 +75,7 @@ local function get_winbar()
 
   local fname = get_filename()
 
-  return is_not_empty(location)
-      and string.format("%s %%#NavicSeparator#|%%* %s", fname, location)
-      or fname
+  return is_not_empty(location) and string.format("%s %%#NavicSeparator#|%%* %s", fname, location) or fname
 end
 
 ---Define autocmds for load winbar module and initialize
@@ -92,27 +86,26 @@ function winbar.toggle()
     vim.g.winbar = nil
   else
     vim.api.nvim_create_autocmd({
-      "CursorMoved", "ModeChanged", "BufEnter"
+      "CursorMoved",
+      "ModeChanged",
+      "BufEnter",
     }, {
       group = vim.api.nvim_create_augroup("_winbar", { clear = true }),
       callback = function(cb)
         if vim.g.winbar ~= nil then
-          if
-              not vim.api.nvim_win_get_config(0).relative ~= ""
-              and not winbar.to_exclude[vim.bo.filetype]
-          then
+          if not vim.api.nvim_win_get_config(0).relative ~= "" and not winbar.to_exclude[vim.bo.filetype] then
             vim.wo.winbar = get_winbar()
           end
         else
           set_color_groups()
           vim.g.winbar = cb.id
         end
-      end
+      end,
     })
   end
 end
 
-vim.api.nvim_create_user_command('ToggleWinbar', function()
+vim.api.nvim_create_user_command("ToggleWinbar", function()
   winbar.toggle()
 end, { desc = "Toggle Winbar" })
 

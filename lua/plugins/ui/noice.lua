@@ -58,7 +58,7 @@ return {
         },
       }
       o.presets = {
-        long_message_to_split = true,
+        long_message_to_split = false,
         cmdline_output_to_split = true,
         lsp_doc_border = true,
       }
