@@ -71,10 +71,17 @@ return {
       o.highlight = {
         enable = true, -- false will disable the whole extension
         additional_vim_regex_highlighting = { "markdown" },
-        disable = function(_, buf)
+        disable = function(ft, buf)
           local max_filesize = 100 * 1024 -- 100 KB
           local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+          local disable_ft = {
+            latex = true,
+          }
 
+          if disable_ft[ft] then
+            print "TS => disabled for this ft"
+            return true
+          end
           return ok and (stats and stats.size > max_filesize) or #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
         end,
       }

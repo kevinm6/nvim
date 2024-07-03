@@ -11,6 +11,24 @@
   ] @conceal
   (#set! conceal " " ))
 
+; this must be before the image shortcut_link(link_text) to avoid overriding
+; since that is more specific
+(shortcut_link
+  [
+    (link_text)
+  ] @conceal
+  (#set! conceal " "))
+
+(image
+  (image_description
+    (shortcut_link
+   [(link_text)] @conceal
+  (#set! conceal " ")   )
+    )
+  )
+
+(inline (html_tag) @conceal (#set! conceal ""))
+
 (inline_link
   [
     (link_destination)

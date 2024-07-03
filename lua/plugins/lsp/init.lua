@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 16 May 2024, 13:46
+-- Last Modified: 28 Jun 2024, 16:56
 -------------------------------------
 
 ---Create capabilities and set default values
@@ -118,10 +118,18 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
   local autocmd = vim.api.nvim_create_autocmd
   local usercmd = vim.api.nvim_create_user_command
 
+  -- Completion
+  -- TODO nvim-0.11
+  -- if vim.fn.has "nvim-0.11" == 1 then -- and client.supports_method "textDocument/completion" then
+  --   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+  -- end
+
   -- InlayHints
-  usercmd("ToggleInlayHints", function()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
-  end, { desc = "Toggle Inlay hints" })
+  if client.supports_method "textDocument/inlayHint" then
+    usercmd("ToggleInlayHints", function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
+    end, { desc = "Toggle Inlay hints" })
+  end
 
   -- lsp-document_highlight
   if client.supports_method "textDocument/documentHighlight" then
@@ -442,12 +450,12 @@ return {
           }))
         end,
 
-        grammarly = function()
-          lspconfig.grammarly.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-            filetypes = { "markdown", "text" },
-            autostart = false,
-          }))
-        end,
+        -- grammarly = function()
+        --   lspconfig.grammarly.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+        --     filetypes = { "markdown", "text" },
+        --     autostart = false,
+        --   }))
+        -- end,
 
         clangd = function()
           lspconfig.clangd.setup(vim.tbl_deep_extend("force", default_lsp_config, {
@@ -574,6 +582,10 @@ return {
         yaml = { "yamllint" },
       }
 
+      lint.linters.markdownlint.args = {
+        "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
+      }
+
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
           if not lint then
@@ -588,7 +600,7 @@ return {
   ---Formatter (Conform)
   {
     "stevearc/conform.nvim",
-    event = { "LspAttach", "BufWritePre" },
+    event = { "BufWritePre" },
     cmd = { "Format", "ConformInfo" },
     keys = {
       {
@@ -607,7 +619,7 @@ return {
         python = { "black" },
         bash = { "beautysh" },
         zsh = { "beautysh" },
-        css = { "prettier" },
+        -- css = { "prettier" },
         javascript = { "prettier" },
         html = { "prettier" },
         json = { "prettier" },
@@ -619,7 +631,7 @@ return {
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return
         end
-        return { timeout_ms = 500, lsp_fallback = true }
+        return { timeout_ms = 500, lsp_format = "fallback" }
       end
 
       o.formatters = {
@@ -648,7 +660,7 @@ return {
             ["end"] = { args.line2, end_line:len() },
           }
         end
-        conform.format { async = true, lsp_fallback = true, range = range }
+        conform.format { async = true, lsp_format = "fallback", range = range }
       end, { range = true })
 
       require("lib").user_command_toggle("ToggleAutoFormat", "disable_autoformat", {

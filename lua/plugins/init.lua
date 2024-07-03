@@ -73,24 +73,12 @@ local M = {
     end,
   },
 
-  ---Luarocks
-  ---integrate luarocks into neovim
-  {
-    "vhyrro/luarocks.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      --NOTE: for macOS replace into
-      -- ~/.local/share/nvim/lazy/luarocks.nvim/.rocks/share/lua/5.1/magick/wand/lib.lua:220
-      --  lib = try_to_load("/opt/homebrew/lib/libMagickWand-7.Q16HDRI.dylib", function()
-      rocks = { "magick", "xml2lua", "mimetypes", "lua-curl", "promise-async" },
-    },
-  },
-
   ---Image in NeoVim
   {
     "3rd/image.nvim",
+    -- dev = true,
     ft = { "markdown", "vimwiki", "png", "jpeg", "jpg", "image_nvim" },
-    dependencies = "luarocks.nvim",
+    -- dependencies = "luarocks.nvim",
     opts = function(_, o)
       o.backend = "kitty"
       o.window_overlap_clear_enabled = true -- toggles images when windows are overlapped
@@ -106,7 +94,7 @@ local M = {
           filetypes = { "markdown", "vimwiki", "quarto" },
         },
       }
-      o.hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" } -- render image files as images when opened
+      o.hijack_file_patterns = { "*.svg", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" } -- render image files as images when opened
     end,
   },
 
@@ -120,25 +108,29 @@ local M = {
     },
     dependencies = { "plenary.nvim" },
     opts = function(_, o)
-      o.notes_subdir = "notes"
-      o.notes_subdir = "notes_subdir"
       o.preferred_link_style = "markdown"
       o.disable_frontmatter = true
 
       o.daily_notes = {
-        folder = "daily",
-        date_format = "%d-%M-%Y",
+        folder = "04 Daily",
+        date_format = "ddd, DD MMM YYYY",
         alias_format = "%-d %B, %Y",
       }
 
       o.workspaces = {
         {
           name = "personal",
-          path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/notes",
+          path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/*Main",
+          -- overrides = {
+          --   notes_subdir = "notes",
+          -- },
         },
         {
           name = "uni",
-          path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/uni",
+          path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/*Uni",
+          -- overrides = {
+          --   notes_subdir = "notes",
+          -- },
         },
       }
 
@@ -147,19 +139,42 @@ local M = {
           action = function()
             return require("obsidian").util.gf_passthrough()
           end,
-          opts = { noremap = false, expr = true, buffer = true },
+          opts = { noremap = false, expr = true, buffer = true, desc = "Obsidian • [g]oto [f]ile" },
         },
-        ["<localleader>ch"] = {
+        ["<localleader>Oc"] = {
           action = function()
             return require("obsidian").util.toggle_checkbox()
           end,
-          opts = { buffer = true },
+          opts = { buffer = true, desc = "Obsidian • [c]heckbox" },
+        },
+        ["<localleader>Oq"] = {
+          action = function()
+            return vim.cmd.ObsidianQuickSwitch()
+          end,
+          opts = { buffer = true, desc = "Obsidian • [q]uick switch" },
         },
       }
     end,
   },
 
-  -- Jupyter Notebook
+  ---LaTeX
+  {
+    "lervag/vimtex",
+    ft = { "latex", "tex", "plaintex" },
+    init = function()
+      vim.g.vimtex_view_method = "general" -- uses `open` on macOS or `xdg-open` on Linux
+      -- vim.g.vimtex_view_sioyek_exe = "/Applications/sioyek.app/Contents/MacOS/sioyek"
+
+      vim.api.nvim_create_autocmd("BufReadPre", {
+        pattern = "*.tex",
+        callback = function(ev)
+          vim.b.vimtex_main = ev.file
+        end,
+      })
+    end,
+  },
+
+  ---Jupyter Notebook
   {
     "GCBallesteros/jupytext.nvim",
     event = { "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
@@ -260,10 +275,8 @@ local M = {
     "jmbuhr/otter.nvim",
     ft = { "quarto", "html", "javascript", "typescript" },
     dependencies = { "nvim-lspconfig" },
-    config = function(_, o)
+    opts = function(_, o)
       o.buffers = { set_filetype = true }
-
-      require("otter").setup(o)
 
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "html",
@@ -283,19 +296,13 @@ local M = {
           require("otter").activate { "html", "javascript" }
         end,
       })
-
-      local nmap = function(tbl)
-        vim.keymap.set("n", tbl[1], tbl[2], { desc = "otter:" .. tbl[3] })
-      end
-      nmap { "<localleader>K", require("otter").ask_hover, "Hover" }
-      nmap { "<localleader>r", require("otter").ask_references, "[r]eferences" }
-      nmap { "<localleader>R", require("otter").ask_rename, "[R]ename" }
-      nmap { "<localleader>d", require("otter").ask_definition, "[d]efinition" }
-      nmap { "<localleader>s", require("otter").ask_type_definition, "[t]ype-definition" }
-      nmap { "<localleader>f", require("otter").ask_format, "[f]ormat" }
-
-      nmap { "<localleader>Ee", require("otter").export, "[e]xport" }
-      nmap { "<localleader>Ea", require("otter").export_otter_as, "[e]xport otter [a]s" }
+      vim.api.nvim_create_autocmd("Filetype", {
+        pattern = "qmd",
+        callback = function()
+          require("otter").activate { "quarto", "markdown", "python" }
+        end,
+      })
+      --
     end,
   },
 
@@ -326,25 +333,6 @@ local M = {
       vim.keymap.set("n", "<localleader>qh", function()
         quarto.searchHelp()
       end, { silent = true, desc = "[q]uarto search [h]elp" })
-
-      vim.keymap.set("n", "<localleader>K", function()
-        require("otter").ask_hover()
-      end, { silent = true, desc = "Hover" })
-      vim.keymap.set("n", "<localleader>gd", function()
-        require("otter").ask_definition()
-      end, { silent = true, desc = "[g]oto [d]efinition " })
-      vim.keymap.set("n", "<localleader>r", function()
-        require("otter").ask_rename()
-      end, { silent = true, desc = "[g]oto [r]eferences" })
-      vim.keymap.set("n", "<localleader>gt", function()
-        require("otter").ask_type_definition()
-      end, { silent = true, desc = "[g]oto [t]ype definition" })
-      vim.keymap.set("n", "<localleader>R", function()
-        require("otter").ask_rename()
-      end, { silent = true, desc = "[R]ename" })
-      vim.keymap.set("n", "<localleader>ds", function()
-        require("otter").ask_document_symbols()
-      end, { silent = true, desc = "[d]ocument [s]ymbols" })
     end,
   },
 
@@ -365,7 +353,7 @@ local M = {
     config = true,
   },
 
-  -- data viewer (csv, tsv ...)
+  ---DataViewer (csv, tsv ...)
   {
     "vidocqh/data-viewer.nvim",
     ft = { "sqlite", "tsv", "csv" },
@@ -380,11 +368,6 @@ local M = {
       vim.api.nvim_set_hl(0, "DataViewerFocusTable", { fg = "#00ff87", bold = true })
     end,
   },
-
-  -- {
-  --   "apple/pkl-neovim",
-  --   ft = "pkl",
-  -- }
 }
 
 return M

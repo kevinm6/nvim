@@ -31,10 +31,10 @@ local settings = {
   cursorline = true,
   showtabline = 1,
   showmatch = true,
-  signcolumn = 'yes',
+  signcolumn = "yes",
   cmdheight = 1,
   pumheight = 16,
-  pumblend = 8,
+  pumblend = 2,
   splitbelow = true,
   splitright = true,
   updatetime = 100,
@@ -43,7 +43,7 @@ local settings = {
   fillchars = [[eob: ,fold:󰇘,foldopen:,foldsep: ,foldclose:]],
   timeoutlen = 350,
   ttimeoutlen = 100,
-  completeopt = { 'menu', 'menuone', 'noselect' },
+  completeopt = { "menu", "menuone", "noselect", "popup" },
   matchpairs = vim.opt.matchpairs:append "<:>",
   wildignore = {
     "*.DS_Store",
@@ -73,9 +73,9 @@ local settings = {
   -- foldexpr = "nvim_treesitter#foldexpr()",
   -- foldtext = '',
 
-  diffopt = { 'internal', 'filler', 'closeoff', 'vertical' },
+  diffopt = { "internal", "filler", "closeoff", "vertical" },
 
-  colorcolumn = '90',
+  colorcolumn = "90",
 
   -- FILE_MANAGEMENT
   autowrite = true,
@@ -83,13 +83,12 @@ local settings = {
   undofile = true,
   backup = false,
   swapfile = false,
-  undodir = vim.fn.stdpath 'cache' .. "/undo",
 
   -- SEARCH
   smartcase = true,
   ignorecase = true,
 
-  inccommand = 'split',
+  inccommand = "split",
 
   whichwrap = vim.opt.whichwrap:append "<,>,[,],h,l",
 
@@ -98,7 +97,7 @@ local settings = {
 
   -- SPELL
   spelllang = "en,uk,it",
-  spelloptions = "camel"
+  spelloptions = "camel",
 }
 
 for k, o in pairs(settings) do

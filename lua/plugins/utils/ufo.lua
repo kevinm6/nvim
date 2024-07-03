@@ -19,7 +19,7 @@ local ftMap = {
 return {
   "kevinhwang91/nvim-ufo",
   event = "BufRead",
-  dependencies = "luarocks.nvim",
+  dependencies = { "kevinhwang91/promise-async" },
   init = function()
     vim.o.foldcolumn = "auto"
     vim.o.foldlevel = 99

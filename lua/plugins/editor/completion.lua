@@ -11,7 +11,6 @@ return {
     event = { "InsertEnter", "CmdlineEnter" },
     opts = function(_, o)
       local cmp = require "cmp"
-      -- local ls = require "luasnip"
       local icons = require "lib.icons"
       local icons_kind = icons.kind
       local context = require "cmp.config.context"
@@ -35,13 +34,12 @@ return {
         ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 
         -- jump to next porition after modify or complete
-        ["<C-l>"] = cmp.mapping(function(fallback)
+        ["<C-l>"] = cmp.mapping(function()
           if not cmp.visible() then
-            fallback()
-          elseif not cmp.get_active_entry() then
-            return cmp.complete_common_string()
+            return
           else
-            cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false }
+            return not cmp.get_active_entry() and cmp.complete_common_string()
+              or cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true }
           end
         end),
 
@@ -97,28 +95,26 @@ return {
 
           vim_item.menu = ({
             nvim_lsp = "[LSP]",
-            -- luasnip = "[Snip]",
-            snippets = "[Snp]",
+            snippets = "[Snip]",
             buffer = "[Buf]",
-            treesitter = "[Trs]",
-            otter = "[Ott]",
+            latex_symbols = "[LaTeX]",
+            path = "[Path]",
+            calc = "[Calc]",
           })[entry.source.name]
 
-          vim_item.dup = ({
-            -- luasnip = 1,
-            -- snippets = 1,
-            nvim_lsp = 0,
-            nvim_lua = 0,
-            buffer = 0,
-          })[entry.source.name] or 0
-
+          -- vim_item.dup = ({
+          --   -- luasnip = 1,
+          --   -- snippets = 1,
+          --   nvim_lsp = 0,
+          --   nvim_lua = 0,
+          --   buffer = 0,
+          -- })[entry.source.name] or 0
           return vim_item
         end,
       }
 
       o.sources = {
         { name = "nvim_lsp" },
-        { name = "otter" },
         {
           name = "buffer",
           option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
@@ -126,14 +122,13 @@ return {
         {
           name = "snippets",
           filter = function()
-            vim.print "Called filter"
             return not context.in_syntax_group "Comment" or not context.in_treesitter_capture "comment"
           end,
         },
-        { name = "treesitter" },
+        -- { name = "treesitter" },
         { name = "path", option = { trailing_slash = true } },
-        { name = "latex_symbols", keyword_length = 2, priority = 2 },
-        { name = "calc", keyword_length = 3 },
+        { name = "latex_symbols", option = { keyword_length = 2, priority = 2 } },
+        { name = "calc", option = { keyword_length = 3 } },
       }
 
       o.confirm_opts = {
@@ -141,10 +136,10 @@ return {
         select = true,
       }
 
-      o.window = {
-        completion = cmp.config.window.bordered { scrollbar = false },
-        documentation = cmp.config.window.bordered(),
-      }
+      -- o.window = {
+      --   completion = cmp.config.window.bordered { scrollbar = false },
+      --   documentation = cmp.config.window.bordered(),
+      -- }
 
       o.experimental = {
         ghost_text = {
@@ -166,23 +161,22 @@ return {
           option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
         },
         { name = "snippets" },
-        { name = "treesitter" },
+        -- { name = "treesitter" },
         { name = "path", option = { trailing_slash = true } },
         { name = "calc", keyword_length = 3 },
       })
 
-      cmp.setup.filetype({ "markdown", "latex", "text", "quarto" }, {
+      cmp.setup.filetype({ "markdown", "latex", "text", "quarto", "qmd" }, {
         sources = {
-          { name = "otter" },
           {
             name = "buffer",
             option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
           },
-          { name = "treesitter" },
           { name = "snippets" },
           { name = "nvim_lsp" },
+          -- { name = "treesitter" },
           { name = "path", option = { trailing_slash = true } },
-          { name = "latex_symbols", keyword_length = 3 },
+          { name = "latex_symbols", keyword_length = 2 },
           { name = "calc", keyword_length = 3 },
         },
       })
@@ -196,7 +190,7 @@ return {
       cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
         sources = {
           { name = "nvim_lsp" },
-          { name = "treesitter" },
+          -- { name = "treesitter" },
           { name = "snippets" },
           { name = "buffer" },
         },
@@ -218,7 +212,6 @@ return {
       cmp.setup(o)
     end,
   },
-  { "hrsh7th/cmp-nvim-lsp", event = "LspAttach" },
   {
     "hrsh7th/cmp-cmdline",
     event = "CmdlineEnter",
@@ -230,7 +223,7 @@ return {
         autocomplete = { cmp.TriggerEvent.TextChanged },
         sources = cmp.config.sources {
           { name = "buffer", length = 2 },
-          { name = "treesitter", length = 3 },
+          -- { name = "treesitter", length = 3 },
         },
       })
 
@@ -245,12 +238,13 @@ return {
       })
     end,
   },
+  { "hrsh7th/cmp-nvim-lsp", event = "LspAttach" },
   { "hrsh7th/cmp-buffer", event = "BufRead" },
   { "hrsh7th/cmp-path", event = "BufRead" },
   { "hrsh7th/cmp-calc", event = "BufRead" },
   {
     "kdheepak/cmp-latex-symbols",
-    ft = "markdown",
+    event = { "BufRead", "InsertEnter" },
   },
   {
     "rcarriga/cmp-dap",
@@ -261,6 +255,8 @@ return {
     event = "InsertEnter",
     dependencies = { "kevinm6/snippets", dev = true },
     opts = function(_, o)
+      -- TODO on nvim-0.11 => set when activating built-in completion (w/o nvim-cmp)
+      -- o.create_cmp_source = false
       o.extended_filetypes = {
         typescript = { "javascript", "tsdoc" },
         javascript = { "jsdoc" },
@@ -271,7 +267,8 @@ return {
         sh = { "shelldoc" },
         php = { "phpdoc" },
         ruby = { "rdoc" },
-        quarto = { "markdown" },
+        quarto = { "quarto", "markdown", "md" },
+        qmd = { "quarto", "md", "markdown" },
         rmarkdown = { "markdown" },
       }
       o.search_paths = { vim.env.HOME .. "/dev/snippets" }

@@ -38,7 +38,7 @@ return {
     {
       "<leader>fb",
       function()
-        require("oil").toggle_float(vim.fn.expand "%:p:h" or vim.uv.cwd())
+        require("oil").toggle_float(vim.uv.cwd() or vim.fn.expand "%:p:h")
       end,
       desc = require("lib.icons").documents.Files .. " File Browser (CWD)",
     },
@@ -109,6 +109,7 @@ return {
     }
     o.constrain_cursor = "name"
     o.use_default_keymaps = false
+    o.skip_confirm_for_simple_edits = true
     o.silence_scp_warning = true -- disable scp warn to use oil-ssh since I'm using a remap
     o.view_options = {
       is_always_hidden = function(name, _)

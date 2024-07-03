@@ -7,7 +7,6 @@
 <img alt="GitHub" src="https://img.shields.io/github/license/kevinm6/nvim?style=flat">
 </p>
 
-
 ---
 
 ***Theme***: [knvim-theme](https://github.com/kevinm6/knvim-theme.nvim)

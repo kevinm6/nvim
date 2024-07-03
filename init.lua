@@ -10,19 +10,19 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- check if NeoVim or Vim
-if not vim.fn.has 'nvim' == 1 then
+if not vim.fn.has "nvim" == 1 then
   vim.cmd.source "~/.config/vim/vimrc"
   return
 end
 
 -- Use other Shadafile for VSCode
 if not vim.g.vscode then
-  vim.opt.shadafile = vim.fn.stdpath 'cache' .. "/shada/main.shada"
+  vim.opt.shadafile = vim.fn.stdpath "state" .. "/shada/main.shada"
 else
-  vim.opt.shadafile = vim.fn.stdpath 'cache' .. "/shada/vscnvim.shada"
+  vim.opt.shadafile = vim.fn.stdpath "state" .. "/shada/vscnvim.shada"
 end
 
-local lazy_path = vim.fn.stdpath 'data' .. "/lazy/lazy.nvim"
+local lazy_path = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazy_path) then
   vim.fn.system {
     "git",

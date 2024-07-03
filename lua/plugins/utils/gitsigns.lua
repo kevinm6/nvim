@@ -2,7 +2,7 @@
 -- File         : git.lua
 -- Description  : git config
 -- Author       : Kevin
--- Last Modified: 01 May 2024, 12:32
+-- Last Modified: 20 Jun 2024, 09:39
 -------------------------------------
 
 return {
@@ -13,18 +13,15 @@ return {
   },
   opts = function(_, o)
     o.signs = {
-      add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-      change = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-      delete = { hl = "GitSignsDelete", text = "-", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-      topdelete = { hl = "GitSignsDelete", text = "-", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-      changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+      add = { text = "+" },
+      change = { text = "~" },
+      delete = { text = "-" },
+      topdelete = { text = "-" },
+      changedelete = { text = "~" },
     }
     o.watch_gitdir = {
       interval = 1000,
       follow_files = true,
-    }
-    o.current_line_blame_formatter_opts = {
-      relative_time = false,
     }
     o.preview_config = {
       -- Options passed to nvim_open_win

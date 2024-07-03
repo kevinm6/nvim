@@ -154,19 +154,19 @@ autocmd("FileType", {
 })
 
 ---Set makeprg and keywordprg for filetype (using default compiler when available)
-autocmd("FileType", {
-  group = augroup("_set_makefile", { clear = true }),
-  pattern = "*",
-  callback = function(ev)
-    local lib_compiler = require "lib.compiler"
-    if ev.match and lib_compiler.set_keywordprg(ev.match) then
-      vim.opt_local.keywordprg = lib_compiler.set_keywordprg(ev.match)
-    end
-    if ev.match and not filetypes_to_exclude[ev.match] then
-      lib_compiler.set_compiler(ev)
-    end
-  end,
-})
+-- autocmd("FileType", {
+--   group = augroup("_set_makefile", { clear = true }),
+--   pattern = "*",
+--   callback = function(ev)
+--     local lib_compiler = require "lib.compiler"
+--     if ev.match and lib_compiler.set_keywordprg(ev.match) then
+--       vim.opt_local.keywordprg = lib_compiler.set_keywordprg(ev.match)
+--     end
+--     if ev.match and not filetypes_to_exclude[ev.match] then
+--       lib_compiler.set_compiler(ev)
+--     end
+--   end,
+-- })
 
 ---Jump to last < cursor-pos > in file
 autocmd("BufRead", {

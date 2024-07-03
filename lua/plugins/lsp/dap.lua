@@ -65,6 +65,7 @@ return {
   ---DAP
   {
     "mfussenegger/nvim-dap",
+    event = { "BufRead", "BufNewFile" },
     config = function()
       local dap = require "dap"
 

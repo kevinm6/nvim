@@ -107,6 +107,8 @@ function M.projects()
     end,
   }, function(choice)
     if choice then
+      vim.cmd.tcd(choice)
+      vim.notify(string.format("TWD: %s", choice), vim.log.levels.INFO)
       local has_oil, oil = pcall(require, "oil")
       if has_oil then
         oil.open_float(choice)
@@ -155,6 +157,7 @@ function M.new_file(cmd_input)
 
       if input then
         vim.cmd.enew()
+        vim.cmd.tcd(vim.fn.fnamemodify(input, "%:p:h"))
         vim.cmd.edit(input)
         vim.cmd.write(input)
         vim.cmd.startinsert()
@@ -162,6 +165,7 @@ function M.new_file(cmd_input)
     end)
   else
     vim.cmd.enew()
+    vim.cmd.tcd(vim.fn.fnamemodify(args, "%:p:h"))
     vim.cmd.edit(args)
     vim.cmd.write(args)
     vim.cmd.startinsert()
@@ -185,12 +189,14 @@ function M.new_tmp_file(cmd_input)
       local f_string = input ~= "" and "%s_f.%s" or "%s_f"
 
       temp_file = string.format(f_string, vim.fn.tempname(), input)
+      vim.cmd.tcd(vim.fn.fnamemodify(temp_file, "%:p:h"))
       vim.cmd.edit(temp_file)
       vim.cmd.write(temp_file)
       vim.cmd.startinsert()
     end)
   else
     local temp_file = string.format("%s_f.%s", vim.fn.tempname(), args)
+    vim.cmd.tcd(vim.fn.fnamemodify(temp_file, "%:p:h"))
     vim.cmd.edit(temp_file)
     vim.cmd.write(temp_file)
     vim.cmd.startinsert()
@@ -233,6 +239,48 @@ function M.shift_reg(reg)
     vim.fn.setreg(tostring(i + 1), vim.fn.getreg(str_reg), vim.fn.getregtype(str_reg))
   end
   vim.fn.setreg("1", reg.val, reg.typ)
+end
+
+---Run Brew service
+---@param service string name of the brew service
+---@param async boolean run sync | async
+function M.run_brew_service(service, async)
+  if async then
+    vim.system({ "brew", "services", "run", service }, { text = true, timeout = 6000 }, function(obj)
+      vim.notify(obj.stdout, vim.log.levels.INFO, { title = "Brew Services" })
+
+      if obj.stderr then
+        vim.print(obj.stderr)
+      else
+        -- Stop brew services just before exiting Nvim
+        -- I put this here so is created only when starting the service from the autocmd
+        -- above (when loading this plugin), if done outside Nvim or without this plugin
+        -- the brew services still run as expected
+        vim.api.nvim_create_autocmd("VimLeavePre", {
+          callback = function()
+            vim.system({ "brew", "services", "stop", service }, { text = true, timeout = 6000 }):wait()
+          end,
+        })
+      end
+    end)
+  else
+    local job = vim.system({ "brew", "services", "run", service }, { text = true }):wait(6000)
+
+    if job.stderr then
+      vim.print(job.stderr)
+    else
+      vim.notify(job.stdout, vim.log.levels.INFO, { title = "Brew Services" })
+      -- Stop brew services just before exiting Nvim
+      -- I put this here so is created only when starting the service from the autocmd
+      -- above (when loading this plugin), if done outside Nvim or without this plugin
+      -- the brew services still run as expected
+    end
+    vim.api.nvim_create_autocmd("VimLeavePre", {
+      callback = function()
+        vim.system({ "brew", "services", "stop", service }, { text = true, timeout = 6000 }):wait()
+      end,
+    })
+  end
 end
 
 ---Create a toggle user command

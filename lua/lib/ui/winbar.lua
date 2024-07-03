@@ -58,11 +58,11 @@ local function get_filename()
     local has_devicons, dev_icons = pcall(require, "nvim-web-devicons")
 
     file_icon, _ =
-      has_devicons and dev_icons.get_icon_color(filename, extension, { default = not is_not_empty(extension) or false })
-        or filename,
+      has_devicons and dev_icons.get_icon_color(filename, extension, { default = not is_not_empty(extension) })
+        or default_file_icon,
       nil
 
-    return string.format("%%#FileIconColor%s#%s%%* %s", extension, file_icon or default_file_icon, filename)
+    return string.format("%%#FileIconColor%s#%s%%* %s", extension, file_icon, filename)
   end
   return ""
 end

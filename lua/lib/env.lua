@@ -7,8 +7,7 @@
 
 local env = {}
 
-local has_tele, pickers = pcall(require, 'telescope.pickers')
-
+local has_tele, pickers = pcall(require, "telescope.pickers")
 
 local function prepare_environment_variables()
   local items = {}
@@ -23,10 +22,10 @@ if not has_tele then
   return
 end
 
-local finders = require("telescope.finders")
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-local entry_display = require("telescope.pickers.entry_display")
+local finders = require "telescope.finders"
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local entry_display = require "telescope.pickers.entry_display"
 local conf = require("telescope.config").values
 
 local function append_environment_name(prompt_bufnr)
@@ -55,78 +54,79 @@ local function edit_environment_value(prompt_bufnr)
   local selection = action_state.get_selected_entry()
   actions.close(prompt_bufnr)
 
-  local value = nil
   vim.ui.input({
     prompt = "[ENV] Enter new value: ",
-    default = selection.value[2]
+    default = selection.value[2],
   }, function(input)
-    if not input then return end
-    value = input
+    if not input then
+      return
+    end
+    vim.notify("Set ENV var\n %s=%s", selection.value[1], input)
+    -- Only works for the current session
+    vim.fn.setenv(selection.value[1], input)
   end)
-
-  print("Setting env %s=%s", selection.value[1], value)
-  -- Only works for the current session
-  vim.fn.setenv(selection.value[1], value)
 end
 
 local function show_environment_variables(opts)
   opts = opts or {}
-  pickers.new(opts, {
-    prompt_title = "Environment Variables",
-    finder = finders.new_table({
-      results = prepare_environment_variables(),
-      entry_maker = function(entry)
-        local columns = vim.o.columns
-        local width = conf.width
+  pickers
+    .new(opts, {
+      prompt_title = "Environment Variables",
+      finder = finders.new_table {
+        results = prepare_environment_variables(),
+        entry_maker = function(entry)
+          local columns = vim.o.columns
+          local width = conf.width
             or conf.layout_config.width
             or conf.layout_config[conf.layout_strategy].width
             or columns
-        local telescope_width
-        if width > 1 then
-          telescope_width = width
-        else
-          telescope_width = math.floor(columns * width)
-        end
-        local env_name_width = math.floor(columns * 0.05)
-        local env_value_width = 22
+          local telescope_width
+          if width > 1 then
+            telescope_width = width
+          else
+            telescope_width = math.floor(columns * width)
+          end
+          local env_name_width = math.floor(columns * 0.05)
+          local env_value_width = 22
 
-        -- NOTE: the width calculating logic is not exact, but approx enough
-        local displayer = entry_display.create({
-          separator = " ▏",
-          items = {
-            { width = env_value_width },
-            { width = telescope_width - env_name_width - env_value_width },
-            { remaining = true },
-          },
-        })
+          -- NOTE: the width calculating logic is not exact, but approx enough
+          local displayer = entry_display.create {
+            separator = " ▏",
+            items = {
+              { width = env_value_width },
+              { width = telescope_width - env_name_width - env_value_width },
+              { remaining = true },
+            },
+          }
 
-        local function make_display()
-          -- concatenating multiline env values
-          local concatenated_width = entry[2]:gsub("\r?\n", " ")
-          return displayer({
-            { entry[1] },
-            { concatenated_width },
-          })
-        end
+          local function make_display()
+            -- concatenating multiline env values
+            local concatenated_width = entry[2]:gsub("\r?\n", " ")
+            return displayer {
+              { entry[1] },
+              { concatenated_width },
+            }
+          end
 
-        return {
-          value = entry,
-          display = make_display,
-          ordinal = string.format("%s %s", entry[1], entry[2]),
-        }
+          return {
+            value = entry,
+            display = make_display,
+            ordinal = string.format("%s %s", entry[1], entry[2]),
+          }
+        end,
+      },
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function(_, map)
+        actions.select_default:replace(append_environment_name)
+        map("i", "<c-a>", append_environment_value)
+        map("i", "<c-e>", edit_environment_value)
+        return true
       end,
-    }),
-    sorter = conf.generic_sorter(opts),
-    attach_mappings = function(_, map)
-      actions.select_default:replace(append_environment_name)
-      map("i", "<c-a>", append_environment_value)
-      map("i", "<c-e>", edit_environment_value)
-      return true
-    end,
-  }):find()
+    })
+    :find()
 end
 
-function env.run()
+function env.show_vars()
   show_environment_variables()
 end
 

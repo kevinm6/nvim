@@ -203,7 +203,7 @@ return {
             prompt_position = "bottom",
             height = 0.4,
           },
-          cwd = vim.uv.cwd(),
+          -- cwd = vim.uv.cwd(),
           no_ignore = true,
           path_display = {
             filename_first = { reverse_directories = false },
@@ -259,6 +259,7 @@ return {
           theme = "dropdown",
           sort_mru = true,
           ignore_current_buffer = true,
+          only_cwd = true,
           previewer = false,
           initial_mode = "insert",
           sorting_strategy = "descending",
