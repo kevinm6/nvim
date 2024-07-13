@@ -48,19 +48,15 @@ end
 ---Get Filename of current buffer
 ---@return string filename file name formatted with icon if available
 local function get_filename()
-  local default_file_icon = require("lib.icons").kind.File
   local filename = vim.fn.expand "%:t"
 
   if is_not_empty(filename) then
     local file_icon = ""
     local extension = vim.fn.expand "%:e"
 
-    local has_devicons, dev_icons = pcall(require, "nvim-web-devicons")
+    local has_icons, icons = pcall(require, "mini.icons")
 
-    file_icon, _ =
-      has_devicons and dev_icons.get_icon_color(filename, extension, { default = not is_not_empty(extension) })
-        or default_file_icon,
-      nil
+    file_icon = has_icons and icons.get("filetype", extension) or icons.get("default", "file")
 
     return string.format("%%#FileIconColor%s#%s%%* %s", extension, file_icon, filename)
   end

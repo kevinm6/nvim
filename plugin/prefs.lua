@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 09 May 2024, 10:24
+-- Last Modified: 20 Jul 2024, 21:04
 -------------------------------------
 
 local settings = {
@@ -20,12 +20,12 @@ local settings = {
   -- GRAPHIC
   termguicolors = true,
   laststatus = 3,
-  guifont = "Fira Code:h12.5",
+  guifont = "Fira Code:h12.5,Symbols Nerd Font Mono:13",
   relativenumber = true,
   number = true,
   showmode = false,
-  scrolloff = 6,
-  sidescrolloff = 6,
+  scrolloff = 4,
+  sidescrolloff = 10,
   matchtime = 2,
   visualbell = false,
   cursorline = true,
@@ -55,6 +55,7 @@ local settings = {
     "*.swp",
     "*.zip",
     "*/.git/*",
+    "*templates/*",
   },
   shortmess = vim.opt.shortmess:append "c",
 
@@ -73,7 +74,7 @@ local settings = {
   -- foldexpr = "nvim_treesitter#foldexpr()",
   -- foldtext = '',
 
-  diffopt = { "internal", "filler", "closeoff", "vertical" },
+  diffopt = { "internal", "filler", "closeoff", "vertical", "iwhiteeol", "followwrap" },
 
   colorcolumn = "90",
 
@@ -96,7 +97,7 @@ local settings = {
   sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal",
 
   -- SPELL
-  spelllang = "en,uk,it",
+  spelllang = "it,en_us",
   spelloptions = "camel",
 }
 

@@ -13,9 +13,9 @@ return {
     dependencies = {
       "nvim-neotest/nvim-nio",
     },
-    config = function(_, o)
-      o.icons = { expanded = "▾", collapsed = "►" }
-      o.mappings = {
+    opts = {
+      icons = { expanded = "▾", collapsed = "►" },
+      mappings = {
         -- Use a table to apply multiple mappings
         expand = { "<CR>", "<2-LeftMouse>" },
         open = "o",
@@ -23,9 +23,9 @@ return {
         edit = "e",
         repl = "r",
         toggle = "t",
-      }
+      },
 
-      o.layouts = {
+      layouts = {
         {
           elements = {
             "scopes",
@@ -44,28 +44,26 @@ return {
           size = 0.25,
           position = "bottom",
         },
-      }
+      },
 
-      o.floating = {
+      floating = {
         max_height = nil,
         max_width = nil,
         border = "rounded",
         mappings = {
           close = { "q", "<Esc>" },
         },
-      }
+      },
 
-      o.windows = { indent = 1 }
-
-      local dapui = require "dapui"
-      dapui.setup(o)
+      windows = { indent = 1 },
       -- vim.keymap.set("n", "<leader>de", function() end)
-    end,
+    },
   },
   ---DAP
   {
     "mfussenegger/nvim-dap",
     event = { "BufRead", "BufNewFile" },
+    keys = { { "<leader>d", desc = "DAP" } },
     config = function()
       local dap = require "dap"
 
@@ -166,7 +164,35 @@ return {
           request = "launch",
           showLog = false,
           program = "${file}",
-          dlvToolPath = vim.fn.exepath "dlv", -- Adjust to where delve is installed
+          dlvToolPath = vim.fn.exepath "dlv",
+        },
+        {
+          type = "go",
+          name = "Debug (test file)",
+          request = "launch",
+          cwd = "${workspaceFolder}",
+          program = function()
+            require("dap.utils").pick_file { filter = ".*%test.go", executables = false }
+          end,
+          console = "integratedTerminal",
+          dlvToolPath = vim.fn.exepath "dlv",
+          mode = "test",
+          showLog = true,
+          showRegisters = true,
+          stopOnEntry = false,
+        },
+        {
+          type = "go",
+          name = "Debug (using go.mod)",
+          request = "launch",
+          cwd = "${workspaceFolder}",
+          program = "./${relativeFileDirname}",
+          console = "integratedTerminal",
+          dlvToolPath = vim.fn.exepath "dlv",
+          mode = "test",
+          -- showLog = true,
+          -- showRegisters = true,
+          stopOnEntry = false,
         },
       }
 
@@ -325,10 +351,10 @@ return {
         },
       }
 
-      local icons_dap = require("lib.icons").debug
+      local icons = require "mini.icons"
 
       vim.fn.sign_define("DapBreakpoint", {
-        text = icons_dap.breakpoint,
+        text = icons.get("file", "breakpoint"),
         texthl = "DiagnosticSignError",
         linehl = "",
         numhl = "",
@@ -350,29 +376,28 @@ return {
 
       -- set keymaps
       local function map(tbl)
-        vim.keymap.set(tbl.mode or "n", tbl[1], tbl[2], { desc = tbl[3] })
+        vim.keymap.set(tbl.mode or "n", tbl[1], tbl[2], { desc = "DAP❭ " .. tbl[3] })
       end
 
-      map { "<localleader>d", function() end, " DAP" }
-      map { "<localleader>db", dap.toggle_breakpoint, icons_dap.breakpoint .. " [b]reakpoint" }
+      map { "<localleader>db", dap.toggle_breakpoint, "Breakpoint" }
       map {
         "<localleader>dB",
         function()
-          dap.set_breakpoint(vim.fn.input(icons_dap.breakpoint .. " Breakpoint condition: "))
+          dap.set_breakpoint(vim.fn.input(icons.get("file", "breakpoint") .. " Breakpoint condition: "))
         end,
-        icons_dap.breakpoint .. " [B]reakpoint condition",
+        "Breakpoint cond",
       }
-      -- nmap { "<leader>dc", require "dap".continue(), "Run Debug" }
-      map { "<localleader>di", dap.step_into, icons_dap.into .. " [i]nto" }
-      map { "<localleader>do", dap.step_over, icons_dap.over .. " [o]ver" }
-      map { "<F9>", dap.step_over, icons_dap.over .. " [o]ver" }
-      map { "<localleader>dO", dap.step_out, icons_dap.out .. " [O]ut" }
-      map { "<localleader>dr", dap.repl.toggle, icons_dap.repl .. " [r]epl" }
-      map { "<localleader>dl", dap.run_last, icons_dap.rerun .. "[l]ast" }
-      map { "<localleader>du", require("dapui").toggle, "[u]i" }
-      map { "<localleader>dx", dap.terminate, icons_dap.stop .. " E[x]it" }
-      map { "<localleader>dc", dap.continue, icons_dap.continue .. "Run Debug" }
-      map { "<F8>", dap.continue, icons_dap.continue .. "Run Debug" }
+      -- nmap { "<leader>dc", require "dap".continue(), "Run Debug"
+      map { "<localleader>di", dap.step_into, "Into" }
+      map { "<localleader>do", dap.step_over, "Over" }
+      map { "<F9>", dap.step_over, "Over" }
+      map { "<localleader>dO", dap.step_out, "Out" }
+      map { "<localleader>dr", dap.repl.toggle, "Repl" }
+      map { "<localleader>dl", dap.run_last, "Last" }
+      map { "<localleader>du", require("dapui").toggle, "UI" }
+      map { "<localleader>dx", dap.terminate, "Exit" }
+      map { "<localleader>dc", dap.continue, "Run Debug" }
+      map { "<F8>", dap.continue, "Run Debug" }
 
       map {
         mode = { "v", "x" },
@@ -380,7 +405,7 @@ return {
         function()
           dapui.eval()
         end,
-        icons_dap.eval .. " [e]val",
+        "Eval",
       }
 
       map {
@@ -390,7 +415,7 @@ return {
           require "plugins.lsp.dap"
           dap.continue()
         end,
-        icons_dap.reload_continue .. " reload and [C]ontinue",
+        "Reload ∧ Continue",
       }
 
       -- map <localleader>{k,K} dap.hover & dapui.eval
@@ -408,10 +433,10 @@ return {
         end
         vim.keymap.set("n", "<localleader>k", function()
           require("dap.ui.widgets").hover()
-        end, { silent = true })
+        end, { desc = "DAP•Hover", silent = true })
         vim.keymap.set("n", "<localleader>K", function()
           dapui.eval()
-        end, { silent = true })
+        end, { desc = "DAP•eval", silent = true })
       end
 
       dap.listeners.after["event_terminated"]["me"] = function()

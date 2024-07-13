@@ -8,6 +8,7 @@
 return {
   "kndndrj/nvim-dbee",
   ft = { "sql", "mysql" },
+  -- commit = "5062efbe5dfa3c0c6a51f5112c671f6625053f39",
   cmd = "Dbee",
   build = function()
     require("dbee").install()

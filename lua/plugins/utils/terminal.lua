@@ -1,5 +1,5 @@
 -------------------------------------
--- File         : toggleterm.lua
+-- File         : terminal.lua
 -- Descriptions : ToggleTerm config
 -- Author       : Kevin
 -- Last Modified: 08 May 2024, 21:31
@@ -18,27 +18,27 @@ return {
     "GHDash",
   },
   keys = {
-    { "<leader>t", desc = require("lib.icons").ui.term .. "Terminal" },
+    { "<leader>t", desc = "Terminal" },
     {
       "<leader>tf",
       function()
         vim.cmd.ToggleTerm "direction=float"
       end,
-      desc = "[f]loat",
+      desc = "Terminal❭ Float",
     },
     {
       "<leader>th",
       function()
         vim.cmd.ToggleTerm "direction=horizontal"
       end,
-      desc = "[h]orizontal",
+      desc = "Terminal❭ Horizontal",
     },
     {
       "<leader>tv",
       function()
         vim.cmd.ToggleTerm "direction=vertical"
       end,
-      desc = "[v]ertical",
+      desc = "Terminal❭ Vertical",
     },
     {
       "<leader>te",
@@ -50,10 +50,10 @@ return {
           return
         end
       end,
-      desc = require("lib.icons").debug.run .. " TermExec",
+      desc = "Terminal❭ TermExec",
     },
   },
-  opts = function(_, o)
+  config = function(_, o)
     o.size = function(term)
       if term.direction == "horizontal" then
         return math.floor(vim.o.lines * 0.3)
@@ -62,50 +62,40 @@ return {
       end
     end
     o.open_mapping = [[<M-t>]]
-    o.hide_numbers = true
-    o.shade_filetypes = {}
-    o.shade_terminals = true
-    o.shading_factor = 2
+    o.shading_factor = 0
     o.start_in_insert = true
     o.insert_mappings = true
     o.persist_size = false
     o.direction = "horizontal"
     o.close_on_exit = true
+    o.autochdir = true
 
-    local shell = nil
     o.shell = function()
-      local ft = vim.bo.filetype
-      if ft == "python" then
-        shell = "ipython"
-      elseif ft == "toggleterm" then
-        return shell
+      if vim.bo.filetype == "python" then
+        return "ipython"
       else
-        shell = vim.o.shell
+        return vim.o.shell
       end
-      return shell
     end
-
-    o.auto_scroll = true
-    o.float_opts = {
-      border = "curved",
-      winblend = 6,
-      highlights = {
-        border = "Normal",
-        background = "Normal",
-      },
-      title_pos = "center",
-    }
     o.winbar = {
       enabled = false,
       name_formatter = function(term)
         return term.name
       end,
     }
-  end,
-  config = function(_, o)
-    local toggle_term = require "toggleterm"
-    toggle_term.setup(o)
+    o.float_opts = {
+      border = "curved",
+      winblend = 6,
+      width = math.floor(vim.o.columns * 0.8),
+      height = math.floor(vim.o.lines * 0.8),
+      highlights = {
+        border = "Normal",
+        background = "Normal",
+      },
+      title_pos = "center",
+    }
 
+    require("toggleterm").setup(o)
     local Terminal = require("toggleterm.terminal").Terminal
 
     local lazygit = Terminal:new {
@@ -204,61 +194,60 @@ return {
     })
 
     local function nmap(tbl)
-      vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
+      vim.keymap.set("n", tbl[1], tbl[2], { desc = "Terminal❭ " .. tbl[3] })
     end
 
-    local icons = require "lib.icons"
     nmap {
       "<leader>t1",
       function()
         vim.cmd "1ToggleTerm"
       end,
-      icons.ui.term .. " Term 1",
+      "Term 1",
     }
     nmap {
       "<leader>t2",
       function()
         vim.cmd "2ToggleTerm"
       end,
-      icons.ui.term .. " Term 2",
+      "Term 2",
     }
     nmap {
       "<leader>t3",
       function()
         vim.cmd "3ToggleTerm"
       end,
-      icons.ui.term .. " Term 3",
+      "Term 3",
     }
     nmap {
       "<leader>t4",
       function()
         vim.cmd "4ToggleTerm"
       end,
-      icons.ui.term .. " Term 4",
+      "Term 4",
     }
     nmap {
       "<leader>tt",
       function()
         htop:toggle()
       end,
-      icons.ui.proc .. "H[t]op",
+      "Htop",
     }
     nmap {
       "<leader>tl",
       function()
         lazygit:toggle()
       end,
-      icons.git.Branch .. "[l]azygit",
+      "Lazygit",
     }
     nmap {
       "<leader>tn",
       function()
         ncdu:toggle()
       end,
-      icons.ui.disc .. " [n]cdu",
+      "Ncdu",
     }
     vim.keymap.set({ "n", "v" }, "<leader>ts", function()
-      toggle_term.send_lines_to_terminal("single_line", false, { args = vim.v.count })
-    end, { desc = " [s]end current line" })
+      require("toggleterm").send_lines_to_terminal("single_line", false, { args = vim.v.count })
+    end, { desc = "send current line" })
   end,
 }

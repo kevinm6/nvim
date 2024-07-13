@@ -2,12 +2,11 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 11 May 2024, 11:50
+--  Last Modified: 14 Jul 2024, 12:10
 -------------------------------------
 
 local M = {
   "nvim-lua/plenary.nvim",
-  "nvim-tree/nvim-web-devicons",
 
   ---Colorscheme
   {
@@ -49,40 +48,16 @@ local M = {
   ---UI-lib used by other plugins
   "MunifTanjim/nui.nvim",
 
-  ---ZenMode
-  {
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    opts = function(_, o)
-      o.window = {
-        backdrop = 1,
-        height = 0.8, -- height of the Zen window
-        width = 0.85,
-        options = {
-          signcolumn = "no", -- disable signcolumn
-          number = false, -- disable number column
-          relativenumber = false, -- disable relative numbers
-          cursorline = true, -- disable cursorline
-        },
-      }
-      o.plugins = {
-        gitsigns = { enabled = false }, -- disables git signs
-        tmux = { enabled = false },
-        twilight = { enabled = true },
-      }
-    end,
-  },
-
   ---Image in NeoVim
   {
-    "3rd/image.nvim",
-    -- dev = true,
+    "kevinm6/image.nvim",
+    -- pin = true, -- DON'T update for now -> https://github.com/3rd/image.nvim/issues/191
+    dev = true,
     ft = { "markdown", "vimwiki", "png", "jpeg", "jpg", "image_nvim" },
-    -- dependencies = "luarocks.nvim",
     opts = function(_, o)
       o.backend = "kitty"
       o.window_overlap_clear_enabled = true -- toggles images when windows are overlapped
-      o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
+      -- o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
       o.window_overlap_clear_ft_ignore = {}
       o.integrations = {
         markdown = {
@@ -103,67 +78,134 @@ local M = {
     "epwalsh/obsidian.nvim",
     version = "*", -- latest release (not commit)
     event = {
-      "BufReadPre " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
-      "BufNewFile " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**/*.md",
+      "BufReadPre " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**.md",
+      "BufNewFile " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/**.md",
     },
-    dependencies = { "plenary.nvim" },
     opts = function(_, o)
       o.preferred_link_style = "markdown"
-      o.disable_frontmatter = true
-
+      o.open_app_foreground = true
+      o.ui = { -- using `markdown.nvim`
+        enable = false,
+        -- checkboxes = {},
+        -- bullets = {},
+        -- external_link_icon = {},
+      }
+      -- o.disable_frontmatter = false
       o.daily_notes = {
         folder = "04 Daily",
-        date_format = "ddd, DD MMM YYYY",
+        date_format = "%a, %d %b %Y",
         alias_format = "%-d %B, %Y",
       }
-
       o.workspaces = {
         {
           name = "personal",
           path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/*Main",
-          -- overrides = {
-          --   notes_subdir = "notes",
-          -- },
+        },
+        {
+          name = "work",
+          path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/*Work",
         },
         {
           name = "uni",
           path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Main/*Uni",
-          -- overrides = {
-          --   notes_subdir = "notes",
-          -- },
         },
       }
-
+      o.templates = {
+        folder = "101 templates",
+        date_format = "%a, %d %b %Y",
+        time_format = "HH:mm",
+      }
       o.mappings = {
         ["gf"] = {
           action = function()
             return require("obsidian").util.gf_passthrough()
           end,
-          opts = { noremap = false, expr = true, buffer = true, desc = "Obsidian • [g]oto [f]ile" },
+          opts = { noremap = false, expr = true, buffer = true, desc = "Obsidian❭ GoTo File" },
         },
-        ["<localleader>Oc"] = {
+        ["<C-cr>"] = {
           action = function()
-            return require("obsidian").util.toggle_checkbox()
+            return require("obsidian").util.smart_action()
           end,
-          opts = { buffer = true, desc = "Obsidian • [c]heckbox" },
+          opts = { expr = true, buffer = true, desc = "Obsidian❭ Smart Action" },
         },
-        ["<localleader>Oq"] = {
-          action = function()
-            return vim.cmd.ObsidianQuickSwitch()
-          end,
-          opts = { buffer = true, desc = "Obsidian • [q]uick switch" },
-        },
+      } -- disable default mappings of plugin
+      o.attachments = {
+        img_folder = "_assets/",
       }
+      o.note_path_func = function(spec)
+        return string.format("%s.md", spec.title)
+      end
+
+      o.note_frontmatter_func = function(note)
+        local out = {
+          title = note.title,
+          created = note.created or os.date "%a, %d %b %Y",
+          modified = note.modified or os.date "%a, %d %b %Y",
+          tags = note.tags,
+        }
+
+        if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+          for k, v in pairs(note.metadata) do
+            out[k] = v
+          end
+        end
+
+        return out
+      end
+
+      o.image_name_func = function()
+        local img_name = vim.fn.input { prompt = "Image name (avoid spaces): " }
+        return img_name
+      end
+
+      -- vim.keymap.set("n", "gf", function()
+      --   return require("obsidian").util.gf_passthrough()
+      -- end, { noremap = false, expr = true, buffer = true, desc = "Obsidian❭ GoTo File" })
+      vim.keymap.set("n", "<localleader>Oc", function()
+        return require("obsidian").util.toggle_checkbox()
+      end, { buffer = true, desc = "Obsidian❭ Checkbox" })
+      vim.keymap.set("n", "<localleader>Oq", function()
+        return vim.cmd.ObsidianQuickSwitch()
+      end, { buffer = true, desc = "Obsidian❭ QuickSwitch" })
     end,
   },
 
   ---LaTeX
   {
     "lervag/vimtex",
-    ft = { "latex", "tex", "plaintex" },
-    init = function()
-      vim.g.vimtex_view_method = "general" -- uses `open` on macOS or `xdg-open` on Linux
-      -- vim.g.vimtex_view_sioyek_exe = "/Applications/sioyek.app/Contents/MacOS/sioyek"
+    ft = { "tex", "plaintex" },
+    config = function()
+      vim.g.vimtex_view_method = "sioyek"
+      vim.g.vimtex_quickfix_mode = 0 -- don't open qflist on compile errors
+      vim.g.vimtex_mappings_prefix = "\\"
+      vim.g.vimtex_fold_enabled = 1
+      vim.g.tex_conceal = "abdmg"
+      vim.g.vimtex_toc_config = {
+        split_pos = "rightbelow",
+        split_width = 20,
+        show_help = 0,
+      }
+      -- Latex warnings to ignore
+      vim.g.vimtex_quickfix_ignore_filters = {
+        "Underfull",
+        "Overfull",
+        "Font shape",
+        "package",
+        -- "Command terminated with space",
+        -- "LaTeX Font Warning: Font shape",
+        -- "Package caption Warning: The option",
+        -- "Package enumitem Warning: Negative labelwidth",
+        -- [[Package caption Warning: Unused \\captionsetup]],
+        -- "Package typearea Warning: Bad type area settings!",
+        -- [[Package fancyhdr Warning: \\headheight is too small]],
+        -- "Package hyperref Warning: Token not allowed in a PDF string",
+      }
+      vim.g.vimtex_log_ignore = {
+        "Underfull",
+        "Overfull",
+        "specifier changed t",
+        "Token not allowed in a PDF string",
+      }
 
       vim.api.nvim_create_autocmd("BufReadPre", {
         pattern = "*.tex",
@@ -197,16 +239,15 @@ local M = {
         })
       end
     end,
-    config = function(_, o)
-      o.custom_language_formatting = {
+    opts = {
+      custom_language_formatting = {
         python = {
           extension = "qmd",
           style = "quarto",
-          force_ft = true,
+          force_ft = "quarto",
         },
-      }
-      require("jupytext").setup(o)
-    end,
+      },
+    },
   },
 
   ---Molten
@@ -215,10 +256,8 @@ local M = {
     ft = { "qmd", "jupyter_notebook", "quarto" },
     version = "^1.0.0",
     build = ":UpdateRemotePlugins",
-    dependencies = { "image.nvim" },
+    -- dependencies = { "image.nvim" },
     init = function()
-      vim.g.python_host_prog = vim.env.VIRTUAL_ENV or vim.fn.stdpath "data" .. "/.venv/bin"
-
       vim.g.molten_image_provider = "image.nvim"
       vim.g.molten_output_win_max_height = 20
       vim.g.molten_auto_open_output = true
@@ -273,8 +312,7 @@ local M = {
   ---spawns lsp-server for injected languages
   {
     "jmbuhr/otter.nvim",
-    ft = { "quarto", "html", "javascript", "typescript" },
-    dependencies = { "nvim-lspconfig" },
+    ft = { "quarto", "markdown", "html", "javascript", "typescript" },
     opts = function(_, o)
       o.buffers = { set_filetype = true }
 
@@ -297,7 +335,7 @@ local M = {
         end,
       })
       vim.api.nvim_create_autocmd("Filetype", {
-        pattern = "qmd",
+        pattern = { "qmd", "quarto" },
         callback = function()
           require("otter").activate { "quarto", "markdown", "python" }
         end,
@@ -310,29 +348,27 @@ local M = {
   {
     "quarto-dev/quarto-nvim",
     ft = { "quarto" },
-    dependencies = { "otter.nvim" },
-    config = function(_, o)
-      local quarto = require "quarto"
+    -- dependencies = { "otter.nvim" },
+    opts = function(_, o)
       o.codeRunner = {
         enabled = false,
         default_method = "molten",
         ft_runners = { python = "molten", markdown = "molten" },
         never_run = { "yaml" },
       }
-      quarto.setup(o)
 
       vim.keymap.set("n", "<localleader>qa", function()
         quarto.activate()
-      end, { silent = true, desc = "[q]uarto [a]activate" })
+      end, { silent = true, desc = "Quarto❭ aactivate" })
       vim.keymap.set("n", "<localleader>qp", function()
         quarto.quartoPreview()
-      end, { silent = true, desc = "[q]uarto [p]review" })
+      end, { silent = true, desc = "Quarto❭ preview" })
       vim.keymap.set("n", "<localleader>qP", function()
         quarto.quartoClosePreview()
-      end, { silent = true, desc = "[q]uarto close [P]review" })
+      end, { silent = true, desc = "Quarto❭ close Preview" })
       vim.keymap.set("n", "<localleader>qh", function()
         quarto.searchHelp()
-      end, { silent = true, desc = "[q]uarto search [h]elp" })
+      end, { silent = true, desc = "Quarto❭ search help" })
     end,
   },
 
@@ -348,9 +384,9 @@ local M = {
 
   ---Nvim colorizer
   {
-    "NvChad/nvim-colorizer.lua",
+    "norcalli/nvim-colorizer.lua",
     cmd = "ColorizerToggle",
-    config = true,
+    opts = {},
   },
 
   ---DataViewer (csv, tsv ...)
@@ -358,7 +394,6 @@ local M = {
     "vidocqh/data-viewer.nvim",
     ft = { "sqlite", "tsv", "csv" },
     cmd = { "DataViewerFocusTable", "DataViewer" },
-    dependencies = { "plenary.nvim" },
     config = function(_, o)
       require("data-viewer").setup(o)
 

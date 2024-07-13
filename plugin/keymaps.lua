@@ -30,8 +30,6 @@ local function imap(tbl)
   map { "i", tbl[1], tbl[2], { desc = tbl[3] } }
 end
 
-local icons = require "lib.icons"
-
 -- NORMAL MODE & VISUAL MODE
 nmap {
   "<leader>.",
@@ -65,7 +63,7 @@ nmap {
   function()
     vim.cmd.update { bang = true }
   end,
-  icons.ui.save .. "Save buffer",
+  "Save buffer",
 }
 -- map("n", "<leader>H", function()
 --    vim.cmd.nohlsearch()
@@ -75,7 +73,7 @@ nmap {
   function()
     require("lib").delete_curr_buf_open_next()
   end,
-  icons.ui.close .. " Close buffer",
+  "Close buffer",
 }
 nmap {
   "<leader>x",
@@ -83,42 +81,42 @@ nmap {
     vim.cmd.update()
     require("lib").delete_curr_buf_open_next()
   end,
-  icons.ui.save .. "Save and Close buffer",
+  "Save and Close buffer",
 }
 nmap {
   "<leader>q",
   function()
     pcall(vim.cmd.bdelete, { bang = true })
   end,
-  icons.ui.Quit .. "Quit",
+  "Quit",
 }
 nmap {
   "<leader>nn",
   function()
     vim.cmd.Notifications()
   end,
-  icons.ui.Bell .. " Notifications",
+  "Notifications",
 }
 nmap {
   "<leader>nm",
   function()
     vim.cmd.messages()
   end,
-  icons.ui.Messages .. "Messages",
+  "Messages",
 }
 nmap {
   "<leader>Q",
   function()
     pcall(vim.cmd.copen)
   end,
-  icons.ui.Gear .. " QuickFixList",
+  "QuickFixList",
 }
 nmap {
   "<leader>L",
   function()
     pcall(vim.cmd.lopen)
   end,
-  icons.misc.Tag .. " LocationList",
+  "LocationList",
 }
 
 nmap {
@@ -149,7 +147,7 @@ nmap {
     vim.ui.select(
       vim.fn.spellsuggest(vim.fn.expand "<cword>"),
       { prompt = "Select spell suggestion" },
-      vim.schedule.wrap(function(selected)
+      vim.schedule_wrap(function(selected)
         if selected then
           vim.cmd("normal! ciw" .. selected)
         end
@@ -210,9 +208,9 @@ nmap {
   end,
 }
 
-map { { "n", "v" }, "<leader>y", function() end, { desc = icons.ui.Copy .. "Yank" } }
-nmap { "<leader>yy", [["+yy]], icons.ui.Copy .. "Yank line to clipboard" }
-nmap { "<leader>Y", [["+y$]], icons.ui.Copy .. "Yank 'til end to clipboard" }
+map { { "n", "v" }, "<leader>y", function() end, { desc = "Yank" } }
+nmap { "<leader>yy", [["+yy]], "Yank line to clipboard" }
+nmap { "<leader>Y", [["+y$]], "Yank 'til end to clipboard" }
 
 -- Tabs
 -- nmap { "<Tab>", "<cmd>tabnext<cr>" }
@@ -245,18 +243,7 @@ nmap {
   function()
     require("lib").projects()
   end,
-  icons.git.Repo .. " Projects",
-}
-
-nmap {
-  "<leader>X",
-  function()
-    local file = vim.fn.expand "%:t"
-    vim.api.nvim_exec2(":!chmod +x %", {})
-    local msg = string.format("File\n < %s >\n is now executable", file)
-    vim.notify(msg, vim.log.levels.INFO, { title = "File Info" })
-  end,
-  " File executable",
+  "Projects",
 }
 
 -- TERMINAL MODE
@@ -296,7 +283,7 @@ vmap { "<", "<gv" }
 vmap { ">", ">gv" }
 vmap { "p", "_dP" }
 vmap { "<C-s>", [[:s///gI<Left><Left><Left><Left>]], "Range Search & Replace" }
-vmap { "<leader>y", [["+y]], icons.ui.Copy .. " Yank to clipboard" }
+vmap { "<leader>y", [["+y]], " Yank to clipboard" }
 map {
   "x",
   "ga",
@@ -312,7 +299,7 @@ map {
       require("lib.alignment").align(input)
     end)
   end,
-  { desc = "  Align from regex" },
+  { desc = "Align from regex" },
 }
 
 -- move selected text

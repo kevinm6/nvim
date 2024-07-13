@@ -2,7 +2,7 @@
 -- File         : completion.lua
 -- Description  : completion config
 -- Author       : Kevin
--- Last Modified: 01 May 2024, 13:25
+-- Last Modified: 10 Jul 2024, 09:12
 -------------------------------------
 
 return {
@@ -11,8 +11,7 @@ return {
     event = { "InsertEnter", "CmdlineEnter" },
     opts = function(_, o)
       local cmp = require "cmp"
-      local icons = require "lib.icons"
-      local icons_kind = icons.kind
+      local icons = require "mini.icons"
       local context = require "cmp.config.context"
 
       o.snippet = {
@@ -91,7 +90,7 @@ return {
         fields = { "abbr", "kind", "menu" },
         format = function(entry, vim_item)
           -- Kind icons
-          vim_item.kind = string.format("%s %s", icons_kind[vim_item.kind], vim_item.kind)
+          vim_item.kind = string.format("%s %s", icons.get("lsp", vim_item.kind), vim_item.kind)
 
           vim_item.menu = ({
             nvim_lsp = "[LSP]",
@@ -127,7 +126,6 @@ return {
         },
         -- { name = "treesitter" },
         { name = "path", option = { trailing_slash = true } },
-        { name = "latex_symbols", option = { keyword_length = 2, priority = 2 } },
         { name = "calc", option = { keyword_length = 3 } },
       }
 
@@ -138,9 +136,13 @@ return {
 
       -- o.window = {
       --   completion = cmp.config.window.bordered { scrollbar = false },
-      --   documentation = cmp.config.window.bordered(),
+      --   documentation = cmp.config.window.bordered {
+      --     border = "single",
+      --     scrollbar = false,
+      --     max_width = math.floor(vim.o.columns * 0.6),
+      --     max_height = math.floor(vim.o.lines * 0.4),
+      --   },
       -- }
-
       o.experimental = {
         ghost_text = {
           enable = true,
@@ -151,6 +153,7 @@ return {
     config = function(_, o)
       -- Cmp Configuration
       local cmp = require "cmp"
+      local context = require "cmp.config.context"
 
       -- per-filetype config
       cmp.setup.filetype("lua", {
@@ -160,25 +163,57 @@ return {
           name = "buffer",
           option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
         },
-        { name = "snippets" },
+        {
+          name = "snippets",
+          filter = function()
+            return not context.in_syntax_group "Comment" or not context.in_treesitter_capture "comment"
+          end,
+        },
         -- { name = "treesitter" },
         { name = "path", option = { trailing_slash = true } },
         { name = "calc", keyword_length = 3 },
       })
 
-      cmp.setup.filetype({ "markdown", "latex", "text", "quarto", "qmd" }, {
+      cmp.setup.filetype({ "markdown", "text", "quarto", "qmd" }, {
         sources = {
           {
             name = "buffer",
             option = { keyword_length = 4, keyword_pattern = [[\k\+]] },
           },
-          { name = "snippets" },
           { name = "nvim_lsp" },
-          -- { name = "treesitter" },
+          { name = "snippets" },
           { name = "path", option = { trailing_slash = true } },
-          { name = "latex_symbols", keyword_length = 2 },
+          { name = "obsidian" },
+          { name = "obsidian_new" },
+          { name = "obsidian_tags" },
+          { name = "latex_symbols", option = { keyword_length = 2, priority = 2 } },
           { name = "calc", keyword_length = 3 },
         },
+      })
+
+      cmp.setup.filetype({ "tex" }, {
+        sources = {
+          { name = "vimtex" }, -- trigger_characters = { "{", "\\" } },
+          { name = "snippets", keyword_length = 2 },
+          { name = "nvim_lsp" },
+          { name = "buffer", option = { keyword_length = 4, keyword_pattern = [[\k\+]] } },
+          { name = "path", option = { trailing_slash = true } },
+          { name = "calc", keyword_length = 3 },
+        },
+        format = function(entry, vim_item)
+          vim_item.kind = string.format("%s %s", require("mini.icons").get("lsp", vim_item.kind), vim_item.kind)
+
+          vim_item.menu = ({
+            nvim_lsp = "[LSP]",
+            snippets = "[Snip]",
+            buffer = "[Buf]",
+            vimtex = "[TeX]",
+            latex_symbols = "[LaTeX]",
+            path = "[Path]",
+            calc = "[Calc]",
+          })[entry.source.name]
+          return vim_item
+        end,
       })
 
       cmp.setup.filetype("help", {
@@ -215,7 +250,6 @@ return {
   {
     "hrsh7th/cmp-cmdline",
     event = "CmdlineEnter",
-    dependencies = "nvim-cmp",
     config = function()
       local cmp = require "cmp"
 
@@ -244,20 +278,21 @@ return {
   { "hrsh7th/cmp-calc", event = "BufRead" },
   {
     "kdheepak/cmp-latex-symbols",
-    event = { "BufRead", "InsertEnter" },
+    ft = { "markdown" },
+    -- event = { "BufRead", "InsertEnter" }
   },
-  {
-    "rcarriga/cmp-dap",
-    ft = { "dap-repl", "dapui_watches", "dapui_hover" },
-  },
+  { "micangl/cmp-vimtex", ft = { "tex" } },
+  { "rcarriga/cmp-dap", ft = { "dap-repl", "dapui_watches", "dapui_hover" } },
+
+  { "kevinm6/snippets", dev = true },
   {
     "garymjr/nvim-snippets",
     event = "InsertEnter",
-    dependencies = { "kevinm6/snippets", dev = true },
-    opts = function(_, o)
+    -- dependencies = { "kevinm6/snippets", dev = true },
+    opts = {
       -- TODO on nvim-0.11 => set when activating built-in completion (w/o nvim-cmp)
       -- o.create_cmp_source = false
-      o.extended_filetypes = {
+      extended_filetypes = {
         typescript = { "javascript", "tsdoc" },
         javascript = { "jsdoc" },
         html = { "css", "javascript" },
@@ -270,8 +305,8 @@ return {
         quarto = { "quarto", "markdown", "md" },
         qmd = { "quarto", "md", "markdown" },
         rmarkdown = { "markdown" },
-      }
-      o.search_paths = { vim.env.HOME .. "/dev/snippets" }
-    end,
+      },
+      search_paths = { vim.env.HOME .. "/dev/snippets" },
+    },
   },
 }

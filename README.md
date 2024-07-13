@@ -36,16 +36,12 @@
 - [Notify](https://github.com/rcarriga/nvim-notify)
 - [Noice](https://github.com/folke/noice.nvim)
 - [ToggleTerm](https://github.com/akinsho/toggleterm.nvim)
-- [Todo-comments](https://github.com/folke/todo-comments.nvim)
-- [Surround](https://github.com/ur4ltz/surround.nvim)
-- [Autopairs](https://github.com/windwp/nvim-autopairs)
+- [Mini-Surround](https://github.com/echasnovski/mini.surround)
+- [Mini-Autopairs](https://github.com/echasnovski/mini.pairs)
 - [Ufo](https://github.com/kevinhwang91/nvim-ufo)
-- [Comment](https://github.com/numToStr/Comment.nvim)
-- [Navic](https://github.com/SmiteshP/nvim-navic)
 - [Oil](https://github.com/stevearc/oil.nvim)
-- [Peek](https://github.com/toppair/peek.nvim)
+- [Markdown-Render](https://github.com/MeanderingProgrammer/markdown.nvim)
 - [Alpha](https://github.com/goolord/alpha-nvim)
-- [Twilight](https://github.com/folke/twilight.nvim)
 
 ---
 

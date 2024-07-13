@@ -2,7 +2,7 @@
 --  File         : noice.lua
 --  Description  : noice plugin configuration
 --  Author       : Kevin
---  Last Modified: 08 May 2024, 12:10
+--  Last Modified: 20 Jul 2024, 21:08
 ----------------------------------------
 
 return {
@@ -11,25 +11,23 @@ return {
     cmd = "Noice",
     event = { "VeryLazy" },
     opts = function(_, o)
-      local icons = require "lib.icons"
-
       o.cmdline = {
         -- opts = { buf_options = { filetype = 'vim' } }, -- enable syntax highlighting in the cmdline
         icons = {
-          ["/"] = { icon = icons.ui.Search, hl_group = "DiagnosticWarn" },
-          ["?"] = { icon = icons.ui.Search, hl_group = "DiagnosticWarn" },
-          [":"] = { icon = icons.ui.term, hl_group = "DiagnosticInfo", firstc = false },
+          ["/"] = { icon = "", hl_group = "DiagnosticWarn" },
+          ["?"] = { icon = "", hl_group = "DiagnosticWarn" },
+          [":"] = { icon = "", hl_group = "DiagnosticInfo", firstc = false },
         },
         format = {
-          cmdline = { icon = icons.ui.term },
-          search_down = { icon = icons.ui.Search .. "⌄" },
-          search_up = { icon = icons.ui.Search .. "⌃" },
+          cmdline = { icon = " " },
+          search_down = { icon = " ⌄ " },
+          search_up = { icon = " ⌃ " },
           -- execute shell command (!command)
-          filter = { pattern = "^:%s*!", icon = "$", ft = "sh" },
+          filter = { pattern = "^:%s*!", icon = "$ ", ft = "sh" },
           -- replace file content with shell command output (%!command)
-          f_filter = { pattern = "^:%s*%%%s*!", icon = icons.documents.File .. "$", ft = "sh" },
+          f_filter = { pattern = "^:%s*%%%s*!", icon = "󰈔$ ", ft = "sh" },
           -- replace selection with shell command output (%! command on visual selection)
-          v_filter = { pattern = "^:%s*%'<,%'>%s*!", icon = " $", ft = "sh" },
+          v_filter = { pattern = "^:%s*%'<,%'>%s*!", icon = " $ ", ft = "sh" },
           lua = { icon = " " },
           help = { icon = "" },
           substitute = {
@@ -43,7 +41,7 @@ return {
       o.lsp = {
         progress = {
           format_done = {
-            { "✓ ", hl_group = "NoiceLrpProgressSpinner" },
+            { "✓ ", hl_group = "NoiceLspProgressSpinner" },
             { "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
             { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
           },
@@ -56,10 +54,36 @@ return {
           -- override cmp documentation with Noice (needs the other options to work)
           ["cmp.entry.get_documentation"] = true,
         },
+        hover = {
+          opts = {
+            border = {
+              style = "rounded",
+              text = {
+                top = "LSP❭ Hover",
+              },
+            },
+            size = {
+              max_width = math.floor(vim.o.columns * 0.6),
+              max_height = math.floor(vim.o.lines * 0.4),
+            },
+          },
+        },
         signature = {
           enabled = true,
           auto_open = {
             luasnip = false, -- using native `vim.snippets`
+          },
+          opts = {
+            border = {
+              style = "rounded",
+              text = {
+                top = "LSP❭ Signature",
+              },
+            },
+            size = {
+              max_width = math.floor(vim.o.columns * 0.6),
+              max_height = math.floor(vim.o.lines * 0.4),
+            },
           },
         },
       }
@@ -97,6 +121,13 @@ return {
             min_height = 6,
           },
           view = "split",
+        },
+        {
+          filter = {
+            event = "notify",
+            find = "No information available",
+          },
+          opts = { skip = true },
         },
         {
           filter = {
@@ -163,9 +194,9 @@ return {
       o.format = {
         level = {
           icons = {
-            error = icons.diagnostics.Error,
-            warn = icons.diagnostics.Warning,
-            info = icons.diagnostics.Information,
+            error = "",
+            warn = "",
+            info = "",
           },
         },
         cmdline = {
@@ -193,10 +224,6 @@ return {
         },
         help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
       }
-    end,
-    config = function(_, o)
-      local noice = require "noice"
-      noice.setup(o)
 
       -- Keymaps
       local function nsmap(tbl)
@@ -222,35 +249,35 @@ return {
       }
 
       local function nmap(tbl)
-        vim.keymap.set("n", tbl[1], tbl[2], { desc = require("lib.icons").ui.Bell .. tbl[3] })
+        vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
       end
 
       nmap { "<leader>n", function() end, "Notifications" }
       nmap {
         "<leader>nn",
         function()
-          noice.cmd "History"
+          require("noice").cmd "History"
         end,
         "Notifications",
       }
       nmap {
         "<leader>nL",
         function()
-          noice.cmd "Log"
+          require("noice").cmd "Log"
         end,
         "Log",
       }
       nmap {
         "<leader>ne",
         function()
-          noice.cmd "Error"
+          require("noice").cmd "Error"
         end,
         "Error",
       }
       nmap {
         "<leader>nl",
         function()
-          noice.cmd "Last"
+          require("noice").cmd "Last"
         end,
         "NoiceLast",
       }
@@ -261,6 +288,7 @@ return {
         end,
         "Noice Telescope",
       }
+      return o
     end,
   },
   {
@@ -287,14 +315,13 @@ return {
         return math.floor(vim.o.columns * 0.75)
       end
 
-      local icons = require "lib.icons"
       -- Icons for the different levels
       o.icons = {
-        ERROR = icons.diagnostics.Error,
-        WARN = icons.diagnostics.Warning,
-        INFO = icons.diagnostics.Information,
-        DEBUG = icons.ui.Bug,
-        TRACE = icons.ui.Pencil,
+        ERROR = "",
+        WARN = "",
+        INFO = "",
+        DEBUG = " ",
+        TRACE = " ",
       }
 
       local notify = require "notify"

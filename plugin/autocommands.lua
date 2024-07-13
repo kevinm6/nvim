@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 13 May 2024, 12:08
+-- Last Modified: 18 Jul 2024, 09:57
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -100,6 +100,17 @@ autocmd("FileType", {
     vim.keymap.set("n", "<esc>", function()
       vim.cmd.quit { bang = true }
     end, { buffer = true, silent = true })
+  end,
+})
+
+autocmd("FileType", {
+  group = augroup("_autocmd_statuscolumn", { clear = true }),
+  callback = function(ev)
+    if not filetypes_to_exclude[ev.match] then
+      vim.opt_local.statuscolumn = "%s%{v:relnum?v:relnum:v:lnum}%=%C "
+    else
+      vim.opt_local.statuscolumn = ""
+    end
   end,
 })
 
@@ -231,6 +242,16 @@ autocmd({ "BufRead", "BufNewFile" }, {
     vim.api.nvim_set_option_value("commentstring", "# %s", { buf = 0 })
   end,
 })
+
+---Start postgresql service on sql files
+-- autocmd("FileType", {
+--   group = augroup("_postres_service", { clear = true }),
+--   pattern = { "sql" },
+--   once = true, -- don't run again on other sql files
+--   callback = function()
+--     require("lib").run_brew_service("postgresql@14", false)
+--   end,
+-- })
 
 ---Read PDF into neovim, using pdftotext binary
 autocmd("FileType", {

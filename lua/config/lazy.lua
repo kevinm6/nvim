@@ -21,6 +21,10 @@ require("lazy").setup({
   },
   dev = {
     path = "~/dev",
+    fallback = true,
+  },
+  rocks = {
+    hererocks = true,
   },
   install = {
     missing = false,
@@ -65,8 +69,8 @@ require("lazy").setup({
         "matchparen",
         "netrwPlugin",
         "tarPlugin",
-        -- "tohtml",
         "tutor",
+        -- "tohtml",
         -- "zipPlugin",
         -- "spellfile",
       },

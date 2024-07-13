@@ -208,7 +208,7 @@ local config = {
       end,
     })
     local function map(tbl)
-      vim.keymap.set(tbl[1], tbl[2], tbl[3], { buffer = bufnr, desc = "󰬷 " .. tbl[4] })
+      vim.keymap.set(tbl[1], tbl[2], tbl[3], { buffer = bufnr, desc = "Java❭ " .. tbl[4] })
     end
 
     map {
@@ -217,7 +217,7 @@ local config = {
       function()
         jdtls.organize_imports()
       end,
-      "[o]rganize [i]mports",
+      "Organize Imports",
     }
     map {
       { "n", "v" },
@@ -225,7 +225,7 @@ local config = {
       function()
         jdtls.extract_variable()
       end,
-      "e[x]tract [v]ariable",
+      "Extract Variable",
     }
     map {
       { "n", "v" },
@@ -233,7 +233,7 @@ local config = {
       function()
         jdtls.extract_constant()
       end,
-      "e[x]tract [c]onstant",
+      "Extract Constant",
     }
 
     map {
@@ -242,7 +242,7 @@ local config = {
       function()
         jdtls.extract_method { visual = true }
       end,
-      "ext[r]act [m]ethod",
+      "Extract Method",
     }
 
     -- nvim-dap keymaps
@@ -252,7 +252,7 @@ local config = {
       function()
         jdtls.test_class()
       end,
-      "[t]est class",
+      "Test Class",
     }
     map {
       "n",
@@ -260,7 +260,7 @@ local config = {
       function()
         jdtls.pick_test()
       end,
-      "[p]ick test",
+      "Pick Test",
     }
     map {
       "n",
@@ -270,7 +270,7 @@ local config = {
           config = { console = "console" },
         }
       end,
-      "Test [n]ear method",
+      "Test Near method",
     }
   end,
 }

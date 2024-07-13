@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 28 Jun 2024, 16:56
+-- Last Modified: 10 Jul 2024, 09:12
 -------------------------------------
 
 ---Create capabilities and set default values
@@ -49,49 +49,56 @@ local function set_buf_keymaps(client, bufnr)
     "Hover | PeekFold",
   }
 
-  nmap { "<leader>lr", vim.lsp.buf.rename, "[r]ename" }
+  nmap { "<leader>lr", vim.lsp.buf.rename, "rename" }
   if client.supports_method "textDocument/declaration" then
-    nmap { "gD", vim.lsp.buf.declaration, "[g]oTo [D]eclaration" }
+    nmap { "gD", vim.lsp.buf.declaration, "GoTo Declaration" }
   end
   nmap {
     "gd",
     tele_builtin.lsp_definitions or vim.lsp.buf.definition,
-    "[g]oTo [d]efinitions",
+    "GoTo Definitions",
   }
   if client.supports_method "textDocument/implementation" then
-    nmap { "<leader>li", vim.lsp.buf.implementation, "[i]mplementation" }
+    nmap { "<leader>li", vim.lsp.buf.implementation, "implementation" }
   elseif client.supports_method "callHierarchy/incomingCalls" then
-    nmap { "<leader>li", vim.lsp.buf.incoming_calls, "[i]ncoming-Calls" }
+    nmap { "<leader>li", vim.lsp.buf.incoming_calls, "incoming-Calls" }
+  end
+
+  if client.supports_method "textDocument/signatureHelp" then
+    vim.keymap.set("s", "<C-space>", vim.lsp.buf.signature_help, {
+      buffer = bufnr,
+      desc = "LSP❭ SignatureHelp",
+    })
   end
 
   if client.supports_method "callHierarchy/outgoingCalls" then
-    nmap { "<leader>lo", vim.lsp.buf.outgoing_calls, "[o]utgoing-Calls" }
+    nmap { "<leader>lo", vim.lsp.buf.outgoing_calls, "Outgoing-Calls" }
   end
-  nmap { "gr", tele_builtin.lsp_references or vim.lsp.buf.references, "[g]oTo [r]eferences" }
+  nmap { "gr", tele_builtin.lsp_references or vim.lsp.buf.references, "GoTo References" }
 
   nmap {
     "<leader>lt",
     tele_builtin.lsp_type_definitions or vim.lsp.buf.type_definition,
-    "[t]ypeDef",
+    "TypeDef",
   }
 
   nmap {
     "<leader>ls",
     tele_builtin.lsp_document_symbols or vim.lsp.buf.document_symbol,
-    "[w]orkspace [s]ymbols",
+    "Workspace Symbols",
   }
 
   nmap {
     "<leader>lws",
     tele_builtin.lsp_workspace_symbols or vim.lsp.buf.workspace_symbol,
-    "[w]orkspace [s]ymbols",
+    "Workspace Symbols",
   }
   if client.supports_method "workspace/workspaceFolders" then
-    nmap { "<leader>lwa", vim.lsp.buf.add_workspace_folder, "[w]orkspace [a]dd folder" }
+    nmap { "<leader>lwa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder" }
     nmap {
       "<leader>lwr",
       vim.lsp.buf.remove_workspace_folder,
-      "[w]orkspace [r]emove folder",
+      "Workspace Remove Folder",
     }
 
     nmap {
@@ -99,16 +106,16 @@ local function set_buf_keymaps(client, bufnr)
       function()
         print(table.concat(vim.lsp.buf.list_workspace_folders(), "\n"))
       end,
-      "[w]orkspace [l]ist folders",
+      "Workspace List Folders",
     }
   end
 
-  nmap { "<leader>la", vim.lsp.buf.code_action, "Code [a]ction" }
+  nmap { "<leader>la", vim.lsp.buf.code_action, "Code Action" }
 
-  nmap { "<leader>ll", vim.lsp.codelens.run, "Code[l]ens" }
+  nmap { "<leader>ll", vim.lsp.codelens.run, "CodeLens" }
 
   -- Enable completion on <c-x><c-o>
-  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+  -- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 end
 
 --- Set buffer capabilities if supported by the passed client and buffer id
@@ -154,10 +161,6 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
         vim.api.nvim_clear_autocmds { group = _lsp_hi_group, buffer = bufnr }
       end,
     })
-  end
-
-  if client.supports_method "textDocument/documentSymbol" then
-    pcall(require("nvim-navic").attach, client, bufnr)
   end
 
   usercmd("LspCapabilities", function()
@@ -232,16 +235,16 @@ return {
         end,
       }))
 
-      vim.keymap.set("n", "<leader>l", function() end, { desc = "[L]SP" })
+      vim.keymap.set("n", "<leader>l", function() end, { desc = "LSP" })
       -- Global Diagnostics keymaps
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next [d]iagnostic" })
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev [d]iagnostic" })
-      vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Open f[l]oat" })
+      -- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+      -- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
+      vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Open Float" })
       vim.keymap.set(
         "n",
         "<leader>ld",
         require("telescope.builtin").diagnostics or vim.diagnostic.setloclist,
-        { desc = "QF [d]iagnostics" }
+        { desc = "QF Diagnostics" }
       )
     end,
   },
@@ -250,7 +253,7 @@ return {
   {
     "folke/lazydev.nvim",
     ft = "lua",
-    config = true,
+    opts = {},
   },
 
   ---Mason
@@ -258,16 +261,16 @@ return {
     "williamboman/mason.nvim",
     cmd = "Mason",
     opts = function(_, o)
-      local icons = require "lib.icons"
+      local icons = require "mini.icons"
 
       o.ui = {
         border = "rounded",
         width = 0.7,
         height = 0.7,
         icons = {
-          package_installed = icons.package_manager.done_sym,
-          package_pending = icons.package_manager.working_sym,
-          package_uninstalled = icons.package_manager.removed_sym,
+          package_installed = icons.get("file", "done_sym"),
+          package_pending = icons.get("file", "working_sym"),
+          package_uninstalled = icons.get("file", "removed_sym"),
         },
         keymaps = {
           uninstall_package = "x",
@@ -280,7 +283,10 @@ return {
   ---Mason-lspconfig
   {
     "williamboman/mason-lspconfig.nvim",
-    opts = function(_, o)
+    config = function(_, o)
+      local lspconfig = require "lspconfig"
+      local lsputil = require "lspconfig.util"
+      local default_lsp_config = get_default_lsp_config()
       o.ensure_installed = {
         "lua_ls",
         "vimls",
@@ -295,13 +301,9 @@ return {
         "bashls",
         "clangd",
         "intelephense",
-        "dockerls",
+        "texlab",
       }
-    end,
-    config = function(_, o)
-      local lspconfig = require "lspconfig"
-      local lsputil = require "lspconfig.util"
-      local default_lsp_config = get_default_lsp_config()
+
       require("mason-lspconfig").setup(o)
 
       require("mason-lspconfig").setup_handlers {
@@ -401,7 +403,7 @@ return {
                 validate = true,
                 schemaStore = {
                   enable = false,
-                  url = "",
+                  -- url = "",
                 },
               },
             },
@@ -473,22 +475,13 @@ return {
         gopls = function()
           lspconfig.gopls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
             root_dir = function(fname)
-              local Path = require "plenary.path"
-
-              local absolute_cwd = Path:new(vim.uv.cwd()):absolute()
-              local absolute_fname = Path:new(fname):absolute()
-
-              if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
-                return absolute_cwd
-              end
-
               return lsputil.root_pattern("go.mod", "go.work", ".git")(fname)
             end,
             settings = {
               gopls = {
                 codelenses = {
                   test = true,
-                  gc_details = false,
+                  gc_details = true,
                   generate = true,
                   regenerate_cgo = true,
                   tidy = true,
@@ -499,26 +492,14 @@ return {
                   unusedparams = true,
                 },
                 staticcheck = true,
-                -- hints = {
-                --   assignVariableTypes = true,
-                --   compositeLiteralFields = true,
-                --   compositeLiteralTypes = true,
-                --   constantValues = true,
-                --   functionTypeParameters = true,
-                --   parameterNames = true,
-                --   rangeVariableTypes = true,
-                -- }
               },
-            },
-            flags = {
-              debounce_text_changes = 200,
             },
           }))
         end,
 
         tsserver = function()
           lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-            filetypes = { "js", "javascript", "typescript", "ojs" },
+            filetypes = { "js", "javascript", "typescript", "ojs", "typescriptreact", "typescript.tsx" },
             root_dir = function()
               return vim.fs.root(0, {
                 "tsconfig.json",
@@ -585,6 +566,9 @@ return {
       lint.linters.markdownlint.args = {
         "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
       }
+      -- lint.linters.yamllint.args = {
+      --   "--no-warnings", -- output only errors
+      -- }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
@@ -621,6 +605,7 @@ return {
         zsh = { "beautysh" },
         -- css = { "prettier" },
         javascript = { "prettier" },
+        typescriptreact = { "prettier" },
         html = { "prettier" },
         json = { "prettier" },
         yaml = { { "yamlfmt", "prettier" } },
@@ -670,6 +655,29 @@ return {
     end,
   },
 
+  ---Go
+  {
+    "ray-x/go.nvim",
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+    opts = function(_, o)
+      o.icons = { breakpoint = "", currentpos = "" }
+      o.diagnostic = {
+        signs = { "", "", "", "󱧢" },
+      }
+      require("go").setup(o)
+
+      vim.keymap.set("n", "<leader>df", "<cmd>GoTestFunc<CR>", { desc = "Go Test function" })
+      vim.keymap.set("n", "<leader>dF", "<cmd>GoTestFile<CR>", { desc = "Go Test File" })
+      vim.keymap.set("n", "<leader>lh", function()
+        local to_search = vim.fn.input "Docs for: "
+        if to_search ~= "" then
+          vim.cmd.GoDoc(to_search)
+        end
+      end, { desc = "Go Doc" })
+    end,
+  },
+
   ---Java
   {
     "mfussenegger/nvim-jdtls",
@@ -685,7 +693,7 @@ return {
   ---JSON
   {
     "b0o/SchemaStore.nvim",
-    ft = { "json", "yml" },
+    ft = { "json", "yaml" },
   },
 
   -- expose functions below to special servers that uses ad-hoc-plugin

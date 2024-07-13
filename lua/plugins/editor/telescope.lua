@@ -2,7 +2,7 @@
 -- File         : telescope.lua
 -- Description  : Telescope config
 -- Author       : Kevin
--- Last Modified: 08 May 2024, 11:59
+-- Last Modified: 13 Aug 2024, 08:58
 ---------------------------------------
 
 local function select_one_or_multi(prompt_bufnr, action)
@@ -42,12 +42,14 @@ return {
       local actions = require "telescope.actions"
       local action_layout = require "telescope.actions.layout"
       local action_state = require "telescope.actions.state"
-      local icons = require "lib.icons"
+      local icons = require "mini.icons"
 
       o.defaults = {
         preview = { hide_on_startup = true },
+        -- file_previewer = require("lib.telescope").image_preview().file_previewer,
+        -- buffer_previewer_maker = require("lib.telescope").image_preview().buffer_previewer_maker,
         initial_mode = "insert",
-        prompt_prefix = icons.ui.Telescope .. "  ",
+        prompt_prefix = icons.get("filetype", "telescope") .. "  ",
         selection_caret = "❭ ",
         entry_prefix = "   ",
         path_display = { "smart" },
@@ -259,7 +261,7 @@ return {
           theme = "dropdown",
           sort_mru = true,
           ignore_current_buffer = true,
-          only_cwd = true,
+          -- only_cwd = true,
           previewer = false,
           initial_mode = "insert",
           sorting_strategy = "descending",
@@ -474,9 +476,9 @@ return {
 
       -- Keymaps
       local function nmap(tbl)
-        vim.keymap.set("n", tbl[1], tbl[2], { desc = require("lib.icons").ui.Telescope .. tbl[3] })
+        vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
       end
-      nmap { "<leader><leader>", tele_builtin.buffers, " Buffers" }
+      nmap { "<leader><leader>", tele_builtin.buffers, "Buffers" }
 
       nmap { "<leader>fF", tele_builtin.live_grep, "Find Text (LiveGrep)" }
 
@@ -507,8 +509,8 @@ return {
       nmap { "<leader>fQ", tele_builtin.loclist, "LocationList" }
       nmap { "<leader>fl", tele_builtin.resume, "Resume last" }
       nmap { "<leader>fk", tele_builtin.keymaps, "Keymaps" }
-      nmap { "<leader>fc", tele_builtin.current_buffer_fuzzy_find, "Line fuzzy" }
-      nmap { "<leader>fC", tele_builtin.commands, "Colorscheme" }
+      nmap { "<leader>fL", tele_builtin.current_buffer_fuzzy_find, "Line fuzzy" }
+      nmap { "<leader>fc", tele_builtin.commands, "Commands" }
       nmap {
         "<leader>fe",
         function()

@@ -7,21 +7,21 @@
 
 return {
   setup = function()
-    local icons = require "lib.icons"
+    local icon_err, icon_warn, icon_info, icon_hint = "", "", "", "󱧢"
 
     local signs = {
       {
         name = "DiagnosticSignError",
-        text = icons.diagnostics.Error,
+        text = icon_err,
         numhl = "ErrorMsg",
       },
       {
         name = "DiagnosticSignWarn",
-        text = icons.diagnostics.Warning,
+        text = icon_warn,
         numhl = "WarningMsg",
       },
-      { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
-      { name = "DiagnosticSignInfo", text = icons.diagnostics.Information },
+      { name = "DiagnosticSignHint", text = icon_hint },
+      { name = "DiagnosticSignInfo", text = icon_info },
     }
 
     for _, sign in pairs(signs) do
@@ -36,10 +36,10 @@ return {
     vim.diagnostic.config {
       signs = {
         text = {
-          [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
-          [vim.diagnostic.severity.WARN] = icons.diagnostics.Warning,
-          [vim.diagnostic.severity.INFO] = icons.diagnostics.Information,
-          [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
+          [vim.diagnostic.severity.ERROR] = icon_err,
+          [vim.diagnostic.severity.WARN] = icon_warn,
+          [vim.diagnostic.severity.INFO] = icon_info,
+          [vim.diagnostic.severity.HINT] = icon_hint,
         },
         numhl = {
           [vim.diagnostic.severity.ERROR] = "ErrorMsg",
@@ -55,10 +55,27 @@ return {
         source = "if_many",
         header = "",
         title = "LSP • Diagnostic",
-        prefix = icons.lsp.nvim_lsp .. " ",
+        prefix = "",
         winblend = 8,
       },
     }
+
+    ---Hover
+    -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    --   title = "LSP❭ Hover",
+    --   border = "rounded",
+    --   max_height = math.floor(vim.o.lines * 0.4),
+    --   max_width = math.floor(vim.o.columns * 0.8),
+    -- })
+    --
+    -- ---SignatureHelp
+    -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    --   title = "LSP❭ SignatureHelp",
+    --   border = "single",
+    --   max_width = math.floor(vim.o.columns * 0.6),
+    --   max_height = math.floor(vim.o.lines * 0.4),
+    --   close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
+    -- })
 
     ---References
     vim.lsp.handlers["textDocument/references"] = vim.lsp.with(vim.lsp.handlers["textDocument/references"], {

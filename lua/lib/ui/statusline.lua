@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 11 May 2024, 11:39
+-- Last Modified: 18 Jul 2024, 09:52
 -----------------------------------------
 
 local sl = {
@@ -68,6 +68,42 @@ local sl = {
     Tmode = "%#Tmode#",
     ShellMode = "%#Tmode#",
   },
+  icons = setmetatable({
+    error = "",
+    warning = "",
+    information = "",
+    hint = "󱧢",
+    status_ok = "",
+    status_not_ok = "",
+    dashboard = "",
+    folder = "",
+    lsp_info = "󰒓",
+    telescope = "",
+    config = "󰒓",
+    robots = "󰚩",
+    table = "",
+    list = "",
+    checkhealth = "♥",
+    search = "",
+    query = "󱩾",
+    web = "󰖟",
+    db = "󰆼",
+    dapui_hover = "󰃤",
+    dapui_watches = "󰃤",
+    default = "",
+  }, {
+    __index = function(t, k)
+      local has_icons, icons = pcall(require, "mini.icons")
+      if not has_icons then
+        return ""
+      else
+        local icon = icons.get("filetype", k)
+        vim.print(icon)
+        t[k] = icon
+        return icon
+      end
+    end,
+  }),
 }
 
 ---Set highlight groups for StatusLine and relative colors.
@@ -206,25 +242,23 @@ local function get_lsp_diagnostic()
   hints = diagnostics[vim.diagnostic.severity.HINT] or 0
   status_ok = #diagnostics == 0
 
-  local icons = require "lib.icons"
-
   -- display values only if there are any
-  return status_ok and sl.colors.diag .. icons.diagnostics.status_ok
-    or do_not_show_diag and sl.colors.diag .. icons.diagnostics.status_not_ok
+  return status_ok and sl.colors.diag .. sl.icons.status_ok
+    or do_not_show_diag and sl.colors.diag .. sl.icons.status_not_ok
     or string.format(
       "%s%s%s %d %s%s %d %s%s %d %s%s %d",
       sl.colors.diag,
       sl.colors.diagError,
-      icons.diagnostics.Error,
+      sl.icons.error,
       errors,
       sl.colors.diagWarn,
-      icons.diagnostics.Warning,
+      sl.icons.warning,
       warns,
       sl.colors.diagInfo,
-      icons.diagnostics.Information,
+      sl.icons.information,
       infos,
       sl.colors.diagHint,
-      icons.diagnostics.Hint,
+      sl.icons.hint,
       hints
     )
 end
@@ -262,18 +296,16 @@ end
 ---Get filetype with icon if available
 ---@return table filetype icon? and filetype
 local function get_filetype()
-  local file_name, file_ext = vim.fn.expand "%:t", vim.fn.expand "%:e"
-  local has_devicons, devicons = pcall(require, "nvim-web-devicons")
-  local icons, icon = require "lib.icons", nil
+  local file_ext = vim.bo.filetype or vim.fn.expand "%:e"
 
-  if has_devicons then
-    icon = devicons.get_icon(file_name, file_ext)
+  local has_icons, icons = pcall(require, "mini.icons")
+  local icon = sl.icons.default
+  if has_icons then
+    icon = icons.get("filetype", file_ext)
   end
   local file_type = vim.bo.filetype
 
-  return file_type and has_devicons and { icon = icon, name = file_type }
-    or { name = file_type }
-    or icons.diagnostics.Error
+  return file_type and has_icons and { icon = icon, name = file_type } or { name = file_type }
 end
 
 ---Get file encoding
@@ -329,27 +361,25 @@ local function disable_statusline()
   local sideSep = "%="
   local modifiedReadOnlyFlags = "%m%r"
 
-  local icons = require "lib.icons"
-
   local special_filetypes = {
-    dashboard = icons.ui.Plugin .. " Dashboard",
-    alpha = icons.ui.Plugin .. " Dashboard",
-    oil = icons.documents.OpenFolder .. " File Explorer",
-    lazy = icons.ui.PluginManager .. " Plugin Manager",
-    lspinfo = icons.ui.Health .. " LSP Status",
-    TelescopePrompt = icons.ui.Telescope .. " Telescope",
-    qf = icons.ui.Gear .. " QuickFix",
-    toggleterm = icons.misc.Robot .. "Terminal",
-    mason = icons.ui.List .. " Package Manager",
-    Outline = icons.ui.Table .. " Symbols Outline",
-    noice = icons.ui.List .. " Notifications",
-    checkhealth = icons.ui.Health .. " Health",
-    WhichKey = icons.ui.Search .. " WhichKey",
-    query = icons.ui.Query .. " Query",
-    dbui = icons.ui.Db .. " Database",
-    httpResult = icons.ui.Web .. " Http",
-    dapui_hover = icons.debug.eval .. " DapUI•Hover",
-    ["dap-float"] = icons.debug.eval .. " DapUI•Hover",
+    dashboard = sl.icons.dashboard .. " Dashboard",
+    alpha = sl.icons.dashboard .. " Dashboard",
+    oil = sl.icons.folder .. " File Explorer",
+    lazy = sl.icons.checkhealth .. " Plugin Manager",
+    lspinfo = sl.icons.lsp_info .. " LSP Status",
+    TelescopePrompt = sl.icons.telescope .. " Telescope",
+    qf = sl.icons.config .. " QuickFix",
+    toggleterm = sl.icons.robots .. "Terminal",
+    mason = sl.icons.list .. " Package Manager",
+    Outline = sl.icons.table .. " Symbols Outline",
+    noice = sl.icons.list .. " Notifications",
+    checkhealth = sl.icons.checkhealth .. " Health",
+    WhichKey = sl.icons.search .. " WhichKey",
+    query = sl.icons.query .. " Query",
+    dbui = sl.icons.db .. " Database",
+    httpResult = sl.icons.web .. " Http",
+    dapui_hover = sl.icons.dapui_hover .. " DapUI•Hover",
+    ["dap-float"] = sl.icons.dapui_watches .. " DapUI•Hover",
   }
   local custom_ft = special_filetypes[vim.bo.filetype]
 
@@ -358,7 +388,7 @@ local function disable_statusline()
     get_mode(),
     modifiedReadOnlyFlags,
     sl.colors.inverted,
-    icons.ui.SlArrowRight,
+    "",
     sideSep,
     sl.colors.inactive,
     custom_ft or ftype_name,
@@ -373,14 +403,12 @@ local function enable_statusline()
   local modifiedReadOnlyFlags = "%m%r"
   local space = " "
 
-  local icons = require "lib.icons"
-
   sl.cached = {
     -- LeftSide
     sl.colors.mode,
     get_mode(),
     sl.colors.inverted,
-    icons.ui.SlArrowRight,
+    "",
     modifiedReadOnlyFlags,
     space,
     sl.colors.git,
@@ -388,7 +416,7 @@ local function enable_statusline()
     sl.colors.name,
     get_filename(),
     sl.colors.symbols,
-    icons.ui.SlArrowRight,
+    "",
     sl.colors.empty,
     session_name(),
     get_python_env(),
@@ -400,7 +428,7 @@ local function enable_statusline()
 
     -- Right Side
     sl.colors.symbols,
-    icons.ui.SlArrowLeft,
+    "",
     get_lsp_info(),
     sl.colors.ftype,
     get_filetype().icon or "",
@@ -412,7 +440,7 @@ local function enable_statusline()
     get_fformat(),
     get_line_onTot(),
     sl.colors.inverted,
-    icons.ui.SlArrowLeft,
+    "",
   }
 
   return table.concat(sl.cached)

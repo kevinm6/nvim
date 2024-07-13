@@ -69,9 +69,9 @@ end, {
 user_command("NvimConfig", function()
   local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
   if not has_telescope then
-    vim.cmd.edit "$NVIMDOTDIR"
+    vim.cmd.edit(vim.fn.stdpath "config")
   else
-    tele_builtin.find_files { cwd = "$NVIMDOTDIR" }
+    tele_builtin.find_files { cwd = vim.fn.stdpath "config" }
   end
 end, { desc = "Neovim Config" })
 
@@ -108,6 +108,12 @@ user_command("TOpdf", function()
 end, { desc = "Export markdown to pdf" })
 
 local usercmd_toggle = require("lib").user_command_toggle
+
+user_command("DiffOrig", function()
+  vim.cmd [[
+  new | set buftype=nofile | read ++edit # | 0d_ \ | diffthis | wincmd p | diffthis
+ ]]
+end, { desc = "View this in diff-mode" })
 
 ---Update `Last Modified` date if found in first 10 row of file
 usercmd_toggle("ToggleAutoTimeStamp", "auto_timestamp", {

@@ -2,7 +2,7 @@
 --  File         : notes.lua
 --  Description  : module to manage notes
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 13:32
+--  Last Modified: 23 Jul 2024, 19:43
 -------------------------------------
 
 local note = {}
@@ -14,17 +14,10 @@ local function get_notes()
   local notes = {}
 
   local notes_data_path = vim.fn.expand "~/Documents/notes"
-  local notes_files = vim.split(
-    vim.fn.globpath(notes_data_path, "*.md"),
-    "\n",
-    { trimempty = true }
-  )
-  local obsidian_path = vim.fn.expand "~/Library/Mobile Documents/iCloud~md~obsidian/Documents"
-  local obsidian_notes = vim.split(
-    vim.fn.globpath(obsidian_path, "**/*.md"),
-    "\n",
-    { trimempty = true }
-  )
+  local notes_files = vim.split(vim.fn.globpath(notes_data_path, "*.md"), "\n", { trimempty = true })
+
+  local obsidian_path = vim.fn.globpath("~/Library/Mobile Documents/iCloud~md~obsidian/Documents", "**/*.md")
+  local obsidian_notes = vim.split(obsidian_path, "\n", { trimempty = true })
   for _, n in ipairs(obsidian_notes) do
     table.insert(notes_files, n)
   end
@@ -50,10 +43,7 @@ function note.delete_note()
           detach = true,
           on_exit = function()
             local choice_name = vim.fn.fnamemodify(choice, ":t")
-            vim.notify(
-              string.format("Note < %s > deleted!", choice_name),
-              vim.log.levels.WARN
-            )
+            vim.notify(string.format("Note < %s > deleted!", choice_name), vim.log.levels.WARN)
           end,
         })
       end
@@ -72,9 +62,9 @@ function note.open_note()
       prompt = " > Select note to open",
       default = nil,
       format_item = function(item)
-        local note_name = vim.fn.fnamemodify(item, ':t:r')
+        local note_name = vim.fn.fnamemodify(item, ":t:r")
         return note_name
-      end
+      end,
     }, function(choice)
       if choice then
         vim.cmd.edit(choice)

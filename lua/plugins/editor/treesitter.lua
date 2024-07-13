@@ -55,14 +55,14 @@ end
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufRead", "BufNewFile", "CmdlineEnter" },
+    event = { "BufReadPre", "BufNewFile", "CmdlineEnter" },
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    main = "nvim-treesitter.configs",
     build = ":TSUpdate",
-    cmd = { "Inspect", "InspectTree" },
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-refactor",
-      "nvim-treesitter/nvim-treesitter-context",
-      "rainbow-delimiters.nvim",
-    },
+    -- dependencies = {
+    --   "nvim-treesitter/nvim-treesitter-refactor",
+    --   "nvim-treesitter/nvim-treesitter-context",
+    -- },
     opts = function(_, o)
       o.ensure_installed = parsers_to_be_installed()
       o.sync_install = false -- install languages synchronously (only applied to `ensure_installed`)
@@ -78,11 +78,11 @@ return {
             latex = true,
           }
 
-          if disable_ft[ft] then
-            print "TS => disabled for this ft"
+          if disable_ft[ft] then -- print "TS => disabled for this ft"
             return true
           end
-          return ok and (stats and stats.size > max_filesize) or #vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] > 1000
+          local lines = vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] or nil
+          return ok and (stats and stats.size > max_filesize) or lines and #lines > 1000
         end,
       }
 
@@ -103,10 +103,10 @@ return {
 
       o.indent = {
         enable = true,
-        disable = {
-          "python",
-          "yaml",
-        },
+        -- disable = {
+        --   "python",
+        --   "yaml",
+        -- },
       }
 
       o.refactor = {
@@ -154,41 +154,34 @@ return {
           show_help = "?",
         },
       }
-    end,
-
-    config = function(_, o)
-      require("nvim-treesitter.install").prefer_git = true
-      require("nvim-treesitter.configs").setup(o)
-
-      vim.api.nvim_create_user_command("Inspect", function()
-        vim.show_pos()
-      end, { desc = "Inspect" })
-      vim.api.nvim_create_user_command("InspectTree", function()
-        vim.treesitter.inspect_tree()
-      end, { desc = "InspectTree" })
+      -- require("nvim-treesitter.install").prefer_git = true
     end,
   },
+
+  "nvim-treesitter/nvim-treesitter-refactor",
+  "nvim-treesitter/nvim-treesitter-context",
   {
     "HiPhish/rainbow-delimiters.nvim",
-    config = function()
-      local rainbow_delimiters = require "rainbow-delimiters"
+    cond = false,
+    event = "",
+    opts = function()
       vim.g.rainbow_delimiters = {
         strategy = {
-          [""] = rainbow_delimiters.strategy["global"],
-          vim = rainbow_delimiters.strategy["local"],
+          [""] = require("rainbow-delimiters").strategy["global"],
+          vim = require("rainbow-delimiters").strategy["local"],
         },
         query = {
           [""] = "rainbow-delimiters",
           -- lua = "rainbow-blocks",
         },
         highlight = {
-          "RainbowDelimiterRed",
           "RainbowDelimiterYellow",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterCyan",
           "RainbowDelimiterBlue",
           "RainbowDelimiterOrange",
-          "RainbowDelimiterGreen",
+          "RainbowDelimiterRed",
           "RainbowDelimiterViolet",
-          "RainbowDelimiterCyan",
         },
         blacklist = { "html" },
       }

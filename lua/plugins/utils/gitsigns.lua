@@ -8,37 +8,37 @@
 return {
   "lewis6991/gitsigns.nvim",
   event = "BufRead",
-  keys = {
-    { "<leader>g", nil, mode = { "v", "n" }, desc = require("lib.icons").git.Branch .. "Git" },
-  },
-  opts = function(_, o)
-    o.signs = {
+  -- keys = {
+  --   { "<leader>g", nil, mode = { "v", "n" }, desc = "Git" },
+  -- },
+  opts = {
+    signs = {
       add = { text = "+" },
       change = { text = "~" },
       delete = { text = "-" },
       topdelete = { text = "-" },
       changedelete = { text = "~" },
-    }
-    o.watch_gitdir = {
+    },
+    watch_gitdir = {
       interval = 1000,
       follow_files = true,
-    }
-    o.preview_config = {
+    },
+    preview_config = {
       -- Options passed to nvim_open_win
       border = "rounded",
       style = "minimal",
       relative = "cursor",
       row = 0,
       col = 1,
-    }
-  end,
+    },
+  },
   config = function(_, o)
     local gitsigns = require "gitsigns"
     gitsigns.setup(o)
 
     -- Keymaps
     local function nmap(tbl)
-      vim.keymap.set("n", tbl[1], tbl[2], { desc = require("lib.icons").git.Branch .. tbl[3] })
+      vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
     end
 
     nmap {

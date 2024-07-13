@@ -26,29 +26,27 @@ return {
       function()
         require("oil").open()
       end,
-      desc = require("lib.icons").documents.OpenFolder .. " File Explorer",
+      desc = "File Explorer",
     },
     {
       "<leader>e",
       function()
         require("oil").toggle_float()
       end,
-      desc = require("lib.icons").documents.Files .. " File Browser",
+      desc = "File Browser",
     },
     {
       "<leader>fb",
       function()
         require("oil").toggle_float(vim.uv.cwd() or vim.fn.expand "%:p:h")
       end,
-      desc = require("lib.icons").documents.Files .. " File Browser (CWD)",
+      desc = "File Browser (CWD)",
     },
   },
   cmd = "Oil",
-  opts = function(_, o)
-    local oil = require "oil"
-    o.columns = default_coloumns(true)
-
-    o.keymaps = {
+  opts = {
+    columns = default_coloumns(true),
+    keymaps = {
       ["?"] = "actions.show_help",
       ["<CR>"] = "actions.select",
       ["<C-k>"] = "k",
@@ -61,24 +59,24 @@ return {
       ["<M-o>"] = {
         desc = "View File",
         callback = function()
-          local dir = oil.get_current_dir()
-          local file = oil.get_cursor_entry().name
+          local dir = require("oil").get_current_dir()
+          local file = require("oil").get_cursor_entry().name
           if not dir or not file then
             return
           end
-          oil.close() -- avoid that opens file in Oil window
+          require("oil").close() -- avoid that opens file in Oil window
           vim.cmd.view(dir .. file)
         end,
       },
       ["<C-o>"] = "actions.open_external",
       ["<C-\\>"] = "actions.open_terminal",
       ["<C-c>"] = "actions.close",
-      ["<C-b>"] = {
+      ["gh"] = {
         desc = "Open UserDir",
         callback = function()
-          oil.close()
+          require("oil").close()
           local home_dir = tostring(vim.env.HOME)
-          oil.open_float(home_dir)
+          require("oil").open_float(home_dir)
         end,
       },
       ["q"] = "actions.close",
@@ -87,7 +85,7 @@ return {
       ["<C-.>"] = "actions.toggle_hidden",
       ["g."] = "actions.toggle_hidden",
       ["-"] = "actions.parent",
-      ["<C-w>"] = "actions.open_cwd",
+      ["gw"] = "actions.open_cwd",
       ["<C-x>"] = "actions.cd",
       ["gt"] = "actions.toggle_trash",
       ["~"] = "actions.tcd",
@@ -100,18 +98,18 @@ return {
         callback = function()
           local config = require "oil.config"
           if #config.columns == #default_coloumns(false) then
-            oil.set_columns(default_coloumns(true))
+            require("oil").set_columns(default_coloumns(true))
           else
-            oil.set_columns(default_coloumns(false))
+            require("oil").set_columns(default_coloumns(false))
           end
         end,
       },
-    }
-    o.constrain_cursor = "name"
-    o.use_default_keymaps = false
-    o.skip_confirm_for_simple_edits = true
-    o.silence_scp_warning = true -- disable scp warn to use oil-ssh since I'm using a remap
-    o.view_options = {
+    },
+    constrain_cursor = "name",
+    use_default_keymaps = false,
+    skip_confirm_for_simple_edits = true,
+    silence_scp_warning = true, -- disable scp warn to use oil-ssh since I'm using a remap
+    view_options = {
       is_always_hidden = function(name, _)
         local ft_to_exclude = {
           [".DS_Store"] = true,
@@ -119,9 +117,9 @@ return {
         }
         return ft_to_exclude[name]
       end,
-    }
+    },
     -- Configuration for the floating window in oil.open_float
-    o.float = {
+    float = {
       -- Padding around the floating window
       padding = 0,
       max_width = 0,
@@ -134,21 +132,21 @@ return {
         conf.row = (vim.o.lines - conf.height - 3)
         return conf
       end,
-    }
+    },
 
-    o.progress = {
+    progress = {
       win_options = {
         winblend = 8,
       },
-    }
+    },
     -- HACK Using this to remap url-scheme from args with oil-ssh schemes
     -- https://github.com/stevearc/oil.nvim/blob/master/lua/oil/config.lua#L187
-    o.adapter_aliases = {
+    adapter_aliases = {
       ["ssh://"] = "oil-ssh://",
       ["scp://"] = "oil-ssh://",
       ["sftp://"] = "oil-ssh://",
-    }
-  end,
+    },
+  },
   init = function(p)
     if vim.fn.argc() == 1 then
       local argv = tostring(vim.fn.argv(0))
