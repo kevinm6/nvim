@@ -2,10 +2,12 @@
 --  File         : session.lua
 --  Description  : module to manage vim builtin sessions
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 13:25
+--  Last Modified: 08 Sep 2024, 11:06
 -------------------------------------
 
-local session = {}
+local session = {
+  dir = string.format("%s/session", vim.fn.stdpath "state"),
+}
 
 ---Get available sessions
 ---@private
@@ -13,12 +15,7 @@ local session = {}
 local function get_sessions()
   local sessions = {}
 
-  local sessions_data_stdpath = vim.fn.stdpath "data" .. "/sessions"
-  local sessions_files = vim.split(
-    vim.fn.globpath(sessions_data_stdpath, "*.vim"),
-    "\n",
-    { trimempty = true }
-  )
+  local sessions_files = vim.split(vim.fn.globpath(session.dir, "*.vim"), "\n", { trimempty = true })
 
   for _, f in pairs(sessions_files) do
     table.insert(sessions, f)
@@ -41,10 +38,7 @@ local function delete_session()
           detach = true,
           on_exit = function()
             local choice_name = vim.fn.fnamemodify(choice, ":t")
-            vim.notify(
-              string.format("Session < %s > deleted!", choice_name),
-              vim.log.levels.WARN
-            )
+            vim.notify(string.format("Session < %s > deleted!", choice_name), vim.log.levels.WARN)
           end,
         })
       end
@@ -62,6 +56,9 @@ local function restore_session()
     require "telescope"
     vim.ui.select(sessions, {
       prompt = " > Select session to restore",
+      format_item = function(item)
+        return string.format("(%s)  %s", item, vim.fn.fnamemodify(item, ":p:t:r"))
+      end,
       default = nil,
     }, function(choice)
       local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
@@ -76,7 +73,6 @@ local function restore_session()
   end
 end
 
-
 ---Save current vim session with name.
 --- The session is saved into 'data' stdpath of nvim
 ---@see mksession |:mksession|
@@ -87,8 +83,12 @@ local function save_session()
     default = nil,
   }, function(input)
     if input then
-      local mks_path = vim.fn.stdpath "data" .. "/sessions/" .. input .. ".vim"
-      vim.cmd("mksession! " .. mks_path)
+      if vim.fn.isdirectory(session.dir) ~= 1 then
+        vim.fn.mkdir(session.dir, "pR")
+      end
+      local new_session_path = string.format("%s/%s.vim", session.dir, input)
+      vim.cmd.mksession { new_session_path, bang = true }
+      -- vim.cmd("mksession! " .. mks_path)
       vim.notify(string.format("Session < %s > created!", input), vim.log.levels.INFO)
     end
   end)
@@ -96,7 +96,7 @@ end
 
 ---Helper function to usercmd completion
 function session.usercmd_session_completion()
-  local args = { 'restore', 'save', 'delete' }
+  local args = { "restore", "save", "delete" }
   return table.concat(args, "\n")
 end
 
@@ -108,10 +108,7 @@ function session.select(arg)
   elseif arg == "delete" then
     delete_session()
   else
-    vim.notify("Invalid argument.\nUsage -> :Session [save|restore|delete]",
-      vim.log.levels.WARN,
-      { title = "Session" }
-    )
+    vim.notify("Invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN, { title = "Session" })
   end
 end
 

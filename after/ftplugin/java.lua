@@ -19,7 +19,7 @@ local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
-local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew" }) or vim.uv.cwd()
+local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" }) or vim.uv.cwd()
 local workspace_dir = string.format("%s/java/workspace/%s", vim.fn.stdpath "cache", vim.fn.fnamemodify(root_dir, ":t"))
 
 local launcher_path = vim.fn.glob(data_path .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", true)
@@ -31,17 +31,21 @@ local bundles = vim.fn.glob(
 
 local lombok_path = data_path .. "/mason/packages/jdtls/lombok.jar"
 
-local os_uname, sys_config = vim.uv.os_uname(), nil
-if os_uname.sysname == "Darwin" then
-  if os_uname.machine == "arm64" then
-    sys_config = "mac_arm"
+local function get_config_dir()
+  local os_uname, sys_config = vim.uv.os_uname(), nil
+  if os_uname.sysname == "Darwin" then
+    if os_uname.machine == "arm64" then
+      sys_config = "mac_arm"
+    else
+      sys_config = "mac"
+    end
+  elseif os_uname.sysname == "Linux" then
+    sys_config = "linux"
   else
-    sys_config = "mac"
+    sys_config = "win"
   end
-elseif os_uname.sysname == "Linux" then
-  sys_config = "linux"
-else
-  vim.notify("Unsupported OS", vim.log.levels.WARN)
+
+  return string.format("%s/mason/packages/jdtls/config_%s", vim.fn.stdpath "data", sys_config)
 end
 
 vim.list_extend(
@@ -73,7 +77,7 @@ local config = {
     lombok_path,
 
     "-configuration",
-    (vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/config_") .. sys_config,
+    get_config_dir(),
     "-data",
     workspace_dir,
   },
@@ -108,17 +112,13 @@ local config = {
         updateBuildConfiguration = "interactive",
         runtimes = {
           {
-            name = "JavaSE-11",
-            path = "/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home",
-          },
-          {
             name = "JavaSE-17",
             path = "/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home",
           },
-          -- {
-          --   name = "JavaSE-20",
-          --   path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
-          -- },
+          {
+            name = "JavaSE-20",
+            path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
+          },
         },
       },
       testsCodeLens = {

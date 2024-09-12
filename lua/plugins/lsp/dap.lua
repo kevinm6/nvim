@@ -129,7 +129,7 @@ return {
       -- PYTHON
       dap.adapters.python = {
         type = "executable",
-        command = vim.fn.stdpath "data" .. "/nvim_python_venv/bin/python",
+        command = vim.fn.stdpath "data" .. "/.venv/bin/python",
         args = { "-m", "debugpy.adapter" },
       }
       dap.configurations.python = {
@@ -289,21 +289,21 @@ return {
         }
       end
 
-      dap.adapters.firefox = {
-        type = "executable",
-        command = vim.fn.stdpath "data" .. "/mason/bin/firefox-debug-adapter",
-      }
-      dap.configurations.typescript = {
-        {
-          name = "Debug with Firefox",
-          type = "firefox",
-          request = "launch",
-          reAttach = true,
-          url = "http://localhost:4200", -- Write the actual URL of your project.
-          webRoot = "${workspaceFolder}",
-          firefoxExecutable = vim.fn.expand "$HOMEBREW_DIR" .. "/firefox",
-        },
-      }
+      -- dap.adapters.firefox = {
+      --   type = "executable",
+      --   command = vim.fn.stdpath "data" .. "/mason/bin/firefox-debug-adapter",
+      -- }
+      -- dap.configurations.typescript = {
+      --   {
+      --     name = "Debug with Firefox",
+      --     type = "firefox",
+      --     request = "launch",
+      --     reAttach = true,
+      --     url = "http://localhost:4200", -- Write the actual URL of your project.
+      --     webRoot = "${workspaceFolder}",
+      --     firefoxExecutable = vim.fn.expand "$HOMEBREW_DIR" .. "/firefox",
+      --   },
+      -- }
 
       -- PHP
       dap.adapters.php = {

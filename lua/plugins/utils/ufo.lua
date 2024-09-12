@@ -39,7 +39,7 @@ return {
         scrollD = "<C-f>",
       },
     }
-    o.close_fold_kinds_for_ft = { "imports", "comment" }
+    o.close_fold_kinds_for_ft = { default = { "imports", "comment" } }
     o.provider_selector = function(_, filetype, _)
       return ftMap[filetype] or { "treesitter", "indent" }
     end

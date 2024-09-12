@@ -287,11 +287,12 @@ return {
       local lspconfig = require "lspconfig"
       local lsputil = require "lspconfig.util"
       local default_lsp_config = get_default_lsp_config()
+
       o.ensure_installed = {
         "lua_ls",
         "vimls",
         "marksman",
-        "tsserver",
+        "ts_ls",
         "sqls",
         "pyright",
         "jsonls",
@@ -452,13 +453,6 @@ return {
           }))
         end,
 
-        -- grammarly = function()
-        --   lspconfig.grammarly.setup(vim.tbl_deep_extend("force", default_lsp_config, {
-        --     filetypes = { "markdown", "text" },
-        --     autostart = false,
-        --   }))
-        -- end,
-
         clangd = function()
           lspconfig.clangd.setup(vim.tbl_deep_extend("force", default_lsp_config, {
             init_options = {
@@ -497,8 +491,8 @@ return {
           }))
         end,
 
-        tsserver = function()
-          lspconfig.tsserver.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+        ts_ls = function()
+          lspconfig.ts_ls.setup(vim.tbl_deep_extend("force", default_lsp_config, {
             filetypes = { "js", "javascript", "typescript", "ojs", "typescriptreact", "typescript.tsx" },
             root_dir = function()
               return vim.fs.root(0, {

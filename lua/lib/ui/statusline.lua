@@ -219,10 +219,9 @@ end
 ---@return string filename name of the current file
 local function get_filename()
   local cols = vim.o.columns
-  local fname = tostring(vim.fn.expand "%f ")
-  local to_trunc = #fname >= sl.preset_width.filename or #fname >= (cols * 0.26)
-  local truncated_name = "..." .. string.sub(fname, #fname - (cols * 0.20), -1)
-
+  local fname = vim.fn.expand "%f"
+  local to_trunc = #fname >= (cols * 0.26)
+  local truncated_name = vim.fn.expand "%:t"
   return to_trunc and truncated_name or fname
 end
 
