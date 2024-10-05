@@ -313,6 +313,7 @@ vim.cmd.cnoreabbrev("Xa", "xa")
 vim.cmd.cnoreabbrev("XA", "xa")
 
 --TODO nvim-0.11 ?
+--NOTE enable on nvim-0.11 and disable nvim-cmp?
 ---Completion
 -- local function feedkeys(keys)
 --   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
@@ -321,8 +322,7 @@ vim.cmd.cnoreabbrev("XA", "xa")
 -- local function pumvisible()
 --   return tonumber(vim.fn.pumvisible()) ~= 0
 -- end
---
--- --TODO enable on nvim-0.11 and disable nvim-cmp
+
 -- map {
 --   "i",
 --   "<cr>",
@@ -331,27 +331,27 @@ vim.cmd.cnoreabbrev("XA", "xa")
 --   end,
 --   { expr = true, desc = "Completion confirm" },
 -- }
---
--- -- Use <C-n> to navigate to the next completion or:
--- -- - Trigger LSP completion.
--- -- - If there's no one, fallback to vanilla omnifunc.
---
+
+-- Use <C-n> to navigate to the next completion or:
+-- - Trigger LSP completion.
+-- - If there's no one, fallback to vanilla omnifunc.
+
 -- imap {
 --   "<C-j>",
 --   function()
 --     if pumvisible() then
 --       feedkeys "<C-n>"
 --     else
---       feedkeys "<C-j>"
---       -- if next(vim.lsp.get_clients { bufnr = 0 }) then
---       --   vim.lsp.completion.trigger()
---       -- else
---       -- if vim.bo.omnifunc == "" then
---       --   feedkeys "<C-x><C-n>"
---       -- else
---       --   feedkeys "<C-x><C-o>"
---       -- end
---       -- end
+--       -- feedkeys "<C-j>"
+--       if next(vim.lsp.get_clients { bufnr = 0 }) then
+--         vim.lsp.completion.trigger()
+--       else
+--         if vim.bo.omnifunc == "" then
+--           feedkeys "<C-x><C-n>"
+--         else
+--           feedkeys "<C-x><C-o>"
+--         end
+--       end
 --     end
 --   end,
 --   "select next completion",
@@ -433,4 +433,3 @@ vim.cmd.cnoreabbrev("XA", "xa")
 --   end,
 --   { desc = "Snippet jump backwards" },
 -- }
---

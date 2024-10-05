@@ -212,14 +212,14 @@ end
 local function get_line_onTot()
   return win_is_smaller(sl.preset_width.row_onTot)
       and string.format(" %s%%l%s/%%L ", sl.colors.git, sl.colors.fformatloc)
-    or sl.colors.fformatloc .. " row " .. sl.colors.git .. "%l" .. sl.colors.fformatloc .. "/%L "
+    or string.format(" %s%%l%s/%%L|%%P", sl.colors.git, sl.colors.fformatloc)
 end
 
 ---Get file name
 ---@return string filename name of the current file
 local function get_filename()
   local cols = vim.o.columns
-  local fname = vim.fn.expand "%f"
+  local fname = vim.fn.expand "%:f"
   local to_trunc = #fname >= (cols * 0.26)
   local truncated_name = vim.fn.expand "%:t"
   return to_trunc and truncated_name or fname
@@ -293,8 +293,8 @@ local function get_git_status()
 end
 
 ---Get filetype with icon if available
----@return table filetype icon? and filetype
-local function get_filetype()
+---@return string filetype icon? and filetype
+local function get_filetype_and_icon()
   local file_ext = vim.bo.filetype or vim.fn.expand "%:e"
 
   local has_icons, icons = pcall(require, "mini.icons")
@@ -304,7 +304,7 @@ local function get_filetype()
   end
   local file_type = vim.bo.filetype
 
-  return file_type and has_icons and { icon = icon, name = file_type } or { name = file_type }
+  return string.format("%s %s", icon, file_type)
 end
 
 ---Get file encoding
@@ -413,7 +413,7 @@ local function enable_statusline()
     sl.colors.git,
     get_git_status(),
     sl.colors.name,
-    get_filename(),
+    "%<" .. get_filename(),
     sl.colors.symbols,
     "",
     sl.colors.empty,
@@ -430,9 +430,7 @@ local function enable_statusline()
     "",
     get_lsp_info(),
     sl.colors.ftype,
-    get_filetype().icon or "",
-    space,
-    get_filetype().name,
+    get_filetype_and_icon(),
     sl.colors.encoding,
     get_fencoding(),
     sl.colors.fformatloc,
