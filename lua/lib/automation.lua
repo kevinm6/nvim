@@ -2,7 +2,7 @@
 --  File         : automation.lua
 --  Description  : automatic functions lib triggered by events
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 13:33
+--  Last Modified: 07 Oct 2024, 18:54
 -------------------------------------
 
 local automation = {}
@@ -17,7 +17,7 @@ function automation.auto_timestamp()
       if vim.opt_local.modified:get() == true then
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-        vim.api.nvim_command [[silent! 0,10s/Last Modified:.\(.\+\)/\=strftime('Last Modified: %d %h %Y, %H:%M')/g ]]
+        vim.api.nvim_command [[0,10s/\(.*Modified*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %h %Y, %H:%M')/g]]
         vim.fn.histdel("search", -1)
         vim.api.nvim_win_set_cursor(0, cursor_pos)
       end

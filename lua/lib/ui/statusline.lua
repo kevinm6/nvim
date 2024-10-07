@@ -322,7 +322,7 @@ end
 ---Get session name if active
 ---@return string session_name name of the active session or empty string
 local function session_name()
-  return sl.session_name ~= "" and string.format("Session: %s%s", sl.colors.session, sl.session_name) or ""
+  return sl.session_name ~= "" and " Session: " .. sl.session_name or ""
 end
 
 ---Get python virtual-env if is active and in python file

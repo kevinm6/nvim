@@ -86,7 +86,7 @@ return {
       ["g."] = "actions.toggle_hidden",
       ["-"] = "actions.parent",
       ["gw"] = "actions.open_cwd",
-      ["<C-x>"] = "actions.cd",
+      ["<leader>."] = "actions.cd",
       ["gt"] = "actions.toggle_trash",
       ["~"] = "actions.tcd",
       ["gs"] = "actions.change_sort",
