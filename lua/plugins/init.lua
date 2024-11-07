@@ -50,12 +50,13 @@ local M = {
 
   ---Image in NeoVim
   {
-    "kevinm6/image.nvim",
+    "3rd/image.nvim",
     -- pin = true, -- DON'T update for now -> https://github.com/3rd/image.nvim/issues/191
-    dev = true,
+    -- dev = true,
     ft = { "markdown", "vimwiki", "png", "jpeg", "jpg", "image_nvim" },
     opts = function(_, o)
       o.backend = "kitty"
+      o.processor = "magick_cli"
       o.window_overlap_clear_enabled = true -- toggles images when windows are overlapped
       -- o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
       o.window_overlap_clear_ft_ignore = {}

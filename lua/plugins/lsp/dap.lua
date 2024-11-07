@@ -69,7 +69,7 @@ return {
 
       dap.defaults.fallback.external_terminal = {
         command = "/usr/bin/env kitty",
-        args = { "-e " },
+        args = { "--hold", "-e" },
       }
 
       -- Filetype configs
@@ -350,6 +350,33 @@ return {
           terminalKind = "integrated",
         },
       }
+
+      -- Gradle
+      -- dap.adapters.gradle = {
+      --   name = "gradle",
+      --   type = "executable",
+      --   command = vim.fn.exepath "gradle",
+      --   -- cwd = "${workspaceFolder}",
+      -- }
+
+      -- dap.configurations.java = {
+      --   {
+      --     name = "Gradle tasks",
+      --     request = "launch",
+      --     type = "gradle",
+      --     program = "${workspaceFolder}/gradlew",
+      --     cwd = "${workspaceFolder}",
+      --     args = { "${input:gradleCmd}" },
+      --   },
+      --   -- inputs = {
+      --   --   {
+      --   --     id = "gradleCmd",
+      --   --     type = "promptString",
+      --   --     description = "Program to run: ",
+      --   --     default = "test",
+      --   --   },
+      --   -- },
+      -- }
 
       local icons = require "mini.icons"
 

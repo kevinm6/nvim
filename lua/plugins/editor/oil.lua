@@ -88,7 +88,7 @@ return {
       ["gw"] = "actions.open_cwd",
       ["<leader>."] = "actions.cd",
       ["gt"] = "actions.toggle_trash",
-      ["~"] = "actions.tcd",
+      ["<leader>t"] = "actions.tcd",
       ["gs"] = "actions.change_sort",
       ["yp"] = "actions.copy_entry_path",
       ["g:"] = "actions.open_cmdline",

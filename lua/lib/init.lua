@@ -189,14 +189,14 @@ function M.new_tmp_file(cmd_input)
       local f_string = input ~= "" and "%s_f.%s" or "%s_f"
 
       temp_file = string.format(f_string, vim.fn.tempname(), input)
-      vim.cmd.tcd(vim.fn.fnamemodify(vim.fn.tempname(), ":p:h"))
+      -- vim.cmd.tcd(vim.fn.fnamemodify(vim.fn.tempname(), ":p:h"))
       vim.cmd.edit(temp_file)
       vim.cmd.write(temp_file)
       vim.cmd.startinsert()
     end)
   else
     local temp_file = string.format("%s_f.%s", vim.fn.tempname(), args)
-    vim.cmd.tcd(vim.fn.fnamemodify(temp_file, "%:p:h"))
+    -- vim.cmd.tcd(vim.fn.fnamemodify(temp_file, "%:p:h"))
     vim.cmd.edit(temp_file)
     vim.cmd.write(temp_file)
     vim.cmd.startinsert()

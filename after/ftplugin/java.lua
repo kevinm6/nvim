@@ -20,7 +20,9 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
 local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" }) or vim.uv.cwd()
-local workspace_dir = string.format("%s/java/workspace/%s", vim.fn.stdpath "cache", vim.fn.fnamemodify(root_dir, ":t"))
+local cache_dir = vim.fn.stdpath "cache"
+local project_name = vim.fn.fnamemodify(root_dir, ":t")
+local workspace_dir = string.format("%s/java/wksp/%s", cache_dir, project_name)
 
 local launcher_path = vim.fn.glob(data_path .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", true)
 local bundles = vim.fn.glob(
@@ -28,6 +30,9 @@ local bundles = vim.fn.glob(
   true,
   true
 )
+
+-- Example usage: Run the function with the desired task
+-- RunGradleTask('test')
 
 local lombok_path = data_path .. "/mason/packages/jdtls/lombok.jar"
 
@@ -116,8 +121,8 @@ local config = {
             path = "/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home",
           },
           {
-            name = "JavaSE-20",
-            path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
+            name = "JavaSE-21",
+            path = "/Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home",
           },
         },
       },
@@ -283,3 +288,72 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     vim.lsp.codelens.refresh()
   end,
 })
+
+if vim.fn.filereadable(root_dir .. "/gradlew") then
+  local gradlew = root_dir .. "/gradlew"
+
+  local function get_gradle_tasks()
+    if vim.g["gradle_" .. root_dir] ~= nil then
+      return vim.g["gradle_" .. root_dir]
+    end
+
+    local taskList = {}
+    local out = vim.system({ gradlew, "tasks", "--all" }, { text = true }):wait()
+    if out.code == 0 then
+      for line in out.stdout:gmatch "[^\r\n]+" do
+        if line:find " - " then
+          local taskName = line:match "^(.-)%s+-" --line:match("^(.-) -")
+          if taskName then
+            table.insert(taskList, taskName)
+          end
+        end
+      end
+      vim.g["gradle_" .. root_dir] = taskList
+    else
+      vim.notify("Error executing command: " .. out.stderr, vim.log.levels.ERROR, { text = "Gradle (tasks)" })
+    end
+    return taskList
+  end
+
+  local function select_gradle_task(tasks, callback)
+    vim.ui.select(tasks, {
+      prompt = "⟩ Gradle task: ",
+    }, function(choice)
+      if not choice then
+        return
+      end
+      callback(choice)
+    end)
+  end
+
+  local function run_gradle_task(task)
+    local msg = string.format(" running: < gradlew %s >", task)
+    vim.notify(msg, vim.log.levels.INFO, { title = "Gradle" })
+    vim.system({ gradlew, task }, { text = true }, function(obj)
+      if obj.code ~= 0 then
+        vim.notify(obj.stderr, vim.log.levels.WARN)
+      else
+        vim.print(obj.stdout)
+        vim.schedule(function()
+          vim.fn.setqflist({}, "r", { title = "Gradle Output", lines = vim.split(obj.stdout, "\n") })
+          vim.cmd.copen()
+        end)
+      end
+    end)
+  end
+
+  vim.api.nvim_create_user_command("Gradle", function(input)
+    local task = nil
+    if input.args ~= "" then
+      run_gradle_task(task)
+    else
+      local tasks = get_gradle_tasks()
+      select_gradle_task(tasks, function(selected_task)
+        run_gradle_task(selected_task)
+      end)
+    end
+  end, {
+    nargs = "?",
+    complete = get_gradle_tasks,
+  })
+end
