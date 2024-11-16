@@ -121,7 +121,7 @@ nmap {
 
 nmap {
   "<C-s>",
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  [[:%s/\<<C-r><C-w>\>/&/gI<Left><Left><Left>]],
   "Replace occurence from <cword>",
 }
 
@@ -165,6 +165,7 @@ nmap { "N", "Nzz" }
 nmap { "#", "#zz" }
 nmap { "g*", "g*zz" }
 nmap { "S", ":%s///g<Left><Left><Left>" }
+nmap { "<M-s>", ":%s//&/gn<Left><Left><Left><Left><Left>", "Count occurrences of search" }
 -- nmap { "<M-S-->", "<C-w>| <C-w>_" }
 -- nmap { "<M-J>", "<C-w>J" }
 -- nmap { "<M-K>", "<C-w>K" }

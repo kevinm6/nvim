@@ -46,8 +46,8 @@ return {
 
       o.defaults = {
         preview = { hide_on_startup = true },
-        -- file_previewer = require("lib.telescope").image_preview().file_previewer,
-        -- buffer_previewer_maker = require("lib.telescope").image_preview().buffer_previewer_maker,
+        file_previewer = require("lib.telescope").image_preview().file_previewer,
+        buffer_previewer_maker = require("lib.telescope").image_preview().buffer_previewer_maker,
         initial_mode = "insert",
         prompt_prefix = icons.get("filetype", "telescope") .. "  ",
         selection_caret = "❭ ",

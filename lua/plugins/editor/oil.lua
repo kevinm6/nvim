@@ -74,15 +74,12 @@ return {
       ["gh"] = {
         desc = "Open UserDir",
         callback = function()
-          require("oil").close()
-          local home_dir = tostring(vim.env.HOME)
-          require("oil").open_float(home_dir)
+          vim.cmd.edit(vim.env.HOME)
         end,
       },
       ["q"] = "actions.close",
       ["<Esc><Esc>"] = "actions.close",
       ["<C-h>"] = "actions.parent",
-      ["<C-.>"] = "actions.toggle_hidden",
       ["g."] = "actions.toggle_hidden",
       ["-"] = "actions.parent",
       ["gw"] = "actions.open_cwd",
