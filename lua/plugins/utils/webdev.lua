@@ -2,13 +2,12 @@
 -- File         : webdev.lua
 -- Descriptions : curl & http wrapper for API testing (REST) and more
 -- Author       : Kevin
--- Last Modified: 01 May 2024, 12:31
+-- Last Modified: 17 Nov 2024, 10:49
 -------------------------------------
 
 return {
   "kevinm6/rest.nvim",
   dev = true,
-  -- dependencies = { "luarocks.nvim" },
   ft = { "http", "https" },
   config = function(_, o)
     o.skip_ssl_verification = true

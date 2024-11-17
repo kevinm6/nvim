@@ -2,17 +2,15 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 01 May 2024, 12:36
+--  Last Modified: 17 Nov 2024, 10:49
 -----------------------------------
 
 return {
   -- "theHamsta/nvim-dap-virtual-text",
   ---DAP-UI
+  "nvim-neotest/nvim-nio",
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-    },
     opts = {
       icons = { expanded = "▾", collapsed = "►" },
       mappings = {

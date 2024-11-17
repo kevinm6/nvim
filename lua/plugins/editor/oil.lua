@@ -2,7 +2,7 @@
 -- File         : oil.lua
 -- Description  : oil plugin config
 -- Author       : Kevin
--- Last Modified: 09 May 2024, 17:51
+-- Last Modified: 17 Nov 2024, 10:49
 -------------------------------------
 
 ---- Get defaults columns view

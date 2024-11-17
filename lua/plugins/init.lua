@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 14 Jul 2024, 12:10
+--  Last Modified: 17 Nov 2024, 10:50
 -------------------------------------
 
 local M = {
@@ -257,7 +257,6 @@ local M = {
     ft = { "qmd", "jupyter_notebook", "quarto" },
     version = "^1.0.0",
     build = ":UpdateRemotePlugins",
-    -- dependencies = { "image.nvim" },
     init = function()
       vim.g.molten_image_provider = "image.nvim"
       vim.g.molten_output_win_max_height = 20
@@ -349,7 +348,6 @@ local M = {
   {
     "quarto-dev/quarto-nvim",
     ft = { "quarto" },
-    -- dependencies = { "otter.nvim" },
     opts = function(_, o)
       o.codeRunner = {
         enabled = false,

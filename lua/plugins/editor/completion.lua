@@ -288,7 +288,6 @@ return {
   {
     "garymjr/nvim-snippets",
     event = "InsertEnter",
-    -- dependencies = { "kevinm6/snippets", dev = true },
     opts = {
       -- TODO on nvim-0.11 => set when activating built-in completion (w/o nvim-cmp)
       -- o.create_cmp_source = false

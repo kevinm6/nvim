@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 01 May 2024, 13:23
+-- Last Modified: 17 Nov 2024, 10:49
 -------------------------------------
 
 local function parsers_to_be_installed()
@@ -59,10 +59,6 @@ return {
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     main = "nvim-treesitter.configs",
     build = ":TSUpdate",
-    -- dependencies = {
-    --   "nvim-treesitter/nvim-treesitter-refactor",
-    --   "nvim-treesitter/nvim-treesitter-context",
-    -- },
     opts = function(_, o)
       o.ensure_installed = parsers_to_be_installed()
       o.sync_install = false -- install languages synchronously (only applied to `ensure_installed`)
@@ -159,7 +155,6 @@ return {
   },
 
   "nvim-treesitter/nvim-treesitter-refactor",
-  "nvim-treesitter/nvim-treesitter-context",
   {
     "HiPhish/rainbow-delimiters.nvim",
     cond = false,

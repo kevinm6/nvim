@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : config all module to be imported
 -- Author       : Kevin
--- Last Modified: 10 Jul 2024, 09:12
+-- Last Modified: 17 Nov 2024, 10:49
 -------------------------------------
 
 ---Create capabilities and set default values
@@ -208,17 +208,16 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = { "BufRead", "BufNewFile" },
-    cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
-    -- Lua dev
     dependencies = {
       "mason.nvim",
       "mason-lspconfig.nvim",
     },
+    cmd = { "LspInfo", "LspStart", "LspInstallInfo" },
     config = function()
       local lspconfig = require "lspconfig"
       local default_lsp_config = get_default_lsp_config()
 
-      require("lspconfig.ui.windows").default_options.border = "rounded"
+      -- require("lspconfig.ui.windows").default_options.border = "rounded"
 
       -- sourcekit is still not available on mason-lspconfig
       lspconfig.sourcekit.setup(vim.tbl_deep_extend("force", default_lsp_config, {
@@ -249,13 +248,6 @@ return {
     end,
   },
 
-  ---NeovimDevelopment
-  {
-    "folke/lazydev.nvim",
-    ft = "lua",
-    opts = {},
-  },
-
   ---Mason
   {
     "williamboman/mason.nvim",
@@ -283,7 +275,7 @@ return {
   ---Mason-lspconfig
   {
     "williamboman/mason-lspconfig.nvim",
-    config = function(_, o)
+    opts = function(_, o)
       local lspconfig = require "lspconfig"
       local lsputil = require "lspconfig.util"
       local default_lsp_config = get_default_lsp_config()
@@ -649,6 +641,13 @@ return {
     end,
   },
 
+  ---NeovimDevelopment
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {},
+  },
+
   ---Go
   {
     "ray-x/go.nvim",
@@ -690,10 +689,8 @@ return {
     ft = { "json", "yaml" },
   },
 
-  -- expose functions below to special servers that uses ad-hoc-plugin
+  -- expose function to servers that uses ad-hoc-plugin
   -- and adds custom features to LSP (like nvim-jdtls & nvim-metals)
-  -- set_buf_keymaps = set_buf_keymaps,
-  -- set_buf_funcs_for_capabilities = set_buf_funcs_for_capabilities,
   capabilities = init_capabilities,
   on_init = custom_init,
   on_attach = custom_attach,
