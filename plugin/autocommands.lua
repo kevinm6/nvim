@@ -41,6 +41,18 @@ local filetypes_to_exclude = {
 ------- Auto-Commands ---------
 --------------------------------
 
+---Statusline&Winbar
+-- if not vim.g.vscode then
+--   autocmd("VimEnter", {
+--     group = augroup("_statusline_and_winbar", { clear = true }),
+--     callback = function()
+--       require("lib.ui.statusline").toggle()
+--       require("lib.ui.winbar").toggle()
+--     end,
+--     -- once = true
+--   })
+-- end
+
 ---Hightlight on yank
 autocmd("TextYankPost", {
   group = augroup("_highlight_yank", { clear = true }),

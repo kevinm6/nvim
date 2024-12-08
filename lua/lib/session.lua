@@ -57,7 +57,8 @@ local function restore_session()
     vim.ui.select(sessions, {
       prompt = " > Select session to restore",
       format_item = function(item)
-        return string.format("(%s)  %s", item, vim.fn.fnamemodify(item, ":p:t:r"))
+        return vim.fn.fnamemodify(item, ":p:t:r")
+        -- return string.format("%s (%s) ", vim.fn.fnamemodify(item, ":p:t:r"), item)
       end,
       default = nil,
     }, function(choice)

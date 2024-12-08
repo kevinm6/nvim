@@ -25,6 +25,7 @@ local M = {
   ---Statusline
   {
     dir = vim.fn.stdpath "config" .. "/lua/lib/ui/statusline.lua",
+    virtual = true,
     event = "VeryLazy",
     cmd = "ToggleStatusline",
     cond = function()
@@ -39,6 +40,7 @@ local M = {
   {
     dir = vim.fn.stdpath "config" .. "/lua/lib/ui/winbar.lua",
     event = { "BufReadPre", "BufNewFile" },
+    virtual = true,
     cmd = "ToggleWinbar",
     config = function()
       require("lib.ui.winbar").toggle()

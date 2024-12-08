@@ -33,13 +33,13 @@ return {
     opts = {},
   },
 
-  ---Text-Object
-  {
-    "echasnovski/mini.ai",
-    event = { "BufRead", "BufNewFile" },
-    version = false,
-    opts = {},
-  },
+  -- ---Text-Object
+  -- {
+  --   "echasnovski/mini.ai",
+  --   event = { "BufRead", "BufNewFile" },
+  --   version = false,
+  --   opts = {},
+  -- },
 
   ---WhichKey
   {
