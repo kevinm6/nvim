@@ -75,6 +75,16 @@ user_command("NvimConfig", function()
   end
 end, { desc = "Neovim Config" })
 
+---Data Files
+user_command("NvimData", function()
+  local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
+  if not has_telescope then
+    vim.cmd.edit(vim.fn.stdpath "data")
+  else
+    tele_builtin.find_files { cwd = vim.fn.stdpath "data" }
+  end
+end, { desc = "Neovim Config" })
+
 ---Dotfiles
 user_command("Dotfiles", function()
   local has_oil, oil = pcall(require, "oil")

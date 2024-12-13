@@ -12,12 +12,12 @@ local automation = {}
 function automation.auto_timestamp()
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoupdate_timestamp", { clear = true }),
-    pattern = "*",
+    pattern = { "*.lua", "*.md", "*.yml" },
     callback = function()
       if vim.opt_local.modified:get() == true then
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-        vim.api.nvim_command [[0,10s/\(.*Modified*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %h %Y, %H:%M')/g]]
+        vim.api.nvim_command [[0,10s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %h %Y, %H:%M')/g]]
         vim.fn.histdel("search", -1)
         vim.api.nvim_win_set_cursor(0, cursor_pos)
       end

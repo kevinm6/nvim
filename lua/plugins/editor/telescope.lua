@@ -5,33 +5,6 @@
 -- Last Modified: 13 Aug 2024, 08:58
 ---------------------------------------
 
-local function select_one_or_multi(prompt_bufnr, action)
-  local tele_actions = require "telescope.actions"
-  local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
-  local multi = picker:get_multi_selection()
-  if not vim.tbl_isempty(multi) then
-    require("telescope.actions").close(prompt_bufnr)
-    for _, j in pairs(multi) do
-      if j.path ~= nil then
-        vim.cmd(string.format("%s %s", action, j.path))
-      end
-    end
-  else
-    local action_map = {
-      edit = tele_actions.select_default,
-      sp = tele_actions.select_horizontal,
-      vsp = tele_actions.select_vertical,
-      tabe = tele_actions.select_tab,
-    }
-    if not action_map[action] then
-      vim.notify("action passed not found: " .. action)
-      return
-    end
-
-    action_map[action](prompt_bufnr)
-  end
-end
-
 return {
   ---Telescope
   {
@@ -44,10 +17,12 @@ return {
       local action_state = require "telescope.actions.state"
       local icons = require "mini.icons"
 
+      local select_one_or_multi = require("lib.telescope").select_one_or_multi
+
       o.defaults = {
         preview = { hide_on_startup = true },
-        file_previewer = require("lib.telescope").image_preview().file_previewer,
-        buffer_previewer_maker = require("lib.telescope").image_preview().buffer_previewer_maker,
+        file_previewer = require("lib.telescope.image_preview").image_preview().file_previewer,
+        buffer_previewer_maker = require("lib.telescope.image_preview").image_preview().buffer_previewer_maker,
         initial_mode = "insert",
         prompt_prefix = icons.get("filetype", "telescope") .. "  ",
         selection_caret = "❭ ",
@@ -456,6 +431,7 @@ return {
             height = 0.5,
           },
         },
+        fzf = {},
       }
       telescope.setup(o)
 
@@ -481,6 +457,14 @@ return {
       nmap { "<leader><leader>", tele_builtin.buffers, "Buffers" }
 
       nmap { "<leader>fF", tele_builtin.live_grep, "Find Text (LiveGrep)" }
+
+      nmap {
+        "<leader>fm",
+        function()
+          require("lib.telescope.multi_rgrep").run {}
+        end,
+        "Multi-LiveGrep",
+      }
 
       nmap {
         "<leader>fh",
