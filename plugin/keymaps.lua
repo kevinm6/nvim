@@ -247,10 +247,87 @@ nmap {
   "Projects",
 }
 
+---Terminal (open)
+nmap {
+  "<leader>th",
+  function()
+    local height = math.floor(vim.o.lines * 0.25)
+    require("lib.terminal").new_terminal_win("", true, {
+      height = height,
+      win = -1,
+      split = "below",
+    })
+  end,
+  "Terminal❭ Horizontal",
+}
+
+nmap {
+  "<leader>tv",
+  function()
+    local width = math.floor(vim.o.columns * 0.4)
+    require("lib.terminal").new_terminal_win("", true, {
+      width = width,
+      win = -1,
+      split = "right",
+    })
+  end,
+  "Terminal❭ Vertical",
+}
+
+nmap {
+  "<leader>te",
+  function()
+    local cmd = vim.fn.input { prompt = "Term command => " }
+    if cmd ~= "" then
+      require("lib.terminal").new_terminal_win(cmd, false, {
+        height = math.floor(vim.o.lines * 0.3),
+        win = -1,
+        split = "below",
+      })
+    end
+  end,
+  "Terminal❭ exec",
+}
+
+nmap {
+  "<leader>tf",
+  function()
+    local width = math.floor(vim.o.columns * 0.6)
+    local height = math.floor(vim.o.lines * 0.80)
+    require("lib.terminal").new_terminal_win("", true, { height = height, width = width, relative = "editor" })
+  end,
+  "Terminal❭ Float",
+}
+
+nmap {
+  "<leader>tl",
+  function()
+    require("lib.terminal").new_terminal_win("lazygit", true, { preset = "lazygit" })
+  end,
+  "LazyGit",
+}
+
+nmap {
+  "<leader>tt",
+  function()
+    require("lib.terminal").new_terminal_win("htop", true, { preset = "htop" })
+  end,
+  "Htop",
+}
+
 -- TERMINAL MODE
 tmap { "<Esc><Esc>", [[<C-\><C-n>]] }
 tmap { "<C-e>", [[<C-\><C-n>]] }
 tmap { "<C-o>", [[<C-\><C-o>]] }
+map {
+  "t",
+  "<C-r>",
+  function()
+    local char = vim.fn.getchar()
+    return '<C-\\><C-N>"' .. vim.fn.nr2char(char) .. "pi"
+  end,
+  { expr = true, noremap = true },
+}
 -- tmap { "<C-h>", [[<C-\><C-n><C-w>h]] }
 -- tmap { "<C-j>", [[<C-\><C-n><C-w>j]] }
 -- tmap { "<C-k>", [[<C-\><C-n><C-w>k]] }

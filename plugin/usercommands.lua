@@ -85,6 +85,21 @@ user_command("NvimData", function()
   end
 end, { desc = "Neovim Config" })
 
+---Lazygit
+user_command("Lazygit", function()
+  require("lib.terminal").new_terminal_win("lazygit", true, { preset = "lazygit" })
+end, { desc = "Lazygit", force = true })
+
+---Htop
+user_command("Htop", function()
+  require("lib.terminal").new_terminal_win("htop", true, { preset = "htop" })
+end, { desc = "Htop", force = true })
+
+---NCDU
+user_command("Ncdu", function()
+  require("lib.terminal").new_terminal_win("ncdu", true, { preset = "ncdu" })
+end, { desc = "Ncdu", force = true })
+
 ---Dotfiles
 user_command("Dotfiles", function()
   local has_oil, oil = pcall(require, "oil")
@@ -107,7 +122,7 @@ user_command("University", function()
   end
 end, { desc = "Open Dotfiles dir" })
 
----University
+---Notes
 user_command("Notes", function()
   require("lib.notes").open_note()
 end, { desc = "Open notes" })

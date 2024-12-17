@@ -206,7 +206,11 @@ autocmd("BufRead", {
 ---Insert mode on builtin Neovim terminal
 autocmd("TermOpen", {
   group = augroup("_startinsert_term_open", { clear = true }),
-  command = "startinsert",
+  callback = function()
+    vim.cmd.startinsert()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end,
 })
 
 ---Start in insert mode in Git and toggleterm files
@@ -285,5 +289,39 @@ autocmd("FileType", {
   pattern = { "xxd", "stata", "bin" },
   callback = function()
     require("lib.hex").setup()
+  end,
+})
+
+---Templates
+autocmd("BufNewFile", {
+  group = vim.api.nvim_create_augroup("templates", { clear = true }),
+  desc = "Load template file",
+  pattern = "*",
+  callback = function(args)
+    local path = vim.fn.stdpath "config"
+    local fname = vim.fn.fnamemodify(args.file, ":t")
+    local ext = vim.fn.fnamemodify(args.file, ":e")
+    local candidates = { fname, ext }
+    local uv = vim.uv
+    vim.print(candidates)
+    for _, candidate in ipairs(candidates) do
+      local tmpl = table.concat { path, "/templates/", candidate, ".tpl" }
+      if uv.fs_stat(tmpl) then
+        vim.cmd("0r " .. tmpl)
+        return
+      end
+    end
+    for _, candidate in ipairs(candidates) do
+      local tmpl = table.concat { path, "/templates/", candidate, ".stpl" }
+      local f = io.open(tmpl, "r")
+      if f then
+        local content = f:read "*a"
+        -- NOTE: the schedule avoid running earlier and mess with outher autocommands
+        vim.schedule(function()
+          vim.snippet.expand(content)
+        end)
+        return
+      end
+    end
   end,
 })
