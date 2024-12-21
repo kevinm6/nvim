@@ -16,6 +16,11 @@ local function init_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
   end
 
+  local has_blink, blink_lsp = pcall(require, "blink.cmp")
+  if has_blink then
+    capabilities = blink_lsp.get_lsp_capabilities(capabilities)
+  end
+
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
   return capabilities
