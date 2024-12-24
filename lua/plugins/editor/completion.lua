@@ -6,6 +6,7 @@
 -------------------------------------
 
 return {
+  { "kevinm6/snippets", dev = true },
   {
     "saghen/blink.cmp",
     event = { "InsertEnter", "CmdlineEnter" },
@@ -52,6 +53,7 @@ return {
       signature = {
         enabled = true,
         window = {
+          border = "rounded",
           min_width = 24,
         },
       },
@@ -59,37 +61,31 @@ return {
         accept = {
           auto_brackets = { enabled = true },
         },
+        list = {
+          selection = function(ctx)
+            return ctx.mode == "cmdline" and "auto_insert" or "preselect"
+          end,
+        },
         menu = {
           scrollbar = false,
+          min_width = 32,
+          winblend = vim.o.pumblend,
           draw = {
             treesitter = { "lsp" },
-            -- columns = { { "label" }, { "label_description" }, { "kind_icon" }, { "kind" } },
-            columns = { { "label" }, { "label_description" }, { "kind_icon", gap = 1, "kind" } },
-            -- components = {
-            --   label = { width = { fill = false } },
-            --   label_description = { width = { fill = false } },
-            --   kind = { width = { fill = true } },
-            -- },
-            -- components = {
-            -- label = { width = { fill = false, max = 32 } },
-            -- label_description = { ellipsis = true, width = { fill = false } },
-            -- kind_icon = {
-            --   text = function(ctx)
-            --     local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-            --     return kind_icon
-            --   end,
-            --   highlight = function(ctx)
-            --     local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-            --     return hl
-            --   end,
-            -- },
-            -- kind = {
-            --   width = { fill = true },
-            --   text = function(ctx)
-            --     return ctx.kind
-            --   end,
-            -- },
-            -- },
+            -- align_to_component = "kind_icon",
+            -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+            columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
+            components = {
+              label = { ellipsis = true, width = { fill = true, max = 32 } },
+              label_description = { ellipsis = true, width = { fill = true, max = 26 } },
+              kind_icon = {
+                ellipsis = false,
+                text = function(ctx)
+                  local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+                  return kind_icon
+                end,
+              },
+            },
           },
         },
         documentation = {
@@ -97,11 +93,15 @@ return {
           window = {
             min_width = 24,
             scrollbar = false,
+            border = "rounded",
+            direction_priority = {
+              menu_north = { "e", "n", "w", "s" },
+              menu_south = { "e", "n", "s", "w" },
+            },
           },
         },
         ghost_text = { enabled = true },
       },
     },
   },
-  { "kevinm6/snippets", dev = true },
 }
