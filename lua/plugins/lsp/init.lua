@@ -11,16 +11,12 @@
 local function init_capabilities()
   -- Update capabilities with extended from cmp_nvim_lsp if available
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-  if has_cmp then
-    capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
-  end
 
   local has_blink, blink_lsp = pcall(require, "blink.cmp")
   if has_blink then
     capabilities = blink_lsp.get_lsp_capabilities(capabilities)
   end
-
+  -- Adding snippetSupport enabled by default for each LSP
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
   return capabilities

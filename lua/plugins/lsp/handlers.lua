@@ -61,17 +61,17 @@ return {
     }
 
     ---Hover
-    -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    --   title = "LSP❭ Hover",
-    --   border = "rounded",
-    --   max_height = math.floor(vim.o.lines * 0.4),
-    --   max_width = math.floor(vim.o.columns * 0.8),
-    -- })
-    --
-    -- ---SignatureHelp
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      title = "LSP❭ Hover",
+      border = "rounded",
+      max_height = math.floor(vim.o.lines * 0.4),
+      max_width = math.floor(vim.o.columns * 0.8),
+    })
+
+    ---SignatureHelp
     -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
     --   title = "LSP❭ SignatureHelp",
-    --   border = "single",
+    --   border = "rounded",
     --   max_width = math.floor(vim.o.columns * 0.6),
     --   max_height = math.floor(vim.o.lines * 0.4),
     --   close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },

@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 06 Jun 2024, 10:50
+-- Last Modified: 26 Dec 2024, 11:01
 -------------------------------------
 
 --- NOTE:if they deliver this -> https://github.com/neovim/neovim/issues/28536

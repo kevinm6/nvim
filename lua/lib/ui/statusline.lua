@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 18 Jul 2024, 09:52
+-- Last Modified: 26 Dec 2024, 11:00
 -----------------------------------------
 
 local sl = {
@@ -19,6 +19,7 @@ local sl = {
     lazy = true,
     mason = true,
     noice = true,
+
     checkhealth = true,
     WhichKey = true,
     query = true,
@@ -262,6 +263,20 @@ local function get_lsp_diagnostic()
     )
 end
 
+---Get lsp progress, trying to remove Noice and mini-view
+---@return string progress formatted progress
+local function get_lsp_progress()
+  local lsp = vim.lsp.status()
+  if lsp then
+    lsp = lsp:gsub(":", " ")
+    lsp = lsp:gsub("(%d+%%)", "%1%%") -- sanitize percentage
+    lsp = lsp:gsub("%s+", " ")
+    return lsp
+  end
+
+  return ""
+end
+
 ---Get git status with `gitsigns` plugin
 ---and display data depending on available window width
 ---@return string git_status git formatted data
@@ -418,6 +433,7 @@ local function enable_statusline()
     "",
     sl.colors.empty,
     session_name(),
+    get_lsp_progress(),
     get_python_env(),
 
     -- Middle
@@ -469,6 +485,8 @@ function sl.toggle()
       "VimResized",
       "FileType",
       "FileChangedShellPost",
+      "DiagnosticChanged",
+      "LspProgress",
     }, {
       group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
       callback = function(cb)

@@ -17,13 +17,12 @@ function lsp.get_current_buf_lsp_capabilities(client, _)
       table.insert(capAsList, "- " .. capability)
     end
   end
-  table.sort(capAsList)     -- sorts alphabetically
+  table.sort(capAsList) -- sorts alphabetically
   local msg = "# " .. client.name .. "\n" .. table.concat(capAsList, "\n")
   vim.notify(msg, vim.log.levels.INFO, {
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
-      vim.api.nvim_set_option_value("filetype", "markdown",
-        { buf = buf, scope = 'local' })
+      vim.api.nvim_set_option_value("filetype", "markdown", { buf = buf })
     end,
     timeout = 14000,
   })
@@ -33,7 +32,7 @@ end
 ---Enable|Disable Diagnostics
 ---@param buf number int id of buffer
 function lsp.toggle_diagnostics(buf)
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = buf }), { bufnr = buf })
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled { bufnr = buf }, { bufnr = buf })
 end
 
 return lsp

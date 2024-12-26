@@ -5,6 +5,9 @@
 -- Last Modified: 21 Dec 2024, 14:30
 -------------------------------------
 
+local snippets_path = vim.fn.has "mac" == 1 and vim.fn.expand "~/dev/snippets"
+  or vim.fn.stdpath "data" .. "/lazy/snippets"
+
 return {
   { "kevinm6/snippets", dev = true },
   {
@@ -19,45 +22,57 @@ return {
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-l>"] = { "select_and_accept" },
-        ["<Tab>"] = {},
-        ["<S-Tab>"] = {},
-        ["<C-i>"] = {
-          function(cmp)
-            if cmp.snippet_active() then
-              return cmp.accept()
-            else
-              return cmp.select_and_accept()
-            end
-          end,
-          "snippet_forward",
-          "fallback",
-        },
+        ["<C-i>"] = { "snippet_forward", "fallback" },
         ["<C-S-i>"] = { "snippet_backward", "fallback" },
         ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+
+        cmdline = {
+          ["<C-i>"] = { "select_and_accept", "fallback" },
+          ["<C-k>"] = { "select_prev", "fallback" },
+          ["<C-j>"] = { "select_next", "fallback" },
+          ["<C-Space>"] = { "show", "hide" },
+          ["<C-e>"] = { "cancel" },
+        },
       },
       appearance = {
         nerd_font_variant = "mono",
       },
+
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "snippets", "lsp", "path", "buffer", "lazydev" },
         providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
+          },
           snippets = {
             opts = {
-              search_paths = {
-                vim.fn.expand "~/dev/snippets",
+              search_paths = { snippets_path },
+              extended_filetypes = {
+                lua = { "luadoc", "nvim_lua" },
+                sh = { "shelldoc" },
+                java = { "javadoc", "java_tests" },
               },
             },
           },
         },
+        min_keyword_length = function(ctx)
+          return ctx.mode == "cmdline" and 2 or 0
+        end,
       },
       signature = {
         enabled = true,
         window = {
-          border = "rounded",
-          min_width = 24,
+          max_width = math.ceil(vim.o.columns * 0.6),
+          max_height = math.ceil(vim.o.lines * 0.4),
         },
       },
       completion = {
+        keyword = {
+          regex = "[-_/]\\|\\k",
+          exclude_from_prefix_regex = "[\\.]",
+        },
         accept = {
           auto_brackets = { enabled = true },
         },
@@ -93,7 +108,6 @@ return {
           window = {
             min_width = 24,
             scrollbar = false,
-            border = "rounded",
             direction_priority = {
               menu_north = { "e", "n", "w", "s" },
               menu_south = { "e", "n", "s", "w" },

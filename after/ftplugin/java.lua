@@ -188,6 +188,7 @@ local config = {
   init_options = {
     -- jvm_args = "-javaagent:" .. vim.fn.expand "~/.local/share/nvim/mason/packages/jdtls/lombok.jar",
     -- workspace = workspace_dir .. project_name,
+    -- capabilities = capabilities,
     bundles = bundles,
     extendedClientCapabilities = extendedClientCapabilities,
     codelenses = {

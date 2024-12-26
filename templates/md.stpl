@@ -1,11 +1,11 @@
 ---
-File          : ${1:TM_FILENAME}
+File          : ${TM_FILENAME_BASE}
 Author        : Kevin
-Date          : ${2:datetime}
-Date Modified : ${3:datetime}
+Date          : ${CURRENT_DATE}
+Date Modified : ${CURRENT_DATE}
 ---
 
-# ${4:Title}
+# ${TM_FILENAME_BASE}
 
 ---
 
