@@ -1,0 +1,35 @@
+{
+   "plist": {
+      "prefix": "plist",
+      "body": [
+         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+         "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">",
+         "<plist version=\"1.0\">",
+         "<dict>",
+         "\t<key>Label</key>",
+         "\t<string>${1:com.author.program}</string>",
+         "\t<key>ProgramArguments</key>",
+         "\t<array>",
+         "\t\t<string>${2:path/to/binary}</string>",
+         "\t</array>",
+         "\t<key>StartCalendarInterval</key>",
+         "\t\t<dict>",
+         "\t\t\t<key>Hour</key>",
+         "\t\t\t<integer>${6:HourInt}</integer>",
+         "\t\t\t<key>Minute</key>",
+         "\t\t\t<integer>${7:MinuteInt}</integer>",
+         "\t\t</dict>",
+         "\t<key>StandardErrorPath</key>",
+         "\t\t<string>${3:path/to/file stderr}</string>",
+         "\t<key>StandardOutPath</key>",
+         "\t\t<string>${4:path/to/file stdout}</string>",
+         "\t<key>RunAtLoad</key>",
+         "\t<${5:true}/>",
+         "\t</dict>",
+         "</plist>"
+      ],
+      "description": "Apple plist"
+   }
+}
+
+

@@ -1,0 +1,7 @@
+{
+  "schema": {
+    "prefix": "sch",
+    "description": "Use yaml $schema",
+    "body": ["# yaml-language-server: \\$schema=${1:url_or_path}$0"]
+  }
+}

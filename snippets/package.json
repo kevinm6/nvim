@@ -1,0 +1,397 @@
+{
+  "name": "snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "all"
+        ],
+        "path": "./general/all.json"
+      },
+      {
+        "language": [
+          "license"
+        ],
+        "path": "./general/license.json"
+      },
+      {
+        "language": "c",
+        "path": "./general/c/c.json"
+      },
+      {
+        "language": "cdoc",
+        "path": "./general/c/cdoc.json"
+      },
+      {
+        "language": "cpp",
+        "path": "./general/cpp/cpp.json"
+      },
+      {
+        "language": "cppdoc",
+        "path": "./general/cpp/cppdoc.json"
+      },
+      {
+        "language": [
+          "csharp",
+          "cs"
+        ],
+        "path": "./general/csharp/csharp.json"
+      },
+      {
+        "language": "csharpdoc",
+        "path": "./general/csharp/csharpdoc.json"
+      },
+      {
+        "language": [
+          "gitcommit",
+          "NeogitCommitMessage"
+        ],
+        "path": "./general/gitcommit.json"
+      },
+      {
+        "language": "eruby",
+        "path": "./general/erb.json"
+      },
+      {
+        "language": "erlang",
+        "path": "./general/erlang.json"
+      },
+      {
+        "language": "elixir",
+        "path": "./general/elixir.json"
+      },
+      {
+        "language": [
+          "eelixir",
+          "heex"
+        ],
+        "path": "./general/eelixir.json"
+      },
+      {
+        "language": "fortran",
+        "path": "./general/fortran.json"
+      },
+      {
+        "language": "glsl",
+        "path": "./general/glsl.json"
+      },
+      {
+        "language": "nix",
+        "path": "./general/nix.json"
+      },
+      {
+        "language": "liquid",
+        "path": "./general/liquid.json"
+      },
+      {
+        "language": "lua",
+        "path": "./general/lua/lua.json"
+      },
+      {
+        "language": "luadoc",
+        "path": "./general/lua/luadoc.json"
+      },
+      {
+        "language": "nvim_lua",
+        "path": "./general/lua/nvim_lua.json"
+      },
+      {
+        "language": "go",
+        "path": "./general/go.json"
+      },
+      {
+        "language": "fennel",
+        "path": "./general/fennel.json"
+      },
+      {
+        "language": "fsh",
+        "path": "./general/fsh.json"
+      },
+      {
+        "language": "php",
+        "path": "./general/php/php.json"
+      },
+      {
+        "language": "phpdoc",
+        "path": "./general/php/phpdoc.json"
+      },
+      {
+        "language": "quarto",
+        "path": "./general/quarto.json"
+      },
+      {
+        "language": "rescript",
+        "path": "./general/rescript.json"
+      },
+      {
+        "language": "ruby",
+        "path": "./general/ruby/ruby.json"
+      },
+      {
+        "language": "rdoc",
+        "path": "./general/ruby/rdoc.json"
+      },
+      {
+        "language": "rust",
+        "path": "./general/rust/rust.json"
+      },
+      {
+        "language": "rustdoc",
+        "path": "./general/rust/rustdoc.json"
+      },
+      {
+        "language": "scala",
+        "path": "./general/scala.json"
+      },
+      {
+        "language": "swift",
+        "path": "./general/swift.json"
+      },
+      {
+        "language": "sql",
+        "path": "./general/sql.json"
+      },
+      {
+        "language": [
+          "shellscript",
+          "shell",
+          "sh",
+          "zsh"
+        ],
+        "path": "./general/shell/shell.json"
+      },
+      {
+        "language": "shelldoc",
+        "path": "./general/shell/shelldoc.json"
+      },
+      {
+        "language": [
+          "markdown",
+          "rmd"
+        ],
+        "path": "./general/markdown.json"
+      },
+      {
+        "language": [
+          "plaintex",
+          "tex"
+        ],
+        "path": "./general/latex.json"
+      },
+      {
+        "language": "java",
+        "path": "./general/java/java.json"
+      },
+      {
+        "language": "java-testing",
+        "path": "./general/java/java-tests.json"
+      },
+      {
+        "language": "javadoc",
+        "path": "./general/java/javadoc.json"
+      },
+      {
+        "language": "julia",
+        "path": "./general/julia.json"
+      },
+      {
+        "language": [
+          "html",
+          "jade",
+          "pug",
+          "eruby",
+          "javascriptreact",
+          "htmldjango",
+          "astro"
+        ],
+        "path": "./general/html.json"
+      },
+      {
+        "language": [
+          "css",
+          "scss",
+          "sass",
+          "less",
+          "stylus"
+        ],
+        "path": "./general/css.json"
+      },
+      {
+        "language": [
+          "javascript",
+          "javascriptreact",
+          "vue",
+          "svelte"
+        ],
+        "path": "./general/javascript/javascript.json"
+      },
+      {
+        "language": "jsdoc",
+        "path": "./general/javascript/jsdoc.json"
+      },
+      {
+        "language": "tsdoc",
+        "path": "./general/javascript/tsdoc.json"
+      },
+      {
+        "language": [
+          "typescript",
+          "typescriptreact"
+        ],
+        "path": "./general/javascript/typescript.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./general/javascript/react.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./general/javascript/react-native.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./general/javascript/next.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./general/javascript/react-ts.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./general/javascript/next-ts.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./general/javascript/react-native-ts.json"
+      },
+      {
+        "language": [
+          "javascriptreact",
+          "typescriptreact"
+        ],
+        "path": "./general/javascript/react-es7.json"
+      },
+      {
+        "language": "svelte",
+        "path": "./general/svelte.json"
+      },
+      {
+        "language": "python",
+        "path": "./general/python/base.json"
+      },
+      {
+        "language": "python",
+        "path": "./general/python/comprehension.json"
+      },
+      {
+        "language": "python",
+        "path": "./general/python/debug.json"
+      },
+      {
+        "language": "python",
+        "path": "./general/python/python.json"
+      },
+      {
+        "language": "python",
+        "path": "./general/python/unittest.json"
+      },
+      {
+        "language": "pydoc",
+        "path": "./general/python/pydoc.json"
+      },
+      {
+        "language": [
+          "plaintex",
+          "tex"
+        ],
+        "path": "./general/latex/latex-snippets.json"
+      },
+      {
+        "language": [
+          "plaintex",
+          "tex"
+        ],
+        "path": "./general/latex/vscode-latex-snippets.json"
+      },
+      {
+        "language": [
+          "bibtex",
+          "bib"
+        ],
+        "path": "./general/latex/bibtex.json"
+      },
+      {
+        "language": [
+          "r",
+          "rmd"
+        ],
+        "path": "./general/r.json"
+      },
+      {
+        "language": "rmd",
+        "path": "./general/rmarkdown.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./general/yml.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./general/kubernetes.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./general/docker/docker-compose.json"
+      },
+      {
+        "language": "make",
+        "path": "./general/make.json"
+      },
+      {
+        "language": "objc",
+        "path": "./general/objc.json"
+      },
+      {
+        "language": "dockerfile",
+        "path": "./general/docker/docker_file.json"
+      },
+      {
+        "language": "edge",
+        "path": "./general/frameworks/edge.json"
+      },
+      {
+        "language": [
+          "powershell",
+          "ps1"
+        ],
+        "path": "./general/PowerShell.json"
+      },
+      {
+        "language": [
+          "ocaml",
+          "ocamlinterface"
+        ],
+        "path": "./general/ocaml/ocaml.json"
+      },
+      {
+        "language": "ocaml.ocamllex",
+        "path": "./general/ocaml/ocamllex.json"
+      },
+      {
+        "language": "dune-project",
+        "path": "./general/ocaml/dune-project.json"
+      },
+      {
+        "language": "hlsplaylist",
+        "path": "./general/hlsplaylist.json"
+      },
+      {
+        "language": [
+          "xml",
+          "plist"
+        ],
+        "path": "./general/xml.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+   "pl": {
+      "prefix": "pl",
+      "body": [
+         "#EXT3MU\n",
+         "#EXTINF:${1:duration}, ${2:title}",
+         "${3:url}"
+      ],
+      "description": "M3U playlist"
+   },
+   "plu": {
+      "prefix": "plu",
+      "body": [
+         "#EXT3MU8\n",
+         "#EXTINF:${1:duration}, ${2:title}",
+         "${3:url}"
+      ],
+      "description": "M3U8 playlist"
+   }
+}
+

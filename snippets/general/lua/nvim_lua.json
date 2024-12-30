@@ -1,0 +1,28 @@
+{
+  "autocmd": {
+    "body": [
+      "vim.api.nvim_create_autocmd(\"${1:Event}\", {",
+      "\tpattern = \"${2:pattern}\",",
+      "\tcallback = function()",
+      "\t\t$0",
+      "\tend,",
+      "})"
+    ],
+    "prefix": "autocmd",
+    "description": "Create a Nvim autocmd"
+  },
+  "usercmd": {
+    "body": [
+      "vim.api.nvim_create_user_command(\"${1:CommandName}\", function()",
+      "\t${2:pattern}",
+      "end, { desc = \"${3:Description}\"})",
+      "$0"
+    ],
+    "prefix": "usercmd",
+    "description": "Create a Nvim user command"
+  },
+  "file exists": {
+    "body": "local fileExists = vim.uv.fs_stat(\"${1:filepath}\") ~= nil",
+    "prefix": "fexist"
+  }
+}
