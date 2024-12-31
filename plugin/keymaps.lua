@@ -90,20 +90,8 @@ nmap {
   end,
   "Quit",
 }
-nmap {
-  "<leader>nn",
-  function()
-    vim.cmd.Notifications()
-  end,
-  "Notifications",
-}
-nmap {
-  "<leader>nm",
-  function()
-    vim.cmd.messages()
-  end,
-  "Messages",
-}
+nmap { "<leader>nn", "<cmd>Notifications<cr>", "Notifications" }
+nmap { "<leader>nm", "<cmd>messages<cr>", "Messages" }
 nmap {
   "<leader>Q",
   function()

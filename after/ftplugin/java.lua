@@ -19,9 +19,9 @@ local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
-local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" }) or vim.uv.cwd()
+local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" })
 local cache_dir = vim.fn.stdpath "cache"
-local project_name = vim.fn.fnamemodify(root_dir, ":t")
+local project_name = vim.fs.basename(root_dir or vim.uv.cwd())
 local workspace_dir = string.format("%s/java/wksp/%s", cache_dir, project_name)
 
 local launcher_path = vim.fn.glob(data_path .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", true)
