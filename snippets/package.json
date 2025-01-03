@@ -100,8 +100,12 @@
         "path": "./general/go.json"
       },
       {
-        "language": "fennel",
-        "path": "./general/fennel.json"
+        "language": "groovy",
+        "path": "./general/groovy.json"
+      },
+      {
+        "language": "freemarker",
+        "path": "./general/freemarker.json"
       },
       {
         "language": "fsh",
@@ -120,16 +124,8 @@
         "path": "./general/quarto.json"
       },
       {
-        "language": "rescript",
-        "path": "./general/rescript.json"
-      },
-      {
         "language": "ruby",
         "path": "./general/ruby/ruby.json"
-      },
-      {
-        "language": "rdoc",
-        "path": "./general/ruby/rdoc.json"
       },
       {
         "language": "rust",
@@ -179,7 +175,7 @@
         "path": "./general/latex.json"
       },
       {
-        "language": "java",
+        "language":  "java",
         "path": "./general/java/java.json"
       },
       {
@@ -391,6 +387,12 @@
           "plist"
         ],
         "path": "./general/xml.json"
+      },
+      {
+        "language": [
+          "xsl", "xslt"
+        ],
+        "path": "./general/xsl.json"
       }
     ]
   }

@@ -20,6 +20,7 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
 local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" })
+  or vim.fs.dirname(vim.api.nvim_buf_get_name(0))
 local cache_dir = vim.fn.stdpath "cache"
 local project_name = vim.fs.basename(root_dir or vim.uv.cwd())
 local workspace_dir = string.format("%s/java/wksp/%s", cache_dir, project_name)

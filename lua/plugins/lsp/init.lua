@@ -29,7 +29,7 @@ local function set_buf_keymaps(client, bufnr)
   local _, tele_builtin = pcall(require, "telescope.builtin")
 
   local function nmap(tbl)
-    vim.keymap.set("n", tbl[1], tbl[2], { buffer = bufnr, desc = "LSP❭ " .. tbl[3] })
+    vim.keymap.set("n", tbl[1], tbl[2], { buffer = bufnr, desc = "Lsp❭ " .. tbl[3] })
   end
 
   nmap {
@@ -66,9 +66,9 @@ local function set_buf_keymaps(client, bufnr)
   end
 
   if client.supports_method "textDocument/signatureHelp" then
-    vim.keymap.set("s", "<C-space>", vim.lsp.buf.signature_help, {
+    vim.keymap.set("s", "<C-x><C-space>", vim.lsp.buf.signature_help, {
       buffer = bufnr,
-      desc = "LSP❭ SignatureHelp",
+      desc = "Lsp❭ SignatureHelp",
     })
   end
 

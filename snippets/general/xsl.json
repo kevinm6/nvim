@@ -1,0 +1,51 @@
+{
+  "value": {
+    "prefix": "vof",
+    "body": "<xsl:value-of select=\"${1:valueOrVariable}\" />$0",
+    "description": "xsl value-of"
+  },
+  "variable": {
+    "prefix": "var",
+    "body": "<xsl:variable name=\"${1:varName}\" select=\"${2:valueOrVariable}\" />$0",
+    "description": "xsl variable"
+  },
+  "for-each statement": {
+    "prefix": "fore",
+    "body": [
+      "<xsl:for-each select=\"${1:variableOrXPath}\">",
+      "\t${2:body}",
+      "</xsl:for-each>",
+      "$0"
+    ],
+    "description": "xsl for-each"
+  },
+  "choose statemnent": {
+    "prefix": "chs",
+    "body": [
+      "<xsl:choose>",
+      "\t<xsl:when test=\"${1:condition}\">",
+      "\t\t<xsl:value-of select=\"${2:value}\" />",
+      "\t</xsl:when>",
+      "\t<xsl:when test=\"${3:condition2}\">",
+      "\t\t<xsl:value-of select=\"${4:value2}\" />",
+      "\t</xsl:when>",
+      "\t<xsl:otherwise>",
+      "\t\t<xsl:value-of select=\"${4:valueDefault}\" />",
+      "\t</xsl:otherwise>",
+      "</xsl:choose>"
+    ],
+
+    "description": "xsl choose"
+  },
+  "if statement": {
+    "prefix": "if",
+    "body": [
+      "<xsl:if test=\"${1:condition}\">",
+      "\t${2:body}",
+      "</xsl:if>",
+      "$0"
+    ],
+    "description": "xsl if statement"
+  }
+}
+

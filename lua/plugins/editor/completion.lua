@@ -2,7 +2,7 @@
 -- File         : completion.lua
 -- Description  : completion config
 -- Author       : Kevin
--- Last Modified: 21 Dec 2024, 14:30
+-- Last Modified: 03 Jan 2025, 00:25
 -------------------------------------
 
 return {
@@ -63,10 +63,10 @@ return {
       },
     },
     completion = {
-      keyword = {
-        regex = "[-_/]\\|\\k",
-        exclude_from_prefix_regex = "[\\.]",
-      },
+      -- keyword = {
+      --  regex = "[-_/]\\|\\k",
+      --  exclude_from_prefix_regex = "[\\.]",
+      -- },
       accept = {
         auto_brackets = { enabled = true },
       },
@@ -81,12 +81,12 @@ return {
         winblend = vim.o.pumblend,
         draw = {
           treesitter = { "lsp" },
-          -- align_to_component = "kind_icon",
+          -- align_to = "kind_icon",
           -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
           columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
           components = {
             label = { ellipsis = true, width = { fill = true, max = 32 } },
-            label_description = { ellipsis = true, width = { fill = true, max = 26 } },
+            label_description = { ellipsis = true, width = { fill = true } },
             kind_icon = {
               ellipsis = false,
               text = function(ctx)

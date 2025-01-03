@@ -154,7 +154,12 @@
   },
   "Insert 2x1 table": {
     "prefix": "2x1tbl",
-    "body": ["| ${1:Column1}  |", "|      ---      |", "| ${2:Item1}    |", "${0}"],
+    "body": [
+      "| ${1:Column1}  |",
+      "|      ---      |",
+      "| ${2:Item1}    |",
+      "${0}"
+    ],
     "description": "Insert table with 2 rows and 1 column. First row is heading."
   },
   "Insert 3x1 table": {
