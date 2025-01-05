@@ -7,8 +7,6 @@
 
 local env = {}
 
-local has_tele, pickers = pcall(require, "telescope.pickers")
-
 local function prepare_environment_variables()
   local items = {}
   for key, value in pairs(vim.fn.environ()) do
@@ -17,18 +15,12 @@ local function prepare_environment_variables()
   return items
 end
 
-if not has_tele then
-  vim.print(prepare_environment_variables())
-  return
-end
-
-local finders = require "telescope.finders"
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
-local entry_display = require "telescope.pickers.entry_display"
 local conf = require("telescope.config").values
 
 local function append_environment_name(prompt_bufnr)
+  local actions = require "telescope.actions"
+  local action_state = require "telescope.actions.state"
+
   local selection = action_state.get_selected_entry()
   actions.close(prompt_bufnr)
   if selection.value == "" then
@@ -40,6 +32,9 @@ local function append_environment_name(prompt_bufnr)
 end
 
 local function append_environment_value(prompt_bufnr)
+  local actions = require "telescope.actions"
+  local action_state = require "telescope.actions.state"
+
   local selection = action_state.get_selected_entry()
   actions.close(prompt_bufnr)
   if selection.value == "" then
@@ -51,6 +46,8 @@ local function append_environment_value(prompt_bufnr)
 end
 
 local function edit_environment_value(prompt_bufnr)
+  local actions = require "telescope.actions"
+  local action_state = require "telescope.actions.state"
   local selection = action_state.get_selected_entry()
   actions.close(prompt_bufnr)
 
@@ -68,6 +65,15 @@ local function edit_environment_value(prompt_bufnr)
 end
 
 local function show_environment_variables(opts)
+  local has_tele, pickers = pcall(require, "telescope.pickers")
+  if not has_tele then
+    vim.print(prepare_environment_variables())
+    return
+  end
+
+  local finders = require "telescope.finders"
+  local actions = require "telescope.actions"
+
   opts = opts or {}
   pickers
     .new(opts, {
@@ -89,6 +95,7 @@ local function show_environment_variables(opts)
           local env_name_width = math.floor(columns * 0.05)
           local env_value_width = 22
 
+          local entry_display = require "telescope.pickers.entry_display"
           -- NOTE: the width calculating logic is not exact, but approx enough
           local displayer = entry_display.create {
             separator = " ▏",

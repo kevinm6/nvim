@@ -1,8 +1,8 @@
 ----------------------------------------
---  File         : noice.lua
---  Description  : noice plugin configuration
+--  File         : notifications.lua
+--  Description  : notifications plugins config
 --  Author       : Kevin
---  Last Modified: 26 Dec 2024, 11:05
+--  Last Modified: 06/01/2025 - 10:19
 ----------------------------------------
 
 return {

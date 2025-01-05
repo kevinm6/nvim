@@ -529,6 +529,20 @@ return {
             },
           }))
         end,
+
+        texlab = function()
+          lspconfig.texlab.setup(vim.tbl_deep_extend("force", default_lsp_config, {
+            settings = {
+              texlab = {
+                auxDirectory = string.format(
+                  "%s/vimtex/aux_dir/%s",
+                  vim.fn.stdpath "cache",
+                  vim.fs.basename(vim.api.nvim_buf_get_name(0))
+                ),
+              },
+            },
+          }))
+        end,
       }
     end,
   },

@@ -55,7 +55,7 @@ function M.new_terminal_win(cmd, autoclose, opts)
   if opts.preset then
     opts = M.presets[opts.preset]
   end
-  local buf = vim.api.nvim_create_buf(false, false)
+  local buf = vim.api.nvim_create_buf(not autoclose, false) -- if autoclose -> buf = not listed
   local width = opts.width or nil
   local height = opts.height or nil
   local rows = opts.relative and math.ceil(vim.o.lines - height) * 0.5 - 1 or nil

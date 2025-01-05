@@ -241,6 +241,7 @@ nmap {
   function()
     local height = math.floor(vim.o.lines * 0.25)
     require("lib.terminal").new_terminal_win("", true, {
+      listed = true,
       height = height,
       win = -1,
       split = "below",
@@ -254,6 +255,7 @@ nmap {
   function()
     local width = math.floor(vim.o.columns * 0.4)
     require("lib.terminal").new_terminal_win("", true, {
+      listed = true,
       width = width,
       win = -1,
       split = "right",

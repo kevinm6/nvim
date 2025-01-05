@@ -8,7 +8,6 @@
 local note = {}
 
 ---Get available notes
----@private
 ---@return table
 local function get_notes()
   local notes = {}

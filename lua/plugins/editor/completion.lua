@@ -34,13 +34,8 @@ return {
     },
 
     sources = {
-      default = { "snippets", "lsp", "path", "buffer", "lazydev" },
+      default = { "snippets", "lsp", "path", "buffer", "markdown", "lazydev" },
       providers = {
-        lazydev = {
-          name = "LazyDev",
-          module = "lazydev.integrations.blink",
-          score_offset = 100,
-        },
         snippets = {
           opts = {
             extended_filetypes = {
@@ -49,6 +44,15 @@ return {
               java = { "javadoc", "java_tests" },
             },
           },
+        },
+        markdown = {
+          name = "RenderMarkdown",
+          module = "render-markdown.integ.blink",
+        },
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          score_offset = 100,
         },
       },
       min_keyword_length = function(ctx)

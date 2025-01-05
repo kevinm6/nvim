@@ -294,16 +294,16 @@ autocmd("FileType", {
 
 ---Templates
 autocmd("BufNewFile", {
-  group = vim.api.nvim_create_augroup("templates", { clear = true }),
+  group = augroup("templates", { clear = true }),
   desc = "Load template file",
-  pattern = "*",
+  pattern = { "pom.xml", "*.md", "*.sh" },
   callback = function(args)
     local path = vim.fn.stdpath "config"
     local fname = vim.fn.fnamemodify(args.file, ":t")
     local ext = vim.fn.fnamemodify(args.file, ":e")
     local candidates = { fname, ext }
     local uv = vim.uv
-    vim.print(candidates)
+    -- vim.print(candidates)
     for _, candidate in ipairs(candidates) do
       local tmpl = table.concat { path, "/templates/", candidate, ".tpl" }
       if uv.fs_stat(tmpl) then
@@ -322,6 +322,17 @@ autocmd("BufNewFile", {
         end)
         return
       end
+    end
+  end,
+})
+
+---Lsp progress
+autocmd("LspProgress", {
+  group = augroup("_lsp_progress", { clear = true }),
+  callback = function()
+    local lsp = vim.lsp.status()
+    if lsp then
+      print(lsp)
     end
   end,
 })

@@ -268,10 +268,12 @@ end
 local function get_lsp_progress()
   local lsp = vim.lsp.status()
   if lsp then
-    lsp = lsp:gsub(":", " ")
-    lsp = lsp:gsub("(%d+%%)", "%1%%") -- sanitize percentage
-    lsp = lsp:gsub("%s+", " ")
-    return lsp
+    vim.print(lsp)
+    -- sanitize percentage
+    lsp = vim.fn.fnameescape(lsp)
+    -- lsp = lsp:gsub(":", " "):gsub("(%d+%%)", "%1%%"):gsub("%s+", " ")
+
+    return (#lsp > 40) and string.sub(lsp, 1, 38) .. "…" or lsp
   end
 
   return ""
@@ -433,7 +435,7 @@ local function enable_statusline()
     "",
     sl.colors.empty,
     session_name(),
-    get_lsp_progress(),
+    -- get_lsp_progress(),
     get_python_env(),
 
     -- Middle
@@ -486,7 +488,7 @@ function sl.toggle()
       "FileType",
       "FileChangedShellPost",
       "DiagnosticChanged",
-      "LspProgress",
+      -- "LspProgress",
     }, {
       group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
       callback = function(cb)

@@ -176,7 +176,7 @@ local M = {
   ---LaTeX
   {
     "lervag/vimtex",
-    ft = { "tex", "plaintex" },
+    ft = { "tex", "plaintex", "bib" },
     config = function()
       vim.g.vimtex_view_method = "sioyek"
       vim.g.vimtex_quickfix_mode = 0 -- don't open qflist on compile errors

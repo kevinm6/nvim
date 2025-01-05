@@ -10,7 +10,6 @@ local session = {
 }
 
 ---Get available sessions
----@private
 ---@return table
 local function get_sessions()
   local sessions = {}
@@ -28,7 +27,7 @@ local function delete_session()
   local sessions = get_sessions()
 
   if #sessions >= 1 then
-    require "telescope"
+    pcall(require, "telescope")
     vim.ui.select(sessions, {
       prompt = "Select session to delete:",
       default = nil,
@@ -53,7 +52,7 @@ local function restore_session()
   local sessions = get_sessions()
 
   if #sessions >= 1 then
-    require "telescope"
+    pcall(require, "telescope")
     vim.ui.select(sessions, {
       prompt = " > Select session to restore",
       format_item = function(item)
@@ -78,7 +77,7 @@ end
 --- The session is saved into 'data' stdpath of nvim
 ---@see mksession |:mksession|
 local function save_session()
-  require "telescope"
+  pcall(require, "telescope")
   vim.ui.input({
     prompt = "Enter session name: ",
     default = nil,
