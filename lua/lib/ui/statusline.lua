@@ -92,6 +92,7 @@ local sl = {
     dapui_hover = "󰃤",
     dapui_watches = "󰃤",
     default = "",
+    gradle = "",
   }, {
     __index = function(t, k)
       local has_icons, icons = pcall(require, "mini.icons")
@@ -366,7 +367,7 @@ end
 ---Get lsp status and if active get names of server running
 ---@return string lsp_status
 local function get_lsp_info()
-  return #vim.lsp.get_clients() ~= 0 and string.format("%s• ", sl.colors.name)
+  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and string.format("%s• ", sl.colors.name)
     or string.format("%s• ", sl.colors.lspnoactive)
 end
 

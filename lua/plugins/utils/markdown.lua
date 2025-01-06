@@ -64,6 +64,6 @@ return {
 
     vim.keymap.set("n", "<localleader>r", function()
       require("render-markdown").toggle()
-    end, { desc = "Render Markdown" })
+    end, { desc = "Render Markdown", buffer = true })
   end,
 }
