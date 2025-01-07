@@ -7,13 +7,9 @@
       " *",
       " * ${2:Description.}$0",
       " *",
-      " * @param ${4:name}  ${5:Type and description of the parameter.}",
-      " * @return ${6:Type and description of the returned object.}",
+      " * @param ${4:name}  ${5:Description of the parameter.}",
+      " * @return ${6:Description of the returned object.}",
       " *",
-      " * @example",
-      " * ```",
-      " * ${7:Write me later}",
-      " * ```",
       " */"
     ],
     "description": "A Java comment block including short summary, description, param, return, and examples."
@@ -25,12 +21,12 @@
   },
   "@param": {
     "prefix": "@param",
-    "body": ["@param ${1:name} ${2:Type and description of the parameter.}$0"],
+    "body": ["@param ${1:name} ${2:Description of the parameter.}$0"],
     "description": "Documents a parameter."
   },
   "@return": {
     "prefix": "@return",
-    "body": ["@param ${1:name} ${2:Type and description of the parameter.}$0"],
+    "body": ["@param ${1:name} ${2:Description of the parameter.}$0"],
     "description": "Documents a the returned object."
   },
   "@example": {

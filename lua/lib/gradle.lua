@@ -41,7 +41,7 @@ local function run_gradle_task(gradlew, task)
     local out = (obj.code ~= 0) and obj.stderr or obj.stdout
 
     vim.schedule(function()
-      local text = string.format(" OUTPUT⟩ gradle %s\n\n%s", task, out)
+      local text = string.format("  OUTPUT⟩ gradle %s\n\n%s", task, out)
       local lines = vim.split(text, "\n")
 
       local buf = vim.api.nvim_create_buf(false, true)
@@ -56,10 +56,9 @@ local function run_gradle_task(gradlew, task)
       vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
       vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
       vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
-      vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
+      vim.api.nvim_set_option_value("filetype", "sh", { buf = buf })
       vim.api.nvim_set_option_value("number", false, { win = win })
       vim.api.nvim_set_option_value("relativenumber", false, { win = win })
-      vim.api.nvim_set_option_value("filetype", "gradle", { buf = buf })
 
       vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf })
       vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = buf })
