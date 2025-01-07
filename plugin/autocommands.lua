@@ -325,14 +325,3 @@ autocmd("BufNewFile", {
     end
   end,
 })
-
----Lsp progress
-autocmd("LspProgress", {
-  group = augroup("_lsp_progress", { clear = true }),
-  callback = function()
-    local lsp = vim.lsp.status()
-    if lsp then
-      print(lsp)
-    end
-  end,
-})

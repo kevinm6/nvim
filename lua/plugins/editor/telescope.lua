@@ -181,7 +181,7 @@ return {
             height = 0.4,
           },
           -- cwd = vim.uv.cwd(),
-          no_ignore = true,
+          -- no_ignore = true,
           path_display = {
             filename_first = { reverse_directories = false },
           },
