@@ -35,7 +35,7 @@ local sl = {
     git_status_full = 110,
     diagnostic = 128,
     row_onTot = 100,
-    lsp_info = 100,
+    lsp_info = 60,
   }, {
     __index = function()
       return 80
@@ -269,8 +269,8 @@ end
 local function get_lsp_progress()
   local lsp = vim.lsp.status()
   if lsp then
-    lsp = lsp:gsub("(%d+%%)", "%1%%") --:gsub("%s+", " ")
-    return (#lsp > 40) and string.sub(lsp, 1, 38) .. "…" or lsp
+    lsp = lsp:gsub("(%%)", "%1%%"):gsub("%s+", " ") --:gsub("\r", ""):gsub("\t", ""):gsub("\n", "")
+    return (#lsp > sl.preset_width.lsp_info) and string.sub(lsp, 1, sl.preset_width.lsp_info) .. "…" or lsp
   end
 
   return ""
@@ -432,8 +432,10 @@ local function enable_statusline()
     "",
     sl.colors.empty,
     session_name(),
-    get_lsp_progress(),
+    space,
     get_python_env(),
+    space,
+    get_lsp_progress(),
 
     -- Middle
     sideSep,
