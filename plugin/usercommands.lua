@@ -57,12 +57,12 @@ user_command("WipeReg", function()
 end, { desc = "Wipe all Registers" })
 
 ---Sessions
-user_command("Session", function(arg)
+vim.api.nvim_create_user_command("Session", function(arg)
   require("lib.session").select(arg.args)
 end, {
-  nargs = 1,
+  nargs = "?",
   desc = "Session Manager",
-  complete = "custom,v:lua.require'lib.session'.usercmd_session_completion",
+  -- complete = "custom,v:lua.require'lib.session'.usercmd_session_completion",
 })
 
 ---Config File

@@ -92,28 +92,20 @@ local config = {
   single_file_support = true,
   settings = {
     java = {
-      redhat = {
-        telemetry = { enabled = false },
-      },
+      redhat = { telemetry = { enabled = false } },
       autobuild = { enabled = false },
       eclipse = { downloadSources = true },
       maven = { downloadSources = true },
       signatureHelp = { enabled = true },
       contentProvider = { preferred = "fernflower" },
-      saveActions = {
-        organizeImports = true,
-      },
+      saveActions = { organizeImports = false },
       sources = {
         organizeImports = {
           starThreshold = 9999,
           staticStarThreshold = 9999,
         },
       },
-      import = {
-        gradle = {
-          enabled = true,
-        },
-      },
+      import = { gradle = { enabled = true } },
       configuration = {
         updateBuildConfiguration = "interactive",
         runtimes = {
@@ -127,21 +119,16 @@ local config = {
           },
         },
       },
-      testsCodeLens = {
-        enabled = true,
-      },
-      implementationsCodeLens = {
-        enabled = true,
-      },
-      referencesCodeLens = {
-        enabled = true,
-      },
-      references = {
-        includeDecompiledSources = true,
-      },
+      testsCodeLens = { enabled = true },
+      implementationsCodeLens = { enabled = true },
+      referencesCodeLens = { enabled = true },
+      references = { includeDecompiledSources = true },
       inlayHints = { parameterNames = { enabled = "all" } },
       format = {
         enabled = true,
+        settings = {
+          ["org.eclipse.jdt.core.formatter.comment.line_length"] = 100,
+        },
       },
       completion = {
         maxResults = 20,

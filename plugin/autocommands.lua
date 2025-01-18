@@ -206,10 +206,9 @@ autocmd("BufRead", {
 ---Insert mode on builtin Neovim terminal
 autocmd("TermOpen", {
   group = augroup("_startinsert_term_open", { clear = true }),
-  callback = function()
+  callback = function(ev)
     vim.cmd.startinsert()
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
+    vim.bo[ev.buf].filetype = "terminal"
   end,
 })
 

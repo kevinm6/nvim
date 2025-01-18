@@ -5,7 +5,7 @@
 -- Last Modified: 26 Dec 2024, 11:00
 -----------------------------------------
 
-local sl = {
+local M = {
   ---name of the session
   session_name = "",
   ---filetypes to exclude
@@ -19,7 +19,7 @@ local sl = {
     lazy = true,
     mason = true,
     noice = true,
-
+    terminal = true,
     checkhealth = true,
     WhichKey = true,
     query = true,
@@ -147,11 +147,11 @@ end
 ---Get active Nvim mode and the highlight group
 ---@return string mode colorful mode or mode_code
 local function get_mode()
-  local nmode = sl.colors.Nmode
-  local vmode = sl.colors.Vmode
-  local cmode = sl.colors.Cmode
-  local tmode = sl.colors.Tmode
-  local imode = sl.colors.Imode
+  local nmode = M.colors.Nmode
+  local vmode = M.colors.Vmode
+  local cmode = M.colors.Cmode
+  local tmode = M.colors.Tmode
+  local imode = M.colors.Imode
 
   local mode = {
     ["n"] = nmode .. "N",
@@ -188,7 +188,7 @@ local function get_mode()
     ["r"] = tmode .. "R",
     ["rm"] = nmode .. "M",
     ["r?"] = nmode .. "C",
-    ["!"] = sl.colors.ShellMode .. "S",
+    ["!"] = M.colors.ShellMode .. "S",
     ["t"] = tmode .. "T",
   }
 
@@ -212,9 +212,8 @@ end
 ---Get location in current buffer (current row on total rows)
 ---@return string line number on total number
 local function get_line_onTot()
-  return win_is_smaller(sl.preset_width.row_onTot)
-      and string.format(" %s%%l%s/%%L ", sl.colors.git, sl.colors.fformatloc)
-    or string.format(" %s%%l%s/%%L|%%P", sl.colors.git, sl.colors.fformatloc)
+  return win_is_smaller(M.preset_width.row_onTot) and string.format(" %s%%l%s/%%L ", M.colors.git, M.colors.fformatloc)
+    or string.format(" %s%%l%s/%%L|%%P", M.colors.git, M.colors.fformatloc)
 end
 
 ---Get file name
@@ -244,22 +243,22 @@ local function get_lsp_diagnostic()
   status_ok = #diagnostics == 0
 
   -- display values only if there are any
-  return status_ok and sl.colors.diag .. sl.icons.status_ok
-    or do_not_show_diag and sl.colors.diag .. sl.icons.status_not_ok
+  return status_ok and M.colors.diag .. M.icons.status_ok
+    or do_not_show_diag and M.colors.diag .. M.icons.status_not_ok
     or string.format(
       "%s%s%s %d %s%s %d %s%s %d %s%s %d",
-      sl.colors.diag,
-      sl.colors.diagError,
-      sl.icons.error,
+      M.colors.diag,
+      M.colors.diagError,
+      M.icons.error,
       errors,
-      sl.colors.diagWarn,
-      sl.icons.warning,
+      M.colors.diagWarn,
+      M.icons.warning,
       warns,
-      sl.colors.diagInfo,
-      sl.icons.information,
+      M.colors.diagInfo,
+      M.icons.information,
       infos,
-      sl.colors.diagHint,
-      sl.icons.hint,
+      M.colors.diagHint,
+      M.icons.hint,
       hints
     )
 end
@@ -270,7 +269,7 @@ local function get_lsp_progress()
   local lsp = vim.lsp.status()
   if lsp then
     lsp = lsp:gsub("(%%)", "%1%%"):gsub("%s+", " ") --:gsub("\r", ""):gsub("\t", ""):gsub("\n", "")
-    return (#lsp > sl.preset_width.lsp_info) and string.sub(lsp, 1, sl.preset_width.lsp_info) .. "…" or lsp
+    return (#lsp > M.preset_width.lsp_info) and string.sub(lsp, 1, M.preset_width.lsp_info) .. "…" or lsp
   end
 
   return ""
@@ -294,9 +293,9 @@ local function get_git_status()
   if signs.head ~= nil then
     local head = signs.head
 
-    if win_is_smaller(sl.preset_width.git_branch) then
+    if win_is_smaller(M.preset_width.git_branch) then
       return "• "
-    elseif win_is_smaller(sl.preset_width.git_branch, sl.preset_width.git_status_full) or no_changes then
+    elseif win_is_smaller(M.preset_width.git_branch, M.preset_width.git_status_full) or no_changes then
       return string.format(" %s ", head)
     else
       return string.format("+%s ~%s -%s |  %s ", add, change, remove, head)
@@ -312,7 +311,7 @@ local function get_filetype_and_icon()
   local file_ext = vim.bo.filetype or vim.fn.expand "%:e"
 
   local has_icons, icons = pcall(require, "mini.icons")
-  local icon = sl.icons.default
+  local icon = M.icons.default
   if has_icons then
     icon = icons.get("filetype", file_ext)
   end
@@ -336,14 +335,14 @@ end
 ---Get session name if active
 ---@return string session_name name of the active session or empty string
 local function session_name()
-  return sl.session_name ~= "" and " Session: " .. sl.session_name or ""
+  return M.session_name ~= "" and " Session: " .. M.session_name or ""
 end
 
 ---Get python virtual-env if is active and in python file
 ---@return string env_name name of python env or empty string
 local function get_python_env()
   -- if vim.bo.filetype == "python" then
-  if not win_is_smaller(sl.preset_width.git_branch) then
+  if not win_is_smaller(M.preset_width.git_branch) then
     local venv = os.getenv "VIRTUAL_ENV"
     if venv then
       if string.find(venv, "/") then
@@ -363,8 +362,8 @@ end
 ---Get lsp status and if active get names of server running
 ---@return string lsp_status
 local function get_lsp_info()
-  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and string.format("%s• ", sl.colors.name)
-    or string.format("%s• ", sl.colors.lspnoactive)
+  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and string.format("%s• ", M.colors.name)
+    or string.format("%s• ", M.colors.lspnoactive)
 end
 
 ---Statusline disabled that display only filetype and current mode
@@ -375,35 +374,35 @@ local function disable_statusline()
   local modifiedReadOnlyFlags = "%m%r"
 
   local special_filetypes = {
-    dashboard = sl.icons.dashboard .. " Dashboard",
-    alpha = sl.icons.dashboard .. " Dashboard",
-    oil = sl.icons.folder .. " File Explorer",
-    lazy = sl.icons.checkhealth .. " Plugin Manager",
-    lspinfo = sl.icons.lsp_info .. " LSP Status",
-    TelescopePrompt = sl.icons.telescope .. " Telescope",
-    qf = sl.icons.config .. " QuickFix",
-    toggleterm = sl.icons.robots .. "Terminal",
-    mason = sl.icons.list .. " Package Manager",
-    Outline = sl.icons.table .. " Symbols Outline",
-    noice = sl.icons.list .. " Notifications",
-    checkhealth = sl.icons.checkhealth .. " Health",
-    WhichKey = sl.icons.search .. " WhichKey",
-    query = sl.icons.query .. " Query",
-    dbui = sl.icons.db .. " Database",
-    httpResult = sl.icons.web .. " Http",
-    dapui_hover = sl.icons.dapui_hover .. " DapUI•Hover",
-    ["dap-float"] = sl.icons.dapui_watches .. " DapUI•Hover",
+    dashboard = M.icons.dashboard .. " Dashboard",
+    alpha = M.icons.dashboard .. " Dashboard",
+    oil = M.icons.folder .. " File Explorer",
+    lazy = M.icons.table .. " Plugin Manager",
+    lspinfo = M.icons.lsp_info .. " LSP Status",
+    TelescopePrompt = M.icons.telescope .. " Telescope",
+    qf = M.icons.config .. " QuickFix",
+    terminal = M.icons.robots .. "Terminal",
+    mason = M.icons.list .. " Package Manager",
+    Outline = M.icons.table .. " Symbols Outline",
+    noice = M.icons.list .. " Notifications",
+    checkhealth = M.icons.checkhealth .. " Health",
+    WhichKey = M.icons.search .. " WhichKey",
+    query = M.icons.query .. " Query",
+    dbui = M.icons.db .. " Database",
+    httpResult = M.icons.web .. " Http",
+    dapui_hover = M.icons.dapui_hover .. " DapUI•Hover",
+    ["dap-float"] = M.icons.dapui_watches .. " DapUI•Hover",
   }
   local custom_ft = special_filetypes[vim.bo.filetype]
 
   return table.concat {
-    sl.colors.mode,
+    M.colors.mode,
     get_mode(),
     modifiedReadOnlyFlags,
-    sl.colors.inverted,
+    M.colors.inverted,
     "",
     sideSep,
-    sl.colors.inactive,
+    M.colors.inactive,
     custom_ft or ftype_name,
     sideSep,
   }
@@ -416,21 +415,21 @@ local function enable_statusline()
   local modifiedReadOnlyFlags = "%m%r"
   local space = " "
 
-  sl.cached = {
+  M.cached = {
     -- LeftSide
-    sl.colors.mode,
+    M.colors.mode,
     get_mode(),
-    sl.colors.inverted,
+    M.colors.inverted,
     "",
     modifiedReadOnlyFlags,
     space,
-    sl.colors.git,
+    M.colors.git,
     get_git_status(),
-    sl.colors.name,
+    M.colors.name,
     "%<" .. get_filename(),
-    sl.colors.symbols,
+    M.colors.symbols,
     "",
-    sl.colors.empty,
+    M.colors.empty,
     session_name(),
     space,
     get_python_env(),
@@ -443,29 +442,29 @@ local function enable_statusline()
     space,
 
     -- Right Side
-    sl.colors.symbols,
+    M.colors.symbols,
     "",
     get_lsp_info(),
-    sl.colors.ftype,
+    M.colors.ftype,
     get_filetype_and_icon(),
-    sl.colors.encoding,
+    M.colors.encoding,
     get_fencoding(),
-    sl.colors.fformatloc,
+    M.colors.fformatloc,
     get_fformat(),
     get_line_onTot(),
-    sl.colors.inverted,
+    M.colors.inverted,
     "",
   }
 
-  return table.concat(sl.cached)
+  return table.concat(M.cached)
 end
 
 ---Set statusline based on filetype of current buffer
-function sl.set()
+function M.set()
   if not vim.g.statusline_color then
     set_color_groups()
   end
-  if not sl.to_exclude[vim.bo.filetype] then
+  if not M.to_exclude[vim.bo.filetype] then
     vim.wo.statusline = enable_statusline()
   else
     vim.wo.statusline = disable_statusline()
@@ -473,11 +472,12 @@ function sl.set()
 end
 
 ---Define autocmds for load winbar module and initialize
-function sl.toggle()
+function M.toggle()
   if vim.g.statusline ~= nil then
     vim.api.nvim_del_autocmd(vim.g.statusline)
     vim.wo.statusline = ""
     vim.g.statusline = nil
+    vim.g.statusline_color = nil
   else
     vim.api.nvim_create_autocmd({
       "BufNewFile",
@@ -500,8 +500,16 @@ function sl.toggle()
     })
     vim.api.nvim_eval_statusline("%!v:lua.require'lib.ui.statusline'.set()", {})
   end
+
+  vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+      if vim.g.statusline ~= nil then
+        set_color_groups()
+      end
+    end,
+  })
 end
 
-vim.api.nvim_create_user_command("ToggleStatusline", sl.toggle, { desc = "Toggle Statusline" })
+vim.api.nvim_create_user_command("ToggleStatusline", M.toggle, { desc = "Toggle Statusline" })
 
-return sl
+return M

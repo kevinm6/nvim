@@ -5,7 +5,7 @@
 --  Last Modified: 08 Sep 2024, 11:06
 -------------------------------------
 
-local session = {
+local M = {
   dir = string.format("%s/session", vim.fn.stdpath "state"),
 }
 
@@ -14,7 +14,7 @@ local session = {
 local function get_sessions()
   local sessions = {}
 
-  local sessions_files = vim.split(vim.fn.globpath(session.dir, "*.vim"), "\n", { trimempty = true })
+  local sessions_files = vim.split(vim.fn.globpath(M.dir, "*.vim"), "\n", { trimempty = true })
 
   for _, f in pairs(sessions_files) do
     table.insert(sessions, f)
@@ -83,10 +83,10 @@ local function save_session()
     default = nil,
   }, function(input)
     if input then
-      if vim.fn.isdirectory(session.dir) ~= 1 then
-        vim.fn.mkdir(session.dir, "pR")
+      if vim.fn.isdirectory(M.dir) ~= 1 then
+        vim.fn.mkdir(M.dir, "pR")
       end
-      local new_session_path = string.format("%s/%s.vim", session.dir, input)
+      local new_session_path = string.format("%s/%s.vim", M.dir, input)
       vim.cmd.mksession { new_session_path, bang = true }
       -- vim.cmd("mksession! " .. mks_path)
       vim.notify(string.format("Session < %s > created!", input), vim.log.levels.INFO)
@@ -95,13 +95,25 @@ local function save_session()
 end
 
 ---Helper function to usercmd completion
-function session.usercmd_session_completion()
+function M.usercmd_session_completion()
   local args = { "restore", "save", "delete" }
   return table.concat(args, "\n")
 end
 
-function session.select(arg)
-  if arg == "save" then
+function M.select(arg)
+  if arg == "" then
+    vim.ui.select({ "save", "delete", "restore" }, {
+      prompt = "Sessions> choose",
+    }, function(choice)
+      if choice == "save" then
+        save_session()
+      elseif choice == "delete_session" then
+        delete_session()
+      elseif choice == "restore_session" then
+        restore_session()
+      end
+    end)
+  elseif arg == "save" then
     save_session()
   elseif arg == "restore" then
     restore_session()
@@ -112,4 +124,4 @@ function session.select(arg)
   end
 end
 
-return session
+return M
