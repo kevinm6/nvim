@@ -20,10 +20,8 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
 local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" })
-  or vim.fs.dirname(vim.api.nvim_buf_get_name(0))
-local cache_dir = vim.fn.stdpath "cache"
-local project_name = vim.fs.basename(root_dir or vim.uv.cwd())
-local workspace_dir = string.format("%s/java/wksp/%s", cache_dir, project_name)
+local project_name = vim.fs.basename(root_dir or vim.fs.dirname(vim.api.nvim_buf_get_name(0)))
+local workspace_dir = string.format("%s/jdtls/wksp/%s", vim.fn.stdpath "cache", project_name)
 
 local launcher_path = vim.fn.glob(data_path .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", true)
 local bundles = vim.fn.glob(
@@ -31,9 +29,6 @@ local bundles = vim.fn.glob(
   true,
   true
 )
-
--- Example usage: Run the function with the desired task
--- RunGradleTask('test')
 
 local lombok_path = data_path .. "/mason/packages/jdtls/lombok.jar"
 
@@ -51,7 +46,7 @@ local function get_config_dir()
     sys_config = "win"
   end
 
-  return string.format("%s/mason/packages/jdtls/config_%s", vim.fn.stdpath "data", sys_config)
+  return string.format("%s/mason/packages/jdtls/config_%s", data_path, sys_config)
 end
 
 vim.list_extend(
@@ -67,21 +62,19 @@ local config = {
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
     "-Dlog.protocol=true",
     "-Dlog.level=ALL",
+    "-Djava.import.generatesMetadataFilesAtProjectRoot=false",
     "-Xms1g",
     "--add-modules=ALL-SYSTEM",
     "--add-opens",
     "java.base/java.util=ALL-UNNAMED",
     "--add-opens",
     "java.base/java.lang=ALL-UNNAMED",
-
     "-jar",
     launcher_path,
-
     "-javaagent",
     lombok_path,
     "-Xbootclasspath/a",
     lombok_path,
-
     "-configuration",
     get_config_dir(),
     "-data",
@@ -98,7 +91,7 @@ local config = {
       maven = { downloadSources = true },
       signatureHelp = { enabled = true },
       contentProvider = { preferred = "fernflower" },
-      saveActions = { organizeImports = false },
+      saveActions = { organizeImports = true },
       sources = {
         organizeImports = {
           starThreshold = 9999,
@@ -229,7 +222,6 @@ local config = {
       end,
       "Extract Constant",
     }
-
     map {
       "v",
       "crm",

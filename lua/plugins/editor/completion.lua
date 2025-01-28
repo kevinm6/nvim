@@ -26,6 +26,8 @@ return {
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-Space>"] = { "show", "hide" },
+        ["<Tab>"] = { "show", "select_next", "fallback" },
+        ["<S-Tab>"] = { "show", "select_prev", "fallback" },
         ["<C-e>"] = { "cancel" },
       },
     },

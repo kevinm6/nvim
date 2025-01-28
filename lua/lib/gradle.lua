@@ -34,14 +34,15 @@ local function get_gradle_tasks(gradlew, root_dir)
 end
 
 local function run_gradle_task(gradlew, task)
-  local msg = string.format(" running: < gradlew %s >", task)
+  -- local msg = string.format(" < gradlew %s >", task)
   -- vim.notify(msg, 2, { title = "Gradle" })
-  print("Gradle⟩ " .. msg)
+  print("Gradle⟩ " .. task)
   vim.system({ gradlew, task }, { text = true }, function(obj)
     local out = (obj.code ~= 0) and obj.stderr or obj.stdout
 
     vim.schedule(function()
-      local text = string.format("  OUTPUT⟩ gradle %s\n\n%s", task, out)
+      local sep = "---------------------------------"
+      local text = string.format("   OUTPUT⟩ gradle %s\n%s\n%s", task, sep, out)
       local lines = vim.split(text, "\n")
 
       local buf = vim.api.nvim_create_buf(false, true)

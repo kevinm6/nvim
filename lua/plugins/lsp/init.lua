@@ -116,7 +116,7 @@ local function set_buf_keymaps(client, bufnr)
   nmap { "<leader>ll", vim.lsp.codelens.run, "CodeLens" }
 
   -- Enable completion on <c-x><c-o>
-  -- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 end
 
 --- Set buffer capabilities if supported by the passed client and buffer id
@@ -609,9 +609,11 @@ return {
         typescriptreact = { "prettier" },
         html = { "prettier" },
         json = { "prettier" },
-        yaml = { { "yamlfmt", "prettier" } },
+        yaml = { "yamlfmt", "prettier" },
         -- java = { "google-java-format" },
       }
+
+      o.stop_after_first = true
 
       o.format_on_save = function(bufnr)
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
