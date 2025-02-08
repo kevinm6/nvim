@@ -20,3 +20,8 @@ vim.keymap.set("n", "<leader>p", function()
   local buf = vim.api.nvim_buf_get_name(0)
   vim.system({ "qlmanage", "-p", buf, ">", "/dev/null" }, { text = true }):wait()
 end, { desc = "Preview Markdown", buffer = true })
+
+---Export to PDF
+vim.api.nvim_create_user_command("TOpdf", function()
+  require("lib.pdf").convert_md_to_pdf()
+end, { desc = "Export markdown to pdf" })

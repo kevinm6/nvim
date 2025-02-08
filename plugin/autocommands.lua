@@ -98,23 +98,6 @@ autocmd("FileType", {
   end,
 })
 
----QuickFixList keymaps
-autocmd("FileType", {
-  group = augroup("_maps_qf_ft", { clear = true }),
-  pattern = "qf",
-  callback = function()
-    vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>", { buffer = true, silent = true })
-    vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>", { buffer = true, silent = true })
-    vim.keymap.set("n", "<C-l>", "<CR>", { buffer = true, silent = true })
-    vim.keymap.set("n", "q", function()
-      vim.cmd.quit { bang = true }
-    end, { buffer = true, silent = true })
-    vim.keymap.set("n", "<esc>", function()
-      vim.cmd.quit { bang = true }
-    end, { buffer = true, silent = true })
-  end,
-})
-
 autocmd("FileType", {
   group = augroup("_autocmd_statuscolumn", { clear = true }),
   callback = function(ev)
@@ -143,53 +126,53 @@ autocmd({ "BufNewFile", "BufRead" }, {
 
 ---Check if want to install Treesitter parser for current
 ---filetype if missing
-autocmd("FileType", {
-  group = augroup("_check_ft_ts_parser", { clear = true }),
-  pattern = "*",
-  callback = function(ev)
-    if not filetypes_to_exclude[ev.match] then
-      local has_ts, ts_parsers = pcall(require, "nvim-treesitter.parsers")
-      if not has_ts then
-        return
-      end
-
-      local lang = ts_parsers.get_buf_lang()
-      local donot_ask_install = vim.g.dont_ask_install or {}
-      if
-        ts_parsers.get_parser_configs()[lang]
-        and not ts_parsers.has_parser(lang)
-        and not donot_ask_install[lang] == true
-      then
-        vim.schedule_wrap(function()
-          local msg = string.format("Install missing TS parser for < %s >?", lang)
-          local choice = vim.fn.confirm(msg, "&Yes\n&No")
-
-          if choice == 1 then
-            vim.cmd.TSInstall(lang)
-          else
-            donot_ask_install[lang] = true
-            vim.g.dont_ask_install = donot_ask_install
-          end
-        end)()
-      end
-    end
-  end,
-})
-
----Set makeprg and keywordprg for filetype (using default compiler when available)
 -- autocmd("FileType", {
---   group = augroup("_set_makefile", { clear = true }),
+--   group = augroup("_check_ft_ts_parser", { clear = true }),
 --   pattern = "*",
 --   callback = function(ev)
---     local lib_compiler = require "lib.compiler"
---     if ev.match and lib_compiler.set_keywordprg(ev.match) then
---       vim.opt_local.keywordprg = lib_compiler.set_keywordprg(ev.match)
---     end
---     if ev.match and not filetypes_to_exclude[ev.match] then
---       lib_compiler.set_compiler(ev)
+--     if not filetypes_to_exclude[ev.match] then
+--       local has_ts, ts_parsers = pcall(require, "nvim-treesitter.parsers")
+--       if not has_ts then
+--         return
+--       end
+--
+--       local lang = ts_parsers.get_buf_lang()
+--       local donot_ask_install = vim.g.dont_ask_install or {}
+--       if
+--         ts_parsers.get_parser_configs()[lang]
+--         and not ts_parsers.has_parser(lang)
+--         and not donot_ask_install[lang] == true
+--       then
+--         vim.schedule_wrap(function()
+--           local msg = string.format("Install missing TS parser for < %s >?", lang)
+--           local choice = vim.fn.confirm(msg, "&Yes\n&No")
+--
+--           if choice == 1 then
+--             vim.cmd.TSInstall(lang)
+--           else
+--             donot_ask_install[lang] = true
+--             vim.g.dont_ask_install = donot_ask_install
+--           end
+--         end)()
+--       end
 --     end
 --   end,
 -- })
+
+---Set makeprg and keywordprg for filetype (using default compiler when available)
+--autocmd("FileType", {
+--  group = augroup("_set_makefile", { clear = true }),
+--  pattern = "*",
+--  callback = function(ev)
+--    local lib_compiler = require "lib.compiler"
+--    if ev.match and lib_compiler.set_keywordprg(ev.match) then
+--      vim.opt_local.keywordprg = lib_compiler.set_keywordprg(ev.match)
+--    end
+--    if ev.match and not filetypes_to_exclude[ev.match] then
+--      lib_compiler.set_compiler(ev)
+--    end
+--  end,
+--})
 
 ---Jump to last < cursor-pos > in file
 autocmd("BufRead", {
@@ -255,30 +238,6 @@ autocmd({ "BufRead", "BufNewFile" }, {
     vim.api.nvim_set_option_value("filetype", "kitty", { buf = 0 })
     vim.api.nvim_set_option_value("comments", ":#,:#\\:", { buf = 0 })
     vim.api.nvim_set_option_value("commentstring", "# %s", { buf = 0 })
-  end,
-})
-
----Start postgresql service on sql files
--- autocmd("FileType", {
---   group = augroup("_postres_service", { clear = true }),
---   pattern = { "sql" },
---   once = true, -- don't run again on other sql files
---   callback = function()
---     require("lib").run_brew_service("postgresql@14", false)
---   end,
--- })
-
----Read PDF into neovim, using pdftotext binary
-autocmd("FileType", {
-  group = augroup("_pdf_reader", { clear = true }),
-  pattern = { "pdf", "PDF" },
-  callback = function(ev)
-    vim.api.nvim_set_option_value("readonly", true, { buf = ev.buf })
-    if not vim.fn.executable "pdftotext" then
-      vim.notify("vim-pdf: pdftotext is not found.\nStop converting...", vim.log.levels.ERROR)
-      return
-    end
-    require("lib.pdf").load_pdf(ev.file)
   end,
 })
 

@@ -85,7 +85,7 @@ return {
 
       db_btn("f", "󰾰 Find file", "<cmd>lua require 'lib'.find_files()<CR>"),
       db_btn("r", " Recent files", "<cmd>lua require 'lib'.recent_files()<CR>"),
-      db_btn("R", " Find project", "<cmd>lua require 'lib'.projects()<CR>"),
+      db_btn("p", " Find project", "<cmd>lua require 'lib'.projects()<CR>"),
       db_btn("d", "󰾰 Developer", [[<cmd>lua require "lib".dev_folder()<CR>]]),
       db_btn("L", " Plugin Manager", "<cmd>Lazy<CR>"),
       db_btn("m", " Package Manager", "<cmd>Mason<CR>"),

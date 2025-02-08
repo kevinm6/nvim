@@ -11,6 +11,12 @@ if not has_jdtls then
   return
 end
 
+local javaBin = vim.fn.expand [[/opt/homebrew/opt/openjdk@21/bin/java]]
+if not vim.fn.exepath(javaBin) then
+  vim.notify("Java is not installed", vim.log.levels.ERROR, { title = "Java" })
+  return
+end
+
 local data_path = vim.fn.stdpath "data"
 
 local capabilities = require("plugins.lsp").capabilities()
@@ -56,7 +62,7 @@ vim.list_extend(
 
 local config = {
   cmd = {
-    "java",
+    javaBin,
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
     "-Declipse.product=org.eclipse.jdt.ls.core.product",

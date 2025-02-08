@@ -15,3 +15,6 @@ vim.opt_local.autoindent = true
 vim.opt_local.commentstring = "-- %s"
 
 vim.opt.spell = false
+
+---Start postgresql service on sql files (Mac)
+-- require("lib").run_brew_service("postgresql@14", false)

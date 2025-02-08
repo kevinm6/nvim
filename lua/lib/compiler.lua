@@ -58,12 +58,13 @@ local function getCommand(command)
   local filepath = vim.fn.expand "%:p"
   local clean_cmd = command
 
-  command = command:gsub("$fileNameWithoutExt", vim.fn.fnamemodify(filepath, ":t:r"))
-  command = command:gsub("$fileName", vim.fn.fnamemodify(filepath, ":t"))
-  command = command:gsub("$file", filepath)
-  command = command:gsub("$dir", vim.fn.fnamemodify(filepath, ":p:h"))
-  command = command:gsub("$dName", vim.fn.fnamemodify(vim.uv.cwd() or vim.loop.cwd() or "", ":t"))
-  command = command:gsub("$end", "")
+  command = command
+    :gsub("$fileNameWithoutExt", vim.fn.fnamemodify(filepath, ":t:r"))
+    :gsub("$fileName", vim.fn.fnamemodify(filepath, ":t"))
+    :gsub("$file", filepath)
+    :gsub("$dir", vim.fn.fnamemodify(filepath, ":p:h"))
+    :gsub("$dName", vim.fn.fnamemodify(vim.uv.cwd() or vim.loop.cwd() or "", ":t"))
+    :gsub("$end", "")
 
   return (command == clean_cmd) and command or string.format("%s %s", command, filepath)
 end
@@ -164,12 +165,12 @@ end
 ---In this way, only if user wants to compile/run the file, prompt the selection
 ---@param buf any bufId for which set keymap
 local function set_keymaps(buf)
-  local icons = require "lib.icons"
+  local icons = require "mini.icons"
   local function map(tbl)
     vim.keymap.set("n", tbl[1], tbl[2], { buffer = buf, desc = "Run❭ " .. tbl[3] })
   end
 
-  vim.keymap.set({ "n", "v" }, "<leader>R", function() end, { buffer = buf, desc = icons.debug.run .. " Run" })
+  vim.keymap.set({ "n", "v" }, "<leader>R", function() end, { buffer = buf, desc = icons.file.rerun .. " Run" })
 
   local function run_file_cmd()
     if not compiler.compilers[vim.bo.filetype] then

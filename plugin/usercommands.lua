@@ -127,11 +127,6 @@ user_command("Notes", function()
   require("lib.notes").open_note()
 end, { desc = "Open notes" })
 
----Export to PDF
-user_command("TOpdf", function()
-  require("lib.pdf").convert_md_to_pdf()
-end, { desc = "Export markdown to pdf" })
-
 local usercmd_toggle = require("lib").user_command_toggle
 
 user_command("DiffOrig", function()
