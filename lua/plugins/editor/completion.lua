@@ -8,6 +8,9 @@
 return {
   "saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
+  -- enabled = function()
+  --   return vim.fn.has "nvim-0.11" ~= 1
+  -- end,
   version = "v0.*",
   opts = {
     keymap = {
@@ -20,8 +23,9 @@ return {
       ["<C-i>"] = { "snippet_forward", "fallback" },
       ["<C-S-i>"] = { "snippet_backward", "fallback" },
       ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-
-      cmdline = {
+    },
+    cmdline = {
+      keymap = {
         ["<C-i>"] = { "select_and_accept", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },

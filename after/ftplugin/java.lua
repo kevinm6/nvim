@@ -11,7 +11,7 @@ if not has_jdtls then
   return
 end
 
-local javaBin = vim.fn.expand [[/opt/homebrew/opt/openjdk@21/bin/java]]
+local javaBin = vim.fn.expand [[/opt/homebrew/opt/openjdk/bin/java]]
 if not vim.fn.exepath(javaBin) then
   vim.notify("Java is not installed", vim.log.levels.ERROR, { title = "Java" })
   return
@@ -87,7 +87,7 @@ local config = {
     workspace_dir,
   },
   capabilities = capabilities,
-  -- root_dir = root_dir,
+  root_dir = root_dir,
   single_file_support = true,
   settings = {
     java = {
@@ -115,6 +115,10 @@ local config = {
           {
             name = "JavaSE-21",
             path = "/Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home",
+          },
+          {
+            name = "JavaSE-23",
+            path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
           },
         },
       },

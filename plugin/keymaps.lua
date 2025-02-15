@@ -153,7 +153,7 @@ nmap { "N", "Nzz" }
 nmap { "#", "#zz" }
 nmap { "g*", "g*zz" }
 nmap { "S", ":%s///g<Left><Left><Left>" }
-nmap { "<M-s>", ":%s//&/gn<Left><Left><Left><Left><Left>", "Count occurrences of search" }
+nmap { "<M-s>", ":%s/<C-r><C-w>/&/gn<Left><Left><Left><Left><Left>", "Count occurrences of search" }
 -- nmap { "<M-S-->", "<C-w>| <C-w>_" }
 -- nmap { "<M-J>", "<C-w>J" }
 -- nmap { "<M-K>", "<C-w>K" }
@@ -381,7 +381,7 @@ vim.cmd.cnoreabbrev("Xa", "xa")
 vim.cmd.cnoreabbrev("XA", "xa")
 
 --TODO nvim-0.11 ?
---NOTE enable on nvim-0.11 and disable nvim-cmp?
+--NOTE enable on nvim-0.11 if snippets are available?
 ---Completion
 -- local function feedkeys(keys)
 --   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)

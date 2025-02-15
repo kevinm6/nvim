@@ -128,9 +128,9 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
 
   -- Completion
   -- TODO nvim-0.11
-  -- if vim.fn.has "nvim-0.11" == 1 then -- and client.supports_method "textDocument/completion" then
-  --   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-  -- end
+  if vim.fn.has "nvim-0.11" == 1 then -- and client.supports_method "textDocument/completion" then
+    vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+  end
 
   -- InlayHints
   if client.supports_method "textDocument/inlayHint" then

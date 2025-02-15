@@ -351,4 +351,11 @@ function M.user_command_toggle(name, var_name, opts)
   })
 end
 
+---TODO: define on nvim-0.11
+-- function M.detaching()
+--   local addr = vim.v.servername
+--   -- save into file in stdpath 'state'
+--   local save_addr_path = vim.fn.stdpath "state" .. "/nvim_server_addr"
+-- end
+
 return M
