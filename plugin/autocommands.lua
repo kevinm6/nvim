@@ -49,7 +49,7 @@ local filetypes_to_exclude = {
 --       require("lib.ui.statusline").toggle()
 --       require("lib.ui.winbar").toggle()
 --     end,
---     -- once = true
+--     once = true,
 --   })
 -- end
 

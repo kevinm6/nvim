@@ -368,7 +368,7 @@ end
 
 ---Statusline disabled that display only filetype and current mode
 ---@return string simple_statusline
-local function disable_statusline()
+local function disabled_statusline()
   local ftype_name = string.format("%s %s", "", vim.bo.filetype)
   local sideSep = "%="
   local modifiedReadOnlyFlags = "%m%r"
@@ -410,7 +410,7 @@ end
 
 ---Statusline enabled with all items
 ---@return string statusline
-local function enable_statusline()
+local function enabled_statusline()
   local sideSep = "%="
   local modifiedReadOnlyFlags = "%m%r"
   local space = " "
@@ -465,9 +465,9 @@ function M.set()
     set_color_groups()
   end
   if not M.to_exclude[vim.bo.filetype] then
-    vim.wo.statusline = enable_statusline()
+    vim.wo.statusline = enabled_statusline()
   else
-    vim.wo.statusline = disable_statusline()
+    vim.wo.statusline = disabled_statusline()
   end
 end
 

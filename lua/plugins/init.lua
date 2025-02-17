@@ -39,8 +39,8 @@ local M = {
   ---Winbar
   {
     dir = vim.fn.stdpath "config" .. "/lua/lib/ui/winbar.lua",
-    event = { "BufReadPre", "BufNewFile" },
     virtual = true,
+    event = { "BufReadPre", "BufNewFile" },
     cmd = "ToggleWinbar",
     config = function()
       require("lib.ui.winbar").toggle()

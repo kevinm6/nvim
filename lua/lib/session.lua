@@ -31,15 +31,16 @@ local function delete_session()
     vim.ui.select(sessions, {
       prompt = "Select session to delete:",
       default = nil,
+      format_item = function(item)
+        return vim.fn.fnamemodify(item, ":p:t:r")
+      end,
     }, function(choice)
       if choice then
-        vim.fn.jobstart("mv " .. vim.fn.fnameescape(choice) .. " ~/.Trash", {
-          detach = true,
-          on_exit = function()
-            local choice_name = vim.fn.fnamemodify(choice, ":t")
-            vim.notify(string.format("Session < %s > deleted!", choice_name), vim.log.levels.WARN)
-          end,
-        })
+        local deleted = vim.fn.delete(choice)
+        if deleted == 0 then
+          local choice_name = vim.fn.fnamemodify(choice, ":t")
+          vim.notify(string.format("Session < %s > deleted!", choice_name), vim.log.levels.WARN)
+        end
       end
     end)
   else
@@ -57,14 +58,13 @@ local function restore_session()
       prompt = " > Select session to restore",
       format_item = function(item)
         return vim.fn.fnamemodify(item, ":p:t:r")
-        -- return string.format("%s (%s) ", vim.fn.fnamemodify(item, ":p:t:r"), item)
       end,
       default = nil,
     }, function(choice)
       local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
       if choice then
         vim.cmd.source(choice)
-        require("core.statusline").session_name = s_name
+        require("lib.ui.statusline").session_name = s_name
         vim.notify(string.format("Session < %s > restored!", choice), vim.log.levels.INFO)
       end
     end)
@@ -88,7 +88,6 @@ local function save_session()
       end
       local new_session_path = string.format("%s/%s.vim", M.dir, input)
       vim.cmd.mksession { new_session_path, bang = true }
-      -- vim.cmd("mksession! " .. mks_path)
       vim.notify(string.format("Session < %s > created!", input), vim.log.levels.INFO)
     end
   end)
