@@ -65,7 +65,7 @@ local function restore_session()
       if choice then
         vim.cmd.source(choice)
         require("lib.ui.statusline").session_name = s_name
-        vim.notify(string.format("Session < %s > restored!", choice), vim.log.levels.INFO)
+        vim.notify(string.format("Session < %s > restored!", s_name), vim.log.levels.INFO)
       end
     end)
   else

@@ -87,7 +87,12 @@ end, { desc = "Neovim Config" })
 
 ---Lazygit
 user_command("Lazygit", function()
-  require("lib.terminal").new_terminal_win("lazygit", true, { preset = "lazygit" })
+  local has_snacks, snacks = pcall(require, "snacks")
+  if has_snacks then
+    snacks.lazygit()
+  else
+    require("lib.terminal").new_terminal_win("lazygit", true, { preset = "lazygit" })
+  end
 end, { desc = "Lazygit", force = true })
 
 ---Htop

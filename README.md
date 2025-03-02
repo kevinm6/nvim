@@ -10,8 +10,6 @@
 
 ---
 
-$$ \displaystyle\sum_{k=3}^5 k^2=3^2 + 4^2 + 5^2 = 50 $$
-
 ***Theme***: [knvim-theme](https://github.com/kevinm6/knvim-theme.nvim)
 
 ![screenNvim1](https://user-images.githubusercontent.com/72861758/210419269-658f8659-9a7b-422b-b1cb-b6afcc67aa07.png)
@@ -25,7 +23,7 @@ $$ \displaystyle\sum_{k=3}^5 k^2=3^2 + 4^2 + 5^2 = 50 $$
 ## Most used plugins
 
 - [Lazy](https://github.com/folke/lazy.nvim)
-- [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+- [Snacks](https://github.com/folke/snacks.nvim)
 - [Treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 - [Which-Key](https://github.com/folke/which-key.nvim)
 - [Mason](https://github.com/williamboman/mason.nvim)

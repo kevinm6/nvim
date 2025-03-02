@@ -20,20 +20,20 @@ return {
           { icon = "󰾰", key = "f", desc = "Find file", action = ":lua require 'lib'.find_files()" },
           { icon = "", key = "r", desc = "Recent files", action = ":lua require 'lib'.recent_files()" },
           { icon = "", key = "p", desc = "Find project", action = ":lua require 'lib'.projects()" },
-          { icon = "󰾰", key = "d", desc = "Developer", action = [[:lua require "lib".dev_folder()]] },
+          -- { icon = "󰾰", key = "d", desc = "Developer", action = [[:lua require "lib".dev_folder()]] },
           { icon = "", key = "L", desc = "Plugin Manager", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
           { icon = "", key = "m", desc = "Package Manager", action = ":Mason" },
           { icon = "", key = "g", desc = "Git", action = ":Lazygit" },
           { icon = "♥", key = "H", desc = "Health", action = ":checkhealth" },
-          { icon = "", key = "c", desc = "Close", action = ":Alpha" },
+          -- { icon = "", key = "c", desc = "Close", action = ":close" },
           { icon = "", key = "q", desc = "Quit", action = ":qa" },
         },
       },
       sections = {
-        { section = "header" },
+        -- { section = "terminal", cmd = "curl -s 'wttr.in/?0'" },
+        { section = "header", padding = 4 },
         { section = "keys", gap = 1, padding = 1 },
         -- { section = "startup" },
-        -- { section = "terminal", cmd = "curl -s 'wttr.in/?0'" },
         -- {
         --   icon = " ",
         --   title = "Git Status",
@@ -559,6 +559,7 @@ return {
         input = {
           keys = {
             ["<c-l>"] = { "confirm", mode = { "n", "i" } },
+            ["<c-u>"] = { "list_scroll_up", mode = { "n" } }, -- delete backward till start in insert-mode
           },
         },
       },
