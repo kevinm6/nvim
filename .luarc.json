@@ -1,0 +1,9 @@
+{
+    "diagnostics.globals": [
+        "vim",
+        "format",
+        "pandoc",
+        "quarto",
+        "Snacks"
+    ]
+}

@@ -30,8 +30,17 @@ return {
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-Space>"] = { "show", "hide" },
-        ["<Tab>"] = { "show", "select_next", "fallback" },
-        ["<S-Tab>"] = { "show", "select_prev", "fallback" },
+        ["<Tab>"] = {
+          function(cmp)
+            if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
+              return cmp.accept()
+            end
+          end,
+          "show_and_insert",
+          "select_next",
+          "fallback",
+        },
+        ["<S-Tab>"] = { "show_and_insert", "select_prev", "fallback" },
         ["<C-e>"] = { "cancel" },
       },
     },
@@ -40,7 +49,8 @@ return {
     },
 
     sources = {
-      default = { "snippets", "lsp", "path", "buffer", "markdown", "lazydev" },
+      -- default = { "snippets", "lsp", "path", "buffer", "markdown", "lazydev" },
+      default = { "snippets", "lsp", "path", "buffer", "lazydev" },
       providers = {
         snippets = {
           opts = {
@@ -51,10 +61,10 @@ return {
             },
           },
         },
-        markdown = {
-          name = "RenderMarkdown",
-          module = "render-markdown.integ.blink",
-        },
+        -- markdown = {
+        --   name = "RenderMarkdown",
+        --   module = "render-markdown.integ.blink",
+        -- },
         lazydev = {
           name = "LazyDev",
           module = "lazydev.integrations.blink",

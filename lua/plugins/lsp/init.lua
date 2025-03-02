@@ -26,7 +26,7 @@ end
 --- @param client table client passed to attach config
 --- @param bufnr integer client passed to attach config
 local function set_buf_keymaps(client, bufnr)
-  local _, tele_builtin = pcall(require, "telescope.builtin")
+  local _, snacks = pcall(require, "snacks.picker")
 
   local function nmap(tbl)
     vim.keymap.set("n", tbl[1], tbl[2], { buffer = bufnr, desc = "Lsp❭ " .. tbl[3] })
@@ -56,7 +56,7 @@ local function set_buf_keymaps(client, bufnr)
   end
   nmap {
     "gd",
-    tele_builtin.lsp_definitions or vim.lsp.buf.definition,
+    snacks.lsp_definitions or vim.lsp.buf.definition,
     "GoTo Definitions",
   }
   if client.supports_method "textDocument/implementation" then
@@ -75,23 +75,23 @@ local function set_buf_keymaps(client, bufnr)
   if client.supports_method "callHierarchy/outgoingCalls" then
     nmap { "<leader>lo", vim.lsp.buf.outgoing_calls, "Outgoing-Calls" }
   end
-  nmap { "gr", tele_builtin.lsp_references or vim.lsp.buf.references, "GoTo References" }
+  nmap { "gr", snacks.lsp_references or vim.lsp.buf.references, "GoTo References" }
 
   nmap {
     "<leader>lt",
-    tele_builtin.lsp_type_definitions or vim.lsp.buf.type_definition,
+    snacks.lsp_type_definitions or vim.lsp.buf.type_definition,
     "TypeDef",
   }
 
   nmap {
     "<leader>ls",
-    tele_builtin.lsp_document_symbols or vim.lsp.buf.document_symbol,
+    snacks.lsp_document_symbols or vim.lsp.buf.document_symbol,
     "Workspace Symbols",
   }
 
   nmap {
     "<leader>lws",
-    tele_builtin.lsp_workspace_symbols or vim.lsp.buf.workspace_symbol,
+    snacks.lsp_workspace_symbols or vim.lsp.buf.workspace_symbol,
     "Workspace Symbols",
   }
   if client.supports_method "workspace/workspaceFolders" then
@@ -243,7 +243,7 @@ return {
       vim.keymap.set(
         "n",
         "<leader>ld",
-        require("telescope.builtin").diagnostics or vim.diagnostic.setloclist,
+        require("snacks.picker").diagnostics or vim.diagnostic.setloclist,
         { desc = "QF Diagnostics" }
       )
     end,

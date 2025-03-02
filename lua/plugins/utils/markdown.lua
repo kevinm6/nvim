@@ -52,6 +52,7 @@ return {
     o.file_types = { "markdown", "quarto" } -- TODO to test
     o.anti_conceal = { enabled = false }
     o.latex = {
+      enabled = false,
       converter = "utftex",
     }
     o.acknowledge_conflicts = true

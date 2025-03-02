@@ -1,13 +1,16 @@
-# <p align="center" style="color: #015A60">NeoVim config <p align="center" style="font-size:16px;color:grey">v0.10</p></p>
+# <p align="center" style="color: #015A60">NeoVim config
+<p align="center" style="font-size:16px;color:grey">v0.10</p>
+</p>
 
 <p align="center">
-<img alt="Lua"
-   src="https://img.shields.io/badge/Lua-2C2D72?style=flat&logo=lua&logoColor=white">
-<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kevinm6/nvim?style=flat">
-<img alt="GitHub" src="https://img.shields.io/github/license/kevinm6/nvim?style=flat">
+  <img alt="Lua" src="https://img.shields.io/badge/Lua-2C2D72?style=flat&logo=lua&logoColor=white">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kevinm6/nvim?style=flat">
+  <img alt="GitHub" src="https://img.shields.io/github/license/kevinm6/nvim?style=flat">
 </p>
 
 ---
+
+$$ \displaystyle\sum_{k=3}^5 k^2=3^2 + 4^2 + 5^2 = 50 $$
 
 ***Theme***: [knvim-theme](https://github.com/kevinm6/knvim-theme.nvim)
 
@@ -45,11 +48,11 @@
 ### Try with Docker
 
 ```bash
-  docker run -w /root -it --rm alpine:edge sh -uelic '
-    apk add git lazygit neovim ripgrep alpine-sdk --update
-    git clone https://github.com/kevinm6/kurayami.nvim ~/dev/kurayami.nvim
-    git clone https://github.com/kevinm6/nvim ~/.config/nvim
-    cd ~/.config/nvim
-    nvim
-  '
+docker run -w /root -it --rm alpine:edge sh -uelic '
+apk add git lazygit neovim ripgrep alpine-sdk --update
+git clone https://github.com/kevinm6/kurayami.nvim ~/dev/kurayami.nvim
+git clone https://github.com/kevinm6/nvim ~/.config/nvim
+cd ~/.config/nvim
+nvim
+'
 ```

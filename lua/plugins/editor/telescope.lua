@@ -9,6 +9,7 @@ return {
   ---Telescope
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     event = "VeryLazy",
     config = function(_, o)
       local telescope = require "telescope"
@@ -21,8 +22,8 @@ return {
 
       o.defaults = {
         preview = { hide_on_startup = true },
-        file_previewer = require("lib.telescope.image_preview").image_preview().file_previewer,
-        buffer_previewer_maker = require("lib.telescope.image_preview").image_preview().buffer_previewer_maker,
+        -- file_previewer = require("lib.telescope.image_preview").image_preview().file_previewer,
+        -- buffer_previewer_maker = require("lib.telescope.image_preview").image_preview().buffer_previewer_maker,
         initial_mode = "insert",
         prompt_prefix = icons.get("filetype", "telescope") .. "  ",
         selection_caret = "❭ ",
@@ -454,91 +455,91 @@ return {
       local function nmap(tbl)
         vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
       end
-      nmap { "<leader><leader>", tele_builtin.buffers, "Buffers" }
+      -- nmap { "<leader><leader>", tele_builtin.buffers, "Buffers" }
 
-      nmap { "<leader>fF", tele_builtin.live_grep, "Find Text (LiveGrep)" }
-
-      nmap {
-        "<leader>fm",
-        function()
-          require("lib.telescope.multi_rgrep").run {}
-        end,
-        "Multi-LiveGrep",
-      }
-
-      nmap {
-        "<leader>fh",
-        function()
-          local cword = vim.fn.expand "<cword>"
-          tele_builtin.help_tags { default_text = cword }
-        end,
-        "Help",
-      }
-
-      nmap {
-        "<leader>fg",
-        function()
-          tele_builtin.git_files()
-        end,
-        "Git Files",
-      }
-      nmap {
-        "<leader>fR",
-        function()
-          tele_builtin.registers()
-        end,
-        "Registers",
-      }
-      nmap { "<leader>fq", tele_builtin.quickfix, "QuickFix" }
-      nmap { "<leader>fQ", tele_builtin.loclist, "LocationList" }
-      nmap { "<leader>fl", tele_builtin.resume, "Resume last" }
-      nmap { "<leader>fk", tele_builtin.keymaps, "Keymaps" }
-      nmap { "<leader>fL", tele_builtin.current_buffer_fuzzy_find, "Line fuzzy" }
-      nmap { "<leader>fc", tele_builtin.commands, "Commands" }
-      nmap {
-        "<leader>fe",
-        function()
-          require("lib.env").show_vars()
-        end,
-        "Environment",
-      }
-      nmap { "<leader>fO", require("lib.software_licenses").pick_license, "Software Licenses" }
-      nmap {
-        "<leader>fw",
-        function()
-          tele_builtin.grep_string {
-            theme = "dropdown",
-            previewer = false,
-          }
-        end,
-        "Grep < cword >",
-      }
-      nmap {
-        "<leader>fW",
-        function()
-          local word = vim.fn.expand "<cWORD>"
-          tele_builtin.grep_string {
-            theme = "dropdown",
-            previewer = false,
-            search = word,
-          }
-        end,
-        "Grep <cword>",
-      }
-
-      nmap {
-        "<leader>ff",
-        function()
-          tele_builtin.find_files { cwd = vim.uv.cwd() }
-        end,
-        "Find Files",
-      }
-      nmap { "<leader>fo", tele_builtin.builtin, "Open Telescope" }
-      nmap { "<leader>fr", tele_builtin.oldfiles, "Recent File" }
-
-      nmap { "<leader>gs", tele_builtin.git_status, "Git status" }
-      nmap { "<leader>gb", tele_builtin.git_branches, "Checkout branch" }
-      nmap { "<leader>gc", tele_builtin.git_commits, "Checkout commit" }
+      -- nmap { "<leader>fF", tele_builtin.live_grep, "Find Text (LiveGrep)" }
+      --
+      -- nmap {
+      --   "<leader>fm",
+      --   function()
+      --     require("lib.telescope.multi_rgrep").run {}
+      --   end,
+      --   "Multi-LiveGrep",
+      -- }
+      --
+      -- nmap {
+      --   "<leader>fh",
+      --   function()
+      --     local cword = vim.fn.expand "<cword>"
+      --     tele_builtin.help_tags { default_text = cword }
+      --   end,
+      --   "Help",
+      -- }
+      --
+      -- nmap {
+      --   "<leader>fg",
+      --   function()
+      --     tele_builtin.git_files()
+      --   end,
+      --   "Git Files",
+      -- }
+      -- nmap {
+      --   "<leader>fR",
+      --   function()
+      --     tele_builtin.registers()
+      --   end,
+      --   "Registers",
+      -- }
+      -- nmap { "<leader>fq", tele_builtin.quickfix, "QuickFix" }
+      -- nmap { "<leader>fQ", tele_builtin.loclist, "LocationList" }
+      -- nmap { "<leader>fl", tele_builtin.resume, "Resume last" }
+      -- nmap { "<leader>fk", tele_builtin.keymaps, "Keymaps" }
+      -- nmap { "<leader>fL", tele_builtin.current_buffer_fuzzy_find, "Line fuzzy" }
+      -- nmap { "<leader>fc", tele_builtin.commands, "Commands" }
+      -- nmap {
+      --   "<leader>fe",
+      --   function()
+      --     require("lib.env").show_vars()
+      --   end,
+      --   "Environment",
+      -- }
+      -- nmap { "<leader>fO", require("lib.software_licenses").pick_license, "Software Licenses" }
+      -- nmap {
+      --   "<leader>fw",
+      --   function()
+      --     tele_builtin.grep_string {
+      --       theme = "dropdown",
+      --       previewer = false,
+      --     }
+      --   end,
+      --   "Grep < cword >",
+      -- }
+      -- nmap {
+      --   "<leader>fW",
+      --   function()
+      --     local word = vim.fn.expand "<cWORD>"
+      --     tele_builtin.grep_string {
+      --       theme = "dropdown",
+      --       previewer = false,
+      --       search = word,
+      --     }
+      --   end,
+      --   "Grep <cword>",
+      -- }
+      --
+      -- nmap {
+      --   "<leader>ff",
+      --   function()
+      --     tele_builtin.find_files { cwd = vim.uv.cwd() }
+      --   end,
+      --   "Find Files",
+      -- }
+      -- nmap { "<leader>fo", tele_builtin.builtin, "Open Telescope" }
+      -- nmap { "<leader>fr", tele_builtin.oldfiles, "Recent File" }
+      --
+      -- nmap { "<leader>gs", tele_builtin.git_status, "Git status" }
+      -- nmap { "<leader>gb", tele_builtin.git_branches, "Checkout branch" }
+      -- nmap { "<leader>gc", tele_builtin.git_commits, "Checkout commit" }
     end,
   },
 
@@ -546,8 +547,12 @@ return {
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     build = "make",
+    enabled = false,
   },
 
   ---UI-select
-  "nvim-telescope/telescope-ui-select.nvim",
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    enabled = false,
+  },
 }

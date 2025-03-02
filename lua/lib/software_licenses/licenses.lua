@@ -1,8 +1,8 @@
 return {
   {
-    name = "agpl-3.0",
-    text = [[
-  Copyright (C) <year>  <name of author>
+    text = "agpl-3.0",
+    preview = [[
+  Copyright (C) <year>  <text of author>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as published by
@@ -16,11 +16,12 @@ return {
 
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  ]]
+  ]],
   },
   {
-    name = "fdl-1.1",
-    text = [[
+    text = "fdl-1.1",
+    preview = {
+      text = [[
   Copyright (c)  YEAR  YOUR NAME.
   Permission is granted to copy, distribute and/or modify this document
   under the terms of the GNU Free Documentation License, Version 1.1
@@ -29,11 +30,11 @@ return {
   Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
   A copy of the license is included in the section entitled "GNU
   Free Documentation License".
-  ]]
-  },
-  {
-    name = "fdl-1.2",
-    text = [[
+  ]],
+    },
+    {
+      text = "fdl-1.2",
+      preview = [[
   Copyright (c)  YEAR  YOUR NAME.
   Permission is granted to copy, distribute and/or modify this document
   under the terms of the GNU Free Documentation License, Version 1.2
@@ -41,11 +42,12 @@ return {
   with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
   A copy of the license is included in the section entitled "GNU
   Free Documentation License".
-  ]]
+  ]],
+    },
   },
   {
-    name = "fdl-1.3",
-    text = [[
+    text = "fdl-1.3",
+    preview = [[
   Copyright (c)  YEAR  YOUR NAME.
   Permission is granted to copy, distribute and/or modify this document
   under the terms of the GNU Free Documentation License, Version 1.3
@@ -53,12 +55,13 @@ return {
   with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
   A copy of the license is included in the section entitled "GNU
   Free Documentation License".
-  ]]
+  ]],
   },
   {
-    name = "gpl-1.0",
-    text = [[
-  Copyright (C) 19yy  <name of author>
+    text = "gpl-1.0",
+    preview = {
+      text = [[
+  Copyright (C) 19yy  <text of author>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -73,12 +76,13 @@ return {
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
-  ]]
+  ]],
+    },
   },
   {
-    name = "gpl-2.0",
-    text = [[
-  Copyright (C) <year>  <name of author>
+    text = "gpl-2.0",
+    preview = [[
+  Copyright (C) <year>  <text of author>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -93,12 +97,12 @@ return {
   You should have received a copy of the GNU General Public License along
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-  ]]
+  ]],
   },
   {
-    name = "gpl-3.0",
-    text = [[
-  Copyright (C) <year>  <name of author>
+    text = "gpl-3.0",
+    preview = [[
+  Copyright (C) <year>  <text of author>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -112,12 +116,12 @@ return {
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  ]]
+  ]],
   },
   {
-    name = "lgpl-2.0",
-    text = [[
-  Copyright (C) <year>  <name of author>
+    text = "lgpl-2.0",
+    preview = [[
+  Copyright (C) <year>  <text of author>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Library General Public
@@ -132,12 +136,12 @@ return {
   You should have received a copy of the GNU Library General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-  ]]
+  ]],
   },
   {
-    name = "lgpl-2.1",
-    text = [[
-  Copyright (C) <year>  <name of author>
+    text = "lgpl-2.1",
+    preview = [[
+  Copyright (C) <year>  <text of author>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -152,11 +156,11 @@ return {
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-  ]]
+  ]],
   },
   {
-    name = "lgpl-3.0",
-    text = [[
+    text = "lgpl-3.0",
+    preview = [[
                      GNU LESSER GENERAL PUBLIC LICENSE
                          Version 3, 29 June 2007
 
@@ -322,11 +326,11 @@ return {
   apply, that proxy's public statement of acceptance of any version is
   permanent authorization for you to choose that version for the
   Library.
-  ]]
+  ]],
   },
   {
-    name = 'MIT',
-    text = [[
+    text = "MIT",
+    preview = [[
   The MIT License (MIT)
   Copyright © <year> <copyright holders>
 
@@ -347,6 +351,6 @@ return {
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
-  ]]
-  }
+  ]],
+  },
 }

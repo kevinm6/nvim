@@ -39,9 +39,9 @@ end
 
 ---Find Files
 function M.find_files()
-  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
-  if has_tele then
-    tele_builtin.find_files()
+  local has_snacks, snacks = pcall(require, "snacks.picker")
+  if has_snacks then
+    snacks.files()
   else
     local files = vim.fn.glob(vim.uv.cwd() .. "**/**", true, true)
 
@@ -58,9 +58,9 @@ end
 
 ---Recent Files
 function M.recent_files()
-  local has_tele, tele_builtin = pcall(require, "telescope.builtin")
-  if has_tele then
-    tele_builtin.oldfiles()
+  local has_snacks, snacks = pcall(require, "snacks.picker")
+  if has_snacks then
+    snacks.recent()
   else
     local oldfiles = {}
     local current_buffer = vim.api.nvim_get_current_buf()
@@ -98,25 +98,29 @@ function M.projects()
     vim.list_extend(projects, vim.split(vim.fn.glob(value .. "/*", true), "\n"))
   end
 
-  pcall(require, "telescope")
-  vim.ui.select(projects, {
-    prompt = " > Select project",
-    default = nil,
-    format_item = function(item)
-      return not vim.endswith(item, "Icon\r") and vim.fn.fnamemodify(item, ":t")
-    end,
-  }, function(choice)
-    if choice then
-      vim.cmd.tcd(choice)
-      vim.notify(string.format("TWD: %s", choice), vim.log.levels.INFO)
-      local has_oil, oil = pcall(require, "oil")
-      if has_oil then
-        oil.open_float(choice)
-      else
-        vim.cmd.edit(choice)
+  local has_snacks, snacks = pcall(require, "snacks.picker")
+  if not has_snacks then
+    vim.ui.select(projects, {
+      prompt = " > Select project",
+      default = nil,
+      format_item = function(item)
+        return not vim.endswith(item, "Icon\r") and vim.fn.fnamemodify(item, ":t") or ""
+      end,
+    }, function(choice)
+      if choice then
+        vim.cmd.tcd(choice)
+        vim.notify(string.format("TWD: %s", choice), vim.log.levels.INFO)
+        local has_oil, oil = pcall(require, "oil")
+        if has_oil then
+          oil.open_float(choice)
+        else
+          vim.cmd.edit(choice)
+        end
       end
-    end
-  end)
+    end)
+  else
+    snacks.projects { dev = projs_folders }
+  end
 end
 
 ---Delete current buffer and view next

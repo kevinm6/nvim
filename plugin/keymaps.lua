@@ -129,21 +129,21 @@ nmap {
   end,
 }
 
-nmap {
-  "z=",
-  function()
-    vim.ui.select(
-      vim.fn.spellsuggest(vim.fn.expand "<cword>"),
-      { prompt = "Select spell suggestion" },
-      vim.schedule_wrap(function(selected)
-        if selected then
-          vim.cmd("normal! ciw" .. selected)
-        end
-      end)
-    )
-  end,
-  "Spelling suggestion",
-}
+-- nmap {
+--   "z=",
+--   function()
+--     vim.ui.select(
+--       vim.fn.spellsuggest(vim.fn.expand "<cword>"),
+--       { prompt = "Select spell suggestion" },
+--       vim.schedule_wrap(function(selected)
+--         if selected then
+--           vim.cmd("normal! ciw" .. selected)
+--         end
+--       end)
+--     )
+--   end,
+--   "Spelling suggestion",
+-- }
 
 nmap { "U", "<C-r>" }
 nmap { "Y", "y$" }
@@ -225,7 +225,7 @@ nmap {
   end,
   "Close buffer and go to next",
 }
-nmap { "ZA", ":%bdelete | :Alpha<CR>", "Close all Buffers" }
+nmap { "ZA", ":%bdelete | :lua Snacks.dashboard()<CR>", "Close all Buffers" }
 
 nmap {
   "<leader>fp",
@@ -292,7 +292,12 @@ nmap {
 nmap {
   "<leader>tl",
   function()
-    require("lib.terminal").new_terminal_win("lazygit", true, { preset = "lazygit" })
+    local has_snacks, snacks = pcall(require, "snacks")
+    if has_snacks then
+      snacks.lazygit()
+    else
+      require("lib.terminal").new_terminal_win("lazygit", true, { preset = "lazygit" })
+    end
   end,
   "LazyGit",
 }

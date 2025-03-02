@@ -53,6 +53,7 @@ local M = {
   ---Image in NeoVim
   {
     "3rd/image.nvim",
+    cond = false,
     -- pin = true, -- DON'T update for now -> https://github.com/3rd/image.nvim/issues/191
     -- dev = true,
     ft = { "markdown", "vimwiki", "png", "jpeg", "jpg", "image_nvim" },
