@@ -328,7 +328,7 @@ local M = {
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "javascript",
         callback = function()
-          require("otter").activate { "html", "php", "regex" }
+          require("otter").activate { "html", "php" }
         end,
       })
       vim.api.nvim_create_autocmd("Filetype", {

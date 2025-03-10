@@ -50,7 +50,7 @@ return {
 
     sources = {
       -- default = { "snippets", "lsp", "path", "buffer", "markdown", "lazydev" },
-      default = { "snippets", "lsp", "path", "buffer", "lazydev" },
+      default = { "snippets", "lsp", "markdown", "path", "buffer", "lazydev", "cmdline" },
       providers = {
         snippets = {
           opts = {
@@ -61,10 +61,10 @@ return {
             },
           },
         },
-        -- markdown = {
-        --   name = "RenderMarkdown",
-        --   module = "render-markdown.integ.blink",
-        -- },
+        markdown = {
+          name = "RenderMarkdown",
+          module = "render-markdown.integ.blink",
+        },
         lazydev = {
           name = "LazyDev",
           module = "lazydev.integrations.blink",

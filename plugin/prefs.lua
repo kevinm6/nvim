@@ -60,7 +60,6 @@ local settings = {
   shortmess = vim.opt.shortmess:append "c",
 
   -- INDENTATION
-  smartindent = true,
   tabstop = 2,
   softtabstop = 2,
   expandtab = true,

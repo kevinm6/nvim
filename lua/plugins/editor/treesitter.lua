@@ -35,7 +35,6 @@ local function parsers_to_be_installed()
       "javascript",
       "markdown",
       "markdown_inline",
-      "ocaml",
       "php",
       "python",
       "regex",
@@ -150,6 +149,19 @@ return {
           show_help = "?",
         },
       }
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.freemarker = {
+        install_info = {
+          url = "~/dev/tree-sitter-freemarker",
+          files = { "src/parser.c" },
+          generate_reqires_npm = true,
+          requires_generate_from_grammar = false,
+        },
+        filetype = "freemarker",
+      }
+      vim.filetype.add { extension = {
+        ftl = "freemarker",
+      } }
       -- require("nvim-treesitter.install").prefer_git = true
     end,
   },

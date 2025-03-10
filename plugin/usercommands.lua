@@ -67,21 +67,23 @@ end, {
 
 ---Config File
 user_command("NvimConfig", function()
-  local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
-  if not has_telescope then
-    vim.cmd.edit(vim.fn.stdpath "config")
+  local has_snacks, snacks = pcall(require, "snacks.picker")
+  local config_path = vim.fn.stdpath "config"
+  if not has_snacks then
+    vim.cmd.edit()
   else
-    tele_builtin.find_files { cwd = vim.fn.stdpath "config" }
+    snacks.files { dirs = { config_path } }
   end
 end, { desc = "Neovim Config" })
 
 ---Data Files
 user_command("NvimData", function()
-  local has_telescope, tele_builtin = pcall(require, "telescope.builtin")
-  if not has_telescope then
-    vim.cmd.edit(vim.fn.stdpath "data")
+  local has_snacks, snacks = pcall(require, "snacks.picker")
+  local data_path = vim.fn.stdpath "data"
+  if not has_snacks then
+    vim.cmd.edit(data_path)
   else
-    tele_builtin.find_files { cwd = vim.fn.stdpath "data" }
+    snacks.files { dirs = { data_path } }
   end
 end, { desc = "Neovim Config" })
 

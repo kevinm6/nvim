@@ -11,7 +11,7 @@ local M = {
   ---filetypes to exclude
   to_exclude = {
     alpha = true,
-    dashboard = true,
+    -- snacks_dashboard = true,
     lspinfo = true,
     snacks_picker_input = true,
     snacks_picker_list = true,
@@ -376,8 +376,7 @@ local function disabled_statusline()
   local modifiedReadOnlyFlags = "%m%r"
 
   local special_filetypes = {
-    dashboard = M.icons.dashboard .. " Dashboard",
-    alpha = M.icons.dashboard .. " Dashboard",
+    -- snacks_dashboard = M.icons.dashboard .. " Dashboard",
     oil = M.icons.folder .. " File Explorer",
     lazy = M.icons.table .. " Plugin Manager",
     lspinfo = M.icons.lsp_info .. " LSP Status",
