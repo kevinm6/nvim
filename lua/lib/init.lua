@@ -141,7 +141,7 @@ function M.delete_curr_buf_open_next()
   else
     return
   end
-  vim.cmd.bdelete(cBuf)
+  vim.api.nvim_buf_delete(cBuf, { force = true })
 end
 
 ---Create new file w/ input for filename

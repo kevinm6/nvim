@@ -100,15 +100,16 @@ function M.usercmd_session_completion()
 end
 
 function M.select(arg)
+  arg = vim.trim(arg)
   if arg == "" then
     vim.ui.select({ "save", "delete", "restore" }, {
       prompt = "Sessions> choose",
     }, function(choice)
       if choice == "save" then
         save_session()
-      elseif choice == "delete_session" then
+      elseif choice == "delete" then
         delete_session()
-      elseif choice == "restore_session" then
+      elseif choice == "restore" then
         restore_session()
       end
     end)

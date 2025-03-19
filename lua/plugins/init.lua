@@ -50,33 +50,6 @@ local M = {
   ---UI-lib used by other plugins
   "MunifTanjim/nui.nvim",
 
-  ---Image in NeoVim
-  {
-    "3rd/image.nvim",
-    cond = false,
-    -- pin = true, -- DON'T update for now -> https://github.com/3rd/image.nvim/issues/191
-    -- dev = true,
-    ft = { "markdown", "vimwiki", "png", "jpeg", "jpg", "image_nvim" },
-    opts = function(_, o)
-      o.backend = "kitty"
-      o.processor = "magick_cli"
-      o.window_overlap_clear_enabled = true -- toggles images when windows are overlapped
-      -- o.editor_only_render_when_focused = true -- auto show/hide images when the editor gains/looses focus
-      o.window_overlap_clear_ft_ignore = {}
-      o.integrations = {
-        markdown = {
-          enabled = true,
-          sizing_strategy = "auto",
-          download_remote_images = true,
-          clear_in_insert_mode = true,
-          only_render_image_at_cursor = true,
-          filetypes = { "markdown", "vimwiki", "quarto" },
-        },
-      }
-      o.hijack_file_patterns = { "*.svg", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" } -- render image files as images when opened
-    end,
-  },
-
   ---Obsidian
   {
     "epwalsh/obsidian.nvim",

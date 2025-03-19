@@ -59,8 +59,8 @@ return {
         -- footer = { "%s", align = "center", hl = "@comment" },
       },
     },
-    -- explorer = {},
     image = {},
+    -- explorer = {},
     -- input = {
     --   relative = "editor",
     --   row = -2,
@@ -198,7 +198,7 @@ return {
         lsp_symbols = {
           layout = {
             reverse = true,
-            preview = true,
+            preview = false,
             layout = {
               backdrop = false,
               width = 0.6,
@@ -216,7 +216,7 @@ return {
         lsp_workspace_symbols = {
           layout = {
             reverse = true,
-            preview = true,
+            preview = false,
             layout = {
               backdrop = false,
               width = 0.6,

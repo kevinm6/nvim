@@ -37,16 +37,13 @@ return {
   "MeanderingProgrammer/markdown.nvim",
   main = "render-markdown",
   ft = { "markdown", "quarto" },
-  keys = {
-    {
-      "<localleader>r",
-      function()
-        require("render-markdown").toggle()
-      end,
-      { "markdown", "quarto" },
-      desc = "Render Markdown",
-    },
-  },
+  -- keys = {
+  --   {
+  --     "<localleader>r",
+  --     { "markdown", "quarto" },
+  --     desc = "Render Markdown",
+  --   },
+  -- },
   opts = function(_, o)
     o.enabled = false -- not rendering on enter md files
     o.file_types = { "markdown", "quarto" } -- TODO to test
@@ -70,6 +67,10 @@ return {
         todo = { raw = "[-]", rendered = "󰥔 ", highlight = "RenderMarkdownTodo" },
       },
     }
+
+    vim.keymap.set("n", "<localleader>r", function()
+      require("render-markdown").toggle()
+    end, { buffer = true, desc = "Render Markdown" })
 
     vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "TabLine" })
   end,

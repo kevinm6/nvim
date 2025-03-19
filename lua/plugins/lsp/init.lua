@@ -85,7 +85,7 @@ local function set_buf_keymaps(client, bufnr)
 
   nmap {
     "<leader>ls",
-    snacks.lsp_document_symbols or vim.lsp.buf.document_symbol,
+    snacks.lsp_symbols or vim.lsp.buf.document_symbol,
     "Workspace Symbols",
   }
 
