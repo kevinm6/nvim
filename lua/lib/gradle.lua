@@ -84,7 +84,7 @@ function M.setup(opts)
   local root_dir = opts.root_dir or nil
 
   if not root_dir then
-    vim.notify("root_dir not passed!", vim.log.levels.ERROR, { title = "Gradle" })
+    -- vim.notify("root_dir not passed!", vim.log.levels.ERROR, { title = "Gradle" })
     return
   end
 
@@ -115,3 +115,4 @@ function M.setup(opts)
 end
 
 return M
+

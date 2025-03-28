@@ -59,36 +59,5 @@ return {
         winblend = 8,
       },
     }
-
-    ---Hover
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      title = "LSP❭ Hover",
-      border = "rounded",
-      max_height = math.floor(vim.o.lines * 0.6),
-      max_width = math.floor(vim.o.columns * 0.8),
-    })
-
-    ---SignatureHelp
-    -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    --   title = "LSP❭ SignatureHelp",
-    --   border = "rounded",
-    --   max_width = math.floor(vim.o.columns * 0.6),
-    --   max_height = math.floor(vim.o.lines * 0.4),
-    --   close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
-    -- })
-
-    ---References
-    vim.lsp.handlers["textDocument/references"] = vim.lsp.with(vim.lsp.handlers["textDocument/references"], {
-      -- Use location list instead of quickfix list
-      loclist = true,
-    })
-
-    ---WorkspaceFolders
-    vim.lsp.handlers["workspace/workspaceFolders"] = vim.lsp.with(vim.lsp.handlers["workspace/workspaceFolders"], {
-      library = {
-        [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-        [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-      },
-    })
   end,
 }

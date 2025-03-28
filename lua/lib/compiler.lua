@@ -47,7 +47,7 @@ local compiler = {
 ---Get matching compiler from current filetype
 ---@return any compilers all compilers available w/ Vim
 local function get_matching_compiler(filetype)
-  local vim_compilers = vim.fn.globpath("$VIMRUNTIME/compiler", filetype .. ".vim", false, 0)
+  local vim_compilers = vim.fn.globpath("$VIMRUNTIME/compiler", filetype .. ".vim", false, true)
 
   return #vim_compilers > 0 and vim.fn.fnamemodify(vim_compilers, ":t:r") or nil
 end
@@ -74,7 +74,7 @@ end
 ---If a custom command is entered, the same filetypes open
 ---in the same nvim session will use the same command.
 local function select_compiler()
-  local vim_compilers = vim.fn.globpath(vim.fn.expand "$VIMRUNTIME/compiler", "*.vim", true, 1)
+  local vim_compilers = vim.fn.globpath(vim.fn.expand "$VIMRUNTIME/compiler", "*.vim", true, true)
   table.insert(vim_compilers, 1, "CUSTOM")
   vim.ui.select(vim_compilers, {
     prompt = "  Select compiler",
@@ -120,7 +120,7 @@ local function float_terminal(command)
 
   local bufnr = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_open_win(bufnr, true, opts)
-  vim.fn.termopen(command)
+  vim.fn.jobstart(command, { term = true })
 
   vim.wo.winblend = 16
   vim.bo.bufhidden = "hide"
@@ -154,7 +154,7 @@ local function run_in_terminal(command, direction)
       float_terminal(full_command)
     elseif direction == "tab" then
       vim.cmd.tabnew()
-      vim.fn.termopen(full_command)
+      vim.fn.jobstart(full_command, { term = true })
     end
   end
 end

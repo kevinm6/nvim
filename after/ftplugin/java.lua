@@ -19,8 +19,14 @@ end
 
 local data_path = vim.fn.stdpath "data"
 
-local capabilities = require("plugins.lsp").capabilities()
-capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+--TODO figure out a better way
+local capabilities = {
+  workspace = {
+    didChangeWatchedFiles = {
+      dynamicRegistration = true,
+    },
+  },
+}
 local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
@@ -173,7 +179,7 @@ local config = {
     },
   },
   on_init = function(client)
-    require("plugins.lsp").on_init(client)
+    -- require("plugins.lsp").on_init(client)
     client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
   end,
   init_options = {
@@ -196,7 +202,7 @@ local config = {
       require("jdtls.dap").setup_dap_main_class_configs {}
     end)
 
-    require("plugins.lsp").on_attach(client, bufnr)
+    -- require("plugins.lsp").on_attach(client, bufnr)
 
     vim.api.nvim_create_autocmd("BufWritePost", {
       buffer = bufnr,
@@ -270,6 +276,8 @@ local config = {
     }
   end,
 }
+
+vim.lsp.config("jdtls", config)
 
 jdtls.start_or_attach(config)
 

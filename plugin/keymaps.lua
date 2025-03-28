@@ -381,7 +381,7 @@ map { "x", "<M-j>", [[:move '>+1<CR>gv-gv]], { silent = true } }
 map { "x", "<M-k>", [[:move '<-2<CR>gv-gv]], { silent = true } }
 
 vim.cmd.cnoreabbrev("Wq", "wq")
-vim.cmd.cnoreabbrev("Wq", "wq")
+vim.cmd.cnoreabbrev("Wa", "wa")
 vim.cmd.cnoreabbrev("Xa", "xa")
 vim.cmd.cnoreabbrev("XA", "xa")
 

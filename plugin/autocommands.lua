@@ -186,6 +186,12 @@ autocmd("BufRead", {
   end,
 })
 
+---Equalize windows on resizing
+autocmd("VimResized", {
+  group = augroup("_vim_w_resizing", { clear = true }),
+  command = "wincmd =",
+})
+
 ---Insert mode on builtin Neovim terminal
 autocmd("TermOpen", {
   group = augroup("_startinsert_term_open", { clear = true }),

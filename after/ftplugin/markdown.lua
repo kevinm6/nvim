@@ -25,3 +25,7 @@ end, { desc = "Preview Markdown", buffer = true })
 vim.api.nvim_create_user_command("TOpdf", function()
   require("lib.pdf").convert_md_to_pdf()
 end, { desc = "Export markdown to pdf" })
+
+--TODO: check after official release
+--marksman isn't starting automatically
+-- vim.lsp.start(vim.lsp.config.marksman)

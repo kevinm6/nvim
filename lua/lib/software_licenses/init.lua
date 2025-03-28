@@ -32,9 +32,9 @@ function M.pick_license()
     vim.ui.select(get_licenses(), {
       prompt = "Software Licenses",
       desc = "Select License",
-    }, function(item)
+    }, function(choice)
       if choice == "spaces" then
-        local lines = split(item.preview)
+        local lines = split(choice.preview)
         vim.api.nvim_put(lines, "l", false, true)
       end
     end)

@@ -31,7 +31,18 @@ return {
       },
       sections = {
         -- { section = "terminal", cmd = "curl -s 'wttr.in/?0'" },
-        { section = "header", padding = 4 },
+        { section = "header", padding = 2 },
+        function()
+          local v = vim.version()
+          local v_info = string.format(" v%d.%d.%d", v.major, v.minor, v.patch)
+          return {
+            title = "version",
+            align = "center",
+            padding = 2,
+            text = v_info,
+            hl = "Comment",
+          }
+        end,
         { section = "keys", gap = 1, padding = 1 },
         -- { section = "startup" },
         -- {

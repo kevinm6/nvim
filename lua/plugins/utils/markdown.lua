@@ -46,7 +46,7 @@ return {
   -- },
   opts = function(_, o)
     o.enabled = false -- not rendering on enter md files
-    o.file_types = { "markdown", "quarto" } -- TODO to test
+    o.file_types = { "markdown", "quarto", "markdown.mdx" } -- TODO to test
     o.anti_conceal = { enabled = false }
     o.latex = {
       enabled = false,

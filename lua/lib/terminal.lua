@@ -74,7 +74,7 @@ function M.new_terminal_win(cmd, autoclose, opts)
     win = opts.win or nil,
   })
 
-  local chan = vim.fn.termopen(cmd, {
+  local chan = vim.fn.jobstart(cmd, {
     detach = true,
     on_exit = function()
       if autoclose then
@@ -83,6 +83,7 @@ function M.new_terminal_win(cmd, autoclose, opts)
       end
       M.channels[buf] = nil
     end,
+    term = true,
   })
   M.channels[buf] = chan
 
