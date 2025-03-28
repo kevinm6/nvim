@@ -12,14 +12,7 @@ local M = {
 ---Get available sessions
 ---@return table
 local function get_sessions()
-  local sessions = {}
-
-  local sessions_files = vim.split(vim.fn.globpath(M.dir, "*.vim"), "\n", { trimempty = true })
-
-  for _, f in pairs(sessions_files) do
-    table.insert(sessions, f)
-  end
-  return sessions
+  return vim.fn.globpath(M.dir, "*.vim", false, true)
 end
 
 ---Delete selected session
@@ -27,7 +20,7 @@ local function delete_session()
   local sessions = get_sessions()
 
   if #sessions >= 1 then
-    pcall(require, "telescope")
+    pcall(require, "snacks")
     vim.ui.select(sessions, {
       prompt = "Select session to delete:",
       default = nil,
@@ -53,7 +46,7 @@ local function restore_session()
   local sessions = get_sessions()
 
   if #sessions >= 1 then
-    pcall(require, "telescope")
+    pcall(require, "snacks")
     vim.ui.select(sessions, {
       prompt = " > Select session to restore",
       format_item = function(item)
@@ -61,7 +54,7 @@ local function restore_session()
       end,
       default = nil,
     }, function(choice)
-      local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
+      local s_name = vim.fn.fnamemodify(choice or "", ":p:t:r")
       if choice then
         vim.cmd.source(choice)
         require("lib.ui.statusline").session_name = s_name
@@ -73,14 +66,33 @@ local function restore_session()
   end
 end
 
+local function update_session()
+  pcall(require, "snacks")
+
+  vim.ui.select(get_sessions(), {
+    prompt = "Sessions> select session to update",
+    format_item = function(item)
+      return vim.fn.fnamemodify(item, ":p:t:r")
+    end,
+  }, function(choice)
+    if choice then
+      local short_name = vim.fn.fnamemodify(choice, ":p:t:r")
+      vim.cmd.mksession { choice, bang = true }
+      vim.notify(string.format("Session < %s > updated", short_name), vim.log.levels.INFO)
+    end
+  end)
+end
+
 ---Save current vim session with name.
 --- The session is saved into 'data' stdpath of nvim
 ---@see mksession |:mksession|
 local function save_session()
-  pcall(require, "telescope")
+  pcall(require, "snacks")
   vim.ui.input({
     prompt = "Enter session name: ",
     default = nil,
+    -- completion = "custom,v:lua.require'lib.session'.save_session_completion",
+    -- complete = "custom,v:lua.require'lib.session'.save_session_completion",
   }, function(input)
     if input then
       if vim.fn.isdirectory(M.dir) ~= 1 then
@@ -95,7 +107,7 @@ end
 
 ---Helper function to usercmd completion
 function M.usercmd_session_completion()
-  local args = { "restore", "save", "delete" }
+  local args = { "update", "restore", "save", "delete" }
   return table.concat(args, "\n")
 end
 
@@ -107,6 +119,8 @@ function M.select(arg)
     }, function(choice)
       if choice == "save" then
         save_session()
+      elseif choice == "update" then
+        update_session()
       elseif choice == "delete" then
         delete_session()
       elseif choice == "restore" then
@@ -115,12 +129,18 @@ function M.select(arg)
     end)
   elseif arg == "save" then
     save_session()
+  elseif arg == "update" then
+    update_session()
   elseif arg == "restore" then
     restore_session()
   elseif arg == "delete" then
     delete_session()
   else
-    vim.notify("Invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN, { title = "Session" })
+    vim.notify(
+      "Invalid argument.\nUsage -> :Session [save|restore|update|delete]",
+      vim.log.levels.WARN,
+      { title = "Session" }
+    )
   end
 end
 

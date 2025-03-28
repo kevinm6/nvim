@@ -92,14 +92,16 @@ function M.projects()
     vim.fn.expand "~/Documents/developer",
     vim.fn.expand "~/dev",
     vim.fn.expand "~/uni",
+    vim.fn.expand "~/Informatica)",
   }
-  local projects = {}
-  for _, value in pairs(projs_folders) do
-    vim.list_extend(projects, vim.split(vim.fn.glob(value .. "/*", true), "\n"))
-  end
 
   local has_snacks, snacks = pcall(require, "snacks.picker")
   if not has_snacks then
+    local projects = {}
+    for _, value in pairs(projs_folders) do
+      vim.list_extend(projects, vim.split(vim.fn.glob(value .. "/*", true), "\n"))
+    end
+
     vim.ui.select(projects, {
       prompt = " > Select project",
       default = nil,
@@ -119,7 +121,10 @@ function M.projects()
       end
     end)
   else
-    snacks.projects { dev = projs_folders }
+    snacks.projects {
+      dev = projs_folders,
+      patterns = { ".git", ".svn", "README.md", "*.xls" },
+    }
   end
 end
 

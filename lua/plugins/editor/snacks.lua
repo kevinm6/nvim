@@ -245,7 +245,7 @@ return {
         lsp_definitions = {
           layout = {
             reverse = true,
-            preview = true,
+            preview = false,
             layout = {
               backdrop = false,
               width = 0.6,
@@ -524,7 +524,7 @@ return {
           },
         },
         projects = {
-          dev = { "~/Documents/developer", "~/dev", "~/uni" },
+          dev = { "~/Documents/develoer", "~/dev", "~/uni", "~/Informatica" },
           layout = {
             reverse = true,
             preview = false,
