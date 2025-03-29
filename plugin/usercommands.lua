@@ -142,6 +142,30 @@ user_command("DiffOrig", function()
  ]]
 end, { desc = "View this in diff-mode" })
 
+---Encode Base64
+user_command("EncodeBase64", function(r)
+  local col_top, col_bot = vim.api.nvim_buf_get_mark(0, "<")[2], vim.api.nvim_buf_get_mark(0, ">")[2]
+  local text = vim.api.nvim_buf_get_text(0, r.line1 - 1, col_top + 1, r.line2 - 1, col_bot + 1, {})
+  local string_text = table.concat(text)
+  local encoded = vim.base64.encode(string_text)
+  vim.api.nvim_buf_set_text(0, r.line1 - 1, col_top + 1, r.line2 - 1, col_bot + 1, vim.split(encoded, " "))
+end, {
+  desc = "Encode text Base64",
+  range = 2,
+})
+
+---TODO Base64
+user_command("DecodeBase64", function(r)
+  local col_top, col_bot = vim.api.nvim_buf_get_mark(0, "<")[2], vim.api.nvim_buf_get_mark(0, ">")[2]
+  local text = vim.api.nvim_buf_get_text(0, r.line1 - 1, col_top + 1, r.line2 - 1, col_bot + 1, {})
+  local string_text = table.concat(text)
+  local decoded = vim.base64.decode(string_text)
+  vim.api.nvim_buf_set_text(0, r.line1 - 1, col_top + 1, r.line2 - 1, col_bot + 1, vim.split(decoded, " "))
+end, {
+  desc = "Decode text Base64",
+  range = 2,
+})
+
 ---Update `Last Modified` date if found in first 10 row of file
 usercmd_toggle("ToggleAutoTimeStamp", "auto_timestamp", {
   title = "Auto Update TimeStamp",

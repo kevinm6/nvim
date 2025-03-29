@@ -367,4 +367,11 @@ end
 --   local save_addr_path = vim.fn.stdpath "state" .. "/nvim_server_addr"
 -- end
 
+---Get text from current selection
+function M.get_selection_text()
+  local top, bot = vim.api.nvim_buf_get_mark(0, "<"), vim.api.nvim_buf_get_mark(0, ">")
+  local text = vim.api.nvim_buf_get_text(0, top[1], top[2], bot[1], bot[2], {})
+  return table.concat(text)
+end
+
 return M

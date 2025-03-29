@@ -91,7 +91,7 @@ local function save_session()
   vim.ui.input({
     prompt = "Enter session name: ",
     default = nil,
-    -- completion = "custom,v:lua.require'lib.session'.save_session_completion",
+    completion = "custom,v:lua.require'lib.session'.save_session_completion",
     -- complete = "custom,v:lua.require'lib.session'.save_session_completion",
   }, function(input)
     if input then
@@ -106,7 +106,7 @@ local function save_session()
 end
 
 ---Helper function to usercmd completion
-function M.usercmd_session_completion()
+function Usercmd_session_completion()
   local args = { "update", "restore", "save", "delete" }
   return table.concat(args, "\n")
 end
