@@ -58,11 +58,36 @@ end, { desc = "Wipe all Registers" })
 
 ---Sessions
 user_command("Session", function(arg)
-  require("lib.session").select(arg.args)
+  local action = vim.trim(arg.args)
+  -- if action == "" then
+  --   vim.ui.select({ "save", "delete", "restore" }, {
+  --     prompt = "Sessions> choose",
+  --     complete = "customlist,v:lua.require'lib.session'.usercmd_session_completion",
+  --   }, function(choice)
+  --     if choice == "save" then
+  --       action = "save"
+  --     elseif choice == "restore" then
+  --       action = "restore"
+  --     elseif choice == "delete" then
+  --       action = "delete"
+  --     end
+  --   end)
+  -- elseif arg == "save" then
+  --   action = "save"
+  -- elseif arg == "restore" then
+  --   action = "restore"
+  -- elseif arg == "delete" then
+  --   action = "delete"
+  -- else
+  --   vim.notify("Invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN, { title = "Session" })
+  --   return
+  -- end
+
+  require("lib.session").select(action)
 end, {
   nargs = "?",
   desc = "Session Manager",
-  complete = "custom,v:lua.require'lib.session'.usercmd_session_completion",
+  complete = "customlist,v:lua.require'lib.session'.usercmd_session_completion",
 })
 
 ---Config File
@@ -160,7 +185,7 @@ user_command("DecodeBase64", function(r)
   local text = vim.api.nvim_buf_get_text(0, r.line1 - 1, col_top + 1, r.line2 - 1, col_bot + 1, {})
   local string_text = table.concat(text)
   local decoded = vim.base64.decode(string_text)
-  vim.api.nvim_buf_set_text(0, r.line1 - 1, col_top + 1, r.line2 - 1, col_bot + 1, vim.split(decoded, " "))
+  vim.api.nvim_buf_set_text(0, r.line1 - 1, col_top + 1, r.line2 - 1, col_bot + 1, { decoded })
 end, {
   desc = "Decode text Base64",
   range = 2,
