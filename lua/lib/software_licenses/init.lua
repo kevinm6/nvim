@@ -39,7 +39,7 @@ function M.pick_license()
       end
     end)
   else
-    require("snacks").picker.pick {
+    snacks.picker.pick {
       source = "Software Licenses",
       -- title = "Software licenses",
       items = get_licenses(),

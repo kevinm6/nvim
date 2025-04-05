@@ -59,30 +59,6 @@ end, { desc = "Wipe all Registers" })
 ---Sessions
 user_command("Session", function(arg)
   local action = vim.trim(arg.args)
-  -- if action == "" then
-  --   vim.ui.select({ "save", "delete", "restore" }, {
-  --     prompt = "Sessions> choose",
-  --     complete = "customlist,v:lua.require'lib.session'.usercmd_session_completion",
-  --   }, function(choice)
-  --     if choice == "save" then
-  --       action = "save"
-  --     elseif choice == "restore" then
-  --       action = "restore"
-  --     elseif choice == "delete" then
-  --       action = "delete"
-  --     end
-  --   end)
-  -- elseif arg == "save" then
-  --   action = "save"
-  -- elseif arg == "restore" then
-  --   action = "restore"
-  -- elseif arg == "delete" then
-  --   action = "delete"
-  -- else
-  --   vim.notify("Invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN, { title = "Session" })
-  --   return
-  -- end
-
   require("lib.session").select(action)
 end, {
   nargs = "?",

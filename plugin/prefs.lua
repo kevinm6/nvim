@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 20 Jul 2024, 21:04
+-- Last Modified: 05 Apr 2025, 20:36
 -------------------------------------
 
 local settings = {
@@ -43,7 +43,7 @@ local settings = {
   fillchars = [[eob: ,fold:󰇘,foldopen:,foldsep: ,foldclose:]],
   timeoutlen = 350,
   ttimeoutlen = 100,
-  completeopt = { "menu", "menuone", "noselect", "popup" },
+  completeopt = { "menuone", "noselect", "popup", "fuzzy" },
   matchpairs = vim.opt.matchpairs:append "<:>",
   wildignore = {
     "*.DS_Store",
@@ -103,3 +103,57 @@ local settings = {
 for k, o in pairs(settings) do
   vim.opt[k] = o
 end
+
+---Custom diagnostic config
+local icon_err, icon_warn, icon_info, icon_hint = "", "", "", "󱧢"
+
+local signs = {
+  {
+    name = "DiagnosticSignError",
+    text = icon_err,
+    numhl = "ErrorMsg",
+  },
+  {
+    name = "DiagnosticSignWarn",
+    text = icon_warn,
+    numhl = "WarningMsg",
+  },
+  { name = "DiagnosticSignHint", text = icon_hint },
+  { name = "DiagnosticSignInfo", text = icon_info },
+}
+
+for _, sign in pairs(signs) do
+  vim.fn.sign_define(sign.name, {
+    texthl = sign.name,
+    text = sign.text,
+    numhl = sign.numhl or nil,
+  })
+end
+
+---LSP•Diagnostic
+vim.diagnostic.config {
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = icon_err,
+      [vim.diagnostic.severity.WARN] = icon_warn,
+      [vim.diagnostic.severity.INFO] = icon_info,
+      [vim.diagnostic.severity.HINT] = icon_hint,
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "ErrorMsg",
+      [vim.diagnostic.severity.WARN] = "WarningMsg",
+    },
+  },
+  virtual_text = { current_line = true },
+  underline = false,
+  float = {
+    focusable = true,
+    style = "minimal",
+    border = "rounded",
+    source = "if_many",
+    header = "",
+    title = "LSP • Diagnostic",
+    prefix = "",
+    winblend = 8,
+  },
+}

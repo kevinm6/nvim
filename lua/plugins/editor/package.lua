@@ -1,0 +1,155 @@
+-------------------------------------
+-- File         : package.lua
+-- Description  : package manager (Mason), Linter and Formatter
+-- Author       : Kevin
+-- Last Modified: 06/04/2025 - 18:30
+-------------------------------------
+
+local path_sep, env_path_sep = "/", ":"
+if vim.fn.has "win32" then
+  path_sep = [[\]]
+  env_path_sep = ";"
+end
+vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, path_sep) .. env_path_sep .. vim.env.PATH
+
+return {
+  ---Mason
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    opts = {
+      ui = {
+        border = "rounded",
+        width = 0.7,
+        height = 0.7,
+        icons = {
+          package_installed = "✓",
+          package_pending = "⟳",
+          package_uninstalled = "-",
+        },
+        keymaps = {
+          uninstall_package = "x",
+          toggle_help = "?",
+        },
+      },
+    },
+  },
+
+  ---Linter (Nvim-Lint)
+  {
+    "mfussenegger/nvim-lint",
+    event = "InsertEnter",
+    config = function()
+      local lint = require "lint"
+      lint.linters_by_ft = {
+        markdown = { "markdownlint" },
+        json = { "jsonlint" },
+        javascript = { "eslint_d" },
+        typescript = { "eslint_d" },
+        python = { "flake8" },
+        gitcommit = { "commitlint" },
+        php = { "php" },
+        yaml = { "yamllint" },
+      }
+
+      lint.linters.markdownlint.args = {
+        "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
+      }
+      -- lint.linters.yamllint.args = {
+      --   "--no-warnings", -- output only errors
+      -- }
+
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          if not lint then
+            return
+          end
+          lint.try_lint()
+        end,
+      })
+    end,
+  },
+
+  ---Formatter (Conform)
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "Format", "ConformInfo" },
+    keys = {
+      {
+        "<leader>lf",
+        function()
+          require("conform").format { async = true, lsp_fallback = true }
+        end,
+        desc = "Format <buf>",
+      },
+    },
+    config = function(_, o)
+      local conform = require "conform"
+
+      o.formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "black" },
+        bash = { "beautysh" },
+        zsh = { "beautysh" },
+        -- css = { "prettier" },
+        javascript = { "prettier" },
+        typescriptreact = { "prettier" },
+        html = { "prettier" },
+        json = { "prettier" },
+        yaml = { "yamlfmt", "prettier" },
+        -- java = { "google-java-format" },
+      }
+
+      o.stop_after_first = true
+
+      o.format_on_save = function(bufnr)
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
+        return { timeout_ms = 500, lsp_format = "fallback" }
+      end
+
+      o.formatters = {
+        beautysh = {
+          args = { "$FILENAME" },
+        },
+        injected = {
+          lang_to_ext = {
+            bash = "sh",
+            javascript = "js",
+            markdown = "md",
+            python = "py",
+            ruby = "rb",
+            typescript = "ts",
+          },
+        },
+      }
+      conform.setup(o)
+
+      vim.api.nvim_create_user_command("Format", function(args)
+        local range = nil
+        if args.count ~= -1 then
+          local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+          range = {
+            ["start"] = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() },
+          }
+        end
+        conform.format { async = true, lsp_format = "fallback", range = range }
+      end, { range = true })
+
+      require("lib").user_command_toggle("ToggleAutoFormat", "disable_autoformat", {
+        title = "Auto-Format (on-save)",
+        desc = "AutoFormat (on-save)",
+      })
+    end,
+  },
+
+  ---NeovimDev
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {},
+  },
+}

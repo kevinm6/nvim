@@ -160,9 +160,11 @@ function M.new_file(cmd_input)
       default = nil,
       completion = "dir",
     }, function(input)
-      if not input then
+      input = vim.trim(input)
+      if not input or input == "" then
         return
       end
+      assert(input ~= "" and input ~= nil, "Empty file to edit")
 
       if input then
         vim.cmd.enew()
@@ -360,18 +362,18 @@ function M.user_command_toggle(name, var_name, opts)
   })
 end
 
----TODO: define on nvim-0.11
--- function M.detaching()
---   local addr = vim.v.servername
---   -- save into file in stdpath 'state'
---   local save_addr_path = vim.fn.stdpath "state" .. "/nvim_server_addr"
--- end
-
 ---Get text from current selection
 function M.get_selection_text()
   local top, bot = vim.api.nvim_buf_get_mark(0, "<"), vim.api.nvim_buf_get_mark(0, ">")
   local text = vim.api.nvim_buf_get_text(0, top[1], top[2], bot[1], bot[2], {})
   return table.concat(text)
 end
+
+---TODO: define on nvim-0.11
+-- function M.detaching()
+--   local addr = vim.v.servername
+--   -- save into file in stdpath 'state'
+--   local save_addr_path = vim.fn.stdpath "state" .. "/nvim_server_addr"
+-- end
 
 return M

@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 26 Dec 2024, 11:01
+-- Last Modified: 05/04/2025 - 20:23
 -------------------------------------
 
 --- NOTE:if they deliver this -> https://github.com/neovim/neovim/issues/28536
@@ -323,6 +323,7 @@ map {
   end,
   { expr = true, noremap = true },
 }
+
 -- tmap { "<C-h>", [[<C-\><C-n><C-w>h]] }
 -- tmap { "<C-j>", [[<C-\><C-n><C-w>j]] }
 -- tmap { "<C-k>", [[<C-\><C-n><C-w>k]] }
@@ -410,14 +411,13 @@ map {
 -- - If there's no one, fallback to vanilla omnifunc.
 
 imap {
-  "<C-j>",
+  "<C-n>",
   function()
     if pumvisible() then
       feedkeys "<C-n>"
     else
-      -- feedkeys "<C-j>"
       if next(vim.lsp.get_clients { bufnr = 0 }) then
-        vim.lsp.completion.trigger()
+        vim.lsp.completion.get()
       else
         if vim.bo.omnifunc == "" then
           feedkeys "<C-x><C-n>"
@@ -425,6 +425,27 @@ imap {
           feedkeys "<C-x><C-o>"
         end
       end
+    end
+  end,
+  "Trigger/select next completion",
+}
+
+imap {
+  "<C-j>",
+  function()
+    if pumvisible() then
+      feedkeys "<C-n>"
+    else
+      feedkeys "<C-j>"
+      -- if next(vim.lsp.get_clients { bufnr = 0 }) then
+      --   vim.lsp.completion.trigger()
+      -- else
+      --   if vim.bo.omnifunc == "" then
+      --     feedkeys "<C-x><C-n>"
+      --   else
+      --     feedkeys "<C-x><C-o>"
+      --   end
+      -- end
     end
   end,
   "select next completion",

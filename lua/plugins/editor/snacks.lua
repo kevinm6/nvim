@@ -578,23 +578,40 @@ return {
             },
           },
         },
-        ["Software Licenses"] = {
-          layout = {
-            reverse = true,
-            preview = false,
-            layout = {
-              width = 0.6,
-              height = 0.4,
-              box = "vertical",
-              border = "rounded",
-              title = "{title}",
-              title_pos = "center",
-              { win = "preview", title = "{preview}", height = 0.6, border = "bottom" },
-              { win = "list", border = "none" },
-              { win = "input", height = 1, border = "top" },
-            },
-          },
-        },
+        -- ["Software Licenses"] = {
+        --   layout = {
+        --     reverse = true,
+        --     preview = false,
+        --     layout = {
+        --       width = 0.6,
+        --       height = 0.4,
+        --       box = "vertical",
+        --       border = "rounded",
+        --       title = "{title}",
+        --       title_pos = "center",
+        --       { win = "preview", title = "{preview}", height = 0.6, border = "bottom" },
+        --       { win = "list", border = "none" },
+        --       { win = "input", height = 1, border = "top" },
+        --     },
+        --   },
+        -- },
+        -- ["Environment Variables"] = {
+        --   layout = {
+        --     reverse = true,
+        --     preview = false,
+        --     layout = {
+        --       width = 0.6,
+        --       height = 0.4,
+        --       box = "vertical",
+        --       border = "rounded",
+        --       title = "{title}",
+        --       title_pos = "center",
+        --       { win = "preview", title = "{preview}", height = 0.6, border = "bottom" },
+        --       { win = "list", border = "none" },
+        --       { win = "input", height = 1, border = "top" },
+        --     },
+        --   },
+        -- },
       },
 
       layout = {
@@ -613,6 +630,8 @@ return {
     },
     quickfile = {},
     lazygit = {
+      configure = false,
+      config = { os = { editPreset = "nvim-remote" } },
       win = {
         style = "lazygit",
         width = 0.94,

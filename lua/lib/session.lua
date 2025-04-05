@@ -41,7 +41,7 @@ local function delete_session()
         local deleted = vim.fn.delete(choice)
         if deleted == 0 then
           local choice_name = vim.fn.fnamemodify(choice, ":t")
-          vim.notify(string.format("Session < %s > deleted!", choice_name), vim.log.levels.WARN)
+          vim.notify(string.format("Session < %s > deleted", choice_name), vim.log.levels.WARN)
         end
       end
     end)
@@ -67,7 +67,7 @@ local function restore_session()
       if choice then
         vim.cmd.source(choice)
         require("lib.ui.statusline").session_name = s_name
-        vim.notify(string.format("Session < %s > restored!", s_name), vim.log.levels.INFO)
+        vim.notify(string.format("Session < %s > restored", s_name), vim.log.levels.INFO)
       end
     end)
   else
@@ -85,7 +85,11 @@ local function save_session()
     default = nil,
     completion = "customlist,v:lua.require'lib.session'.get_sessions_completion",
   }, function(input)
-    if input then
+    if input == nil then
+      return
+    end
+    input = vim.trim(input)
+    if input ~= "" then
       local op = "created"
       local session_file_path = string.format("%s/%s.vim", M.dir, input)
 
@@ -97,6 +101,8 @@ local function save_session()
       end
       vim.cmd.mksession { session_file_path, bang = true }
       vim.notify(string.format("Session < %s > %s", input, op), vim.log.levels.INFO)
+    else
+      print "  canceled"
     end
   end)
 end

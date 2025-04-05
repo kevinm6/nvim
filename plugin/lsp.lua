@@ -2,7 +2,7 @@
 -- File         : lsp.lua
 -- Description  : lsp config nvim-0.11
 -- Author       : Kevin
--- Last Modified: 17 Nov 2024, 10:49
+-- Last Modified: 05 Apr 2025, 20:37
 -------------------------------------
 
 local api, lsp = vim.api, vim.lsp
@@ -15,10 +15,10 @@ local function init_capabilities()
   -- Update capabilities with extended from cmp_nvim_lsp if available
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-  local has_blink, blink_lsp = pcall(require, "blink.cmp")
-  if has_blink then
-    capabilities = blink_lsp.get_lsp_capabilities(capabilities)
-  end
+  -- local has_blink, blink = pcall(require, "blink.cmp")
+  -- if has_blink then
+  --   capabilities = blink.get_lsp_capabilities(capabilities)
+  -- end
   -- Adding snippetSupport enabled by default for each LSP
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
@@ -45,7 +45,8 @@ local function set_buf_keymaps(client, bufnr)
   nmap {
     "K",
     function()
-      local winid = require("ufo").peekFoldedLinesUnderCursor()
+      local has_ufo, ufo = pcall(require, "ufo")
+      local winid = has_ufo and ufo.peekFoldedLinesUnderCursor() or false
       if winid then
         local buf = vim.api.nvim_win_get_buf(winid)
         vim.wo[winid].list = false
@@ -159,8 +160,9 @@ local function set_buf_funcs_for_capabilities(client, bufnr)
   local usercmd = vim.api.nvim_create_user_command
 
   -- Completion
-  -- TODO nvim-0.11
-  -- if vim.fn.has "nvim-0.11" == 1 then -- and client.supports_method "textDocument/completion" then
+  -- NOTE nvim-0.11: still not useful for me, doesn't supports custom snippets
+  -- if vim.fn.has "nvim-0.11" == 1 and client.supports_method "textDocument/completion" then
+  --   print "Setup completion..."
   --   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
   -- end
 
@@ -218,7 +220,7 @@ end
 --- @param client table client passed to attach config
 --- @param bufnr integer buffer id passed to attach config
 local function custom_attach(client, bufnr)
-  require("plugins.lsp.handlers").setup()
+  -- require("plugins.lsp.handlers").setup()
 
   set_buf_keymaps(client, bufnr)
   set_buf_funcs_for_capabilities(client, bufnr)
@@ -264,6 +266,15 @@ lsp.config("jdtls", {
   end,
 })
 
+lsp.config("metals", {
+  on_init = function(client)
+    custom_init(client)
+  end,
+  on_attach = function(client, bufnr)
+    custom_attach(client, bufnr)
+  end,
+})
+
 lsp.enable {
   "marksman",
   "gopls",
@@ -284,4 +295,5 @@ lsp.enable {
   "lemminx",
   "html",
   "dockerls",
+  -- "metals",
 }

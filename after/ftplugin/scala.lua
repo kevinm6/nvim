@@ -7,8 +7,7 @@
 
 local has_metals, metals = pcall(require, "metals")
 if not has_metals then
-  vim.notify(" metals not found or error on starting",
-    vim.log.levels.ERROR, { title = "Metals"})
+  vim.notify(" `nvim-metals` not found or error on starting", vim.log.levels.ERROR, { title = "Metals" })
   return
 end
 
@@ -20,9 +19,7 @@ metals_config.settings = {
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
 }
 
-metals_config.capabilities = require "cmp_nvim_lsp".default_capabilities()
-
-local dap = require "dap"
+local dap = require "lua.plugins.editor.dap"
 
 dap.configurations.scala = {
   {
@@ -44,8 +41,9 @@ dap.configurations.scala = {
   },
 }
 
-metals_config.on_attach = function(_, _)
-  require "metals".setup_dap()
-end
+-- metals_config.on_attach = function(_, _)
+--   require("metals").setup_dap()
+-- end
 
-require "metals".initialize_or_attach(metals_config)
+vim.lsp.config("metals", metals_config)
+require("metals").initialize_or_attach(metals_config)

@@ -8,11 +8,9 @@
 return {
   "saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
-  -- enabled = function()
-  --   return vim.fn.has "nvim-0.11" ~= 1
-  -- end,
-  version = "v0.*",
+  version = "1.*",
   opts = {
+    fuzzy = { implementation = "prefer_rust" },
     keymap = {
       preset = "default",
       ["<Up>"] = {},
@@ -24,7 +22,9 @@ return {
       ["<C-S-i>"] = { "snippet_backward", "fallback" },
       ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
     },
+    term = { enabled = true, keymap = { preset = "inherit" } },
     cmdline = {
+      -- enabled = false,
       keymap = {
         ["<C-i>"] = { "select_and_accept", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
@@ -38,102 +38,102 @@ return {
           end,
           "show_and_insert",
           "select_next",
-          "fallback",
         },
-        ["<S-Tab>"] = { "show_and_insert", "select_prev", "fallback" },
+        ["<S-Tab>"] = { "show_and_insert", "select_prev" },
         ["<C-e>"] = { "cancel" },
       },
     },
-    appearance = {
-      nerd_font_variant = "mono",
-    },
+  },
+  appearance = {
+    nerd_font_variant = "mono",
+  },
 
-    sources = {
-      -- default = { "snippets", "lsp", "path", "buffer", "markdown", "lazydev" },
-      default = { "snippets", "lsp", "markdown", "path", "buffer", "lazydev", "cmdline" },
-      providers = {
-        snippets = {
-          opts = {
-            extended_filetypes = {
-              lua = { "luadoc", "nvim_lua" },
-              sh = { "shelldoc" },
-              java = { "javadoc", "java_tests" },
-            },
+  sources = {
+    -- default = { "snippets", "lsp", "path", "buffer", "markdown", "lazydev" },
+    default = { "snippets", "lsp", "markdown", "path", "buffer", "lazydev" },
+    providers = {
+      snippets = {
+        opts = {
+          extended_filetypes = {
+            lua = { "luadoc", "nvim_lua" },
+            sh = { "shelldoc" },
+            java = { "javadoc", "java_tests" },
           },
         },
-        markdown = {
-          name = "RenderMarkdown",
-          module = "render-markdown.integ.blink",
-        },
-        lazydev = {
-          name = "LazyDev",
-          module = "lazydev.integrations.blink",
-          score_offset = 100,
+      },
+      markdown = {
+        name = "RenderMarkdown",
+        module = "render-markdown.integ.blink",
+      },
+      lazydev = {
+        name = "LazyDev",
+        module = "lazydev.integrations.blink",
+        score_offset = 100,
+      },
+    },
+    min_keyword_length = function(ctx)
+      return ctx.mode == "cmdline" and 2 or 0
+    end,
+  },
+  signature = {
+    enabled = true,
+    window = {
+      max_width = math.ceil(vim.o.columns * 0.6),
+      max_height = math.ceil(vim.o.lines * 0.4),
+    },
+  },
+
+  completion = {
+    -- keyword = {
+    --  regex = "[-_/]\\|\\k",
+    --  exclude_from_prefix_regex = "[\\.]",
+    -- },
+    accept = {
+      auto_brackets = { enabled = true },
+    },
+    list = {
+      selection = {
+        preselect = function(ctx)
+          return ctx.mode ~= "cmdline" and not require("blink.cmp").snippet_active { direction = 1 }
+        end,
+        auto_insert = function(ctx)
+          return ctx.mode == "cmdline"
+        end,
+      },
+    },
+    menu = {
+      scrollbar = false,
+      min_width = 32,
+      winblend = vim.o.pumblend,
+      draw = {
+        treesitter = { "lsp" },
+        -- align_to = "kind_icon",
+        -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
+        components = {
+          label = { ellipsis = true, width = { fill = true, max = 32 } },
+          label_description = { ellipsis = true, width = { fill = true } },
+          kind_icon = {
+            ellipsis = false,
+            text = function(ctx)
+              local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+              return kind_icon
+            end,
+          },
         },
       },
-      min_keyword_length = function(ctx)
-        return ctx.mode == "cmdline" and 2 or 0
-      end,
     },
-    signature = {
-      enabled = true,
+    documentation = {
+      auto_show = true,
       window = {
-        max_width = math.ceil(vim.o.columns * 0.6),
-        max_height = math.ceil(vim.o.lines * 0.4),
-      },
-    },
-    completion = {
-      -- keyword = {
-      --  regex = "[-_/]\\|\\k",
-      --  exclude_from_prefix_regex = "[\\.]",
-      -- },
-      accept = {
-        auto_brackets = { enabled = true },
-      },
-      list = {
-        selection = {
-          preselect = function(ctx)
-            return ctx.mode ~= "cmdline" and not require("blink.cmp").snippet_active { direction = 1 }
-          end,
-          auto_insert = function(ctx)
-            return ctx.mode == "cmdline"
-          end,
-        },
-      },
-      menu = {
+        min_width = 24,
         scrollbar = false,
-        min_width = 32,
-        winblend = vim.o.pumblend,
-        draw = {
-          treesitter = { "lsp" },
-          -- align_to = "kind_icon",
-          -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
-          columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
-          components = {
-            label = { ellipsis = true, width = { fill = true, max = 32 } },
-            label_description = { ellipsis = true, width = { fill = true } },
-            kind_icon = {
-              ellipsis = false,
-              text = function(ctx)
-                local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-                return kind_icon
-              end,
-            },
-          },
+        direction_priority = {
+          menu_north = { "e", "n", "w", "s" },
+          menu_south = { "e", "n", "s", "w" },
         },
       },
-      documentation = {
-        auto_show = true,
-        window = {
-          min_width = 24,
-          scrollbar = false,
-          direction_priority = {
-            menu_north = { "e", "n", "w", "s" },
-            menu_south = { "e", "n", "s", "w" },
-          },
-        },
-      },
-      ghost_text = { enabled = true },
     },
+    ghost_text = { enabled = true },
   },
 }

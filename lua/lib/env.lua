@@ -10,12 +10,10 @@ local env = {}
 local function prepare_environment_variables()
   local items = {}
   for key, value in pairs(vim.fn.environ()) do
-    table.insert(items, { key, value })
+    table.insert(items, { text = key, preview = value })
   end
   return items
 end
-
-local conf = require("telescope.config").values
 
 local function append_environment_name(prompt_bufnr)
   local actions = require "telescope.actions"
@@ -64,73 +62,43 @@ local function edit_environment_value(prompt_bufnr)
   end)
 end
 
-local function show_environment_variables(opts)
-  local has_tele, pickers = pcall(require, "telescope.pickers")
-  if not has_tele then
+local function show_environment_variables(_)
+  local has_snacks, snacks = pcall(require, "snacks")
+  if not has_snacks then
     vim.print(prepare_environment_variables())
     return
   end
-
-  local finders = require "telescope.finders"
-  local actions = require "telescope.actions"
-
-  opts = opts or {}
-  pickers
-    .new(opts, {
-      prompt_title = "Environment Variables",
-      finder = finders.new_table {
-        results = prepare_environment_variables(),
-        entry_maker = function(entry)
-          local columns = vim.o.columns
-          local width = conf.width
-            or conf.layout_config.width
-            or conf.layout_config[conf.layout_strategy].width
-            or columns
-          local telescope_width
-          if width > 1 then
-            telescope_width = width
-          else
-            telescope_width = math.floor(columns * width)
-          end
-          local env_name_width = math.floor(columns * 0.05)
-          local env_value_width = 22
-
-          local entry_display = require "telescope.pickers.entry_display"
-          -- NOTE: the width calculating logic is not exact, but approx enough
-          local displayer = entry_display.create {
-            separator = " ▏",
-            items = {
-              { width = env_value_width },
-              { width = telescope_width - env_name_width - env_value_width },
-              { remaining = true },
-            },
-          }
-
-          local function make_display()
-            -- concatenating multiline env values
-            local concatenated_width = entry[2]:gsub("\r?\n", " ")
-            return displayer {
-              { entry[1] },
-              { concatenated_width },
-            }
-          end
-
-          return {
-            value = entry,
-            display = make_display,
-            ordinal = string.format("%s %s", entry[1], entry[2]),
-          }
-        end,
-      },
-      sorter = conf.generic_sorter(opts),
-      attach_mappings = function(_, map)
-        actions.select_default:replace(append_environment_name)
-        map("i", "<c-a>", append_environment_value)
-        map("i", "<c-e>", edit_environment_value)
-        return true
+  snacks.picker.pick {
+    source = "Environment Variables",
+    -- title = "Software licenses",
+    items = prepare_environment_variables(),
+    format = "text",
+    preview = function(ctx)
+      ctx.preview:set_lines { ctx.item.text, "", ctx.item.preview }
+    end,
+    -- TODO add copy-value to clipboard registry
+    -- confirm = function(picker, item)
+    --   local lines = split(item.preview)
+    --   picker.close(picker)
+    --   vim.api.nvim_put(lines, "l", false, true)
+    -- end,
+    actions = {
+      add_environment_var = function(picker)
+        print "called add var"
       end,
-    })
-    :find()
+      edit_environment_var = function(picker)
+        print "called edit var"
+      end,
+    },
+    win = {
+      input = {
+        keys = {
+          ["<a-e>"] = { "edit_environment_var", mode = { "n", "i" }, desc = "Edit Environment variable" },
+          ["<a-a>"] = { "add_environment_var", mode = { "n", "i" }, desc = "Add Environment variable" },
+        },
+      },
+    },
+  }
 end
 
 function env.show_vars()

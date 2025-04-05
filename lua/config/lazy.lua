@@ -10,7 +10,7 @@ require("lazy").setup({
   { import = "plugins.ui" },
   { import = "plugins" },
   { import = "plugins.utils" },
-  { import = "plugins.lsp.dap" },
+  -- { import = "plugins.lsp.dap" },
 }, {
   defaults = {
     lazy = true,
