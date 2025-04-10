@@ -6,7 +6,7 @@
 -------------------------------------
 
 local path_sep, env_path_sep = "/", ":"
-if vim.fn.has "win32" then
+if vim.fn.has "win32" == 1 then
   path_sep = [[\]]
   env_path_sep = ";"
 end
@@ -89,7 +89,7 @@ return {
 
       o.formatters_by_ft = {
         lua = { "stylua" },
-        python = { "black" },
+        python = { "autopep8", "black" },
         bash = { "beautysh" },
         zsh = { "beautysh" },
         -- css = { "prettier" },

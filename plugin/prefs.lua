@@ -2,10 +2,11 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 05 Apr 2025, 20:36
+-- Last Modified: 09/04/2025 - 19:00
 -------------------------------------
 
 local settings = {
+  path = "**",
   -- CURSOR
   guicursor = {
     "n-v-c:block",
@@ -93,7 +94,7 @@ local settings = {
   whichwrap = vim.opt.whichwrap:append "<,>,[,],h,l",
 
   -- SESSION
-  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal",
+  sessionoptions = "buffers,curdir,folds,options,help,tabpages,winsize,winpos,terminal",
 
   -- SPELL
   spelllang = "it,en_us",
@@ -121,14 +122,6 @@ local signs = {
   { name = "DiagnosticSignHint", text = icon_hint },
   { name = "DiagnosticSignInfo", text = icon_info },
 }
-
-for _, sign in pairs(signs) do
-  vim.fn.sign_define(sign.name, {
-    texthl = sign.name,
-    text = sign.text,
-    numhl = sign.numhl or nil,
-  })
-end
 
 ---LSP•Diagnostic
 vim.diagnostic.config {
