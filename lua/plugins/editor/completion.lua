@@ -24,7 +24,7 @@ return {
     },
     term = { enabled = true, keymap = { preset = "inherit" } },
     cmdline = {
-      -- enabled = false,
+      enabled = false,
       keymap = {
         ["<C-i>"] = { "select_and_accept", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },

@@ -48,7 +48,7 @@ local M = {
   },
 
   ---UI-lib used by other plugins
-  "MunifTanjim/nui.nvim",
+  -- "MunifTanjim/nui.nvim",
 
   ---Obsidian
   {

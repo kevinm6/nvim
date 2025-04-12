@@ -61,6 +61,7 @@ local function set_buf_keymaps(client, bufnr)
           border = "rounded",
           max_height = math.floor(vim.o.lines * 0.6),
           max_width = math.floor(vim.o.columns * 0.8),
+          wrap_at = math.floor(vim.o.columns * 0.8),
         }
       end
     end,

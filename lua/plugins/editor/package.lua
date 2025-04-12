@@ -55,6 +55,9 @@ return {
       lint.linters.markdownlint.args = {
         "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
       }
+      lint.linters.flake8.args = {
+        "--extend-ignore E302,E111,E501,W391",
+      }
       -- lint.linters.yamllint.args = {
       --   "--no-warnings", -- output only errors
       -- }
@@ -86,13 +89,14 @@ return {
     },
     config = function(_, o)
       local conform = require "conform"
+      vim.g.disable_autoformat = true
 
       o.formatters_by_ft = {
         lua = { "stylua" },
-        python = { "autopep8", "black" },
+        python = { "autopep8" },
         bash = { "beautysh" },
         zsh = { "beautysh" },
-        -- css = { "prettier" },
+        css = { "prettier" },
         javascript = { "prettier" },
         typescriptreact = { "prettier" },
         html = { "prettier" },
