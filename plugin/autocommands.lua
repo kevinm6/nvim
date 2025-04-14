@@ -98,16 +98,16 @@ autocmd("FileType", {
   end,
 })
 
-autocmd("FileType", {
-  group = augroup("_autocmd_statuscolumn", { clear = true }),
-  callback = function(ev)
-    if not filetypes_to_exclude[ev.match] then
-      vim.opt_local.statuscolumn = "%s%{v:relnum?v:relnum:v:lnum}%=%C "
-    else
-      vim.opt_local.statuscolumn = ""
-    end
-  end,
-})
+-- autocmd("FileType", {
+--   group = augroup("_autocmd_statuscolumn", { clear = true }),
+--   callback = function(ev)
+--     if not filetypes_to_exclude[ev.match] then
+--       vim.opt_local.statuscolumn = "%s%{v:relnum?v:relnum:v:lnum}%=%C "
+--     else
+--       vim.opt_local.statuscolumn = ""
+--     end
+--   end,
+-- })
 
 ---Autocmd for `NNN` cli tools useful
 --- to quit buffer used by it for help and similar things

@@ -290,8 +290,9 @@ local M = {
     "jmbuhr/otter.nvim",
     ft = { "quarto", "markdown", "html", "javascript", "typescript" },
     opts = function(_, o)
-      o.buffers = { set_filetype = true }
+      --o.buffers = { set_filetype = true }
 
+      --[[
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "html",
         callback = function()
@@ -303,13 +304,15 @@ local M = {
         callback = function()
           require("otter").activate { "html", "php" }
         end,
-      })
+      }
+
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "php",
         callback = function()
           require("otter").activate { "html", "javascript" }
         end,
       })
+      ]]
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = { "qmd", "quarto" },
         callback = function()

@@ -8,6 +8,10 @@
 vim.opt_local.expandtab = true
 vim.opt_local.autoindent = true
 
+vim.opt_local.makeprg = "python3 -u"
+vim.opt_local.errorformat = '%C %.%#,%A  File "%f"\\, line %l%.%#,%Z%[%^ ]%\\@=%m'
+vim.opt_local.keywordprg = "python3 -m pydoc"
+
 -- Add custom mappings only for python files
 vim.keymap.set("n", "<localleader>pv", function()
   require "lib.python_envs".pick_venv()

@@ -179,7 +179,7 @@
             "try:",
             "\t${1:pass}",
             "except ${2:Exception} as ${3:e}:",
-            "\t${4:raise $3}"
+            "\t${4:raise} $3"
         ],
         "description": "try/except blocks"
     },
@@ -189,7 +189,7 @@
             "try:",
             "\t${1:pass}",
             "except ${2:Exception} as ${3:e}:",
-            "\t${4:raise $3}",
+            "\t${4:raise} $3",
             "else:",
             "\t${5:pass}"
         ],
@@ -201,7 +201,7 @@
             "try:",
             "\t${1:pass}",
             "except ${2:Exception} as ${3:e}:",
-            "\t${4:raise $3}",
+            "\t${4:raise} $3",
             "finally:",
             "\t${5:pass}"
         ],
@@ -212,12 +212,12 @@
         "body": [
             "try:",
             "\t${1:pass}",
-            "except${2: ${3:Exception} as ${4:e}}:",
-            "\t${5:raise}",
+            "except${2:Exception} as ${3:e}:",
+            "\t${4:raise}",
             "else:",
-            "\t${6:pass}",
+            "\t${5:pass}",
             "finally:",
-            "\t${7:pass}"
+            "\t${6:pass}"
         ],
         "description": "try/except/else/finally blocks"
     },

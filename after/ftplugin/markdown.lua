@@ -5,6 +5,9 @@
 -- Last Modified: 27 Jul 2024, 09:18
 -------------------------------------
 
+-- vim.opt_local.makeprg = "glow"
+-- vim.opt_local.errorformat = ""
+
 vim.opt_local.conceallevel = 2
 vim.opt_local.shiftwidth = 2
 vim.opt_local.expandtab = false
@@ -18,8 +21,12 @@ vim.opt_local.spell = true
 
 vim.keymap.set("n", "<leader>p", function()
   local buf = vim.api.nvim_buf_get_name(0)
-  vim.system({ "qlmanage", "-p", buf, ">", "/dev/null" }, { text = true }):wait()
+  vim.system({ "qlmanage", "-p", buf, "2&>1", "/dev/null" }, { text = true }):wait()
 end, { desc = "Preview Markdown", buffer = true })
+
+vim.keymap.set("n", "<leader>r", function()
+  require("render-markdown").toggle()
+end, { buffer = true, desc = "Render Markdown" })
 
 ---Export to PDF
 vim.api.nvim_create_user_command("TOpdf", function()

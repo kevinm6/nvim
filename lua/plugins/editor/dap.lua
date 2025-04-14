@@ -436,8 +436,8 @@ return {
       map {
         "<localleader>dC",
         function()
-          package.loaded["plugins.lsp.dap"] = nil
-          require "plugins.lsp.dap"
+          package.loaded["plugins.editor.dap"] = nil
+          require "plugins.editor.dap"
           dap.continue()
         end,
         "Reload ∧ Continue",
@@ -478,5 +478,13 @@ return {
         end,
       })
     end,
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    config = function()
+      local dap_py_venv = vim.fn.stdpath("data").."/mason/packages/debugpy/venv/bin/python3.12"
+      require "dap-python".setup(dap_py_venv)
+    end
   },
 }

@@ -9,7 +9,6 @@
       " *",
       " * @param ${4:name}  ${5:Description of the parameter.}",
       " * @return ${6:Description of the returned object.}",
-      " *",
       " */"
     ],
     "description": "A Java comment block including short summary, description, param, return, and examples."

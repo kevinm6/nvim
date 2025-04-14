@@ -19,15 +19,7 @@ end
 
 local data_path = vim.fn.stdpath "data"
 
---TODO figure out a better way
-local capabilities = {
-  workspace = {
-    didChangeWatchedFiles = {
-      dynamicRegistration = true,
-    },
-  },
-}
-local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 extendedClientCapabilities.document_formatting = false
 
@@ -92,7 +84,13 @@ local config = {
     "-data",
     workspace_dir,
   },
-  capabilities = capabilities,
+  capabilities = {
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    },
+  },
   root_dir = root_dir,
   single_file_support = true,
   settings = {
@@ -198,6 +196,8 @@ local config = {
   },
   on_attach = function(client, bufnr)
     jdtls.setup_dap { config_overrides = {}, hotcodereplace = "auto" }
+    require("lib.lsp").set_buf_funcs_for_capabilities(client, bufnr)
+    require("lib.lsp").set_buf_keymaps(client, bufnr)
     vim.schedule(function()
       require("jdtls.dap").setup_dap_main_class_configs {}
     end)

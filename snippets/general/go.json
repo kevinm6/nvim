@@ -6,7 +6,7 @@
     },
     "multiple imports": {
         "prefix": "ims",
-        "body": "import (\n\t\"${1:package}\"\n)",
+        "body": "import (\n  \"${1:package}\"\n)",
         "description": "Snippet for a import block"
     },
     "single constant": {
@@ -16,7 +16,7 @@
     },
     "multiple constants": {
         "prefix": "cos",
-        "body": "const (\n\t${1:name} = ${2:value}\n)",
+        "body": "const (\n  ${1:name} = ${2:value}\n)",
         "description": "Snippet for a constant block"
     },
     "type function declaration": {
@@ -26,22 +26,22 @@
     },
     "type interface declaration": {
         "prefix": "tyi",
-        "body": "type ${1:name} interface {\n\t$0\n}",
+        "body": "type ${1:name} interface {\n  $0\n}",
         "description": "Snippet for a type interface"
     },
     "type struct declaration": {
         "prefix": "tys",
-        "body": "type ${1:name} struct {\n\t$0\n}",
+        "body": "type ${1:name} struct {\n  $0\n}",
         "description": "Snippet for a struct declaration"
     },
     "package main and main function": {
         "prefix": "pkgm",
-        "body": "package main\n\nfunc main() {\n\t$0\n}",
+        "body": "package main\n\nfunc main() {\n  $0\n}",
         "description": "Snippet for main package & function"
     },
     "function declaration": {
         "prefix": "func",
-        "body": "func $1($2) $3 {\n\t$0\n}",
+        "body": "func $1($2) $3 {\n  $0\n}",
         "description": "Snippet for function declaration"
     },
     "variable declaration": {
@@ -51,17 +51,17 @@
     },
     "variables declaration": {
         "prefix": "vars",
-        "body": "var (\n\t${1:name} ${2:type} = ${3:value}\n)",
+        "body": "var (\n  ${1:name} ${2:type} = ${3:value}\n)",
         "description": "Snippet for a variable"
     },
     "switch statement": {
         "prefix": "switch",
-        "body": "switch ${1:expression} {\ncase ${2:condition}:\n\t$0\n}",
+        "body": "switch ${1:expression} {\ncase ${2:condition}:\n  $0\n}",
         "description": "Snippet for switch statement"
     },
     "select statement": {
         "prefix": "sel",
-        "body": "select {\ncase ${1:condition}:\n\t$0\n}",
+        "body": "select {\ncase ${1:condition}:\n  $0\n}",
         "description": "Snippet for select statement"
     },
     "case clause": {
@@ -71,17 +71,17 @@
     },
     "for statement": {
         "prefix": "for",
-        "body": "for ${1}{\n\t$0\n}",
+        "body": "for ${1}{\n  $0\n}",
         "description": "Snippet for a pure for loop"
     },
     "for n statement": {
         "prefix": "fori",
-        "body": "for ${1:i} := ${2:0}; $1 < ${3:count}; $1${4:++} {\n\t$0\n}",
+        "body": "for ${1:i} := ${2:0}; $1 < ${3:count}; $1${4:++} {\n  $0\n}",
         "description": "Snippet for a for loop"
     },
     "for range statement": {
         "prefix": "forr",
-        "body": "for ${1:_, }${2:v} := range ${3:v} {\n\t$0\n}",
+        "body": "for ${1:_, }${2:v} := range ${3:v} {\n  $0\n}",
         "description": "Snippet for a for range loop"
     },
     "channel declaration": {
@@ -101,22 +101,22 @@
     },
     "if statement": {
         "prefix": "if",
-        "body": "if ${1:condition} {\n\t$0\n}",
+        "body": "if ${1:condition} {\n  $0\n}",
         "description": "Snippet for if statement"
     },
     "else branch": {
         "prefix": "el",
-        "body": "else {\n\t$0\n}",
+        "body": "else {\n  $0\n}",
         "description": "Snippet for else branch"
     },
     "if else statement": {
         "prefix": "ife",
-        "body": "if ${1:condition} {\n\t$2\n} else {\n\t$0\n}",
+        "body": "if ${1:condition} {\n  $2\n} else {\n  $0\n}",
         "description": "Snippet for if else"
     },
     "if err != nil": {
         "prefix": "ir",
-        "body": "if err != nil {\n\treturn ${1:nil}, ${2:err}\n}",
+        "body": "if err != nil {\n  return ${1:nil}, ${2:err}\n}",
         "description": "Snippet for if err != nil"
     },
     "fmt.Println": {
@@ -186,7 +186,7 @@
     },
     "http handler declaration": {
         "prefix": "hand",
-        "body": "func $1(${2:w} http.ResponseWriter, ${3:r} *http.Request) {\n\t$0\n}",
+        "body": "func $1(${2:w} http.ResponseWriter, ${3:r} *http.Request) {\n  $0\n}",
         "description": "Snippet for http handler declaration"
     },
     "http.Redirect": {
@@ -211,7 +211,7 @@
     },
     "goroutine anonymous function": {
         "prefix": "go",
-        "body": "go func($1) {\n\t$0\n}($2)",
+        "body": "go func($1) {\n  $0\n}($2)",
         "description": "Snippet for anonymous goroutine declaration"
     },
     "goroutine function": {
@@ -226,47 +226,47 @@
     },
     "test function": {
         "prefix": "tf",
-        "body": "func Test$1(t *testing.T) {\n\t$0\n}",
+        "body": "func Test$1(t *testing.T) {\n  $0\n}",
         "description": "Snippet for Test function"
     },
     "test main": {
         "prefix": "tm",
-        "body": "func TestMain(m *testing.M) {\n\t$1\n\n\tos.Exit(m.Run())\n}",
+        "body": "func TestMain(m *testing.M) {\n  $1\n\n  os.Exit(m.Run())\n}",
         "description": "Snippet for TestMain function"
     },
     "benchmark function": {
         "prefix": "bf",
-        "body": "func Benchmark$1(b *testing.B) {\n\tfor ${2:i} := 0; ${2:i} < b.N; ${2:i}++ {\n\t\t$0\n\t}\n}",
+        "body": "func Benchmark$1(b *testing.B) {\n  for ${2:i} := 0; ${2:i} < b.N; ${2:i}++ {\n    $0\n  }\n}",
         "description": "Snippet for Benchmark function"
     },
     "example function": {
         "prefix": "ef",
-        "body": "func Example$1() {\n\t$2\n\t//Output:\n\t$3\n}",
+        "body": "func Example$1() {\n  $2\n  //Output:\n  $3\n}",
         "description": "Snippet for Example function"
     },
     "table driven test": {
         "prefix": "tdt",
-        "body": "func Test$1(t *testing.T) {\n\ttestCases := []struct {\n\t\tdesc\tstring\n\t\t$2\n\t}{\n\t\t{\n\t\t\tdesc: \"$3\",\n\t\t\t$4\n\t\t},\n\t}\n\tfor _, tC := range testCases {\n\t\tt.Run(tC.desc, func(t *testing.T) {\n\t\t\t$0\n\t\t})\n\t}\n}",
+        "body": "func Test$1(t *testing.T) {\n  testCases := []struct {\n    desc  string\n    $2\n  }{\n    {\n      desc: \"$3\",\n      $4\n    },\n  }\n  for _, tC := range testCases {\n    t.Run(tC.desc, func(t *testing.T) {\n      $0\n    })\n  }\n}",
         "description": "Snippet for table driven test"
     },
     "init function": {
         "prefix": "finit",
-        "body": "func init() {\n\t$1\n}",
+        "body": "func init() {\n  $1\n}",
         "description": "Snippet for init function"
     },
     "main function": {
         "prefix": "fmain",
-        "body": "func main() {\n\t$1\n}",
+        "body": "func main() {\n  $1\n}",
         "description": "Snippet for main function"
     },
     "method declaration": {
         "prefix": ["meth", "fum"],
-        "body": "func (${1:receiver} ${2:type}) ${3:method}($4) $5 {\n\t$0\n}",
+        "body": "func (${1:receiver} ${2:type}) ${3:method}($4) $5 {\n  $0\n}",
         "description": "Snippet for method declaration"
     },
     "hello world web app": {
         "prefix": "helloweb",
-        "body": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"time\"\n)\n\nfunc greet(w http.ResponseWriter, r *http.Request) {\n\tfmt.Fprintf(w, \"Hello World! %s\", time.Now())\n}\n\nfunc main() {\n\thttp.HandleFunc(\"/\", greet)\n\thttp.ListenAndServe(\":8080\", nil)\n}",
+        "body": "package main\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"time\"\n)\n\nfunc greet(w http.ResponseWriter, r *http.Request) {\n  fmt.Fprintf(w, \"Hello World! %s\", time.Now())\n}\n\nfunc main() {\n  http.HandleFunc(\"/\", greet)\n  http.ListenAndServe(\":8080\", nil)\n}",
         "description": "Snippet for sample hello world webapp"
     },
     "sort implementation": {
@@ -286,6 +286,6 @@
     },
     "if key in a map": {
         "prefix": "om",
-        "body": "if ${1:value}, ok := ${2:map}[${3:key}]; ok {\n\t$4\n}"
+        "body": "if ${1:value}, ok := ${2:map}[${3:key}]; ok {\n  $4\n}"
     }
 }

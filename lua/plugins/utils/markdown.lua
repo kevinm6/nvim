@@ -68,9 +68,6 @@ return {
       },
     }
 
-    vim.keymap.set("n", "<localleader>r", function()
-      require("render-markdown").toggle()
-    end, { buffer = true, desc = "Render Markdown" })
 
     vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "TabLine" })
   end,

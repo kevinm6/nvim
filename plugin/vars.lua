@@ -31,7 +31,7 @@ vim.g.terminal_color_15 = "#ffffff" -- bright-white
 
 -- disable language Providers support (using only lua and vimscript plugins)
 -- using python for `molten-nvim` and jupyter_notebook in Neovim
-vim.g.python3_host_prog = vim.fn.stdpath "data" .. "/.venv/bin/python3"
+vim.g.python3_host_prog = vim.fn.stdpath "data" .. "/.venv/bin/python3.12"
 vim.g.python_host_prog = vim.fn.stdpath "data" .. "/.venv/bin/python"
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
