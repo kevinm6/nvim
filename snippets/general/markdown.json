@@ -292,23 +292,19 @@
   },
   "Markdown Head": {
     "prefix": "head",
-    "body": ["# ${1:${TM_FILENAME}}\n", "---\n", "$0"],
+    "body": ["# ${TM_FILENAME}$1\n", "---\n", "$0"],
     "description": "Markdown files head (info)"
   },
-  "file-info_yaml": {
-    "prefix": "infYaml",
+  "file-info-pandoc": {
+    "prefix": "infp",
     "body": [
-      "---",
-      "File          : ${TM_FILENAME}",
-      "Author        : Kevin",
-      "Date Created  : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
-      "Last Modified : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
-      "---\n",
-      "# ${1:Title}\n",
-      "---\n",
-      "$0"
+      "% ${TM_FILENAME}$1",
+      "% ${2:Author}",
+      "% ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "\n---",
+      "\n$0"
     ],
-    "description": "file info in yaml for md files"
+    "description": "file info for pandoc metadata"
   },
   "Right Arrow": {
     "prefix": ["rarr"],

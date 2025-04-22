@@ -3,5 +3,20 @@
     "prefix": "sch",
     "description": "Use yaml $schema",
     "body": ["# yaml-language-server: \\$schema=${1:url_or_path}$0"]
+  },
+  "file-info_yaml": {
+    "prefix": "infYaml",
+    "body": [
+      "---",
+      "File          : ${TM_FILENAME}",
+      "Author        : Kevin",
+      "Date Created  : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "Last Modified : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "---\n",
+      "# ${1:Title}\n",
+      "---\n",
+      "$0"
+    ],
+    "description": "file info in yaml for md files"
   }
 }

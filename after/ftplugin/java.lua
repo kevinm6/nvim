@@ -196,11 +196,11 @@ local config = {
   },
   on_attach = function(client, bufnr)
     jdtls.setup_dap { config_overrides = {}, hotcodereplace = "auto" }
-    require("lib.lsp").set_buf_funcs_for_capabilities(client, bufnr)
-    require("lib.lsp").set_buf_keymaps(client, bufnr)
     vim.schedule(function()
       require("jdtls.dap").setup_dap_main_class_configs {}
     end)
+    require("lib.lsp").set_buf_funcs_for_capabilities(client, bufnr)
+    require("lib.lsp").set_buf_keymaps(client, bufnr)
 
     -- require("plugins.lsp").on_attach(client, bufnr)
 

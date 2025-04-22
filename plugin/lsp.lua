@@ -75,14 +75,14 @@ lsp.config("sqls", {
   end,
 })
 
-lsp.config("jdtls", {
-  on_init = function(client)
-    custom_init(client)
-  end,
-  on_attach = function(client, bufnr)
-    custom_attach(client, bufnr)
-  end,
-})
+-- lsp.config("jdtls", {
+--   on_init = function(client)
+--     custom_init(client)
+--   end,
+--   on_attach = function(client, bufnr)
+--     custom_attach(client, bufnr)
+--   end,
+-- })
 
 lsp.config("metals", {
   on_init = function(client)

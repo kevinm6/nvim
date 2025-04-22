@@ -2,13 +2,12 @@
 --  File         : pdf.lua
 --  Description  : use Neovim as pdf reader (need pdftotext binaries)
 --  Author       : Kevin
---  Last Modified: 11 May 2024, 10:50
+--  Last Modified: 22/04/2025, 18:36
 -------------------------------------
 
 local pdf = {
   pdf_cache = {}
 }
-
 
 ---Read file and load buffer
 ---@private
@@ -62,7 +61,9 @@ function pdf.convert_md_to_pdf()
 
   local file_path = vim.api.nvim_buf_get_name(0)
   local pdf_out_path = string.sub(file_path, 1, -3) .. 'pdf'
-  print(pdf_out_path)
+  local dir_file_path = vim.fs.dirname(file_path)
+  local old_cwd = vim.fn.chdir(dir_file_path)
+  -- print(pdf_out_path)
 
   local args = {
     'pandoc',
@@ -78,6 +79,7 @@ function pdf.convert_md_to_pdf()
   vim.system(args, { text = true }, function(obj)
     if obj.stderr ~= "" then
       vim.notify(obj.stderr, vim.log.levels.ERROR, { title = "TOpdf: export" })
+      vim.fn.chdir(old_cwd)
       return
     end
 
@@ -86,8 +88,10 @@ function pdf.convert_md_to_pdf()
     end
 
     vim.notify("TOpdf: conversion complete")
-
-    vim.schedule(function() vim.ui.open(pdf_out_path) end)
+    vim.schedule(function()
+      vim.fn.chdir(old_cwd)
+      vim.ui.open(pdf_out_path)
+    end)
   end)
 
 end

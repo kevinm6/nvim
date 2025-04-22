@@ -426,7 +426,7 @@ return {
 
       map {
         mode = { "v", "x" },
-        "K",
+        "<M-k>",
         function()
           dapui.eval()
         end,
@@ -436,8 +436,8 @@ return {
       map {
         "<localleader>dC",
         function()
-          package.loaded["plugins.editor.dap"] = nil
-          require "plugins.editor.dap"
+          package.loaded["dap"] = nil
+          require "dap"
           dap.continue()
         end,
         "Reload ∧ Continue",

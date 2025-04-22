@@ -31,6 +31,7 @@ local settings = {
   visualbell = false,
   cursorline = true,
   showtabline = 1,
+  tabclose = "uselast",
   showmatch = true,
   signcolumn = "yes",
   cmdheight = 1,
@@ -74,7 +75,7 @@ local settings = {
   -- foldexpr = "nvim_treesitter#foldexpr()",
   -- foldtext = '',
 
-  diffopt = { "internal", "filler", "closeoff", "vertical", "iwhiteeol", "followwrap" },
+  diffopt = { "internal", "filler", "closeoff", "context:12", "algorithm:histogram", "linematch:200", "indent-heuristic" },
 
   colorcolumn = "90",
 
