@@ -160,11 +160,11 @@ function M.new_file(cmd_input)
       default = nil,
       completion = "dir",
     }, function(input)
-      input = vim.trim(input)
       if not input or input == "" then
         return
       end
-      assert(input ~= "" and input ~= nil, "Empty file to edit")
+      input = vim.trim(input)
+      -- assert(input ~= "" and input ~= nil, "Empty file to edit")
 
       if input then
         vim.cmd.enew()

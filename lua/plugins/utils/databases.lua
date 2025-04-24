@@ -2,21 +2,22 @@
 --  File         : databases.lua
 --  Description  : DB config and help
 --  Author       : Kevin
---  Last Modified: 08 May 2024, 12:12
+--  Last Modified: 25 Apr 2025, 09:12
 -------------------------------------
 
 return {
   "kndndrj/nvim-dbee",
   ft = { "sql", "mysql" },
+  dependencies = { "MunifTanjim/nui.nvim" },
   -- commit = "5062efbe5dfa3c0c6a51f5112c671f6625053f39",
   cmd = "Dbee",
   build = function()
     require("dbee").install()
   end,
-  opts = function(_, o)
-    o.default_connection = "default" -- id of default connection set in `connection.json`
+  opts = {
+    default_connection = "default", -- id of default connection set in `connection.json`
 
-    o.drawer = {
+    drawer = {
       disable_help = true,
       mappings = {
         { key = "<cr>", mode = "n", action = "action_1" },
@@ -32,16 +33,19 @@ return {
         { key = "<Esc>", mode = "n", action = "menu_close" },
         { key = "q", mode = "n", action = "menu_close" },
       },
-    }
-    o.extra_helpers = {
+    },
+    extra_helpers = {
       ["postgres"] = {
         ["List All"] = "select * from {{ .Table }}",
       },
-    }
-    o.sources = { -- stored connection config location
-      require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json"),
-    }
-    o.editor = {
+    },
+    -- sources = { -- stored connection config location
+    --   require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
+    -- },
+    sources = function ()
+      require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
+    end,
+    editor = {
       -- mappings for the buffer
       mappings = {
         -- run what's currently selected on the active connection
@@ -50,8 +54,8 @@ return {
         -- run the whole file on the active connection
         { key = "<localleader>r", mode = "n", action = "run_file" },
       },
-    }
-    o.result = {
+    },
+    result = {
       page_size = 30,
       { key = "L", mode = "n", action = "page_next" },
       { key = "H", mode = "n", action = "page_prev" },
@@ -59,9 +63,9 @@ return {
       { key = "<C-p>", mode = "n", action = "page_prev" },
       { key = "G", mode = "n", action = "page_last" },
       { key = "gg", mode = "n", action = "page_first" },
-    }
+    },
 
-    o.call_log = {
+    call_log = {
       -- mappings for the buffer
       mappings = {
         -- show the result of the currently selected call record
@@ -71,5 +75,5 @@ return {
         { key = "<C-c>", mode = "n", action = "cancel_call" },
       },
     }
-  end,
+  }
 }

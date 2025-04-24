@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
   cmd = { "typescript-language-server", "--stdio" },
   filetypes = {
@@ -15,8 +16,8 @@ return {
       "package.json",
       "jsconfig.json",
       ".git",
-    }) or vim.uv.cwd()
-    cb(dir)
+    })
+    if dir then cb(dir) end
   end,
   -- root_markers = {
   --   "tsconfig.json",

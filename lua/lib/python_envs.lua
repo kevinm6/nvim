@@ -9,7 +9,7 @@
 --- Available funcs:
 ---   - get_current_venv
 ---   - pick_venv
-local pyvenv = {
+local M = {
   preset = {
     {
       name = "audioToText",
@@ -26,7 +26,7 @@ local pyvenv = {
 ---Set Python venv
 ---@private
 ---@param venv table set this venv as current python venv
-function pyvenv.set_venv(venv)
+function M.set_venv(venv)
   local origin_path = vim.fn.getenv "PATH"
   local venv_bin_path = venv.path .. "/bin"
   if vim.fn.isdirectory(venv_bin_path) == 1 then
@@ -41,7 +41,7 @@ end
 
 ---Get active Python venv
 ---@return string|nil _ current active python venv or nothing
-function pyvenv.get_current_venv()
+function M.get_current_venv()
   return vim.g.python_venv
 end
 
@@ -49,12 +49,12 @@ end
 ---@private
 ---@return table
 local function get_venvs()
-  return pyvenv.preset
+  return M.preset
 end
 
 ---Show a picker for select Python venv
 ---and make it active
-function pyvenv.pick_venv()
+function M.pick_venv()
   local venvs = get_venvs()
 
   if not next(venvs) then
@@ -72,12 +72,12 @@ function pyvenv.pick_venv()
     if not choice then
       return
     end
-    pyvenv.set_venv(choice)
+    M.set_venv(choice)
   end)
 end
 
 ---Helper function to usercmd completion
-function pyvenv.usercmd_pyenv_completion()
+function M.usercmd_pyenv_completion()
   local venvs = {}
   for _, v in pairs(get_venvs()) do
     table.insert(venvs, v.name)
@@ -85,4 +85,4 @@ function pyvenv.usercmd_pyenv_completion()
   return table.concat(venvs, "\n")
 end
 
-return pyvenv
+return M

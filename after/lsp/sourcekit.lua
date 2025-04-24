@@ -5,6 +5,7 @@ local bin = vim.fn.glob(
   true
 )
 
+---@type vim.lsp.Config
 return {
   cmd = { bin },
   filetypes = { "swift" },

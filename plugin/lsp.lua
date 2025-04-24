@@ -53,7 +53,6 @@ lsp.config("*", {
 
 lsp.config("bashls", {
   -- cmd = { "bash-language-server", "start" },
-  filetypes = { "sh", "bash", "zsh" },
   allowList = { "sh", "bash", "zsh" },
   settings = {
     allowList = { "sh", "bash", "zsh" },

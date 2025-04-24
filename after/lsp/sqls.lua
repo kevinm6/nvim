@@ -1,10 +1,8 @@
+---@type vim.lsp.Config
 return {
   cmd = { "sqls" },
   filetypes = { "sql", "mysql" },
-  root_dir = function(bufnr, cb)
-    local dir = vim.fs.root(bufnr, "config.yml")
-    cb(dir)
-  end,
+  root_markers = { 'config.yml' },
   single_file_support = true,
   settings = {},
   docs = {

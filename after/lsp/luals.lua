@@ -5,6 +5,7 @@ local function lua_rtp()
   return runtime_path
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },

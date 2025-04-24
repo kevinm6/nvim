@@ -9,6 +9,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+vim.cmd.colorscheme "kurayami"
+
 -- check if NeoVim or Vim
 if not vim.fn.has "nvim" == 1 then
   vim.cmd.source "~/.config/vim/vimrc"

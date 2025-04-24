@@ -37,9 +37,7 @@ return {
     gitsigns.setup(o)
 
     -- Keymaps
-    local function nmap(tbl)
-      vim.keymap.set("n", tbl[1], tbl[2], { desc = tbl[3] })
-    end
+    local nmap = require("lib.keys").nmap
 
     nmap {
       "<leader>gj",

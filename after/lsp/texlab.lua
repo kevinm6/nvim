@@ -131,10 +131,11 @@ local function buf_change_env(client, bufnr)
   }, { bufnr = bufnr })
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { "texlab" },
   filetypes = { "tex", "plaintex", "bib" },
-  root_dir = vim.fs.root(0, { ".git", ".latexmkrc", ".texlabroot", "texlabroot", "Tectonic.toml" }),
+  root_markers = { ".git", ".latexmkrc", ".texlabroot", "texlabroot", "Tectonic.toml" },
   single_file_support = true,
   settings = {
     texlab = {

@@ -5,7 +5,7 @@
 --  Last Modified: 22/04/2025, 18:36
 -------------------------------------
 
-local pdf = {
+local M = {
   pdf_cache = {}
 }
 
@@ -20,14 +20,14 @@ end
 
 ---Load pdf file using <pdftotext> shell command
 ---@param file string pdf file to be displayed
-function pdf.load_pdf(file)
+function M.load_pdf(file)
   if vim.g[file] == 1 then return end
 
   local pdf_file = vim.fn.escape(vim.fn.expand(file), "'")
   local pdf_cache_file = ""
 
-  if pdf.pdf_cache[pdf_file] ~= nil then
-    pdf_cache_file = pdf.pdf_cache[pdf_file]
+  if M.pdf_cache[pdf_file] ~= nil then
+    pdf_cache_file = M.pdf_cache[pdf_file]
     read_file(pdf_cache_file)
   else
     local temp_file = string.format("%s_%s.txt", vim.fn.tempname(),
@@ -40,13 +40,13 @@ function pdf.load_pdf(file)
     vim.fn.system(shell_command, {})
 
     read_file(pdf_cache_file)
-    pdf.pdf_cache[pdf_file] = pdf_cache_file
+    M.pdf_cache[pdf_file] = pdf_cache_file
   end
 
   vim.g[file] = 1
 end
 
-function pdf.convert_md_to_pdf()
+function M.convert_md_to_pdf()
   if vim.bo.ft ~= 'markdown' then
     local err_msg = string.format("FileType < %s > not supported", vim.bo.ft)
     vim.notify(err_msg, vim.log.levels.ERROR, { title = "PDF export" })
@@ -96,4 +96,4 @@ function pdf.convert_md_to_pdf()
 
 end
 
-return pdf
+return M

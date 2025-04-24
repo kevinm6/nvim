@@ -28,7 +28,7 @@ require("lazy").setup({
   },
   install = {
     missing = false,
-    colorscheme = { "knvim", "default" },
+    colorscheme = { "kurayami", "default" },
   },
   change_detection = { notify = false },
   ui = {

@@ -5,22 +5,16 @@
 --  Last Modified: 17 Nov 2024, 10:50
 -------------------------------------
 
+---Add Mason path to get packages available
+local path_sep, env_path_sep = "/", ":"
+if vim.fn.has "win32" == 1 then
+  path_sep = [[\]]
+  env_path_sep = ";"
+end
+vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, path_sep) .. env_path_sep .. vim.env.PATH
+
 local M = {
   "nvim-lua/plenary.nvim",
-
-  ---Colorscheme
-  {
-    "kevinm6/kurayami.nvim",
-    lazy = false,
-    dev = true,
-    priority = 1000,
-    cond = function()
-      return not vim.g.vscode
-    end,
-    config = function()
-      vim.cmd.colorscheme "kurayami"
-    end,
-  },
 
   ---Statusline
   {
@@ -47,8 +41,27 @@ local M = {
     end,
   },
 
-  ---UI-lib used by other plugins
-  -- "MunifTanjim/nui.nvim",
+  ---Mason
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    opts = {
+      ui = {
+        border = "rounded",
+        width = 0.7,
+        height = 0.7,
+        icons = {
+          package_installed = "✓",
+          package_pending = "⟳",
+          package_uninstalled = "-",
+        },
+        keymaps = {
+          uninstall_package = "x",
+          toggle_help = "?",
+        },
+      },
+    },
+  },
 
   ---Obsidian
   {

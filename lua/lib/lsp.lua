@@ -44,9 +44,8 @@ end
 function M.set_buf_keymaps(client, bufnr)
   local _, snacks = pcall(require, "snacks.picker")
 
-  local function nmap(tbl)
-    vim.keymap.set("n", tbl[1], tbl[2], { buffer = bufnr, desc = "Lsp❭ " .. tbl[3] })
-  end
+  local nmap = require("lib.keys").nmap
+
   -- Global Diagnostics keymaps
   nmap { "gl", vim.diagnostic.open_float, "Open Float" }
   nmap {
@@ -158,8 +157,6 @@ function M.set_buf_keymaps(client, bufnr)
       "Workspace List Folders",
     }
   end
-
-  nmap { "<leader>la", lsp.buf.code_action, "Code Action" }
 
   nmap { "<leader>ll", lsp.codelens.run, "CodeLens" }
 end

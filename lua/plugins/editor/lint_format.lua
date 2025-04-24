@@ -1,40 +1,11 @@
 -------------------------------------
--- File         : package.lua
--- Description  : package manager (Mason), Linter and Formatter
+-- File         : lint_format.lua
+-- Description  : Linter and Formatter plugins and config
 -- Author       : Kevin
 -- Last Modified: 06/04/2025 - 18:30
 -------------------------------------
 
-local path_sep, env_path_sep = "/", ":"
-if vim.fn.has "win32" == 1 then
-  path_sep = [[\]]
-  env_path_sep = ";"
-end
-vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, path_sep) .. env_path_sep .. vim.env.PATH
-
 return {
-  ---Mason
-  {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    opts = {
-      ui = {
-        border = "rounded",
-        width = 0.7,
-        height = 0.7,
-        icons = {
-          package_installed = "✓",
-          package_pending = "⟳",
-          package_uninstalled = "-",
-        },
-        keymaps = {
-          uninstall_package = "x",
-          toggle_help = "?",
-        },
-      },
-    },
-  },
-
   ---Linter (Nvim-Lint)
   {
     "mfussenegger/nvim-lint",
@@ -93,7 +64,7 @@ return {
 
       o.formatters_by_ft = {
         lua = { "stylua" },
-        python = { "autopep8" },
+        python = { "ruff" },
         bash = { "beautysh" },
         zsh = { "beautysh" },
         css = { "prettier" },

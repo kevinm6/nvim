@@ -3,6 +3,7 @@ if vim.fn.has "win32" == 1 then
   bin_name = bin_name .. ".bat"
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { bin_name },
   filetypes = { "groovy" },

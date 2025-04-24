@@ -5,11 +5,11 @@
 --  Last Modified: 07 Oct 2024, 18:54
 -------------------------------------
 
-local automation = {}
+local M = {}
 
 ---If buffer modified, update any 'Last modified: ' in the first 10 lines.
 ---Restores cursor and window position using save_cursor variable.
-function automation.auto_timestamp()
+function M.auto_timestamp()
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoupdate_timestamp", { clear = true }),
     pattern = { "*.lua", "*.md", "*.yml" },
@@ -26,7 +26,7 @@ function automation.auto_timestamp()
 end
 
 ---Auto Remove trailing spaces before saving current buffer
-function automation.auto_remove_trailing_spaces()
+function M.auto_remove_trailing_spaces()
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoremove_trailing_space", { clear = true }),
     pattern = "*",
@@ -38,4 +38,4 @@ function automation.auto_remove_trailing_spaces()
   })
 end
 
-return automation
+return M

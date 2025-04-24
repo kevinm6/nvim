@@ -426,7 +426,7 @@ return {
 
       map {
         mode = { "v", "x" },
-        "<M-k>",
+        "<C-S-k>",
         function()
           dapui.eval()
         end,
