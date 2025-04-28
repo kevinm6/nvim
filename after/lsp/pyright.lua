@@ -31,17 +31,13 @@ end
 return {
   cmd = { "pyright-langserver", "--stdio" },
   filetypes = { "python" },
-  root_dir = function(bufnr, cb)
-    local dir = vim.fs.root(bufnr, {
-      ".git",
-      "setup.py",
-      "setup.cfg",
-      "pyproject.toml",
-      "requirements.txt",
-    }) or vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
-    cb(dir)
-  end,
-  -- root_markers = { ".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt" },
+  root_markers = {
+    ".git",
+    "setup.py",
+    "setup.cfg",
+    "pyproject.toml",
+    "requirements.txt",
+  },
   single_file_support = true,
   settings = {
     python = {

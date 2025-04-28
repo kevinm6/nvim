@@ -1,14 +1,8 @@
-local bin_name = "gradle-language-server"
-if vim.fn.has "win32" == 1 then
-  bin_name = bin_name .. ".bat"
-end
-
 ---@type vim.lsp.Config
 return {
-  cmd = { bin_name },
+  cmd = {  "gradle-language-server" },
   filetypes = { "groovy" },
   root_markers = { "settings.gradle", "build.gradle" },
-  -- gradle-language-server expects init_options.settings to be defined
   init_options = {
     settings = {
       gradleWrapperEnabled = true,

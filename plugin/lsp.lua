@@ -52,10 +52,7 @@ lsp.config("*", {
 })
 
 lsp.config("bashls", {
-  -- cmd = { "bash-language-server", "start" },
-  allowList = { "sh", "bash", "zsh" },
   settings = {
-    allowList = { "sh", "bash", "zsh" },
     bashIde = {
       shellcheckArguments = {
         "-e",

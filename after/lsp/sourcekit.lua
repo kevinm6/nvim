@@ -9,7 +9,5 @@ local bin = vim.fn.glob(
 return {
   cmd = { bin },
   filetypes = { "swift" },
-  root_dir = function(bufnr, cb)
-    cb(vim.fs.root(bufnr, ".git"))
-  end,
+  root_markers = { ".git" },
 }

@@ -2,11 +2,7 @@
 return {
   cmd = { "vscode-html-language-server", "--stdio" },
   filetypes = { "html", "templ" },
-  -- root_markers = { "package.json", ".git" },
-  root_dir = function(bufnr, cb)
-    local dir = vim.fs.root(bufnr, { "package.json", ".git" }) or vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
-    cb(dir)
-  end,
+  root_markers = { "package.json", ".git" },
   single_file_support = true,
   settings = {},
   init_options = {

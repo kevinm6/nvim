@@ -10,21 +10,12 @@ return {
     "typescript.tsx",
     "ojs",
   },
-  root_dir = function(bufnr, cb)
-    local dir = vim.fs.root(bufnr, {
-      "tsconfig.json",
-      "package.json",
-      "jsconfig.json",
-      ".git",
-    })
-    if dir then cb(dir) end
-  end,
-  -- root_markers = {
-  --   "tsconfig.json",
-  --   "jsconfig.json",
-  --   "package.json",
-  --   ".git",
-  -- },
+  root_markers = {
+    "tsconfig.json",
+    "jsconfig.json",
+    "package.json",
+    ".git",
+  },
   init_options = {
     host_info = "neovim",
     preferences = {

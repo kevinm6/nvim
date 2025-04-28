@@ -3,10 +3,6 @@ return {
   cmd = { "docker-langserver", "--stdio" },
   filetypes = { "dockerfile" },
   root_markers = { "Dockerfile" },
-  -- root_dir = function(bufnr, cb)
-  --   local dir = vim.fs.root(bufnr, { "Dockerfile" }) or vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
-  --   cb(dir)
-  -- end,
   single_file_support = true,
   docs = {
     description = [[

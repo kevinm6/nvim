@@ -2,10 +2,7 @@
 return {
   cmd = { "yaml-language-server", "--stdio" },
   filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
-  root_dir = function(bufnr, cb)
-    local dir = vim.fs.root(bufnr, { ".git" }) or vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
-    cb(dir)
-  end,
+  root_markers = { ".git" },
   single_file_support = true,
   settings = {
     -- https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting

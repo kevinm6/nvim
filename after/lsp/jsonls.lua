@@ -4,10 +4,7 @@
 return {
   cmd = { "vscode-json-language-server", "--stdio" },
   filetypes = { "json", "jsonc" },
-  root_dir = function(bufnr, cb)
-    local dir = vim.fs.root(bufnr, { ".git" }) or vim.fs.dirname(vim.api.nvim_buf_get_name(0))
-    cb(dir)
-  end,
+  root_markers = { ".git" },
   { provideFormatter = true },
   settings = {
     json = {
