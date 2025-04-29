@@ -58,12 +58,12 @@ return {
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     main = "nvim-treesitter.configs",
     build = ":TSUpdate",
-    opts = function(_, o)
-      o.ensure_installed = parsers_to_be_installed()
-      o.sync_install = false -- install languages synchronously (only applied to `ensure_installed`)
-      o.ignore_install = {}
+    opts = {
+      ensure_installed = parsers_to_be_installed(),
+      sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+      ignore_install = {},
 
-      o.highlight = {
+      highlight = {
         enable = true, -- false will disable the whole extension
         additional_vim_regex_highlighting = { "markdown" },
         disable = function(ft, buf)
@@ -79,13 +79,13 @@ return {
           local lines = vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] or nil
           return ok and (stats and stats.size > max_filesize) or lines and #lines > 1000
         end,
-      }
+      },
 
-      o.autopairs = {
+      autopairs = {
         enable = true,
-      }
+      },
 
-      o.incremental_selection = {
+      incremental_selection = {
         enable = true,
         keymaps = {
           init_selection = "<CR>",
@@ -94,17 +94,17 @@ return {
           node_decremental = "<BS>",
         },
         disable = { "vim" }, -- useful for cedit
-      }
+      },
 
-      o.indent = {
+      indent = {
         enable = true,
         -- disable = {
         --   "python",
         --   "yaml",
         -- },
-      }
+      },
 
-      o.refactor = {
+      refactor = {
         highlight_definitions = {
           enable = true,
           -- Set to false if you have an `updatetime` of ~100.
@@ -128,27 +128,27 @@ return {
             goto_previous_usage = "<C-p>",
           },
         },
-      }
+      },
 
-      o.playground = {
-        enable = true,
-        disable = {},
-        updatetime = 25,
-        persist_queries = false,
-        keymaps = {
-          open = "gtd",
-          toggle_query_editor = "o",
-          toggle_hl_groups = "i",
-          toggle_injected_languages = "t",
-          toggle_anonymous_nodes = "a",
-          toggle_language_display = "I",
-          focus_language = "f",
-          unfocus_language = "F",
-          update = "R",
-          goto_node = "<cr>",
-          show_help = "?",
-        },
-      }
+      -- playground = {
+      --   enable = true,
+      --   disable = {},
+      --   updatetime = 25,
+      --   persist_queries = false,
+      --   keymaps = {
+      --     open = "gtd",
+      --     toggle_query_editor = "o",
+      --     toggle_hl_groups = "i",
+      --     toggle_injected_languages = "t",
+      --     toggle_anonymous_nodes = "a",
+      --     toggle_language_display = "I",
+      --     focus_language = "f",
+      --     unfocus_language = "F",
+      --     update = "R",
+      --     goto_node = "<cr>",
+      --     show_help = "?",
+      --   },
+      -- }
       -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
       -- parser_config.freemarker = {
       --   install_info = {
@@ -163,7 +163,7 @@ return {
       --   ftl = "freemarker",
       -- } }
       -- require("nvim-treesitter.install").prefer_git = true
-    end,
+    },
   },
 
   "nvim-treesitter/nvim-treesitter-refactor",
