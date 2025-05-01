@@ -1,6 +1,5 @@
-# <p align="center" style="color: #015A60">NeoVim config
+# <p align="center" style="color: #015A60">NeoVim config</p>
 <p align="center" style="font-size:16px;color:grey">v0.10</p>
-</p>
 
 <p align="center">
   <img alt="Lua" src="https://img.shields.io/badge/Lua-2C2D72?style=flat&logo=lua&logoColor=white">

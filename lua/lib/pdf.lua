@@ -66,10 +66,11 @@ function M.convert_md_to_pdf()
   -- print(pdf_out_path)
 
   local args = {
-    'pandoc',
-    '-V',
+    "pandoc",
+    "-V",
     "geometry:margin=1.5cm",
     file_path,
+    "--from=gfm",
     "-o", pdf_out_path,
     "--highlight", "tango",
     -- "--toc"
@@ -79,7 +80,7 @@ function M.convert_md_to_pdf()
   vim.system(args, { text = true }, function(obj)
     if obj.stderr ~= "" then
       vim.notify(obj.stderr, vim.log.levels.ERROR, { title = "TOpdf: export" })
-      vim.fn.chdir(old_cwd)
+      vim.schedule(function() vim.fn.chdir(old_cwd) end)
       return
     end
 
@@ -93,7 +94,6 @@ function M.convert_md_to_pdf()
       vim.ui.open(pdf_out_path)
     end)
   end)
-
 end
 
 return M
