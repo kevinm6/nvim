@@ -5,7 +5,6 @@ return {
   root_markers = { ".git" },
   single_file_support = true,
   settings = {
-    -- https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
     redhat = { telemetry = { enabled = false } },
     yaml = {
       schemaDownload = { enable = true },
@@ -15,6 +14,9 @@ return {
         enable = false,
         -- url = "",
       },
+      editor = {
+        tabSize = 2
+      }
     },
   },
   docs = {

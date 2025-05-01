@@ -225,6 +225,7 @@ vim.filetype.add {
     -- md = "quarto",
     ipynb = "jupyter_notebook",
     dat = "xxd",
+    nl = "neverlang"
   },
   pattern = {
     ["*.python"] = "python",

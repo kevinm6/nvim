@@ -4,6 +4,19 @@ return {
   filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
   root_markers = { ".git", ".marksman.toml", "_quarto.yml" },
   single_file_support = true,
+  settings = {
+    xml = {
+      logs = { client = false },
+      format = {
+        enabled = false,
+        insertSpaces = true,
+        splitAttributes = false,
+        joinContentLines = true,
+        joinCommentLines = false,
+        spaceBeforeEmptyCloseTag = true,
+      },
+    },
+  },
   docs = {
     description = [[
 https://github.com/eclipse/lemminx

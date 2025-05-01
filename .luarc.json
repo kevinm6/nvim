@@ -1,9 +1,14 @@
 {
-    "diagnostics.globals": [
-        "vim",
-        "format",
-        "pandoc",
-        "quarto",
-        "Snacks"
-    ]
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "hint.enable": true,
+  "diagnostics.globals": ["vim", "format", "pandoc", "quarto", "Snacks"],
+  "format.defaultConfig": {
+    "quote_style": "double",
+    "indent_style": "space",
+    "indent_size": "2",
+    "insert_final_newline": "false",
+    "align_if_branch": "true",
+    "max_line_length": "100"
+  },
+  "completion.displayContext": 1
 }

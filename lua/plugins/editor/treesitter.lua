@@ -129,41 +129,23 @@ return {
           },
         },
       },
-
-      -- playground = {
-      --   enable = true,
-      --   disable = {},
-      --   updatetime = 25,
-      --   persist_queries = false,
-      --   keymaps = {
-      --     open = "gtd",
-      --     toggle_query_editor = "o",
-      --     toggle_hl_groups = "i",
-      --     toggle_injected_languages = "t",
-      --     toggle_anonymous_nodes = "a",
-      --     toggle_language_display = "I",
-      --     focus_language = "f",
-      --     unfocus_language = "F",
-      --     update = "R",
-      --     goto_node = "<cr>",
-      --     show_help = "?",
-      --   },
-      -- }
-      -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-      -- parser_config.freemarker = {
-      --   install_info = {
-      --     url = "~/dev/tree-sitter-freemarker",
-      --     files = { "src/parser.c" },
-      --     generate_reqires_npm = true,
-      --     requires_generate_from_grammar = false,
-      --   },
-      --   filetype = "freemarker",
-      -- }
-      -- vim.filetype.add { extension = {
-      --   ftl = "freemarker",
-      -- } }
-      -- require("nvim-treesitter.install").prefer_git = true
     },
+    -- config = function(_, o)
+    --   require("nvim-treesitter").setup(o)
+    --   local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+    --   parser_config.freemarker = {
+    --   install_info = {
+    --       url = "~/dev/tree-sitter-freemarker",
+    --       files = { "src/parser.c" },
+    --       generate_reqires_npm = true,
+    --       requires_generate_from_grammar = false,
+    --     },
+    --   filetype = "freemarker",
+    --   }
+    --   vim.filetype.add { extension = {
+    --   ftl = "freemarker",
+    --   } }
+    -- end
   },
 
   "nvim-treesitter/nvim-treesitter-refactor",

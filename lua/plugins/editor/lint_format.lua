@@ -63,7 +63,6 @@ return {
       vim.g.disable_autoformat = true
 
       o.formatters_by_ft = {
-        lua = { "stylua" },
         python = { "ruff" },
         bash = { "beautysh" },
         zsh = { "beautysh" },

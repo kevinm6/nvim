@@ -23,7 +23,7 @@ return {
       },
       diagnostics = {
         enable = true,
-        globals = { "vim", "format", "pandoc", "quarto" },
+        globals = { "vim", "format", "pandoc", "quarto", "Snacks" },
         disable = { "undefined-field" },
       },
       workspace = {
@@ -40,9 +40,11 @@ return {
         defaultConfig = {
           indent_style = "space",
           indent_size = 2,
-          quote_style = "none",
+          quote_style = "double",
           continuation_indent = 2,
           call_arg_parentheses = "remove",
+          insert_final_newline = "false",
+          align_if_branch = "true"
         },
       },
       completion = {
