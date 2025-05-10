@@ -75,8 +75,6 @@ return {
         -- java = { "google-java-format" },
       }
 
-      o.stop_after_first = true
-
       o.format_on_save = function(bufnr)
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return
@@ -96,9 +94,14 @@ return {
             python = "py",
             ruby = "rb",
             typescript = "ts",
+            latex = "tex"
           },
+          lang_to_ft = {
+            bash = "sh"
+          }
         },
       }
+
       conform.setup(o)
 
       vim.api.nvim_create_user_command("Format", function(args)

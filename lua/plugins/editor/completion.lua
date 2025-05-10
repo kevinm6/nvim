@@ -2,7 +2,7 @@
 -- File         : completion.lua
 -- Description  : completion config
 -- Author       : Kevin
--- Last Modified: 03 Jan 2025, 00:25
+-- Last Modified: 11/05/2025, 09:35
 -------------------------------------
 
 return {
@@ -24,7 +24,6 @@ return {
     },
     term = { enabled = true, keymap = { preset = "inherit" } },
     cmdline = {
-      enabled = false,
       keymap = {
         ["<C-i>"] = { "select_and_accept", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
@@ -49,8 +48,7 @@ return {
   },
 
   sources = {
-    -- default = { "snippets", "lsp", "path", "buffer", "markdown", "lazydev" },
-    default = { "snippets", "lsp", "markdown", "path", "buffer", "lazydev" },
+    default = { "snippets", "lsp", "markdown", "path", "buffer", },
     providers = {
       snippets = {
         opts = {
@@ -65,15 +63,7 @@ return {
         name = "RenderMarkdown",
         module = "render-markdown.integ.blink",
       },
-      lazydev = {
-        name = "LazyDev",
-        module = "lazydev.integrations.blink",
-        score_offset = 100,
-      },
     },
-    min_keyword_length = function(ctx)
-      return ctx.mode == "cmdline" and 2 or 0
-    end,
   },
   signature = {
     enabled = true,
@@ -84,10 +74,6 @@ return {
   },
 
   completion = {
-    -- keyword = {
-    --  regex = "[-_/]\\|\\k",
-    --  exclude_from_prefix_regex = "[\\.]",
-    -- },
     accept = {
       auto_brackets = { enabled = true },
     },
@@ -107,8 +93,6 @@ return {
       winblend = vim.o.pumblend,
       draw = {
         treesitter = { "lsp" },
-        -- align_to = "kind_icon",
-        -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
         columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
         components = {
           label = { ellipsis = true, width = { fill = true, max = 32 } },

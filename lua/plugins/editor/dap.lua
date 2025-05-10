@@ -6,11 +6,13 @@
 -----------------------------------
 
 return {
-  -- "theHamsta/nvim-dap-virtual-text",
   ---DAP-UI
-  "nvim-neotest/nvim-nio",
   {
     "rcarriga/nvim-dap-ui",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+    },
     opts = {
       icons = { expanded = "▾", collapsed = "►" },
       mappings = {
@@ -31,13 +33,13 @@ return {
             "stacks",
             "watches",
           },
-          size = 0.2,
+          size = 0.15,
           position = "left",
         },
         {
           elements = {
-            "repl",
             "console",
+            "repl",
           },
           size = 0.25,
           position = "bottom",
@@ -483,7 +485,7 @@ return {
     "mfussenegger/nvim-dap-python",
     ft = "python",
     config = function()
-      local dap_py_venv = vim.fn.stdpath("data").."/mason/packages/debugpy/venv/bin/python3.12"
+      local dap_py_venv = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python3.12"
       require "dap-python".setup(dap_py_venv)
     end
   },

@@ -80,15 +80,15 @@ function M.set_buf_keymaps(client, bufnr)
     "Hover | PeekFold",
   }
 
-  nmap { "grn", lsp.buf.rename, "rename" }
-  if client.supports_method "textDocument/declaration" then
-    nmap { "gD", lsp.buf.declaration, "GoTo Declaration" }
-  end
-  nmap {
-    "gd",
-    snacks.lsp_definitions or lsp.buf.definition,
-    "GoTo Definitions",
-  }
+  -- nmap { "grn", lsp.buf.rename, "rename" }
+  -- if client.supports_method "textDocument/declaration" then
+  --   nmap { "gD", lsp.buf.declaration, "GoTo Declaration" }
+  -- end
+  -- nmap {
+  --   "gd",
+  --   snacks.lsp_definitions or lsp.buf.definition,
+  --   "GoTo Definitions",
+  -- }
 
   if client.supports_method "textDocument/implementation" then
     nmap { "gri", snacks.lsp_implementations or lsp.buf.incoming_calls, "incoming-Calls" }
@@ -131,7 +131,7 @@ function M.set_buf_keymaps(client, bufnr)
   }
 
   nmap {
-    "gO",
+    "gro",
     snacks.lsp_symbols or lsp.buf.document_symbol,
     "Workspace Symbols",
   }

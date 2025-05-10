@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 17 Nov 2024, 10:49
+-- Last Modified: 10/05/2025, 09:55
 -------------------------------------
 
 local function parsers_to_be_installed()
@@ -54,10 +54,13 @@ end
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile", "CmdlineEnter" },
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     main = "nvim-treesitter.configs",
-    build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-refactor",
+    },
     opts = {
       ensure_installed = parsers_to_be_installed(),
       sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
@@ -129,24 +132,6 @@ return {
           },
         },
       },
-    },
-    -- config = function(_, o)
-    --   require("nvim-treesitter").setup(o)
-    --   local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-    --   parser_config.freemarker = {
-    --   install_info = {
-    --       url = "~/dev/tree-sitter-freemarker",
-    --       files = { "src/parser.c" },
-    --       generate_reqires_npm = true,
-    --       requires_generate_from_grammar = false,
-    --     },
-    --   filetype = "freemarker",
-    --   }
-    --   vim.filetype.add { extension = {
-    --   ftl = "freemarker",
-    --   } }
-    -- end
+    }
   },
-
-  "nvim-treesitter/nvim-treesitter-refactor",
 }

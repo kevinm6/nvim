@@ -1,6 +1,6 @@
 -----------------------------------------
 -- File         : winbar.lua
--- Description  : Personal winbar config w/ navic
+-- Description  : Personal winbar config
 -- Author       : Kevin Manca
 -- Last Modified: 11 May 2024, 11:44
 -----------------------------------------
@@ -66,8 +66,11 @@ end
 ---Get winbar with highlights and icons
 ---@return string winbar formatted and with relative highlights
 local function get_winbar()
-  local has_navic, navic = pcall(require, "nvim-navic")
-  local location = has_navic and navic.get_location() or nil
+  local location = require("nvim-treesitter").statusline {
+    type_patterns = { 'class', 'function', 'method' },
+    indicator_size = math.ceil(vim.o.columns * 0.5),
+    separator = " ⟩ "
+  }
 
   local fname = get_filename()
 

@@ -29,9 +29,7 @@ return {
       workspace = {
         checkThirdParty = false,
         library = {
-          vim.env.VIMRUNTIME,
           vim.api.nvim_get_runtime_file("", true),
-          vim.fn.stdpath "config" .. "/lua",
           -- "${3rd}/luv/library",
         },
       },
