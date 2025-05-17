@@ -122,11 +122,4 @@ return {
       })
     end,
   },
-
-  ---NeovimDev
-  {
-    "folke/lazydev.nvim",
-    ft = "lua",
-    opts = {},
-  },
 }

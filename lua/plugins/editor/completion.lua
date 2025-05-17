@@ -25,22 +25,24 @@ return {
     term = { enabled = true, keymap = { preset = "inherit" } },
     cmdline = {
       keymap = {
-        ["<C-i>"] = { "select_and_accept", "fallback" },
+        ["<C-i>"] = { "select_and_accept" },
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-Space>"] = { "show", "hide" },
-        ["<Tab>"] = {
-          function(cmp)
-            if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
-              return cmp.accept()
-            end
-          end,
-          "show_and_insert",
-          "select_next",
-        },
+        ["<Tab>"] = { "show_and_insert", "select_next" },
+        -- ["<Tab>"] = {
+        --   function(cmp)
+        --     if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
+        --       return cmp.accept()
+        --     end
+        --   end,
+        --   "show_and_insert",
+        --   "select_next",
+        -- },
         ["<S-Tab>"] = { "show_and_insert", "select_prev" },
         ["<C-e>"] = { "cancel" },
       },
+      -- completion = { menu = { auto_show = false } }
     },
   },
   appearance = {
@@ -63,6 +65,12 @@ return {
         name = "RenderMarkdown",
         module = "render-markdown.integ.blink",
       },
+      -- lazydev = {
+      --   name = "LazyDev",
+      --   module = "lazydev.integrations.blink",
+      --   -- make lazydev completions top priority (see `:h blink.cmp`)
+      --   score_offset = 100,
+      -- },
     },
   },
   signature = {

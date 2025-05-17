@@ -9,6 +9,5 @@
     "insert_final_newline": "false",
     "align_if_branch": "true",
     "max_line_length": "100"
-  },
-  "completion.displayContext": 1
+  }
 }

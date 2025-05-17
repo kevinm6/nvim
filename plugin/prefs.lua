@@ -109,21 +109,6 @@ end
 ---Custom diagnostic config
 local icon_err, icon_warn, icon_info, icon_hint = "", "", "", "󱧢"
 
-local signs = {
-  {
-    name = "DiagnosticSignError",
-    text = icon_err,
-    numhl = "ErrorMsg",
-  },
-  {
-    name = "DiagnosticSignWarn",
-    text = icon_warn,
-    numhl = "WarningMsg",
-  },
-  { name = "DiagnosticSignHint", text = icon_hint },
-  { name = "DiagnosticSignInfo", text = icon_info },
-}
-
 ---LSP•Diagnostic
 vim.diagnostic.config {
   signs = {
