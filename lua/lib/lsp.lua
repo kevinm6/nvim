@@ -44,17 +44,19 @@ end
 function M.set_buf_keymaps(client, bufnr)
   local _, snacks = pcall(require, "snacks.picker")
 
-  local nmap = require("lib.keys").nmap
+  local map = require("lib.keys").map
 
   -- Global Diagnostics keymaps
-  nmap { "gl", vim.diagnostic.open_float, "Open Float" }
-  nmap {
+  map { "n", "gl", vim.diagnostic.open_float, { buffer = bufnr, desc = "Open Float" } }
+  map {
+    "n",
     "<leader>ld",
     require("snacks.picker").diagnostics or vim.diagnostic.setloclist,
-    "QF Diagnostics",
+    { buffer = bufnr, desc = "QF Diagnostics" },
   }
 
-  nmap {
+  map {
+    "n",
     "K",
     function()
       local has_ufo, ufo = pcall(require, "ufo")
@@ -77,7 +79,7 @@ function M.set_buf_keymaps(client, bufnr)
         }
       end
     end,
-    "Hover | PeekFold",
+    { desc = "Hover | PeekFold", buffer = bufnr },
   }
 
   -- nmap { "grn", lsp.buf.rename, "rename" }
@@ -91,16 +93,16 @@ function M.set_buf_keymaps(client, bufnr)
   -- }
 
   if client.supports_method "textDocument/implementation" then
-    nmap { "gri", snacks.lsp_implementations or lsp.buf.incoming_calls, "incoming-Calls" }
+    map { "n", "gri", snacks.lsp_implementations or lsp.buf.incoming_calls, { buffer = bufnr, desc = "incoming-Calls" } }
   end
 
   if client.supports_method "callHierarchy/incomingCalls" then
-    nmap { "<leader>li", lsp.buf.incoming_calls, "incoming-Calls" }
+    map { "n", "<leader>li", lsp.buf.incoming_calls, { buffer = bufnr, desc = "incoming-Calls" } }
   end
 
   if client.supports_method "textDocument/signatureHelp" then
     ---SignatureHelp
-    vim.keymap.set("s", "<C-s>", function()
+    map { "s", "<C-s>", function()
       lsp.buf.signature_help {
         title = "LSP❭ SignatureHelp",
         border = "rounded",
@@ -111,54 +113,60 @@ function M.set_buf_keymaps(client, bufnr)
     end, {
       buffer = bufnr,
       desc = "Lsp❭ SignatureHelp",
-    })
+    }}
   end
 
   if client.supports_method "callHierarchy/outgoingCalls" then
-    nmap { "<leader>lo", lsp.buf.outgoing_calls, "Outgoing-Calls" }
+    map { "n", "<leader>lo", lsp.buf.outgoing_calls, { buffer = bufnr, desc = "Outgoing-Calls" } }
   end
   ---References
-  nmap {
+  map {
+    "n",
     "grr",
     snacks.lsp_references or lsp.buf.references { includeDeclaration = false, loclist = true },
-    "GoTo References",
+    { buffer = bufnr, desc = "GoTo References" },
   }
 
-  nmap {
+  map {
+    "n",
     "<leader>lt",
     snacks.lsp_type_definitions or lsp.buf.type_definition,
-    "TypeDef",
+    { buffer = bufnr, desc = "TypeDef" },
   }
 
-  nmap {
+  map {
+    "n",
     "gro",
     snacks.lsp_symbols or lsp.buf.document_symbol,
-    "Workspace Symbols",
+    { buffer = bufnr, desc = "Workspace Symbols" },
   }
 
-  nmap {
+  map {
+    "n",
     "<leader>lws",
     snacks.lsp_workspace_symbols or lsp.buf.workspace_symbol,
-    "Workspace Symbols",
+    { buffer = bufnr, desc = "Workspace Symbols" },
   }
   if client.supports_method "workspace/workspaceFolders" then
-    nmap { "<leader>lwa", lsp.buf.add_workspace_folder, "Workspace Add Folder" }
-    nmap {
+    map { "n", "<leader>lwa", lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Workspace Add Folder" } }
+    map {
+      "n",
       "<leader>lwr",
       lsp.buf.remove_workspace_folder,
-      "Workspace Remove Folder",
+      { buffer = bufnr, desc = "Workspace Remove Folder" },
     }
 
-    nmap {
+    map {
+      "n",
       "<leader>lwl",
       function()
         print(table.concat(lsp.buf.list_workspace_folders(), "\n"))
       end,
-      "Workspace List Folders",
+      { buffer = bufnr, desc = "Workspace List Folders" },
     }
   end
 
-  nmap { "<leader>ll", lsp.codelens.run, "CodeLens" }
+  map { "n", "<leader>ll", lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" } }
 end
 
 --- Set buffer capabilities if supported by the passed client and buffer id
@@ -170,12 +178,12 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
   -- Completion
   -- NOTE nvim-0.11: still not useful for me, doesn't supports custom snippets
   -- if client.supports_method "textDocument/completion" then
-    -- trigger autocompletion on EVERY keypress. May be slow!
-    -- local chars = {}
-    -- for i = 32, 126 do
-    --   table.insert(chars, string.char(i))
-    -- end
-    -- client.server_capabilities.completionProvider.triggerCharacters = chars
+  -- trigger autocompletion on EVERY keypress. May be slow!
+  -- local chars = {}
+  -- for i = 32, 126 do
+  --   table.insert(chars, string.char(i))
+  -- end
+  -- client.server_capabilities.completionProvider.triggerCharacters = chars
   --   lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
   -- end
 

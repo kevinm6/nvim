@@ -2,16 +2,8 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 17 Nov 2024, 10:50
+--  Last Modified: 31/05/2025, 09:49
 -------------------------------------
-
----Add Mason path to get packages available
-local path_sep, env_path_sep = "/", ":"
-if vim.fn.has "win32" == 1 then
-  path_sep = [[\]]
-  env_path_sep = ";"
-end
-vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, path_sep) .. env_path_sep .. vim.env.PATH
 
 local M = {
   "nvim-lua/plenary.nvim",
@@ -45,6 +37,9 @@ local M = {
   {
     "williamboman/mason.nvim",
     cmd = "Mason",
+    init = function(p)
+      vim.env.PATH = p.dir .. "/bin:" .. vim.env.PATH
+    end,
     opts = {
       ui = {
         border = "rounded",

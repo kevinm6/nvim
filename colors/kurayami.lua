@@ -89,7 +89,7 @@ local groups = {
 	---Search
 	IncSearch = { fg = "#3a3a3a", bg = default.green, bold = true },
 	Search = { reverse = true },
-	QuickFixLine = { reverse = true },
+	QuickFixLine = { bg = "grey15" },
 
 	---Debugging
 	Debug = { fg = default.red },

@@ -84,9 +84,11 @@ local function show_environment_variables(_)
     -- end,
     actions = {
       add_environment_var = function(picker)
+        vim.print(picker)
         print "called add var"
       end,
       edit_environment_var = function(picker)
+        vim.print(picker)
         print "called edit var"
       end,
     },

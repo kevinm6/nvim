@@ -5,6 +5,9 @@
 -- Last Modified: 07 May 2024, 17:02
 -------------------------------------
 
+local f = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t:r")
+vim.opt_local.makeprg = "javac % && java " .. f
+
 local has_jdtls, jdtls = pcall(require, "jdtls")
 if not has_jdtls then
   vim.notify(" ERROR loading jdtls", vim.log.levels.ERROR)

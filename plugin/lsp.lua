@@ -45,7 +45,7 @@ local function custom_attach(client, bufnr)
 end
 
 ---Default Lsp Config
-lsp.config("*", {
+vim.lsp.config("*", {
   on_init = custom_init,
   on_attach = custom_attach,
   capabilities = init_capabilities(),
@@ -66,7 +66,7 @@ lsp.config("bashls", {
 
 lsp.config("sqls", {
   on_attach = function(client, bufnr)
-    custom_attach(client, bufnr)
+    -- custom_attach(client, bufnr)
     require("after.lsp.sqls").on_attach(client, bufnr)
   end,
 })
@@ -80,14 +80,14 @@ lsp.config("sqls", {
 --   end,
 -- })
 
-lsp.config("metals", {
-  on_init = function(client)
-    custom_init(client)
-  end,
-  on_attach = function(client, bufnr)
-    custom_attach(client, bufnr)
-  end,
-})
+-- lsp.config("metals", {
+--   on_init = function(client)
+--     custom_init(client)
+--   end,
+--   on_attach = function(client, bufnr)
+--     custom_attach(client, bufnr)
+--   end,
+-- })
 
 lsp.enable {
   "marksman",
@@ -109,5 +109,6 @@ lsp.enable {
   "lemminx",
   "html",
   "dockerls",
+  "groovyls",
   -- "metals",
 }

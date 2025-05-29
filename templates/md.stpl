@@ -1,12 +1,9 @@
----
-File          : ${TM_FILENAME_BASE}
-Author        : Kevin
-Date          : ${CURRENT_DATE}
-Date Modified : ${CURRENT_DATE}
----
-
-# ${TM_FILENAME_BASE}
+% ${TM_FILENAME_BASE}
+% Kevin
+% ${CURRENT_DATE}
 
 ---
 
-$0
+% ${TM_FILENAME_BASE}
+
+---
