@@ -8,31 +8,6 @@
 local M = {
   "nvim-lua/plenary.nvim",
 
-  ---Statusline
-  {
-    dir = vim.fn.stdpath "config" .. "/lua/lib/ui/statusline.lua",
-    virtual = true,
-    event = "VeryLazy",
-    cmd = "ToggleStatusline",
-    cond = function()
-      return not vim.g.vscode
-    end,
-    config = function()
-      require("lib.ui.statusline").toggle()
-    end,
-  },
-
-  ---Winbar
-  {
-    dir = vim.fn.stdpath "config" .. "/lua/lib/ui/winbar.lua",
-    virtual = true,
-    event = { "BufReadPre", "BufNewFile" },
-    cmd = "ToggleWinbar",
-    config = function()
-      require("lib.ui.winbar").toggle()
-    end,
-  },
-
   ---Mason
   {
     "williamboman/mason.nvim",
@@ -56,6 +31,31 @@ local M = {
         },
       },
     },
+  },
+
+  ---Statusline
+  {
+    dir = vim.fn.stdpath "config" .. "/lua/lib/ui/statusline.lua",
+    virtual = true,
+    event = "VeryLazy",
+    cmd = "ToggleStatusline",
+    cond = function()
+      return not vim.g.vscode
+    end,
+    config = function()
+      require("lib.ui.statusline").toggle()
+    end,
+  },
+
+  ---Winbar
+  {
+    dir = vim.fn.stdpath "config" .. "/lua/lib/ui/winbar.lua",
+    virtual = true,
+    event = { "BufReadPre", "BufNewFile" },
+    cmd = "ToggleWinbar",
+    config = function()
+      require("lib.ui.winbar").toggle()
+    end,
   },
 
   ---Obsidian

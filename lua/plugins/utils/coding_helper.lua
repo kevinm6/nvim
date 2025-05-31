@@ -64,7 +64,7 @@ return {
       spec = {
         { "<leader>?", hidden = true },
         { "<leader>g", group = "Git" },
-        { "<leader>f", group = "Telescope" },
+        { "<leader>f", group = "Find" },
         { "<leader>d", group = "DAP", icon = "" },
         { "<leader>l", group = "LSP", icon = "" },
         { "<leader>lw", group = "Workspace", icon = "" },
