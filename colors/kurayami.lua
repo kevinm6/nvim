@@ -455,15 +455,15 @@ local groups = {
 	["@todo"] = { link = "Todo" },
 	-- ["@spell"] = { underline = true },
 
-	---WhichKey
-	---@url https://github.com/folke/which-key.nvim
-	WhichKey = { link = "Function" },
-	WhichKeyGroup = { link = "Type" },
-	WhichKeySeparator = { link = "DiffAdded" },
-	WhichKeyDesc = { link = "Identifier" },
-	WhichKeyFloat = { bg = "#1c1c1c" },
-	WhichKeyBorder = { link = "FloatBorder" },
-	WhichKeyValue = { link = "Comment" },
+	---Clues
+	---@url https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-clue.md
+   MiniClueBorder = { link = "FloatBorder" },
+   MiniClueDescGroup = { link = "Type" },
+   -- MiniClueDescSingle = { link = "Identifier" },
+   MiniClueNextKey = { },
+   -- MiniClueNextKeyWithPostkeys = { },
+   MiniClueSeparator = { link = "DiffAdded" },
+   MiniClueTitle = { link = "Function" },
 }
 
 for group, opts in pairs(groups) do
