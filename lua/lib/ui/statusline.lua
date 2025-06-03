@@ -43,34 +43,6 @@ local M = {
       return 80
     end,
   }),
-  ---highlights value
-  colors = {
-    inactive = "%#StatusLineInactive#",
-    mode = "%#StatusLineMode#",
-    git = "%#StatusLineGit#",
-    diag = "%#StatusLineGpsDiagnostic#",
-    diagError = "%#SLDiagnosticError#",
-    diagWarn = "%#SLDiagnosticWarn#",
-    diagInfo = "%#SLDiagnosticInfo#",
-    diagHint = "%#SLDiagnosticHint#",
-    lspactive = "%#StatusLineLspActive#",
-    lspnoactive = "%#StatusLineLspNotActive#",
-    ftype = "%#StatusLineFileType#",
-    empty = "%#StatusLineEmptyspace#",
-    lite = "%#StatusLineLite#",
-    name = "%#StatusLineFileName#",
-    encoding = "%#StatusLineFileEncoding#",
-    fformatloc = "%#StatusLineFileFormatLocation#",
-    session = "%#StatusLineSession#",
-    inverted = "%#StatusLineInverted#",
-    symbols = "%#StatuslineSymbols#",
-    Nmode = "%#Nmode#",
-    Vmode = "%#Vmode#",
-    Imode = "%#Imode#",
-    Cmode = "%#Cmode#",
-    Tmode = "%#Tmode#",
-    ShellMode = "%#Tmode#",
-  },
   icons = setmetatable({
     error = "",
     warning = "",
@@ -110,9 +82,44 @@ local M = {
   }),
 }
 
+---Lazy load colors if not added to table
+local function load_colors()
+  if not M.colors then
+    ---highlights value
+    M.colors = {
+      inactive = "%#StatusLineInactive#",
+      mode = "%#StatusLineMode#",
+      git = "%#StatusLineGit#",
+      diag = "%#StatusLineGpsDiagnostic#",
+      diagError = "%#SLDiagnosticError#",
+      diagWarn = "%#SLDiagnosticWarn#",
+      diagInfo = "%#SLDiagnosticInfo#",
+      diagHint = "%#SLDiagnosticHint#",
+      lspactive = "%#StatusLineLspActive#",
+      lspnoactive = "%#StatusLineLspNotActive#",
+      ftype = "%#StatusLineFileType#",
+      empty = "%#StatusLineEmptyspace#",
+      lite = "%#StatusLineLite#",
+      name = "%#StatusLineFileName#",
+      encoding = "%#StatusLineFileEncoding#",
+      fformatloc = "%#StatusLineFileFormatLocation#",
+      session = "%#StatusLineSession#",
+      inverted = "%#StatusLineInverted#",
+      symbols = "%#StatuslineSymbols#",
+      Nmode = "%#Nmode#",
+      Vmode = "%#Vmode#",
+      Imode = "%#Imode#",
+      Cmode = "%#Cmode#",
+      Tmode = "%#Tmode#",
+      ShellMode = "%#Tmode#",
+    }
+  end
+end
+
 ---Set highlight groups for StatusLine and relative colors.
 ---This is useful on first start, otherwise they are not overriden.
 local function set_color_groups()
+  load_colors()
   vim.g.statusline_color = true
 
   local hls = {
@@ -267,11 +274,12 @@ end
 
 ---Get lsp progress, trying to remove Noice and mini-view
 ---@return string progress formatted progress
-local function get_lsp_progress()
+function M.get_lsp_progress()
   local lsp = vim.lsp.status()
   if lsp then
-    lsp = lsp:gsub("(%%)", "%1%%"):gsub("%s+", " ") --:gsub("\r", ""):gsub("\t", ""):gsub("\n", "")
-    return (#lsp > M.preset_width.lsp_info) and string.sub(lsp, 1, M.preset_width.lsp_info) .. "…" or lsp
+    local idx = lsp:find(",")
+    lsp = vim.trim(lsp:sub(0, idx and idx-1 or nil))
+    return (#lsp > M.preset_width.lsp_info) and lsp:sub(1, M.preset_width.lsp_info) .. "…" or lsp
   end
 
   return ""
@@ -337,7 +345,7 @@ end
 ---Get session name if active
 ---@return string session_name name of the active session or empty string
 local function session_name()
-  return M.session_name ~= "" and " Session: " .. M.session_name or ""
+  return M.session_name ~= "" and " Session: " .. M.session_name .. " " or ""
 end
 
 ---Get python virtual-env if is active and in python file
@@ -354,7 +362,7 @@ local function get_python_env()
         end
         venv = final_venv
       end
-      return string.format(" 󰌠 (%s)", venv)
+      return string.format(" 󰌠 (%s) ", venv)
     end
   end
   -- end
@@ -427,17 +435,18 @@ local function enabled_statusline()
     modifiedReadOnlyFlags,
     space,
     M.colors.git,
-    get_git_status(),
+    "%<" .. get_git_status(),
     M.colors.name,
-    "%<" .. get_filename(),
+    get_filename(),
     M.colors.symbols,
     "",
     M.colors.empty,
     session_name(),
-    space,
     get_python_env(),
     space,
-    get_lsp_progress(),
+    [[%{luaeval("require'lib.ui.statusline'.get_lsp_progress()")}]],
+    space,
+    -- get_lsp_progress(),
 
     -- Middle
     sideSep,
