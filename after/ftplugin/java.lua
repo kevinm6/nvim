@@ -104,7 +104,7 @@ local config = {
       maven = { downloadSources = true },
       signatureHelp = { enabled = true },
       contentProvider = { preferred = "fernflower" },
-      saveActions = { organizeImports = true },
+      saveActions = { organizeImports = false },
       sources = {
         organizeImports = {
           starThreshold = 9999,
@@ -276,6 +276,22 @@ local config = {
         }
       end,
       "Test Near method",
+    }
+    map {
+      "n",
+      "<localleader>dtg",
+      function()
+        require("jdtls.tests").generate()
+      end,
+      "GoTo Test subjects",
+    }
+    map {
+      "n",
+      "<localleader>dts",
+      function()
+        require("jdtls.tests").goto_subjects()
+      end,
+      "GoTo Test subjects",
     }
   end,
 }

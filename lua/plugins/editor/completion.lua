@@ -52,6 +52,11 @@ return {
   sources = {
     default = { "snippets", "lsp", "markdown", "path", "buffer", },
     providers = {
+      buffer = {
+        opts = {
+          enable_in_ex_commands = true
+        }
+      },
       snippets = {
         opts = {
           extended_filetypes = {

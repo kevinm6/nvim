@@ -153,5 +153,10 @@
     "prefix": "import",
     "body": ["import ${1:PackageName}"],
     "description": "Import statement"
+  },
+  "assert": {
+    "prefix": "as",
+    "body": ["assert ${1:condition} : ${2:assertion text};$0"],
+    "description": "Assertion"
   }
 }

@@ -1,12 +1,10 @@
 ---@type vim.lsp.Config
 return {
-  default_config = {
-    cmd = { "intelephense", "--stdio" },
-    filetypes = { "php" },
-    init_options = {
-      globalStoragePath = vim.fn.expand "~/.local/php/",
-      -- clearCache = true
-    },
+  cmd = { "intelephense", "--stdio" },
+  filetypes = { "php" },
+  init_options = {
+    globalStoragePath = vim.fn.expand "~/.local/php/",
+    -- clearCache = true
     root_markers = { "composer.json", ".git" },
   },
   docs = {

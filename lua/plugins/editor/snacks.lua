@@ -524,6 +524,7 @@ return {
           },
         },
         projects = {
+          confirm = "picker",
           dev = { "~/Documents/develoer", "~/dev", "~/uni", "~/Informatica" },
           layout = {
             reverse = true,

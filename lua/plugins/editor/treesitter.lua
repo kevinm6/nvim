@@ -2,7 +2,7 @@
 -- File         : treesitter.lua
 -- Description  : TreeSitter config
 -- Author       : Kevin
--- Last Modified: 29/05/2025, 21:04
+-- Last Modified: 08/06/2025
 -------------------------------------
 
 local function parsers_to_be_installed()
@@ -50,9 +50,9 @@ end
 vim.api.nvim_create_autocmd("FileType", {
   pattern = parsers_to_be_installed(),
   callback = function(ev)
-    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     vim.treesitter.start()
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     require "lib.ts_utils".attach(ev.buf)
 
     vim.api.nvim_create_autocmd("BufDelete", {
@@ -68,11 +68,21 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = function()
-      pcall(function() require "nvim-treesitter".install(parsers_to_be_installed()) end)
+      pcall(function() require "nvim-treesitter".install(parsers_to_be_installed()):wait(300000) end)
       pcall(function() require "nvim-treesitter".update() end)
     end,
     branch = "main",
     lazy = false,
-    dependencies = { "nvim-treesitter/nvim-treesitter-context" },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    cmd = "TSContext",
+    event = "FileType",
+    ft = parsers_to_be_installed(),
+    opts = function()
+      vim.keymap.set("n", "[c", function()
+        require("treesitter-context").go_to_context(vim.v.count1)
+      end, { silent = true })
+    end
   },
 }
