@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 14/06/2025, 18:12
+--  Last Modified: 28/06/2025, 10:50
 -------------------------------------
 
 local M = {
@@ -140,58 +140,67 @@ local M = {
 
   ---Molten
   {
-    "benlubas/molten-nvim",
+    "kevinm6/molten-nvim",
     ft = { "qmd", "jupyter_notebook", "quarto" },
-    version = "^1.0.0",
+    -- version = "^1.0.0",
     build = ":UpdateRemotePlugins",
     init = function()
-      vim.g.molten_image_provider = "image.nvim"
-      vim.g.molten_output_win_max_height = 20
-      vim.g.molten_auto_open_output = true
-    end,
-    config = function()
-      vim.keymap.set(
-        "n",
-        "<localleader>R",
-        ":MoltenEvaluateOperator<CR>",
-        { silent = true, noremap = true, desc = "run operator selection" }
-      )
-      vim.keymap.set(
-        "n",
-        "<localleader>rl",
-        ":MoltenEvaluateLine<CR>",
-        { silent = true, noremap = true, desc = "evaluate line" }
-      )
-      vim.keymap.set(
-        "n",
-        "<localleader>rc",
-        ":MoltenReevaluateCell<CR>",
-        { silent = true, noremap = true, desc = "re-evaluate cell" }
-      )
-      vim.keymap.set(
-        "v",
-        "<localleader>r",
-        ":<C-u>MoltenEvaluateVisual<CR>gv",
-        { silent = true, noremap = true, desc = "evaluate visual selection" }
-      )
+      vim.g.molten_auto_open_html_in_browser = true
+      vim.g.molten_image_provider = "snacks.nvim"
+      vim.g.molten_output_virt_lines = true -- pad to don't cover actual lines
+      vim.g.molten_output_win_max_height = math.floor(vim.o.lines * 0.8)
+      vim.g.molten_output_win_max_width = math.floor(vim.o.columns * 0.8)
 
-      vim.keymap.set("n", "<leader>M", function() end, { desc = "Molten" })
-      vim.keymap.set("n", "<leader>MI", function()
-        vim.cmd.MoltenInfo()
-      end, { desc = "MoltenInfo" })
-      vim.keymap.set("n", "<leader>Ml", function()
-        vim.cmd.MoltenEvaluateLine()
-      end, { desc = "MoltenEvaluateLine" })
-      vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv", { desc = "MoltenEvaluateVisual" })
-      vim.keymap.set("n", "<leader>Ma", function()
-        vim.cmd.MoltenEvaluateArgument()
-      end, { desc = "MoltenEvaluateArgument" })
-      vim.keymap.set("n", "<leader>Mo", function()
-        vim.cmd.MoltenEvaluateOperator()
-      end, { desc = "MoltenEvaluateOperator" })
-      vim.keymap.set("n", "<leader>Mc", function()
-        vim.cmd.MoltenReevaluateCell()
-      end, { desc = "MoltenReevaluateCell" })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("_molten_keymaps", { clear = true }),
+        pattern = { "qmd", "jupyter_notebook", "quarto" },
+        callback = function(ev)
+
+          vim.keymap.set(
+            "n",
+            "<localleader>R",
+            ":MoltenEvaluateOperator<CR>",
+            { silent = true, buffer = ev.buf, noremap = true, desc = "run operator selection" }
+          )
+          vim.keymap.set(
+            "n",
+            "<localleader>rl",
+            ":MoltenEvaluateLine<CR>",
+            { silent = true, buffer = ev.buf, noremap = true, desc = "evaluate line" }
+          )
+          vim.keymap.set(
+            "n",
+            "<localleader>rc",
+            ":MoltenReevaluateCell<CR>",
+            { silent = true, buffer = ev.buf, noremap = true, desc = "re-evaluate cell" }
+          )
+          vim.keymap.set(
+            "v",
+            "<localleader>r",
+            ":<C-u>MoltenEvaluateVisual<CR>gv",
+            { silent = true, buffer = ev.buf, noremap = true, desc = "evaluate visual selection" }
+          )
+
+          vim.keymap.set("n", "<leader>M", function() end, { desc = "Molten" })
+          vim.keymap.set("n", "<leader>MI", function()
+            vim.cmd.MoltenInfo()
+          end, { buffer = ev.buf, desc = "MoltenInfo" })
+          vim.keymap.set("n", "<leader>Ml", function()
+            vim.cmd.MoltenEvaluateLine()
+          end, { buffer = ev.buf, desc = "MoltenEvaluateLine" })
+          vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv",
+            { buffer = ev.buf, desc = "MoltenEvaluateVisual" })
+          vim.keymap.set("n", "<leader>Ma", function()
+            vim.cmd.MoltenEvaluateArgument()
+          end, { buffer = ev.buf, desc = "MoltenEvaluateArgument" })
+          vim.keymap.set("n", "<leader>Mo", function()
+            vim.cmd.MoltenEvaluateOperator()
+          end, { buffer = ev.buf, desc = "MoltenEvaluateOperator" })
+          vim.keymap.set("n", "<leader>Mc", function()
+            vim.cmd.MoltenReevaluateCell()
+          end, { buffer = ev.buf, desc = "MoltenReevaluateCell" })
+        end
+      })
     end,
   },
 
@@ -200,9 +209,7 @@ local M = {
   {
     "jmbuhr/otter.nvim",
     ft = { "quarto", "markdown", "html", "javascript", "typescript" },
-    opts = function(_, o)
-      --o.buffers = { set_filetype = true }
-
+    opts = function()
       --[[
       vim.api.nvim_create_autocmd("Filetype", {
         pattern = "html",
@@ -228,6 +235,8 @@ local M = {
         pattern = { "qmd", "quarto" },
         callback = function()
           require("otter").activate { "quarto", "markdown", "python" }
+          vim.treesitter.language.register("quarto", "python")
+          vim.treesitter.language.register("markdown", "python")
         end,
       })
       --

@@ -46,5 +46,5 @@ if not has_lazy then
   )
   return
 else
-  require "config.lazy"
+  require "lazy_config"
 end

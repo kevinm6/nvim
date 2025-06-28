@@ -362,7 +362,11 @@ local function get_python_env()
         end
         venv = final_venv
       end
-      return string.format(" 󰌠 (%s) ", venv)
+      local kernels = ""
+      if vim.bo.filetype == "quarto" and vim.endswith(get_filename(), "ipynb") then
+        kernels = require("molten.status").kernels()
+      end
+      return kernels ~= "" and string.format(" 󰌠 (%s) (%s) ", venv, kernels) or string.format(" 󰌠 (%s) ", venv)
     end
   end
   -- end

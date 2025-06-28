@@ -11,32 +11,32 @@ local autocmd = vim.api.nvim_create_autocmd
 ---General
 ---local _general_settings = augroup("_general_settings", { clear = true })
 
----FileTypes to exclude
-local filetypes_to_exclude = {
-  alpha = true,
-  WhichKey = true,
-  lspinfo = true,
-  TelescopePrompt = true,
-  TelescopeResults = true,
-  qf = true,
-  toggleterm = true,
-  lazy = true,
-  mason = true,
-  noice = true,
-  checkhealth = true,
-  notify = true,
-  cmp_menu = true,
-  vim = true,
-  oil = true,
-  help = true,
-  query = true,
-  man = true,
-  lazy_backdrop = true,
-  cmp_docs = true,
-  ["dap-float"] = true,
-  dapui_hover = true,
-}
-
+-- ---FileTypes to exclude
+-- local filetypes_to_exclude = {
+--   alpha = true,
+--   WhichKey = true,
+--   lspinfo = true,
+--   TelescopePrompt = true,
+--   TelescopeResults = true,
+--   qf = true,
+--   toggleterm = true,
+--   lazy = true,
+--   mason = true,
+--   noice = true,
+--   checkhealth = true,
+--   notify = true,
+--   cmp_menu = true,
+--   vim = true,
+--   oil = true,
+--   help = true,
+--   query = true,
+--   man = true,
+--   lazy_backdrop = true,
+--   cmp_docs = true,
+--   ["dap-float"] = true,
+--   dapui_hover = true,
+-- }
+--
 --------------------------------
 ------- Auto-Commands ---------
 --------------------------------
@@ -225,7 +225,8 @@ vim.filetype.add {
     -- md = "quarto",
     ipynb = "jupyter_notebook",
     dat = "xxd",
-    nl = "neverlang"
+    nl = "neverlang",
+    ftl = "freemarker"
   },
   pattern = {
     ["*.python"] = "python",
