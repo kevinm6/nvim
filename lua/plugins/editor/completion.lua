@@ -23,27 +23,27 @@ return {
       ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
     },
     term = { enabled = true, keymap = { preset = "inherit" } },
-    cmdline = {
-      keymap = {
-        ["<C-i>"] = { "select_and_accept" },
-        ["<C-k>"] = { "select_prev", "fallback" },
-        ["<C-j>"] = { "select_next", "fallback" },
-        ["<C-Space>"] = { "show", "hide" },
-        ["<Tab>"] = { "show_and_insert", "select_next" },
-        -- ["<Tab>"] = {
-        --   function(cmp)
-        --     if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
-        --       return cmp.accept()
-        --     end
-        --   end,
-        --   "show_and_insert",
-        --   "select_next",
-        -- },
-        ["<S-Tab>"] = { "show_and_insert", "select_prev" },
-        ["<C-e>"] = { "cancel" },
-      },
-      -- completion = { menu = { auto_show = false } }
-    },
+    -- cmdline = {
+    --   keymap = {
+    --     ["<C-i>"] = { "select_and_accept" },
+    --     ["<C-k>"] = { "select_prev", "fallback" },
+    --     ["<C-j>"] = { "select_next", "fallback" },
+    --     ["<C-Space>"] = { "show", "hide" },
+    --     ["<Tab>"] = { "show_and_insert", "select_next" },
+    --     -- ["<Tab>"] = {
+    --     --   function(cmp)
+    --     --     if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
+    --     --       return cmp.accept()
+    --     --     end
+    --     --   end,
+    --     --   "show_and_insert",
+    --     --   "select_next",
+    --     -- },
+    --     ["<S-Tab>"] = { "show_and_insert", "select_prev" },
+    --     ["<C-e>"] = { "cancel" },
+    --   },
+    --   -- completion = { menu = { auto_show = false } }
+    -- },
   },
   appearance = {
     nerd_font_variant = "mono",
@@ -87,19 +87,7 @@ return {
   },
 
   completion = {
-    accept = {
-      auto_brackets = { enabled = true },
-    },
-    list = {
-      selection = {
-        preselect = function()
-          return not require("blink.cmp").snippet_active { direction = 1 }
-        end,
-        -- auto_insert = function(ctx)
-        --   return ctx.mode == "cmdline"
-        -- end,
-      },
-    },
+    accept = { auto_brackets = { enabled = true } },
     menu = {
       scrollbar = false,
       min_width = 32,

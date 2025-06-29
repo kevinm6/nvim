@@ -191,7 +191,7 @@ local groups = {
 	PmenuKind = { link = "Type" },
 
 	---Snippet
-	SnippetTabstop = { italic = true, underline = true },
+	SnippetTabstop = { italic = true },
 
 	---Spell
 	SpellRare = { fg = default.purple, underline = true },
