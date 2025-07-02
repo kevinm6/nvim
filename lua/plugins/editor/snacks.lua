@@ -20,6 +20,7 @@ return {
           { icon = "󰾰", key = "f", desc = "Find file", action = ":lua require 'lib'.find_files()" },
           { icon = "", key = "r", desc = "Recent files", action = ":lua require 'lib'.recent_files()" },
           { icon = "", key = "p", desc = "Find project", action = ":lua require 'lib'.projects()" },
+          { icon = "", key = "s", desc = "Sessions", action = ":lua require 'lib.session'.restore()" },
           -- { icon = "󰾰", key = "d", desc = "Developer", action = [[:lua require "lib".dev_folder()]] },
           { icon = "", key = "L", desc = "Plugin Manager", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
           { icon = "", key = "m", desc = "Package Manager", action = ":Mason" },

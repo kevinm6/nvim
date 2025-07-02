@@ -23,27 +23,16 @@ return {
       ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
     },
     term = { enabled = true, keymap = { preset = "inherit" } },
-    -- cmdline = {
-    --   keymap = {
-    --     ["<C-i>"] = { "select_and_accept" },
-    --     ["<C-k>"] = { "select_prev", "fallback" },
-    --     ["<C-j>"] = { "select_next", "fallback" },
-    --     ["<C-Space>"] = { "show", "hide" },
-    --     ["<Tab>"] = { "show_and_insert", "select_next" },
-    --     -- ["<Tab>"] = {
-    --     --   function(cmp)
-    --     --     if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
-    --     --       return cmp.accept()
-    --     --     end
-    --     --   end,
-    --     --   "show_and_insert",
-    --     --   "select_next",
-    --     -- },
-    --     ["<S-Tab>"] = { "show_and_insert", "select_prev" },
-    --     ["<C-e>"] = { "cancel" },
-    --   },
-    --   -- completion = { menu = { auto_show = false } }
-    -- },
+    cmdline = {
+      keymap = {
+        ["<C-i>"] = { 'show_and_insert', 'select_next' },
+        ['<C-S-i>'] = { 'show_and_insert', 'select_prev' },
+        ["<C-k>"] = { "select_prev", "fallback" },
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-l>"] = { "select_and_accept", "fallback" },
+        ["<C-Space>"] = { "show", "hide" },
+      }
+    },
   },
   appearance = {
     nerd_font_variant = "mono",

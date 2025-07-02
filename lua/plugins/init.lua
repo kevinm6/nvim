@@ -107,7 +107,7 @@ local M = {
   ---Jupyter Notebook
   {
     "GCBallesteros/jupytext.nvim",
-    event = { "BufReadPre *.ipynb", "BufNewFile *.ipynb" },
+    event = { "BufRead *.ipynb", "BufNewFile *.ipynb" },
     init = function(p)
       if vim.fn.argc() == 1 then
         local argv = tostring(vim.fn.argv(0))
@@ -140,7 +140,7 @@ local M = {
 
   ---Molten
   {
-    "kevinm6/molten-nvim",
+    "benlubas/molten-nvim",
     ft = { "qmd", "jupyter_notebook", "quarto" },
     -- version = "^1.0.0",
     build = ":UpdateRemotePlugins",
@@ -235,8 +235,10 @@ local M = {
         pattern = { "qmd", "quarto" },
         callback = function()
           require("otter").activate { "quarto", "markdown", "python" }
-          vim.treesitter.language.register("quarto", "python")
           vim.treesitter.language.register("markdown", "python")
+          -- vim.treesitter.language.register("quarto", "markdown")
+          vim.treesitter.language.register("quarto", "python")
+          vim.treesitter.start()
         end,
       })
       --
