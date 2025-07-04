@@ -67,7 +67,7 @@ lsp.config("bashls", {
 lsp.config("sqls", {
   on_attach = function(client, bufnr)
     -- custom_attach(client, bufnr)
-    require("after.lsp.sqls").on_attach(client, bufnr)
+    require("sqls").on_attach(client, bufnr)
   end,
 })
 

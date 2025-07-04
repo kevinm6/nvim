@@ -39,7 +39,11 @@ return {
   },
 
   sources = {
-    default = { "snippets", "lsp", "markdown", "path", "buffer", },
+    default = { "snippets", "lsp", "path", "buffer", },
+    per_filetype = {
+      markdown = { "snippets", "lsp", "markdown", "path", "buffer", },
+      quarto = { "snippets", "lsp", "markdown", "path", "buffer", },
+    },
     providers = {
       buffer = {
         opts = {
@@ -55,16 +59,8 @@ return {
           },
         },
       },
-      markdown = {
-        name = "RenderMarkdown",
-        module = "render-markdown.integ.blink",
-      },
-      -- lazydev = {
-      --   name = "LazyDev",
-      --   module = "lazydev.integrations.blink",
-      --   -- make lazydev completions top priority (see `:h blink.cmp`)
-      --   score_offset = 100,
-      -- },
+      markdown = { name = "RenderMarkdown", module = "render-markdown.integ.blink" },
+      dbee = { name = "cmp-dbee", module = "blink.compat.source" }
     },
   },
   signature = {

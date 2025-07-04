@@ -283,7 +283,7 @@ local config = {
       function()
         require("jdtls.tests").generate()
       end,
-      "GoTo Test subjects",
+      "GoTo Test generate",
     }
     map {
       "n",

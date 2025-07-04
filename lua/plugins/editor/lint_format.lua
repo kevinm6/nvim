@@ -17,7 +17,7 @@ return {
         json = { "jsonlint" },
         javascript = { "eslint_d" },
         typescript = { "eslint_d" },
-        python = { "flake8" },
+        python = { "ruff" },
         gitcommit = { "commitlint" },
         php = { "php" },
         yaml = { "yamllint" },
@@ -63,7 +63,14 @@ return {
       vim.g.disable_autoformat = true
 
       o.formatters_by_ft = {
-        python = { "ruff" },
+        python = {
+          -- To fix auto-fixable lint errors.
+          -- "ruff_fix",
+          -- To run the Ruff formatter.
+          "ruff_format",
+          -- To organize the imports.
+          -- "ruff_organize_imports",
+        },
         bash = { "beautysh" },
         zsh = { "beautysh" },
         css = { "prettier" },
