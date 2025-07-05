@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 17 Nov 2024, 10:49
+--  Last Modified: 06/07/2025, 11:44
 -----------------------------------
 
 return {
@@ -66,6 +66,20 @@ return {
     keys = { { "<leader>d", desc = "DAP" } },
     config = function()
       local dap = require "dap"
+      local sl_to_exclude = require("lib.ui.statusline").to_exclude
+      local dap_ft = {
+        "dapui_hover",
+        "dapui_console",
+        "dapui_scopes",
+        "dapui_breakpoints",
+        "dapui_stacks",
+        "dapui_watches",
+        "dap-repl",
+        "dap-float"
+      }
+      for _, v in pairs(dap_ft) do
+        sl_to_exclude[v] = true
+      end
 
       dap.defaults.fallback.external_terminal = {
         command = "/usr/bin/env kitty",

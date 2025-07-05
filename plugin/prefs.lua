@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 09/04/2025 - 19:00
+-- Last Modified: 05/07/2025, 09:29
 -------------------------------------
 
 local settings = {
@@ -42,7 +42,7 @@ local settings = {
   updatetime = 100,
   updatecount = 0,
   listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_", nbsp = "␣" },
-  fillchars = [[eob: ,fold:󰇘,foldopen:,foldsep: ,foldclose:]],
+  fillchars = { eob = " ", fold = "󰇘", foldopen = "", foldsep = " ", foldclose = "❭" },
   timeoutlen = 350,
   ttimeoutlen = 100,
   completeopt = { "menuone", "noselect", "popup", "fuzzy" },
@@ -74,7 +74,6 @@ local settings = {
   -- foldmethod = "expr",
   -- foldexpr = "nvim_treesitter#foldexpr()",
   -- foldtext = '',
-
   diffopt = { "internal", "filler", "closeoff", "context:12", "algorithm:histogram", "linematch:200", "indent-heuristic" },
 
   colorcolumn = "90",
@@ -106,17 +105,14 @@ for k, o in pairs(settings) do
   vim.opt[k] = o
 end
 
----Custom diagnostic config
-local icon_err, icon_warn, icon_info, icon_hint = "", "", "", "󱧢"
-
 ---LSP•Diagnostic
 vim.diagnostic.config {
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = icon_err,
-      [vim.diagnostic.severity.WARN] = icon_warn,
-      [vim.diagnostic.severity.INFO] = icon_info,
-      [vim.diagnostic.severity.HINT] = icon_hint,
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = "󱧢 ",
     },
     numhl = {
       [vim.diagnostic.severity.ERROR] = "ErrorMsg",

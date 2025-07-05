@@ -2,7 +2,7 @@
 -- File         : lsp.lua
 -- Description  : lsp config nvim-0.11
 -- Author       : Kevin
--- Last Modified: 05 Apr 2025, 20:37
+-- Last Modified: 05/07/2025, 09:20
 -------------------------------------
 
 local lsp = vim.lsp
@@ -11,13 +11,8 @@ local lsp = vim.lsp
 ---default and `cmp_nvim_lsp`
 ---@return table capabilities custom capabilities merged with default
 local function init_capabilities()
-  -- Update capabilities with extended from cmp_nvim_lsp if available
   local capabilities = lsp.protocol.make_client_capabilities()
 
-  -- local has_blink, blink = pcall(require, "blink.cmp")
-  -- if has_blink then
-  --   capabilities = blink.get_lsp_capabilities(capabilities)
-  -- end
   -- Adding snippetSupport enabled by default for each LSP
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
@@ -38,8 +33,6 @@ end
 --- @param client table client passed to attach config
 --- @param bufnr integer buffer id passed to attach config
 local function custom_attach(client, bufnr)
-  -- require("plugins.lsp.handlers").setup()
-
   require("lib.lsp").set_buf_keymaps(client, bufnr)
   require("lib.lsp").set_buf_funcs_for_capabilities(client, bufnr)
 end
@@ -64,31 +57,6 @@ lsp.config("bashls", {
   },
 })
 
-lsp.config("sqls", {
-  on_attach = function(client, bufnr)
-    -- custom_attach(client, bufnr)
-    require("sqls").on_attach(client, bufnr)
-  end,
-})
-
--- lsp.config("jdtls", {
---   on_init = function(client)
---     custom_init(client)
---   end,
---   on_attach = function(client, bufnr)
---     custom_attach(client, bufnr)
---   end,
--- })
-
--- lsp.config("metals", {
---   on_init = function(client)
---     custom_init(client)
---   end,
---   on_attach = function(client, bufnr)
---     custom_attach(client, bufnr)
---   end,
--- })
-
 lsp.enable {
   "marksman",
   "gopls",
@@ -97,7 +65,6 @@ lsp.enable {
   "pyright",
   "bashls",
   "jsonls",
-  -- "jdtls",
   "yamlls",
   "sqls",
   "ts_ls",
@@ -110,5 +77,6 @@ lsp.enable {
   "html",
   "dockerls",
   "groovyls",
+  -- "jdtls",
   -- "metals",
 }

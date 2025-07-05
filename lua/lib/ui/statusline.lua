@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 26 Dec 2024, 11:00
+-- Last Modified: 06/07/2025, 11:45
 -----------------------------------------
 
 local M = {
@@ -11,8 +11,8 @@ local M = {
   ---filetypes to exclude
   to_exclude = {
     alpha = true,
-    -- snacks_dashboard = true,
     lspinfo = true,
+    -- snacks_dashboard = true,
     snacks_picker_input = true,
     snacks_picker_list = true,
     snacks_picker_preview = true,
@@ -27,8 +27,6 @@ local M = {
     query = true,
     oil = true,
     httpResult = true,
-    dapui_hover = true,
-    ["dap-float"] = true,
   },
   ---width values used to display info if win-size is between
   preset_width = setmetatable({
@@ -63,8 +61,6 @@ local M = {
     query = "󱩾",
     web = "󰖟",
     db = "󰆼",
-    dapui_hover = "󰃤",
-    dapui_watches = "󰃤",
     default = "",
     gradle = "",
   }, {
@@ -74,7 +70,7 @@ local M = {
         return ""
       else
         local icon = icons.get("filetype", k)
-        vim.print(icon)
+        -- vim.print(icon)
         t[k] = icon
         return icon
       end
@@ -401,12 +397,17 @@ local function disabled_statusline()
     Outline = M.icons.table .. " Symbols Outline",
     noice = M.icons.list .. " Notifications",
     checkhealth = M.icons.checkhealth .. " Health",
-    WhichKey = M.icons.search .. " WhichKey",
     query = M.icons.query .. " Query",
     dbui = M.icons.db .. " Database",
     httpResult = M.icons.web .. " Http",
     dapui_hover = M.icons.dapui_hover .. " DapUI•Hover",
+    dapui_watches = M.icons.dapui_watches .. " DapUI•Watches",
+    dapui_stacks = M.icons.dapui_stacks .. " DapUI•Stacks",
+    dapui_console = M.icons.dapui_console .. " DapUI•Console",
+    dapui_scopes = M.icons.dapui_scopes .. " DapUI•Scopes",
+    dapui_breakpoints = M.icons.dapui_breakpoints .. " DapUI•Breakpoints",
     ["dap-float"] = M.icons.dapui_watches .. " DapUI•Hover",
+    ["dap-repl"] = M.icons.robots .. " DapUI•Repl",
   }
   local custom_ft = special_filetypes[vim.bo.filetype]
 

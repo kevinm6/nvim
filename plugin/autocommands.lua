@@ -2,56 +2,15 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 18 Jul 2024, 09:57
+-- Last Modified: 05 Jul 2025, 10:34
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
----General
----local _general_settings = augroup("_general_settings", { clear = true })
-
--- ---FileTypes to exclude
--- local filetypes_to_exclude = {
---   alpha = true,
---   WhichKey = true,
---   lspinfo = true,
---   TelescopePrompt = true,
---   TelescopeResults = true,
---   qf = true,
---   toggleterm = true,
---   lazy = true,
---   mason = true,
---   noice = true,
---   checkhealth = true,
---   notify = true,
---   cmp_menu = true,
---   vim = true,
---   oil = true,
---   help = true,
---   query = true,
---   man = true,
---   lazy_backdrop = true,
---   cmp_docs = true,
---   ["dap-float"] = true,
---   dapui_hover = true,
--- }
---
 --------------------------------
 ------- Auto-Commands ---------
 --------------------------------
-
----Statusline&Winbar
--- if not vim.g.vscode then
---   autocmd("VimEnter", {
---     group = augroup("_statusline_and_winbar", { clear = true }),
---     callback = function()
---       require("lib.ui.statusline").toggle()
---       require("lib.ui.winbar").toggle()
---     end,
---     once = true,
---   })
--- end
 
 ---Hightlight on yank
 autocmd("TextYankPost", {
@@ -98,17 +57,6 @@ autocmd("FileType", {
   end,
 })
 
--- autocmd("FileType", {
---   group = augroup("_autocmd_statuscolumn", { clear = true }),
---   callback = function(ev)
---     if not filetypes_to_exclude[ev.match] then
---       vim.opt_local.statuscolumn = "%s%{v:relnum?v:relnum:v:lnum}%=%C "
---     else
---       vim.opt_local.statuscolumn = ""
---     end
---   end,
--- })
-
 ---Autocmd for `NNN` cli tools useful
 --- to quit buffer used by it for help and similar things
 autocmd({ "BufNewFile", "BufRead" }, {
@@ -124,55 +72,6 @@ autocmd({ "BufNewFile", "BufRead" }, {
   end,
 })
 
----Check if want to install Treesitter parser for current
----filetype if missing
--- autocmd("FileType", {
---   group = augroup("_check_ft_ts_parser", { clear = true }),
---   pattern = "*",
---   callback = function(ev)
---     if not filetypes_to_exclude[ev.match] then
---       local has_ts, ts_parsers = pcall(require, "nvim-treesitter.parsers")
---       if not has_ts then
---         return
---       end
---
---       local lang = ts_parsers.get_buf_lang()
---       local donot_ask_install = vim.g.dont_ask_install or {}
---       if
---         ts_parsers.get_parser_configs()[lang]
---         and not ts_parsers.has_parser(lang)
---         and not donot_ask_install[lang] == true
---       then
---         vim.schedule_wrap(function()
---           local msg = string.format("Install missing TS parser for < %s >?", lang)
---           local choice = vim.fn.confirm(msg, "&Yes\n&No")
---
---           if choice == 1 then
---             vim.cmd.TSInstall(lang)
---           else
---             donot_ask_install[lang] = true
---             vim.g.dont_ask_install = donot_ask_install
---           end
---         end)()
---       end
---     end
---   end,
--- })
-
----Set makeprg and keywordprg for filetype (using default compiler when available)
---autocmd("FileType", {
---  group = augroup("_set_makefile", { clear = true }),
---  pattern = "*",
---  callback = function(ev)
---    local lib_compiler = require "lib.compiler"
---    if ev.match and lib_compiler.set_keywordprg(ev.match) then
---      vim.opt_local.keywordprg = lib_compiler.set_keywordprg(ev.match)
---    end
---    if ev.match and not filetypes_to_exclude[ev.match] then
---      lib_compiler.set_compiler(ev)
---    end
---  end,
---})
 
 ---Jump to last < cursor-pos > in file
 autocmd("BufRead", {
@@ -193,13 +92,13 @@ autocmd("VimResized", {
 })
 
 ---Insert mode on builtin Neovim terminal
-autocmd("TermOpen", {
-  group = augroup("_startinsert_term_open", { clear = true }),
-  callback = function(ev)
-    vim.cmd.startinsert()
-    vim.bo[ev.buf].filetype = "terminal"
-  end,
-})
+-- autocmd("TermOpen", {
+--   group = augroup("_startinsert_term_open", { clear = true }),
+--   callback = function(ev)
+--     vim.cmd.startinsert()
+--     vim.bo[ev.buf].filetype = "terminal"
+--   end,
+-- })
 
 ---Start in insert mode in Git and toggleterm files
 autocmd({ "FileType", "BufNewFile" }, {

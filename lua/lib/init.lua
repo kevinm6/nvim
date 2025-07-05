@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 30 Apr 2024, 12:50
+--  Last Modified: 05/07/2025, 09:43
 -------------------------------------
 
 local M = {}
@@ -21,7 +21,6 @@ function M.dev_folder()
     vim.fn.expand "~/dev",
     vim.fn.expand "~/Documents/developer",
   }
-  pcall(require, "telescope")
   vim.ui.select(dev_folders, {
     prompt = " > Select dev folder",
     default = nil,
@@ -151,7 +150,7 @@ end
 
 ---Create new file w/ input for filename
 ---useful for dashboard and so on
----@param cmd_input string file name\[.ext\] that it will be passed to vim.cmd.edit
+---@param cmd_input table file name\[.ext\] that it will be passed to vim.cmd.edit
 function M.new_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
@@ -184,7 +183,7 @@ function M.new_file(cmd_input)
 end
 
 ---Create temporary file
----@param cmd_input string file extension without dot prefixed
+---@param cmd_input table file extension without dot prefixed
 function M.new_tmp_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
@@ -215,7 +214,6 @@ function M.new_tmp_file(cmd_input)
 end
 
 function M.workon()
-  pcall(require, "telescope")
   local config = require "lazy.core.config"
   vim.ui.select(vim.tbl_values(config.plugins), {
     prompt = "lcd to:",
