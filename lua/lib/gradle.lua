@@ -82,26 +82,27 @@ end
 ---@param opts table
 function M.setup(opts)
   local root_dir = opts.root_dir or nil
+  assert(root_dir, "root_dir not passed!")
 
-  if not root_dir then
-    -- vim.notify("root_dir not passed!", vim.log.levels.ERROR, { title = "Gradle" })
-    return
-  end
-
-  if not vim.fn.filereadable(root_dir .. "/gradlew") then
-    vim.notify("No gradlew bin found for the path\n" .. root_dir, vim.log.levels.WARN, { title = "Gradle" })
-    return
-  end
-
+  local gradle = vim.fn.executable("gradle") and vim.fn.exepath("gradle") or nil
   local gradlew = root_dir .. "/gradlew"
+
+  if vim.fn.executable(gradlew) == 1 then
+    gradle = gradlew -- use wrapper if present in cwd
+  end
+
+  if not gradle then
+    vim.notify("No gradle available in cwd and in the system\n", vim.log.levels.WARN, { title = "Gradle" })
+    return
+  end
 
   vim.api.nvim_create_user_command("Gradle", function(input)
     local task = nil
     if input.args ~= "" then
-      run_gradle_task(gradlew, task)
+      run_gradle_task(gradle, task)
     else
-      local tasks = get_gradle_tasks(gradlew, root_dir)
-      select_and_run_gradle_task(gradlew, tasks)
+      local tasks = get_gradle_tasks(gradle, root_dir)
+      select_and_run_gradle_task(gradle, tasks)
     end
   end, {
     nargs = "?",
@@ -109,10 +110,9 @@ function M.setup(opts)
   })
 
   vim.keymap.set("n", "<leader>dg", function()
-    local tasks = get_gradle_tasks(gradlew, root_dir)
-    select_and_run_gradle_task(gradlew, tasks)
+    local tasks = get_gradle_tasks(gradle, root_dir)
+    select_and_run_gradle_task(gradle, tasks)
   end, { desc = "Gradle", buffer = true })
 end
 
 return M
-
