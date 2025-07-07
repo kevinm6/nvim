@@ -42,7 +42,8 @@ return {
           continuation_indent = 2,
           call_arg_parentheses = "remove",
           insert_final_newline = "false",
-          align_if_branch = "true"
+          align_if_branch = "true",
+          max_line_length = 90
         },
       },
       completion = {

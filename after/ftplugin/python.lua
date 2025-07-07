@@ -19,11 +19,15 @@ end, { desc = "Pick Python Venv" })
 
 vim.api.nvim_create_user_command("Pyvenv", function(arg)
   if arg.args ~= "" then
-    local venv = {
-      name = vim.fn.fnamemodify(arg.args, ":t"),
-      path = string.format("%s/%s", vim.uv.cwd(), vim.fn.expand(arg.args))
-    }
-    require "lib.python_envs".set_venv(venv)
+    -- if arg.args == "current_dir" then
+    --   venv = require "lib.python_envs".current_dir
+    -- else
+    --   venv = {
+    --     name = vim.fn.fnamemodify(arg.args, ":t"),
+    --     path = string.format("%s/%s", vim.uv.cwd(), vim.fn.expand(arg.args))
+    --   }
+    -- end
+    require "lib.python_envs".set_venv(arg.args)
   else
     require "lib.python_envs".pick_venv()
   end

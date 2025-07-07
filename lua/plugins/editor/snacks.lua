@@ -71,7 +71,19 @@ return {
         -- footer = { "%s", align = "center", hl = "@comment" },
       },
     },
-    image = {},
+    image = {
+      resolve = function(_, src)
+        if vim.startswith(src, "{{ url_for('") then -- match in Flask apps
+          local path = src:match("url_for%('([^']+)'")
+          local filename = src:match("filename='([^']+)'")
+          if path and filename then
+            local dir = vim.fs.find(path, { type = "directory", path = vim.fn.getcwd() })
+            local file_path = string.format("%s/%s", dir[1], filename)
+            return file_path
+          end
+        end
+      end
+    },
     -- explorer = {},
     -- input = {
     --   relative = "editor",
