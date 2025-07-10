@@ -103,7 +103,7 @@ local config = {
       eclipse = { downloadSources = true },
       maven = { downloadSources = true },
       signatureHelp = { enabled = true },
-      contentProvider = { preferred = "fernflower" },
+      -- contentProvider = { preferred = "fernflower" },
       saveActions = { organizeImports = false },
       sources = {
         organizeImports = {
@@ -124,7 +124,7 @@ local config = {
             path = "/Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home",
           },
           {
-            name = "JavaSE-23",
+            name = "JavaSE-24",
             path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
           },
         },
