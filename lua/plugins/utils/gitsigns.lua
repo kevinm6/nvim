@@ -2,15 +2,15 @@
 -- File         : git.lua
 -- Description  : git config
 -- Author       : Kevin
--- Last Modified: 20 Jun 2024, 09:39
+-- Last Modified: 15/07/2025, 13:10
 -------------------------------------
 
 return {
   "lewis6991/gitsigns.nvim",
   event = "BufRead",
-  -- keys = {
-  --   { "<leader>g", nil, mode = { "v", "n" }, desc = "Git" },
-  -- },
+  cond = function()
+    return vim.fn.executable "git" == 1
+  end,
   opts = {
     signs = {
       add = { text = "+" },

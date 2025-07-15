@@ -14,9 +14,9 @@ return {
       local lint = require "lint"
       lint.linters_by_ft = {
         markdown = { "markdownlint" },
-        json = { "jsonlint" },
-        javascript = { "eslint_d" },
-        typescript = { "eslint_d" },
+        json = { "biome" },
+        javascript = { "biome", "eslint_d" },
+        typescript = { "biome", "eslint_d" },
         python = { "ruff" },
         gitcommit = { "commitlint" },
         php = { "php" },
@@ -29,6 +29,18 @@ return {
       lint.linters.flake8.args = {
         "--extend-ignore E302,E111,E501,W391",
       }
+
+      -- lint.linters.eslint_d.args = {
+      --   "--no-warn-ignored", -- <-- this is the key argument
+      --   "--format",
+      --   "json",
+      --   "--stdin",
+      --   "--stdin-filename",
+      --   function()
+      --     return vim.api.nvim_buf_get_name(0)
+      --   end,
+      -- }
+
       -- lint.linters.yamllint.args = {
       --   "--no-warnings", -- output only errors
       -- }
@@ -69,15 +81,15 @@ return {
           -- To run the Ruff formatter.
           "ruff_format",
           -- To organize the imports.
-          -- "ruff_organize_imports",
+          "ruff_organize_imports",
         },
         bash = { "beautysh" },
         zsh = { "beautysh" },
         css = { "prettier" },
-        javascript = { "prettier" },
-        typescriptreact = { "prettier" },
+        javascript = { "biome", "biome-organize-imports" },
+        typescriptreact = { "biome", "biome-organize-imports" },
         html = { "prettier" },
-        json = { "prettier" },
+        json = { "biome" },
         yaml = { "yamlfmt", "prettier" },
         -- java = { "google-java-format" },
       }

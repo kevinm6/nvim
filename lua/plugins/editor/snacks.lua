@@ -25,7 +25,7 @@ return {
           { icon = "", key = "L", desc = "Plugin Manager", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
           { icon = "", key = "m", desc = "Package Manager", action = ":Mason" },
           { icon = "", key = "g", desc = "Git", action = ":Lazygit" },
-          { icon = "♥", key = "H", desc = "Health", action = ":checkhealth" },
+          -- { icon = "♥", key = "H", desc = "Health", action = ":checkhealth" },
           -- { icon = "", key = "c", desc = "Close", action = ":close" },
           { icon = "", key = "q", desc = "Quit", action = ":qa" },
         },

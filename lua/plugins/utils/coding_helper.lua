@@ -77,6 +77,8 @@ return {
           { mode = 'n', keys = '<Leader>l', desc = '❭ LSP' },
           { mode = 'n', keys = '<Leader>lw', desc = 'LSP ❭ Workspace' },
           { mode = 'n', keys = '<Leader>d', desc = '❭ DAP' },
+          { mode = 'n', keys = '<Leader>g', desc = '❭ Git' },
+          { mode = 'n', keys = '<Leader>t', desc = '❭ Terminal' },
         },
         window = {
           config = {

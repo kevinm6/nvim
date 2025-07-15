@@ -67,7 +67,7 @@ lsp.enable {
   "jsonls",
   "yamlls",
   "sqls",
-  "ts_ls",
+  -- "ts_ls",
   "intelephense",
   "texlab",
   "sourcekit",
@@ -77,6 +77,7 @@ lsp.enable {
   "html",
   "dockerls",
   "groovyls",
+  "biome",
   -- "jdtls",
   -- "metals",
 }
