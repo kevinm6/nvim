@@ -10,14 +10,13 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
-      "mfussenegger/nvim-dap",
       "nvim-neotest/nvim-nio",
     },
     opts = {
-      icons = { expanded = "▾", collapsed = "►" },
+      icons = { expanded = "", collapsed = "" },
       mappings = {
         -- Use a table to apply multiple mappings
-        expand = { "<CR>", "<2-LeftMouse>" },
+        expand = { "<CR>", "<2-LeftMouse>", "<C-l>" },
         open = "o",
         remove = "d",
         edit = "e",
@@ -75,23 +74,26 @@ return {
         "dapui_stacks",
         "dapui_watches",
         "dap-repl",
-        "dap-float"
+        "dap-float",
       }
       for _, v in pairs(dap_ft) do
         sl_to_exclude[v] = true
       end
 
       dap.defaults.fallback.external_terminal = {
-        command = "/usr/bin/env kitty",
+        command = vim.fn.exepath "kitty",
         args = { "--hold", "-e" },
       }
+
+      dap.defaults.fallback.autostart = "nluarepl"
+      dap.defaults.fallback.switchbuf = 'usevisible,usetab,uselast'
 
       -- Filetype configs
       -- C
       dap.adapters.c = {
         name = "lldb",
         type = "executable",
-        command = "/usr/bin/lldb",
+        command = vim.fn.exepath "lldb",
         attach = {
           pidProperty = "pid",
           pidSelect = "ask",
@@ -125,6 +127,22 @@ return {
       dap.configurations.rust = dap.configurations.cpp
 
       -- LUA
+      dap.adapters["local-lua"] = {
+        type = "executable",
+        command = "node",
+        args = {
+          vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode/extension/extension/debugAdapter.js"
+        },
+        enrich_config = function(config, on_config)
+          if not config["extensionPath"] then
+            local c = vim.deepcopy(config)
+            c.extensionPath = vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode/extension/"
+            on_config(c)
+          else
+            on_config(config)
+          end
+        end,
+      }
       dap.configurations.lua = {
         {
           name = "Current file (local-lua-dbg, nlua)",
@@ -132,7 +150,7 @@ return {
           request = "launch",
           cwd = "${workspaceFolder}",
           program = {
-            lua = vim.env.HOME .. "/.luarocks/bin/nlua",
+            lua = "nlua.lua",
             file = "${file}",
           },
           verbose = true,
@@ -154,14 +172,10 @@ return {
           program = "${file}",
           args = { "--target", "api" },
           console = "integratedTerminal",
-        },
-        {
-          type = "python",
-          request = "launch",
-          name = "lsif",
-          program = "src/lsif/__main__.py",
-          args = {},
-          console = "integratedTerminal",
+          pythonPath = function()
+            return vim.env.VIRTUAL_ENV and vim.env.VIRTUAL_ENV .. "/bin/python" or
+                vim.fn.stdpath("data") .. "/.venv/bin/python"
+          end
         },
       }
 
@@ -233,7 +247,7 @@ return {
 
       for _, lang in pairs(js_based_languages) do
         dap.configurations[lang] = {
-          { -- single nodejs file
+          {   -- single nodejs file
             type = "pwa-node",
             request = "launch",
             name = "Launch file",
@@ -252,7 +266,7 @@ return {
               "node_modules/**",
             },
           },
-          { -- debug nodejs process (need --inspect flag to get the processId)
+          {   -- debug nodejs process (need --inspect flag to get the processId)
             type = "pwa-node",
             request = "attach",
             name = "Attach",
@@ -392,10 +406,8 @@ return {
       --   -- },
       -- }
 
-      local icons = require "mini.icons"
-
       vim.fn.sign_define("DapBreakpoint", {
-        text = icons.get("file", "breakpoint"),
+        text = " ",
         texthl = "DiagnosticSignError",
         linehl = "",
         numhl = "",
@@ -408,12 +420,13 @@ return {
       dap.listeners.before.launch.dapui_config = function()
         dapui.open()
       end
-      -- dap.listeners.before.event_terminated.dapui_config = function()
-      --   dapui.close()
-      -- end
-      -- dap.listeners.before.event_exited.dapui_config = function()
-      --   dapui.close()
-      -- end
+
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
 
       -- set keymaps
       local function map(tbl)
@@ -424,11 +437,11 @@ return {
       map {
         "<localleader>dB",
         function()
-          dap.set_breakpoint(vim.fn.input(icons.get("file", "breakpoint") .. " Breakpoint condition: "))
+          dap.set_breakpoint(vim.fn.input("  Breakpoint condition: "))
         end,
         "Breakpoint cond",
       }
-      -- nmap { "<leader>dc", require "dap".continue(), "Run Debug"
+      -- map { "<leader>dc", dap.continue, "Run Debug" }
       map { "<localleader>di", dap.step_into, "Into" }
       map { "<localleader>do", dap.step_over, "Over" }
       map { "<F9>", dap.step_over, "Over" }
@@ -486,21 +499,18 @@ return {
         end
         keymap_restore = {}
       end
-
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "dap-repl",
-        callback = function()
-          require("dap.ext.autocompl").attach()
-        end,
-      })
     end,
   },
   {
     "mfussenegger/nvim-dap-python",
     ft = "python",
     config = function()
-      local dap_py_venv = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python3.12"
-      require "dap-python".setup(dap_py_venv)
+      local dap_py_venv = vim.fn.stdpath("data") .. "/.venv/bin/python3.12"
+      if vim.fn.executable(dap_py_venv) then
+        require "dap-python".setup(dap_py_venv)
+      else
+        vim.notify("Python not found", vim.log.levels.WARN, { title = "Nvim-dap-python" })
+      end
     end
   },
 }
