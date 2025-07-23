@@ -23,5 +23,10 @@ return {
       includeCompletionsForImportStatements = true,
     },
   },
+  settings = {
+    ts_ls = {
+      documentFormattingProvider = false,
+    }
+  },
   single_file_support = true,
 }

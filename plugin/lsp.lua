@@ -67,7 +67,7 @@ lsp.enable {
   "jsonls",
   "yamlls",
   "sqls",
-  -- "ts_ls",
+  "ts_ls",
   "intelephense",
   "texlab",
   "sourcekit",

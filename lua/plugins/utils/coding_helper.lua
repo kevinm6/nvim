@@ -3,6 +3,10 @@
 -- Description  : useful plugins
 -- Author       : Kevin
 -- Last Modified: 02/06/2025, 10:16
+--  NOTE
+--    Font    : Fira Code : 12.5 v|i 92, n/n 90
+--    Fallback: Source Code Pro : 13 v|i 92, n/n 90
+--    Symbols : Symbols (Only) Nerd Font
 -------------------------------------
 
 return {
@@ -30,8 +34,8 @@ return {
       require("mini.align").setup()
 
       ---WhichKey
-      local miniclue = require("mini.clue")
-      require("mini.clue").setup {
+      local mini_clue = require("mini.clue")
+      mini_clue.setup {
         triggers = {
           -- Leader triggers
           { mode = 'n', keys = '<Leader>' },
@@ -64,12 +68,12 @@ return {
           { mode = 'x', keys = 'z' },
         },
         clues = {
-          miniclue.gen_clues.builtin_completion(),
-          miniclue.gen_clues.g(),
-          miniclue.gen_clues.marks(),
-          miniclue.gen_clues.registers(),
-          miniclue.gen_clues.windows(),
-          miniclue.gen_clues.z(),
+          mini_clue.gen_clues.builtin_completion(),
+          mini_clue.gen_clues.g(),
+          mini_clue.gen_clues.marks(),
+          mini_clue.gen_clues.registers(),
+          mini_clue.gen_clues.windows(),
+          mini_clue.gen_clues.z(),
 
           { mode = 'n', keys = '<Leader><Leader>', desc = '❭ Buffers' },
           { mode = 'n', keys = '<Leader>n', desc = '❭ Notifications' },
@@ -90,6 +94,82 @@ return {
           delay = 400
         }
       }
+
+      local mini_icons = require("mini.icons")
+      mini_icons.setup {
+        filetype = {
+          telescope = { glyph = " " },
+          dashboard = { glyph = "" },
+          list = { glyph = "" },
+          table = { glyph = "" },
+          search = { glyph = " " },
+          error = { glyph = "" },
+          warning = { glyph = "" },
+          information = { glyph = "" },
+          question = { glyph = "" },
+          hint = { glyph = "󱧢" },
+          status_ok = { glyph = "" },
+          status_not_ok = { glyph = "" },
+          term = { glyph = " " },
+          notification = { glyph = " " },
+        },
+        file = {
+          files = { glyph = "" },
+          run = { glyph = "" },
+          continue = { glyph = " " },
+          reload_continue = { glyph = " " },
+          pause = { glyph = "" },
+          stop = { glyph = " " },
+          breakpoint = { glyph = "" },
+          restart = { glyph = " " },
+          disconnect = { glyph = " " },
+          into = { glyph = "" },
+          over = { glyph = " " },
+          out = { glyph = "󰆸" },
+          repl = { glyph = " " },
+          rerun = { glyph = " " },
+          eval = { glyph = " " },
+          working_sym = { glyph = "⟳" },
+          error_sym = { glyph = "✗" },
+          done_sym = { glyph = "✓" },
+          removed_sym = { glyph = "-" },
+          moved_sym = { glyph = "→" },
+          header_sym = { glyph = "━" },
+        },
+        directory = {
+          branch = { glyph = " " },
+          -- Change Type
+          add = { glyph = "" },
+          mod = { glyph = "" },
+          ignore = { glyph = "" },
+          remove = { glyph = "" },
+          rename = { glyph = "" },
+          diff = { glyph = "" },
+          repo = { glyph = "" },
+          -- Status Type
+          unstaged = { glyph = "*" },
+          staged = { glyph = "" },
+          unmerged = { glyph = "" },
+          untracked = { glyph = "" },
+          conflict = { glyph = "" },
+          ignored = { glyph = "" },
+          deleted = { glyph = "✗" },
+        },
+        lsp = {
+          nvim_lsp = { glyph = "" },
+          nvim_lua = { glyph = "" },
+          snippet = { glyph = "󰘦" },
+          buffer = { glyph = "" },
+          path = { glyph = "" },
+          treesitter = { glyph = "" },
+          latex_symbols = { glyph = "α" },
+          emoji = { glyph = "" },
+          calc = { glyph = "" },
+          otter = { glyph = "⎆" },
+        }
+
+      }
+      mini_icons.mock_nvim_web_devicons()
     end
   },
 }

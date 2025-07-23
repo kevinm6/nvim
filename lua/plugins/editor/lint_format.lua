@@ -15,8 +15,8 @@ return {
       lint.linters_by_ft = {
         markdown = { "markdownlint" },
         json = { "biome" },
-        javascript = { "biome", "eslint_d" },
-        typescript = { "biome", "eslint_d" },
+        javascript = { "biomejs", "eslint_d" },
+        typescript = { "biomejs", "eslint_d" },
         python = { "ruff" },
         gitcommit = { "commitlint" },
         php = { "php" },
