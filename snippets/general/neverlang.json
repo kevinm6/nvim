@@ -1,0 +1,49 @@
+{
+  "imports": {
+    "prefix": "import",
+    "body": [
+      "imports {",
+      "${1:java.lang.Util.*}",
+      "${2:package_to_import}",
+      "}"
+    ],
+    "description": "Import statement in Neverlang"
+  },
+  "module": {
+    "prefix": "module",
+    "body": [
+      "module ${1:module_name} {\n\t$0\n}"
+    ],
+    "description": "Module statement in Neverlang"
+  },
+  "NonTerminalList": {
+    "prefix": "ntl",
+    "body": [
+      "${1:NonTerminalName}List <-- ${1:NonTerminalName} ${1:NonTerminalName}List ;",
+      "${1:NonTerminalName}List <-- ${1:NonTerminalName} ;",
+      "$0"
+    ],
+    "description": "Non Terminal list statement in Neverlang"
+  },
+  "Reference": {
+    "prefix": "ref",
+    "body": [
+      "reference syntax $0"
+    ],
+    "description": "Reference syntax in Neverlang"
+  },
+  "Role": {
+    "prefix": "role",
+    "body": [
+      "role (${1:evalutation}) {\n\t$0\n}"
+    ],
+    "description": "Role statement in Neverlang"
+  },
+  ".": {
+    "prefix": ".",
+    "body": [
+      ".{ ${1:/* Code */} }."
+    ],
+    "description": "something in Neverlang"
+  }
+}

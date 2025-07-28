@@ -295,6 +295,21 @@
     "body": ["# ${TM_FILENAME}$1\n", "---\n", "$0"],
     "description": "Markdown files head (info)"
   },
+  "file-info_yaml": {
+    "prefix": "infyml",
+    "body": [
+      "---",
+      "File          : ${TM_FILENAME}",
+      "Author        : ${1:AuthorName}",
+      "Date Created  : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "Last Modified : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "---\n",
+      "# ${2:Title}\n",
+      "---\n",
+      "$0"
+    ],
+    "description": "file info in yaml for md files"
+  },
   "file-info-pandoc": {
     "prefix": "infp",
     "body": [

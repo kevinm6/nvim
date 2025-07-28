@@ -103,7 +103,7 @@ autocmd("VimResized", {
 ---Start in insert mode in Git and toggleterm files
 autocmd({ "FileType", "BufNewFile" }, {
   group = augroup("_startinsert_git_files", { clear = true }),
-  pattern = { "gitcommit", "gitrebase", "toggleterm" },
+  pattern = { "gitcommit", "gitrebase" },
   command = "startinsert",
 })
 
@@ -189,4 +189,16 @@ autocmd("BufNewFile", {
       end
     end
   end,
+})
+
+---Gradle
+---setup gradle tasks cmd
+autocmd("VimEnter", {
+  group = augroup("_gradle_setup_autocmd", { clear = true }),
+  callback = function()
+    local root_dir = vim.fs.root(0, { "build.gradle", "gradlew", ".gradlew", "gradle/" })
+    if root_dir then
+      require("lib.gradle").setup { root_dir = root_dir }
+    end
+  end
 })

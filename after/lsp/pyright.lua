@@ -45,8 +45,12 @@ return {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
+        enableReachabilityAnalysis = false
       },
     },
+    pyright = {
+      enableReachabilityAnalysis = false
+    }
   },
   commands = {
     PyrightOrganizeImports = {

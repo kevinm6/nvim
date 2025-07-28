@@ -306,5 +306,3 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     vim.lsp.codelens.refresh()
   end,
 })
-
-require("lib.gradle").setup { root_dir = root_dir }

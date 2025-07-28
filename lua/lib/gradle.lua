@@ -11,28 +11,41 @@ local M = {}
 ---@param gradlew string the path for the gradle
 ---@param root_dir string the root directory of the project
 local function get_gradle_tasks(gradlew, root_dir)
-  if vim.g["gradle_" .. root_dir] ~= nil then
-    return vim.g["gradle_" .. root_dir]
+  gradlew = gradlew and gradlew or M.gradle
+  root_dir = root_dir and root_dir or M.root_dir
+
+  local _id = "gradle_"..vim.fs.basename(root_dir)
+  if M[_id] and next(M[_id]) then
+    return M[_id]
   end
 
-  local taskList = {}
-  local out = vim.system({ gradlew, "tasks", "--all" }, { text = true }):wait()
-  if out.code == 0 then
-    for line in out.stdout:gmatch "[^\r\n]+" do
-      if line:find " - " then
-        local taskName = line:match "^(.-)%s+-" --line:match("^(.-) -")
-        if taskName then
-          table.insert(taskList, taskName)
+  if not gradlew or gradlew == "" then
+    vim.print(gradlew)
+    return {}
+  end
+  M[_id] = {}
+  --local out =
+  vim.system({ gradlew, "tasks", "--all" }, { text = true }, function(obj)
+    if obj.code == 0 then
+      for line in obj.stdout:gmatch "[^\r\n]+" do
+        if line:find " - " then
+          local taskName = line:match "^(.-)%s+-" --line:match("^(.-) -")
+          if taskName then
+            table.insert(M[_id], taskName)
+          end
         end
       end
+      -- vim.g["gradle_" .. root_dir] = taskList
+    else
+      vim.notify("Error executing command: " .. obj.stderr, vim.log.levels.ERROR, { text = "Gradle (tasks)" })
     end
-    vim.g["gradle_" .. root_dir] = taskList
-  else
-    vim.notify("Error executing command: " .. out.stderr, vim.log.levels.ERROR, { text = "Gradle (tasks)" })
-  end
-  return taskList
+  end)--:wait()
+  return M[_id]
 end
 
+---Run selected Gradle task
+---@param gradlew string the path for the gradle executable
+---@param task string the task to run
 local function run_gradle_task(gradlew, task)
   -- local msg = string.format(" < gradlew %s >", task)
   -- vim.notify(msg, 2, { title = "Gradle" })
@@ -67,6 +80,9 @@ local function run_gradle_task(gradlew, task)
   end)
 end
 
+---Get Gradle tasks for the project
+---@param gradlew string the path for the gradle
+---@param tasks table the list of task
 local function select_and_run_gradle_task(gradlew, tasks)
   vim.ui.select(tasks, {
     prompt = "⟩ Gradle task: ",
@@ -78,11 +94,20 @@ local function select_and_run_gradle_task(gradlew, tasks)
   end)
 end
 
+---Get tasks completion
+---@return table list of tasks
+local function get_tasks_completion()
+  local _id = "gradle_"..vim.fs.basename(M.root_dir)
+  if M[_id] and next(M[_id]) then
+    return M[_id]
+  end
+  return {}
+end
+
 ---Setup Gradle module
 ---@param opts table
 function M.setup(opts)
-  local root_dir = opts.root_dir or nil
-  assert(root_dir, "root_dir not passed!")
+  local root_dir = opts.root_dir or vim.uv.cwd()
 
   local gradle = vim.fn.executable("gradle") and vim.fn.exepath("gradle") or nil
   local gradlew = root_dir .. "/gradlew"
@@ -95,22 +120,25 @@ function M.setup(opts)
     vim.notify("No gradle available in cwd and in the system\n", vim.log.levels.WARN, { title = "Gradle" })
     return
   end
+  M.root_dir = root_dir
+  M.gradle = gradle
+
+  local tasks = get_gradle_tasks(gradle, root_dir)
 
   vim.api.nvim_create_user_command("Gradle", function(input)
     local task = nil
     if input.args ~= "" then
+      task = input.args
       run_gradle_task(gradle, task)
     else
-      local tasks = get_gradle_tasks(gradle, root_dir)
       select_and_run_gradle_task(gradle, tasks)
     end
   end, {
     nargs = "?",
-    complete = get_gradle_tasks,
+    complete = get_tasks_completion
   })
 
   vim.keymap.set("n", "<leader>dg", function()
-    local tasks = get_gradle_tasks(gradle, root_dir)
     select_and_run_gradle_task(gradle, tasks)
   end, { desc = "Gradle", buffer = true })
 end

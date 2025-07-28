@@ -14,7 +14,7 @@ return {
       local lint = require "lint"
       lint.linters_by_ft = {
         markdown = { "markdownlint" },
-        json = { "biome" },
+        json = { "biomejs" },
         javascript = { "biomejs", "eslint_d" },
         typescript = { "biomejs", "eslint_d" },
         python = { "ruff" },
@@ -86,8 +86,8 @@ return {
         bash = { "beautysh" },
         zsh = { "beautysh" },
         css = { "prettier" },
-        javascript = { "biome", "biome-organize-imports" },
-        typescriptreact = { "biome", "biome-organize-imports" },
+        javascript = { "biomejs", "biome-organize-imports" },
+        typescriptreact = { "biomejs", "biome-organize-imports" },
         html = { "prettier" },
         json = { "biome" },
         yaml = { "yamlfmt", "prettier" },
