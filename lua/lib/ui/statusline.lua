@@ -10,7 +10,7 @@ local M = {
   session_name = "",
   ---filetypes to exclude
   to_exclude = {
-    alpha = true,
+    -- alpha = true,
     lspinfo = true,
     -- snacks_dashboard = true,
     snacks_terminal = true,
@@ -24,10 +24,12 @@ local M = {
     noice = true,
     terminal = true,
     checkhealth = true,
-    WhichKey = true,
+    -- WhichKey = true,
     query = true,
     oil = true,
     httpResult = true,
+    minifiles = true,
+    gradle_output = true,
   },
   ---width values used to display info if win-size is between
   preset_width = setmetatable({
@@ -52,7 +54,6 @@ local M = {
     dashboard = "",
     folder = "",
     lsp_info = "󰒓",
-    telescope = "",
     config = "󰒓",
     robots = "󰚩",
     table = "",

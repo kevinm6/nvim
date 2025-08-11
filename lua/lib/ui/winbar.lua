@@ -12,9 +12,11 @@ local winbar = {
     alpha = true,
     WhichKey = true,
     lspinfo = true,
-    TelescopePrompt = true,
-    TelescopeResults = true,
     qf = true,
+    snacks_terminal = true,
+    snacks_picker_input = true,
+    snacks_picker_list = true,
+    snacks_picker_preview = true,
     toggleterm = true,
     lazy = true,
     mason = true,
@@ -29,6 +31,7 @@ local winbar = {
     httpResult = true,
     dapui_hover = true,
     ["dap-float"] = true,
+    minifiles = true,
   },
 }
 

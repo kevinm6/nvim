@@ -1,18 +1,54 @@
--------------------------------------
--- File         : coding_helper.lua
 -- Description  : useful plugins
 -- Author       : Kevin
--- Last Modified: 02/06/2025, 10:16
+-- Last Modified: 09/08/2025, 09:53
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
 --    Symbols : Symbols (Only) Nerd Font
 -------------------------------------
 
+
 return {
   {
     "echasnovski/mini.nvim",
     event = "VeryLazy",
+    init = function(p)
+      if vim.fn.argc() == 1 then
+        local argv = tostring(vim.fn.argv(0))
+        local stat = vim.loop.fs_stat(argv)
+
+        if stat and stat.type == "directory" then
+          require("lazy").load { plugins = { p.name } }
+        end
+      end
+      if not require("lazy.core.config").plugins[p.name]._.loaded then
+        vim.api.nvim_create_autocmd("BufNew", {
+          pattern = "*/", -- load on dirs
+          callback = function()
+            require("lazy").load { plugins = { p.name } }
+            return true
+          end,
+        })
+      end
+    end,
+    keys = {
+      {
+        "<leader>e",
+        function()
+          -- require("mini.files").open()
+          require("mini.files").open(vim.api.nvim_buf_get_name(0))
+        end,
+        desc = "File Explorer",
+      },
+      {
+        "<leader>E",
+        function()
+          --Open fresh in cwd
+          require("mini.files").open(nil, false)
+        end,
+        desc = "File Explorer",
+      }
+    },
     config = function()
       ---Auto-Pairs
       require("mini.pairs").setup {
@@ -95,6 +131,7 @@ return {
         }
       }
 
+      ---Icons
       local mini_icons = require("mini.icons")
       mini_icons.setup {
         filetype = {
@@ -170,6 +207,157 @@ return {
 
       }
       mini_icons.mock_nvim_web_devicons()
+
+      ---Files
+      local mini_files = require("mini.files")
+      local set_cwd = function()
+        local path = (mini_files.get_fs_entry() or {}).path
+        if path == nil then return vim.notify('Cursor is not on valid entry') end
+        vim.fn.chdir(vim.fs.dirname(path))
+      end
+
+      -- Yank in register full path of entry under cursor
+      local yank_path = function()
+        local path = (mini_files.get_fs_entry() or {}).path
+        if path == nil then return vim.notify('Cursor is not on valid entry') end
+        vim.fn.setreg(vim.v.register, path)
+      end
+
+      local map_split = function(buf_id, lhs, direction)
+        local rhs = function()
+          local cur_target = mini_files.get_explorer_state().target_window
+          local new_target = vim.api.nvim_win_call(cur_target, function()
+            vim.cmd(direction .. ' split')
+            return vim.api.nvim_get_current_win()
+          end)
+
+          mini_files.set_target_window(new_target)
+
+          -- This intentionally doesn't act on file under cursor in favor of
+          -- explicit "go in" action (`l` / `L`). To immediately open file,
+          -- add appropriate `MiniFiles.go_in()` call instead of this comment.
+        end
+        local desc = 'Split ' .. direction
+        vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
+      end
+
+      local show_dotfiles = true
+
+      local filter_show = function(fs_entry) return true end
+
+      local filter_hide = function(fs_entry)
+        return not vim.startswith(fs_entry.name, '.')
+      end
+
+      local toggle_dotfiles = function()
+        show_dotfiles = not show_dotfiles
+        local new_filter = show_dotfiles and filter_show or filter_hide
+        mini_files.refresh({ content = { filter = new_filter } })
+      end
+
+      local function format_size(size)
+        if not size then
+          return
+        elseif size < 1024 then
+          return string.format("%3dB", size)
+        elseif size < 1048576 then
+          return string.format("%3.0fK", size / 1024)
+        else
+          return string.format("%3.0fM", size / 1048576)
+        end
+      end
+
+      local function format_time(time)
+        return time and vim.fn.strftime("%d-%m-%Y %H:%M", time.sec) or nil
+      end
+
+      local function custom_pre_prefix(fs_stat)
+        local _, mtime = pcall(format_time, fs_stat.mtime)
+        local pre_prefix = ""
+        if mtime ~= nil then
+          pre_prefix = pre_prefix .. " " .. mtime
+        end
+        if fs_stat.type == "file" then
+          local _, size = pcall(format_size, fs_stat.size)
+          if size ~= nil then
+            pre_prefix = pre_prefix .. " " .. size
+          end
+        end
+        return pre_prefix
+      end
+
+      local function custom_prefix(fs_entry)
+        local prefix, hl = require("mini.files").default_prefix(fs_entry)
+        local fs_stat = vim.loop.fs_stat(fs_entry.path) or {}
+        local pre_prefix = custom_pre_prefix(fs_stat)
+        return pre_prefix .. " " .. prefix, hl
+      end
+
+      local show_details = false
+      local function toggle_details()
+        show_details = not show_details
+
+        mini_files.refresh { content = { prefix = show_details and custom_prefix or mini_files.default_prefix } }
+      end
+      mini_files.setup {
+        -- content = { prefix = custom_prefix },
+        mappings = {
+          close       = "q",
+          go_in       = "<C-l>",
+          go_in_plus  = "<C-l>",
+          go_out      = "<C-h>",
+          go_out_plus = "<C-h>",
+          mark_goto   = "'",
+          mark_set    = "m",
+          reset       = "<BS>",
+          reveal_cwd  = "gw",
+          show_help   = "g?",
+          trim_left   = "<",
+          trim_right  = ">",
+          synchronize = "<leader>w",
+          refresh     = "<leader>r",
+        }
+      }
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniFilesWindowOpen",
+        callback = function(args)
+          local win_id = args.data.win_id
+          vim.wo[win_id].winblend = 8
+          local config = vim.api.nvim_win_get_config(win_id)
+          config.border, config.title_pos = "rounded", "center"
+          vim.api.nvim_win_set_config(win_id, config)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniFilesBufferCreate",
+        group = vim.api.nvim_create_augroup("mini-file-buffer", { clear = true }),
+        callback = function(args)
+          local buf_id = args.data.buf_id
+          vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = buf_id })
+          vim.keymap.set("n", "gd", toggle_details, { buffer = buf_id, desc = "Toggle file details" })
+          map_split(buf_id, '<C-s>', 'belowright horizontal')
+          map_split(buf_id, '<C-v>', 'belowright vertical')
+          map_split(buf_id, '<C-t>', 'tab')
+          vim.keymap.set('n', '<leader>t', set_cwd, { buffer = buf_id, desc = 'Set cwd' })
+          vim.keymap.set('n', 'gx', function() vim.ui.open(mini_files.get_fs_entry().path) end,
+            { buffer = buf_id, desc = 'OS open' })
+          vim.keymap.set('n', 'gy', yank_path, { buffer = buf_id, desc = 'Yank path' })
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniFilesWindowUpdate",
+        callback = function(args)
+          local config = vim.api.nvim_win_get_config(args.data.win_id)
+          config.height = math.floor(vim.o.lines * 0.4)
+          local n = #config.title
+          config.title[1][1] = config.title[1][1]:gsub('^ ', '')
+          config.title[n][1] = config.title[n][1]:gsub(' $', '')
+          vim.api.nvim_win_set_config(args.data.win_id, config)
+        end,
+      })
     end
   },
 }

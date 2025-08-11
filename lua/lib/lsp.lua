@@ -129,7 +129,7 @@ function M.set_buf_keymaps(client, bufnr)
 
   if client.supports_method "textDocument/signatureHelp" then
     ---SignatureHelp
-    map { "s", "<C-s>", function()
+    map { { "s", "i" }, "<C-s>", function()
       lsp.buf.signature_help {
         title = "LSP❭ SignatureHelp",
         border = "rounded",
