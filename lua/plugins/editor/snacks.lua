@@ -2,13 +2,13 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 06/08/2025, 21:11
+-- Last Modified: 23/08/2025, 09:34
 -------------------------------------
 
 return {
   -- NOTE
   -- using personal fork, to make multiple selection useful
-  "kevinm6/snacks.nvim",
+  "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
   opts = {
@@ -26,9 +26,7 @@ return {
           -- { icon = "󰾰", key = "d", desc = "Developer", action = [[:lua require "lib".dev_folder()]] },
           { icon = "", key = "L", desc = "Plugin Manager", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
           { icon = "", key = "m", desc = "Package Manager", action = ":Mason" },
-          { icon = "", key = "g", desc = "Git", action = ":Lazygit" },
-          -- { icon = "♥", key = "H", desc = "Health", action = ":checkhealth" },
-          -- { icon = "", key = "c", desc = "Close", action = ":close" },
+          -- { icon = "", key = "g", desc = "Git", action = ":Lazygit" },
           { icon = "", key = "q", desc = "Quit", action = ":qa" },
         },
       },
@@ -555,8 +553,8 @@ return {
           },
         },
         projects = {
-          confirm = "picker",
-          dev = { "~/Documents/develoer", "~/dev", "~/uni", "~/Informatica" },
+          confirm = { "tcd", "picker" },
+          -- dev = { "~/Documents/develoer", "~/dev", "~/uni", "~/Informatica" },
           layout = {
             reverse = true,
             preview = false,
@@ -661,6 +659,15 @@ return {
       },
     },
     quickfile = {},
+    -- gh = {
+    --   configure = false,
+    --   config = { os = { editPreset = "nvim-remote" } },
+    --   win = {
+    --     style = "lazygit",
+    --     width = 0.94,
+    --     height = 0.94,
+    --   },
+    -- },
     lazygit = {
       configure = false,
       config = { os = { editPreset = "nvim-remote" } },
@@ -670,6 +677,10 @@ return {
         height = 0.94,
       },
     },
+    notifier = {
+      width = { max = 0.86 },
+      height = { max = 0.46 },
+    }
   },
   keys = {
     {
@@ -688,7 +699,7 @@ return {
       desc = "Smart search",
     },
     {
-      "<leader>fF",
+      "<leader>/",
       function()
         Snacks.picker.grep()
       end,
@@ -778,17 +789,17 @@ return {
       desc = "Software Licenses",
     },
     {
-      "<leader>fw",
+      "<leader>g/",
       function()
         Snacks.picker.grep_word { search = vim.fn.expand "<cword>" }
       end,
-      desc = "Grep < cword >",
+      desc = "Grep <cword>",
     },
     {
       "<leader>fW",
       function()
         local word = vim.fn.expand "<cWORD>"
-        Snacks.picker.grep_string {
+        Snacks.picker.grep_word {
           theme = "dropdown",
           previewer = false,
           search = word,
@@ -818,34 +829,47 @@ return {
       end,
       desc = "Recent File",
     },
-    -- {
-    --   "<leader>fp",
-    --   function()
-    --     Snacks.picker.projects()
-    --   end,
-    --   desc = "Projects",
-    -- },
-
     {
       "<leader>gs",
       function()
         Snacks.picker.git_status()
       end,
-      desc = "Git status",
+      desc = "Git󰅂 status",
     },
     {
       "<leader>gb",
       function()
         Snacks.picker.git_branches()
       end,
-      desc = "Checkout branch",
+      desc = "Git󰅂 checkout Branch",
     },
     {
       "<leader>gc",
       function()
         Snacks.picker.git_commits()
       end,
-      desc = "Checkout commit",
+      desc = "Git󰅂 Checkout commit",
+    },
+    {
+      "<leader>gl",
+      function()
+        Snacks.picker.git_log_file()
+      end,
+      desc = "Git󰅂 Log file",
+    },
+    {
+      "<leader>gL",
+      function()
+        Snacks.picker.git_log()
+      end,
+      desc = "Git󰅂 Log",
+    },
+    {
+      "<leader>gS",
+      function()
+        Snacks.picker.git_stash()
+      end,
+      desc = "Git󰅂 Stash",
     },
     {
       "z=",
@@ -853,6 +877,20 @@ return {
         Snacks.picker.spelling { word = "<cword>" }
       end,
       desc = "Spelling suggestion",
+    },
+    {
+      "<leader>nn",
+      function()
+        Snacks.notifier.show_history()
+      end,
+      desc = "Show notifications hist",
+    },
+    {
+      "<leader>nN",
+      function()
+        Snacks.picker.notifications()
+      end,
+      desc = "Notifications",
     },
   },
 }

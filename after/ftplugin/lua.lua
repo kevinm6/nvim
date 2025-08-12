@@ -1,10 +1,3 @@
--------------------------------------
--- File         : lua.lua
--- Description  : Lua filetype extra config
--- Author       : Kevin
--- Last Modified: 19/01/2025 - 10:15
--------------------------------------
-
 vim.opt_local.makeprg = "nvim -l"
 vim.opt_local.errorformat = "%f"
 

@@ -73,7 +73,6 @@ local function run_gradle_task(gradlew, task)
       vim.api.nvim_set_option_value("filetype", "sh", { buf = buf })
       vim.api.nvim_set_option_value("number", false, { win = win })
       vim.api.nvim_set_option_value("relativenumber", false, { win = win })
-      vim.api.nvim_set_option_value("filetype", "gradle_output", { buf = buf })
 
       vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf })
       vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = buf })
@@ -139,7 +138,7 @@ function M.setup(opts)
     complete = get_tasks_completion
   })
 
-  vim.keymap.set("n", "<leader>dG", function()
+  vim.keymap.set("n", "<leader>dg", function()
     select_and_run_gradle_task(gradle, tasks)
   end, { desc = "Gradle", buffer = true })
 end

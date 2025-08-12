@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 05/07/2025, 09:29
+-- Last Modified: 04/10/2025, 08:36
 -------------------------------------
 
 local settings = {
@@ -42,7 +42,7 @@ local settings = {
   updatetime = 100,
   updatecount = 0,
   listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_", nbsp = "␣" },
-  fillchars = { eob = " ", fold = "󰇘", foldopen = "", foldsep = " ", foldclose = "❭" },
+  fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "❭" },
   timeoutlen = 350,
   ttimeoutlen = 100,
   completeopt = { "menuone", "noselect", "popup", "fuzzy" },
@@ -71,9 +71,11 @@ local settings = {
   -- wrap = false,
   -- linebreak = true,
   -- foldenable = true,
-  -- foldmethod = "expr",
-  -- foldexpr = "nvim_treesitter#foldexpr()",
-  -- foldtext = '',
+  foldlevel = 99,
+  foldmethod = "expr",
+  foldexpr = "v:lua.vim.treesitter.foldexpr()",
+  foldtext = "v:lua.require'lib.folds'.fold_text()",
+
   diffopt = { "internal", "filler", "closeoff", "context:12", "algorithm:histogram", "linematch:200", "indent-heuristic" },
 
   colorcolumn = "90",

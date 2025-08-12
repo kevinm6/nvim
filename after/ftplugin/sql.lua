@@ -1,10 +1,3 @@
--------------------------------------
--- File         : sql.lua
--- Description  : SQL filetype extra config
--- Author       : Kevin
--- Last Modified: 28 Jun 2024, 16:54
--------------------------------------
-
 vim.opt_local.conceallevel = 2
 vim.opt_local.shiftwidth = 2
 vim.opt_local.expandtab = true

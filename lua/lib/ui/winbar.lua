@@ -59,7 +59,7 @@ local function get_filename()
 
     local has_icons, icons = pcall(require, "mini.icons")
 
-    file_icon = has_icons and icons.get("filetype", extension) or icons.get("default", "file")
+    file_icon = has_icons and icons.get("filetype", extension) or ""
 
     return string.format("%%#FileIconColor%s#%s%%* %s", extension, file_icon, filename)
   end

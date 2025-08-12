@@ -5,6 +5,8 @@
 -- Last Modified: 08/06/2025
 -------------------------------------
 
+vim.pack.add { { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" } }
+
 local function parsers_to_be_installed()
   return {
     "c",
@@ -64,26 +66,16 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
-return {
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = function()
+require("nvim-treesitter").setup {}
+
+
+vim.api.nvim_create_autocmd("PackChanged", {
+  group = vim.api.nvim_create_augroup("nvim-treesitter_update_handler", { clear = true }),
+  desc = "Handle nvim-treesitter updates",
+  callback = function(ev)
+    if ev.data.kind == "update" and ev.data.spec.name == "nvim-treesitter" then
       pcall(function() require "nvim-treesitter".install(parsers_to_be_installed()):wait(300000) end)
       pcall(function() require "nvim-treesitter".update() end)
-    end,
-    branch = "main",
-    lazy = false,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    cmd = "TSContext",
-    event = "FileType",
-    ft = parsers_to_be_installed(),
-    cond = false,
-    opts = function()
-      vim.keymap.set("n", "[c", function()
-        require("treesitter-context").go_to_context(vim.v.count1)
-      end, { silent = true })
     end
-  },
-}
+  end
+})

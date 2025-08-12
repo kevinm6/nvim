@@ -68,18 +68,25 @@ end
 --- @param bufnr integer client passed to attach config
 function M.set_buf_keymaps(client, bufnr)
   local lsp = vim.lsp
+  vim.notify("LOADING KEYMAPS for LSP")
 
   local _, snacks = pcall(require, "snacks.picker")
 
   local map = require("lib.keys").map
 
   -- Global Diagnostics keymaps
-  map { "n", "gl", vim.diagnostic.open_float, { buffer = bufnr, desc = "Open Float" } }
+  map { "n", "gl", function() vim.diagnostic.open_float() end, { buffer = bufnr, desc = "Open Float" } }
   map {
     "n",
     "<leader>ld",
-    require("snacks.picker").diagnostics or vim.diagnostic.setloclist,
-    { buffer = bufnr, desc = "QF Diagnostics" },
+    function()
+     local has_snacks, picker = pcall(require, "snacks.picker")
+      if has_snacks then
+        picker.diagnostics()
+      else
+        vim.diagnostic.setloclist()
+      end
+    end, { buffer = bufnr, desc = "QF Diagnostics" },
   }
 
   map {
@@ -110,7 +117,7 @@ function M.set_buf_keymaps(client, bufnr)
   }
 
   -- nmap { "grn", lsp.buf.rename, "rename" }
-  -- if client.supports_method "textDocument/declaration" then
+  -- if client:supports_method "textDocument/declaration" then
   --   nmap { "gD", lsp.buf.declaration, "GoTo Declaration" }
   -- end
   -- nmap {
@@ -119,15 +126,15 @@ function M.set_buf_keymaps(client, bufnr)
   --   "GoTo Definitions",
   -- }
 
-  if client.supports_method "textDocument/implementation" then
+  if client:supports_method "textDocument/implementation" then
     map { "n", "gri", snacks.lsp_implementations or lsp.buf.incoming_calls, { buffer = bufnr, desc = "incoming-Calls" } }
   end
 
-  if client.supports_method "callHierarchy/incomingCalls" then
+  if client:supports_method "callHierarchy/incomingCalls" then
     map { "n", "<leader>li", lsp.buf.incoming_calls, { buffer = bufnr, desc = "incoming-Calls" } }
   end
 
-  if client.supports_method "textDocument/signatureHelp" then
+  if client:supports_method "textDocument/signatureHelp" then
     ---SignatureHelp
     map { { "s", "i" }, "<C-s>", function()
       lsp.buf.signature_help {
@@ -143,7 +150,7 @@ function M.set_buf_keymaps(client, bufnr)
     } }
   end
 
-  if client.supports_method "callHierarchy/outgoingCalls" then
+  if client:supports_method "callHierarchy/outgoingCalls" then
     map { "n", "<leader>lo", lsp.buf.outgoing_calls, { buffer = bufnr, desc = "Outgoing-Calls" } }
   end
   ---References
@@ -174,7 +181,7 @@ function M.set_buf_keymaps(client, bufnr)
     snacks.lsp_workspace_symbols or lsp.buf.workspace_symbol,
     { buffer = bufnr, desc = "Workspace Symbols" },
   }
-  if client.supports_method "workspace/workspaceFolders" then
+  if client:supports_method "workspace/workspaceFolders" then
     map { "n", "<leader>lwa", lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Workspace Add Folder" } }
     map {
       "n",
@@ -217,14 +224,14 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
   -- end
 
   -- InlayHints
-  if client.supports_method "textDocument/inlayHint" then
+  if client:supports_method "textDocument/inlayHint" then
     usercmd("ToggleInlayHints", function()
       lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled { bufnr = bufnr })
     end, { desc = "Toggle Inlay hints" })
   end
 
   -- lsp-document_highlight
-  if client.supports_method "textDocument/documentHighlight" then
+  if client:supports_method "textDocument/documentHighlight" then
     local _lsp_hi_group = vim.api.nvim_create_augroup("_lsp_highlight_group", { clear = true })
     autocmd({ "CursorHold", "CursorHoldI" }, {
       group = _lsp_hi_group,

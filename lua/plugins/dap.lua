@@ -421,12 +421,12 @@ return {
         dapui.open()
       end
 
-      -- dap.listeners.before.event_terminated.dapui_config = function()
-      --   dapui.close()
-      -- end
-      -- dap.listeners.before.event_exited.dapui_config = function()
-      --   dapui.close()
-      -- end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
 
       -- set keymaps
       local function map(tbl)
@@ -503,7 +503,6 @@ return {
   },
   {
     "mfussenegger/nvim-dap-python",
-    dependencies = { "nvim-dap" },
     ft = "python",
     config = function()
       local dap_py_venv = vim.fn.stdpath("data") .. "/.venv/bin/python3.12"

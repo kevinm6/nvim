@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 05/04/2025 - 20:23
+-- Last Modified: 23/08/2025, 09:25
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -30,6 +30,18 @@ nmap {
 }
 map { { "n", "v" }, "<M-Left>", "b", { remap = true } }
 map { { "n", "v" }, "<M-Right>", "E", { remap = true } }
+
+nmap { "g/", "*" }
+nmap { "[/", "[<c-i>" }
+nmap { "cn", "*``cgn", "Change word forward" }
+nmap { "cN", "*``cgN", "Change word backward" }
+
+nmap { "<c-w>/", function()
+  local word = vim.fn.expand "<cword>"
+  if word ~= "" then
+    vim.cmd("split | silent! ijump /" .. word .. "/") -- `:h ijump`
+  end
+end, "Search first occurence cword in other window" }
 
 -- nmap { "<C-h>", "<C-w>h" }
 -- nmap { "<C-j>", "<C-w>j" }
@@ -71,7 +83,6 @@ nmap {
   end,
   "Quit",
 }
-nmap { "<leader>nn", "<cmd>Notifications<cr>", "Notifications" }
 nmap { "<leader>nm", "<cmd>messages<cr>", "Messages" }
 nmap {
   "<leader>Q",
@@ -299,7 +310,7 @@ map {
   "t",
   "<C-r>",
   function()
-    local char = vim.fn.getchar()
+    local char = tonumber(vim.fn.getchar()) or 0
     return '<C-\\><C-N>"' .. vim.fn.nr2char(char) .. "pi"
   end,
   { expr = true, noremap = true },
@@ -361,6 +372,8 @@ map {
 map { "x", "<leader>p", '"_dP' }
 map { "x", "<M-j>", [[:move '>+1<CR>gv-gv]], { silent = true } }
 map { "x", "<M-k>", [[:move '<-2<CR>gv-gv]], { silent = true } }
+
+map { "x", "/", "<esc>/\\%V", { silent = true } } -- match inside visual area
 
 vim.cmd.cnoreabbrev("Wq", "wq")
 vim.cmd.cnoreabbrev("Wa", "wa")
@@ -466,7 +479,7 @@ imap {
 }
 
 map {
-  { "i", "x" },
+  { "i",                                "x" },
   "<C-l>",
   function()
     if pumvisible() then
@@ -479,7 +492,7 @@ map {
 }
 
 map {
-  { "i", "s" },
+  { "i",                           "s" },
   "<C-i>",
   function()
     if vim.snippet.active { direction = 1 } then
@@ -495,7 +508,7 @@ map {
 
 -- prev position of snippet $x -> $x-1
 map {
-  { "i", "s" },
+  { "i",                            "s" },
   "<C-S-i>",
   function()
     if vim.snippet.active { direction = -1 } then
@@ -506,5 +519,5 @@ map {
       feedkeys "<C-S-i>"
     end
   end,
-  { desc = "Snippet jump backwards" },
+  { desc = "Snippet jump backward" },
 }

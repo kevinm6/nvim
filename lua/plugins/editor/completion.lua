@@ -25,8 +25,10 @@ return {
     term = { enabled = true, keymap = { preset = "inherit" } },
     cmdline = {
       keymap = {
-        ["<C-i>"] = { 'show_and_insert', 'select_next' },
-        ['<C-S-i>'] = { 'show_and_insert', 'select_prev' },
+        ['<Tab>'] = { 'show_and_insert_or_accept_single', 'select_next' },
+        ['<S-Tab>'] = { 'show_and_insert_or_accept_single', 'select_prev' },
+        ["<C-i>"] = { 'show_and_insert_or_accept_single', 'select_next' },
+        ['<C-S-i>'] = { 'show_and_insert_or_accept_single', 'select_prev' },
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-l>"] = { "select_and_accept", "fallback" },

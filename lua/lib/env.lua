@@ -2,7 +2,7 @@
 --  File         : env.lua
 --  Description  : environment variables in telescope or listed
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 13:22
+--  Last Modified: 11/11/2025, 20:29
 -------------------------------------
 
 local M = {}
@@ -21,6 +21,8 @@ local function show_environment_variables(_)
     vim.fn.setloclist(0, get_environment_variables(), ' ')
     return
   end
+  local buf = vim.api.nvim_get_current_buf()
+  local cur_line = vim.api.nvim_win_get_cursor(0)[1] - 1
   snacks.picker.pick {
     source = "Environment Variables",
     items = get_environment_variables(),
@@ -29,11 +31,16 @@ local function show_environment_variables(_)
       ctx.preview:set_lines { ctx.item.text, "", ctx.item.preview }
     end,
     confirm = function(picker, item)
-      vim.fn.setreg("+", item.preview)
+      local value = item.preview
       picker:close()
-      vim.notify(string.format("Env var < %s > value copied to clipboard", item.text), vim.log.levels.INFO, { title = "Env" })
+      vim.api.nvim_buf_set_lines(buf, cur_line, -1, false, { value })
     end,
     actions = {
+      copy_to_clipboard = function(picker, item)
+        vim.fn.setreg("+", item.preview)
+        picker:close()
+        vim.notify(string.format("Env var < %s > value copied to clipboard", item.text), vim.log.levels.INFO, { title = "Env" })
+      end,
       add_environment_var = function(picker)
         local prompt = string.format("Enter new env var in 'VAR=VALUE' format: ")
         picker:close()
@@ -65,6 +72,9 @@ local function show_environment_variables(_)
         keys = {
           ["<a-e>"] = { "edit_environment_var", mode = { "n", "i" }, desc = "Edit Environment variable" },
           ["<a-a>"] = { "add_environment_var", mode = { "n", "i" }, desc = "Add Environment variable" },
+          ["<a-y>"] = { "copy_to_clipboard", mode = { "n", "i" }, desc = "Copy to system clipboard" },
+          ["<C-y>"] = { "copy_to_clipboard", mode = { "n", "i" }, desc = "Copy to system clipboard" },
+          ["yy"] = { "copy_to_clipboard", mode = { "n" }, desc = "Copy to system clipboard" },
         },
       },
     },

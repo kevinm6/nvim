@@ -1,10 +1,3 @@
--------------------------------------
--- File         : tex.lua
--- Description  : filetype tex extra config
--- Author       : Kevin
--- Last Modified: 10 Jul 2024, 09:02
--------------------------------------
-
 vim.opt_local.conceallevel = 2
 vim.opt_local.shiftwidth = 2
 vim.opt_local.wrap = true

@@ -1,10 +1,3 @@
--------------------------------------
--- File         : qf.lua
--- Description  : filetype qf extra config
--- Author       : Kevin
--- Last Modified: 20/10/2024 - 19:10
--------------------------------------
-
 local del_qf_item = function()
   local items = vim.fn.getqflist()
   local line = vim.fn.line "."

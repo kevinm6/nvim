@@ -1,10 +1,3 @@
--------------------------------------
--- File         : python.lua
--- Description  : filetype python extra config
--- Author       : Kevin
--- Last Modified: 10 Apr 2024, 10:08
--------------------------------------
-
 vim.opt_local.expandtab = true
 vim.opt_local.autoindent = true
 

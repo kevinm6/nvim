@@ -1,10 +1,3 @@
--------------------------------------
--- File         : scala.lua
--- Description  : scala language server configuration (metals)
--- Author       : Kevin
--- Last Modified: 17 Mar 2024, 14:35
--------------------------------------
-
 vim.opt_local.makeprg = "scala"
 -- vim.opt_local.errorformat = ""
 

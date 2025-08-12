@@ -1,0 +1,109 @@
+{
+  "plugins": {
+    "SchemaStore.nvim": [],
+    "blink.cmp": {
+      "rev": "327fff9",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "1.0.0 - 2.0.0"
+    },
+    "color-picker.nvim": {
+      "rev": "06cb5f8",
+      "src": "https://github.com/ziontee113/color-picker.nvim"
+    },
+    "data-viewer.nvim": {
+      "rev": "40ddf37",
+      "src": "https://github.com/vidocqh/data-viewer.nvim"
+    },
+    "gitsigns.nvim": {
+      "rev": "20ad441",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "go.nvim": {
+      "rev": "81bb94c",
+      "src": "https://github.com/ray-x/go.nvim"
+    },
+    "jupytext.nvim": {
+      "rev": "c8baf3a",
+      "src": "https://github.com/GCBallesteros/jupytext.nvim"
+    },
+    "markdown.nvim": {
+      "rev": "6a744f0",
+      "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
+    },
+    "mason.nvim": {
+      "rev": "ad7146a",
+      "src": "https://github.com/williamboman/mason.nvim"
+    },
+    "mini.nvim": {
+      "rev": "42dbeaa",
+      "src": "https://github.com/echasnovski/mini.nvim"
+    },
+    "molten-nvim": {
+      "rev": "a286aa9",
+      "src": "https://github.com/benlubas/molten-nvim",
+      "version": "1.0.0 - 2.0.0"
+    },
+    "nui.nvim": {
+      "rev": "de74099",
+      "src": "https://github.com/MunifTanjim/nui.nvim"
+    },
+    "nvim-colorizer.lua": {
+      "rev": "a065833",
+      "src": "https://github.com/norcalli/nvim-colorizer.lua"
+    },
+    "nvim-dbee": {
+      "rev": "dda5176",
+      "src": "https://github.com/kndndrj/nvim-dbee"
+    },
+    "nvim-jdtls": {
+      "rev": "38d265e",
+      "src": "https://github.com/mfussenegger/nvim-jdtls"
+    },
+    "nvim-metals": {
+      "rev": "40f7b9e",
+      "src": "https://github.com/scalameta/nvim-metals"
+    },
+    "nvim-treesitter": {
+      "rev": "d97d226c",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'main'"
+    },
+    "nvim-ufo": {
+      "rev": "72d54c3",
+      "src": "https://github.com/kevinhwang91/nvim-ufo"
+    },
+    "otter.nvim": {
+      "rev": "fc0aa35",
+      "src": "https://github.com/jmbuhr/otter.nvim"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd522",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "promise-async": {
+      "rev": "119e896",
+      "src": "https://github.com/kevinhwang91/promise-async"
+    },
+    "quarto-nvim": {
+      "rev": "0e94915",
+      "src": "https://github.com/quarto-dev/quarto-nvim"
+    },
+    "rest.nvim": {
+      "rev": "c794476",
+      "src": "https://github.com/kevinm6/rest.nvim"
+    },
+    "schemastore.nvim": [],
+    "snacks.nvim": {
+      "rev": "de1cd71",
+      "src": "https://github.com/kevinm6/snacks.nvim"
+    },
+    "sqls.nvim": {
+      "rev": "bfb7b40",
+      "src": "https://github.com/nanotee/sqls.nvim"
+    },
+    "vimtex": {
+      "rev": "be9deac3",
+      "src": "https://github.com/lervag/vimtex"
+    }
+  }
+}

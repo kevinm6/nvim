@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 06/07/2025, 11:45
+-- Last Modified: 02/11/2025, 17:49
 -----------------------------------------
 
 local M = {
@@ -10,9 +10,7 @@ local M = {
   session_name = "",
   ---filetypes to exclude
   to_exclude = {
-    -- alpha = true,
     lspinfo = true,
-    -- snacks_dashboard = true,
     snacks_terminal = true,
     snacks_picker_input = true,
     snacks_picker_list = true,
@@ -24,7 +22,6 @@ local M = {
     noice = true,
     terminal = true,
     checkhealth = true,
-    -- WhichKey = true,
     query = true,
     oil = true,
     httpResult = true,
@@ -220,7 +217,7 @@ end
 ---@return string line number on total number
 local function get_line_onTot()
   return win_is_smaller(M.preset_width.row_onTot) and string.format(" %s%%l%s/%%L ", M.colors.git, M.colors.fformatloc)
-    or string.format(" %s%%l%s/%%L|%%P", M.colors.git, M.colors.fformatloc)
+      or string.format(" %s%%l%s/%%L|%%P", M.colors.git, M.colors.fformatloc)
 end
 
 ---Get file name
@@ -251,32 +248,32 @@ local function get_lsp_diagnostic()
 
   -- display values only if there are any
   return status_ok and M.colors.diag .. M.icons.status_ok
-    or do_not_show_diag and M.colors.diag .. M.icons.status_not_ok
-    or string.format(
-      "%s%s%s %d %s%s %d %s%s %d %s%s %d",
-      M.colors.diag,
-      M.colors.diagError,
-      M.icons.error,
-      errors,
-      M.colors.diagWarn,
-      M.icons.warning,
-      warns,
-      M.colors.diagInfo,
-      M.icons.information,
-      infos,
-      M.colors.diagHint,
-      M.icons.hint,
-      hints
-    )
+      or do_not_show_diag and M.colors.diag .. M.icons.status_not_ok
+      or string.format(
+        "%s%s%s %d %s%s %d %s%s %d %s%s %d",
+        M.colors.diag,
+        M.colors.diagError,
+        M.icons.error,
+        errors,
+        M.colors.diagWarn,
+        M.icons.warning,
+        warns,
+        M.colors.diagInfo,
+        M.icons.information,
+        infos,
+        M.colors.diagHint,
+        M.icons.hint,
+        hints
+      )
 end
 
 ---Get lsp progress, trying to remove Noice and mini-view
 ---@return string progress formatted progress
 function M.get_lsp_progress()
   local lsp = vim.lsp.status()
-  if lsp then
+  if lsp and lsp ~= "" then
     local idx = lsp:find(",")
-    lsp = vim.trim(lsp:sub(0, idx and idx-1 or nil))
+    lsp = vim.trim(lsp:sub(0, idx and idx - 1 or nil))
     return (#lsp > M.preset_width.lsp_info) and lsp:sub(1, M.preset_width.lsp_info) .. "…" or lsp
   end
 
@@ -287,29 +284,27 @@ end
 ---and display data depending on available window width
 ---@return string git_status git formatted data
 local function get_git_status()
-  local signs = vim.b["gitsigns_status_dict"] or nil
+  local signs = vim.b["minidiff_summary"] or nil
   if not signs then
     return ""
   end
 
-  local add, change, remove = signs.added or 0, signs.changed or 0, signs.removed or 0
+  local add, change, delete = signs.add or 0, signs.change or 0, signs.delete or 0
 
-  local no_changes = (add + change + remove) == 0
+  local no_changes = (add + change + delete) == 0
 
-  -- display based on size of window
-  --  if no changes, display only head (if available)
-  if signs.head ~= nil then
-    local head = signs.head
+  if signs.source_name == "git" then
+    local head = M.branch
 
     if win_is_smaller(M.preset_width.git_branch) then
-      return "• "
+      return " " .. head
     elseif win_is_smaller(M.preset_width.git_branch, M.preset_width.git_status_full) or no_changes then
       return string.format(" %s ", head)
     else
-      return string.format("+%s ~%s -%s |  %s ", add, change, remove, head)
+      return string.format("+%s ~%s -%s |  %s ", add, change, delete, head)
     end
   else
-    return "•"
+    return string.format("+%s ~%s -%s ", add, change, delete)
   end
 end
 
@@ -343,7 +338,7 @@ end
 ---Get session name if active
 ---@return string session_name name of the active session or empty string
 local function session_name()
-  return M.session_name ~= "" and " Session: " .. M.session_name .. " " or ""
+  return M.session_name ~= "" and string.format(" [%s] ", M.session_name) or ""
 end
 
 ---Get python virtual-env if is active and in python file
@@ -374,8 +369,24 @@ end
 ---Get lsp status and if active get names of server running
 ---@return string lsp_status
 local function get_lsp_info()
-  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and string.format("%s• ", M.colors.name)
-    or string.format("%s• ", M.colors.lspnoactive)
+  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and string.format("%s• ", M.colors.name) or
+      string.format("%s• ", M.colors.lspnoactive)
+end
+
+---Get git Branch and cache it
+---@param buf number the id of the buffer
+local function get_git_branch(buf)
+  local root = vim.fs.root(buf, ".git")
+  if not root then return end
+
+  local cmd = { "git", "rev-parse", "--abbrev-ref", "HEAD" }
+  vim.system(cmd, { text = true, cwd = root }, function(obj)
+    if obj.stdout then
+      local branch = obj.stdout:sub(1, -2) -- remove null terminator
+      M.branch = branch
+      vim.schedule(function() vim.cmd.redrawstatus() end)
+    end
+  end)
 end
 
 ---Statusline disabled that display only filetype and current mode
@@ -494,22 +505,23 @@ end
 ---Define autocmds for load winbar module and initialize
 function M.toggle()
   if vim.g.statusline ~= nil then
-    vim.api.nvim_del_autocmd(vim.g.statusline)
+    vim.api.nvim_del_augroup_by_name("_statusline")
     vim.wo.statusline = ""
     vim.g.statusline = nil
     vim.g.statusline_color = nil
   else
+    local augroup = vim.api.nvim_create_augroup("_statusline", { clear = true })
     vim.api.nvim_create_autocmd({
       "BufNewFile",
-      "CursorMoved",
       "ModeChanged",
       "VimResized",
       "FileType",
       "FileChangedShellPost",
       "DiagnosticChanged",
       "LspProgress",
+      "LspDetach",
     }, {
-      group = vim.api.nvim_create_augroup("_statusline", { clear = true }),
+      group = augroup,
       callback = function(cb)
         if vim.g.statusline ~= nil then
           vim.api.nvim_eval_statusline("%!v:lua.require'lib.ui.statusline'.set()", {})
@@ -517,6 +529,14 @@ function M.toggle()
           vim.g.statusline = cb.id
         end
       end,
+    })
+
+    vim.api.nvim_create_autocmd({ "BufNew", "BufNewFile", "FocusGained" }, {
+      group = augroup,
+      callback = function(args)
+        if (args.event == "BufNew" and args.file == "") then return end
+        get_git_branch(args.buf)
+      end
     })
     vim.api.nvim_eval_statusline("%!v:lua.require'lib.ui.statusline'.set()", {})
   end

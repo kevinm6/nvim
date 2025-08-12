@@ -5,15 +5,14 @@
 --  Last Modified: 04/07/2025, 18:53
 -------------------------------------
 
-return {
-  "kndndrj/nvim-dbee",
-  ft = { "sql", "mysql" },
-  dependencies = { "MunifTanjim/nui.nvim", },
-  cmd = "Dbee",
-  build = function()
-    require("dbee").install()
-  end,
-  config = function()
+vim.pack.add {
+  { src = "https://github.com/kndndrj/nvim-dbee" },
+  { src = "https://github.com/MunifTanjim/nui.nvim" }
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "sql", "mysql" },
+  callback = function()
     require("dbee").setup {
       default_connection = "default", -- id of default connection set in `connection.json`
 
@@ -77,4 +76,13 @@ return {
       }
     }
   end
-}
+})
+
+--   dependencies = { "MunifTanjim/nui.nvim", },
+--   cmd = "Dbee",
+--   build = function()
+--     require("dbee").install()
+--   end,
+--   config = function()
+--   end
+-- }

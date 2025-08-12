@@ -1,6 +1,6 @@
 -- Description  : useful plugins
 -- Author       : Kevin
--- Last Modified: 09/08/2025, 09:53
+-- Last Modified: 12/08/2025, 09:43
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
@@ -8,48 +8,31 @@
 -------------------------------------
 
 
-return {
-  {
-    "echasnovski/mini.nvim",
-    event = "VeryLazy",
-    init = function(p)
-      if vim.fn.argc() == 1 then
-        local argv = tostring(vim.fn.argv(0))
-        local stat = vim.loop.fs_stat(argv)
+-- vim.api.nvim_create_autocmd("BufRead", {
+--   pattern = "*/",
+--   callback = function()
+--     if vim.fn.argc() == 1 then
+--       local argv = tostring(vim.fn.argv(0))
+--       local stat = vim.loop.fs_stat(argv)
+--
+--       if stat and stat.type == "directory" then
+--         require("lazy").load { plugins = { p.name } }
+--       end
+--     end
+--     if not package.loaded["mini.files"] then
+--       vim.api.nvim_create_autocmd("BufNew", {
+--         pattern = "*/", -- load on dirs
+--         callback = function()
+--           require("lazy").load { plugins = { p.name } }
+--           return true
+--         end,
+--       })
+--     end
+--   end
+-- })
 
-        if stat and stat.type == "directory" then
-          require("lazy").load { plugins = { p.name } }
-        end
-      end
-      if not require("lazy.core.config").plugins[p.name]._.loaded then
-        vim.api.nvim_create_autocmd("BufNew", {
-          pattern = "*/", -- load on dirs
-          callback = function()
-            require("lazy").load { plugins = { p.name } }
-            return true
-          end,
-        })
-      end
-    end,
-    keys = {
-      {
-        "<leader>e",
-        function()
-          -- require("mini.files").open()
-          require("mini.files").open(vim.api.nvim_buf_get_name(0))
-        end,
-        desc = "File Explorer",
-      },
-      {
-        "<leader>E",
-        function()
-          --Open fresh in cwd
-          require("mini.files").open(nil, false)
-        end,
-        desc = "File Explorer",
-      }
-    },
-    config = function()
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
       ---Auto-Pairs
       require("mini.pairs").setup {
         mappings = {
@@ -131,8 +114,10 @@ return {
         }
       }
 
+      vim.schedule(function()
       ---Icons
       local mini_icons = require("mini.icons")
+      --      --[[
       mini_icons.setup {
         filetype = {
           telescope = { glyph = " " },
@@ -204,9 +189,10 @@ return {
           calc = { glyph = "" },
           otter = { glyph = "⎆" },
         }
-
       }
+      -- ]]
       mini_icons.mock_nvim_web_devicons()
+      end)
 
       ---Files
       local mini_files = require("mini.files")
@@ -243,7 +229,7 @@ return {
 
       local show_dotfiles = true
 
-      local filter_show = function(fs_entry) return true end
+      local filter_show = function(_) return true end
 
       local filter_hide = function(fs_entry)
         return not vim.startswith(fs_entry.name, '.')
@@ -358,6 +344,18 @@ return {
           vim.api.nvim_win_set_config(args.data.win_id, config)
         end,
       })
-    end
-  },
-}
+      vim.keymap.set("n", "<leader>e", function()
+          -- require("mini.files").open()
+          local buf_path = vim.api.nvim_buf_get_name(0)
+          local path_exists = vim.fn.filereadable(buf_path) == 1
+          require("mini.files").open(path_exists and buf_path or vim.uv.cwd())
+        end,
+        { desc = "File Explorer" })
+
+      vim.keymap.set("n", "<leader>E", function()
+          --Open fresh in cwd
+          require("mini.files").open(nil, false)
+        end,
+        { desc = "File Explorer" })
+--   end
+-- })

@@ -1,0 +1,1 @@
+-- vim.env.JAVA_HOME = "/opt/homebrew/Cellar/openjdk@17/17.0.16"

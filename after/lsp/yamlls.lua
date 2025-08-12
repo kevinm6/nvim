@@ -1,4 +1,5 @@
 ---@type vim.lsp.Config
+vim.pack.add { "https://github.com/b0o/schemastore.nvim" }
 return {
   cmd = { "yaml-language-server", "--stdio" },
   filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
