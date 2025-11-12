@@ -11,10 +11,9 @@
 
 ***Theme***: [knvim-theme](https://github.com/kevinm6/knvim-theme.nvim)
 
-![screenNvim1](https://user-images.githubusercontent.com/72861758/210419269-658f8659-9a7b-422b-b1cb-b6afcc67aa07.png)
+<img width="960" height="1049" alt="nvimScreen1" src="https://github.com/user-attachments/assets/d2da4e9a-147c-4167-b87b-2be4b3125304" />
 
-![screenNvim2](https://user-images.githubusercontent.com/72861758/210419286-5784a479-729d-4e9a-8ccd-460704b28b9e.png)
-
+<img width="960" height="1049" alt="nvimScreen2" src="https://github.com/user-attachments/assets/4abd2d38-ac47-4754-8ec7-8f5606150d38" />
 ---
 
 > Written mostly in ![Lua](https://img.shields.io/badge/Lua-2C2D72?style=flat&logo=lua&logoColor=white)

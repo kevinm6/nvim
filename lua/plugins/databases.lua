@@ -2,87 +2,80 @@
 --  File         : databases.lua
 --  Description  : DB config and help
 --  Author       : Kevin
---  Last Modified: 04/07/2025, 18:53
+--  Last Modified: 15/11/2025, 15:44
 -------------------------------------
 
-vim.pack.add {
-  { src = "https://github.com/kndndrj/nvim-dbee" },
-  { src = "https://github.com/MunifTanjim/nui.nvim" }
-}
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "sql", "mysql" },
-  callback = function()
-    require("dbee").setup {
-      default_connection = "default", -- id of default connection set in `connection.json`
-
-      drawer = {
-        disable_help = true,
-        mappings = {
-          { key = "<cr>",  mode = "n", action = "action_1" },
-          { key = "<C-l>", mode = "n", action = "action_1" },
-          { key = "o",     mode = "n", action = "toggle" },
-          { key = "r",     mode = "n", action = "refresh" },
-          { key = "cw",    mode = "n", action = "action_2" },
-          { key = "dd",    mode = "n", action = "action_3" },
-          -- { key = "h", mode = "n", action = "collapse" },
-          -- { key = "l", mode = "n", action = "expand" },
-          { key = "<CR>",  mode = "n", action = "menu_confirm" },
-          { key = "y",     mode = "n", action = "menu_yank" },
-          { key = "<Esc>", mode = "n", action = "menu_close" },
-          { key = "q",     mode = "n", action = "menu_close" },
-        },
-      },
-      extra_helpers = {
-        ["postgres"] = {
-          ["List All"] = "select * from {{ .Table }}",
-        },
-      },
-      sources = { -- stored connection config location
-        require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
-      },
-      -- sources = {
-      --   require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
-      -- },
-      editor = {
-        -- mappings for the buffer
-        mappings = {
-          -- run what's currently selected on the active connection
-          { key = "<localleader>r", mode = "v", action = "run_selection" },
-          { key = "<C-CR>",         mode = "v", action = "run_selection" },
-          -- run the whole file on the active connection
-          { key = "<localleader>r", mode = "n", action = "run_file" },
-        },
-      },
-      result = {
-        page_size = 30,
-        { key = "L",     mode = "n", action = "page_next" },
-        { key = "H",     mode = "n", action = "page_prev" },
-        { key = "<C-n>", mode = "n", action = "page_next" },
-        { key = "<C-p>", mode = "n", action = "page_prev" },
-        { key = "G",     mode = "n", action = "page_last" },
-        { key = "gg",    mode = "n", action = "page_first" },
-      },
-
-      call_log = {
-        -- mappings for the buffer
-        mappings = {
-          -- show the result of the currently selected call record
-          { key = "<CR>",  mode = "n", action = "show_result" },
-          { key = "<C-l>", mode = "n", action = "show_result" },
-          -- cancel the currently selected call (if its still executing)
-          { key = "<C-c>", mode = "n", action = "cancel_call" },
-        },
-      }
-    }
-  end
+vim.api.nvim_create_autocmd("PackChanged", {
+  -- pattern = "nvim-dbee",
+  desc = "Run `dbee.install` after pack update",
+  group = vim.api.nvim_create_augroup("nvim_dbee_update", { clear = true }),
+  callback = function(ev)
+    vim.print(ev)
+    -- if e.data.kind == "update" then
+    --   require("dbee").install()
+    -- end
+  end,
 })
 
---   dependencies = { "MunifTanjim/nui.nvim", },
---   cmd = "Dbee",
---   build = function()
---     require("dbee").install()
---   end,
---   config = function()
---   end
--- }
+require("dbee").setup {
+  default_connection = "default",     -- id of default connection set in `connection.json`
+
+  drawer = {
+    disable_help = true,
+    mappings = {
+      { key = "<cr>",  mode = "n", action = "action_1" },
+      { key = "<C-l>", mode = "n", action = "action_1" },
+      { key = "o",     mode = "n", action = "toggle" },
+      { key = "r",     mode = "n", action = "refresh" },
+      { key = "cw",    mode = "n", action = "action_2" },
+      { key = "dd",    mode = "n", action = "action_3" },
+      -- { key = "h", mode = "n", action = "collapse" },
+      -- { key = "l", mode = "n", action = "expand" },
+      { key = "<CR>",  mode = "n", action = "menu_confirm" },
+      { key = "y",     mode = "n", action = "menu_yank" },
+      { key = "<Esc>", mode = "n", action = "menu_close" },
+      { key = "q",     mode = "n", action = "menu_close" },
+    },
+  },
+  extra_helpers = {
+    ["postgres"] = {
+      ["List All"] = "select * from {{ .Table }}",
+    },
+  },
+  sources = {     -- stored connection config location
+    require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
+  },
+  -- sources = {
+  --   require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
+  -- },
+  editor = {
+    -- mappings for the buffer
+    mappings = {
+      -- run what's currently selected on the active connection
+      { key = "<localleader>r", mode = "v", action = "run_selection" },
+      { key = "<C-CR>",         mode = "v", action = "run_selection" },
+      -- run the whole file on the active connection
+      { key = "<localleader>r", mode = "n", action = "run_file" },
+    },
+  },
+  result = {
+    page_size = 30,
+    { key = "L",     mode = "n", action = "page_next" },
+    { key = "H",     mode = "n", action = "page_prev" },
+    { key = "<C-n>", mode = "n", action = "page_next" },
+    { key = "<C-p>", mode = "n", action = "page_prev" },
+    { key = "G",     mode = "n", action = "page_last" },
+    { key = "gg",    mode = "n", action = "page_first" },
+  },
+
+  call_log = {
+    -- mappings for the buffer
+    mappings = {
+      -- show the result of the currently selected call record
+      { key = "<CR>",  mode = "n", action = "show_result" },
+      { key = "<C-l>", mode = "n", action = "show_result" },
+      -- cancel the currently selected call (if its still executing)
+      { key = "<C-c>", mode = "n", action = "cancel_call" },
+    },
+  }
+}

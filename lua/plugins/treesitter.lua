@@ -5,7 +5,6 @@
 -- Last Modified: 08/06/2025
 -------------------------------------
 
-vim.pack.add { { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" } }
 
 local function parsers_to_be_installed()
   return {

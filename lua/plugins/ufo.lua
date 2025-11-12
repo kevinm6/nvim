@@ -16,11 +16,6 @@ local ftMap = {
   [""] = "",
 }
 
-vim.pack.add {
-  { src = "https://github.com/kevinhwang91/promise-async" },
-  { src = "https://github.com/kevinhwang91/nvim-ufo" }
-}
-
 vim.api.nvim_create_autocmd("BufRead", {
   callback = function()
     local ufo = require "ufo"

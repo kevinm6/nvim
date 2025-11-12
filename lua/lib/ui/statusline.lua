@@ -65,13 +65,14 @@ local M = {
   }, {
     __index = function(t, k)
       local has_icons, icons = pcall(require, "mini.icons")
+      local default_ico = ""
       if not has_icons then
-        return ""
+        return default_ico
       else
-        local icon = icons.get("filetype", k)
-        -- vim.print(icon)
-        t[k] = icon
-        return icon
+        local has_icon, icon = pcall(icons.get, "filetype", k)
+        local ico = has_icon and icon or default_ico
+        t[k] = ico
+        return ico
       end
     end,
   }),
@@ -313,14 +314,15 @@ end
 local function get_filetype_and_icon()
   local file_ext = vim.bo.filetype or vim.fn.expand "%:e"
 
-  local has_icons, icons = pcall(require, "mini.icons")
-  local icon = M.icons.default
-  if has_icons then
-    icon = icons.get("filetype", file_ext)
-  end
-  local file_type = vim.bo.filetype
+  -- local has_icons, icons = pcall(require, "mini.icons")
+  local icon = M.icons[file_ext]
+  -- if has_icons then
+  --   icon = icons.get("filetype", file_ext)
+  -- end
+  -- local file_type = vim.bo.filetype
 
-  return string.format("%s %s", icon, file_type)
+  -- return string.format("%s %s", icon, file_type)
+  return string.format("%s %s", icon, file_ext)
 end
 
 ---Get file encoding

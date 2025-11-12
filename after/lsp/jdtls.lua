@@ -1,5 +1,3 @@
-vim.env.JAVA_HOME = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home"
-
 local data_path = vim.fn.stdpath "data"
 local bundles = vim.fn.glob(
   data_path .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",

@@ -479,7 +479,7 @@ imap {
 }
 
 map {
-  { "i",                                "x" },
+  { "i", "x" },
   "<C-l>",
   function()
     if pumvisible() then
@@ -492,7 +492,20 @@ map {
 }
 
 map {
-  { "i",                           "s" },
+  { "i", "x" },
+  "<C-u>",
+  function()
+    if pumvisible() then
+      feedkeys "<C-e><C-u>"
+    else
+      feedkeys "<C-u>"
+    end
+  end,
+  { desc = "Stop completion and delete to start" },
+}
+
+map {
+  { "i", "s" },
   "<C-i>",
   function()
     if vim.snippet.active { direction = 1 } then
@@ -508,7 +521,7 @@ map {
 
 -- prev position of snippet $x -> $x-1
 map {
-  { "i",                            "s" },
+  { "i", "s" },
   "<C-S-i>",
   function()
     if vim.snippet.active { direction = -1 } then

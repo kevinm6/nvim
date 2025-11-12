@@ -6,56 +6,54 @@
 -------------------------------------
 
 vim.pack.add({
+  ---QoL plugins
   "https://github.com/echasnovski/mini.nvim",
 
+  ---QoL plugins
   "https://github.com/kevinm6/snacks.nvim",
+
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 
   ---Mason
   "https://github.com/williamboman/mason.nvim",
 
-  -- {
-  --   event =
-  --   init = function(p)
-  --     if vim.fn.argc() == 1 then
-  --       local argv = tostring(vim.fn.argv(0))
-  --       local stat = vim.uv.fs_stat(argv)
-  --
-  --       local jupyter_notebooks = vim.endswith(argv, "ipynb")
-  --       if stat or jupyter_notebooks then
-  --         require("lazy").load { plugins = { p.name } }
-  --       end
-  --     end
-  --     if not require("lazy.core.config").plugins[p.name]._.loaded then
-  --       vim.api.nvim_create_autocmd("BufNew", {
-  --         pattern = "*.ipynb",
-  --         callback = function()
-  --           require("lazy").load { plugins = { p.name } }
-  --         end,
-  --       })
-  --     end
-  --   end,
+  ---Databases
+  "https://github.com/kndndrj/nvim-dbee",
+  "https://github.com/MunifTanjim/nui.nvim",
 
+  ---DAP
+  "https://github.com/rcarriga/nvim-dap-ui",
+  "https://github.com/nvim-neotest/nvim-nio",
+  "https://github.com/mfussenegger/nvim-dap",
 
+  ---Lint & Format
+  "https://github.com/mfussenegger/nvim-lint",
+  "https://github.com/stevearc/conform.nvim",
 
-  ---Color Picker
-  "https://github.com/ziontee113/color-picker.nvim",
+  ---Completion
+  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
 
-  ---Nvim colorizer
-  "https://github.com/norcalli/nvim-colorizer.lua" ,
+  ---Folding
+  "https://github.com/kevinhwang91/promise-async",
+  "https://github.com/kevinhwang91/nvim-ufo",
 
+  ---Markdown
+  "https://github.com/MeanderingProgrammer/markdown.nvim",
+
+  ---Webdev
+  -- TODO: to fix
+  -- "https://github.com/rest-nvim/rest.nvim",
 })
 
-require("color-picker").setup {
-  ["icons"] = { "", "" },
-  ["border"] = "rounded",
-}
+-- require("color-picker").setup {
+--   ["icons"] = { "", "" },
+--   ["border"] = "rounded",
+-- }
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "tex", "plaintex", "bib" },
   callback = function()
     ---LaTeX
-    vim.pack.add { "https://github.com/lervag/vimtex" }
-
     vim.g.vimtex_view_method = "sioyek"
     vim.g.vimtex_quickfix_mode = 0 -- don't open qflist on compile errors
     vim.g.vimtex_mappings_prefix = "\\"
@@ -88,28 +86,19 @@ vim.api.nvim_create_autocmd("FileType", {
       "Token not allowed in a PDF string",
     }
 
-      vim.api.nvim_create_autocmd("BufReadPre", {
-        pattern = "*.tex",
-        callback = function(ev)
-          vim.b.vimtex_main = ev.file
-        end,
-      })
-    end,
+    vim.api.nvim_create_autocmd("BufReadPre", {
+      pattern = "*.tex",
+      callback = function(ev)
+        vim.b.vimtex_main = ev.file
+      end,
+    })
+  end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+  once = true,
   pattern = { "BufRead *.ipynb", "BufNewFile *.ipynb" },
   callback = function()
-    vim.pack.add {
-      ---Jupyter Notebook
-      "https://github.com/GCBallesteros/jupytext.nvim",
-
-      ---Molten
-      {
-        src = "https://github.com/benlubas/molten-nvim",
-        version = vim.version.range("^1.0.0")
-      }
-    }
     require("jupytext").setup {
       custom_language_formatting = {
         python = {
@@ -123,11 +112,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+  once = true,
   pattern = "quarto",
   callback = function()
-    ---Quarto
-    vim.pack.add { "https://github.com/quarto-dev/quarto-nvim" }
-
     require("quarto").setup {
       codeRunner = {
         enabled = false,
@@ -152,15 +139,9 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "sqlite", "tsv", "csv" },
   callback = function()
-    ---DataViewer (csv, tsv ...)
-    vim.pack.add {
-      { src = "https://github.com/nvim-lua/plenary.nvim" },
-      { src = "https://github.com/vidocqh/data-viewer.nvim" }
-    }
     require("data-viewer").setup {}
 
     vim.api.nvim_set_hl(0, "DataViewerColumn0", { fg = "#4fc1ff", bold = true })
@@ -173,34 +154,28 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "quarto", "markdown", "html", "javascript", "typescript" },
   callback = function()
-    --[[
-    vim.api.nvim_create_autocmd("Filetype", {
+    vim.api.nvim_create_autocmd("FileType", {
       pattern = "html",
       callback = function()
         require("otter").activate { "javascript", "php", "css" }
       end,
     })
-    vim.api.nvim_create_autocmd("Filetype", {
+    vim.api.nvim_create_autocmd("FileType", {
       pattern = "javascript",
       callback = function()
         require("otter").activate { "html", "php" }
       end,
-    }
+    })
 
-    vim.api.nvim_create_autocmd("Filetype", {
+    vim.api.nvim_create_autocmd("FileType", {
       pattern = "php",
       callback = function()
         require("otter").activate { "html", "javascript" }
       end,
     })
-    ]]
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "qmd", "quarto" },
       callback = function()
-        ---Otter
-        ---spawns lsp-server for injected languages
-        vim.pack.add { "https://github.com/jmbuhr/otter.nvim" }
-
         require("otter").activate { "quarto", "markdown", "python" }
         vim.treesitter.language.register("markdown", "python")
         -- vim.treesitter.language.register("quarto", "markdown")
@@ -274,67 +249,308 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
--- TODO to complete
---[[
-local function hooks(ev)
-  local name, kind = ev.data.spec.name, ev.data.kind
+local pack = require "lib.pack"
 
-  -- Run build script after plugin's code has changed
-  if name == 'plug-1' and (kind == 'install' or kind == 'update') then
-    vim.system({ 'make' }, { cwd = ev.data.path })
-  end
+pack.ensure_installed({
+  ---Go
+  { src = "https://github.com/ray-x/go.nvim" },
+  ---Java
+  { src = "https://github.com/mfussenegger/nvim-jdtls" },
+  ---Json
+  { src = "https://github.com/b0o/SchemaStore.nvim" },
+  ---SQL
+  { src = "https://github.com/nanotee/sqls.nvim" },
+  ---LaTex
+  { src = "https://github.com/lervag/vimtex" },
+  ---Color Picker
+  { src = "https://github.com/ziontee113/color-picker.nvim" },
+  ---Nvim colorizer
+  { src = "https://github.com/norcalli/nvim-colorizer.lua" },
+  ---Jupyter Notebook
+  { src = "https://github.com/GCBallesteros/jupytext.nvim" },
+  ---Molten
+  { src = "https://github.com/benlubas/molten-nvim", version = vim.version.range("^1.0.0") },
+  ---Quarto
+  { src = "https://github.com/quarto-dev/quarto-nvim" },
+  ---DataViewer (csv, tsv ...)
+  { src = "https://github.com/nvim-lua/plenary.nvim" },
+  { src = "https://github.com/vidocqh/data-viewer.nvim" },
+  ---Otter: spawns lsp-server for injected languages
+  { src = "https://github.com/jmbuhr/otter.nvim" },
+})
 
-  if kind == "update" and name == "go.nvim" then
-    -- if you need to install/update all binaries
-   require("go.install").update_all_sync()
-  end
 
-  -- If action relies on code from the plugin (like user command or
-  -- Lua code), make sure to explicitly load it first
-  if name == 'plug-2' and kind == 'update' then
-    if not ev.data.active then
-      vim.cmd.packadd('plug-2')
-    end
-    vim.cmd('PlugTwoUpdate')
-    -- require('plug2').after_update()
-  end
-end
+require("mason").setup {
+  ui = {
+    border = "rounded",
+    width = 0.7,
+    height = 0.7,
+    icons = {
+      package_installed = "✓",
+      package_pending = "⟳",
+      package_uninstalled = "-",
+    },
+    keymaps = {
+      uninstall_package = "x",
+      toggle_help = "?",
+    },
+  },
+}
 
-vim.api.nvim_create_autocmd("PackChanged", { callback = hooks })
-]]
-
--- vim.api.nvim_create_autocmd("User", {
---   callback = function()
-    -- vim.env.PATH = vim.fn.stdpath("data").."/mason".dir .. "/bin:" .. vim.env.PATH
-
-    require("mason").setup {
-      ui = {
-        border = "rounded",
-        width = 0.7,
-        height = 0.7,
-        icons = {
-          package_installed = "✓",
-          package_pending = "⟳",
-          package_uninstalled = "-",
-        },
-        keymaps = {
-          uninstall_package = "x",
-          toggle_help = "?",
-        },
-      },
-    }
---   end
--- })
-
+require("plugins.snacks")
 require("plugins.coding_helper")
+require("plugins.treesitter")
 require("plugins.completion")
 require("plugins.dap")
 require("plugins.databases")
-require("plugins.gitsigns")
-require("plugins.lang_specific")
-require("plugins.lint_format")
 require("plugins.markdown")
-require("plugins.snacks")
-require("plugins.treesitter")
 require("plugins.ufo")
-require("plugins.webdev")
+
+-- TODO: fix
+-- require("plugins.webdev")
+
+---- Lint (Nvim-Lint) & Format (Conform)
+---
+-- "mfussenegger/nvim-lint", event = "InsertEnter"
+vim.api.nvim_create_autocmd("InsertEnter", {
+  once = true,
+  callback = function()
+    local lint = require "lint"
+    lint.linters_by_ft = {
+      markdown = { "markdownlint" },
+      json = { "biomejs" },
+      javascript = { "biomejs", "eslint_d" },
+      typescript = { "biomejs", "eslint_d" },
+      python = { "ruff" },
+      gitcommit = { "commitlint" },
+      php = { "php" },
+      yaml = { "yamllint" },
+    }
+
+    lint.linters.markdownlint.args = {
+      "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
+    }
+    lint.linters.flake8.args = {
+      "--extend-ignore E302,E111,E501,W391",
+    }
+
+    -- lint.linters.eslint_d.args = {
+    --   "--no-warn-ignored", -- <-- this is the key argument
+    --   "--format",
+    --   "json",
+    --   "--stdin",
+    --   "--stdin-filename",
+    --   function()
+    --     return vim.api.nvim_buf_get_name(0)
+    --   end,
+    -- }
+
+    -- lint.linters.yamllint.args = {
+    --   "--no-warnings", -- output only errors
+    -- }
+
+    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+      callback = function()
+        if not lint then
+          return
+        end
+        lint.try_lint()
+      end,
+    })
+  end
+})
+
+---Formatter (Conform)
+-- "stevearc/conform.nvim", event = { "BufWritePre" }, cmd = { "Format", "ConformInfo" }
+vim.api.nvim_create_autocmd("BufWritePre", {
+  once = true,
+  callback = function()
+    local conform = require "conform"
+    local o = {}
+    vim.g.disable_autoformat = true
+
+    o.formatters_by_ft = {
+      python = {
+        -- To fix auto-fixable lint errors.
+        -- "ruff_fix",
+        -- To run the Ruff formatter.
+        "ruff_format",
+        -- To organize the imports.
+        "ruff_organize_imports",
+      },
+      bash = { "beautysh" },
+      zsh = { "beautysh" },
+      css = { "prettier" },
+      javascript = { "biomejs", "biome-organize-imports" },
+      typescriptreact = { "biomejs", "biome-organize-imports" },
+      html = { "prettier" },
+      json = { "biome" },
+      yaml = { "yamlfmt", "prettier" },
+      -- java = { "google-java-format" },
+    }
+
+    o.format_on_save = function(bufnr)
+      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+        return
+      end
+      return { timeout_ms = 500, lsp_format = "fallback" }
+    end
+
+    o.formatters = {
+      beautysh = {
+        args = { "$FILENAME" },
+      },
+      injected = {
+        lang_to_ext = {
+          bash = "sh",
+          javascript = "js",
+          markdown = "md",
+          python = "py",
+          ruby = "rb",
+          typescript = "ts",
+          latex = "tex"
+        },
+        lang_to_ft = {
+          bash = "sh"
+        }
+      },
+    }
+
+    conform.setup(o)
+
+    vim.api.nvim_create_user_command("Format", function(args)
+      local range = nil
+      if args.count ~= -1 then
+        local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+        range = {
+          ["start"] = { args.line1, 0 },
+          ["end"] = { args.line2, end_line:len() },
+        }
+      end
+      conform.format { async = true, lsp_format = "fallback", range = range }
+    end, { range = true })
+
+    vim.keymap.set("n", "<leader>lf", function()
+      conform.format { async = true, lsp_fallback = true }
+    end, { desc = "Format <buf>", })
+    require("lib").user_command_toggle("ToggleAutoFormat", "disable_autoformat", {
+      title = "Auto-Format (on-save)",
+      desc = "AutoFormat (on-save)",
+    })
+  end
+})
+
+---- end Lint (Nvim-Lint) & Format (Conform)
+
+---- Language specific plugins ----
+
+vim.api.nvim_create_autocmd("FileType", {
+  once = true,
+  pattern = { "scala", "sbt" },
+  callback = function()
+    ---Scala
+    vim.pack.add { "https://github.com/scalameta/nvim-metals" }
+  end
+})
+
+local function hooks(ev)
+  local name, kind = ev.data.spec.name, ev.data.kind
+  vim.print(name, kind)
+
+  if (kind == "install" or kind == "update") then
+    vim.cmd.packadd({ args = { name }, bang = false })
+    local title = string.format("vim.pack 󰅂 %s", name)
+    local msg_info = string.format("building '%s' due to install/update plugin", name)
+    if name == "nvim-treesitter" then
+      vim.notify(msg_info, vim.log.levels.INFO, { title = title })
+      require("nvim-treesitter").update()
+    end
+    if name == "blink.cmp" then
+      vim.notify(msg_info, vim.log.levels.INFO, { title = title })
+      require("blink.cmp.fuzzy.build").build()
+    end
+    if name == "go.nvim" then
+      vim.notify(msg_info, vim.log.levels.INFO, { title = title })
+      require("go.install").update_all_sync()
+    end
+  end
+
+  -- -- Run build script after plugin's code has changed
+  -- if name == 'plug-1' and (kind == 'install' or kind == 'update') then
+  --   vim.system({ 'make' }, { cwd = ev.data.path })
+  -- end
+  --
+  -- -- If action relies on code from the plugin (like user command or
+  -- -- Lua code), make sure to explicitly load it first
+  -- if name == 'plug-2' and kind == 'update' then
+  --   if not ev.data.active then
+  --     vim.cmd.packadd('plug-2')
+  --   end
+  --   vim.cmd('PlugTwoUpdate')
+  --   require('plug2').after_update()
+  -- end
+end
+vim.api.nvim_create_autocmd("PackChanged", { callback = hooks })
+
+vim.api.nvim_create_autocmd("FileType", {
+  once = true,
+  pattern = "go",
+  callback = function()
+    require("go").setup {
+      icons = { breakpoint = "", currentpos = "" },
+      diagnostic = {
+        signs = { "", "", "", "󱧢" },
+      }
+    }
+
+    vim.keymap.set("n", "<leader>df", "<cmd>GoTestFunc<CR>", { desc = "Go Test function" })
+    vim.keymap.set("n", "<leader>dF", "<cmd>GoTestFile<CR>", { desc = "Go Test File" })
+    vim.keymap.set("n", "<leader>lh", function()
+      local to_search = vim.fn.input "Docs for: "
+      if to_search ~= "" then
+        vim.cmd.GoDoc(to_search)
+      end
+    end, { desc = "Go Doc" })
+  end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  once = true,
+  pattern = { "markdown", "quarto" },
+  callback = function()
+    require("render-markdown").setup {
+      -- keys = {
+      --   {
+      --     "<localleader>r",
+      --     { "markdown", "quarto" },
+      --     desc = "Render Markdown",
+      --   },
+      -- },
+      enabled = false, -- not rendering on enter md files
+      file_types = { "markdown", "quarto", "markdown.mdx" },
+      anti_conceal = { enabled = false },
+      latex = {
+        enabled = false,
+        converter = "utftex",
+      },
+      acknowledge_conflicts = true,
+      heading = {
+        icons = { "󰉫 ", "󰉬 ", "󰉭 ", "󰉮 ", "󰉯 ", "󰉰 " },
+      },
+      checkbox = {
+        unchecked = { -- Replaces '[ ]' of 'task_list_marker_unchecked'
+          icon = "󰄱 ",
+        },
+        checked = { -- Replaces '[x]' of 'task_list_marker_checked'
+          icon = "󰄵 ",
+        },
+        custom = {
+          todo = { raw = "[-]", rendered = "󰥔 ", highlight = "RenderMarkdownTodo" },
+        },
+      }
+    }
+
+    vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "TabLine" })
+  end
+})
+---- end Language specific plugins ----

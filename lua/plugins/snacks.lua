@@ -2,12 +2,9 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 06/08/2025, 21:11
+-- Last Modified: 15/11/2025, 19:42
 -------------------------------------
 
-
--- NOTE
--- using personal fork, to make multiple selection useful
 require("snacks").setup {
   bigfile = {},
   dashboard = {
@@ -20,12 +17,8 @@ require("snacks").setup {
         { icon = "", key = "r", desc = "Recent files", action = ":lua require 'lib'.recent_files()" },
         { icon = "", key = "p", desc = "Find project", action = ":lua require 'lib'.projects()" },
         { icon = "", key = "s", desc = "Sessions", action = ":lua require 'lib.session'.restore()" },
-        -- { icon = "󰾰", key = "d", desc = "Developer", action = [[:lua require "lib".dev_folder()]] },
         { icon = "", key = "L", desc = "Plugin Manager", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
         { icon = "", key = "m", desc = "Package Manager", action = ":Mason" },
-        -- { icon = "", key = "g", desc = "Git", action = ":Lazygit" },
-        -- { icon = "♥", key = "H", desc = "Health", action = ":checkhealth" },
-        -- { icon = "", key = "c", desc = "Close", action = ":close" },
         { icon = "", key = "q", desc = "Quit", action = ":qa" },
       },
     },
@@ -658,125 +651,78 @@ require("snacks").setup {
     },
   },
   quickfile = {},
-  lazygit = {
-    configure = false,
-    config = { os = { editPreset = "nvim-remote" } },
-    win = {
-      style = "lazygit",
-      width = 0.94,
-      height = 0.94,
-    },
-  },
 }
 
-vim.keymap.set("n", "<leader><leader>",
-  function()
-    Snacks.picker.buffers()
-  end,
-  { desc = "Buffers" }
-)
+vim.keymap.set("n", "<leader><leader>", function()
+  Snacks.picker.buffers()
+end, { desc = "Buffers" })
 
-vim.keymap.set("n", "<leader>fs",
-  function()
-    Snacks.picker.smart()
-  end,
-  { desc = "Smart search" }
-)
+vim.keymap.set("n", "<leader>fs", function()
+  Snacks.picker.smart()
+end, { desc = "Smart search" })
 vim.keymap.set("n", "<leader>fF", function()
-    Snacks.picker.grep()
-  end,
-  { desc = "Find Text (LiveGrep)" }
-)
+  Snacks.picker.grep()
+end, { desc = "Find Text (LiveGrep)" })
 
 vim.keymap.set("n", "<leader>fh", function()
-    local cword = vim.fn.expand "<cword>"
-    Snacks.picker.help {
-      search = "Search in Help",
-      default_text = cword,
-    }
-  end,
-  { desc = "Help" }
-)
+  local cword = vim.fn.expand "<cword>"
+  Snacks.picker.help { search = "Search in Help", default_text = cword }
+end, { desc = "Help" })
 
 vim.keymap.set("n", "<leader>fg", function()
-    Snacks.picker.git_files()
-  end,
-  { desc = "Git Files" }
-)
+  Snacks.picker.git_files()
+end, { desc = "Git Files" })
 vim.keymap.set("n", "<leader>fR", function()
-    Snacks.picker.registers()
-  end,
-  { desc = "Registers" }
-)
+  Snacks.picker.registers()
+end, { desc = "Registers" })
 vim.keymap.set("n", "<leader>fq", function()
-    Snacks.picker.qflist()
-  end,
-  { desc = "QuickFix" }
-)
+  Snacks.picker.qflist()
+end, { desc = "QuickFix" })
 
 vim.keymap.set("n", "<leader>fQ", function()
-    Snacks.picker.loclist()
-  end,
-  { desc = "LocationList" }
-)
+  Snacks.picker.loclist()
+end, { desc = "LocationList" })
 vim.keymap.set("n", "<leader>fl", function()
-    Snacks.picker.resume()
-  end,
-  { desc = "Resume last" }
-)
+  Snacks.picker.resume()
+end, { desc = "Resume last" })
 vim.keymap.set("n", "<leader>fk", function()
-    Snacks.picker.keymaps()
-  end,
-  { desc = "Keymaps" }
-)
+  Snacks.picker.keymaps()
+end, { desc = "Keymaps" })
 vim.keymap.set("n", "<leader>fL", function()
-    Snacks.picker.lines()
-  end,
-  { desc = "Line fuzzy" }
-)
+  Snacks.picker.lines()
+end, { desc = "Line fuzzy" })
 vim.keymap.set("n", "<leader>fc", function()
-    Snacks.picker.commands()
-  end,
-  { desc = "Commands" }
-)
+  Snacks.picker.commands()
+end, { desc = "Commands" })
 vim.keymap.set("n", "<leader>fe", function()
-    require("lib.env").show_vars()
-  end,
-  { desc = "Environment" }
-)
+  require("lib.env").show_vars()
+end, { desc = "Environment" })
 vim.keymap.set("n", "<leader>fO", function()
-    require("lib.software_licenses").pick_license()
-  end,
-  { desc = "Software Licenses" }
-)
+  require("lib.software_licenses").pick_license()
+end, { desc = "Software Licenses" })
 vim.keymap.set("n", "<leader>fw", function()
-    Snacks.picker.grep_word { search = vim.fn.expand "<cword>" }
-  end,
-  { desc = "Grep < cword >" }
-)
+  Snacks.picker.grep_word { search = vim.fn.expand "<cword>" }
+end, { desc = "Grep < cword >" })
 vim.keymap.set("n", "<leader>fW", function()
-    local word = vim.fn.expand "<cWORD>"
-    Snacks.picker.grep_string {
-      theme = "dropdown",
-      previewer = false,
-      search = word,
-    }
-  end,
-  { desc = "Grep <cword>" }
-)
+  local word = vim.fn.expand "<cWORD>"
+  Snacks.picker.grep_string {
+    theme = "dropdown",
+    previewer = false,
+    search = word,
+  }
+end, { desc = "Grep <cword>" })
 
 vim.keymap.set("n", "<leader>ff", function()
-    Snacks.picker.files { cwd = vim.uv.cwd() }
-  end, { desc = "Find Files" })
+  Snacks.picker.files { cwd = vim.uv.cwd() }
+end, { desc = "Find Files" })
 
 vim.keymap.set("n", "<leader>fo", function()
-    Snacks.picker()
-  end, { desc = "Open Pickers" })
+  Snacks.picker()
+end, { desc = "Open Pickers" })
 
 vim.keymap.set("n", "<leader>fr", function()
-    Snacks.picker.recent()
-  end, { desc = "Recent File" })
-
+  Snacks.picker.recent()
+end, { desc = "Recent File" })
 
 vim.keymap.set("n", "<leader>gs", function()
   Snacks.picker.git_status()

@@ -1,6 +1,9 @@
 {
   "plugins": {
-    "SchemaStore.nvim": [],
+    "SchemaStore.nvim": {
+      "rev": "eed1834170f343c14a6768f085b26b3571a55302",
+      "src": "https://github.com/b0o/SchemaStore.nvim"
+    },
     "blink.cmp": {
       "rev": "327fff9",
       "src": "https://github.com/saghen/blink.cmp",
@@ -9,6 +12,10 @@
     "color-picker.nvim": {
       "rev": "06cb5f8",
       "src": "https://github.com/ziontee113/color-picker.nvim"
+    },
+    "conform.nvim": {
+      "rev": "cde4da5",
+      "src": "https://github.com/stevearc/conform.nvim"
     },
     "data-viewer.nvim": {
       "rev": "40ddf37",
@@ -19,7 +26,7 @@
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "go.nvim": {
-      "rev": "81bb94c",
+      "rev": "81bb94c1d21648245eb14c69461f5c7f8c705752",
       "src": "https://github.com/ray-x/go.nvim"
     },
     "jupytext.nvim": {
@@ -51,17 +58,37 @@
       "rev": "a065833",
       "src": "https://github.com/norcalli/nvim-colorizer.lua"
     },
+    "nvim-dap": {
+      "rev": "b38f7d3",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
+    "nvim-dap-python": {
+      "rev": "64652d1",
+      "src": "https://github.com/mfussenegger/nvim-dap-python"
+    },
+    "nvim-dap-ui": {
+      "rev": "cf91d5e",
+      "src": "https://github.com/rcarriga/nvim-dap-ui"
+    },
     "nvim-dbee": {
-      "rev": "dda5176",
+      "rev": "dda517694889a5d238d7aa407403984da9f80cc0",
       "src": "https://github.com/kndndrj/nvim-dbee"
     },
     "nvim-jdtls": {
       "rev": "38d265e",
       "src": "https://github.com/mfussenegger/nvim-jdtls"
     },
+    "nvim-lint": {
+      "rev": "8b349e8",
+      "src": "https://github.com/mfussenegger/nvim-lint"
+    },
     "nvim-metals": {
       "rev": "40f7b9e",
       "src": "https://github.com/scalameta/nvim-metals"
+    },
+    "nvim-nio": {
+      "rev": "21f5324",
+      "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
       "rev": "d97d226c",
@@ -89,8 +116,8 @@
       "src": "https://github.com/quarto-dev/quarto-nvim"
     },
     "rest.nvim": {
-      "rev": "c794476",
-      "src": "https://github.com/kevinm6/rest.nvim"
+      "rev": "5466d1e447fc4b038ef511a7a2c4c7cbb13da01a",
+      "src": "https://github.com/rest-nvim/rest.nvim"
     },
     "schemastore.nvim": [],
     "snacks.nvim": {

@@ -68,7 +68,6 @@ end
 --- @param bufnr integer client passed to attach config
 function M.set_buf_keymaps(client, bufnr)
   local lsp = vim.lsp
-  vim.notify("LOADING KEYMAPS for LSP")
 
   local _, snacks = pcall(require, "snacks.picker")
 

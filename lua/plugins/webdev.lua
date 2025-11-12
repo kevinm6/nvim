@@ -5,17 +5,17 @@
 -- Last Modified: 12/08/2025, 09:42
 -------------------------------------
 
+---@class rest.Config
+vim.g.rest_nvim = {
+  request = {
+    skip_ssl_verification = true,
+  },
+}
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "http", "https" },
   -- dev = true,
   callback  = function()
-    vim.pack.add { "https://github.com/kevinm6/rest.nvim" }
-
-    require("rest-nvim").setup {
-      skip_ssl_verification = true,
-      encode_url = true
-    }
 
     vim.keymap.set("n", "<localleader>r", "<cmd>Rest run<cr>", { desc = "Run Request under cursor", buffer = true })
     vim.keymap.set("n", "<localleader>l", "<cmd>Rest last<cr>", { desc = "Run Last Request", buffer = true })

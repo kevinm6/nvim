@@ -5,12 +5,9 @@
 -- Last Modified: 11/05/2025, 09:35
 -------------------------------------
 
-vim.pack.add { { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") } }
---   version = vim.version.range("1.*")
--- }}
 
-vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
-  callback = function()
+-- vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
+--   callback = function()
     require("blink.cmp").setup {
       fuzzy = { implementation = "prefer_rust" },
       keymap = {
@@ -104,5 +101,5 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
       ghost_text = { enabled = true },
     },
   }
-end
-})
+-- end
+-- })
