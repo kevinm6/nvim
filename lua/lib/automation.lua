@@ -2,7 +2,7 @@
 --  File         : automation.lua
 --  Description  : automatic functions lib triggered by events
 --  Author       : Kevin
---  Last Modified: 07 Oct 2024, 18:54
+--  Last Modified: 15 Nov 2025, 22:27
 -------------------------------------
 
 local M = {}
@@ -10,19 +10,20 @@ local M = {}
 ---If buffer modified, update any 'Last modified: ' in the first 10 lines.
 ---Restores cursor and window position using save_cursor variable.
 function M.auto_timestamp()
-  vim.api.nvim_create_autocmd("BufWritePre", {
+  local _autoupdate_tmsp = vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoupdate_timestamp", { clear = true }),
     pattern = { "*.lua", "*.md", "*.yml" },
     callback = function()
       if vim.opt_local.modified:get() == true then
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-        vim.api.nvim_command [[0,10s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %h %Y, %H:%M')/g]]
+        vim.api.nvim_command [[0,10s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %b %Y, %H:%M')/g]]
         vim.fn.histdel("search", -1)
         vim.api.nvim_win_set_cursor(0, cursor_pos)
       end
     end,
   })
+  vim.g.autoupdate_timestamp = _autoupdate_tmsp
 end
 
 ---Auto Remove trailing spaces before saving current buffer

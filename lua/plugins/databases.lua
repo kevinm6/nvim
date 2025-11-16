@@ -5,18 +5,6 @@
 --  Last Modified: 15/11/2025, 15:44
 -------------------------------------
 
-vim.api.nvim_create_autocmd("PackChanged", {
-  -- pattern = "nvim-dbee",
-  desc = "Run `dbee.install` after pack update",
-  group = vim.api.nvim_create_augroup("nvim_dbee_update", { clear = true }),
-  callback = function(ev)
-    vim.print(ev)
-    -- if e.data.kind == "update" then
-    --   require("dbee").install()
-    -- end
-  end,
-})
-
 require("dbee").setup {
   default_connection = "default",     -- id of default connection set in `connection.json`
 

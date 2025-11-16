@@ -2,7 +2,7 @@
 -- File         : usercommands.lua
 -- Description  : User commands config
 -- Author       : Kevin
--- Last Modified: 13 May 2024, 12:08
+-- Last Modified: 15 Nov 2025, 22:28
 -------------------------------------
 
 local user_command = vim.api.nvim_create_user_command
@@ -155,13 +155,8 @@ usercmd_toggle("ToggleAutoTimeStamp", "auto_timestamp", {
   desc = "Update TimeStamp on save",
   on_enable = require("lib.automation").auto_timestamp,
   on_disable = function()
-    local has_autocmd, autocmd = pcall(vim.api.nvim_get_autocmds, {
-      event = "BufWritePre",
-      group = "_autoupdate_timestamp",
-      pattern = "*",
-    })
-    if has_autocmd then
-      vim.api.nvim_del_autocmd(autocmd[1].id)
+    if vim.g.autoupdate_timestamp then
+      vim.api.nvim_del_autocmd(vim.g.autoupdate_timestamp)
     end
   end,
 })

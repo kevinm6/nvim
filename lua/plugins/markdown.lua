@@ -1,6 +1,0 @@
--------------------------------------
---  File         : markdown.lua
---  Description  : markdown specific plugin configs
---  Author       : Kevin
---  Last Modified: 12/08/2025, 09:34
--------------------------------------

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : NeoVim configuration
 -- Author       : Kevin
--- Last Modified: 13 Jul 2024, 16:10
+-- Last Modified: 15 Nov 2025, 22:20
 --------------------------------------
 
 -- Set leader key
@@ -24,8 +24,8 @@ if not vim.g.vscode then
   ---Statusline & Winbar
   vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
-        require("lib.ui.statusline").toggle()
-        require("lib.ui.winbar").toggle()
+      require("lib.ui.statusline").toggle()
+      require("lib.ui.winbar").toggle()
     end
   })
 else
@@ -33,28 +33,3 @@ else
 end
 
 require "plugins"
-
--- local lazy_path = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
--- if not vim.uv.fs_stat(lazy_path) then
---   vim.fn.system {
---     "git",
---     "clone",
---     "--filter=blob:none",
---     "--single-branch",
---     "https://github.com/folke/lazy.nvim.git",
---     lazy_path,
---   }
--- end
--- vim.opt.rtp:prepend(lazy_path)
---
--- local has_lazy, lazy = pcall(require, "lazy")
--- if not has_lazy then
---   vim.notify(
---     string.format("Error loading lazy config \n (%s) \n", lazy),
---     vim.log.levels.ERROR,
---     { timeout = 2000, title = "Lazy" }
---   )
---   return
--- else
---   require "lazy_config"
--- end

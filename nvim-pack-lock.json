@@ -95,10 +95,6 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
-    "nvim-ufo": {
-      "rev": "72d54c3",
-      "src": "https://github.com/kevinhwang91/nvim-ufo"
-    },
     "otter.nvim": {
       "rev": "fc0aa35",
       "src": "https://github.com/jmbuhr/otter.nvim"
@@ -106,10 +102,6 @@
     "plenary.nvim": {
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
-    "promise-async": {
-      "rev": "119e896",
-      "src": "https://github.com/kevinhwang91/promise-async"
     },
     "quarto-nvim": {
       "rev": "0e94915",
@@ -121,8 +113,8 @@
     },
     "schemastore.nvim": [],
     "snacks.nvim": {
-      "rev": "de1cd71",
-      "src": "https://github.com/kevinm6/snacks.nvim"
+      "rev": "836e07336ba523d4da480cd66f0241815393e98e",
+      "src": "https://github.com/folke/snacks.nvim"
     },
     "sqls.nvim": {
       "rev": "bfb7b40",

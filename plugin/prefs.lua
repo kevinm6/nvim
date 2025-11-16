@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 04/10/2025, 08:36
+-- Last Modified: 16 Nov 2025, 13:38
 -------------------------------------
 
 local settings = {
