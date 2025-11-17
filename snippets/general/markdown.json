@@ -292,17 +292,17 @@
   },
   "Markdown Head": {
     "prefix": "head",
-    "body": ["# ${TM_FILENAME}$1\n", "---\n", "$0"],
+    "body": ["# ${TM_FILENAME_BASE}$1\n", "---\n", "$0"],
     "description": "Markdown files head (info)"
   },
   "file-info_yaml": {
     "prefix": "infyml",
     "body": [
       "---",
-      "File          : ${TM_FILENAME}",
+      "File          : ${TM_FILENAME_BASE}",
       "Author        : ${1:AuthorName}",
-      "Date Created  : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
-      "Last Modified : ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "Date Created  : ${CURRENT_DATE} ${CURRENT_MONTH_NAME_SHORT} ${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "Last Modified : ${CURRENT_DATE} ${CURRENT_MONTH_NAME_SHORT} ${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
       "---\n",
       "# ${2:Title}\n",
       "---\n",
@@ -313,7 +313,7 @@
   "file-info-pandoc": {
     "prefix": "infp",
     "body": [
-      "% ${TM_FILENAME}$1",
+      "% ${TM_FILENAME_BASE}$1",
       "% ${2:Author}",
       "% ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
       "\n---",

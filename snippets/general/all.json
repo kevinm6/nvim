@@ -11,6 +11,13 @@
     ],
     "description": "Date and Time stamp"
   },
+  "Date&TimeFormat": {
+    "prefix": "datetimef",
+    "body": [
+      "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} - ${CURRENT_HOUR}:${CURRENT_MINUTE}"
+    ],
+    "description": "Date and Time stamp"
+  },
   "Time": {
     "prefix": "time",
     "body": ["${CURRENT_HOUR}:${CURRENT_MINUTE}"],

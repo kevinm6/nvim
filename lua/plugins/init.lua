@@ -19,7 +19,16 @@ vim.pack.add({
 ---Plugin: lazy loading
 vim.pack.add({
   ---Completion
-  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+  {
+    src = "https://github.com/saghen/blink.cmp",
+    version = vim.version.range("1.*"),
+    data = {
+      ev = { "InsertEnter", "CmdLineEnter" },
+      config = function()
+        require "plugins.completion"
+      end
+    }
+  },
 
   ---DAP
   { src = "https://github.com/rcarriga/nvim-dap-ui" },
@@ -31,7 +40,7 @@ vim.pack.add({
       config = function ()
         vim.cmd.packadd "nvim-nio"
         vim.cmd.packadd "nvim-dap-ui"
-        require("plugins.dap")
+        require "plugins.dap"
       end
     }
   },
@@ -228,7 +237,7 @@ vim.pack.add({
           }
         }
 
-        vim.keymap.set("n", "<localleader>r", ":RenderMarkdown toggle", { desc = "Render Markdown" })
+        vim.keymap.set("n", "<localleader>r", ":RenderMarkdown toggle<CR>", { desc = "Render Markdown" })
         vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "TabLine" })
       end
     }
@@ -598,7 +607,6 @@ vim.pack.add({
 require("plugins.snacks")
 require("plugins.coding_helper")
 require("plugins.treesitter")
-require("plugins.completion")
 
 ---Hooks to be used for some plugins installation or updates that requires other steps
 ---@param ev table
