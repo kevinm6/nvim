@@ -2,88 +2,17 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 06/07/2025, 11:44
+--  Last Modified: 29 Nov 2025, 20:54
 -----------------------------------
 
----DAP-UI
-require("dapui").setup {
-  icons = { expanded = "", collapsed = "" },
-  mappings = {
-    -- Use a table to apply multiple mappings
-    expand = { "<CR>", "<2-LeftMouse>", "<C-l>" },
-    open = "o",
-    remove = "d",
-    edit = "e",
-    repl = "r",
-    toggle = "t",
-  },
-
-  layouts = {
-    {
-      elements = {
-        "scopes",
-        "breakpoints",
-        "stacks",
-        "watches",
-      },
-      size = 0.15,
-      position = "left",
-    },
-    {
-      elements = {
-        "console",
-        "repl",
-      },
-      size = 0.25,
-      position = "bottom",
-    },
-  },
-
-  floating = {
-    max_height = nil,
-    max_width = nil,
-    border = "rounded",
-    mappings = {
-      close = { "q", "<Esc>" },
-    },
-  },
-
-  windows = { indent = 1 },
-  -- vim.keymap.set("n", "<leader>de", function() end)
-}
 ---DAP
 local sl_to_exclude = require("lib.ui.statusline").to_exclude
-local dap_ft = {
-  "dapui_hover",
-  "dapui_console",
-  "dapui_scopes",
-  "dapui_breakpoints",
-  "dapui_stacks",
-  "dapui_watches",
-  "dap-repl",
-  "dap-float",
-}
+local dap_ft = { "dap-repl", "dap-float", "dap-view" }
 for _, v in pairs(dap_ft) do
   sl_to_exclude[v] = true
 end
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "python",
-  callback = function()
-    vim.pack.add { "https://github.com/mfussenegger/nvim-dap-python" }
-
-    local dap_py_venv = vim.fn.stdpath("data") .. "/.venv/bin/python3.12"
-    if vim.fn.executable(dap_py_venv) then
-      require "dap-python".setup(dap_py_venv)
-    else
-      vim.notify("Python not found", vim.log.levels.WARN, { title = "Nvim-dap-python" })
-    end
-  end
-})
-
-local dap = require("dap")
--- event = { "BufRead", "BufNewFile" },
--- keys = { { "<leader>d", desc = "DAP" } },
+local dap = require "dap"
 
 dap.defaults.fallback.external_terminal = {
   command = vim.fn.exepath "kitty",
@@ -155,7 +84,7 @@ dap.configurations.lua = {
     request = "launch",
     cwd = "${workspaceFolder}",
     program = {
-      lua = "nlua.lua",
+      lua = vim.fn.expand "~/.luarocks/bin/nlua.lua",
       file = "${file}",
     },
     verbose = true,
@@ -179,7 +108,7 @@ dap.configurations.python = {
     console = "integratedTerminal",
     pythonPath = function()
       return vim.env.VIRTUAL_ENV and vim.env.VIRTUAL_ENV .. "/bin/python" or
-        vim.fn.stdpath("data") .. "/.venv/bin/python"
+          vim.fn.stdpath("data") .. "/.venv/bin/python"
     end
   },
 }
@@ -252,7 +181,7 @@ dap.adapters["pwa-node"] = {
 
 for _, lang in pairs(js_based_languages) do
   dap.configurations[lang] = {
-    {   -- single nodejs file
+    { -- single nodejs file
       type = "pwa-node",
       request = "launch",
       name = "Launch file",
@@ -271,7 +200,7 @@ for _, lang in pairs(js_based_languages) do
         "node_modules/**",
       },
     },
-    {   -- debug nodejs process (need --inspect flag to get the processId)
+    { -- debug nodejs process (need --inspect flag to get the processId)
       type = "pwa-node",
       request = "attach",
       name = "Attach",
@@ -300,12 +229,12 @@ for _, lang in pairs(js_based_languages) do
             prompt = "Enter URL: ",
             default = "http://localhost:3000",
           }, function(url)
-              if url == nil or url == "" then
-                return
-              else
-                coroutine.resume(co, url)
-              end
-            end)
+            if url == nil or url == "" then
+              return
+            else
+              coroutine.resume(co, url)
+            end
+          end)
         end)
       end,
       webRoot = "${workspaceFolder}",
@@ -412,26 +341,39 @@ dap.configurations.sh = {
 -- }
 
 vim.fn.sign_define("DapBreakpoint", {
-  text = " ",
-  texthl = "DiagnosticSignError",
+  text = " ",
+  texthl = "DiagnosticWarn",
   linehl = "",
   numhl = "",
 })
 
-local dapui = require "dapui"
-dap.listeners.before.attach.dapui_config = function()
-  dapui.open()
-end
-dap.listeners.before.launch.dapui_config = function()
-  dapui.open()
-end
+vim.fn.sign_define("DapBreakpointCondition", {
+  text = " ",
+  texthl = "DiagnosticWarn",
+  linehl = "",
+  numhl = "",
+})
+vim.fn.sign_define("DapLogPoint", {
+  text = " ",
+  texthl = "DiagnosticInformation",
+  linehl = "",
+  numhl = "DiagnosticInformation",
+})
+vim.fn.sign_define("DapStopped", {
+  text = "⇲ ",
+  texthl = "DiagnosticOk",
+  linehl = "",
+  numhl = "DiagnosticOk"
+})
+vim.fn.sign_define("DapBreakpointRejected", {
+  text = " ",
+  texthl = "DiagnosticError",
+  linehl = "",
+  numhl = "DiagnosticError",
+})
 
-dap.listeners.before.event_terminated.dapui_config = function()
-  dapui.close()
-end
-dap.listeners.before.event_exited.dapui_config = function()
-  dapui.close()
-end
+local dapv = require "dap-view"
+-- dap.listeners.before.launch.dapui_config = dapv.open --open UI on launch
 
 -- set keymaps
 local function map(tbl)
@@ -453,19 +395,10 @@ map { "<F9>", dap.step_over, "Over" }
 map { "<localleader>dO", dap.step_out, "Out" }
 map { "<localleader>dr", dap.repl.toggle, "Repl" }
 map { "<localleader>dl", dap.run_last, "Last" }
-map { "<localleader>du", require("dapui").toggle, "UI" }
+map { "<localleader>du", dapv.toggle, "UI" }
 map { "<localleader>dx", dap.terminate, "Exit" }
 map { "<localleader>dc", dap.continue, "Run Debug" }
 map { "<F8>", dap.continue, "Run Debug" }
-
-map {
-  mode = { "v", "x" },
-  "<C-S-k>",
-  function()
-    dapui.eval()
-  end,
-  "Eval",
-}
 
 map {
   "<localleader>dC",
@@ -491,11 +424,14 @@ dap.listeners.after["event_initialized"]["me"] = function()
     end
   end
   vim.keymap.set("n", "<localleader>k", function()
-    require("dap.ui.widgets").hover()
-  end, { desc = "DAP•Hover", silent = true })
-  vim.keymap.set("n", "<localleader>K", function()
-    dapui.eval()
-  end, { desc = "DAP•eval", silent = true })
+    require("dap.ui.widgets").hover(vim.fn.expand "<cexpr>", {
+      title = "DAP❭ Hover",
+      border = "rounded",
+    })
+  end, { desc = "DAP❭ Hover", silent = true })
+  vim.keymap.set({ "n", "v", "x" }, "<localleader>K", function()
+    dap.preview()
+  end, { desc = "DAP❭ Preview", silent = true })
 end
 
 dap.listeners.after["event_terminated"]["me"] = function()
@@ -504,3 +440,10 @@ dap.listeners.after["event_terminated"]["me"] = function()
   end
   keymap_restore = {}
 end
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "dap-view", "dap-view-term", "dap-repl" },
+  callback = function(args)
+    vim.keymap.set("n", "q", "<C-w>q", { buffer = args.buf })
+  end,
+})

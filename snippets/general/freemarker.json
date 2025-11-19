@@ -35,5 +35,10 @@
       "$0"
     ],
     "description": "If statement"
+  },
+  "todo": {
+    "prefix": "todo",
+    "body": "${BLOCK_COMMENT_START} ${1|TODO,WARN,ERROR,FIX,HACK|}:${2:body} ${BLOCK_COMMENT_END}\n$0",
+    "description": "ToDo comment"
   }
 }

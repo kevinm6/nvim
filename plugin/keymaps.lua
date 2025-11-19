@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 23/08/2025, 09:25
+-- Last Modified: 29 Nov 2025, 11:00
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -383,154 +383,154 @@ vim.cmd.cnoreabbrev("XA", "xa")
 --TODO nvim-0.11 ?
 --NOTE enable on nvim-0.11 if snippets are available?
 ---Completion
-local function feedkeys(keys)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
-end
-
-local function pumvisible()
-  return tonumber(vim.fn.pumvisible()) ~= 0
-end
-
-map {
-  "i",
-  "<cr>",
-  function()
-    return pumvisible() and "<C-y>" or "<cr>"
-  end,
-  { expr = true, desc = "Completion confirm" },
-}
-
--- Use <C-n> to navigate to the next completion or:
--- - Trigger LSP completion.
--- - If there's no one, fallback to vanilla omnifunc.
-
-imap {
-  "<C-n>",
-  function()
-    if pumvisible() then
-      feedkeys "<C-n>"
-    else
-      if next(vim.lsp.get_clients { bufnr = 0 }) then
-        vim.lsp.completion.get()
-      else
-        if vim.bo.omnifunc == "" then
-          feedkeys "<C-x><C-n>"
-        else
-          feedkeys "<C-x><C-o>"
-        end
-      end
-    end
-  end,
-  "Trigger/select next completion",
-}
-
-imap {
-  "<C-j>",
-  function()
-    if pumvisible() then
-      feedkeys "<C-n>"
-    else
-      feedkeys "<C-j>"
-      -- if next(vim.lsp.get_clients { bufnr = 0 }) then
-      --   vim.lsp.completion.trigger()
-      -- else
-      --   if vim.bo.omnifunc == "" then
-      --     feedkeys "<C-x><C-n>"
-      --   else
-      --     feedkeys "<C-x><C-o>"
-      --   end
-      -- end
-    end
-  end,
-  "select next completion",
-}
-
-imap {
-  "<C-k>",
-  function()
-    if pumvisible() then
-      feedkeys "<C-p>"
-    else
-      feedkeys "<C-k>"
-      -- if next(vim.lsp.get_clients { bufnr = 0 }) then
-      --   vim.lsp.completion.trigger()
-      -- else
-      -- if vim.bo.omnifunc == "" then
-      --   feedkeys "<C-x><C-p>"
-      -- else
-      --   feedkeys "<C-x><C-o>"
-      -- end
-      -- end
-    end
-  end,
-  "Trigger/select next completion",
-}
-
-imap {
-  "<C-space>",
-  function()
-    if pumvisible() then
-      feedkeys "<C-e>"
-    else
-      feedkeys "<C-x><C-o>"
-    end
-  end,
-  "Toggle completion",
-}
-
-map {
-  { "i", "x" },
-  "<C-l>",
-  function()
-    if pumvisible() then
-      feedkeys "<C-y>"
-    else
-      feedkeys "<C-e>"
-    end
-  end,
-  { desc = "Trigger/confirm completion" },
-}
-
-map {
-  { "i", "x" },
-  "<C-u>",
-  function()
-    if pumvisible() then
-      feedkeys "<C-e><C-u>"
-    else
-      feedkeys "<C-u>"
-    end
-  end,
-  { desc = "Stop completion and delete to start" },
-}
-
-map {
-  { "i", "s" },
-  "<C-i>",
-  function()
-    if vim.snippet.active { direction = 1 } then
-      vim.schedule(function()
-        vim.snippet.jump(1)
-      end)
-    else
-      feedkeys "<C-i>"
-    end
-  end,
-  { desc = "Snippet jump forwards" },
-}
-
--- prev position of snippet $x -> $x-1
-map {
-  { "i", "s" },
-  "<C-S-i>",
-  function()
-    if vim.snippet.active { direction = -1 } then
-      vim.schedule(function()
-        vim.snippet.jump(-1)
-      end)
-    else
-      feedkeys "<C-S-i>"
-    end
-  end,
-  { desc = "Snippet jump backward" },
-}
+-- local function feedkeys(keys)
+--   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", true)
+-- end
+--
+-- local function pumvisible()
+--   return tonumber(vim.fn.pumvisible()) ~= 0
+-- end
+--
+-- map {
+--   "i",
+--   "<cr>",
+--   function()
+--     return pumvisible() and "<C-y>" or "<cr>"
+--   end,
+--   { expr = true, desc = "Completion confirm" },
+-- }
+--
+-- -- Use <C-n> to navigate to the next completion or:
+-- -- - Trigger LSP completion.
+-- -- - If there's no one, fallback to vanilla omnifunc.
+--
+-- imap {
+--   "<C-n>",
+--   function()
+--     if pumvisible() then
+--       feedkeys "<C-n>"
+--     else
+--       if next(vim.lsp.get_clients { bufnr = 0 }) then
+--         vim.lsp.completion.get()
+--       else
+--         if vim.bo.omnifunc == "" then
+--           feedkeys "<C-x><C-n>"
+--         else
+--           feedkeys "<C-x><C-o>"
+--         end
+--       end
+--     end
+--   end,
+--   "Trigger/select next completion",
+-- }
+--
+-- imap {
+--   "<C-j>",
+--   function()
+--     if pumvisible() then
+--       feedkeys "<C-n>"
+--     else
+--       feedkeys "<C-j>"
+--       -- if next(vim.lsp.get_clients { bufnr = 0 }) then
+--       --   vim.lsp.completion.trigger()
+--       -- else
+--       --   if vim.bo.omnifunc == "" then
+--       --     feedkeys "<C-x><C-n>"
+--       --   else
+--       --     feedkeys "<C-x><C-o>"
+--       --   end
+--       -- end
+--     end
+--   end,
+--   "select next completion",
+-- }
+--
+-- imap {
+--   "<C-k>",
+--   function()
+--     if pumvisible() then
+--       feedkeys "<C-p>"
+--     else
+--       feedkeys "<C-k>"
+--       -- if next(vim.lsp.get_clients { bufnr = 0 }) then
+--       --   vim.lsp.completion.trigger()
+--       -- else
+--       -- if vim.bo.omnifunc == "" then
+--       --   feedkeys "<C-x><C-p>"
+--       -- else
+--       --   feedkeys "<C-x><C-o>"
+--       -- end
+--       -- end
+--     end
+--   end,
+--   "Trigger/select next completion",
+-- }
+--
+-- imap {
+--   "<C-space>",
+--   function()
+--     if pumvisible() then
+--       feedkeys "<C-e>"
+--     else
+--       feedkeys "<C-x><C-o>"
+--     end
+--   end,
+--   "Toggle completion",
+-- }
+--
+-- map {
+--   { "i", "x" },
+--   "<C-l>",
+--   function()
+--     if pumvisible() then
+--       feedkeys "<C-y>"
+--     else
+--       feedkeys "<C-e>"
+--     end
+--   end,
+--   { desc = "Trigger/confirm completion" },
+-- }
+--
+-- map {
+--   { "i", "x" },
+--   "<C-u>",
+--   function()
+--     if pumvisible() then
+--       feedkeys "<C-e><C-u>"
+--     else
+--       feedkeys "<C-u>"
+--     end
+--   end,
+--   { desc = "Stop completion and delete to start" },
+-- }
+--
+-- map {
+--   { "i", "s" },
+--   "<C-i>",
+--   function()
+--     if vim.snippet.active { direction = 1 } then
+--       vim.schedule(function()
+--         vim.snippet.jump(1)
+--       end)
+--     else
+--       feedkeys "<C-i>"
+--     end
+--   end,
+--   { desc = "Snippet jump forwards" },
+-- }
+--
+-- -- prev position of snippet $x -> $x-1
+-- map {
+--   { "i", "s" },
+--   "<C-S-i>",
+--   function()
+--     if vim.snippet.active { direction = -1 } then
+--       vim.schedule(function()
+--         vim.snippet.jump(-1)
+--       end)
+--     else
+--       feedkeys "<C-S-i>"
+--     end
+--   end,
+--   { desc = "Snippet jump backward" },
+-- }

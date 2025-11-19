@@ -2,11 +2,11 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 16 Nov 2025, 13:31
+--  Last Modified: 29 Nov 2025, 20:55
 -------------------------------------
 
----Plugin: load on start
 vim.pack.add({
+  ---Plugin: load on start
   ---QoL plugins
   "https://github.com/echasnovski/mini.nvim",
 
@@ -14,10 +14,8 @@ vim.pack.add({
 
   ---Treesitter
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
-})
 
----Plugin: lazy loading
-vim.pack.add({
+  ---Plugin: lazy loading
   ---Completion
   {
     src = "https://github.com/saghen/blink.cmp",
@@ -25,22 +23,46 @@ vim.pack.add({
     data = {
       ev = { "InsertEnter", "CmdLineEnter" },
       config = function()
-        require "plugins.completion"
+        require "km.completion"
       end
     }
   },
 
   ---DAP
-  { src = "https://github.com/rcarriga/nvim-dap-ui" },
-  { src = "https://github.com/nvim-neotest/nvim-nio" },
   {
     src = "https://github.com/mfussenegger/nvim-dap",
     data = {
       ev = "VimEnter",
       config = function ()
-        vim.cmd.packadd "nvim-nio"
-        vim.cmd.packadd "nvim-dap-ui"
-        require "plugins.dap"
+        vim.cmd.packadd "nvim-dap-view"
+        require "km.dap"
+      end
+    }
+  },
+  {
+    src = "https://github.com/igorlfs/nvim-dap-view",
+    data = {
+      ev = "VimEnter",
+      config = function()
+        require("dap-view").setup {
+          windows = {
+            height = 0.24,
+          },
+          winbar = {
+            sections = {
+              "watches",
+              "scopes",
+              "breakpoints",
+              "exceptions",
+              "repl",
+              "console",
+              "threads",
+            },
+            controls = { enabled = true },
+          },
+          help = { border = "rounded" }
+        }
+
       end
     }
   },
@@ -79,6 +101,7 @@ vim.pack.add({
       config = function()
         local lint = require "lint"
         lint.linters_by_ft = {
+          groovy = { "npm-groovy-lint" },
           markdown = { "markdownlint" },
           json = { "biomejs" },
           javascript = { "biomejs", "eslint_d" },
@@ -87,6 +110,9 @@ vim.pack.add({
           gitcommit = { "commitlint" },
           php = { "php" },
           yaml = { "yamllint" },
+        }
+        lint.linters["npm-groovy-lint"].args = {
+          "--config", vim.fn.expand "~/.groovylintrc.json"
         }
 
         lint.linters.markdownlint.args = {
@@ -143,6 +169,7 @@ vim.pack.add({
             -- To organize the imports.
             "ruff_organize_imports",
           },
+          groovy = { "npm-groovy-lint" },
           bash = { "beautysh" },
           zsh = { "beautysh" },
           css = { "prettier" },
@@ -162,6 +189,7 @@ vim.pack.add({
         end
 
         opts.formatters = {
+          groovy = { "npm-groovy-lint" },
           beautysh = {
             args = { "$FILENAME" },
           },
@@ -195,7 +223,7 @@ vim.pack.add({
           conform.format { async = true, lsp_format = "fallback", range = range }
         end, { range = true })
 
-        vim.keymap.set("n", "<leader>lf", function()
+        vim.keymap.set({ "n", "x", "v" }, "<leader>lf", function()
           conform.format { async = true, lsp_fallback = true }
         end, { desc = "Format <buf>", })
         require("lib").user_command_toggle("ToggleAutoFormat", "disable_autoformat", {
@@ -251,11 +279,26 @@ vim.pack.add({
       cmd = { "Dbee" },
       config = function()
         vim.cmd.packadd "nui.nvim"
-        require "plugins.databases"
+        require "km.databases"
       end
     }
   },
 
+  ---Python
+  {
+    src = "https://github.com/mfussenegger/nvim-dap-python",
+    data = {
+      ft = { "python" },
+      config = function()
+        local dap_py_venv = vim.fn.stdpath "data" .. "/.venv/bin/python3.12"
+        if vim.fn.executable(dap_py_venv) then
+          require "dap-python".setup(dap_py_venv)
+        else
+          vim.notify("Python not found", vim.log.levels.WARN, { title = "Nvim-dap-python" })
+        end
+      end
+    }
+  },
   ---Go
   {
     src = "https://github.com/ray-x/go.nvim",
@@ -385,6 +428,7 @@ vim.pack.add({
     src = "https://github.com/benlubas/molten-nvim",
     version = vim.version.range("^1.0.0"),
     data = {
+      cmd = { "MoltenInit" },
       ft = { "qmd", "jupyter_notebook", "quarto" },
       config = function()
         --   build = ":UpdateRemotePlugins",
@@ -579,6 +623,7 @@ vim.pack.add({
     end
     if data.ft then
       vim.api.nvim_create_autocmd("FileType", {
+        once = true,
         pattern = data.ft,
         callback = function()
           vim.cmd.packadd(p.spec.name)
@@ -590,6 +635,7 @@ vim.pack.add({
     end
     if data.ev then
       vim.api.nvim_create_autocmd(data.ev, {
+        once = true,
         callback = function()
           vim.cmd.packadd(p.spec.name)
           if p.spec.data and p.spec.data.config then
@@ -604,9 +650,9 @@ vim.pack.add({
   end,
 })
 
-require("plugins.snacks")
-require("plugins.coding_helper")
-require("plugins.treesitter")
+require "km.snacks"
+require "km.coding_helper"
+require "km.treesitter"
 
 ---Hooks to be used for some plugins installation or updates that requires other steps
 ---@param ev table

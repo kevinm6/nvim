@@ -2,7 +2,7 @@
 --  File         : lsp.lua
 --  Description  : lsp utility functions
 --  Author       : Kevin
---  Last Modified: 01/06/2025, 10:16
+--  Last Modified: 29 Nov 2025, 17:26
 -------------------------------------
 
 local M = {}
@@ -79,7 +79,7 @@ function M.set_buf_keymaps(client, bufnr)
     "n",
     "<leader>ld",
     function()
-     local has_snacks, picker = pcall(require, "snacks.picker")
+      local has_snacks, picker = pcall(require, "snacks.picker")
       if has_snacks then
         picker.diagnostics()
       else
@@ -247,10 +247,8 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
 
     autocmd("LspDetach", {
       group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
-      callback = function()
-        lsp.buf.clear_references()
-        -- vim.api.nvim_clear_autocmds { group = _lsp_hi_group, buffer = bufnr }
-      end,
+      callback = lsp.buf.clear_references
+      -- vim.api.nvim_clear_autocmds { group = _lsp_hi_group, buffer = bufnr }
     })
   end
 

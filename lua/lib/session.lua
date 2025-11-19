@@ -2,7 +2,7 @@
 --  File         : session.lua
 --  Description  : module to manage vim builtin sessions
 --  Author       : Kevin
---  Last Modified: 29 Mar 2025, 23:33
+--  Last Modified: 26 Nov 2025, 20:23
 -------------------------------------
 
 local M = {
@@ -63,8 +63,8 @@ local function restore_session()
       end,
       default = nil,
     }, function(choice)
-      local s_name = vim.fn.fnamemodify(choice or "", ":p:t:r")
       if choice then
+        local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
         vim.cmd.source(choice)
         require("lib.ui.statusline").session_name = s_name
         vim.notify(string.format("Session < %s > restored", s_name), vim.log.levels.INFO)

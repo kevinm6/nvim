@@ -2,12 +2,13 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 15/11/2025, 19:42
+-- Last Modified: 24 Nov 2025, 20:25
 -------------------------------------
 
 require("snacks").setup {
-  bigfile = {},
+  bigfile = { enabled = false },
   dashboard = {
+    enabled = false,
     preset = {
       keys = {
         { icon = "", key = "n", desc = "New file", action = ":lua require 'lib'.new_file()" },
@@ -76,7 +77,7 @@ require("snacks").setup {
       end
     end
   },
-  -- explorer = {},
+  explorer = { enabled = false },
   -- input = {
   --   relative = "editor",
   --   row = -2,
@@ -650,7 +651,7 @@ require("snacks").setup {
       },
     },
   },
-  quickfile = {},
+  quickfile = { enabled = false },
 }
 
 vim.keymap.set("n", "<leader><leader>", function()
@@ -660,7 +661,7 @@ end, { desc = "Buffers" })
 vim.keymap.set("n", "<leader>fs", function()
   Snacks.picker.smart()
 end, { desc = "Smart search" })
-vim.keymap.set("n", "<leader>fF", function()
+vim.keymap.set("n", "<leader>/", function()
   Snacks.picker.grep()
 end, { desc = "Find Text (LiveGrep)" })
 
@@ -700,7 +701,7 @@ end, { desc = "Environment" })
 vim.keymap.set("n", "<leader>fO", function()
   require("lib.software_licenses").pick_license()
 end, { desc = "Software Licenses" })
-vim.keymap.set("n", "<leader>fw", function()
+vim.keymap.set("n", "<leader>g/", function()
   Snacks.picker.grep_word { search = vim.fn.expand "<cword>" }
 end, { desc = "Grep < cword >" })
 vim.keymap.set("n", "<leader>fW", function()

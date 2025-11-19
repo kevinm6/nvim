@@ -32,4 +32,4 @@ else
   vim.opt.shadafile = vim.fn.stdpath "state" .. "/shada/vscnvim.shada"
 end
 
-require "plugins"
+require "km"

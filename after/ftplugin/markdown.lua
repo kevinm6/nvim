@@ -35,3 +35,5 @@ end
 vim.api.nvim_create_user_command("TOpdf", function()
   require("lib.pdf").convert_md_to_pdf()
 end, { desc = "Export markdown to pdf" })
+
+require("lib.automation").auto_timestamp("*.md")

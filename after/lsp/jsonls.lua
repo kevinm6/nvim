@@ -1,4 +1,5 @@
-vim.pack.add { "https://github.com/b0o/schemastore.nvim" }
+vim.cmd.packadd "schemastore.nvim"
+
 -- install with:
 --   npm install -g vscode-langservers-extracted
 ---@type vim.lsp.Config

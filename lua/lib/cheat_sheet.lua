@@ -2,7 +2,7 @@
 -- File         : cheat_sheet.lua
 -- Description  : query < https://cht.sh > to get result in Neovim
 -- Author       : Kevin
--- Last Modified: 26 Apr 2024, 20:43
+-- Last Modified: 26 Nov 2025, 21:10
 -----------------------------------
 
 local M = {
@@ -121,13 +121,16 @@ function M.open_preview(args)
   end
 
   set_opt("modifiable", false, { buf = M.main_buf })
+  set_opt("swapfile", false, { buf = M.main_buf })
+  set_opt("bufhidden", "wipe", { buf = M.main_buf })
+  set_opt("buftype", "nofile", { buf = M.main_buf })
+  set_opt("buftype", "nofile", { buf = M.main_buf })
   vim.keymap.set("n", "<esc><esc>", "<cmd>quit<cr>", {
     desc = "Close CheatSH",
     buffer = M.main_buf,
   })
-
   -- Stop client if is started due to the ft option set to highlights the syntax of output
-  vim.lsp.stop_client(vim.lsp.get_clients { bufnr = M.main_buf })
+  -- vim.lsp.stop_client(vim.lsp.get_clients { bufnr = M.main_buf })
 end
 
 return M

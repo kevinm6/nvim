@@ -2,7 +2,7 @@
 -- File         : usercommands.lua
 -- Description  : User commands config
 -- Author       : Kevin
--- Last Modified: 15 Nov 2025, 22:28
+-- Last Modified: 26 Nov 2025, 20:56
 -------------------------------------
 
 local user_command = vim.api.nvim_create_user_command
@@ -100,23 +100,23 @@ end, { desc = "Ncdu", force = true })
 
 ---Dotfiles
 user_command("Dotfiles", function()
-  local has_oil, oil = pcall(require, "oil")
+  local has_mini, mini_files = pcall(require, "mini.files")
   local dotfiles_dir = vim.env.DOTFILES or vim.fn.expand "~/.MacDotfiles"
-  if not has_oil then
+  if not has_mini then
     vim.cmd.edit(dotfiles_dir)
   else
-    oil.open_float(dotfiles_dir)
+    mini_files.open(dotfiles_dir)
   end
 end, { desc = "Open Dotfiles dir" })
 
 ---University
 user_command("University", function()
-  local has_oil, oil = pcall(require, "oil")
+  local has_mini, mini_files = pcall(require, "mini.files")
   local university_dir = vim.env.CS or vim.fn.expand "~/Informatica/"
-  if not has_oil then
+  if not has_mini then
     vim.cmd.edit(university_dir)
   else
-    oil.open_float(university_dir)
+    mini_files.open_float(university_dir)
   end
 end, { desc = "Open Dotfiles dir" })
 

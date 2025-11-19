@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 02/11/2025, 17:49
+-- Last Modified: 29 Nov 2025, 20:48
 -----------------------------------------
 
 local M = {
@@ -10,6 +10,7 @@ local M = {
   session_name = "",
   ---filetypes to exclude
   to_exclude = {
+    [""] = true,
     lspinfo = true,
     snacks_terminal = true,
     snacks_picker_input = true,
@@ -17,7 +18,6 @@ local M = {
     snacks_picker_preview = true,
     qf = true,
     toggleterm = true,
-    lazy = true,
     mason = true,
     noice = true,
     terminal = true,
@@ -27,6 +27,7 @@ local M = {
     httpResult = true,
     minifiles = true,
     gradle_output = true,
+    ["nvim-pack"] = true,
   },
   ---width values used to display info if win-size is between
   preset_width = setmetatable({
@@ -42,6 +43,7 @@ local M = {
     end,
   }),
   icons = setmetatable({
+    neovim = "",
     error = "",
     warning = "",
     information = "",
@@ -399,31 +401,24 @@ local function disabled_statusline()
   local modifiedReadOnlyFlags = "%m%r"
 
   local special_filetypes = {
-    -- snacks_dashboard = M.icons.dashboard .. " Dashboard",
-    oil = M.icons.folder .. " File Explorer",
-    lazy = M.icons.table .. " Plugin Manager",
+    [""] = M.icons.neovim .. " Neovim",
+    ["nvim-pack"] = M.icons.table .. " Plugin Manager",
     lspinfo = M.icons.lsp_info .. " LSP Status",
     snacks_terminal = M.icons.robots .. " Terminal",
-    snacks_picker_input = M.icons.search .. " Picker•Input",
-    snacks_picker_list = M.icons.list .. " Picker•List",
-    snacks_picker_preview = M.icons.default .. " Picker•Preview",
+    snacks_picker_input = M.icons.search .. " Picker❭ Input",
+    snacks_picker_list = M.icons.list .. " Picker❭ List",
+    snacks_picker_preview = M.icons.default .. " Picker❭ Preview",
     qf = M.icons.config .. " QuickFix",
     terminal = M.icons.robots .. "Terminal",
     mason = M.icons.list .. " Package Manager",
     Outline = M.icons.table .. " Symbols Outline",
-    noice = M.icons.list .. " Notifications",
     checkhealth = M.icons.checkhealth .. " Health",
     query = M.icons.query .. " Query",
     dbui = M.icons.db .. " Database",
     httpResult = M.icons.web .. " Http",
-    dapui_hover = M.icons.dapui_hover .. " DapUI•Hover",
-    dapui_watches = M.icons.dapui_watches .. " DapUI•Watches",
-    dapui_stacks = M.icons.dapui_stacks .. " DapUI•Stacks",
-    dapui_console = M.icons.dapui_console .. " DapUI•Console",
-    dapui_scopes = M.icons.dapui_scopes .. " DapUI•Scopes",
-    dapui_breakpoints = M.icons.dapui_breakpoints .. " DapUI•Breakpoints",
-    ["dap-float"] = M.icons.dapui_watches .. " DapUI•Hover",
-    ["dap-repl"] = M.icons.robots .. " DapUI•Repl",
+    ["dap-float"] = M.icons.dapui_watches .. " DapUI❭ Hover",
+    ["dap-repl"] = M.icons.robots .. " DapUI❭ Repl",
+    ["dap-view"] = M.icons.dapui_watches .. " DapUI",
   }
   local custom_ft = special_filetypes[vim.bo.filetype]
 

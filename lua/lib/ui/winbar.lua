@@ -2,7 +2,7 @@
 -- File         : winbar.lua
 -- Description  : Personal winbar config
 -- Author       : Kevin Manca
--- Last Modified: 11 May 2024, 11:44
+-- Last Modified: 29 Nov 2025, 15:53
 -----------------------------------------
 
 local winbar = {
@@ -10,17 +10,14 @@ local winbar = {
   to_exclude = {
     dashboard = true,
     alpha = true,
-    WhichKey = true,
     lspinfo = true,
     qf = true,
-    snacks_terminal = true,
     snacks_picker_input = true,
     snacks_picker_list = true,
     snacks_picker_preview = true,
     toggleterm = true,
     lazy = true,
     mason = true,
-    noice = true,
     checkhealth = true,
     notify = true,
     cmpmenu = true,
@@ -29,7 +26,7 @@ local winbar = {
     help = true,
     query = true,
     httpResult = true,
-    dapui_hover = true,
+    ["dap-view"] = true,
     ["dap-float"] = true,
     minifiles = true,
   },

@@ -129,6 +129,31 @@ return {
       jdtls.setup_dap { config_overrides = {}, hotcodereplace = "auto" }
       vim.schedule(function()
         require("jdtls.dap").setup_dap_main_class_configs {}
+
+        local _, dap = pcall(require, "dap")
+        local old_dap_function = dap.adapters.java
+        dap.adapters.java = function(callback, configDap)
+          if configDap.name == "Nearest Method" then
+            jdtls.test_nearest_method()
+          elseif configDap.name == "Test Class" then
+            jdtls.test_class()
+          else
+            old_dap_function(callback, configDap)
+          end
+        end
+
+        dap.configurations.java = {
+          {
+            type = 'java',
+            request = 'launch',
+            name = "Nearest Method",
+          },
+          {
+            type = 'java',
+            request = 'launch',
+            name = "Test Class",
+          }
+        }
       end)
     end
     require("lib.lsp").set_buf_funcs_for_capabilities(client, bufnr)
@@ -139,16 +164,6 @@ return {
       callback = function()
         ---@diagnostic disable-next-line: param-type-mismatch
         client:request_sync("java/buildWorkspace", false, 5000, bufnr)
-        -- client:request("java/buildWorkspace", {}, function(err, res)
-        --   if err.code then
-        --     local out = string.format("Error code: %s, message:\n%s\ndata:\n%s", err.code, err.message, err.data)
-        --     -- vim.notify(out, vim.log.levels.ERROR, { title = "Java > java/buildWorkspace" })
-        --     vim.print("Java > java/buildWorkspace\n" .. out)
-        --     return
-        --   end
-        --   -- vim.notify(res, vim.log.levels.INFO, { title = "Java > java/buildWorkspace" })
-        --   vim.print("Java > java/buildWorkspace\n" .. res)
-        -- end, bufnr)
       end,
     })
 

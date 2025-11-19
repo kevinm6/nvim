@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "eed1834170f343c14a6768f085b26b3571a55302",
+      "rev": "aa25399c48236b77af71d4b64cdf157d2ba4e990",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
@@ -20,6 +20,10 @@
     "data-viewer.nvim": {
       "rev": "40ddf37",
       "src": "https://github.com/vidocqh/data-viewer.nvim"
+    },
+    "fidget.nvim": {
+      "rev": "e32b672d8fd343f9d6a76944fedb8c61d7d8111a",
+      "src": "https://github.com/j-hui/fidget.nvim"
     },
     "gitsigns.nvim": {
       "rev": "20ad441",
@@ -66,16 +70,16 @@
       "rev": "64652d1",
       "src": "https://github.com/mfussenegger/nvim-dap-python"
     },
-    "nvim-dap-ui": {
-      "rev": "cf91d5e",
-      "src": "https://github.com/rcarriga/nvim-dap-ui"
+    "nvim-dap-view": {
+      "rev": "25ffcf3a6d8d44b6275dac9d5ff9b1f9485907d9",
+      "src": "https://github.com/igorlfs/nvim-dap-view"
     },
     "nvim-dbee": {
       "rev": "dda517694889a5d238d7aa407403984da9f80cc0",
       "src": "https://github.com/kndndrj/nvim-dbee"
     },
     "nvim-jdtls": {
-      "rev": "38d265e",
+      "rev": "943e2398aba6b7e976603708450c6c93c600e830",
       "src": "https://github.com/mfussenegger/nvim-jdtls"
     },
     "nvim-lint": {
@@ -85,10 +89,6 @@
     "nvim-metals": {
       "rev": "40f7b9e",
       "src": "https://github.com/scalameta/nvim-metals"
-    },
-    "nvim-nio": {
-      "rev": "21f5324",
-      "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
       "rev": "d97d226c",
@@ -111,7 +111,6 @@
       "rev": "5466d1e447fc4b038ef511a7a2c4c7cbb13da01a",
       "src": "https://github.com/rest-nvim/rest.nvim"
     },
-    "schemastore.nvim": [],
     "snacks.nvim": {
       "rev": "836e07336ba523d4da480cd66f0241815393e98e",
       "src": "https://github.com/folke/snacks.nvim"

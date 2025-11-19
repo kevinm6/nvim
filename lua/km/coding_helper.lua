@@ -1,36 +1,12 @@
 -------------------------------------
 -- Description  : useful plugins
 -- Author       : Kevin
--- Last Modified: 12/08/2025, 09:43
+-- Last Modified: 29 Nov 2025, 18:39
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
 --    Symbols : Symbols (Only) Nerd Font
 -------------------------------------
-
-
--- vim.api.nvim_create_autocmd("BufRead", {
---   pattern = "*/",
---   callback = function()
---     if vim.fn.argc() == 1 then
---       local argv = tostring(vim.fn.argv(0))
---       local stat = vim.loop.fs_stat(argv)
---
---       if stat and stat.type == "directory" then
---         require("lazy").load { plugins = { p.name } }
---       end
---     end
---     if not package.loaded["mini.files"] then
---       vim.api.nvim_create_autocmd("BufNew", {
---         pattern = "*/", -- load on dirs
---         callback = function()
---           require("lazy").load { plugins = { p.name } }
---           return true
---         end,
---       })
---     end
---   end
--- })
 
 -- vim.api.nvim_create_autocmd("VimEnter", {
 --   callback = function()
@@ -374,10 +350,13 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesExplorerOpen',
   callback = function()
-    mini_files.set_bookmark('c', vim.fn.stdpath('config'), 'Config') -- path
-    mini_files.set_bookmark('w', vim.fn.getcwd, 'Working directory') -- callable
+    mini_files.set_bookmark('c', vim.fn.stdpath('config'), 'Config')
+    mini_files.set_bookmark('w', vim.fn.getcwd, 'Working directory')
     mini_files.set_bookmark('~', '~', 'Home directory')
     mini_files.set_bookmark('h', '~', 'Home directory')
+    mini_files.set_bookmark('d', vim.fn.expand "$DOTFILES", 'Dotfiles directory')
+    mini_files.set_bookmark('u', "~/uni", 'Dotfiles directory')
+    mini_files.set_bookmark('W', "~/work", 'Work directory')
   end,
 })
 vim.api.nvim_create_autocmd("User", {

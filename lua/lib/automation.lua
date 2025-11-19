@@ -2,22 +2,24 @@
 --  File         : automation.lua
 --  Description  : automatic functions lib triggered by events
 --  Author       : Kevin
---  Last Modified: 15 Nov 2025, 22:27
+--  Last Modified: 29 Nov 2025, 10:44
 -------------------------------------
 
 local M = {}
 
 ---If buffer modified, update any 'Last modified: ' in the first 10 lines.
 ---Restores cursor and window position using save_cursor variable.
-function M.auto_timestamp()
+---@param exts string|table pattern or list of extension pattern to match with
+function M.auto_timestamp(exts)
+  exts = exts or { "*.lua", "*.md", "*.yml", "*.conf", "*.config" }
   local _autoupdate_tmsp = vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoupdate_timestamp", { clear = true }),
-    pattern = { "*.lua", "*.md", "*.yml" },
+    pattern = exts,
     callback = function()
       if vim.opt_local.modified:get() == true then
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-        vim.api.nvim_command [[0,10s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %b %Y, %H:%M')/g]]
+        vim.api.nvim_command [[0,10s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %b %Y, %H:%M')/ge]]
         vim.fn.histdel("search", -1)
         vim.api.nvim_win_set_cursor(0, cursor_pos)
       end

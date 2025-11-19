@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 05/07/2025, 09:43
+--  Last Modified: 26 Nov 2025, 21:00
 -------------------------------------
 
 local M = {}
@@ -26,9 +26,9 @@ function M.dev_folder()
     default = nil,
   }, function(choice)
     if choice then
-      local has_oil, oil = pcall(require, "oil")
-      if has_oil then
-        oil.open_float(choice)
+      local has_mini, mini_files = pcall(require, "mini.files")
+      if has_mini then
+        mini_files.open(choice)
       else
         vim.cmd.edit(choice)
       end
@@ -111,9 +111,9 @@ function M.projects()
       if choice then
         vim.cmd.tcd(choice)
         vim.notify(string.format("TWD: %s", choice), vim.log.levels.INFO)
-        local has_oil, oil = pcall(require, "oil")
-        if has_oil then
-          oil.open_float(choice)
+        local has_mini, mini_files = pcall(require, "mini.files")
+        if has_mini then
+          mini_files.open(choice)
         else
           vim.cmd.edit(choice)
         end
@@ -150,7 +150,7 @@ end
 
 ---Create new file w/ input for filename
 ---useful for dashboard and so on
----@param cmd_input table file name\[.ext\] that it will be passed to vim.cmd.edit
+---@param cmd_input? vim.api.keyset.create_user_command.command_args file name\[.ext\] that it will be passed to vim.cmd.edit
 function M.new_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
@@ -163,7 +163,6 @@ function M.new_file(cmd_input)
         return
       end
       input = vim.trim(input)
-      -- assert(input ~= "" and input ~= nil, "Empty file to edit")
 
       if input then
         vim.cmd.enew()
@@ -183,7 +182,7 @@ function M.new_file(cmd_input)
 end
 
 ---Create temporary file
----@param cmd_input table file extension without dot prefixed
+---@param cmd_input? vim.api.keyset.create_user_command.command_args file extension without dot prefixed
 function M.new_tmp_file(cmd_input)
   local args = cmd_input and cmd_input.args or nil
   if args == nil or args == "" then
