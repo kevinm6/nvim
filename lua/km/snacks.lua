@@ -2,7 +2,7 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 24 Nov 2025, 20:25
+-- Last Modified: 16 Dec 2025, 09:44
 -------------------------------------
 
 require("snacks").setup {
@@ -733,9 +733,13 @@ vim.keymap.set("n", "<leader>gb", function()
   Snacks.picker.git_branches()
 end, { desc = "Checkout branch" })
 
-vim.keymap.set("n", "<leader>gc", function()
-  Snacks.picker.git_commits()
+vim.keymap.set("n", "<leader>gl", function()
+  Snacks.picker.git_log()
 end, { desc = "Checkout commit" })
+
+vim.keymap.set("n", "<leader>gB", function()
+  Snacks.picker.blame_line()
+end, { desc = "Blame line" })
 
 vim.keymap.set("n", "z=", function()
   Snacks.picker.spelling { word = "<cword>" }

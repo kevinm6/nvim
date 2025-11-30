@@ -1,7 +1,7 @@
 -------------------------------------
 -- Description  : useful plugins
 -- Author       : Kevin
--- Last Modified: 29 Nov 2025, 18:39
+-- Last Modified: 30 Nov 2025, 12:17
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
@@ -357,6 +357,7 @@ vim.api.nvim_create_autocmd('User', {
     mini_files.set_bookmark('d', vim.fn.expand "$DOTFILES", 'Dotfiles directory')
     mini_files.set_bookmark('u', "~/uni", 'Dotfiles directory')
     mini_files.set_bookmark('W', "~/work", 'Work directory')
+    mini_files.set_bookmark('t', "~/.Trash", 'Trash')
   end,
 })
 vim.api.nvim_create_autocmd("User", {

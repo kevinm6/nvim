@@ -2,11 +2,11 @@
 --  File         : databases.lua
 --  Description  : DB config and help
 --  Author       : Kevin
---  Last Modified: 15/11/2025, 15:44
+--  Last Modified: 12 Dec 2025, 21:03
 -------------------------------------
 
 require("dbee").setup {
-  default_connection = "default",     -- id of default connection set in `connection.json`
+  default_connection = "default", -- id of default connection set in `connection.json`
 
   drawer = {
     disable_help = true,
@@ -29,21 +29,21 @@ require("dbee").setup {
     ["postgres"] = {
       ["List All"] = "select * from {{ .Table }}",
     },
+    ["sqlite3"] = {
+      ["List All"] = "select * from {{ .Table }}",
+    },
   },
-  sources = {     -- stored connection config location
+  sources = { -- stored connection config location
     require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
   },
-  -- sources = {
-  --   require("dbee.sources").FileSource:new(vim.fn.stdpath "state" .. "/dbee/connection.json")
-  -- },
   editor = {
-    -- mappings for the buffer
     mappings = {
       -- run what's currently selected on the active connection
+      { key = "<localleader>r", mode = "n", action = "run_under_cursor" },
       { key = "<localleader>r", mode = "v", action = "run_selection" },
       { key = "<C-CR>",         mode = "v", action = "run_selection" },
       -- run the whole file on the active connection
-      { key = "<localleader>r", mode = "n", action = "run_file" },
+      { key = "<localleader>R", mode = "n", action = "run_file" },
     },
   },
   result = {

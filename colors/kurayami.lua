@@ -2,7 +2,7 @@
 --- File         : kurayami.lua
 --- Description  : color palette for kurayami colorscheme
 --- Author       : Kevin
---- Last Modified: 26/04/2025, 20:25
+--- Last Modified: 04 Dec 2025, 23:59
 -------------------------------------
 
 vim.cmd.hi 'clear'
@@ -162,10 +162,10 @@ local groups = {
 	WildMenu = { fg = "#161616", bg = "#808000" },
 
 	---Diff
-	DiffAdd = { fg = "#014fff" },
+	DiffAdd = { bg = "#0a141e" },
 	DiffChange = { bg = "#2c2c2c" },
-	DiffDelete = { fg = "#ff8080" },
-	DiffText = { fg = "gold" },
+	DiffDelete = { bg = "#280a0a" },
+	DiffText = { bg = "#23230f" },--{ bg = "#91733c" },
 	-- diffAdded = { fg = default.green },
 	-- diffRemoved = { fg = default.red },
 	-- diffChanged = { fg = default.aqua },
@@ -442,6 +442,7 @@ local groups = {
 	["@lsp.type.namespace"] = { link = "@namespace" },
 	["@lsp.type.parameter"] = { link = "@parameter" },
 	["@lsp.type.property"] = { link = "@property" },
+  ["@lsp.typemod.record"] = { link = "Type" },
 	["@lsp.type.variable"] = { link = "@variable" },
 	["@lsp.typemod.method.defaultLibrary"] = { link = "@function.builtin" },
 	["@lsp.typemod.function.defaultLibrary"] = { link = "@function.builtin" },

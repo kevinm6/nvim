@@ -2,7 +2,7 @@
 --  File         : automation.lua
 --  Description  : automatic functions lib triggered by events
 --  Author       : Kevin
---  Last Modified: 29 Nov 2025, 10:44
+--  Last Modified: 03 Dec 2025, 21:31
 -------------------------------------
 
 local M = {}
@@ -18,8 +18,12 @@ function M.auto_timestamp(exts)
     callback = function()
       if vim.opt_local.modified:get() == true then
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
-
-        vim.api.nvim_command [[0,10s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %b %Y, %H:%M')/ge]]
+        local lines = vim.api.nvim_buf_line_count(0)
+        local max_range = math.min(lines, 10)
+        if max_range > 0 then
+          local range = "0," .. max_range
+          vim.api.nvim_command(range .. [[s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %b %Y, %H:%M')/ge]])
+        end
         vim.fn.histdel("search", -1)
         vim.api.nvim_win_set_cursor(0, cursor_pos)
       end

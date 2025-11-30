@@ -2,7 +2,7 @@
 -- File         : autocommands.lua
 -- Description  : Autocommands config
 -- Author       : Kevin
--- Last Modified: 05 Jul 2025, 10:34
+-- Last Modified: 03 Dec 2025, 21:17
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -121,7 +121,6 @@ vim.filetype.add {
     JPEG = "image_nvim",
     GIF = "image_nvim",
     WEBP = "image_nvim",
-    -- md = "quarto",
     ipynb = "jupyter_notebook",
     dat = "xxd",
     nl = "neverlang",

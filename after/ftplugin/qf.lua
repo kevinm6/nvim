@@ -7,15 +7,16 @@ local del_qf_item = function()
 end
 
 ---Keymaps
-vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>", { buffer = true, silent = true })
-vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>", { buffer = true, silent = true })
-vim.keymap.set("n", "<C-l>", "<CR>", { buffer = true, silent = true })
-vim.keymap.set("n", "q", function()
+local set_keymap = vim.keymap.set
+set_keymap("n", "<C-k>", "<cmd>cprev<CR>", { buffer = true, silent = true })
+set_keymap("n", "<C-j>", "<cmd>cnext<CR>", { buffer = true, silent = true })
+set_keymap("n", "<C-l>", "<CR>", { buffer = true, silent = true })
+set_keymap("n", "q", function()
   vim.cmd.quit { bang = true }
 end, { buffer = true, silent = true })
-vim.keymap.set("n", "<esc>", function()
+set_keymap("n", "<esc>", function()
   vim.cmd.quit { bang = true }
 end, { buffer = true, silent = true })
 
-vim.keymap.set("n", "dd", del_qf_item, { silent = true, buffer = true, desc = "Remove entry from QF" })
-vim.keymap.set("v", "D", del_qf_item, { silent = true, buffer = true, desc = "Remove entry from QF" })
+set_keymap("n", "dd", del_qf_item, { silent = true, buffer = true, desc = "Remove entry from QF" })
+set_keymap("v", "D", del_qf_item, { silent = true, buffer = true, desc = "Remove entry from QF" })

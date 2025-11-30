@@ -2,7 +2,7 @@
 -- File         : prefs.lua
 -- Description  : NeoVim & VimR preferences
 -- Author       : Kevin
--- Last Modified: 16 Nov 2025, 13:38
+-- Last Modified: 04 Dec 2025, 08:57
 -------------------------------------
 
 local settings = {
@@ -35,17 +35,19 @@ local settings = {
   showmatch = true,
   signcolumn = "yes",
   cmdheight = 1,
-  pumheight = 16,
+  pumheight = 10,
   pumblend = 2,
+  pummaxwidth = 80,
   splitbelow = true,
   splitright = true,
   updatetime = 100,
   updatecount = 0,
   listchars = { tab = "⇥ ", eol = "↲", trail = "~", space = "_", nbsp = "␣" },
-  fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "❭" },
+  fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "❭", diff = " " },
   timeoutlen = 350,
   ttimeoutlen = 100,
-  completeopt = { "menuone", "noselect", "popup", "fuzzy" },
+  complete = { "o", ".", "w", "b", "u" },
+  completeopt = { "fuzzy", "menuone", "noselect", "popup" },
   matchpairs = vim.opt.matchpairs:append "<:>",
   wildignore = {
     "*.DS_Store",
@@ -59,7 +61,7 @@ local settings = {
     "*/.git/*",
     "*templates/*",
   },
-  shortmess = vim.opt.shortmess:append "c",
+  shortmess = vim.opt.shortmess:prepend "c",
 
   -- INDENTATION
   tabstop = 2,
@@ -76,7 +78,7 @@ local settings = {
   foldexpr = "v:lua.vim.treesitter.foldexpr()",
   foldtext = "v:lua.require'lib.folds'.fold_text()",
 
-  diffopt = { "internal", "filler", "closeoff", "context:12", "algorithm:histogram", "linematch:200", "indent-heuristic" },
+  diffopt = { "internal", "closeoff", "context:3", "algorithm:histogram", "linematch:200", "indent-heuristic", "inline:char" },
 
   colorcolumn = "90",
 

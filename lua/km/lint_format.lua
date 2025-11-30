@@ -2,7 +2,7 @@
 -- File         : lint_format.lua
 -- Description  : Linter and Formatter plugins and config
 -- Author       : Kevin
--- Last Modified: 22 Nov 2025, 13:11
+-- Last Modified: 03 Dec 2025, 11:08
 -------------------------------------
 
 return {
@@ -30,9 +30,6 @@ return {
 
       lint.linters.markdownlint.args = {
         "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
-      }
-      lint.linters.flake8.args = {
-        "--extend-ignore E302,E111,E501,W391",
       }
 
       -- lint.linters.eslint_d.args = {

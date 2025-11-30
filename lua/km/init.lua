@@ -2,18 +2,73 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 29 Nov 2025, 20:55
+--  Last Modified: 17 Dec 2025, 08:54
 -------------------------------------
+
+---Hooks to be used for some plugins installation or updates that requires more steps
+---@param ev table
+local function hooks(ev)
+  local name, kind, build = ev.data.spec.name, ev.data.kind, ev.data.spec.data.build
+  -- vim.print(string.format("%s (%s): build => ", name, kind), ev.data.spec.data.build)
+  if kind ~= "delete" and build then
+    if not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
+    local msg = string.format("vim.pack: Running build - %s", name)
+    vim.api.nvim_echo({ { msg, "DiagnosticUnnecessary" } }, true, {})
+    pcall(build)
+  end
+end
+
+vim.api.nvim_create_autocmd("PackChanged", { callback = hooks })
+
+local ts_utils = require "lib.ts_utils"
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = ts_utils.parsers_to_be_installed(),
+  callback = function(ev)
+    vim.treesitter.start()
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    ts_utils.attach(ev.buf)
+
+    vim.api.nvim_create_autocmd("BufDelete", {
+      pattern = ts_utils.parsers_to_be_installed(),
+      callback = function()
+        ts_utils.detach(ev.buf)
+      end
+    })
+  end
+})
 
 vim.pack.add({
   ---Plugin: load on start
   ---QoL plugins
-  "https://github.com/echasnovski/mini.nvim",
+  {
+    src = "https://github.com/echasnovski/mini.nvim",
+    data = {
+      config = function()
+        require "km.coding_helper"
+      end
+    }
+  },
 
-  "https://github.com/folke/snacks.nvim",
+  {
+    src = "https://github.com/folke/snacks.nvim",
+    data = {
+      config = function()
+        require "km.snacks"
+      end
+    },
+  },
 
   ---Treesitter
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+  {
+    src = "https://github.com/nvim-treesitter/nvim-treesitter",
+    data = {
+      build = function()
+        require "nvim-treesitter".install(require "lib.ts_utils".parsers_to_be_installed()):wait(300000)
+        require "nvim-treesitter".update()
+      end
+    }
+  },
 
   ---Plugin: lazy loading
   ---Completion
@@ -24,7 +79,7 @@ vim.pack.add({
       ev = { "InsertEnter", "CmdLineEnter" },
       config = function()
         require "km.completion"
-      end
+      end,
     }
   },
 
@@ -33,7 +88,7 @@ vim.pack.add({
     src = "https://github.com/mfussenegger/nvim-dap",
     data = {
       ev = "VimEnter",
-      config = function ()
+      config = function()
         vim.cmd.packadd "nvim-dap-view"
         require "km.dap"
       end
@@ -62,7 +117,6 @@ vim.pack.add({
           },
           help = { border = "rounded" }
         }
-
       end
     }
   },
@@ -149,7 +203,6 @@ vim.pack.add({
     }
   },
   ---Formatter (Conform)
-  -- "stevearc/conform.nvim", event = { "BufWritePre" }, cmd = { "Format", "ConformInfo" }
   {
     src = "https://github.com/stevearc/conform.nvim",
     data = {
@@ -244,11 +297,9 @@ vim.pack.add({
           enabled = false, -- not rendering on enter md files
           file_types = { "markdown", "quarto", "markdown.mdx" },
           anti_conceal = { enabled = false },
-          latex = {
-            enabled = false,
-            converter = "utftex",
-          },
+          latex = { enabled = false, converter = "utftex" },
           acknowledge_conflicts = true,
+          completions = { lsp = { enabled = true } },
           heading = {
             icons = { "󰉫 ", "󰉬 ", "󰉭 ", "󰉮 ", "󰉯 ", "󰉰 " },
           },
@@ -257,7 +308,7 @@ vim.pack.add({
               icon = "󰄱 ",
             },
             checked = { -- Replaces '[x]' of 'task_list_marker_checked'
-              icon = "󰄵 ",
+              icon = "  ",
             },
             custom = {
               todo = { raw = "[-]", rendered = "󰥔 ", highlight = "RenderMarkdownTodo" },
@@ -290,7 +341,9 @@ vim.pack.add({
     data = {
       ft = { "python" },
       config = function()
-        local dap_py_venv = vim.fn.stdpath "data" .. "/.venv/bin/python3.12"
+        vim.cmd.packadd "nvim-dap"
+        local dap_py_venv = vim.env.VIRTUAL_ENV and vim.env.VIRTUAL_ENV .. "/bin/python" or
+            vim.fn.stdpath "data" .. "/.venv/bin/python3.12"
         if vim.fn.executable(dap_py_venv) then
           require "dap-python".setup(dap_py_venv)
         else
@@ -303,6 +356,9 @@ vim.pack.add({
   {
     src = "https://github.com/ray-x/go.nvim",
     data = {
+      build = function()
+        require("go.install").update_all_sync()
+      end,
       ft = "go",
       config = function()
         require("go").setup {
@@ -413,7 +469,6 @@ vim.pack.add({
   {
     src = "https://github.com/GCBallesteros/jupytext.nvim",
     data = {
-      ft = { "quarto", "qmd" },
       config = function()
         require("jupytext").setup {
           custom_language_formatting = {
@@ -428,10 +483,10 @@ vim.pack.add({
     src = "https://github.com/benlubas/molten-nvim",
     version = vim.version.range("^1.0.0"),
     data = {
+      build = function() vim.cmd.UpdateRemotePlugins() end,
       cmd = { "MoltenInit" },
-      ft = { "qmd", "jupyter_notebook", "quarto" },
+      ft = { "jupyter_notebook", "quarto" },
       config = function()
-        --   build = ":UpdateRemotePlugins",
         vim.g.molten_auto_open_html_in_browser = true
         vim.g.molten_image_provider = "snacks.nvim"
         vim.g.molten_output_virt_lines = true -- pad to don't cover actual lines
@@ -494,11 +549,12 @@ vim.pack.add({
   {
     src = "https://github.com/quarto-dev/quarto-nvim",
     data = {
-      ft = "quarto",
+      ft = { "quarto", "jupyter_notebook" },
       config = function()
+        -- vim.cmd.packadd "otter.nvim"
         require("quarto").setup {
           codeRunner = {
-            enabled = false,
+            -- enabled = false,
             default_method = "molten",
             ft_runners = { python = "molten", markdown = "molten" },
             never_run = { "yaml" },
@@ -541,7 +597,7 @@ vim.pack.add({
   {
     src = "https://github.com/jmbuhr/otter.nvim",
     data = {
-      ft = { "quarto", "markdown", "html", "javascript", "typescript" },
+      ev = "VimEnter",
       config = function()
         vim.api.nvim_create_autocmd("FileType", {
           pattern = "html",
@@ -562,14 +618,16 @@ vim.pack.add({
             require("otter").activate { "html", "javascript" }
           end,
         })
+
         vim.api.nvim_create_autocmd("FileType", {
-          pattern = { "qmd", "quarto" },
-          callback = function()
-            require("otter").activate { "quarto", "markdown", "python" }
-            vim.treesitter.language.register("markdown", "python")
+          pattern = { "jupyter_notebook" },
+          callback = function(ev)
+            -- vim.print("activating otter for " .. ev.match .. " filetype")
+            require("otter").activate { "quarto", "qmd", "markdown", "python" }
+            -- vim.treesitter.language.register("markdown", "python")
             -- vim.treesitter.language.register("quarto", "markdown")
-            vim.treesitter.language.register("quarto", "python")
-            vim.treesitter.start()
+            -- vim.treesitter.language.register("quarto", "python")
+            -- vim.treesitter.start()
           end,
         })
       end
@@ -581,7 +639,7 @@ vim.pack.add({
     src = "https://github.com/rest-nvim/rest.nvim",
     data = {
       ft = "http",
-      config = function ()
+      config = function()
         ---@class rest.Config
         vim.g.rest_nvim = {
           request = {
@@ -590,9 +648,10 @@ vim.pack.add({
         }
 
         vim.api.nvim_create_autocmd("FileType", {
-          pattern = { "http", "https" },
-          callback  = function()
-            vim.keymap.set("n", "<localleader>r", "<cmd>Rest run<cr>", { desc = "Run Request under cursor", buffer = true })
+          pattern  = { "http", "https" },
+          callback = function()
+            vim.keymap.set("n", "<localleader>r", "<cmd>Rest run<cr>",
+              { desc = "Run Request under cursor", buffer = true })
             vim.keymap.set("n", "<localleader>l", "<cmd>Rest last<cr>", { desc = "Run Last Request", buffer = true })
             vim.keymap.set(
               "n",
@@ -646,37 +705,7 @@ vim.pack.add({
     end
     if not lazy then
       vim.cmd.packadd(p.spec.name)
+      if data.config then data.config() end
     end
   end,
 })
-
-require "km.snacks"
-require "km.coding_helper"
-require "km.treesitter"
-
----Hooks to be used for some plugins installation or updates that requires other steps
----@param ev table
-local function hooks(ev)
-  local name, kind = ev.data.spec.name, ev.data.kind
-  vim.print(name, kind)
-
-  if (kind == "install" or kind == "update") then
-    vim.cmd.packadd { args = { name }, bang = false }
-    local title = string.format("vim.pack 󰅂 %s", name)
-    local msg_info = string.format("building '%s' due to install/update plugin", name)
-    if name == "nvim-treesitter" then
-      vim.notify(msg_info, vim.log.levels.INFO, { title = title })
-      require("nvim-treesitter").update()
-    end
-    if name == "blink.cmp" then
-      vim.notify(msg_info, vim.log.levels.INFO, { title = title })
-      require("blink.cmp.fuzzy.build").build()
-    end
-    if name == "go.nvim" then
-      vim.notify(msg_info, vim.log.levels.INFO, { title = title })
-      require("go.install").update_all_sync()
-    end
-  end
-end
-
-vim.api.nvim_create_autocmd("PackChanged", { callback = hooks })

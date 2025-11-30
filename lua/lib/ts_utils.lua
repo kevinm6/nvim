@@ -2,10 +2,53 @@
 -- File         : ts_highlight_current_scope.lua
 -- Description  : utils function for treesitter (revamp of `nvim-treesitter-refactor`)
 -- Author       : Kevin
--- Last Modified: 28/05/2025, 08:46
+-- Last Modified: 16 Dec 2025, 21:08
 -------------------------------------
 
 local M = {}
+
+---Get treesitter parsers to be installed
+---@return table list of parsers
+function M.parsers_to_be_installed()
+  return {
+    "c",
+    "comment",
+    "cpp",
+    "css",
+    "dot",
+    "dockerfile",
+    "bash",
+    "gitignore",
+    "gitattributes",
+    "gitcommit",
+    "git_rebase",
+    "go",
+    "vimdoc",
+    "html",
+    "http",
+    "json",
+    "jsdoc",
+    "latex",
+    "ruby",
+    "lua",
+    "java",
+    "javascript",
+    "markdown",
+    "markdown_inline",
+    "php",
+    "python",
+    "regex",
+    "python",
+    "phpdoc",
+    "scheme",
+    "sql",
+    "swift",
+    "todotxt",
+    "vim",
+    "yaml",
+    "ini",
+  }
+end
 
 ---Go to usage of variable under cursor
 ---@param direction string<"prev","next">
@@ -152,25 +195,25 @@ local function goto_definition()
 end
 
 function M.attach(bufnr)
-  vim.keymap.set("n", "<C-j>", function()
+  local set_keymap = vim.keymap.set
+  set_keymap("n", "<C-j>", function()
     goto_variable_usage("next")
   end, { buffer = bufnr, silent = true, noremap = true, desc = "goto_next_usage" })
-  vim.keymap.set("n", "<C-k>", function()
+  set_keymap("n", "<C-k>", function()
     goto_variable_usage("prev")
   end, { buffer = bufnr, silent = true, noremap = true, desc = "goto_previous_usage" })
-  vim.keymap.set("n", "gd", function()
+  set_keymap("n", "gd", function()
     goto_definition()
   end, { buffer = bufnr, silent = true, noremap = true, desc = "goto_definition" })
 end
 
 function M.detach(bufnr)
-  local api = vim.api
-
-  api.nvim_buf_del_keymap(bufnr, "n", "<C-j>")
-  api.nvim_buf_del_keymap(bufnr, "n", "<C-k>")
-  api.nvim_buf_del_keymap(bufnr, "n", "gd")
-  api.nvim_buf_del_keymap(bufnr, "n", "gD")
-  api.nvim_buf_del_keymap(bufnr, "n", "gO")
+  local del_keymap = vim.api.nvim_buf_del_keymap
+  del_keymap(bufnr, "n", "<C-j>")
+  del_keymap(bufnr, "n", "<C-k>")
+  del_keymap(bufnr, "n", "gd")
+  del_keymap(bufnr, "n", "gD")
+  del_keymap(bufnr, "n", "gO")
 end
 
 return M

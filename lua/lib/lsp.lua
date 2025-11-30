@@ -2,38 +2,10 @@
 --  File         : lsp.lua
 --  Description  : lsp utility functions
 --  Author       : Kevin
---  Last Modified: 29 Nov 2025, 17:26
+--  Last Modified: 16 Dec 2025, 20:56
 -------------------------------------
 
 local M = {}
-
----Completion for client
----@param arg string argument
----@return table
-local complete_client = function(arg)
-  return vim
-      .iter(vim.lsp.get_clients())
-      :map(function(client)
-        return client.name
-      end)
-      :filter(function(name)
-        return name:sub(1, #arg) == arg
-      end)
-      :totable()
-end
-
----Completion for config
----@param arg string
----@return table
-local complete_config = function(arg)
-  return vim
-      .iter(vim.api.nvim_get_runtime_file(('lsp/%s*.lua'):format(arg), true))
-      :map(function(path)
-        local file_name = path:match('[^/]*.lua$')
-        return file_name:sub(0, #file_name - 4)
-      end)
-      :totable()
-end
 
 ---Get current buf lsp Capabilities
 ---@see nvim_lsp_get_active_clients |nvim_lsp_get_active_clients()|
@@ -92,27 +64,16 @@ function M.set_buf_keymaps(client, bufnr)
     "n",
     "K",
     function()
-      local has_ufo, ufo = pcall(require, "ufo")
-      local winid = has_ufo and ufo.peekFoldedLinesUnderCursor() or false
-      if winid then
-        local buf = vim.api.nvim_win_get_buf(winid)
-        vim.wo[winid].list = false
-        local keys = { "a", "i", "o", "A", "I", "O", "gd", "gr" }
-        for _, k in ipairs(keys) do
-          vim.keymap.set("n", k, "<CR>" .. k, { noremap = false, buffer = buf })
-        end
-      else
-        ---Hover
-        lsp.buf.hover {
-          title = "LSP❭ Hover",
-          border = "rounded",
-          max_height = math.floor(vim.o.lines * 0.6),
-          max_width = math.floor(vim.o.columns * 0.8),
-          wrap_at = math.floor(vim.o.columns * 0.8),
-        }
-      end
+      ---Hover
+      lsp.buf.hover {
+        title = "LSP❭ Hover",
+        border = "rounded",
+        max_height = math.floor(vim.o.lines * 0.6),
+        max_width = math.floor(vim.o.columns * 0.8),
+        wrap_at = math.floor(vim.o.columns * 0.8),
+      }
     end,
-    { desc = "Hover | PeekFold", buffer = bufnr },
+    { desc = "LSP❭ Hover", buffer = bufnr },
   }
 
   -- nmap { "grn", lsp.buf.rename, "rename" }
@@ -210,15 +171,16 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
   local autocmd = vim.api.nvim_create_autocmd
   local usercmd = vim.api.nvim_create_user_command
 
+
   -- Completion
   -- NOTE nvim-0.11: still not useful for me, doesn't supports custom snippets
-  -- if client.supports_method "textDocument/completion" then
-  -- trigger autocompletion on EVERY keypress. May be slow!
-  -- local chars = {}
-  -- for i = 32, 126 do
-  --   table.insert(chars, string.char(i))
-  -- end
-  -- client.server_capabilities.completionProvider.triggerCharacters = chars
+  -- if client:supports_method "textDocument/completion" then
+  --   -- trigger autocompletion on EVERY keypress. May be slow!
+  --   local chars = {}
+  --   for i = 32, 126 do
+  --     table.insert(chars, string.char(i))
+  --   end
+  --   client.server_capabilities.completionProvider.triggerCharacters = chars
   --   lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
   -- end
 
@@ -260,58 +222,14 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
     require("lib.lsp").toggle_diagnostics(bufnr)
   end, { desc = "List server capabilities" })
 
-  usercmd("LspStart", function(info)
-    if vim.lsp.config[info.args] == nil then
-      vim.notify(("Invalid server name '%s'"):format(info.args))
-      return
-    end
-
-    vim.lsp.enable(info.args)
+  usercmd("LspLog", function()
+    vim.cmd.split(vim.fn.stdpath "state" .. "/lsp.log")
   end, {
-    desc = 'Enable and launch a language server',
-    nargs = '?',
-    complete = complete_config,
-  })
-
-  usercmd("LspRestart", function(info)
-    for _, name in ipairs(info.fargs) do
-      if vim.lsp.config[name] == nil then
-        vim.notify(("Invalid server name '%s'"):format(info.args))
-      else
-        vim.lsp.enable(name, false)
-      end
-    end
-
-    local timer = assert(vim.uv.new_timer())
-    timer:start(500, 0, function()
-      for _, name in ipairs(info.fargs) do
-        vim.schedule_wrap(function(x)
-          vim.lsp.enable(x)
-        end)(name)
-      end
-    end)
-  end, {
-    desc = 'Restart the given client(s)',
-    nargs = '+',
-    complete = complete_client,
-  })
-
-  usercmd("LspStop", function(info)
-    for _, name in ipairs(info.fargs) do
-      if vim.lsp.config[name] == nil then
-        vim.notify(("Invalid server name '%s'"):format(info.args))
-      else
-        vim.lsp.enable(name, false)
-      end
-    end
-  end, {
-    desc = 'Disable and stop the given client(s)',
-    nargs = '+',
-    complete = complete_client,
+    desc = 'Open Lsp log in a split',
   })
 
   -- Enable completion on <c-x><c-o>
-  -- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 end
 
 return M

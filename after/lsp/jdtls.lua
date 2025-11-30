@@ -44,18 +44,14 @@ return {
       configuration = {
         updateBuildConfiguration = "interactive",
         runtimes = {
-          -- {
-          --   name = "JavaSE-17",
-          --   path = "/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home",
-          -- },
           {
-            name = "JavaSE-21",
-            path = "/Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home",
+            name = "JavaSE-17",
+            path = "/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home",
           },
-          -- {
-          --   name = "JavaSE-24",
-          --   path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
-          -- },
+          {
+            name = "JavaSE-11",
+            path = "/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home",
+          },
           {
             name = "JavaSE-25",
             path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",

@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 29 Nov 2025, 20:54
+--  Last Modified: 03 Dec 2025, 21:45
 -----------------------------------
 
 ---DAP
@@ -360,10 +360,10 @@ vim.fn.sign_define("DapLogPoint", {
   numhl = "DiagnosticInformation",
 })
 vim.fn.sign_define("DapStopped", {
-  text = "⇲ ",
-  texthl = "DiagnosticOk",
-  linehl = "",
-  numhl = "DiagnosticOk"
+  text = "➡ ",
+  texthl = "DiagnosticWarning",
+  linehl = "@markup.underline",
+  numhl = "DiagnosticWarning"
 })
 vim.fn.sign_define("DapBreakpointRejected", {
   text = " ",

@@ -2,7 +2,7 @@
 -- File         : init.lua
 -- Description  : NeoVim configuration
 -- Author       : Kevin
--- Last Modified: 15 Nov 2025, 22:20
+-- Last Modified: 30 Nov 2025, 20:38
 --------------------------------------
 
 -- Set leader key
@@ -28,8 +28,9 @@ if not vim.g.vscode then
       require("lib.ui.winbar").toggle()
     end
   })
+  if vim.o.diff then return end
+
+  require "km"
 else
   vim.opt.shadafile = vim.fn.stdpath "state" .. "/shada/vscnvim.shada"
 end
-
-require "km"

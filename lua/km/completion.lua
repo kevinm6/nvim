@@ -2,7 +2,7 @@
 -- File         : completion.lua
 -- Description  : completion config
 -- Author       : Kevin
--- Last Modified: 16 Nov 2025, 13:18
+-- Last Modified: 09 Dec 2025, 12:23
 -------------------------------------
 
 --NOTE: snippets variables
@@ -57,7 +57,7 @@ require("blink.cmp").setup {
           },
         },
       },
-      markdown = { name = "RenderMarkdown", module = "render-markdown.integ.blink" },
+      -- markdown = { name = "RenderMarkdown", module = "render-markdown.integ.blink" },
       dbee = { name = "cmp-dbee", module = "blink.compat.source" }
     },
   },
@@ -67,37 +67,40 @@ require("blink.cmp").setup {
       max_width = math.ceil(vim.o.columns * 0.6),
       max_height = math.ceil(vim.o.lines * 0.4),
     },
-  }, completion = { accept = { auto_brackets = { enabled = true } }, menu = {
-  scrollbar = false,
-  min_width = 32,
-  winblend = vim.o.pumblend,
-  draw = {
-    treesitter = { "lsp" },
-    columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
-    components = {
-      label = { ellipsis = true, width = { fill = true, max = 32 } },
-      label_description = { ellipsis = true, width = { fill = true } },
-      kind_icon = {
-        ellipsis = false,
-        text = function(ctx)
-          local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-          return kind_icon
-        end,
-      },
-    },
   },
-},
-  documentation = {
-    auto_show = true,
-    window = {
-      min_width = 24,
+  completion = {
+    accept = { auto_brackets = { enabled = true } },
+    menu = {
       scrollbar = false,
-      direction_priority = {
-        menu_north = { "e", "n", "w", "s" },
-        menu_south = { "e", "n", "s", "w" },
+      min_width = 32,
+      winblend = vim.o.pumblend,
+      draw = {
+        treesitter = { "lsp" },
+        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
+        components = {
+          label = { ellipsis = true, width = { fill = true, max = 32 } },
+          label_description = { ellipsis = true, width = { fill = true } },
+          kind_icon = {
+            ellipsis = false,
+            text = function(ctx)
+              local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+              return kind_icon
+            end,
+          },
+        },
       },
     },
+    documentation = {
+      auto_show = true,
+      window = {
+        min_width = 24,
+        scrollbar = false,
+        direction_priority = {
+          menu_north = { "e", "n", "w", "s" },
+          menu_south = { "e", "n", "s", "w" },
+        },
+      },
+    },
+    ghost_text = { enabled = true },
   },
-  ghost_text = { enabled = true },
-},
 }

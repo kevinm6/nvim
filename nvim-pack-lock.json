@@ -5,7 +5,7 @@
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
-      "rev": "327fff9",
+      "rev": "b19413d214068f316c78978b08264ed1c41830ec",
       "src": "https://github.com/saghen/blink.cmp",
       "version": "1.0.0 - 2.0.0"
     },
@@ -30,7 +30,7 @@
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "go.nvim": {
-      "rev": "81bb94c1d21648245eb14c69461f5c7f8c705752",
+      "rev": "41a18f0c05534c375bafec7ed05cdb409c4abcc6",
       "src": "https://github.com/ray-x/go.nvim"
     },
     "jupytext.nvim": {
@@ -91,9 +91,8 @@
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-treesitter": {
-      "rev": "d97d226c",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
-      "version": "'main'"
+      "rev": "d3218d988f72ed34414959c9ccd802d393432d6e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "otter.nvim": {
       "rev": "fc0aa35",

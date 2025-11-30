@@ -2,11 +2,15 @@
 -- File         : vars.lua
 -- Description  : NeoVim & VimR global vars
 -- Author       : Kevin
--- Last Modified: 03 Dec 2023, 10:45
+-- Last Modified: 30 Nov 2025, 20:42
 -------------------------------------
 
--- disable netrw
--- vim.g.loaded = 1
+-- Disable unwanted plugins
+vim.g.did_install_default_menus = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.tutor_is_loaded = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_matchit = 1
 
 -- embedded script highlighting
 vim.g.vimsyn_embed = "lP"
@@ -40,3 +44,6 @@ vim.g.loaded_node_provider = 0
 -- Database
 vim.g.sql_type_default = "postgresql"
 vim.g.omni_sql_no_default_maps = 1
+
+--disable localisations on diff
+vim.g.diff_translations = 0
