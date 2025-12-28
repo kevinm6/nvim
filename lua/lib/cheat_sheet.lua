@@ -2,7 +2,7 @@
 -- File         : cheat_sheet.lua
 -- Description  : query < https://cht.sh > to get result in Neovim
 -- Author       : Kevin
--- Last Modified: 26 Nov 2025, 21:10
+-- Last Modified: 28 Dec 2025, 17:24
 -----------------------------------
 
 local M = {
@@ -75,7 +75,7 @@ function M.open_preview(args)
       if input then
         search_input = split_string(input, sep)
       else
-        vim.notify("No search input passed", vim.log.levels.ERROR)
+        vim.notify("CheatSH - no search input passed", vim.log.levels.ERROR)
       end
     end)
   end

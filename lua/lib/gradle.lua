@@ -2,14 +2,14 @@
 --  File         : gradle.lua
 --  Description  : gradle utils functions
 --  Author       : Kevin
---  Last Modified: 06/01/2025 - 12:19
+--  Last Modified: 28 Dec 2025, 17:29
 -------------------------------------
 
 local M = {}
 
 ---Get Gradle tasks for the project
 ---@param gradlew string the path for the gradle
----@param root_dir string the root directory of the project
+---@param root_dir string? the root directory of the project
 local function get_gradle_tasks(gradlew, root_dir)
   gradlew = gradlew and gradlew or M.gradle
   root_dir = root_dir and root_dir or M.root_dir
@@ -37,7 +37,7 @@ local function get_gradle_tasks(gradlew, root_dir)
       end
       -- vim.g["gradle_" .. root_dir] = taskList
     else
-      vim.notify("Error executing command: " .. obj.stderr, vim.log.levels.ERROR, { text = "Gradle (tasks)" })
+      vim.notify("Gradle - error executing command => " .. obj.stderr, vim.log.levels.ERROR, { text = "Gradle (tasks)" })
     end
   end)--:wait()
   return M[_id]
@@ -47,9 +47,7 @@ end
 ---@param gradlew string the path for the gradle executable
 ---@param task string the task to run
 local function run_gradle_task(gradlew, task)
-  -- local msg = string.format(" < gradlew %s >", task)
-  -- vim.notify(msg, 2, { title = "Gradle" })
-  print("Gradle⟩ " .. task)
+  vim.notify("Gradle - " .. task)
   vim.system({ gradlew, task }, { text = true }, function(obj)
     local out = (obj.code ~= 0) and obj.stderr or obj.stdout
 
@@ -117,7 +115,7 @@ function M.setup(opts)
   end
 
   if not gradle then
-    vim.notify("No gradle available in cwd and in the system\n", vim.log.levels.WARN, { title = "Gradle" })
+    vim.notify("Gradle - no gradle available in cwd and globally", vim.log.levels.WARN, { title = "Gradle" })
     return
   end
   M.root_dir = root_dir

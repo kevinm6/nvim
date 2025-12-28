@@ -2,7 +2,7 @@
 -- File         : usercommands.lua
 -- Description  : User commands config
 -- Author       : Kevin
--- Last Modified: 26 Nov 2025, 20:56
+-- Last Modified: 28 Dec 2025, 17:11
 -------------------------------------
 
 local user_command = vim.api.nvim_create_user_command
@@ -53,7 +53,7 @@ user_command("WipeReg", function()
   for _, v in pairs(regs) do
     vim.call("setreg", v, "")
   end
-  vim.notify("All Registers wiped", vim.log.levels.INFO, { title = "Registers" })
+  vim.notify("Registers - all Registers wiped", vim.log.levels.WARN, { title = "Registers" })
 end, { desc = "Wipe all Registers" })
 
 ---Sessions

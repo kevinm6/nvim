@@ -2,7 +2,7 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 16 Dec 2025, 09:44
+-- Last Modified: 23 Dec 2025, 12:49
 -------------------------------------
 
 require("snacks").setup {
@@ -652,6 +652,7 @@ require("snacks").setup {
     },
   },
   quickfile = { enabled = false },
+  notifier = { enabled = false }
 }
 
 vim.keymap.set("n", "<leader><leader>", function()

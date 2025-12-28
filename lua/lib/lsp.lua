@@ -2,7 +2,7 @@
 --  File         : lsp.lua
 --  Description  : lsp utility functions
 --  Author       : Kevin
---  Last Modified: 16 Dec 2025, 20:56
+--  Last Modified: 28 Dec 2025, 17:47
 -------------------------------------
 
 local M = {}
@@ -18,7 +18,7 @@ function M.get_current_buf_lsp_capabilities(client, _)
     end
   end
   table.sort(capAsList) -- sorts alphabetically
-  local msg = "# " .. client.name .. "\n" .. table.concat(capAsList, "\n")
+  local msg = "LspCapabilities - " .. client.name .. "\n" .. table.concat(capAsList, "\n")
   vim.notify(msg, vim.log.levels.INFO, {
     on_open = function(win)
       local buf = vim.api.nvim_win_get_buf(win)
@@ -66,14 +66,14 @@ function M.set_buf_keymaps(client, bufnr)
     function()
       ---Hover
       lsp.buf.hover {
-        title = "LSP❭ Hover",
+        title = "LSP - Hover",
         border = "rounded",
         max_height = math.floor(vim.o.lines * 0.6),
         max_width = math.floor(vim.o.columns * 0.8),
         wrap_at = math.floor(vim.o.columns * 0.8),
       }
     end,
-    { desc = "LSP❭ Hover", buffer = bufnr },
+    { desc = "LSP - Hover", buffer = bufnr },
   }
 
   -- nmap { "grn", lsp.buf.rename, "rename" }
@@ -98,7 +98,7 @@ function M.set_buf_keymaps(client, bufnr)
     ---SignatureHelp
     map { { "s", "i" }, "<C-s>", function()
       lsp.buf.signature_help {
-        title = "LSP❭ SignatureHelp",
+        title = "LSP - SignatureHelp",
         border = "rounded",
         max_width = math.floor(vim.o.columns * 0.6),
         max_height = math.floor(vim.o.lines * 0.4),
@@ -106,7 +106,7 @@ function M.set_buf_keymaps(client, bufnr)
       }
     end, {
       buffer = bufnr,
-      desc = "Lsp❭ SignatureHelp",
+      desc = "Lsp - SignatureHelp",
     } }
   end
 

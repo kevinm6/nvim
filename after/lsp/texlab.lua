@@ -3,7 +3,7 @@ local function client_with_fn(fn)
     local bufnr = vim.api.nvim_get_current_buf()
     local client = vim.lsp.get_clients { bufnr = 0, name = "texlab" }
     if not client then
-      return vim.notify(("texlab client not found in bufnr %d"):format(bufnr), vim.log.levels.ERROR)
+      return vim.notify(("TexLab - client not found in bufnr %d"):format(bufnr), vim.log.levels.ERROR)
     end
     fn(client, bufnr)
   end
@@ -39,7 +39,7 @@ local function buf_search(client, bufnr)
       [2] = "Failure",
       [3] = "Unconfigured",
     }
-    vim.notify("Search " .. texlab_forward_status[result.status], vim.log.levels.INFO)
+    vim.notify("TexLab - search " .. texlab_forward_status[result.status], vim.log.levels.INFO)
   end, bufnr)
 end
 
@@ -48,15 +48,15 @@ local function buf_cancel_build(client, bufnr)
     title = "cancel",
     command = "texlab.cancelBuild",
   }, { bufnr = bufnr })
-  vim.notify("Build cancelled", vim.log.levels.INFO)
+  vim.notify("TexLab - build cancelled")
 end
 
 local function dependency_graph(client)
   client.request("workspace/executeCommand", { command = "texlab.showDependencyGraph" }, function(err, result)
     if err then
-      return vim.notify(err.code .. ": " .. err.message, vim.log.levels.ERROR)
+      return vim.notify(string.format("TexLab - %s: %s", err.code, err.message), vim.log.levels.ERROR)
     end
-    vim.notify("The dependency graph has been generated:\n" .. result, vim.log.levels.INFO)
+    vim.notify("TexLab - the dependency graph has been generated =>\n" .. result, vim.log.levels.INFO)
   end, 0)
 end
 
@@ -73,13 +73,13 @@ local function command_factory(cmd)
       arguments = { { uri = vim.uri_from_bufnr(bufnr) } },
     }, { bufnr = bufnr }, function(err, _)
       if err then
-        vim.notify(("Failed to clean %s files: %s"):format(cmd, err.message), vim.log.levels.ERROR)
+        vim.notify(("TexLab - failed to clean %s files: %s"):format(cmd, err.message), vim.log.levels.ERROR)
       else
-        vim.notify(("command %s executed successfully"):format(cmd), vim.log.levels.INFO)
+        vim.notify(("TexLab - command %s executed successfully"):format(cmd), vim.log.levels.INFO)
       end
     end)
 
-    vim.notify(("command %s executed successfully"):format(cmd_tbl[cmd]))
+    vim.notify(("TexLab - command %s executed successfully"):format(cmd_tbl[cmd]))
   end
 end
 
@@ -115,7 +115,7 @@ end
 local function buf_change_env(client, bufnr)
   local new = vim.fn.input "Enter the new environment name: "
   if not new or new == "" then
-    return vim.notify("No environment name provided", vim.log.levels.WARN)
+    return vim.notify("TexLab - no environment name provided", vim.log.levels.WARN)
   end
   local pos = vim.api.nvim_win_get_cursor(0)
   return client:exec_cmd({

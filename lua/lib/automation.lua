@@ -2,7 +2,7 @@
 --  File         : automation.lua
 --  Description  : automatic functions lib triggered by events
 --  Author       : Kevin
---  Last Modified: 03 Dec 2025, 21:31
+--  Last Modified: 28 Dec 2025, 16:45
 -------------------------------------
 
 local M = {}
@@ -11,7 +11,7 @@ local M = {}
 ---Restores cursor and window position using save_cursor variable.
 ---@param exts string|table pattern or list of extension pattern to match with
 function M.auto_timestamp(exts)
-  exts = exts or { "*.lua", "*.md", "*.yml", "*.conf", "*.config" }
+  exts = exts or { "*.lua", "*.md", "*.yml", "*.conf", "*.config", "*.zsh", "*.sh" }
   local _autoupdate_tmsp = vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoupdate_timestamp", { clear = true }),
     pattern = exts,

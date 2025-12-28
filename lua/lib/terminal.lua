@@ -2,7 +2,7 @@
 --  File         : terminal.lua
 --  Description  : terminal utilities functions
 --  Author       : Kevin
---  Last Modified: 17/12/2024 - 08:53
+--  Last Modified: 28 Dec 2025, 17:26
 -------------------------------------
 
 local M = {
@@ -43,14 +43,8 @@ M.presets = {
 function M.new_terminal_win(cmd, autoclose, opts)
   cmd = cmd ~= "" and cmd or vim.o.shell
   local exe = vim.split(cmd, " ", { plain = true, trimempty = true })[1]
-  if vim.fn.executable(exe) ~= 1 then
-    vim.notify(
-      string.format("< %s > is not installed or executable", cmd),
-      vim.log.levels.WARN,
-      { title = "Terminal❭ Run" }
-    )
-    return
-  end
+  assert(vim.fn.executable(exe) == 1, string.format("Terminal - < %s > is not installed or executable", cmd))
+
   opts = opts or {}
   if opts.preset then
     opts = M.presets[opts.preset]

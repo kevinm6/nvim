@@ -48,14 +48,14 @@ function M.process_base64(encode, range)
   if encode then
     local ok, encoded = pcall(vim.base64.encode, string_text)
     if not ok then
-      vim.notify("Base64 encode failed: " .. encoded, vim.log.levels.ERROR)
+      vim.notify("Base64 - encode failed => " .. encoded, vim.log.levels.ERROR)
       return
     end
     result = encoded
   else
     local ok, decoded = pcall(vim.base64.decode, string_text)
     if not ok then
-      vim.notify("Base64 decode failed: " .. decoded, vim.log.levels.ERROR)
+      vim.notify("Base64 - decode failed => " .. decoded, vim.log.levels.ERROR)
       return
     end
     result = decoded

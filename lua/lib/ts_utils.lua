@@ -2,7 +2,7 @@
 -- File         : ts_highlight_current_scope.lua
 -- Description  : utils function for treesitter (revamp of `nvim-treesitter-refactor`)
 -- Author       : Kevin
--- Last Modified: 16 Dec 2025, 21:08
+-- Last Modified: 28 Dec 2025, 17:39
 -------------------------------------
 
 local M = {}
@@ -58,7 +58,7 @@ local function goto_variable_usage(direction)
   local node = ts.get_node({ ignore_injections = true })
 
   if not node then
-    vim.notify("No Tree-sitter node found under cursor", vim.log.levels.WARN)
+    vim.notify("Treesitter - no ts_node found under cursor", vim.log.levels.WARN)
     return
   end
 
@@ -68,7 +68,7 @@ local function goto_variable_usage(direction)
   end
 
   if not node or node:type() ~= "identifier" then
-    vim.notify("Not on an identifier", vim.log.levels.WARN)
+    vim.notify("Treesitter - not on an identifier", vim.log.levels.WARN)
     return
   end
 
@@ -126,7 +126,7 @@ local function goto_variable_usage(direction)
     local row, col = target:range()
     vim.api.nvim_win_set_cursor(0, { row + 1, col })
   else
-    vim.notify("No " .. direction .. " usage found", vim.log.levels.INFO)
+    vim.notify("Treesitter -  no " .. direction .. " usage found", vim.log.levels.INFO)
   end
 end
 
@@ -136,7 +136,7 @@ local function goto_definition()
   local node = ts_utils.get_node({ ignore_injections = true })
 
   if not node then
-    vim.notify("No Tree-sitter node found", vim.log.levels.WARN)
+    vim.notify("Treesitter - no ts_node found", vim.log.levels.WARN)
     return
   end
 
@@ -146,7 +146,7 @@ local function goto_definition()
   end
 
   if not node then
-    vim.notify("Not on an identifier", vim.log.levels.WARN)
+    vim.notify("Treesitter - not on an identifier", vim.log.levels.WARN)
     return
   end
 
@@ -190,7 +190,7 @@ local function goto_definition()
         return
       end
     end
-    vim.notify("Definition not found (Tree-sitter or LSP)", vim.log.levels.INFO)
+    vim.notify("Treesitter - definition not found (Treesitter or LSP)", vim.log.levels.INFO)
   end
 end
 

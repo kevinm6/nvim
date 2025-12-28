@@ -2,7 +2,7 @@
 --  File         : alignment.lua
 --  Description  : alignment functions
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 13:58
+--  Last Modified: 28 Dec 2025, 17:41
 -------------------------------------
 
 local M = {}
@@ -15,7 +15,7 @@ local M = {}
 local function align_lines(pattern, startline, endline)
   local re = vim.regex(pattern)
   if not pattern or not re then
-    vim.notify("Pattern for RegEx not valid", vim.log.levels.WARN)
+    vim.notify("Align - Pattern for RegEx not valid", vim.log.levels.WARN)
     return
   end
 

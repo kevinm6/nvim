@@ -2,7 +2,7 @@
 --  File         : python_envs.lua
 --  Description  : helper module to get and manage python_envs
 --  Author       : Kevin
---  Last Modified: 07/07/2025, 19:38
+--  Last Modified: 28 Dec 2025, 17:05
 -------------------------------------
 
 ---Python envs
@@ -49,26 +49,27 @@ function M.set_venv(venv)
   local venv_python = venv_bin_path .. "/python"
 
   if vim.fn.isdirectory(venv_bin_path) == 1 then
-    if vim.fn.executable(venv_python) == 0 then
-      vim.notify("Python in virtual env not available setting venv.\n" .. venv_python, vim.log.levels.ERROR,
-        { title = "Python•venvs" })
-      return
-    end
+    assert(vim.fn.executable(venv_python) ~= 0, "Python-venvs - Python 'venv' module not available: " .. venv_python)
+
     vim.fn.setenv("PATH", venv_bin_path .. ":" .. origin_path)
     vim.fn.setenv("VIRTUAL_ENV", venv.path)
 
-    vim.notify("Virtual environment set to: " .. venv.path, vim.log.levels.INFO, { title = "Python•venvs" })
+    vim.notify("Python-venvs - Virtual environment => " .. venv.path)
     -- Restart the LSP server
     vim.defer_fn(function()
-      vim.notify("Restarting LSP client ", vim.log.levels.INFO, { title = "Python•venvs" })
-      vim.lsp.stop_client(vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf(), name = "pyright" })
+      vim.notify("Python-venvs - Restarting LSP client... ")
+      local client = vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf(), name = "pyright" }
+      if next(client) then
+        client[1]:stop()
+      else
+        return
+      end
       vim.lsp.start(vim.lsp.config.pyright)
       vim.cmd.edit()
+      vim.notify("Python-venvs - Restarted successfully")
     end, 1000)
   else
-    vim.notify("ERROR: Given path is not a python venv!", vim.log.levels.ERROR, {
-      title = "Python Venv"
-    })
+    vim.notify("Python-venvs - given path is not a python venv => " .. venv_bin_path, vim.log.levels.WARN)
   end
 end
 
@@ -92,7 +93,7 @@ local function get_venvs()
 
   local venv = get_venv("current_dir")
   if not venv then
-    table.insert(M.venvs,  {
+    table.insert(M.venvs, {
       name = "current_dir",
       path = current_buf_venv[1]
     })
@@ -101,15 +102,12 @@ local function get_venvs()
   return M.venvs
 end
 
----Show a picker for select Python venv
----and make it active
+---Show a picker for select Python venv and make it active
 function M.pick_venv()
   local venvs = get_venvs()
 
   if not next(venvs) then
-    vim.notify("Warning: no virtual_envs found.",
-      vim.log.levels.WARN,
-      { title = "Py-venvs" })
+    vim.notify("Python-venvs - no virtual_envs found", vim.log.levels.WARN)
     return
   end
   vim.ui.select(venvs, {

@@ -2,7 +2,7 @@
 -- File         : completion.lua
 -- Description  : completion config
 -- Author       : Kevin
--- Last Modified: 09 Dec 2025, 12:23
+-- Last Modified: 23 Dec 2025, 19:55
 -------------------------------------
 
 --NOTE: snippets variables
@@ -38,10 +38,10 @@ require("blink.cmp").setup {
 
   sources = {
     default = { "snippets", "lsp", "path", "buffer", },
-    per_filetype = {
-      markdown = { "snippets", "lsp", "markdown", "path", "buffer", },
-      quarto = { "snippets", "lsp", "markdown", "path", "buffer", },
-    },
+    -- per_filetype = {
+    --   markdown = { "snippets", "lsp", "markdown", "path", "buffer", },
+    --   quarto = { "snippets", "lsp", "markdown", "path", "buffer", },
+    -- },
     providers = {
       buffer = {
         opts = {

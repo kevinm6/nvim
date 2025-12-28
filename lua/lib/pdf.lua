@@ -2,7 +2,7 @@
 --  File         : pdf.lua
 --  Description  : use Neovim as pdf reader (need pdftotext binaries)
 --  Author       : Kevin
---  Last Modified: 22/04/2025, 18:36
+--  Last Modified: 28 Dec 2025, 17:14
 -------------------------------------
 
 local M = {
@@ -48,16 +48,12 @@ end
 
 function M.convert_md_to_pdf()
   if vim.bo.ft ~= 'markdown' then
-    local err_msg = string.format("FileType < %s > not supported", vim.bo.ft)
+    local err_msg = string.format("TOpdf - fileType < %s > not supported", vim.bo.ft)
     vim.notify(err_msg, vim.log.levels.ERROR, { title = "PDF export" })
     return
   end
 
-  if vim.fn.executable 'pandoc' ~= 1 then
-    vim.notify("Pandoc binary is required", vim.log.levels.ERROR,
-      { title = "Binary not found" })
-    return
-  end
+  assert(vim.fn.executable 'pandoc' == 1, "TOpdf - pandoc binary is required")
 
   local file_path = vim.api.nvim_buf_get_name(0)
   local pdf_out_path = string.sub(file_path, 1, -3) .. 'pdf'
@@ -76,19 +72,19 @@ function M.convert_md_to_pdf()
     -- "--toc"
   }
 
-  vim.notify("TOpdf: starting conversion...")
+  vim.notify("TOpdf - starting conversion...")
   vim.system(args, { text = true }, function(obj)
     if obj.stderr ~= "" then
-      vim.notify(obj.stderr, vim.log.levels.ERROR, { title = "TOpdf: export" })
+      vim.notify("TOpdf - stderr => " .. obj.stderr, vim.log.levels.ERROR, { title = "TOpdf - export" })
       vim.schedule(function() vim.fn.chdir(old_cwd) end)
       return
     end
 
     if obj.stdout ~= "" then
-      vim.notify(obj.stdout)
+      vim.notify("TOpdf - stdout => " .. obj.stdout)
     end
 
-    vim.notify("TOpdf: conversion complete")
+    vim.notify("TOpdf - conversion complete")
     vim.schedule(function()
       vim.fn.chdir(old_cwd)
       vim.ui.open(pdf_out_path)

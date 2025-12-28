@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 17 Dec 2025, 20:52
+-- Last Modified: 28 Dec 2025, 17:48
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -16,7 +16,7 @@ nmap {
   "<leader>.",
   function()
     vim.cmd.cd "%:h"
-    vim.notify(string.format(" Current Working Directory:\n « %s »", vim.fn.expand "%:p:h"), vim.log.levels.INFO, {
+    vim.notify(string.format(" Current Working Directory => %s", vim.fn.expand "%:p:h"), vim.log.levels.INFO, {
       title = "File Explorer",
       render = "wrapped-compact",
       timeout = 4,
@@ -239,7 +239,7 @@ nmap {
       split = "below",
     })
   end,
-  "Terminal❭ Horizontal",
+  "Terminal - horizontal",
 }
 
 nmap {
@@ -253,7 +253,7 @@ nmap {
       split = "right",
     })
   end,
-  "Terminal❭ Vertical",
+  "Terminal - vertical",
 }
 
 nmap {
@@ -268,7 +268,7 @@ nmap {
       })
     end
   end,
-  "Terminal❭ exec",
+  "Terminal - exec",
 }
 
 nmap {
@@ -278,7 +278,7 @@ nmap {
     local height = math.floor(vim.o.lines * 0.80)
     require("lib.terminal").new_terminal_win("", true, { height = height, width = width, relative = "editor" })
   end,
-  "Terminal❭ Float",
+  "Terminal - float",
 }
 
 nmap {

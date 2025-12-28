@@ -2,14 +2,14 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 17 Dec 2025, 08:54
+--  Last Modified: 28 Dec 2025, 17:43
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
 ---@param ev table
 local function hooks(ev)
   local name, kind, build = ev.data.spec.name, ev.data.kind, ev.data.spec.data.build
-  -- vim.print(string.format("%s (%s): build => ", name, kind), ev.data.spec.data.build)
+  vim.print(string.format("%s (%s): build => ", name, kind), ev.data.spec.data.build)
   if kind ~= "delete" and build then
     if not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
     local msg = string.format("vim.pack: Running build - %s", name)
@@ -347,7 +347,7 @@ vim.pack.add({
         if vim.fn.executable(dap_py_venv) then
           require "dap-python".setup(dap_py_venv)
         else
-          vim.notify("Python not found", vim.log.levels.WARN, { title = "Nvim-dap-python" })
+          vim.notify("Nvim-dap-python - python not found", vim.log.levels.WARN, { title = "Nvim-dap-python" })
         end
       end
     }
@@ -600,24 +600,25 @@ vim.pack.add({
       ev = "VimEnter",
       config = function()
         vim.api.nvim_create_autocmd("FileType", {
-          pattern = "html",
+          pattern = { "html", "css", "php", "javascript" },
           callback = function()
-            require("otter").activate { "javascript", "php", "css" }
-          end,
-        })
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = "javascript",
-          callback = function()
-            require("otter").activate { "html", "php" }
+            require("otter").activate() -- { "javascript", "php", "css" }
           end,
         })
 
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = "php",
-          callback = function()
-            require("otter").activate { "html", "javascript" }
-          end,
-        })
+        -- vim.api.nvim_create_autocmd("FileType", {
+        --   pattern = "javascript",
+        --   callback = function()
+        --     require("otter").activate { "html", "php" }
+        --   end,
+        -- })
+        --
+        -- vim.api.nvim_create_autocmd("FileType", {
+        --   pattern = "php",
+        --   callback = function()
+        --     require("otter").activate { "html", "javascript" }
+        --   end,
+        -- })
 
         vim.api.nvim_create_autocmd("FileType", {
           pattern = { "jupyter_notebook" },

@@ -2,7 +2,7 @@
 --  File         : env.lua
 --  Description  : environment variables in telescope or listed
 --  Author       : Kevin
---  Last Modified: 11/11/2025, 20:29
+--  Last Modified: 28 Dec 2025, 17:20
 -------------------------------------
 
 local M = {}
@@ -39,16 +39,16 @@ local function show_environment_variables(_)
       copy_to_clipboard = function(picker, item)
         vim.fn.setreg("+", item.preview)
         picker:close()
-        vim.notify(string.format("Env var < %s > value copied to clipboard", item.text), vim.log.levels.INFO, { title = "Env" })
+        vim.notify(string.format("Env - var < %s > value copied to clipboard", item.text), vim.log.levels.INFO, { title = "Env" })
       end,
-      add_environment_var = function(picker)
-        local prompt = string.format("Enter new env var in 'VAR=VALUE' format: ")
+      add_environment_var = function(picker, item)
+        local prompt = string.format("Env - enter new env var in 'VAR=VALUE' format: ")
         picker:close()
-        vim.ui.input({ prompt = prompt }, function(input)
+        vim.ui.input({ prompt = prompt, default = item.preview }, function(input)
           if input then
             local new_var, new_value = unpack(vim.split(input, "="))
             vim.env[new_var] = tostring(new_value)
-            local msg = string.format("Set env var '%s' to '%s'", new_var, new_value)
+            local msg = string.format("Env - set env var '%s' to '%s'", new_var, new_value)
             vim.notify(msg, vim.log.levels.INFO, { title = "Env" })
           end
         end)
@@ -56,12 +56,12 @@ local function show_environment_variables(_)
       edit_environment_var = function(picker)
         if picker:current().text == "" then return end
         local c_word = picker:current().text
-        local prompt = string.format("Enter new value for < %s > : ", c_word)
+        local prompt = string.format("Env - enter new value for < %s > : ", c_word)
         picker:close()
         vim.ui.input({ prompt = prompt }, function(input)
           if input then
             vim.env[c_word] = tostring(input)
-            local msg = string.format("Update env var '%s' to '%s'", c_word, input)
+            local msg = string.format("Env - update env var '%s' to '%s'", c_word, input)
             vim.notify(msg, vim.log.levels.INFO, { title = "Env" })
           end
         end)

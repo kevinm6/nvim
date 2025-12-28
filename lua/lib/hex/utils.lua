@@ -17,7 +17,10 @@ function hex_utils.dump_to_hex(hex_dump_cmd)
   vim.bo.ft = 'xxd'
   hex_utils.drop_undo_history()
 
-  vim.lsp.stop_client(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() }))
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+    client:stop()
+  end
+
   vim.bo.mod = false
 end
 
@@ -44,7 +47,7 @@ function hex_utils.is_program_executable(program)
   if vim.fn.executable(program) == 1 then
     return true
   else
-    vim.notify(program .. " is not installed on this system, aborting!",
+    vim.notify(string.format("Hex - %s is not installed on this system, aborting!", program),
       vim.log.levels.WARN)
     return false
   end

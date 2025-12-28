@@ -2,7 +2,7 @@
 --  File         : notes.lua
 --  Description  : module to manage notes
 --  Author       : Kevin
---  Last Modified: 27/07/2025, 09:16
+--  Last Modified: 28 Dec 2025, 17:30
 -------------------------------------
 
 local note = {}
@@ -36,13 +36,13 @@ function note.delete_note()
           detach = true,
           on_exit = function()
             local choice_name = vim.fn.fnamemodify(choice, ":t")
-            vim.notify(string.format("Note < %s > deleted!", choice_name), vim.log.levels.WARN)
+            vim.notify(string.format("Notes - note < %s > deleted!", choice_name), vim.log.levels.WARN)
           end,
         })
       end
     end)
   else
-    vim.notify("No notes to delete", vim.log.levels.WARN, { title = " Notes" })
+    vim.notify("Notes - no notes to delete", vim.log.levels.WARN, { title = " Notes" })
   end
 end
 
@@ -65,7 +65,7 @@ function note.open_note()
       end
     end)
   else
-    vim.notify("No saved notes found.", vim.log.levels.WARN)
+    vim.notify("Notes - no saved notes found.", vim.log.levels.WARN)
   end
 end
 

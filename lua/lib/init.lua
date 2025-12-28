@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 26 Nov 2025, 21:00
+--  Last Modified: 28 Dec 2025, 17:37
 -------------------------------------
 
 local M = {}
@@ -12,7 +12,7 @@ local M = {}
 function M.toggle_option(option)
   local value = not vim.api.nvim_get_option_value(option, {})
   vim.opt[option] = value
-  vim.notify(option .. " set to " .. tostring(value), vim.log.levels.INFO)
+  vim.notify(string.format("Opts - %s set to %s", option, tostring(value)), vim.log.levels.INFO)
 end
 
 ---Dev FOLDER
@@ -110,7 +110,7 @@ function M.projects()
     }, function(choice)
       if choice then
         vim.cmd.tcd(choice)
-        vim.notify(string.format("TWD: %s", choice), vim.log.levels.INFO)
+        vim.notify(string.format("Projects - twd => %s", choice), vim.log.levels.INFO)
         local has_mini, mini_files = pcall(require, "mini.files")
         if has_mini then
           mini_files.open(choice)
@@ -266,12 +266,12 @@ function M.run_brew_service(service, async)
   end
 
   if async then
-    vim.notify "creating async service"
+    vim.notify("Brew Services - creating async service")
     vim.system({ "brew", "services", "run", service }, { text = true, timeout = 6000 }, function(obj)
-      vim.notify(obj.stdout, vim.log.levels.INFO, { title = "Brew Services" })
+      vim.notify("Brew Services - stdout => " .. obj.stdout, vim.log.levels.INFO, { title = "Brew Services" })
 
       if obj.code ~= 0 then
-        vim.notify(obj.stderr, vim.log.levels.WARN)
+        vim.notify("Brew Services - stderr => " .. obj.stderr, vim.log.levels.WARN)
       else
         autocmd_stop_service()
       end
@@ -280,9 +280,9 @@ function M.run_brew_service(service, async)
     local job = vim.system({ "brew", "services", "run", service }, { text = true }):wait(6000)
 
     if job.code ~= 0 then
-      vim.notify(job.stderr, vim.log.levels.WARN)
+      vim.notify("Brew Services - stderr => " .. job.stderr, vim.log.levels.WARN)
     else
-      vim.notify(job.stdout, vim.log.levels.INFO, { title = "Brew Services" })
+      vim.notify("Brew Services - stdout => " .. job.stdout, vim.log.levels.INFO, { title = "Brew Services" })
       autocmd_stop_service()
     end
   end
@@ -349,7 +349,7 @@ function M.user_command_toggle(name, var_name, opts)
     action = enabled and "  ON" or "  OFF"
     local log_level = enabled and vim.log.levels.INFO or vim.log.levels.WARN
 
-    vim.notify(action, log_level, {
+    vim.notify("Usercommand Toggle - " .. action, log_level, {
       render = "wrapped-compact",
       title = opts and opts.title,
     })

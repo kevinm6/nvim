@@ -1,7 +1,7 @@
 -------------------------------------
 -- Description  : useful plugins
 -- Author       : Kevin
--- Last Modified: 30 Nov 2025, 12:17
+-- Last Modified: 28 Dec 2025, 17:42
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
@@ -84,7 +84,8 @@ mini_clue.setup {
   window = {
     config = {
       height = math.floor(vim.o.lines * 0.26),
-      width = math.floor(vim.o.columns * 0.26),
+      width = "auto",
+      -- width = math.floor(vim.o.columns * 0.26),
       anchor = "SE",
       border = "rounded",
     },
@@ -180,7 +181,7 @@ vim.api.nvim_create_autocmd("FileType", {
 local mini_diff = require("mini.diff")
 local has_git = vim.fn.executable("git") == 1
 local diff_sources = has_git and { mini_diff.gen_source.git(), mini_diff.gen_source.save() } or
-{ mini_diff.gen_source.save() }
+    { mini_diff.gen_source.save() }
 
 mini_diff.setup {
   view = {
@@ -213,16 +214,16 @@ vim.api.nvim_set_hl(0, "MiniDiffOverDelete", { fg = "NONE", bg = "#b2555b" })
 local mini_files = require("mini.files")
 local set_cwd = function()
   local path = (mini_files.get_fs_entry() or {}).path
-  if path == nil then return vim.notify('Cursor is not on valid entry') end
+  if path == nil then return vim.notify("MiniFiles - cursor is not on valid entry") end
   local dir_path = vim.fs.dirname(path)
   vim.fn.chdir(dir_path)
-  vim.notify("tcd set to " .. dir_path, vim.log.levels.INFO, { title = "Mini.Files" })
+  vim.notify("MiniFiles - tcd => " .. dir_path, vim.log.levels.INFO, { title = "Mini.Files" })
 end
 
 -- Yank in register full path of entry under cursor
 local yank_path = function()
   local path = (mini_files.get_fs_entry() or {}).path
-  if path == nil then return vim.notify('Cursor is not on valid entry') end
+  if path == nil then return vim.notify("MiniFiles - cursor is not on valid entry") end
   vim.fn.setreg(vim.v.register, path)
 end
 
@@ -372,15 +373,15 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 vim.keymap.set("n", "<leader>e", function()
-  -- require("mini.files").open()
-  local buf_path = vim.api.nvim_buf_get_name(0)
-  local path_exists = vim.fn.filereadable(buf_path) == 1
-  require("mini.files").open(path_exists and buf_path or vim.uv.cwd())
-end,
+    -- require("mini.files").open()
+    local buf_path = vim.api.nvim_buf_get_name(0)
+    local path_exists = vim.fn.filereadable(buf_path) == 1
+    require("mini.files").open(path_exists and buf_path or vim.uv.cwd())
+  end,
   { desc = "File Explorer" })
 
 vim.keymap.set("n", "<leader>E", function()
-  --Open fresh in cwd
-  require("mini.files").open(nil, false)
-end,
+    --Open fresh in cwd
+    require("mini.files").open(nil, false)
+  end,
   { desc = "File Explorer" })

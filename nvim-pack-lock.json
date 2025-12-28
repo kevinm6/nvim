@@ -91,7 +91,7 @@
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-treesitter": {
-      "rev": "d3218d988f72ed34414959c9ccd802d393432d6e",
+      "rev": "36fcb4a4238928f0b627e1ab84ade0acc1facc2c",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "otter.nvim": {

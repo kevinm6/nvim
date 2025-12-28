@@ -3,7 +3,7 @@ vim.opt_local.makeprg = "scala"
 
 local has_metals, metals = pcall(require, "metals")
 if not has_metals then
-  vim.notify(" `nvim-metals` not found or error on starting", vim.log.levels.ERROR, { title = "Metals" })
+  vim.notify("Scala - `nvim-metals` not found or error on starting", vim.log.levels.ERROR, { title = "Metals" })
   return
 end
 

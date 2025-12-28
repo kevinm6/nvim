@@ -3,7 +3,7 @@
 --  Description  : edit hex files
 --  Author       : Kevin
 --  Source       : https://github.com/RaafatTurki/hex.nvim/tree/master/lua
---  Last Modified: 13 May 2024, 12:15
+--  Last Modified: 28 Dec 2025, 17:37
 -------------------------------------
 
 -- TODO: add docs
@@ -41,7 +41,7 @@ local function dump()
   if not vim.b.hex then
     utils.dump_to_hex(hex.config.dump_cmd)
   else
-    vim.notify('already dumped!', vim.log.levels.WARN)
+    vim.notify("Hex - already dumped!", vim.log.levels.WARN)
   end
 end
 
@@ -49,7 +49,7 @@ local function assemble()
   if vim.b.hex then
     utils.assemble_from_hex(hex.config.assemble_cmd)
   else
-    vim.notify('already assembled!', vim.log.levels.WARN)
+    vim.notify("Hex - already assembled!", vim.log.levels.WARN)
   end
   vim.g.hex_dumped = true
 end

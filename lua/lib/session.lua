@@ -2,7 +2,7 @@
 --  File         : session.lua
 --  Description  : module to manage vim builtin sessions
 --  Author       : Kevin
---  Last Modified: 26 Nov 2025, 20:23
+--  Last Modified: 28 Dec 2025, 17:24
 -------------------------------------
 
 local M = {
@@ -41,12 +41,12 @@ local function delete_session()
         local deleted = vim.fn.delete(choice)
         if deleted == 0 then
           local choice_name = vim.fn.fnamemodify(choice, ":t")
-          vim.notify(string.format("Session < %s > deleted", choice_name), vim.log.levels.WARN)
+          vim.notify(string.format("Session - session < %s > deleted", choice_name), vim.log.levels.WARN)
         end
       end
     end)
   else
-    vim.notify("No Sessions to delete", vim.log.levels.WARN)
+    vim.notify("Session - no sessions to delete", vim.log.levels.WARN)
   end
 end
 
@@ -67,11 +67,11 @@ local function restore_session()
         local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
         vim.cmd.source(choice)
         require("lib.ui.statusline").session_name = s_name
-        vim.notify(string.format("Session < %s > restored", s_name), vim.log.levels.INFO)
+        vim.notify(string.format("Session - session < %s > restored", s_name), vim.log.levels.INFO)
       end
     end)
   else
-    vim.notify("No Sessions to restore", vim.log.levels.WARN)
+    vim.notify("Session - no sessions to restore", vim.log.levels.WARN)
   end
 end
 
@@ -100,7 +100,7 @@ local function save_session()
         op = "updated"
       end
       vim.cmd.mksession { session_file_path, bang = true }
-      vim.notify(string.format("Session < %s > %s", input, op), vim.log.levels.INFO)
+      vim.notify(string.format("Session - session < %s > %s", input, op), vim.log.levels.INFO)
     else
       print "  canceled"
     end
@@ -126,7 +126,7 @@ function M.select(arg)
   elseif M[arg] then
     M[arg]()
   else
-    vim.notify("Invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN, { title = "Session" })
+    vim.notify("Session - invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN, { title = "Session" })
   end
 end
 

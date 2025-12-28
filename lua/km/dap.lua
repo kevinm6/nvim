@@ -2,7 +2,7 @@
 --  File         : dap.lua
 --  Description  : dap plugin config
 --  Author       : Kevin
---  Last Modified: 03 Dec 2025, 21:45
+--  Last Modified: 28 Dec 2025, 17:47
 -----------------------------------
 
 ---DAP
@@ -377,7 +377,7 @@ local dapv = require "dap-view"
 
 -- set keymaps
 local function map(tbl)
-  vim.keymap.set(tbl.mode or "n", tbl[1], tbl[2], { desc = "DAP❭ " .. tbl[3] })
+  vim.keymap.set(tbl.mode or "n", tbl[1], tbl[2], { desc = "DAP - " .. tbl[3] })
 end
 
 map { "<localleader>db", dap.toggle_breakpoint, "Breakpoint" }
@@ -425,13 +425,13 @@ dap.listeners.after["event_initialized"]["me"] = function()
   end
   vim.keymap.set("n", "<localleader>k", function()
     require("dap.ui.widgets").hover(vim.fn.expand "<cexpr>", {
-      title = "DAP❭ Hover",
+      title = "DAP - Hover",
       border = "rounded",
     })
-  end, { desc = "DAP❭ Hover", silent = true })
+  end, { desc = "DAP - Hover", silent = true })
   vim.keymap.set({ "n", "v", "x" }, "<localleader>K", function()
     dap.preview()
-  end, { desc = "DAP❭ Preview", silent = true })
+  end, { desc = "DAP - Preview", silent = true })
 end
 
 dap.listeners.after["event_terminated"]["me"] = function()
