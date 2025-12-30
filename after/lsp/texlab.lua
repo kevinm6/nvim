@@ -52,7 +52,7 @@ local function buf_cancel_build(client, bufnr)
 end
 
 local function dependency_graph(client)
-  client.request("workspace/executeCommand", { command = "texlab.showDependencyGraph" }, function(err, result)
+  client:request("workspace/executeCommand", { command = "texlab.showDependencyGraph" }, function(err, result)
     if err then
       return vim.notify(string.format("TexLab - %s: %s", err.code, err.message), vim.log.levels.ERROR)
     end

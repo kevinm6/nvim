@@ -2,23 +2,22 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:43
+--  Last Modified: 31 Dec 2025, 09:58
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
----@param ev table
-local function hooks(ev)
-  local name, kind, build = ev.data.spec.name, ev.data.kind, ev.data.spec.data.build
-  vim.print(string.format("%s (%s): build => ", name, kind), ev.data.spec.data.build)
-  if kind ~= "delete" and build then
-    if not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
-    local msg = string.format("vim.pack: Running build - %s", name)
-    vim.api.nvim_echo({ { msg, "DiagnosticUnnecessary" } }, true, {})
-    pcall(build)
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(ev)
+    if not ev.data then return end
+    local name, kind, build = ev.data.spec.name, ev.data.kind, ev.data.spec.data.build
+    if kind ~= "delete" and build then
+      if not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
+      local msg = string.format("vim.pack: Running build (%s) - %s", kind, name)
+      vim.notify(msg, vim.log.levels.INFO, { title = "PackChanged" })
+      pcall(build)
+    end
   end
-end
-
-vim.api.nvim_create_autocmd("PackChanged", { callback = hooks })
+})
 
 local ts_utils = require "lib.ts_utils"
 vim.api.nvim_create_autocmd("FileType", {
@@ -38,11 +37,18 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
+---Add github prefix to url
+---@param user_repo string the context part of the GitHub url, in format `user/repo`
+---@return string the full GitHub url
+local function gh(user_repo)
+  return "https://github.com/" .. user_repo
+end
+
 vim.pack.add({
   ---Plugin: load on start
   ---QoL plugins
   {
-    src = "https://github.com/echasnovski/mini.nvim",
+    src = gh("echasnovski/mini.nvim"),
     data = {
       config = function()
         require "km.coding_helper"
@@ -51,7 +57,7 @@ vim.pack.add({
   },
 
   {
-    src = "https://github.com/folke/snacks.nvim",
+    src = gh("folke/snacks.nvim"),
     data = {
       config = function()
         require "km.snacks"
@@ -61,7 +67,7 @@ vim.pack.add({
 
   ---Treesitter
   {
-    src = "https://github.com/nvim-treesitter/nvim-treesitter",
+    src = gh("nvim-treesitter/nvim-treesitter"),
     data = {
       build = function()
         require "nvim-treesitter".install(require "lib.ts_utils".parsers_to_be_installed()):wait(300000)
@@ -73,7 +79,7 @@ vim.pack.add({
   ---Plugin: lazy loading
   ---Completion
   {
-    src = "https://github.com/saghen/blink.cmp",
+    src = gh("saghen/blink.cmp"),
     version = vim.version.range("1.*"),
     data = {
       ev = { "InsertEnter", "CmdLineEnter" },
@@ -85,7 +91,7 @@ vim.pack.add({
 
   ---DAP
   {
-    src = "https://github.com/mfussenegger/nvim-dap",
+    src = gh("mfussenegger/nvim-dap"),
     data = {
       ev = "VimEnter",
       config = function()
@@ -95,7 +101,7 @@ vim.pack.add({
     }
   },
   {
-    src = "https://github.com/igorlfs/nvim-dap-view",
+    src = gh("igorlfs/nvim-dap-view"),
     data = {
       ev = "VimEnter",
       config = function()
@@ -123,7 +129,7 @@ vim.pack.add({
 
   ---Mason
   {
-    src = "https://github.com/williamboman/mason.nvim",
+    src = gh("williamboman/mason.nvim"),
     data = {
       cmd = { "Mason" },
       config = function()
@@ -147,9 +153,8 @@ vim.pack.add({
     }
   },
   ---Lint & Format
-  ---- Lint (Nvim-Lint) "mfussenegger/nvim-lint", event = "InsertEnter"
   {
-    src = "https://github.com/mfussenegger/nvim-lint",
+    src = gh("mfussenegger/nvim-lint"),
     data = {
       ev = "InsertEnter",
       config = function()
@@ -160,6 +165,7 @@ vim.pack.add({
           json = { "biomejs" },
           javascript = { "biomejs", "eslint_d" },
           typescript = { "biomejs", "eslint_d" },
+          html = { "biomejs" },
           python = { "ruff" },
           gitcommit = { "commitlint" },
           php = { "php" },
@@ -204,7 +210,7 @@ vim.pack.add({
   },
   ---Formatter (Conform)
   {
-    src = "https://github.com/stevearc/conform.nvim",
+    src = gh("stevearc/conform.nvim"),
     data = {
       cmd = { "Format", "ConformInfo" },
       ev = "BufWritePre",
@@ -226,10 +232,11 @@ vim.pack.add({
           bash = { "beautysh" },
           zsh = { "beautysh" },
           css = { "prettier" },
-          javascript = { "biomejs", "biome-organize-imports" },
-          typescriptreact = { "biomejs", "biome-organize-imports" },
-          html = { "prettier" },
+          javascript = { "biome", "biome-organize-imports" },
+          typescriptreact = { "biome", "biome-organize-imports" },
+          html = { "biome" },
           json = { "biome" },
+          -- json = { "biome" },
           yaml = { "yamlfmt", "prettier" },
           -- java = { "google-java-format" },
         }
@@ -289,7 +296,7 @@ vim.pack.add({
 
   ---Markdown
   {
-    src = "https://github.com/MeanderingProgrammer/markdown.nvim",
+    src = gh("MeanderingProgrammer/markdown.nvim"),
     data = {
       ft = { "markdown", "quarto" },
       config = function()
@@ -323,9 +330,9 @@ vim.pack.add({
   },
 
   ---Databases
-  { src = "https://github.com/MunifTanjim/nui.nvim" },
+  { src = gh("MunifTanjim/nui.nvim") },
   {
-    src = "https://github.com/kndndrj/nvim-dbee",
+    src = gh("kndndrj/nvim-dbee"),
     data = {
       cmd = { "Dbee" },
       config = function()
@@ -337,7 +344,7 @@ vim.pack.add({
 
   ---Python
   {
-    src = "https://github.com/mfussenegger/nvim-dap-python",
+    src = gh("mfussenegger/nvim-dap-python"),
     data = {
       ft = { "python" },
       config = function()
@@ -354,7 +361,7 @@ vim.pack.add({
   },
   ---Go
   {
-    src = "https://github.com/ray-x/go.nvim",
+    src = gh("ray-x/go.nvim"),
     data = {
       build = function()
         require("go.install").update_all_sync()
@@ -381,27 +388,27 @@ vim.pack.add({
   },
   ---Java
   {
-    src = "https://github.com/mfussenegger/nvim-jdtls",
+    src = gh("mfussenegger/nvim-jdtls"),
     data = { ft = "java" }
   },
   ---Json
   {
-    src = "https://github.com/b0o/SchemaStore.nvim",
+    src = gh("b0o/SchemaStore.nvim"),
     data = { ft = { "json", "json5" } }
   },
   ---SQL
   {
-    src = "https://github.com/nanotee/sqls.nvim",
+    src = gh("nanotee/sqls.nvim"),
     data = { ft = "sql" }
   },
   ---Scala
   {
-    src = "https://github.com/scalameta/nvim-metals",
+    src = gh("scalameta/nvim-metals"),
     data = { ft = { "scala", "sbt" } }
   },
   ---LaTex
   {
-    src = "https://github.com/lervag/vimtex",
+    src = gh("lervag/vimtex"),
     data = {
       ft = { "tex", "plaintex", "bib" },
       config = function()
@@ -449,7 +456,7 @@ vim.pack.add({
   },
   ---Color Picker
   {
-    src = "https://github.com/ziontee113/color-picker.nvim",
+    src = gh("ziontee113/color-picker.nvim"),
     data = {
       cmd = { "PickColor" },
       config = function()
@@ -462,12 +469,12 @@ vim.pack.add({
   },
   ---Nvim colorizer
   {
-    src = "https://github.com/norcalli/nvim-colorizer.lua",
+    src = gh("norcalli/nvim-colorizer.lua"),
     data = { cmd = { "ColorizerToggle" } }
   },
   ---Jupyter Notebook
   {
-    src = "https://github.com/GCBallesteros/jupytext.nvim",
+    src = gh("GCBallesteros/jupytext.nvim"),
     data = {
       config = function()
         require("jupytext").setup {
@@ -480,7 +487,7 @@ vim.pack.add({
   },
   ---Molten
   {
-    src = "https://github.com/benlubas/molten-nvim",
+    src = gh("benlubas/molten-nvim"),
     version = vim.version.range("^1.0.0"),
     data = {
       build = function() vim.cmd.UpdateRemotePlugins() end,
@@ -547,7 +554,7 @@ vim.pack.add({
   },
   ---Quarto
   {
-    src = "https://github.com/quarto-dev/quarto-nvim",
+    src = gh("quarto-dev/quarto-nvim"),
     data = {
       ft = { "quarto", "jupyter_notebook" },
       config = function()
@@ -577,9 +584,9 @@ vim.pack.add({
     }
   },
   ---DataViewer (csv, tsv ...)
-  { src = "https://github.com/nvim-lua/plenary.nvim" },
+  { src = gh("nvim-lua/plenary.nvim") },
   {
-    src = "https://github.com/vidocqh/data-viewer.nvim",
+    src = gh("vidocqh/data-viewer.nvim"),
     data = {
       ft = { "sqlite", "tsv", "csv" },
       config = function()
@@ -595,7 +602,7 @@ vim.pack.add({
   },
   ---Otter: spawns lsp-server for injected languages
   {
-    src = "https://github.com/jmbuhr/otter.nvim",
+    src = gh("jmbuhr/otter.nvim"),
     data = {
       ev = "VimEnter",
       config = function()
@@ -606,23 +613,9 @@ vim.pack.add({
           end,
         })
 
-        -- vim.api.nvim_create_autocmd("FileType", {
-        --   pattern = "javascript",
-        --   callback = function()
-        --     require("otter").activate { "html", "php" }
-        --   end,
-        -- })
-        --
-        -- vim.api.nvim_create_autocmd("FileType", {
-        --   pattern = "php",
-        --   callback = function()
-        --     require("otter").activate { "html", "javascript" }
-        --   end,
-        -- })
-
         vim.api.nvim_create_autocmd("FileType", {
           pattern = { "jupyter_notebook" },
-          callback = function(ev)
+          callback = function(_)
             -- vim.print("activating otter for " .. ev.match .. " filetype")
             require("otter").activate { "quarto", "qmd", "markdown", "python" }
             -- vim.treesitter.language.register("markdown", "python")
@@ -637,7 +630,7 @@ vim.pack.add({
 
   ---Webdev
   {
-    src = "https://github.com/rest-nvim/rest.nvim",
+    src = gh("rest-nvim/rest.nvim"),
     data = {
       ft = "http",
       config = function()

@@ -2,7 +2,7 @@
 -- File         : ts_highlight_current_scope.lua
 -- Description  : utils function for treesitter (revamp of `nvim-treesitter-refactor`)
 -- Author       : Kevin
--- Last Modified: 28 Dec 2025, 17:39
+-- Last Modified: 29 Dec 2025, 12:26
 -------------------------------------
 
 local M = {}
@@ -11,43 +11,73 @@ local M = {}
 ---@return table list of parsers
 function M.parsers_to_be_installed()
   return {
-    "c",
+    "bash",
     "comment",
     "cpp",
     "css",
-    "dot",
     "dockerfile",
-    "bash",
-    "gitignore",
+    "dot",
+    "dtd",
+    "git_rebase",
     "gitattributes",
     "gitcommit",
-    "git_rebase",
+    "gitignore",
     "go",
-    "vimdoc",
+    "gomod",
+    "gosum",
+    "gotmpl",
+    "gowork",
+    "groovy",
     "html",
     "http",
-    "json",
-    "jsdoc",
-    "latex",
-    "ruby",
-    "lua",
+    "ini",
     "java",
     "javascript",
-    "markdown",
+    "jsdoc",
+    "json",
+    "latex",
+    "lua",
     "markdown_inline",
+    "markdown",
+    "matlab",
+    "php_only",
     "php",
+    "phpdoc",
     "python",
     "regex",
-    "python",
-    "phpdoc",
+    "ruby",
     "scheme",
+    "scss",
     "sql",
+    "svelte",
     "swift",
     "todotxt",
+    "tsx",
+    "typescript",
+    "typst",
     "vim",
+    "vimdoc",
+    "vue",
+    "xml",
     "yaml",
     "ini",
   }
+end
+
+---Remove installed treesitter parsers
+function M.uninstall_parsers()
+  local parsers = vim.fn.glob(vim.fn.stdpath "data" .. "/site/parser/*.*", true, true)
+  local numParsers = #parsers
+  if numParsers < 1 then
+    vim.notify("TS Utils - no parser installed", vim.log.levels.INFO, { title = "TS Utils" })
+    return
+  end
+  vim.fn.confirm("Are you sure to uninstall all treesitter parsers?", "&Yes\n&No", 2, "WARN")
+
+  for _, parser in pairs(parsers) do
+    vim.fn.delete(parser)
+  end
+  vim.notify(("TS utils - %d parsers deleted"):format(#numParsers), vim.log.levels.WARN, { title = "TS Utils" })
 end
 
 ---Go to usage of variable under cursor
