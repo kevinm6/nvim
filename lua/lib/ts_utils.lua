@@ -2,7 +2,7 @@
 -- File         : ts_highlight_current_scope.lua
 -- Description  : utils function for treesitter (revamp of `nvim-treesitter-refactor`)
 -- Author       : Kevin
--- Last Modified: 29 Dec 2025, 12:26
+-- Last Modified: 01 Jan 2026, 20:17
 -------------------------------------
 
 local M = {}
@@ -224,6 +224,16 @@ local function goto_definition()
   end
 end
 
+
+local function detach(bufnr)
+  local del_keymap = vim.api.nvim_buf_del_keymap
+  del_keymap(bufnr, "n", "<C-j>")
+  del_keymap(bufnr, "n", "<C-k>")
+  del_keymap(bufnr, "n", "gd")
+  del_keymap(bufnr, "n", "gD")
+  del_keymap(bufnr, "n", "gO")
+end
+
 function M.attach(bufnr)
   local set_keymap = vim.keymap.set
   set_keymap("n", "<C-j>", function()
@@ -235,15 +245,13 @@ function M.attach(bufnr)
   set_keymap("n", "gd", function()
     goto_definition()
   end, { buffer = bufnr, silent = true, noremap = true, desc = "goto_definition" })
-end
 
-function M.detach(bufnr)
-  local del_keymap = vim.api.nvim_buf_del_keymap
-  del_keymap(bufnr, "n", "<C-j>")
-  del_keymap(bufnr, "n", "<C-k>")
-  del_keymap(bufnr, "n", "gd")
-  del_keymap(bufnr, "n", "gD")
-  del_keymap(bufnr, "n", "gO")
+  vim.api.nvim_create_autocmd("BufDelete", {
+    pattern = M.parsers_to_be_installed(),
+    callback = function()
+      detach(bufnr)
+    end
+  })
 end
 
 return M

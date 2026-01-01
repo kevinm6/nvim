@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:48
+--  Last Modified: 01 Jan 2026, 20:18
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -26,13 +26,6 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     ts_utils.attach(ev.buf)
-
-    vim.api.nvim_create_autocmd("BufDelete", {
-      pattern = ts_utils.parsers_to_be_installed(),
-      callback = function()
-        ts_utils.detach(ev.buf)
-      end
-    })
   end
 })
 
@@ -69,7 +62,7 @@ vim.pack.add({
     src = gh("nvim-treesitter/nvim-treesitter"),
     data = {
       build = function()
-        require "nvim-treesitter".install(require "lib.ts_utils".parsers_to_be_installed()):wait(300000)
+        require "nvim-treesitter".install(ts_utils.parsers_to_be_installed()):wait(300000)
         require "nvim-treesitter".update()
       end
     }
@@ -95,15 +88,7 @@ vim.pack.add({
       ev = "VimEnter",
       config = function()
         vim.cmd.packadd "nvim-dap-view"
-        require "km.dap"
-      end
-    }
-  },
-  {
-    src = gh("igorlfs/nvim-dap-view"),
-    data = {
-      ev = "VimEnter",
-      config = function()
+
         require("dap-view").setup {
           windows = {
             height = 0.24,
@@ -122,7 +107,36 @@ vim.pack.add({
           },
           help = { border = "rounded" }
         }
+        -- vim.cmd.packadd "nvim-dap-view"
+        require "km.dap"
       end
+    }
+  },
+  {
+    src = gh("igorlfs/nvim-dap-view"),
+    data = {
+      on_demand = true,
+      -- ev = "VimEnter",
+      -- config = function()
+      --   require("dap-view").setup {
+      --     windows = {
+      --       height = 0.24,
+      --     },
+      --     winbar = {
+      --       sections = {
+      --         "watches",
+      --         "scopes",
+      --         "breakpoints",
+      --         "exceptions",
+      --         "repl",
+      --         "console",
+      --         "threads",
+      --       },
+      --       controls = { enabled = true },
+      --     },
+      --     help = { border = "rounded" }
+      --   }
+      -- end
     }
   },
 
@@ -329,14 +343,19 @@ vim.pack.add({
   },
 
   ---Databases
-  { src = gh("MunifTanjim/nui.nvim") },
+  {
+    src = gh("MunifTanjim/nui.nvim"),
+    data = { on_demand = true }
+  },
   {
     src = gh("kndndrj/nvim-dbee"),
     data = {
       cmd = { "Dbee" },
       config = function()
-        vim.cmd.packadd "nui.nvim"
-        require "km.databases"
+        require("lib.lazyload").require_stub("nui.nvim", function()
+          vim.cmd.packadd "nui.nvim"
+          require "km.databases"
+        end)
       end
     }
   },
@@ -583,7 +602,10 @@ vim.pack.add({
     }
   },
   ---DataViewer (csv, tsv ...)
-  { src = gh("nvim-lua/plenary.nvim") },
+  {
+    src = gh("nvim-lua/plenary.nvim"),
+    data = { on_demand = true }
+  },
   {
     src = gh("vidocqh/data-viewer.nvim"),
     data = {
@@ -661,16 +683,23 @@ vim.pack.add({
 }, {
   load = function(p)
     local data = p.spec.data or {}
-    local lazy = (data.cmd or data.ft or data.ev)
+    local lazy = (data.cmd or data.ft or data.ev or data.on_demand)
+    if data.on_demand then return end
+
+    local function run_config()
+      if data and data.config then
+        data.config()
+      end
+    end
+
     if data.cmd then
       for _, cmd in ipairs(data.cmd) do
-        vim.api.nvim_create_user_command(cmd, function()
+        require("lib.lazyload").command_stub(cmd, function()
           vim.cmd.packadd(p.spec.name)
-          if p.spec.data and p.spec.data.config then
-            p.spec.data.config()
+          if not package.loaded[p.spec.name] then
+            run_config()
           end
-          vim.cmd(cmd)
-        end, {})
+        end)
       end
     end
     if data.ft then
@@ -679,9 +708,7 @@ vim.pack.add({
         pattern = data.ft,
         callback = function()
           vim.cmd.packadd(p.spec.name)
-          if p.spec.data and p.spec.data.config then
-            p.spec.data.config()
-          end
+          run_config()
         end
       })
     end
@@ -690,15 +717,13 @@ vim.pack.add({
         once = true,
         callback = function()
           vim.cmd.packadd(p.spec.name)
-          if p.spec.data and p.spec.data.config then
-            p.spec.data.config()
-          end
+          run_config()
         end
       })
     end
     if not lazy then
       vim.cmd.packadd(p.spec.name)
-      if data.config then data.config() end
+      run_config()
     end
   end,
 })
