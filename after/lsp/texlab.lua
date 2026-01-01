@@ -54,7 +54,7 @@ end
 local function dependency_graph(client)
   client:request("workspace/executeCommand", { command = "texlab.showDependencyGraph" }, function(err, result)
     if err then
-      return vim.notify(string.format("TexLab - %s: %s", err.code, err.message), vim.log.levels.ERROR)
+      return vim.notify("TexLab - " .. err.code .. ": " .. err.message, vim.log.levels.ERROR)
     end
     vim.notify("TexLab - the dependency graph has been generated =>\n" .. result, vim.log.levels.INFO)
   end, 0)
@@ -68,18 +68,18 @@ local function command_factory(cmd)
   }
   return function(client, bufnr)
     client:exec_cmd({
-      title = ("clean_%s"):format(cmd),
+      title = "clean_" .. cmd,
       command = cmd_tbl[cmd],
       arguments = { { uri = vim.uri_from_bufnr(bufnr) } },
     }, { bufnr = bufnr }, function(err, _)
       if err then
         vim.notify(("TexLab - failed to clean %s files: %s"):format(cmd, err.message), vim.log.levels.ERROR)
       else
-        vim.notify(("TexLab - command %s executed successfully"):format(cmd), vim.log.levels.INFO)
+        vim.notify("TexLab - command " .. cmd .. " executed successfully", vim.log.levels.INFO)
       end
     end)
 
-    vim.notify(("TexLab - command %s executed successfully"):format(cmd_tbl[cmd]))
+    vim.notify("TexLab - command " .. cmd_tbl[cmd] .. " executed successfully")
   end
 end
 
@@ -140,8 +140,7 @@ return {
   settings = {
     texlab = {
       rootDirectory = nil,
-      auxDirectory = string.format(
-        "%s/vimtex/aux_dir/%s",
+      auxDirectory = ("%s/vimtex/aux_dir/%s"):format(
         vim.fn.stdpath "cache",
         vim.fs.basename(vim.api.nvim_buf_get_name(0))
       ),

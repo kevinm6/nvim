@@ -17,7 +17,7 @@ vim.api.nvim_create_user_command("Pyvenv", function(arg)
     -- else
     --   venv = {
     --     name = vim.fn.fnamemodify(arg.args, ":t"),
-    --     path = string.format("%s/%s", vim.uv.cwd(), vim.fn.expand(arg.args))
+    --     path = vim.uv.cwd() .. "/" .. vim.fn.expand(arg.args)
     --   }
     -- end
     require "lib.python_envs".set_venv(arg.args)

@@ -2,7 +2,7 @@
 --  File         : pick_license.lua
 --  Description  : helper module to get licenses
 --  Author       : Kevin
---  Last Modified: 24 Mar 2024, 14:01
+--  Last Modified: 31 Dec 2025, 16:37
 -------------------------------------
 
 local M = {}
@@ -10,7 +10,7 @@ local M = {}
 local function split(s, sep)
   sep = sep or "\n"
   local fields = {}
-  local pattern = string.format("([^%s]+)", sep)
+  local pattern = ("([^%s]+)"):format(sep)
   for match, _ in string.gmatch(s, pattern) do
     table.insert(fields, match)
   end

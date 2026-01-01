@@ -2,7 +2,7 @@
 --  File         : python_envs.lua
 --  Description  : helper module to get and manage python_envs
 --  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:05
+--  Last Modified: 31 Dec 2025, 16:48
 -------------------------------------
 
 ---Python envs
@@ -113,7 +113,7 @@ function M.pick_venv()
   vim.ui.select(venvs, {
     prompt = "Select Python venv",
     format_item = function(item)
-      return ("%s (%s)"):format(item.name, vim.fn.fnamemodify(item.path, ':~'))
+      return item.name .. " (" .. vim.fn.fnamemodify(item.path, ':~') .. ")"
     end,
   }, function(choice)
     if not choice then

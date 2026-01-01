@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 28 Dec 2025, 17:48
+-- Last Modified: 31 Dec 2025, 16:14
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -16,7 +16,7 @@ nmap {
   "<leader>.",
   function()
     vim.cmd.cd "%:h"
-    vim.notify(string.format(" Current Working Directory => %s", vim.fn.expand "%:p:h"), vim.log.levels.INFO, {
+    vim.notify(" Current Working Directory => %s" .. vim.fn.expand "%:p:h", vim.log.levels.INFO, {
       title = "File Explorer",
       render = "wrapped-compact",
       timeout = 4,

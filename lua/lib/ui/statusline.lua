@@ -2,7 +2,7 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 29 Nov 2025, 20:48
+-- Last Modified: 01 Jan 2026, 13:06
 -----------------------------------------
 
 local M = {
@@ -219,8 +219,8 @@ end
 ---Get location in current buffer (current row on total rows)
 ---@return string line number on total number
 local function get_line_onTot()
-  return win_is_smaller(M.preset_width.row_onTot) and string.format(" %s%%l%s/%%L ", M.colors.git, M.colors.fformatloc)
-      or string.format(" %s%%l%s/%%L|%%P", M.colors.git, M.colors.fformatloc)
+  return win_is_smaller(M.preset_width.row_onTot) and (" %s%%l%s/%%L "):format(M.colors.git, M.colors.fformatloc)
+      or (" %s%%l%s/%%L|%%P"):format(M.colors.git, M.colors.fformatloc)
 end
 
 ---Get file name
@@ -252,8 +252,7 @@ local function get_lsp_diagnostic()
   -- display values only if there are any
   return status_ok and M.colors.diag .. M.icons.status_ok
       or do_not_show_diag and M.colors.diag .. M.icons.status_not_ok
-      or string.format(
-        "%s%s%s %d %s%s %d %s%s %d %s%s %d",
+      or ("%s%s%s %d %s%s %d %s%s %d %s%s %d"):format(
         M.colors.diag,
         M.colors.diagError,
         M.icons.error,
@@ -276,7 +275,7 @@ function M.get_lsp_progress()
   local lsp = vim.lsp.status()
   if lsp and lsp ~= "" then
     local idx = lsp:find(",")
-    lsp = vim.trim(lsp:sub(0, idx and idx - 1 or nil))
+    lsp = vim.trim(lsp:sub(1, idx and idx - 1 or nil))
     return (#lsp > M.preset_width.lsp_info) and lsp:sub(1, M.preset_width.lsp_info) .. "…" or lsp
   end
 
@@ -299,15 +298,13 @@ local function get_git_status()
   if signs.source_name == "git" then
     local head = M.branch
 
-    if win_is_smaller(M.preset_width.git_branch) then
-      return " " .. head
-    elseif win_is_smaller(M.preset_width.git_branch, M.preset_width.git_status_full) or no_changes then
-      return string.format(" %s ", head)
+    if no_changes or (win_is_smaller(M.preset_width.git_branch) or win_is_smaller(M.preset_width.git_branch, M.preset_width.git_status_full)) then
+      return (" %s "):format(head)
     else
-      return string.format("+%s ~%s -%s |  %s ", add, change, delete, head)
+      return ("+%s ~%s -%s |  %s "):format(add, change, delete, head)
     end
   else
-    return string.format("+%s ~%s -%s ", add, change, delete)
+    return ("+%s ~%s -%s "):format(add, change, delete)
   end
 end
 
@@ -316,15 +313,9 @@ end
 local function get_filetype_and_icon()
   local file_ext = vim.bo.filetype or vim.fn.expand "%:e"
 
-  -- local has_icons, icons = pcall(require, "mini.icons")
   local icon = M.icons[file_ext]
-  -- if has_icons then
-  --   icon = icons.get("filetype", file_ext)
-  -- end
-  -- local file_type = vim.bo.filetype
 
-  -- return string.format("%s %s", icon, file_type)
-  return string.format("%s %s", icon, file_ext)
+  return icon .. " " .. file_ext
 end
 
 ---Get file encoding
@@ -342,7 +333,7 @@ end
 ---Get session name if active
 ---@return string session_name name of the active session or empty string
 local function session_name()
-  return M.session_name ~= "" and string.format(" [%s] ", M.session_name) or ""
+  return M.session_name ~= "" and " [" .. M.session_name .. "] " or ""
 end
 
 ---Get python virtual-env if is active and in python file
@@ -363,7 +354,7 @@ local function get_python_env()
       if vim.bo.filetype == "quarto" and vim.endswith(get_filename(), "ipynb") then
         kernels = require("molten.status").kernels()
       end
-      return kernels ~= "" and string.format(" 󰌠 (%s) [%s] ", venv, kernels) or string.format(" 󰌠 (%s) ", venv)
+      return kernels ~= "" and " 󰌠 (" .. venv .. ") [" .. kernels .. "] " or " 󰌠 (" .. venv .. ") "
     end
   end
   -- end
@@ -373,8 +364,8 @@ end
 ---Get lsp status and if active get names of server running
 ---@return string lsp_status
 local function get_lsp_info()
-  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and string.format("%s• ", M.colors.name) or
-      string.format("%s• ", M.colors.lspnoactive)
+  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and  M.colors.name .. "• " or
+      M.colors.lspnoactive .. "• "
 end
 
 ---Get git Branch and cache it
@@ -396,7 +387,7 @@ end
 ---Statusline disabled that display only filetype and current mode
 ---@return string simple_statusline
 local function disabled_statusline()
-  local ftype_name = string.format("%s %s", "", vim.bo.filetype)
+  local ftype_name = " " .. vim.bo.filetype
   local sideSep = "%="
   local modifiedReadOnlyFlags = "%m%r"
 

@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 31 Dec 2025, 09:58
+--  Last Modified: 31 Dec 2025, 16:48
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -12,8 +12,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
     local name, kind, build = ev.data.spec.name, ev.data.kind, ev.data.spec.data.build
     if kind ~= "delete" and build then
       if not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
-      local msg = string.format("vim.pack: Running build (%s) - %s", kind, name)
-      vim.notify(msg, vim.log.levels.INFO, { title = "PackChanged" })
+      vim.notify("vim.pack: Running build (" .. kind .. ") - " .. name, vim.log.levels.INFO, { title = "PackChanged" })
       pcall(build)
     end
   end

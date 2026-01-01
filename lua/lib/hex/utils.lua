@@ -47,7 +47,7 @@ function hex_utils.is_program_executable(program)
   if vim.fn.executable(program) == 1 then
     return true
   else
-    vim.notify(string.format("Hex - %s is not installed on this system, aborting!", program),
+    vim.notify("Hex - " .. program .. " is not installed on this system, aborting!",
       vim.log.levels.WARN)
     return false
   end

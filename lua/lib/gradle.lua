@@ -2,7 +2,7 @@
 --  File         : gradle.lua
 --  Description  : gradle utils functions
 --  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:29
+--  Last Modified: 31 Dec 2025, 16:30
 -------------------------------------
 
 local M = {}
@@ -53,7 +53,7 @@ local function run_gradle_task(gradlew, task)
 
     vim.schedule(function()
       local sep = "---------------------------------"
-      local text = string.format("   OUTPUT⟩ gradle %s\n%s\n%s", task, sep, out)
+      local text = ("   OUTPUT⟩ gradle %s\n%s\n%s"):format(task, sep, out)
       local lines = vim.split(text, "\n")
 
       local buf = vim.api.nvim_create_buf(false, true)

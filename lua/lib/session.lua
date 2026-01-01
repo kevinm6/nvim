@@ -2,11 +2,11 @@
 --  File         : session.lua
 --  Description  : module to manage vim builtin sessions
 --  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:24
+--  Last Modified: 31 Dec 2025, 16:47
 -------------------------------------
 
 local M = {
-  dir = string.format("%s/session", vim.fn.stdpath "state"),
+  dir = vim.fn.stdpath "state" .. "/session",
 }
 
 ---Get available sessions
@@ -41,7 +41,7 @@ local function delete_session()
         local deleted = vim.fn.delete(choice)
         if deleted == 0 then
           local choice_name = vim.fn.fnamemodify(choice, ":t")
-          vim.notify(string.format("Session - session < %s > deleted", choice_name), vim.log.levels.WARN)
+          vim.notify("Session - session < " .. choice_name .. " > deleted", vim.log.levels.WARN)
         end
       end
     end)
@@ -67,7 +67,7 @@ local function restore_session()
         local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
         vim.cmd.source(choice)
         require("lib.ui.statusline").session_name = s_name
-        vim.notify(string.format("Session - session < %s > restored", s_name), vim.log.levels.INFO)
+        vim.notify("Session - session < " .. s_name .. " > restored", vim.log.levels.INFO)
       end
     end)
   else
@@ -91,7 +91,7 @@ local function save_session()
     input = vim.trim(input)
     if input ~= "" then
       local op = "created"
-      local session_file_path = string.format("%s/%s.vim", M.dir, input)
+      local session_file_path = M.dir .. "/" .. input .. ".vim"
 
       if vim.fn.isdirectory(M.dir) ~= 1 then
         vim.fn.mkdir(M.dir, "pR")
@@ -100,7 +100,7 @@ local function save_session()
         op = "updated"
       end
       vim.cmd.mksession { session_file_path, bang = true }
-      vim.notify(string.format("Session - session < %s > %s", input, op), vim.log.levels.INFO)
+      vim.notify("Session - session < " .. input .. " > " .. op, vim.log.levels.INFO)
     else
       print "  canceled"
     end
@@ -126,7 +126,8 @@ function M.select(arg)
   elseif M[arg] then
     M[arg]()
   else
-    vim.notify("Session - invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN, { title = "Session" })
+    vim.notify("Session - invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN,
+      { title = "Session" })
   end
 end
 

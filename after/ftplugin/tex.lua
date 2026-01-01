@@ -7,5 +7,5 @@ vim.opt_local.autoindent = true
 vim.opt_local.spell = true
 
 vim.g.vimtex_compiler_latexmk = {
-  aux_dir = string.format("%s/vimtex/aux_dir/%s", vim.fn.stdpath "cache", vim.fn.expand "%:t:r"),
+  aux_dir = vim.fn.stdpath "cache" .. "/vimtex/aux_dir/" .. vim.fn.expand "%:t:r",
 }

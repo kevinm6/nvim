@@ -1,2 +1,2 @@
 -- vim.opt_local.makeprg = "ocaml"
-vim.notify(string.format("OcaML - make cmd: %s",vim.opt_local.makeprg))
+vim.notify("OcaML - make cmd: " .. vim.opt_local.makeprg, vim.log.levels.INFO, { title =  "OcaML" })

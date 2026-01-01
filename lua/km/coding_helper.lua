@@ -1,7 +1,7 @@
 -------------------------------------
 -- Description  : useful plugins
 -- Author       : Kevin
--- Last Modified: 28 Dec 2025, 17:42
+-- Last Modified: 31 Dec 2025, 16:31
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
@@ -258,11 +258,11 @@ local function format_size(size)
   if not size then
     return
   elseif size < 1024 then
-    return string.format("%3dB", size)
+    return ("%3dB"):format(size)
   elseif size < 1048576 then
-    return string.format("%3.0fK", size / 1024)
+    return ("%3.0fK"):format(size / 1024)
   else
-    return string.format("%3.0fM", size / 1048576)
+    return ("%3.0fM"):format(size / 1048576)
   end
 end
 

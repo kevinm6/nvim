@@ -2,7 +2,7 @@
 --  File         : pdf.lua
 --  Description  : use Neovim as pdf reader (need pdftotext binaries)
 --  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:14
+--  Last Modified: 31 Dec 2025, 16:29
 -------------------------------------
 
 local M = {
@@ -13,8 +13,7 @@ local M = {
 ---@private
 ---@param cache_file string file already created to load and show in buffer
 local function read_file(cache_file)
-  local command = string.format("bdelete | edit %s | set readonly | set filetype=text",
-    cache_file)
+  local command = ("bdelete | edit %s | set readonly | set filetype=text"):format(cache_file)
   vim.cmd(command)
 end
 
@@ -30,13 +29,9 @@ function M.load_pdf(file)
     pdf_cache_file = M.pdf_cache[pdf_file]
     read_file(pdf_cache_file)
   else
-    local temp_file = string.format("%s_%s.txt", vim.fn.tempname(),
-      vim.fn.fnamemodify(file, ":t:r"))
+    local temp_file = ("%s_%s.txt"):format(vim.fn.tempname(), vim.fn.fnamemodify(file, ":t:r"))
     pdf_cache_file = vim.fn.escape(temp_file, "'")
-    local shell_command = string.format("pdftotext -nopgbrk -layout '%s' '%s'",
-      pdf_file,
-      pdf_cache_file
-    )
+    local shell_command = ("pdftotext -nopgbrk -layout '%s' '%s'"):format(pdf_file, pdf_cache_file)
     vim.fn.system(shell_command, {})
 
     read_file(pdf_cache_file)
@@ -48,7 +43,7 @@ end
 
 function M.convert_md_to_pdf()
   if vim.bo.ft ~= 'markdown' then
-    local err_msg = string.format("TOpdf - fileType < %s > not supported", vim.bo.ft)
+    local err_msg = "TOpdf - fileType < %s > not supported" .. vim.bo.ft
     vim.notify(err_msg, vim.log.levels.ERROR, { title = "PDF export" })
     return
   end

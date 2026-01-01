@@ -2,7 +2,7 @@
 -- File         : cheat_sheet.lua
 -- Description  : query < https://cht.sh > to get result in Neovim
 -- Author       : Kevin
--- Last Modified: 28 Dec 2025, 17:24
+-- Last Modified: 31 Dec 2025, 16:29
 -----------------------------------
 
 local M = {
@@ -83,7 +83,7 @@ function M.open_preview(args)
   local filetype, query = search_input[1], search_input[2]
 
   -- search and get result
-  local url = string.format("https://cheat.sh/%s/%s", filetype, query)
+  local url = ("https://cheat.sh/%s/%s"):format(filetype, query)
 
   -- figure out a way to run async and then present the window
   local output = vim.system({ "curl", "-s", url }, { text = true, timeout = 5000 }):wait()
@@ -104,7 +104,7 @@ function M.open_preview(args)
     anchor = M.opts.main_win.anchor,
     border = M.opts.main_win.border,
     title_pos = M.opts.main_win.title_pos,
-    title = string.format("CheatSH < %s/%s >", filetype, query),
+    title = ("CheatSH < %s/%s >"):format(filetype, query),
     noautocmd = true,
   })
 

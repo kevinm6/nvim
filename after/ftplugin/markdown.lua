@@ -1,7 +1,7 @@
 if vim.fn.executable "pandoc" then
   local file_path = vim.api.nvim_buf_get_name(0)
   local pdf_out_path = string.sub(file_path, 1, -3) .. 'pdf'
-  vim.opt_local.makeprg = string.format("pandoc -V geometry:margin=1.5cm %s --from=gfm -o %s --highlight tango", file_path, pdf_out_path)
+  vim.opt_local.makeprg = ("pandoc -V geometry:margin=1.5cm %s --from=gfm -o %s --highlight tango"):format(file_path, pdf_out_path)
   -- vim.opt_local.errorformat = ""
 end
 

@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:37
+--  Last Modified: 31 Dec 2025, 16:46
 -------------------------------------
 
 local M = {}
@@ -12,7 +12,7 @@ local M = {}
 function M.toggle_option(option)
   local value = not vim.api.nvim_get_option_value(option, {})
   vim.opt[option] = value
-  vim.notify(string.format("Opts - %s set to %s", option, tostring(value)), vim.log.levels.INFO)
+  vim.notify("Opts - " .. option .. " set to " .. tostring(value), vim.log.levels.INFO)
 end
 
 ---Dev FOLDER
@@ -110,7 +110,7 @@ function M.projects()
     }, function(choice)
       if choice then
         vim.cmd.tcd(choice)
-        vim.notify(string.format("Projects - twd => %s", choice), vim.log.levels.INFO)
+        vim.notify("Projects - twd => " .. choice, vim.log.levels.INFO)
         local has_mini, mini_files = pcall(require, "mini.files")
         if has_mini then
           mini_files.open(choice)
@@ -197,14 +197,14 @@ function M.new_tmp_file(cmd_input)
       local temp_file = nil
       local f_string = input ~= "" and "%s_f.%s" or "%s_f"
 
-      temp_file = string.format(f_string, vim.fn.tempname(), input)
+      temp_file = f_string .. vim.fn.tempname() .. input
       -- vim.cmd.tcd(vim.fn.fnamemodify(vim.fn.tempname(), ":p:h"))
       vim.cmd.edit(temp_file)
       vim.cmd.write(temp_file)
       vim.cmd.startinsert()
     end)
   else
-    local temp_file = string.format("%s_f.%s", vim.fn.tempname(), args)
+    local temp_file = vim.fn.tempname() .. "_f." .. args
     -- vim.cmd.tcd(vim.fn.fnamemodify(temp_file, "%:p:h"))
     vim.cmd.edit(temp_file)
     vim.cmd.write(temp_file)
@@ -217,7 +217,7 @@ function M.workon()
   vim.ui.select(vim.tbl_values(config.plugins), {
     prompt = "lcd to:",
     format_item = function(plugin)
-      return string.format("%s (%s)", plugin.name, plugin.dir)
+      return plugin.name .. " (" .. plugin.dir .. ")"
     end,
   }, function(plugin)
     if not plugin then
@@ -306,7 +306,7 @@ function M.user_command_toggle(name, var_name, opts)
       vim.b[buf][var_name] = not vim.b[buf][var_name]
 
       local buf_name_tail = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
-      action = string.format("%s < %s >", action, buf_name_tail)
+      action = ("%s < %s >"):format(action, buf_name_tail)
 
       -- if (var_name_disable*) -> ON = not enabled, OFF = enabled
       -- This is a tricky variable, especially when variable names contains 'disable'

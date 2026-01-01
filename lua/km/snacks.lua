@@ -2,7 +2,7 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 23 Dec 2025, 12:49
+-- Last Modified: 31 Dec 2025, 16:18
 -------------------------------------
 
 require("snacks").setup {
@@ -28,7 +28,7 @@ require("snacks").setup {
       { section = "header", padding = 2 },
       function()
         local v = vim.version()
-        local v_info = string.format(" v%d.%d.%d", v.major, v.minor, v.patch)
+        local v_info = (" v%d.%d.%d"):format(v.major, v.minor, v.patch)
         return {
           title = "version",
           align = "center",
@@ -71,7 +71,7 @@ require("snacks").setup {
         local filename = src:match("filename='([^']+)'")
         if path and filename then
           local dir = vim.fs.find(path, { type = "directory", path = vim.fn.getcwd() })
-          local file_path = string.format("%s/%s", dir[1], filename)
+          local file_path = ("%s/%s"):format(dir[1], filename)
           return file_path
         end
       end

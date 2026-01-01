@@ -2,7 +2,7 @@
 -- File         : curl.lua
 -- Description  : wrap of curl, to use with nvim
 -- Author       : Kevin
--- Last Modified: 24 Nov 2025, 20:55
+-- Last Modified: 31 Dec 2025, 16:32
 -----------------------------------
 
 local M = {}
@@ -22,7 +22,7 @@ local function parse(lines, verbose, debug)
       method, url = line:match("^%s*(%u+)%s+(http.+)$")
     elseif line:match("^%s*([%w-]+)%s*:%s*(.+)$") then
       local header, value = line:match("^%s*([%w-]+)%s*:%s*(.+)$")
-      table.insert(headers, string.format('-H "%s: %s"', header, value))
+      table.insert(headers, ('-H "%s: %s"'):format(header, value))
     else
       body = body .. line
     end
@@ -56,7 +56,7 @@ local function parse(lines, verbose, debug)
   end
   local to_jq = json and " | jq" or ""
   -- Execute curl command in a new split
-  local cmd = string.format("%s -s -w \\%{time_total} %s", curl_command, to_jq)
+  local cmd = curl_command .. " -s -w \\%{time_total} " .. to_jq
   require("lib.terminal").new_terminal_win(cmd, false, {
     height = math.floor(vim.o.lines * 0.3),
     win = -1,
