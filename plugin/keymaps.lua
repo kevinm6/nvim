@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 31 Dec 2025, 16:14
+-- Last Modified: 06 Jan 2026, 15:06
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -12,6 +12,11 @@ local vmap = require("lib.keys").vmap
 local tmap = require("lib.keys").tmap
 
 -- NORMAL MODE & VISUAL MODE
+
+--IT Layout
+nmap { "<M-C-+>", '<C-]>' }
+nmap { "<M-C-è>", '<C-[>' }
+
 nmap {
   "<leader>.",
   function()
@@ -54,7 +59,7 @@ nmap { "<C-u>", "<C-u>zz" }
 nmap {
   "<leader>w",
   function()
-    vim.cmd.update { bang = true }
+    pcall(vim.cmd.update { bang = true })
   end,
   "Save buffer",
 }

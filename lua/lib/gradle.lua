@@ -2,7 +2,7 @@
 --  File         : gradle.lua
 --  Description  : gradle utils functions
 --  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:30
+--  Last Modified: 17 Jan 2026, 15:39
 -------------------------------------
 
 local M = {}
@@ -37,7 +37,9 @@ local function get_gradle_tasks(gradlew, root_dir)
       end
       -- vim.g["gradle_" .. root_dir] = taskList
     else
-      vim.notify("Gradle - error executing command => " .. obj.stderr, vim.log.levels.ERROR, { text = "Gradle (tasks)" })
+      vim.schedule_wrap(function()
+        vim.notify("Gradle - error executing command => " .. obj.stderr, vim.log.levels.ERROR, { text = "Gradle (tasks)" })
+      end)
     end
   end)--:wait()
   return M[_id]

@@ -2,7 +2,7 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 31 Dec 2025, 16:18
+-- Last Modified: 06 Jan 2026, 19:24
 -------------------------------------
 
 require("snacks").setup {
@@ -664,7 +664,17 @@ vim.keymap.set("n", "<leader>fs", function()
 end, { desc = "Smart search" })
 vim.keymap.set("n", "<leader>/", function()
   Snacks.picker.grep()
-end, { desc = "Find Text (LiveGrep)" })
+end, { desc = "Grep" })
+
+vim.keymap.set("n", "<leader><M-7>", function()
+  vim.ui.input({ prompt = "Enter directory where start grep: " }, function(input)
+    if input and input ~= "" then
+      vim.schedule(function()
+        Snacks.picker.grep { dirs = { input } }
+      end)
+    end
+ end)
+end, { desc = "Grep in Dir" })
 
 vim.keymap.set("n", "<leader>fh", function()
   local cword = vim.fn.expand "<cword>"

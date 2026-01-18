@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "1bc1227ee1f5ad02f6796701539e9aaf6c5e77e6",
+      "rev": "fb7b9034285a5658c746faa12eff8c1c9d9b11b1",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
@@ -14,8 +14,12 @@
       "src": "https://github.com/ziontee113/color-picker.nvim"
     },
     "conform.nvim": {
-      "rev": "4b713b9da0061a54750bfed457e190459be28c7b",
+      "rev": "5ac2bb57a9096f00ca50e1a3c46020d5930319b8",
       "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "dap-view": {
+      "rev": "b1eadfadf7f161a707a3ebc100fb3989d06eaa29",
+      "src": "https://github.com/igorlfs/nvim-dap-view"
     },
     "data-viewer.nvim": {
       "rev": "40ddf37bb7ab6c04ff9e820812d1539afe691668",
@@ -30,16 +34,20 @@
       "src": "https://github.com/GCBallesteros/jupytext.nvim"
     },
     "markdown.nvim": {
-      "rev": "07d088bf8bdadd159eb807b90eaee86a4778383f",
+      "rev": "c54380dd4d8d1738b9691a7c349ecad7967ac12e",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
     },
     "mason.nvim": {
-      "rev": "57e5a8addb8c71fb063ee4acda466c7cf6ad2800",
-      "src": "https://github.com/williamboman/mason.nvim"
+      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
+      "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "43ec25063430196d36f5fff5758c9101775f3d57",
+      "rev": "4f53281c51ad9384ef790178b9643740fa763979",
       "src": "https://github.com/echasnovski/mini.nvim"
+    },
+    "minuet": {
+      "rev": "fc483f1e8afdbb6dbe9c8cb1b00d51f8f9c8f7f1",
+      "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "molten-nvim": {
       "rev": "a286aa914d9a154bc359131aab788b5a077a5a99",
@@ -55,16 +63,12 @@
       "src": "https://github.com/norcalli/nvim-colorizer.lua"
     },
     "nvim-dap": {
-      "rev": "818cd8787a77a97703eb1d9090543a374f79a9ac",
+      "rev": "cdfd55a133f63228c55f91378f12908cb2a78ded",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-dap-python": {
       "rev": "1808458eba2b18f178f990e01376941a42c7f93b",
       "src": "https://github.com/mfussenegger/nvim-dap-python"
-    },
-    "nvim-dap-view": {
-      "rev": "4f73b98b4db88a953f1998175a4daaea2bf52d28",
-      "src": "https://github.com/igorlfs/nvim-dap-view"
     },
     "nvim-dbee": {
       "rev": "dda517694889a5d238d7aa407403984da9f80cc0",
@@ -75,27 +79,31 @@
       "src": "https://github.com/mfussenegger/nvim-jdtls"
     },
     "nvim-lint": {
-      "rev": "1f19dacd945a7b1a57f29f32b2d7168384df3d36",
+      "rev": "ca6ea12daf0a4d92dc24c5c9ae22a1f0418ade37",
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-metals": {
-      "rev": "90dadd67bb1069ce1ba2a4dabf4e45da2807ba80",
+      "rev": "7ed47cd3095508e80423e30922385d5b9988f9d6",
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-treesitter": {
-      "rev": "c6dd314086f7b471bf6c9110092a94ce1c06d220",
+      "rev": "d19def46c112c26c17adeef88dd1253cc6d623a1",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "otter.nvim": {
       "rev": "b36e1a40617e35779d2097fc9b9fd701acd4f5e8",
       "src": "https://github.com/jmbuhr/otter.nvim"
     },
-    "plenary.nvim": {
+    "plenary": {
       "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "plenary.nvim": {
+      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "src": "ssh://git@github.com/nvim-lua/plenary.nvim"
+    },
     "quarto-nvim": {
-      "rev": "0e9491509b38efbd83d3f41dbfacc7fc4bd40191",
+      "rev": "cc99501a524b7abf484ed0248cae66ac53f93a13",
       "src": "https://github.com/quarto-dev/quarto-nvim"
     },
     "rest.nvim": {
@@ -111,7 +119,7 @@
       "src": "https://github.com/nanotee/sqls.nvim"
     },
     "vimtex": {
-      "rev": "f5c37462c690da9a0d05cd12a7b9595b10b56200",
+      "rev": "f707368022cdb851716be0d2970b90599c84a6a6",
       "src": "https://github.com/lervag/vimtex"
     }
   }

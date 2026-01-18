@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : various utilities functions
 --  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:46
+--  Last Modified: 05 Jan 2026, 10:51
 -------------------------------------
 
 local M = {}
@@ -196,8 +196,7 @@ function M.new_tmp_file(cmd_input)
       end
       local temp_file = nil
       local f_string = input ~= "" and "%s_f.%s" or "%s_f"
-
-      temp_file = f_string .. vim.fn.tempname() .. input
+      temp_file = (f_string):format(vim.fn.tempname(), input)
       -- vim.cmd.tcd(vim.fn.fnamemodify(vim.fn.tempname(), ":p:h"))
       vim.cmd.edit(temp_file)
       vim.cmd.write(temp_file)

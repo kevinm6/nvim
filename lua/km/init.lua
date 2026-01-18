@@ -2,16 +2,18 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 01 Jan 2026, 20:18
+--  Last Modified: 18 Jan 2026, 19:23
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
 vim.api.nvim_create_autocmd("PackChanged", {
   callback = function(ev)
     if not ev.data then return end
-    local name, kind, build = ev.data.spec.name, ev.data.kind, ev.data.spec.data.build
-    if kind ~= "delete" and build then
-      if not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
+    local kind = ev.data.kind
+    if kind ~= "delete" then
+      local name, build = ev.data.spec.name, ev.data.spec.data.build
+      if not build then return end
+      if kind == "update" and not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
       vim.notify("vim.pack: Running build (" .. kind .. ") - " .. name, vim.log.levels.INFO, { title = "PackChanged" })
       pcall(build)
     end
@@ -91,7 +93,7 @@ vim.pack.add({
 
         require("dap-view").setup {
           windows = {
-            height = 0.24,
+            size = 0.24,
           },
           winbar = {
             sections = {
@@ -114,35 +116,35 @@ vim.pack.add({
   },
   {
     src = gh("igorlfs/nvim-dap-view"),
-    data = {
-      on_demand = true,
-      -- ev = "VimEnter",
-      -- config = function()
-      --   require("dap-view").setup {
-      --     windows = {
-      --       height = 0.24,
-      --     },
-      --     winbar = {
-      --       sections = {
-      --         "watches",
-      --         "scopes",
-      --         "breakpoints",
-      --         "exceptions",
-      --         "repl",
-      --         "console",
-      --         "threads",
-      --       },
-      --       controls = { enabled = true },
-      --     },
-      --     help = { border = "rounded" }
-      --   }
-      -- end
-    }
+    name = "dap-view",
+    data = { on_demand = true },
+    -- ev = "VimEnter",
+    -- config = function()
+    --   require("dap-view").setup {
+    --     windows = {
+    --       height = 0.24,
+    --     },
+    --     winbar = {
+    --       sections = {
+    --         "watches",
+    --         "scopes",
+    --         "breakpoints",
+    --         "exceptions",
+    --         "repl",
+    --         "console",
+    --         "threads",
+    --       },
+    --       controls = { enabled = true },
+    --     },
+    --     help = { border = "rounded" }
+    --   }
+    -- end
+    -- }
   },
 
   ---Mason
   {
-    src = gh("williamboman/mason.nvim"),
+    src = gh("mason-org/mason.nvim"),
     data = {
       cmd = { "Mason" },
       config = function()
@@ -194,21 +196,6 @@ vim.pack.add({
         lint.linters.flake8.args = {
           "--extend-ignore E302,E111,E501,W391",
         }
-
-        -- lint.linters.eslint_d.args = {
-        --   "--no-warn-ignored", -- <-- this is the key argument
-        --   "--format",
-        --   "json",
-        --   "--stdin",
-        --   "--stdin-filename",
-        --   function()
-        --     return vim.api.nvim_buf_get_name(0)
-        --   end,
-        -- }
-
-        -- lint.linters.yamllint.args = {
-        --   "--no-warnings", -- output only errors
-        -- }
 
         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
           callback = function()
@@ -345,17 +332,17 @@ vim.pack.add({
   ---Databases
   {
     src = gh("MunifTanjim/nui.nvim"),
-    data = { on_demand = true }
+    data = {}
   },
   {
     src = gh("kndndrj/nvim-dbee"),
     data = {
       cmd = { "Dbee" },
       config = function()
-        require("lib.lazyload").require_stub("nui.nvim", function()
-          vim.cmd.packadd "nui.nvim"
-          require "km.databases"
-        end)
+        vim.cmd.packadd "nui.nvim"
+        require "km.databases"
+        -- require("lib.lazyload").require_stub("nui.nvim", function()
+        -- end)
       end
     }
   },
@@ -604,14 +591,22 @@ vim.pack.add({
   ---DataViewer (csv, tsv ...)
   {
     src = gh("nvim-lua/plenary.nvim"),
-    data = { on_demand = true }
+    name = "plenary",
+    -- data = {}
+    data = {
+      config = function()
+        require("lib.lazyload").require_stub("plenary", function()
+          vim.cmd.packadd "plenary.nvim"
+          require("plenary")
+        end)
+      end
+    }
   },
   {
     src = gh("vidocqh/data-viewer.nvim"),
     data = {
       ft = { "sqlite", "tsv", "csv" },
       config = function()
-        vim.cmd.packadd "plenary.nvim"
         require("data-viewer").setup {}
 
         vim.api.nvim_set_hl(0, "DataViewerColumn0", { fg = "#4fc1ff", bold = true })
@@ -679,12 +674,31 @@ vim.pack.add({
         })
       end
     }
+  },
+
+  ---AI
+  {
+    src = gh("milanglacier/minuet-ai.nvim"),
+    name = "minuet",
+    data = {
+      cmd = { "Minuet" },
+      config = function()
+        require "km.ai"
+      end
+    }
   }
 }, {
   load = function(p)
+    local p_name = p.spec.name or ""
     local data = p.spec.data or {}
     local lazy = (data.cmd or data.ft or data.ev or data.on_demand)
-    if data.on_demand then return end
+    assert(p_name, "Plugin name cannot be empty.")
+    if data.on_demand then
+      require("lib.lazyload").require_stub(p_name, function()
+        vim.cmd.packadd(p_name)
+        require(p_name)
+      end)
+    end
 
     local function run_config()
       if data and data.config then
@@ -695,10 +709,11 @@ vim.pack.add({
     if data.cmd then
       for _, cmd in ipairs(data.cmd) do
         require("lib.lazyload").command_stub(cmd, function()
-          vim.cmd.packadd(p.spec.name)
-          if not package.loaded[p.spec.name] then
+          vim.cmd.packadd(p_name)
+          if package.loaded[p_name] == nil then
             run_config()
           end
+          vim.cmd(cmd)
         end)
       end
     end
@@ -707,7 +722,7 @@ vim.pack.add({
         once = true,
         pattern = data.ft,
         callback = function()
-          vim.cmd.packadd(p.spec.name)
+          vim.cmd.packadd(p_name)
           run_config()
         end
       })
@@ -716,13 +731,13 @@ vim.pack.add({
       vim.api.nvim_create_autocmd(data.ev, {
         once = true,
         callback = function()
-          vim.cmd.packadd(p.spec.name)
+          vim.cmd.packadd(p_name)
           run_config()
         end
       })
     end
     if not lazy then
-      vim.cmd.packadd(p.spec.name)
+      vim.cmd.packadd(p_name)
       run_config()
     end
   end,

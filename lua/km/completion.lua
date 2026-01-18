@@ -2,7 +2,7 @@
 -- File         : completion.lua
 -- Description  : completion config
 -- Author       : Kevin
--- Last Modified: 23 Dec 2025, 19:55
+-- Last Modified: 18 Jan 2026, 19:14
 -------------------------------------
 
 --NOTE: snippets variables
@@ -20,6 +20,7 @@ require("blink.cmp").setup {
     ["<C-i>"] = { "snippet_forward", "fallback" },
     ["<C-S-i>"] = { "snippet_backward", "fallback" },
     ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+    ["<M-l>"] = vim.g.ai_completion and require("minuet").make_blink_map() or {},
   },
   term = { enabled = true, keymap = { preset = "inherit" } },
   cmdline = {
@@ -37,11 +38,7 @@ require("blink.cmp").setup {
   },
 
   sources = {
-    default = { "snippets", "lsp", "path", "buffer", },
-    -- per_filetype = {
-    --   markdown = { "snippets", "lsp", "markdown", "path", "buffer", },
-    --   quarto = { "snippets", "lsp", "markdown", "path", "buffer", },
-    -- },
+    -- default = { "snippets", "lsp", "path", "buffer", },
     providers = {
       buffer = {
         opts = {
@@ -57,8 +54,17 @@ require("blink.cmp").setup {
           },
         },
       },
-      -- markdown = { name = "RenderMarkdown", module = "render-markdown.integ.blink" },
-      dbee = { name = "cmp-dbee", module = "blink.compat.source" }
+      -- minuet = {
+      --   enabled = function() return vim.g.ai_completion end,
+      --   name = 'minuet',
+      --   module = 'minuet.blink',
+      --   async = true,
+      --   -- Should match minuet.config.request_timeout * 1000,
+      --   -- since minuet.config.request_timeout is in seconds
+      --   timeout_ms = 3000,
+      --   score_offset = 50
+      -- },
+      -- dbee = { name = "cmp-dbee", module = "blink.compat.source" }
     },
   },
   signature = {
@@ -69,6 +75,7 @@ require("blink.cmp").setup {
     },
   },
   completion = {
+    trigger = { prefetch_on_insert = false }, -- Recommended to avoid unnecessary request
     accept = { auto_brackets = { enabled = true } },
     menu = {
       scrollbar = false,
