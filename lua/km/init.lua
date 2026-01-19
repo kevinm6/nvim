@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 18 Jan 2026, 19:23
+--  Last Modified: 19 Jan 2026, 21:42
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -592,7 +592,6 @@ vim.pack.add({
   {
     src = gh("nvim-lua/plenary.nvim"),
     name = "plenary",
-    -- data = {}
     data = {
       config = function()
         require("lib.lazyload").require_stub("plenary", function()
@@ -681,9 +680,12 @@ vim.pack.add({
     src = gh("milanglacier/minuet-ai.nvim"),
     name = "minuet",
     data = {
-      cmd = { "Minuet" },
       config = function()
-        require "km.ai"
+        ---NOTE: create user_command ad hoc to enable, since AI must be on-demand
+        vim.api.nvim_create_user_command("AIcompletion", function()
+          require "km.ai"
+          vim.api.nvim_del_user_command "AIcompletion"
+        end, {})
       end
     }
   }

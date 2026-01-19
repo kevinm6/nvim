@@ -2,7 +2,7 @@
 --  File         : pdf.lua
 --  Description  : use Neovim as pdf reader (need pdftotext binaries)
 --  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:29
+--  Last Modified: 19 Jan 2026, 09:35
 -------------------------------------
 
 local M = {
@@ -63,24 +63,28 @@ function M.convert_md_to_pdf()
     file_path,
     "--from=gfm",
     "-o", pdf_out_path,
-    "--highlight", "tango",
+    "--syntax-highlighting", "tango",
     -- "--toc"
   }
 
   vim.notify("TOpdf - starting conversion...")
   vim.system(args, { text = true }, function(obj)
     if obj.stderr ~= "" then
-      vim.notify("TOpdf - stderr => " .. obj.stderr, vim.log.levels.ERROR, { title = "TOpdf - export" })
-      vim.schedule(function() vim.fn.chdir(old_cwd) end)
+      vim.schedule(function()
+        vim.notify("TOpdf - stderr => " .. obj.stderr, vim.log.levels.ERROR, { title = "TOpdf - export" })
+        vim.fn.chdir(old_cwd)
+      end)
       return
     end
 
     if obj.stdout ~= "" then
-      vim.notify("TOpdf - stdout => " .. obj.stdout)
+      vim.schedule(function()
+        vim.notify("TOpdf - stdout => " .. obj.stdout)
+      end)
     end
 
-    vim.notify("TOpdf - conversion complete")
     vim.schedule(function()
+      vim.notify("TOpdf - conversion complete")
       vim.fn.chdir(old_cwd)
       vim.ui.open(pdf_out_path)
     end)
