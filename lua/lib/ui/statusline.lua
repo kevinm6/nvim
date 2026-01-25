@@ -2,46 +2,14 @@
 -- File         : statusline.lua
 -- Description  : Personal statusline config
 -- Author       : Kevin Manca
--- Last Modified: 01 Jan 2026, 13:06
+-- Last Modified: 26 Jan 2026, 21:22
 -----------------------------------------
 
 local M = {
   ---name of the session
   session_name = "",
-  ---filetypes to exclude
-  to_exclude = {
-    [""] = true,
-    lspinfo = true,
-    snacks_terminal = true,
-    snacks_picker_input = true,
-    snacks_picker_list = true,
-    snacks_picker_preview = true,
-    qf = true,
-    toggleterm = true,
-    mason = true,
-    noice = true,
-    terminal = true,
-    checkhealth = true,
-    query = true,
-    oil = true,
-    httpResult = true,
-    minifiles = true,
-    gradle_output = true,
-    ["nvim-pack"] = true,
-  },
-  ---width values used to display info if win-size is between
-  preset_width = setmetatable({
-    filename = 60,
-    git_branch = 60,
-    git_status_full = 110,
-    diagnostic = 128,
-    row_onTot = 100,
-    lsp_info = 60,
-  }, {
-    __index = function()
-      return 80
-    end,
-  }),
+  ---lsp status
+  lsp_status = nil,
   icons = setmetatable({
     neovim = "",
     error = "",
@@ -80,6 +48,71 @@ local M = {
   }),
 }
 
+local lib_activity = require "lib.activity"
+
+----------------
+---Utilities
+----------------
+
+---Sanitize string for statusline
+---@param str string?
+local function sanitize_stl(str)
+  return (str or ""):gsub("%%", "%%%%")
+end
+
+---Check window size compared to args.
+---if 2 args are passed checks if win_width is between or equal to lower and upper,
+---otherwise check if win_width is bigger than single value passed.
+---@param win_width number current window width
+---@param lower number lower bound or minimum width allowed
+---@param upper number? upper bound, if passed
+---@return boolean win_is_smaller true if window width is smaller than passed args or
+---between if 2 args are passed
+local function win_is_smaller(win_width, lower, upper)
+  upper = upper or nil
+  return upper ~= nil and (win_width >= lower and win_width <= upper) or win_width < lower
+end
+
+
+----------------
+---Icons & presets
+----------------
+
+M.to_exclude = {
+  [""] = true,
+  lspinfo = true,
+  snacks_terminal = true,
+  snacks_picker_input = true,
+  snacks_picker_list = true,
+  snacks_picker_preview = true,
+  qf = true,
+  toggleterm = true,
+  mason = true,
+  terminal = true,
+  checkhealth = true,
+  query = true,
+  oil = true,
+  httpResult = true,
+  minifiles = true,
+  gradle_output = true,
+  ["nvim-pack"] = true,
+}
+
+M.preset_width = setmetatable({
+  filename = 60,
+  git_branch = 60,
+  git_status_full = 110,
+  diagnostic = 128,
+  row_onTot = 100,
+  lsp_info = 60,
+}, {
+  __index = function() return 80 end,
+})
+
+----------------
+---Colors
+----------------
+
 ---Lazy load colors if not added to table
 local function load_colors()
   if not M.colors then
@@ -114,42 +147,9 @@ local function load_colors()
   end
 end
 
----Set highlight groups for StatusLine and relative colors.
----This is useful on first start, otherwise they are not overriden.
-local function set_color_groups()
-  load_colors()
-  vim.g.statusline_color = true
-
-  local hls = {
-    -- StatusLine
-    StatusLine = { fg = "#626262", bg = "#1c1c1c" },
-    StatusLineNC = { fg = "#868686", bg = "#1c1c1c" },
-    StatusLineTerm = { fg = "#626262", bg = "NONE" },
-    StatusLineTermNC = { fg = "#A9A9A9", bg = "#2c2c2c" },
-    StatusLineMode = { fg = "#158C8A" },
-    StatusLineGit = { fg = "#af8700", bg = "#2c2c2c" },
-    StatusLineFileName = { fg = "#36FF5A", bg = "#2c2c2c" },
-    StatusLineLspActive = { fg = "#4c4c4c", bg = "#2c2c2c" },
-    StatusLineLspNotActive = { fg = "#3c3c3c", bg = "#2c2c2c" },
-    StatusLineFileEncoding = { fg = "#86868B", bg = "#2c2c2c" },
-    StatusLineFileType = { fg = "#158C8A", bg = "#2c2c2c" },
-    StatusLineFileFormatLocation = { fg = "#86868B", bg = "#2c2c2c" },
-    StatusLineGpsDiagnostic = { fg = "#3c3c3c", bg = "#262626" },
-    StatusLineInverted = { fg = "#1c1c1c", bg = "#2c2c2c" },
-    StatusLineEmptyspace = { fg = "#3c3c3c", bg = "#262626" },
-    StatusLineLite = { fg = "#dcdcdc", bg = "#1c1c1c" },
-    StatusLineInactive = { fg = "#5c5c5c", bg = "#2c2c2c" },
-    StatuslineSymbols = { fg = "#2c2c2c", bg = "#262626" },
-    SLDiagnosticError = { fg = "#f44757", bg = "#262626" },
-    SLDiagnosticWarn = { fg = "#ff8800", bg = "#262626" },
-    SLDiagnosticHint = { fg = "#4fc1ff", bg = "#262626" },
-    SLDiagnosticInfo = { fg = "#00ffaa", bg = "#262626" },
-  }
-
-  for group, settings in pairs(hls) do
-    vim.api.nvim_set_hl(0, group, settings)
-  end
-end
+----------------
+---Mode
+----------------
 
 ---Get active Nvim mode and the highlight group
 ---@return string mode colorful mode or mode_code
@@ -203,40 +203,89 @@ local function get_mode()
   return mode[mode_code] or mode_code
 end
 
----Check window size compared to args.
----if 2 args are passed checks if win_width is between or equal to lower and upper,
----otherwise check if win_width is bigger than single value passed.
----@param lower number lower bound or minimum width allowed
----@param upper number? upper bound, if passed
----@return boolean win_is_smaller true if window width is smaller than passed args or
----between if 2 args are passed
-local function win_is_smaller(lower, upper)
-  upper = upper or nil
-  local win_size = vim.api.nvim_win_get_width(0)
-  return upper ~= nil and (win_size >= lower and win_size <= upper) or win_size < lower
+---Set highlight groups for StatusLine and relative colors.
+---This is useful on first start, otherwise they are not overriden.
+local function set_color_groups()
+  load_colors()
+  vim.g.statusline_color = true
+
+  local hls = {
+    -- StatusLine
+    StatusLine = { fg = "#626262", bg = "#1c1c1c" },
+    StatusLineNC = { fg = "#868686", bg = "#1c1c1c" },
+    StatusLineTerm = { fg = "#626262", bg = "NONE" },
+    StatusLineTermNC = { fg = "#A9A9A9", bg = "#2c2c2c" },
+    StatusLineMode = { fg = "#158C8A" },
+    StatusLineGit = { fg = "#af8700", bg = "#2c2c2c" },
+    StatusLineFileName = { fg = "#36FF5A", bg = "#2c2c2c" },
+    StatusLineLspActive = { fg = "#4c4c4c", bg = "#2c2c2c" },
+    StatusLineLspNotActive = { fg = "#3c3c3c", bg = "#2c2c2c" },
+    StatusLineFileEncoding = { fg = "#86868B", bg = "#2c2c2c" },
+    StatusLineFileType = { fg = "#158C8A", bg = "#2c2c2c" },
+    StatusLineFileFormatLocation = { fg = "#86868B", bg = "#2c2c2c" },
+    StatusLineGpsDiagnostic = { fg = "#3c3c3c", bg = "#262626" },
+    StatusLineInverted = { fg = "#1c1c1c", bg = "#2c2c2c" },
+    StatusLineEmptyspace = { fg = "#3c3c3c", bg = "#262626" },
+    StatusLineLite = { fg = "#dcdcdc", bg = "#1c1c1c" },
+    StatusLineInactive = { fg = "#5c5c5c", bg = "#2c2c2c" },
+    StatuslineSymbols = { fg = "#2c2c2c", bg = "#262626" },
+    SLDiagnosticError = { fg = "#f44757", bg = "#262626" },
+    SLDiagnosticWarn = { fg = "#ff8800", bg = "#262626" },
+    SLDiagnosticHint = { fg = "#4fc1ff", bg = "#262626" },
+    SLDiagnosticInfo = { fg = "#00ffaa", bg = "#262626" },
+  }
+
+  for group, settings in pairs(hls) do
+    vim.api.nvim_set_hl(0, group, settings)
+  end
 end
 
----Get location in current buffer (current row on total rows)
----@return string line number on total number
-local function get_line_onTot()
-  return win_is_smaller(M.preset_width.row_onTot) and (" %s%%l%s/%%L "):format(M.colors.git, M.colors.fformatloc)
-      or (" %s%%l%s/%%L|%%P"):format(M.colors.git, M.colors.fformatloc)
-end
+
+----------------
+---Segments
+----------------
 
 ---Get file name
+---@param win_width number width of window
 ---@return string filename name of the current file
-local function get_filename()
-  local cols = vim.o.columns
-  local fname = vim.fn.expand "%:f"
-  local to_trunc = #fname >= (cols * 0.26)
-  local truncated_name = vim.fn.expand "%:t"
-  return to_trunc and truncated_name or fname
+local function get_filename(win_width)
+  local fname = sanitize_stl(vim.fn.expand "%:f")
+  local to_trunc = #fname >= (win_width * 0.26)
+  return to_trunc and sanitize_stl(vim.fn.expand "%:t") or fname
+end
+
+---Get git status with `gitsigns` plugin
+---and display data depending on available window width
+---@param win_width number current width of the window
+---@return string git_status git formatted data
+local function get_git_status(win_width)
+  local signs = vim.b["minidiff_summary"] or nil
+  if not signs then
+    return ""
+  end
+
+  local add, change, delete = signs.add or 0, signs.change or 0, signs.delete or 0
+
+  local no_changes = (add + change + delete) == 0
+
+  if signs.source_name == "git" then
+    local head = M.branch
+
+    if no_changes or (win_is_smaller(win_width, M.preset_width.git_branch) or win_is_smaller(win_width, M.preset_width.git_branch, M.preset_width.git_status_full)) then
+      return (" %s "):format(head)
+    else
+      return ("+%s ~%s -%s |  %s "):format(add, change, delete, head)
+    end
+  else
+    return ("+%s ~%s -%s "):format(add, change, delete)
+  end
 end
 
 ---Get lsp diagnostics data
----@return string diagnostic diagnostic formatted data
-local function get_lsp_diagnostic()
-  local do_not_show_diag = win_is_smaller(80)
+---@param win_width number width of window
+---@return string diagnostic formatted data
+local function get_lsp_diagnostic(win_width)
+  local do_not_show_diag = win_is_smaller(win_width, 80)
 
   local diagnostics = nil
   local errors, warns, infos, hints = 0, 0, 0, 0
@@ -269,43 +318,69 @@ local function get_lsp_diagnostic()
       )
 end
 
----Get lsp progress, trying to remove Noice and mini-view
----@return string progress formatted progress
-function M.get_lsp_progress()
-  local lsp = vim.lsp.status()
-  if lsp and lsp ~= "" then
-    local idx = lsp:find(",")
-    lsp = vim.trim(lsp:sub(1, idx and idx - 1 or nil))
-    return (#lsp > M.preset_width.lsp_info) and lsp:sub(1, M.preset_width.lsp_info) .. "…" or lsp
-  end
-
-  return ""
+---Get lsp status and if active get names of server running
+---@return string lsp_status
+local function get_lsp_info()
+  local activity_status = lib_activity.status() ~= "" and lib_activity.status() or "• "
+  return M.lsp_attached and M.colors.name .. activity_status or
+      M.colors.lspnoactive .. "• "
 end
 
----Get git status with `gitsigns` plugin
----and display data depending on available window width
----@return string git_status git formatted data
-local function get_git_status()
-  local signs = vim.b["minidiff_summary"] or nil
-  if not signs then
-    return ""
-  end
+----------------
+---LSP Progress
+----------------
 
-  local add, change, delete = signs.add or 0, signs.change or 0, signs.delete or 0
+---Get lsp progress, trying to remove Noice and mini-view
+---@param lsp_status table lsp status table
+local function get_lsp_progress(lsp_status)
+  if not lsp_status then return end
+  local lsp_status = ("(%d%%) %s: %s"):format(lsp_status.percentage or 0, lsp_status.title or "",
+    lsp_status.message or "")
+  M.lsp_status = sanitize_stl(lsp_status)
+end
 
-  local no_changes = (add + change + delete) == 0
+----------------
+---Git Branch (async)
+----------------
 
-  if signs.source_name == "git" then
-    local head = M.branch
+---Get git Branch and cache it
+---@param buf number the id of the buffer
+local function get_git_branch(buf)
+  local root = vim.fs.root(buf, ".git")
+  if not root then return end
 
-    if no_changes or (win_is_smaller(M.preset_width.git_branch) or win_is_smaller(M.preset_width.git_branch, M.preset_width.git_status_full)) then
-      return (" %s "):format(head)
-    else
-      return ("+%s ~%s -%s |  %s "):format(add, change, delete, head)
+  local cmd = { "git", "rev-parse", "--abbrev-ref", "HEAD" }
+  vim.system(cmd, { text = true, cwd = root }, function(obj)
+    if obj.stdout then
+      local branch = obj.stdout:sub(1, -2) -- remove null terminator
+      M.branch = sanitize_stl(branch)
+      vim.schedule(function() vim.cmd.redrawstatus() end)
     end
-  else
-    return ("+%s ~%s -%s "):format(add, change, delete)
-  end
+  end)
+end
+
+
+----------------
+---Session
+----------------
+
+---Get session name if active
+---@return string session_name name of the active session or empty string
+local function session_name()
+  return M.session_name ~= "" and " [" .. sanitize_stl(M.session_name) .. "] " or ""
+end
+
+----------------
+---Other Segments
+----------------
+
+---Get location in current buffer (current row on total rows)
+---@param win_width number width of window
+---@return string line number on total number
+local function get_line_onTot(win_width)
+  return win_is_smaller(win_width, M.preset_width.row_onTot) and
+      (" %s%%l%s/%%L "):format(M.colors.git, M.colors.fformatloc)
+      or (" %s%%l%s/%%L|%%P"):format(M.colors.git, M.colors.fformatloc)
 end
 
 ---Get filetype with icon if available
@@ -319,28 +394,28 @@ local function get_filetype_and_icon()
 end
 
 ---Get file encoding
+---@param win_width number current width of the window
 ---@return string file_encoding current buf file-encoding or empty string
-local function get_fencoding()
-  return not win_is_smaller(76) and " %{&fileencoding?&fileencoding:&encoding} " or ""
+local function get_fencoding(win_width)
+  return not win_is_smaller(win_width, 76) and " %{&fileencoding?&fileencoding:&encoding} " or ""
 end
 
 ---Get file format
+---@param win_width number current width of the window
 ---@return string file_format current buf file-format or empty string
-local function get_fformat()
-  return not win_is_smaller(76) and "%{&ff}" or ""
+local function get_fformat(win_width)
+  return not win_is_smaller(win_width, 76) and "%{&ff}" or ""
 end
 
----Get session name if active
----@return string session_name name of the active session or empty string
-local function session_name()
-  return M.session_name ~= "" and " [" .. M.session_name .. "] " or ""
-end
+----------------
+---Python venv
+----------------
 
 ---Get python virtual-env if is active and in python file
+---@param win_width number current width of the window
 ---@return string env_name name of python env or empty string
-local function get_python_env()
-  -- if vim.bo.filetype == "python" then
-  if not win_is_smaller(M.preset_width.git_branch) then
+local function get_python_env(win_width)
+  if not win_is_smaller(win_width, M.preset_width.git_branch) then
     local venv = os.getenv "VIRTUAL_ENV"
     if venv then
       if string.find(venv, "/") then
@@ -348,41 +423,21 @@ local function get_python_env()
         for w in venv:gmatch "([^/]+)" do
           final_venv = w
         end
-        venv = final_venv
+        venv = sanitize_stl(final_venv)
       end
       local kernels = ""
-      if vim.bo.filetype == "quarto" and vim.endswith(get_filename(), "ipynb") then
-        kernels = require("molten.status").kernels()
+      if vim.bo.filetype == "quarto" and vim.endswith(get_filename(win_width), "ipynb") then
+        kernels = sanitize_stl(require("molten.status").kernels())
       end
       return kernels ~= "" and " 󰌠 (" .. venv .. ") [" .. kernels .. "] " or " 󰌠 (" .. venv .. ") "
     end
   end
-  -- end
   return ""
 end
 
----Get lsp status and if active get names of server running
----@return string lsp_status
-local function get_lsp_info()
-  return #vim.lsp.get_clients { bufnr = 0 } ~= 0 and  M.colors.name .. "• " or
-      M.colors.lspnoactive .. "• "
-end
-
----Get git Branch and cache it
----@param buf number the id of the buffer
-local function get_git_branch(buf)
-  local root = vim.fs.root(buf, ".git")
-  if not root then return end
-
-  local cmd = { "git", "rev-parse", "--abbrev-ref", "HEAD" }
-  vim.system(cmd, { text = true, cwd = root }, function(obj)
-    if obj.stdout then
-      local branch = obj.stdout:sub(1, -2) -- remove null terminator
-      M.branch = branch
-      vim.schedule(function() vim.cmd.redrawstatus() end)
-    end
-  end)
-end
+----------------
+---StatusLine Builder
+----------------
 
 ---Statusline disabled that display only filetype and current mode
 ---@return string simple_statusline
@@ -429,6 +484,7 @@ end
 ---Statusline enabled with all items
 ---@return string statusline
 local function enabled_statusline()
+  local win_width = vim.api.nvim_win_get_width(0)
   local sideSep = "%="
   local modifiedReadOnlyFlags = "%m%r"
   local space = " "
@@ -442,22 +498,21 @@ local function enabled_statusline()
     modifiedReadOnlyFlags,
     space,
     M.colors.git,
-    "%<" .. get_git_status(),
+    "%<" .. get_git_status(win_width),
     M.colors.name,
-    get_filename(),
+    get_filename(win_width),
     M.colors.symbols,
     "",
     M.colors.empty,
     session_name(),
-    get_python_env(),
+    get_python_env(win_width),
     space,
-    [[%{luaeval("require'lib.ui.statusline'.get_lsp_progress()")}]],
+    M.lsp_status or "",
     space,
-    -- get_lsp_progress(),
 
     -- Middle
     sideSep,
-    get_lsp_diagnostic(),
+    get_lsp_diagnostic(win_width),
     space,
 
     -- Right Side
@@ -467,16 +522,21 @@ local function enabled_statusline()
     M.colors.ftype,
     get_filetype_and_icon(),
     M.colors.encoding,
-    get_fencoding(),
+    get_fencoding(win_width),
     M.colors.fformatloc,
-    get_fformat(),
-    get_line_onTot(),
+    get_fformat(win_width),
+    get_line_onTot(win_width),
     M.colors.inverted,
     "",
   }
 
   return table.concat(M.cached)
 end
+
+
+----------------
+---API
+----------------
 
 ---Set statusline based on filetype of current buffer
 function M.set()
@@ -490,6 +550,21 @@ function M.set()
   end
 end
 
+local state = {}
+
+---@param state table statusline state
+local function render(state)
+  return table.concat {
+    state.mode,
+    state.git,
+  }
+end
+
+
+----------------
+---Autocommands
+----------------
+
 ---Define autocmds for load winbar module and initialize
 function M.toggle()
   if vim.g.statusline ~= nil then
@@ -500,23 +575,62 @@ function M.toggle()
   else
     local augroup = vim.api.nvim_create_augroup("_statusline", { clear = true })
     vim.api.nvim_create_autocmd({
+      "BufEnter",
       "BufNewFile",
       "ModeChanged",
       "VimResized",
-      "FileType",
-      "FileChangedShellPost",
+      -- "FileType",
+      -- "FileChangedShellPost",
       "DiagnosticChanged",
-      "LspProgress",
-      "LspDetach",
     }, {
       group = augroup,
       callback = function(cb)
         if vim.g.statusline ~= nil then
-          vim.api.nvim_eval_statusline("%!v:lua.require'lib.ui.statusline'.set()", {})
+          M.set()
+          vim.cmd.redrawstatus()
         else
           vim.g.statusline = cb.id
         end
       end,
+    })
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = augroup,
+      callback = function(ev)
+        if vim.api.nvim_win_get_buf(0) == ev.buf then
+          M.lsp_attached = true -- #vim.lsp.get_clients { bufnr = ev.buf } > 0
+          get_git_branch(ev.buf)
+        end
+      end
+    })
+
+    vim.api.nvim_create_autocmd("LspDetach", {
+      group = augroup,
+      callback = function(ev)
+        if vim.api.nvim_win_get_buf(0) == ev.buf then
+          M.lsp_attached = false
+        end
+      end
+    })
+
+
+    vim.api.nvim_create_autocmd("LspProgress", {
+      group = augroup,
+      callback = function(ev)
+        if not vim.api.nvim_win_get_buf(0) == ev.buf then return end
+        local value = ev.data.params.value
+        lib_activity.start("LSP")
+        if value and value.kind == "report" then
+          get_lsp_progress(value)
+          M.set()
+          vim.cmd.redrawstatus()
+        elseif value and value.kind == "end" then
+          lib_activity.stop("LSP")
+          M.lsp_status = nil
+          M.set()
+          vim.cmd.redrawstatus()
+        end
+      end
     })
 
     vim.api.nvim_create_autocmd({ "BufNew", "BufNewFile", "FocusGained" }, {
@@ -526,7 +640,8 @@ function M.toggle()
         get_git_branch(args.buf)
       end
     })
-    vim.api.nvim_eval_statusline("%!v:lua.require'lib.ui.statusline'.set()", {})
+    M.set()
+    vim.cmd.redrawstatus()
   end
 
   vim.api.nvim_create_autocmd("ColorScheme", {

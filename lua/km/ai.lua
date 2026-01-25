@@ -2,7 +2,7 @@
 --  File         : ai.lua
 --  Description  : AI interops with Neovim
 --  Author       : Kevin
---  Last Modified: 18 Jan 2026, 19:22
+--  Last Modified: 25 Jan 2026, 10:27
 -------------------------------------
 
 require("minuet").setup {
@@ -54,7 +54,7 @@ if has_blink then
     module = 'minuet.blink',
     async = true,
     timeout_ms = 3000,
-    score_offset = 50,
+    score_offset = 100,
   })
   ---NOTE: without this, is not showing by default on autocomplete
   blink_config.sources.default = vim.list_extend(blink_config.sources.default, { "minuet" })
