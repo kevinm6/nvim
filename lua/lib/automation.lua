@@ -2,7 +2,7 @@
 --  File         : automation.lua
 --  Description  : automatic functions lib triggered by events
 --  Author       : Kevin
---  Last Modified: 28 Dec 2025, 16:45
+--  Last Modified: 27 Jan 2026, 16:03
 -------------------------------------
 
 local M = {}
@@ -17,6 +17,7 @@ function M.auto_timestamp(exts)
     pattern = exts,
     callback = function()
       if vim.opt_local.modified:get() == true then
+        vim.cmd.undojoin()
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
         local lines = vim.api.nvim_buf_line_count(0)
         local max_range = math.min(lines, 10)
