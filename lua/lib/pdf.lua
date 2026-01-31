@@ -2,7 +2,7 @@
 --  File         : pdf.lua
 --  Description  : use Neovim as pdf reader (need pdftotext binaries)
 --  Author       : Kevin
---  Last Modified: 19 Jan 2026, 09:35
+--  Last Modified: 31 Jan 2026, 09:55
 -------------------------------------
 
 local M = {
@@ -41,7 +41,9 @@ function M.load_pdf(file)
   vim.g[file] = 1
 end
 
-function M.convert_md_to_pdf()
+---Convert from markdown to pdf, using pandoc
+---@param cmd? string extra command args
+function M.convert_md_to_pdf(cmd)
   if vim.bo.ft ~= 'markdown' then
     local err_msg = "TOpdf - fileType < %s > not supported" .. vim.bo.ft
     vim.notify(err_msg, vim.log.levels.ERROR, { title = "PDF export" })
@@ -54,7 +56,7 @@ function M.convert_md_to_pdf()
   local pdf_out_path = string.sub(file_path, 1, -3) .. 'pdf'
   local dir_file_path = vim.fs.dirname(file_path)
   local old_cwd = vim.fn.chdir(dir_file_path)
-  -- print(pdf_out_path)
+  local extra_args = cmd and vim.split(cmd, " ") or {}
 
   local args = {
     "pandoc",
@@ -64,10 +66,10 @@ function M.convert_md_to_pdf()
     "--from=gfm",
     "-o", pdf_out_path,
     "--syntax-highlighting", "tango",
-    -- "--toc"
   }
+  vim.list_extend(args, extra_args)
 
-  vim.notify("TOpdf - starting conversion...")
+  vim.notify("TOpdf - starting conversion...\n executing => " .. table.concat(args, " "))
   vim.system(args, { text = true }, function(obj)
     if obj.stderr ~= "" then
       vim.schedule(function()

@@ -32,8 +32,8 @@ if has_rendermd then
 end
 
 ---Export to PDF
-vim.api.nvim_create_user_command("TOpdf", function()
-  require("lib.pdf").convert_md_to_pdf()
-end, { desc = "Export markdown to pdf" })
+vim.api.nvim_create_user_command("TOpdf", function(cmd_args)
+  require("lib.pdf").convert_md_to_pdf(cmd_args.args)
+end, { nargs = "?", desc = "Export markdown to pdf" })
 
 require("lib.automation").auto_timestamp("*.md")

@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "9afa445602e6191917b4d32f1355e77b4525f905",
+      "rev": "9b6a3ab14cecc7da9f3aa4fa0ae2a7390748aca5",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
@@ -18,7 +18,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "dap-view": {
-      "rev": "bd67e84de295455a5cd994b8f227438e8c696ea9",
+      "rev": "821a6d049096fea7023d8f5628ad1d35a02c88d0",
       "src": "https://github.com/igorlfs/nvim-dap-view"
     },
     "data-viewer.nvim": {
@@ -26,7 +26,7 @@
       "src": "https://github.com/vidocqh/data-viewer.nvim"
     },
     "go.nvim": {
-      "rev": "41a18f0c05534c375bafec7ed05cdb409c4abcc6",
+      "rev": "d89ea7aba93220383ded5bb22b1e82841980cecf",
       "src": "https://github.com/ray-x/go.nvim"
     },
     "jupytext.nvim": {
@@ -34,7 +34,7 @@
       "src": "https://github.com/GCBallesteros/jupytext.nvim"
     },
     "markdown.nvim": {
-      "rev": "c54380dd4d8d1738b9691a7c349ecad7967ac12e",
+      "rev": "48934b49a2363b49ae1d698ed4cb30fb79d7efe8",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
     },
     "mason.nvim": {
@@ -46,7 +46,7 @@
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "minuet": {
-      "rev": "f1a99a9a7514b0f76a4d6a073c264692e275f76d",
+      "rev": "90822118ce285130fecd77cc0942880c2ad89fd0",
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "molten-nvim": {
@@ -63,7 +63,7 @@
       "src": "https://github.com/norcalli/nvim-colorizer.lua"
     },
     "nvim-dap": {
-      "rev": "085386b9359ddf8d76ad89b98973b8e332dc5ba3",
+      "rev": "e47878dcf1ccc30136b30d19ab19fe76946d61cd",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-dap-python": {
@@ -79,7 +79,7 @@
       "src": "https://github.com/mfussenegger/nvim-jdtls"
     },
     "nvim-lint": {
-      "rev": "ca6ea12daf0a4d92dc24c5c9ae22a1f0418ade37",
+      "rev": "b3292aac30b935d4cccf0904053d1c7930df8a20",
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-metals": {
@@ -87,7 +87,7 @@
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-treesitter": {
-      "rev": "f8bbc3177d929dc86e272c41cc15219f0a7aa1ac",
+      "rev": "19c729dae6e0eeb79423df0cf37780aa9a7cc3b7",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "otter.nvim": {
@@ -99,7 +99,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "quarto-nvim": {
-      "rev": "cc99501a524b7abf484ed0248cae66ac53f93a13",
+      "rev": "d923bb7cfc2bde41143e1c531c28190f0fade3a2",
       "src": "https://github.com/quarto-dev/quarto-nvim"
     },
     "rest.nvim": {
