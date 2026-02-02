@@ -2,7 +2,7 @@
 -- File         : keymaps.lua
 -- Description  : Keymaps for NeoVim
 -- Author       : Kevin
--- Last Modified: 06 Jan 2026, 15:06
+-- Last Modified: 02 Feb 2026, 10:36
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -222,7 +222,7 @@ nmap {
   end,
   "Close buffer and go to next",
 }
-nmap { "ZA", ":%bdelete", "Close all Buffers" }
+nmap { "ZA", ":%bdelete<CR>", "Close all Buffers" }
 
 nmap {
   "<leader>fp",

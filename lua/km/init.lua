@@ -2,7 +2,7 @@
 --  File         : init.lua
 --  Description  : plugin init scheme
 --  Author       : Kevin
---  Last Modified: 19 Jan 2026, 21:42
+--  Last Modified: 02 Feb 2026, 09:58
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -36,6 +36,13 @@ vim.api.nvim_create_autocmd("FileType", {
 ---@return string the full GitHub url
 local function gh(user_repo)
   return "https://github.com/" .. user_repo
+end
+
+local mason_dir = vim.fn.stdpath "data" .. "/mason/bin"
+
+--NOTE add mason packs to env PATH
+if vim.uv.fs_stat(mason_dir) then
+  vim.env.PATH = ("%s:%s"):format(mason_dir, vim.env.PATH)
 end
 
 vim.pack.add({

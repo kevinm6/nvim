@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "9b6a3ab14cecc7da9f3aa4fa0ae2a7390748aca5",
+      "rev": "6217ff926e951401ac32f572da04e93e8cd6129d",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
@@ -34,7 +34,7 @@
       "src": "https://github.com/GCBallesteros/jupytext.nvim"
     },
     "markdown.nvim": {
-      "rev": "48934b49a2363b49ae1d698ed4cb30fb79d7efe8",
+      "rev": "b3efd6408e4e4d66d6caaee0579e72b579bc0884",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
     },
     "mason.nvim": {
@@ -46,7 +46,7 @@
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "minuet": {
-      "rev": "90822118ce285130fecd77cc0942880c2ad89fd0",
+      "rev": "3d25c24487876676d29d325c01ce108cbdbd0753",
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "molten-nvim": {

@@ -1,15 +1,13 @@
 -------------------------------------
 -- Description  : useful plugins
 -- Author       : Kevin
--- Last Modified: 14 Jan 2026, 21:53
+-- Last Modified: 03 Feb 2026, 11:53
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
 --    Symbols : Symbols (Only) Nerd Font
 -------------------------------------
 
--- vim.api.nvim_create_autocmd("VimEnter", {
---   callback = function()
 ---Auto-Pairs
 require("mini.pairs").setup {
   mappings = {
@@ -241,7 +239,7 @@ local function map_split(buf_id, lhs, direction)
   vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
 end
 
-local show_dotfiles = true
+local show_dotfiles = false
 
 local function filter_show() return true end
 
@@ -250,8 +248,9 @@ local function filter_hide(fs_entry)
 end
 
 local function toggle_dotfiles()
-  mini_files.refresh({ content = { filter = show_dotfiles and filter_show or filter_hide } })
   show_dotfiles = not show_dotfiles
+  local new_filter = show_dotfiles and filter_show or filter_hide
+  mini_files.refresh { content = { filter = new_filter } }
 end
 
 local function format_size(size)
@@ -299,7 +298,6 @@ local function toggle_details()
 end
 mini_files.setup {
   content = { filter = filter_hide },
-  -- content = { prefix = custom_prefix, filter = filter_show  },
   mappings = {
     close       = "q",
     go_in       = "<C-l>",
@@ -314,7 +312,6 @@ mini_files.setup {
     trim_left   = "<",
     trim_right  = ">",
     synchronize = "<leader>w",
-    refresh     = "<leader>r",
   }
 }
 
@@ -340,6 +337,9 @@ vim.api.nvim_create_autocmd("User", {
     vim.keymap.set('n', 'gx', function() vim.ui.open(mini_files.get_fs_entry().path) end,
       { buffer = buf_id, desc = 'OS open' })
     vim.keymap.set('n', 'gy', yank_path, { buffer = buf_id, desc = 'Yank path' })
+    vim.keymap.set('n', 'gr', function()
+      mini_files.refresh { content = { filter = show_dotfiles and filter_show or filter_hide } }
+    end, { buffer = buf_id, desc = 'Refresh' })
     vim.keymap.set('n', '<cr>', function() mini_files.go_in { close_on_file = true } end,
       { buffer = buf_id, desc = 'Open File' })
     map_split(buf_id, '<C-s>', 'belowright horizontal')
@@ -373,12 +373,12 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 vim.keymap.set("n", "<leader>e", function()
-    -- require("mini.files").open()
-    local buf_path = vim.api.nvim_buf_get_name(0)
-    local path_exists = vim.fn.filereadable(buf_path) == 1
-    require("mini.files").open(path_exists and buf_path or vim.uv.cwd())
-  end,
-  { desc = "File Explorer" })
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  local is_dot_file = vim.startswith(vim.fs.basename(buf_path), ".")
+  require("mini.files").open(buf_path, nil, {
+    content = { filter = is_dot_file and filter_show or filter_hide }
+  })
+end, { desc = "File Explorer" })
 
 vim.keymap.set("n", "<leader>E", function()
     --Open fresh in cwd
