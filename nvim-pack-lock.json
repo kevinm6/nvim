@@ -1,11 +1,11 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "6217ff926e951401ac32f572da04e93e8cd6129d",
+      "rev": "636519034e360b686d3e131353393382388ee5b5",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
-      "rev": "b19413d214068f316c78978b08264ed1c41830ec",
+      "rev": "4b18c32adef2898f95cdef6192cbd5796c1a332d",
       "src": "https://github.com/saghen/blink.cmp",
       "version": "1.0.0 - 2.0.0"
     },
@@ -18,7 +18,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "dap-view": {
-      "rev": "821a6d049096fea7023d8f5628ad1d35a02c88d0",
+      "rev": "c4384f417dae719d21a4af0ab62c9a3ae3c518c8",
       "src": "https://github.com/igorlfs/nvim-dap-view"
     },
     "data-viewer.nvim": {
@@ -26,7 +26,7 @@
       "src": "https://github.com/vidocqh/data-viewer.nvim"
     },
     "go.nvim": {
-      "rev": "d89ea7aba93220383ded5bb22b1e82841980cecf",
+      "rev": "421694ad11759ad22d5200cff6a8c69d223ade29",
       "src": "https://github.com/ray-x/go.nvim"
     },
     "jupytext.nvim": {
@@ -34,7 +34,7 @@
       "src": "https://github.com/GCBallesteros/jupytext.nvim"
     },
     "markdown.nvim": {
-      "rev": "b3efd6408e4e4d66d6caaee0579e72b579bc0884",
+      "rev": "48b4175dbca8439d30c1f52231cbe5a712c8f9d9",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
     },
     "mason.nvim": {
@@ -42,7 +42,7 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "9b935c218ddba02e5dc75c94f90143bce1f7c646",
+      "rev": "f28cd08c8be826355d64080400fab1764c9693dd",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "minuet": {

@@ -56,24 +56,25 @@ function M.convert_md_to_pdf(cmd)
   local pdf_out_path = string.sub(file_path, 1, -3) .. 'pdf'
   local dir_file_path = vim.fs.dirname(file_path)
   local old_cwd = vim.fn.chdir(dir_file_path)
-  local extra_args = cmd and vim.split(cmd, " ") or {}
+  local extra_args = cmd ~= "" and vim.split(cmd, " ") or {}
 
   local args = {
     "pandoc",
-    "-V",
-    "geometry:margin=1.5cm",
-    file_path,
-    "--from=gfm",
+    "-V", "geometry:margin=1.5cm",
+    "--from=gfm", file_path,
     "-o", pdf_out_path,
     "--syntax-highlighting", "tango",
   }
-  vim.list_extend(args, extra_args)
+
+  if next(extra_args) then
+    vim.list_extend(args, extra_args)
+  end
 
   vim.notify("TOpdf - starting conversion...\n executing => " .. table.concat(args, " "))
   vim.system(args, { text = true }, function(obj)
     if obj.stderr ~= "" then
       vim.schedule(function()
-        vim.notify("TOpdf - stderr => " .. obj.stderr, vim.log.levels.ERROR, { title = "TOpdf - export" })
+        vim.notify(("TOpdf - stderr =>\n%q"):format(obj.stderr), vim.log.levels.ERROR, { title = "TOpdf - export" })
         vim.fn.chdir(old_cwd)
       end)
       return

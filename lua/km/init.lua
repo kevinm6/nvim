@@ -183,7 +183,7 @@ vim.pack.add({
         local lint = require "lint"
         lint.linters_by_ft = {
           groovy = { "npm-groovy-lint" },
-          markdown = { "markdownlint" },
+          -- markdown = { "markdownlint" },
           json = { "biomejs" },
           javascript = { "biomejs", "eslint_d" },
           typescript = { "biomejs", "eslint_d" },
@@ -197,9 +197,9 @@ vim.pack.add({
           "--config", vim.fn.expand "~/.groovylintrc.json"
         }
 
-        lint.linters.markdownlint.args = {
-          "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
-        }
+        -- lint.linters.markdownlint.args = {
+        --   "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
+        -- }
         lint.linters.flake8.args = {
           "--extend-ignore E302,E111,E501,W391",
         }

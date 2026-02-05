@@ -2,7 +2,7 @@
 -- File         : snacks.lua
 -- Description  : snacks plugin config
 -- Author       : Kevin
--- Last Modified: 06 Jan 2026, 19:24
+-- Last Modified: 03 Feb 2026, 20:54
 -------------------------------------
 
 require("snacks").setup {
@@ -211,7 +211,7 @@ require("snacks").setup {
         },
       },
       select = {
-        layout = {
+        ayout = {
           reverse = true,
           preview = false,
           layout = {
@@ -601,40 +601,6 @@ require("snacks").setup {
           },
         },
       },
-      -- ["Software Licenses"] = {
-      --   layout = {
-      --     reverse = true,
-      --     preview = false,
-      --     layout = {
-      --       width = 0.6,
-      --       height = 0.4,
-      --       box = "vertical",
-      --       border = "rounded",
-      --       title = "{title}",
-      --       title_pos = "center",
-      --       { win = "preview", title = "{preview}", height = 0.6, border = "bottom" },
-      --       { win = "list", border = "none" },
-      --       { win = "input", height = 1, border = "top" },
-      --     },
-      --   },
-      -- },
-      -- ["Environment Variables"] = {
-      --   layout = {
-      --     reverse = true,
-      --     preview = false,
-      --     layout = {
-      --       width = 0.6,
-      --       height = 0.4,
-      --       box = "vertical",
-      --       border = "rounded",
-      --       title = "{title}",
-      --       title_pos = "center",
-      --       { win = "preview", title = "{preview}", height = 0.6, border = "bottom" },
-      --       { win = "list", border = "none" },
-      --       { win = "input", height = 1, border = "top" },
-      --     },
-      --   },
-      -- },
     },
 
     layout = {

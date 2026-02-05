@@ -2,7 +2,7 @@
 --  File         : automation.lua
 --  Description  : automatic functions lib triggered by events
 --  Author       : Kevin
---  Last Modified: 27 Jan 2026, 16:03
+--  Last Modified: 05 Feb 2026, 11:51
 -------------------------------------
 
 local M = {}
@@ -17,13 +17,19 @@ function M.auto_timestamp(exts)
     pattern = exts,
     callback = function()
       if vim.opt_local.modified:get() == true then
+        -- undojoin ensures the timestamp update is undone along with the actual edit
         vim.cmd.undojoin()
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
         local lines = vim.api.nvim_buf_line_count(0)
         local max_range = math.min(lines, 10)
         if max_range > 0 then
           local range = "0," .. max_range
-          vim.api.nvim_command(range .. [[s/\(.*Modified.*:\)\s\+\(.\+\)/\=submatch(1) . ' ' . strftime('%d %b %Y, %H:%M')/ge]])
+          -- 1. "Last Modified: ..." (your original)
+          -- 2. "date: ..." (standard YAML)
+          -- 3. "modified: ..." (alternative YAML)
+          local pattern = [[\v^(\s*%(Last [Mm]odified|date|modified):\s*).*]]
+          local replacement = [[\=submatch(1) . strftime('%d %b %Y, %H:%M')]]
+          vim.api.nvim_command(('keepjumps silent %s s/%s/%s/e'):format(range, pattern, replacement))
         end
         vim.fn.histdel("search", -1)
         vim.api.nvim_win_set_cursor(0, cursor_pos)
