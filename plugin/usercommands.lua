@@ -1,9 +1,10 @@
 -------------------------------------
--- File         : usercommands.lua
--- Description  : User commands config
--- Author       : Kevin
--- Last Modified: 28 Dec 2025, 17:11
+-- title: usercommands.lua
+-- abstract: User commands config
+-- author: Kevin
+-- date: 28 Dec 2025, 17:11
 -------------------------------------
+
 
 local user_command = vim.api.nvim_create_user_command
 
@@ -125,8 +126,6 @@ user_command("Notes", function()
   require("lib.notes").open_note()
 end, { desc = "Open notes" })
 
-local usercmd_toggle = require("lib").user_command_toggle
-
 user_command("DiffOrig", function()
   vim.cmd [[
   new | set buftype=nofile | read ++edit # | 0d_ \ | diffthis | wincmd p | diffthis
@@ -150,30 +149,29 @@ end, {
 })
 
 ---Update `Last Modified` date if found in first 10 row of file
-usercmd_toggle("ToggleAutoTimeStamp", "auto_timestamp", {
-  title = "Auto Update TimeStamp",
-  desc = "Update TimeStamp on save",
-  on_enable = require("lib.automation").auto_timestamp,
-  on_disable = function()
-    if vim.g.autoupdate_timestamp then
-      vim.api.nvim_del_autocmd(vim.g.autoupdate_timestamp)
-    end
-  end,
-})
+user_command("ToggleAutoTimeStamp", function()
+  if not vim.g.autoupdate_timestamp then
+    require("lib.automation").auto_timestamp()
+  else
+    vim.api.nvim_del_augroup_by_id(vim.g.autoupdate_timestamp)
+    vim.g.autoupdate_timestamp = nil
+  end
+  local state = vim.g.autoupdate_timestamp and "enabled" or "disabled"
+  vim.notify("ToggleAutoTimeStamp => " .. state, vim.log.levels.INFO, {
+    title = "AutoTimeStamp"
+  })
+end, { desc = "Toggle auto update timestamp on file" })
 
 ---User command to toggle auto trim trailing space on save
-usercmd_toggle("ToggleAutoTrimTrailSpaces", "auto_remove_trail_spaces", {
-  title = "Auto Remove trailing spaces",
-  desc = "Remove extra trailing white spaces",
-  on_enable = require("lib.automation").auto_remove_trailing_spaces,
-  on_disable = function()
-    local has_autocmd, autocmd = pcall(vim.api.nvim_get_autocmds, {
-      event = "BufWritePre",
-      group = "_autoremove_trailing_space",
-      pattern = "*",
-    })
-    if has_autocmd then
-      vim.api.nvim_del_autocmd(autocmd[1].id)
-    end
-  end,
-})
+user_command("ToggleAutoTrimTrailSpaces", function()
+  if not vim.g.autoremove_trailingspace then
+    require("lib.automation").auto_remove_trailing_spaces()
+  else
+    vim.api.nvim_del_augroup_by_id(vim.g.autoremove_trailingspace)
+    vim.g.autoremove_trailingspace = nil
+  end
+  local state = vim.g.autoremove_trailingspace and "enabled" or "disabled"
+  vim.notify("ToggleAutoTrimTrailSpaces => " .. state, vim.log.levels.INFO, {
+    title = "AutoTrailingSpaces"
+  })
+end, { desc = "Toggle auto remove trailing spaces on file" })

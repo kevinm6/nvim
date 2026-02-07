@@ -1,13 +1,13 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "636519034e360b686d3e131353393382388ee5b5",
+      "rev": "ff73799fc8df725d51eada87a113581ba4d3717b",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
       "rev": "4b18c32adef2898f95cdef6192cbd5796c1a332d",
       "src": "https://github.com/saghen/blink.cmp",
-      "version": "1.0.0 - 2.0.0"
+      "version": ">=1.9.1"
     },
     "color-picker.nvim": {
       "rev": "06cb5f853535dea529a523e9a0e8884cdf9eba4d",
@@ -29,10 +29,6 @@
       "rev": "421694ad11759ad22d5200cff6a8c69d223ade29",
       "src": "https://github.com/ray-x/go.nvim"
     },
-    "jupytext.nvim": {
-      "rev": "c8baf3ad344c59b3abd461ecc17fc16ec44d0f7b",
-      "src": "https://github.com/GCBallesteros/jupytext.nvim"
-    },
     "markdown.nvim": {
       "rev": "48b4175dbca8439d30c1f52231cbe5a712c8f9d9",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
@@ -42,7 +38,7 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "f28cd08c8be826355d64080400fab1764c9693dd",
+      "rev": "8c40d95931cbe6138391af9180e59439ed2e69df",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "minuet": {
@@ -50,17 +46,12 @@
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "molten-nvim": {
-      "rev": "a286aa914d9a154bc359131aab788b5a077a5a99",
-      "src": "https://github.com/benlubas/molten-nvim",
-      "version": "1.0.0 - 2.0.0"
+      "rev": "4fd7be6a12b5efda5179db642f13bad60893acca",
+      "src": "https://github.com/benlubas/molten-nvim"
     },
     "nui.nvim": {
       "rev": "de740991c12411b663994b2860f1a4fd0937c130",
       "src": "https://github.com/MunifTanjim/nui.nvim"
-    },
-    "nvim-colorizer.lua": {
-      "rev": "a065833f35a3a7cc3ef137ac88b5381da2ba302e",
-      "src": "https://github.com/norcalli/nvim-colorizer.lua"
     },
     "nvim-dap": {
       "rev": "e47878dcf1ccc30136b30d19ab19fe76946d61cd",
@@ -87,7 +78,7 @@
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-treesitter": {
-      "rev": "4967fa48b0fe7a7f92cee546c76bb4bb61bb14d5",
+      "rev": "45a07f869b0cffba342276f2c77ba7c116d35db8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "otter.nvim": {

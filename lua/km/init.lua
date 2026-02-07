@@ -81,7 +81,7 @@ vim.pack.add({
   ---Completion
   {
     src = gh("saghen/blink.cmp"),
-    version = vim.version.range("1.*"),
+    version = vim.version.range(">=1.9.1"),
     data = {
       ev = { "InsertEnter", "CmdLineEnter" },
       config = function()
@@ -96,8 +96,6 @@ vim.pack.add({
     data = {
       ev = "VimEnter",
       config = function()
-        vim.cmd.packadd "nvim-dap-view"
-
         require("dap-view").setup {
           windows = {
             size = 0.24,
@@ -116,7 +114,6 @@ vim.pack.add({
           },
           help = { border = "rounded" }
         }
-        -- vim.cmd.packadd "nvim-dap-view"
         require "km.dap"
       end
     }
@@ -125,28 +122,6 @@ vim.pack.add({
     src = gh("igorlfs/nvim-dap-view"),
     name = "dap-view",
     data = { on_demand = true },
-    -- ev = "VimEnter",
-    -- config = function()
-    --   require("dap-view").setup {
-    --     windows = {
-    --       height = 0.24,
-    --     },
-    --     winbar = {
-    --       sections = {
-    --         "watches",
-    --         "scopes",
-    --         "breakpoints",
-    --         "exceptions",
-    --         "repl",
-    --         "console",
-    --         "threads",
-    --       },
-    --       controls = { enabled = true },
-    --     },
-    --     help = { border = "rounded" }
-    --   }
-    -- end
-    -- }
   },
 
   ---Mason
@@ -479,31 +454,11 @@ vim.pack.add({
       end
     }
   },
-  ---Nvim colorizer
-  {
-    src = gh("norcalli/nvim-colorizer.lua"),
-    data = { cmd = { "ColorizerToggle" } }
-  },
-  ---Jupyter Notebook
-  {
-    src = gh("GCBallesteros/jupytext.nvim"),
-    data = {
-      config = function()
-        require("jupytext").setup {
-          custom_language_formatting = {
-            python = { extension = "qmd", style = "quarto", force_ft = "quarto" },
-          }
-        }
-      end
-    }
-  },
   ---Molten
   {
     src = gh("benlubas/molten-nvim"),
-    version = vim.version.range("^1.0.0"),
     data = {
       build = function() vim.cmd.UpdateRemotePlugins() end,
-      cmd = { "MoltenInit" },
       ft = { "jupyter_notebook", "quarto" },
       config = function()
         vim.g.molten_auto_open_html_in_browser = true
@@ -512,55 +467,49 @@ vim.pack.add({
         vim.g.molten_output_win_max_height = math.floor(vim.o.lines * 0.8)
         vim.g.molten_output_win_max_width = math.floor(vim.o.columns * 0.8)
 
-        vim.api.nvim_create_autocmd("FileType", {
-          group = vim.api.nvim_create_augroup("_molten_keymaps", { clear = true }),
-          pattern = { "qmd", "jupyter_notebook", "quarto" },
-          callback = function(ev)
-            vim.keymap.set(
-              "n",
-              "<localleader>R",
-              ":MoltenEvaluateOperator<CR>",
-              { silent = true, buffer = ev.buf, noremap = true, desc = "run operator selection" }
-            )
-            vim.keymap.set(
-              "n",
-              "<localleader>rl",
-              ":MoltenEvaluateLine<CR>",
-              { silent = true, buffer = ev.buf, noremap = true, desc = "evaluate line" }
-            )
-            vim.keymap.set(
-              "n",
-              "<localleader>rc",
-              ":MoltenReevaluateCell<CR>",
-              { silent = true, buffer = ev.buf, noremap = true, desc = "re-evaluate cell" }
-            )
-            vim.keymap.set(
-              "v",
-              "<localleader>r",
-              ":<C-u>MoltenEvaluateVisual<CR>gv",
-              { silent = true, buffer = ev.buf, noremap = true, desc = "evaluate visual selection" }
-            )
+        vim.keymap.set(
+          "n",
+          "<localleader>R",
+          ":MoltenEvaluateOperator<CR>",
+          { silent = true, buffer = true, noremap = true, desc = "run operator selection" }
+        )
+        vim.keymap.set(
+          "n",
+          "<localleader>rl",
+          ":MoltenEvaluateLine<CR>",
+          { silent = true, buffer = true, noremap = true, desc = "evaluate line" }
+        )
+        vim.keymap.set(
+          "n",
+          "<localleader>rc",
+          ":MoltenReevaluateCell<CR>",
+          { silent = true, buffer = true, noremap = true, desc = "re-evaluate cell" }
+        )
+        vim.keymap.set(
+          "v",
+          "<localleader>r",
+          ":<C-u>MoltenEvaluateVisual<CR>gv",
+          { silent = true, buffer = true, noremap = true, desc = "evaluate visual selection" }
+        )
 
-            vim.keymap.set("n", "<leader>M", function() end, { desc = "Molten" })
-            vim.keymap.set("n", "<leader>MI", function()
-              vim.cmd.MoltenInfo()
-            end, { buffer = ev.buf, desc = "MoltenInfo" })
-            vim.keymap.set("n", "<leader>Ml", function()
-              vim.cmd.MoltenEvaluateLine()
-            end, { buffer = ev.buf, desc = "MoltenEvaluateLine" })
-            vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv",
-              { buffer = ev.buf, desc = "MoltenEvaluateVisual" })
-            vim.keymap.set("n", "<leader>Ma", function()
-              vim.cmd.MoltenEvaluateArgument()
-            end, { buffer = ev.buf, desc = "MoltenEvaluateArgument" })
-            vim.keymap.set("n", "<leader>Mo", function()
-              vim.cmd.MoltenEvaluateOperator()
-            end, { buffer = ev.buf, desc = "MoltenEvaluateOperator" })
-            vim.keymap.set("n", "<leader>Mc", function()
-              vim.cmd.MoltenReevaluateCell()
-            end, { buffer = ev.buf, desc = "MoltenReevaluateCell" })
-          end
-        })
+        vim.keymap.set("n", "<leader>M", function() end, { desc = "Molten" })
+        vim.keymap.set("n", "<leader>MI", function()
+          vim.cmd.MoltenInfo()
+        end, { buffer = true, desc = "MoltenInfo" })
+        vim.keymap.set("n", "<leader>Ml", function()
+          vim.cmd.MoltenEvaluateLine()
+        end, { buffer = true, desc = "MoltenEvaluateLine" })
+        vim.keymap.set("v", "<leader>Mv", ":<C-u>MoltenEvaluateVisual<CR>gv",
+          { buffer = true, desc = "MoltenEvaluateVisual" })
+        vim.keymap.set("n", "<leader>Ma", function()
+          vim.cmd.MoltenEvaluateArgument()
+        end, { buffer = true, desc = "MoltenEvaluateArgument" })
+        vim.keymap.set("n", "<leader>Mo", function()
+          vim.cmd.MoltenEvaluateOperator()
+        end, { buffer = true, desc = "MoltenEvaluateOperator" })
+        vim.keymap.set("n", "<leader>Mc", function()
+          vim.cmd.MoltenReevaluateCell()
+        end, { buffer = true, desc = "MoltenReevaluateCell" })
       end
     }
   },
@@ -570,10 +519,8 @@ vim.pack.add({
     data = {
       ft = { "quarto", "jupyter_notebook" },
       config = function()
-        -- vim.cmd.packadd "otter.nvim"
         require("quarto").setup {
           codeRunner = {
-            -- enabled = false,
             default_method = "molten",
             ft_runners = { python = "molten", markdown = "molten" },
             never_run = { "yaml" },
@@ -638,12 +585,7 @@ vim.pack.add({
         vim.api.nvim_create_autocmd("FileType", {
           pattern = { "jupyter_notebook" },
           callback = function(_)
-            -- vim.print("activating otter for " .. ev.match .. " filetype")
-            require("otter").activate { "quarto", "qmd", "markdown", "python" }
-            -- vim.treesitter.language.register("markdown", "python")
-            -- vim.treesitter.language.register("quarto", "markdown")
-            -- vim.treesitter.language.register("quarto", "python")
-            -- vim.treesitter.start()
+            require("otter").activate { "jupyter_notebook", "quarto", "qmd", "markdown", "python" }
           end,
         })
       end

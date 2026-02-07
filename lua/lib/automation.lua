@@ -9,7 +9,7 @@ local M = {}
 
 ---If buffer modified, update any 'Last modified: ' in the first 10 lines.
 ---Restores cursor and window position using save_cursor variable.
----@param exts string|table pattern or list of extension pattern to match with
+---@param exts? string|table pattern or list of extension pattern to match with
 function M.auto_timestamp(exts)
   exts = exts or { "*.lua", "*.md", "*.yml", "*.conf", "*.config", "*.zsh", "*.sh" }
   local _autoupdate_tmsp = vim.api.nvim_create_autocmd("BufWritePre", {
@@ -41,7 +41,7 @@ end
 
 ---Auto Remove trailing spaces before saving current buffer
 function M.auto_remove_trailing_spaces()
-  vim.api.nvim_create_autocmd("BufWritePre", {
+  local _autorm_tlsp = vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("_autoremove_trailing_space", { clear = true }),
     pattern = "*",
     callback = function()
@@ -50,6 +50,7 @@ function M.auto_remove_trailing_spaces()
       end
     end,
   })
+  vim.g.autoremove_trailingspace = _autorm_tlsp
 end
 
 return M

@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : autocommands.lua
--- Description  : Autocommands config
--- Author       : Kevin
--- Last Modified: 31 Dec 2025, 09:17
+-- title: autocommands.lua
+-- abstract: Autocommands config
+-- author: Kevin
+-- date: 31 Dec 2025, 09:17
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -72,6 +72,14 @@ autocmd({ "BufNewFile", "BufRead" }, {
   end,
 })
 
+---Autocmd for jupyter-notebook
+autocmd("BufReadCmd", {
+  group = augroup("jupytext-nvim", { clear = true }),
+  pattern = { "*.ipynb" },
+  callback = function(ev)
+    require("lib.jupytext").start(ev)
+  end,
+})
 
 ---Jump to last < cursor-pos > in file
 autocmd("BufRead", {
@@ -89,6 +97,15 @@ autocmd("BufRead", {
 autocmd("VimResized", {
   group = augroup("_vim_w_resizing", { clear = true }),
   command = "wincmd =",
+})
+
+
+---Enable auto-timestamp by default on defined filetypes
+autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    require("lib.automation").auto_timestamp()
+  end
 })
 
 ---Insert mode on builtin Neovim terminal
