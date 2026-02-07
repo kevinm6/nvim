@@ -1,12 +1,12 @@
 -------------------------------------
---  File         : hex.lua
---  Description  : edit hex files
---  Author       : Kevin
---  Source       : https://github.com/RaafatTurki/hex.nvim/tree/master/lua
---  Last Modified: 28 Dec 2025, 17:37
+-- title: hex.lua
+-- abstract: edit hex files
+-- author: Kevin
+-- date: 28 Dec 2025, 17:37
 -------------------------------------
 
 -- TODO: add docs
+-- Source: https://github.com/RaafatTurki/hex.nvim/tree/master/lua
 
 local utils = require 'lib.hex.utils'
 local augroup_hex_editor = vim.api.nvim_create_augroup('hex_editor', { clear = true })

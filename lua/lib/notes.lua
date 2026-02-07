@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : notes.lua
---  Description  : module to manage notes
---  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:40
+-- title: notes.lua
+-- abstract: module to manage notes
+-- author: Kevin
+-- date: 31 Dec 2025, 16:40
 -------------------------------------
 
 local note = {}

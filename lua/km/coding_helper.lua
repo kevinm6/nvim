@@ -1,7 +1,7 @@
 -------------------------------------
 -- Description  : useful plugins
--- Author       : Kevin
--- Last Modified: 03 Feb 2026, 11:53
+-- author: Kevin
+-- date: 03 Feb 2026, 11:53
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90

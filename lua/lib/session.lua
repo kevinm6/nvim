@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : session.lua
---  Description  : module to manage vim builtin sessions
---  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:47
+-- title: session.lua
+-- abstract: module to manage vim builtin sessions
+-- author: Kevin
+-- date: 31 Dec 2025, 16:47
 -------------------------------------
 
 local M = {

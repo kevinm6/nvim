@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : alignment.lua
---  Description  : alignment functions
---  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:41
+-- title: alignment.lua
+-- abstract: alignment functions
+-- author: Kevin
+-- date: 28 Dec 2025, 17:41
 -------------------------------------
 
 local M = {}

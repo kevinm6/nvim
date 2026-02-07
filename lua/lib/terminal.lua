@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : terminal.lua
---  Description  : terminal utilities functions
---  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:46
+-- title: terminal.lua
+-- abstract: terminal utilities functions
+-- author: Kevin
+-- date: 31 Dec 2025, 16:46
 -------------------------------------
 
 local M = {

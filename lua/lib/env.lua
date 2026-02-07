@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : env.lua
---  Description  : environment variables in telescope or listed
---  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:47
+-- title: env.lua
+-- abstract: environment variables in telescope or listed
+-- author: Kevin
+-- date: 31 Dec 2025, 16:47
 -------------------------------------
 
 local M = {}

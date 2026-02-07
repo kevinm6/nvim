@@ -1,7 +1,7 @@
 " Vim syntax file
-" Language         : Kitty
-" Last Modified    : 13/05/2024 - 10:56
-" Source           : https://github.com/fladson/vim-kitty/tree/main/syntax
+" Language: Kitty
+" date: 13/05/2024 - 10:56
+" Source: https://github.com/fladson/vim-kitty/tree/main/syntax
 
 syn region kittyKeybind start=' ' end=' ' contains=kittyMod,kittyKey,kittyKeyComb contained nextgroup=kittyActionKW
 syn region kittyString start=+"+ skip=+\\\\\|\\"+ end=+"+ oneline

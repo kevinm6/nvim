@@ -1,8 +1,8 @@
 --------------------------------------
--- File         : init.lua
+-- title: init.lua
 -- Description  : NeoVim configuration
--- Author       : Kevin
--- Last Modified: 30 Nov 2025, 20:38
+-- author: Kevin
+-- date: 30 Nov 2025, 20:38
 --------------------------------------
 
 -- Set leader key

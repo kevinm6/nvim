@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : keymaps.lua
--- Description  : Keymaps for NeoVim
--- Author       : Kevin
--- Last Modified: 02 Feb 2026, 10:36
+-- title: keymaps.lua
+-- abstract: Keymaps for NeoVim
+-- author: Kevin
+-- date: 02 Feb 2026, 10:36
 -------------------------------------
 
 local map = require("lib.keys").map

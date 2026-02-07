@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : lazyload.lua
---  Description  : utilities function to lazy load plugins
---  Author       : Kevin
---  Last Modified: 01 Jan 2026, 18:56
+-- title: lazyload.lua
+-- abstract: utilities function to lazy load plugins
+-- author: Kevin
+-- date: 01 Jan 2026, 18:56
 -------------------------------------
 
 local M = {}

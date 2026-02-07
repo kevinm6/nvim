@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : vars.lua
--- Description  : NeoVim & VimR global vars
--- Author       : Kevin
--- Last Modified: 30 Nov 2025, 20:42
+-- title: vars.lua
+-- abstract: NeoVim & VimR global vars
+-- author: Kevin
+-- date: 30 Nov 2025, 20:42
 -------------------------------------
 
 -- Disable unwanted plugins

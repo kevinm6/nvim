@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : lsp.lua
--- Description  : lsp config nvim-0.11
--- Author       : Kevin
--- Last Modified: 17 Dec 2025, 20:41
+-- title: lsp.lua
+-- abstract: lsp config nvim-0.11
+-- author: Kevin
+-- date: 17 Dec 2025, 20:41
 -------------------------------------
 
 local lsp = vim.lsp

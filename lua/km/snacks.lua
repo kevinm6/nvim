@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : snacks.lua
--- Description  : snacks plugin config
--- Author       : Kevin
--- Last Modified: 03 Feb 2026, 20:54
+-- title: snacks.lua
+-- abstract: snacks plugin config
+-- author: Kevin
+-- date: 03 Feb 2026, 20:54
 -------------------------------------
 
 require("snacks").setup {

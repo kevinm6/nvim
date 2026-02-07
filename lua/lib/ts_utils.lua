@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : ts_highlight_current_scope.lua
--- Description  : utils function for treesitter (revamp of `nvim-treesitter-refactor`)
--- Author       : Kevin
--- Last Modified: 01 Jan 2026, 20:17
+-- title: ts_highlight_current_scope.lua
+-- abstract: utils function for treesitter (revamp of `nvim-treesitter-refactor`)
+-- author: Kevin
+-- date: 01 Jan 2026, 20:17
 -------------------------------------
 
 local M = {}

@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : init.lua
---  Description  : various utilities functions
---  Author       : Kevin
---  Last Modified: 05 Jan 2026, 10:51
+-- title: init.lua
+-- abstract: various utilities functions
+-- author: Kevin
+-- date: 05 Jan 2026, 10:51
 -------------------------------------
 
 local M = {}

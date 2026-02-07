@@ -1,8 +1,8 @@
 " -----------------------------------
-"	File: pseudocode.vim
-"	Description: pseudocode syntax for Vim / NeoVim
-"	Author: Kevin
-"	Last Modified: 31 Mar 2024, 18:44
+"	title: pseudocode.vim
+"	abstract: pseudocode syntax for Vim / NeoVim
+"	author: Kevin
+"	date: 31 Mar 2024, 18:44
 " -----------------------------------
 
 syntax case ignore

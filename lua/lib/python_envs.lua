@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : python_envs.lua
---  Description  : helper module to get and manage python_envs
---  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:48
+-- title: python_envs.lua
+-- abstract: helper module to get and manage python_envs
+-- author: Kevin
+-- date: 31 Dec 2025, 16:48
 -------------------------------------
 
 ---Python envs

@@ -92,5 +92,19 @@
     "prefix": "todo",
     "body": "--[[ ${1|TODO,NOTE,WARN,ERROR,FIX,HACK|}:${2:body} ]]\n$0",
     "description": "ToDo comment"
+  },
+  "file-info_yaml": {
+    "prefix": "infyml",
+    "body": [
+      "--------------------------",
+      "-- title: ${1:${TM_FILENAME_BASE}}",
+      "-- author: ${2:AuthorName}",
+      "-- date: ${CURRENT_DATE} ${CURRENT_MONTH_NAME_SHORT} ${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "--------------------------\n",
+      "# ${3:Title}\n",
+      "---\n",
+      "$0"
+    ],
+    "description": "file info in yaml for md files"
   }
 }

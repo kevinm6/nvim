@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : pdf.lua
---  Description  : use Neovim as pdf reader (need pdftotext binaries)
---  Author       : Kevin
---  Last Modified: 31 Jan 2026, 09:55
+-- title: pdf.lua
+-- abstract: use Neovim as pdf reader (need pdftotext binaries)
+-- author: Kevin
+-- date: 31 Jan 2026, 09:55
 -------------------------------------
 
 local M = {

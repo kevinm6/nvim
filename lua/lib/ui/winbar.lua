@@ -1,8 +1,8 @@
 -----------------------------------------
--- File         : winbar.lua
--- Description  : Personal winbar config
--- Author       : Kevin Manca
--- Last Modified: 31 Dec 2025, 16:41
+-- title: winbar.lua
+-- abstract: Personal winbar config
+-- author: Kevin Manca
+-- date: 31 Dec 2025, 16:41
 -----------------------------------------
 
 local winbar = {
@@ -63,6 +63,19 @@ local function get_filename()
   return ""
 end
 
+---Get winbar with highlights and icons
+---@return string winbar formatted and with relative highlights
+-- local function get_winbar()
+--   local location = require("nvim-treesitter").statusline {
+--     type_patterns = { 'class', 'function', 'method' },
+--     indicator_size = math.ceil(vim.o.columns * 0.5),
+--     separator = " ⟩ "
+--   }
+--
+--   local fname = get_filename()
+--
+--   return is_not_empty(location) and string.format("%s %%#NavicSeparator#|%%* %s", fname, location) or fname
+-- end
 
 ---Define autocmds for load winbar module and initialize
 function winbar.toggle()

@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : completion.lua
--- Description  : completion config
--- Author       : Kevin
--- Last Modified: 18 Jan 2026, 19:14
+-- title: completion.lua
+-- abstract: completion config
+-- author: Kevin
+-- date: 18 Jan 2026, 19:14
 -------------------------------------
 
 --NOTE: snippets variables

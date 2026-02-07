@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : activity.lua
---  Description  : helper functions to show an activity indicator
---  Author       : Kevin
---  Last Modified: 25 Jan 2026, 19:26
+-- title: activity.lua
+-- abstract: helper functions to show an activity indicator
+-- author: Kevin
+-- date: 25 Jan 2026, 19:26
 -------------------------------------
 
 local M = {}

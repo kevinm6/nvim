@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : databases.lua
---  Description  : DB config and help
---  Author       : Kevin
---  Last Modified: 12 Dec 2025, 21:03
+-- title: databases.lua
+-- abstract: DB config and help
+-- author: Kevin
+-- date: 12 Dec 2025, 21:03
 -------------------------------------
 
 require("dbee").setup {

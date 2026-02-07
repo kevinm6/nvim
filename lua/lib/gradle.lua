@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : gradle.lua
---  Description  : gradle utils functions
---  Author       : Kevin
---  Last Modified: 17 Jan 2026, 15:39
+-- title: gradle.lua
+-- abstract: gradle utils functions
+-- author: Kevin
+-- date: 17 Jan 2026, 15:39
 -------------------------------------
 
 local M = {}

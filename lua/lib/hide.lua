@@ -1,9 +1,10 @@
 -------------------------------------
--- File         : hide.lua
--- Description  : format functions
--- Source       : https://github.com/laytan/cloak.nvim/blob/main/lua/cloak/init.lua
--- Last Modified: 24 Mar 2024, 13:38
+-- title: hide.lua
+-- abstract: format functions
+-- date: 24 Mar 2024, 13:38
 -------------------------------------
+
+---@see https://github.com/laytan/cloak.nvim/blob/main/lua/cloak/init.lua
 
 local group = vim.api.nvim_create_augroup('cloak', {})
 local namespace = vim.api.nvim_create_namespace('cloak')

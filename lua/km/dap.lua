@@ -1,8 +1,8 @@
 -----------------------------------
---  File         : dap.lua
---  Description  : dap plugin config
---  Author       : Kevin
---  Last Modified: 01 Jan 2026, 20:14
+-- title: dap.lua
+-- abstract: dap plugin config
+-- author: Kevin
+-- date: 01 Jan 2026, 20:14
 -----------------------------------
 
 ---DAP

@@ -1,8 +1,8 @@
 -----------------------------------
--- File         : cheat_sheet.lua
--- Description  : query < https://cht.sh > to get result in Neovim
--- Author       : Kevin
--- Last Modified: 31 Dec 2025, 16:29
+-- title: cheat_sheet.lua
+-- abstract://cht.sh > to get result in Neovim
+-- author: Kevin
+-- date: 31 Dec 2025, 16:29
 -----------------------------------
 
 local M = {

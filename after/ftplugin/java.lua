@@ -4,6 +4,6 @@ vim.opt_local.makeprg = "javac % && java " .. f
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   pattern = { "*.java" },
   callback = function()
-    vim.lsp.codelens.refresh()
+    vim.lsp.codelens.enable(true)
   end,
 })

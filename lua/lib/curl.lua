@@ -1,8 +1,8 @@
 -----------------------------------
--- File         : curl.lua
--- Description  : wrap of curl, to use with nvim
--- Author       : Kevin
--- Last Modified: 31 Dec 2025, 16:32
+-- title: curl.lua
+-- abstract: wrap of curl, to use with nvim
+-- author: Kevin
+-- date: 31 Dec 2025, 16:32
 -----------------------------------
 
 local M = {}

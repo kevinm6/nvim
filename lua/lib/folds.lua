@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : folds.lua
---  Description  : folds utilities functions
---  Author       : Kevin
---  Last Modified: 02/09/2025, 08:56
+-- title: folds.lua
+-- abstract: folds utilities functions
+-- author: Kevin
+-- date: 02/09/2025, 08:56
 -------------------------------------
 
 local M = {}

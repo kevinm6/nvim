@@ -1,8 +1,8 @@
 -------------------------------------
--- File         : keys.lua
--- Description  : Keymaps utilities for NeoVim
--- Author       : Kevin
--- Last Modified: 25/04/2025, 09:19
+-- title: keys.lua
+-- abstract: Keymaps utilities for NeoVim
+-- author: Kevin
+-- date: 25/04/2025, 09:19
 -------------------------------------
 
 local M = {}

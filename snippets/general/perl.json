@@ -68,9 +68,9 @@
     "body": [
       "################################################################################",
       "#",
-      "# Author:      ${1:Author}",
-      "# Date:        ${CURRENT_MONTH}/${CURRENT_DATE}/${CURRENT_YEAR}",
-      "# Description: ${2:Description}",
+      "# author: ${1:Author}",
+      "# date: ${CURRENT_MONTH}/${CURRENT_DATE}/${CURRENT_YEAR}",
+      "# abstract: ${2:Description}",
       "#",
       "# Arguments:",
       "# * ${3:argument_name} - ${4:description}",

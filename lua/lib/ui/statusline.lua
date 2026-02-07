@@ -1,8 +1,8 @@
 -----------------------------------------
--- File         : statusline.lua
--- Description  : Personal statusline config
--- Author       : Kevin Manca
--- Last Modified: 28 Jan 2026, 13:49
+-- title: statusline.lua
+-- abstract: Personal statusline config
+-- author: Kevin Manca
+-- date: 28 Jan 2026, 13:49
 -----------------------------------------
 
 local M = {}

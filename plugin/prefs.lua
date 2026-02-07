@@ -1,8 +1,8 @@
 ------------------------------------
--- File         : prefs.lua
--- Description  : NeoVim & VimR preferences
--- Author       : Kevin
--- Last Modified: 04 Dec 2025, 08:57
+-- title: prefs.lua
+-- abstract: NeoVim & VimR preferences
+-- author: Kevin
+-- date: 04 Dec 2025, 08:57
 -------------------------------------
 
 local settings = {

@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : init.lua
---  Description  : plugin init scheme
---  Author       : Kevin
---  Last Modified: 02 Feb 2026, 09:58
+-- title: init.lua
+-- abstract: plugin init scheme
+-- author: Kevin
+-- date: 02 Feb 2026, 09:58
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps

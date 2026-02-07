@@ -3,10 +3,10 @@
     "prefix": "inf",
     "body": [
       "-----------------------------------",
-      "\tFile         : ${TM_FILENAME}",
-      "\tDescription  : ${1:Description}",
-      "\tAuthor       : Kevin",
-      "\tLast Modified: ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "-- title: ${1:${TM_FILENAME_BASE}}",
+      "-- author: ${2:Kevin}",
+      "-- abstract: ${1:Description}",
+      "-- date: ${CURRENT_DATE} ${CURRENT_MONTH_NAME_SHORT} ${CURRENT_YEAR}, ${CURRENT_HOUR}:${CURRENT_MINUTE}",
       "-----------------------------------",
       "$0"
     ],

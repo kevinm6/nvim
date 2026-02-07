@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : lsp.lua
---  Description  : lsp utility functions
---  Author       : Kevin
---  Last Modified: 28 Dec 2025, 17:47
+-- title: lsp.lua
+-- abstract: lsp utility functions
+-- author: Kevin
+-- date: 28 Dec 2025, 17:47
 -------------------------------------
 
 local M = {}

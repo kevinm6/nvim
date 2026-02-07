@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : ai.lua
---  Description  : AI interops with Neovim
---  Author       : Kevin
---  Last Modified: 25 Jan 2026, 10:27
+-- title: ai.lua
+-- abstract: AI interops with Neovim
+-- author: Kevin
+-- date: 25 Jan 2026, 10:27
 -------------------------------------
 
 require("minuet").setup {

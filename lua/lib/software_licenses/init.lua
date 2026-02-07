@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : pick_license.lua
---  Description  : helper module to get licenses
---  Author       : Kevin
---  Last Modified: 31 Dec 2025, 16:37
+-- title: pick_license.lua
+-- abstract: helper module to get licenses
+-- author: Kevin
+-- date: 31 Dec 2025, 16:37
 -------------------------------------
 
 local M = {}

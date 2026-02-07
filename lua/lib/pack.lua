@@ -1,8 +1,8 @@
 -------------------------------------
---  File         : pack.lua
---  Description  : lib utils function for native package manager
---  Author       : Kevin
---  Last Modified: 13/11/2025, 08:50
+-- title: pack.lua
+-- abstract: lib utils function for native package manager
+-- author: Kevin
+-- date: 13/11/2025, 08:50
 -------------------------------------
 
 local M = {}

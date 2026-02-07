@@ -1,8 +1,8 @@
 -------------------------------------
---- File         : kurayami.lua
---- Description  : color palette for kurayami colorscheme
---- Author       : Kevin
---- Last Modified: 04 Dec 2025, 23:59
+-- title: kurayami.lua
+-- abstract: color palette for kurayami colorscheme
+-- author: Kevin
+-- date: 04 Dec 2025, 23:59
 -------------------------------------
 
 vim.cmd.hi 'clear'
