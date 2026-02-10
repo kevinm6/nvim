@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 02 Feb 2026, 09:58
+-- date: 14 Feb 2026, 09:51
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -282,7 +282,8 @@ vim.pack.add({
     data = {
       ft = { "markdown", "quarto" },
       config = function()
-        require("render-markdown").setup {
+        local render_markdown = require "render-markdown"
+        render_markdown.setup {
           enabled = false, -- not rendering on enter md files
           file_types = { "markdown", "quarto", "markdown.mdx" },
           anti_conceal = { enabled = false },
@@ -305,8 +306,26 @@ vim.pack.add({
           }
         }
 
-        vim.keymap.set("n", "<localleader>r", ":RenderMarkdown toggle<CR>", { desc = "Render Markdown" })
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = { "markdown" },
+          callback = function(ev)
+            vim.keymap.set("n", "<leader>r", function()
+              render_markdown.toggle()
+            end, { buffer = ev.buf, desc = "Render Markdown" })
+          end
+        })
+
         vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "TabLine" })
+      end
+    }
+  },
+  {
+    src = gh("dhruvasagar/vim-table-mode"),
+    data = {
+      ft = { "markdown", "quarto" },
+      cmd = { "TableModeToggle" },
+      config = function()
+        vim.g.table_mode_corner = '|'
       end
     }
   },
@@ -323,8 +342,6 @@ vim.pack.add({
       config = function()
         vim.cmd.packadd "nui.nvim"
         require "km.databases"
-        -- require("lib.lazyload").require_stub("nui.nvim", function()
-        -- end)
       end
     }
   },
@@ -459,7 +476,7 @@ vim.pack.add({
     src = gh("benlubas/molten-nvim"),
     data = {
       build = function() vim.cmd.UpdateRemotePlugins() end,
-      ft = { "jupyter_notebook", "quarto" },
+      ft = { "quarto" },
       config = function()
         vim.g.molten_auto_open_html_in_browser = true
         vim.g.molten_image_provider = "snacks.nvim"
@@ -517,8 +534,9 @@ vim.pack.add({
   {
     src = gh("quarto-dev/quarto-nvim"),
     data = {
-      ft = { "quarto", "jupyter_notebook" },
+      ft = { "quarto" },
       config = function()
+        vim.cmd.packadd "otter.nvim"
         require("quarto").setup {
           codeRunner = {
             default_method = "molten",
@@ -527,18 +545,29 @@ vim.pack.add({
           }
         }
 
-        vim.keymap.set("n", "<localleader>qa", function()
-          quarto.activate()
-        end, { silent = true, desc = "Quarto❭ activate" })
-        vim.keymap.set("n", "<localleader>qp", function()
-          quarto.quartoPreview()
-        end, { silent = true, desc = "Quarto❭ preview" })
-        vim.keymap.set("n", "<localleader>qP", function()
-          quarto.quartoClosePreview()
-        end, { silent = true, desc = "Quarto❭ close Preview" })
-        vim.keymap.set("n", "<localleader>qh", function()
-          quarto.searchHelp()
-        end, { silent = true, desc = "Quarto❭ search help" })
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = "quarto",
+          callback = function(ev)
+            vim.keymap.set("n", "<localleader>qa", function()
+              quarto.activate()
+            end, { buffer = ev.buf, silent = true, desc = "Quarto❭ activate" })
+            vim.keymap.set("n", "<localleader>qp", function()
+              quarto.quartoPreview()
+            end, { buffer = ev.buf, silent = true, desc = "Quarto❭ preview" })
+            vim.keymap.set("n", "<localleader>qP", function()
+              quarto.quartoClosePreview()
+            end, { buffer = ev.buf, silent = true, desc = "Quarto❭ close Preview" })
+            vim.keymap.set("n", "<localleader>qh", function()
+              quarto.searchHelp()
+            end, { buffer = ev.buf, silent = true, desc = "Quarto❭ search help" })
+
+            local has_otter, otter = pcall(require, "otter")
+            if has_otter then
+              otter.activate { "python" }
+            end
+          end
+        })
+
       end
     }
   },
@@ -562,6 +591,15 @@ vim.pack.add({
       config = function()
         require("data-viewer").setup {}
 
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = { "csv", "tsv", "sqlite" },
+          callback = function(ev)
+            vim.keymap.set("n", "<leader>r", function()
+              vim.cmd.DataViewer()
+            end, { buffer = ev.buf, desc = "Data Viewer" })
+          end
+        })
+
         vim.api.nvim_set_hl(0, "DataViewerColumn0", { fg = "#4fc1ff", bold = true })
         vim.api.nvim_set_hl(0, "DataViewerColumn1", { fg = "#6c7986" })
         vim.api.nvim_set_hl(0, "DataViewerColumn2", { fg = "#626262" })
@@ -573,7 +611,8 @@ vim.pack.add({
   {
     src = gh("jmbuhr/otter.nvim"),
     data = {
-      ev = "VimEnter",
+      -- ev = "VimEnter",
+      ft = { "quarto", "html", "css", "php", "javascript" },
       config = function()
         vim.api.nvim_create_autocmd("FileType", {
           pattern = { "html", "css", "php", "javascript" },
@@ -582,12 +621,12 @@ vim.pack.add({
           end,
         })
 
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = { "jupyter_notebook" },
-          callback = function(_)
-            require("otter").activate { "jupyter_notebook", "quarto", "qmd", "markdown", "python" }
-          end,
-        })
+        -- vim.api.nvim_create_autocmd("FileType", {
+        --   pattern = { "jupyter_notebook" },
+        --   callback = function(_)
+        --     require("otter").activate { "jupyter_notebook", "quarto", "qmd", "markdown", "python" }
+        --   end,
+        -- })
       end
     }
   },

@@ -1,179 +1,171 @@
--- origin: https://github.com/GCBallesteros/jupytext.nvim
 local commands = require "lib.jupytext.commands"
-local utils = require "lib.jupytext.utils"
 
 local M = {}
 
 local config = {
-  style = "hydrogen",
-  output_extension = "auto",
-  force_ft = nil,
+  source_extension = "ipynb",
+  proxy_filetype = "quarto",
+  output_extension = "qmd",
   custom_language_formatting = {
     python = { extension = "qmd", style = "quarto", force_ft = "quarto" }
   },
 }
 
-local write_to_ipynb = function(event, output_extension)
-  local ipynb_filename = event.match
-  local jupytext_filename = utils.get_jupytext_file(ipynb_filename, output_extension)
-  jupytext_filename = vim.fn.resolve(vim.fn.expand(jupytext_filename))
+-----------------
+---Utils
+-----------------
+local uv = vim.uv
 
-  vim.cmd.write({ jupytext_filename, bang = true })
-  commands.run_jupytext_command(vim.fn.shellescape(jupytext_filename), {
-    ["--update"] = "",
-    ["--to"] = "ipynb",
-    ["--output"] = vim.fn.shellescape(ipynb_filename),
-  })
-  local buf = vim.api.nvim_get_current_buf()
-  vim.api.nvim_set_option_value("modified", false, { buf = buf })
+---Debounce function on set amount of time
+---@param fn function the function to debounce
+---@param ms number milliseconds of debounce
+---@return function
+local function debounce(fn, ms)
+  local timer = nil
+  ms = ms or 300
 
-  local post_write = "BufWritePost"
-  if event.event == "FileWriteCmd" then
-    post_write = "FileWritePost"
-  end
-  vim.api.nvim_exec_autocmds(post_write, { pattern = ipynb_filename })
-end
+  return function(...)
+    local args = { ... }
 
-local style_and_extension = function(metadata)
-  local to_extension_and_style
-  local output_extension
-
-  local custom_formatting = nil
-  if utils.check_key(config.custom_language_formatting, metadata.language) then
-    custom_formatting = config.custom_language_formatting[metadata.language]
-  end
-
-  if custom_formatting then
-    output_extension = custom_formatting.extension
-    to_extension_and_style = output_extension .. ":" .. custom_formatting.style
-  else
-    if config.output_extension == "auto" then
-      output_extension = metadata.extension
-    else
-      output_extension = config.output_extension
+    if timer then
+      timer:stop()
+      timer:close()
     end
-    to_extension_and_style = config.output_extension .. ":" .. config.style
-  end
 
-  return custom_formatting, output_extension, to_extension_and_style
-end
-
-local cleanup = function(ipynb_filename, delete)
-  local metadata = utils.get_ipynb_metadata(ipynb_filename)
-
-  local _, output_extension, _ = style_and_extension(metadata)
-
-  local jupytext_filename = utils.get_jupytext_file(ipynb_filename, output_extension)
-  if delete then
-    vim.fn.delete(vim.fn.resolve(vim.fn.expand(jupytext_filename)))
+    timer = uv.new_timer()
+    if not timer then return end
+    timer:start(ms, 0, function()
+      timer:close()
+      timer = nil
+      vim.schedule(function()
+        fn(unpack(args))
+      end)
+    end)
   end
 end
 
-local read_from_ipynb = function(ipynb_filename)
-  local metadata = utils.get_ipynb_metadata(ipynb_filename)
-  ipynb_filename = vim.fn.resolve(vim.fn.expand(ipynb_filename))
-
-  -- Decide output extension and style
-  local custom_formatting, output_extension, to_extension_and_style = style_and_extension(metadata)
-
-  local jupytext_filename = utils.get_jupytext_file(ipynb_filename, output_extension)
-  local jupytext_file_exists = vim.fn.filereadable(jupytext_filename) == 1
-  -- filename is the notebook
-  local filename_exists = vim.fn.filereadable(ipynb_filename)
-
-  if filename_exists and not jupytext_file_exists then
-    commands.run_jupytext_command(vim.fn.shellescape(ipynb_filename), {
-      ["--to"] = to_extension_and_style,
-      ["--output"] = vim.fn.shellescape(jupytext_filename),
-    })
+local function get_state(bufnr)
+  local ok, state = pcall(vim.api.nvim_buf_get_var, bufnr, "jupytext")
+  if not ok then
+    return nil
   end
+  return state
+end
 
-  -- This is when the magic happens and we read the new file into the buffer
-  if vim.fn.filereadable(jupytext_filename) then
-    local jupytext_content = vim.fn.readfile(jupytext_filename)
+local function set_state(bufnr, state)
+  vim.api.nvim_buf_set_var(bufnr, "jupytext", state)
+end
 
-    -- Need to add an extra line so that the undo dance that comes later on
-    -- doesn't delete the first line of the actual input
-    table.insert(jupytext_content, 1, "")
 
-    -- Replace the buffer content with the jupytext content
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, jupytext_content)
-  else
-    error "Couldn't find jupytext file."
-    return
+-----------------
+---Management
+-----------------
+
+---Sync back qmd changes to jupiter-notebook
+---@param bufnr number the buffer identifier
+local function sync_back(bufnr)
+  local state = get_state(bufnr)
+  if not state then return end
+
+  commands.run_jupytext(state.qmd, {
+    ["--to"] = config.source_extension,
+    ["--output"] = state.ipynb,
+  }, { sync = false, context = "sync back" })
+end
+
+---Debounced write-back (300ms)
+---@param bufnr number the buffer identifier
+local debounced_sync = debounce(function(bufnr)
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    sync_back(bufnr)
   end
+end, 300)
 
-  -- If jupytext version already existed then don't delete otherwise consider
-  -- it to be sort of a temp file.
-  local should_delete = not jupytext_file_exists
-  vim.api.nvim_create_autocmd("BufUnload", {
-    pattern = "<buffer>",
-    group = "jupytext-nvim",
-    callback = function(ev)
-      cleanup(ev.match, should_delete)
-    end,
-  })
+local function create_temp_qmd(ipynb_path)
+  local tmpdir = vim.fn.stdpath("run")
+  local qmd_path = ("%s/%s.%s"):format(tmpdir, vim.fn.fnamemodify(ipynb_path, ":t:r"), config.output_extension)
+  local qmd_file = vim.fn.resolve(qmd_path)
 
-  vim.api.nvim_create_autocmd({ "BufWriteCmd", "FileWriteCmd" }, {
-    pattern = "<buffer>",
-    group = "jupytext-nvim",
-    callback = function(ev)
-      write_to_ipynb(ev, output_extension)
-    end,
-  })
+  commands.run_jupytext(ipynb_path, {
+    ["--to"] = config.output_extension .. ":" .. config.proxy_filetype,
+    ["--output"] = qmd_file
+  }, { context = "open proxy" })
 
-  local ft = config.force_ft
+  return qmd_file
+end
 
-  if custom_formatting ~= nil then
-    if custom_formatting.force_ft then
-      if custom_formatting.style == "quarto" then
-        ft = "quarto"
-      else
-        -- just let the user set whatever ft they want
-        ft = custom_formatting.force_ft
+local function open_proxy(ipynb_buf)
+  local ipynb_path = vim.api.nvim_buf_get_name(ipynb_buf)
+  local ipynb = vim.fn.resolve(ipynb_path)
+
+  -- convert to temp qmd
+  local qmd_path = create_temp_qmd(ipynb)
+  local lines = vim.fn.readfile(qmd_path)
+  assert(#lines > 0, "Generated qmd file is empty: " .. qmd_path)
+
+  -- open qmd in a new buffer
+  vim.cmd.edit(vim.fn.fnameescape(qmd_path))
+  local qmd_buf = vim.api.nvim_get_current_buf()
+  vim.bo.filetype = config.proxy_filetype
+
+  set_state(qmd_buf, { ipynb = ipynb, qmd = qmd_path })
+
+  -- deferred close the original ipynb buffer, not mess with filesystem plugins
+  vim.schedule(function()
+    if vim.api.nvim_buf_is_valid(ipynb_buf) then
+      vim.api.nvim_buf_delete(ipynb_buf, { force = true })
+    end
+
+    if not vim.api.nvim_buf_is_valid(qmd_buf) then return end
+
+    --HACK
+    --this nested autocmd is a workaround to register correctly 'BufWritePost' for the proxy buffer
+    --w/o it is not attached to its buffer and so never fires
+    vim.api.nvim_create_autocmd("BufModifiedSet", {
+      buffer = qmd_buf,
+      callback = function(ev)
+        vim.api.nvim_create_autocmd("BufWritePost", {
+          group = vim.api.nvim_create_augroup("jupytext-nvim", { clear = true }),
+          buffer = ev.buf,
+          callback = function(e)
+            if not get_state(e.buf) then return end
+            debounced_sync(e.buf)
+          end,
+        })
       end
-    end
-  end
+    })
 
-  if not ft then
-    ft = metadata.language
-  end
+    vim.api.nvim_create_autocmd("BufWipeout", {
+      group = vim.api.nvim_create_augroup("jupytext-nvim", { clear = true }),
+      buffer = qmd_buf,
+      callback = function(ev)
+        local state = get_state(ev.buf)
+        if not state then return end
 
-  -- In order to make :undo a no-op immediately after the buffer is read, we
-  -- need to do this dance with 'undolevels'.  Actually discarding the undo
-  -- history requires performing a change after setting 'undolevels' to -1 and,
-  -- luckily, we have one we need to do (delete the extra line from the :r
-  -- command)
-  -- (Comment straight from goerz/jupytext.vim)
-  local levels = vim.o.undolevels
-  vim.o.undolevels = -1
-  vim.api.nvim_command "silent 1delete"
-  vim.o.undolevels = levels
+        -- final sync
+        sync_back(ev.buf)
 
-  vim.api.nvim_command("setlocal fenc=utf-8 ft=" .. ft)
-
-  -- First time we enter the buffer redraw. Don't know why but jupytext.vim was
-  -- doing it. Apply Chesterton's fence principle.
-  vim.api.nvim_create_autocmd("BufEnter", {
-    pattern = "<buffer>",
-    group = "jupytext-nvim",
-    once = true,
-    command = "redraw",
-  })
+        -- cleanup
+        vim.schedule(function() vim.fn.delete(state.qmd) end)
+      end,
+    })
+  end)
 end
 
-M.start = function(ev, extra_config)
+-----------------
+---Setup
+-----------------
+M.start = function()
   assert(vim.fn.executable("jupytext") == 1, "Jupytext is not available: install via `pip install jupytext`")
-  extra_config = extra_config or {}
-  vim.validate({ config = { extra_config, "table", true } })
-  config = vim.tbl_deep_extend("force", config, extra_config)
+  local augroup = vim.api.nvim_create_augroup("jupytext-nvim", { clear = true })
 
-  vim.validate({
-    style = { config.style, "string" },
-    output_extension = { config.output_extension, "string" },
+  vim.api.nvim_create_autocmd("BufReadPost", {
+    group = augroup,
+    pattern = { "*." .. config.source_extension },
+    callback = function(ev)
+      open_proxy(ev.buf)
+    end
   })
-
-  read_from_ipynb(ev.match)
 end
 
 return M

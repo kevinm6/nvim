@@ -2,7 +2,7 @@
 -- title: autocommands.lua
 -- abstract: Autocommands config
 -- author: Kevin
--- date: 31 Dec 2025, 09:17
+-- date: 13 Feb 2026, 20:32
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -73,11 +73,12 @@ autocmd({ "BufNewFile", "BufRead" }, {
 })
 
 ---Autocmd for jupyter-notebook
-autocmd("BufReadCmd", {
-  group = augroup("jupytext-nvim", { clear = true }),
+autocmd("BufReadPre", {
+  group = augroup("jupytex-nvim", {}),
   pattern = { "*.ipynb" },
-  callback = function(ev)
-    require("lib.jupytext").start(ev)
+  once = true,
+  callback = function(_)
+    require("lib.jupytext").start()
   end,
 })
 
@@ -98,7 +99,6 @@ autocmd("VimResized", {
   group = augroup("_vim_w_resizing", { clear = true }),
   command = "wincmd =",
 })
-
 
 ---Enable auto-timestamp by default on defined filetypes
 autocmd("VimEnter", {
@@ -128,17 +128,6 @@ autocmd({ "FileType", "BufNewFile" }, {
 vim.filetype.add {
   extension = {
     conf = "config",
-    png = "image_nvim",
-    jpg = "image_nvim",
-    jpeg = "image_nvim",
-    gif = "image_nvim",
-    webp = "image_nvim",
-    PNG = "image_nvim",
-    JPG = "image_nvim",
-    JPEG = "image_nvim",
-    GIF = "image_nvim",
-    WEBP = "image_nvim",
-    ipynb = "jupyter_notebook",
     dat = "xxd",
     nl = "neverlang",
     ftl = "freemarker"

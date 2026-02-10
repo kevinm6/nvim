@@ -12,6 +12,7 @@ vim.list_extend(
 ---@type vim.lsp.Config
 return {
   cmd = { "jdtls" },
+  filetypes = { "java" },
   before_init = function(params)
     params.initializationOptions.bundles = bundles
   end,

@@ -24,14 +24,7 @@ if vim.fn.has "mac" == 1 then
   end, { desc = "Preview Markdown", buffer = true })
 end
 
-local has_rendermd, render_md = pcall(require, "render-markdown")
-if has_rendermd then
-  vim.keymap.set("n", "<leader>r", function()
-    render_md.toggle()
-  end, { buffer = true, desc = "Render Markdown" })
-end
-
 ---Export to PDF
-vim.api.nvim_create_user_command("TOpdf", function(cmd_args)
+vim.api.nvim_buf_create_user_command(0, "TOpdf", function(cmd_args)
   require("lib.pdf").convert_md_to_pdf(cmd_args.args)
 end, { nargs = "?", desc = "Export markdown to pdf" })

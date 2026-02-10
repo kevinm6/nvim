@@ -2,7 +2,7 @@
 -- title: automation.lua
 -- abstract: automatic functions lib triggered by events
 -- author: Kevin
--- date: 07 Feb 2026, 17:23
+-- date: 22 Feb 2026, 13:02
 -------------------------------------
 
 local M = {}
@@ -28,7 +28,7 @@ function M.auto_timestamp(exts)
           -- 1. "Last Modified: ..." (your original)
           -- 2. "date: ..." (standard YAML)
           -- 3. "modified: ..." (alternative YAML)
-          local pattern = [[\v<(\s*%(Last [Mm]odified|date|modified):\s*).*]]
+          local pattern = [[\v<(\s*%(Last [Mm]odified|[Dd]ate|[Mm]odified)\s*:\s*).*]]
           local replacement = [[\=submatch(1) . strftime('%d %b %Y, %H:%M')]]
           vim.api.nvim_command(('keepjumps silent %s s/%s/%s/e'):format(range, pattern, replacement))
         end

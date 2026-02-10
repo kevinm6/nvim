@@ -3,3 +3,6 @@ vim.opt_local.shiftwidth = 2
 vim.opt_local.expandtab = false
 vim.opt_local.wrap = true
 vim.opt_local.textwidth = 100
+
+vim.treesitter.language.register("markdown", "quarto")
+vim.treesitter.start()

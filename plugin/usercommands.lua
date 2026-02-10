@@ -2,7 +2,7 @@
 -- title: usercommands.lua
 -- abstract: User commands config
 -- author: Kevin
--- date: 28 Dec 2025, 17:11
+-- date: 10 Feb 2026, 20:28
 -------------------------------------
 
 
@@ -148,7 +148,7 @@ end, {
   range = true,
 })
 
----Update `Last Modified` date if found in first 10 row of file
+---Update `Last Modified` date if found in first 6 rows of file
 user_command("ToggleAutoTimeStamp", function()
   if not vim.g.autoupdate_timestamp then
     require("lib.automation").auto_timestamp()

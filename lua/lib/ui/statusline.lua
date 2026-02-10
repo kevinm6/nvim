@@ -2,7 +2,7 @@
 -- title: statusline.lua
 -- abstract: Personal statusline config
 -- author: Kevin Manca
--- date: 28 Jan 2026, 13:49
+-- date: 10 Feb 2026, 20:18
 -----------------------------------------
 
 local M = {}
@@ -551,7 +551,7 @@ M.set = set
 ---Setup
 ----------------
 
-function setup()
+local function setup()
   local autocmd = vim.api.nvim_create_autocmd
   local augroup = vim.api.nvim_create_augroup("_statusline", { clear = true })
 
