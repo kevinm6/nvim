@@ -2,7 +2,7 @@
 -- title: prefs.lua
 -- abstract: NeoVim & VimR preferences
 -- author: Kevin
--- date: 04 Dec 2025, 08:57
+-- date: 24 Feb 2026, 08:55
 -------------------------------------
 
 local settings = {
@@ -49,17 +49,14 @@ local settings = {
   complete = { "o", ".", "w", "b", "u" },
   completeopt = { "fuzzy", "menuone", "noselect", "popup" },
   matchpairs = vim.opt.matchpairs:append "<:>",
-  wildignore = {
+  wildignore = vim.opt.wildignore:append {
     "*.DS_Store",
     "*.bak",
-    "*.gif",
-    -- "*.jpeg",
-    -- "*.jpg",
-    -- "*.png",
     "*.swp",
     "*.zip",
     "*/.git/*",
-    "*templates/*",
+    "*.class",
+    "*.bin"
   },
   shortmess = vim.opt.shortmess:prepend "c",
 

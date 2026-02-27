@@ -2,10 +2,12 @@
 -- title: gradle.lua
 -- abstract: gradle utils functions
 -- author: Kevin
--- date: 17 Jan 2026, 15:39
+-- date: 27 Feb 2026, 20:56
 -------------------------------------
 
 local M = {}
+
+local state = {}
 
 ---Get Gradle tasks for the project
 ---@param gradlew string the path for the gradle
@@ -58,30 +60,45 @@ local function run_gradle_task(gradlew, task)
       local text = ("   OUTPUT⟩ gradle %s\n%s\n%s"):format(task, sep, out)
       local lines = vim.split(text, "\n")
 
-      local buf = vim.api.nvim_create_buf(false, true)
+      if not state.buf then
+        state.buf = vim.api.nvim_create_buf(false, true)
+      else
+        vim.api.nvim_set_option_value("readonly", false, { buf = state.buf })
+      end
 
-      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+      vim.api.nvim_buf_set_lines(state.buf, 0, -1, false, lines)
       local height = math.floor(vim.o.lines * 0.25)
-      local win = vim.api.nvim_open_win(buf, true, {
-        height = height,
-        win = -1,
-        split = "below",
-      })
-      vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
-      vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
-      vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
-      vim.api.nvim_set_option_value("filetype", "sh", { buf = buf })
-      vim.api.nvim_set_option_value("number", false, { win = win })
-      vim.api.nvim_set_option_value("relativenumber", false, { win = win })
+      if not state.win then
+        state.win = vim.api.nvim_open_win(state.buf, true, {
+          height = height,
+          win = -1,
+          split = "below",
+        })
+      end
+      vim.api.nvim_set_option_value("buftype", "nofile", { buf = state.buf })
+      vim.api.nvim_set_option_value("swapfile", false, { buf = state.buf })
+      vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = state.buf })
+      vim.api.nvim_set_option_value("filetype", "bash", { buf = state.buf })
+      vim.api.nvim_set_option_value("readonly", true, { buf = state.buf })
+      vim.api.nvim_set_option_value("number", false, { win = state.win })
+      vim.api.nvim_set_option_value("relativenumber", false, { win = state.win })
 
-      vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf })
-      vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = buf })
+      vim.api.nvim_create_autocmd("BufUnload", {
+        buffer = state.buf,
+        callback = function()
+          state.buf = nil
+          state.win = nil
+        end
+      })
+
+      vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = state.buf })
+      vim.keymap.set("n", "<esc>",  "<cmd>close<CR>", { buffer = state.buf })
     end)
   end)
 end
 
 ---Get Gradle tasks for the project
----@param gradlew string the path for the gradle
+---@param gradlew string the path for gradle
 ---@param tasks table the list of task
 local function select_and_run_gradle_task(gradlew, tasks)
   vim.ui.select(tasks, {

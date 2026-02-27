@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 14 Feb 2026, 09:51
+-- date: 25 Feb 2026, 21:23
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -73,7 +73,7 @@ vim.pack.add({
       build = function()
         require "nvim-treesitter".install(ts_utils.parsers_to_be_installed()):wait(300000)
         require "nvim-treesitter".update()
-      end
+      end,
     }
   },
 
@@ -211,8 +211,8 @@ vim.pack.add({
             "ruff_organize_imports",
           },
           groovy = { "npm-groovy-lint" },
-          bash = { "beautysh" },
-          zsh = { "beautysh" },
+          bash = { "shfmt" },
+          zsh = { "shfmt" },
           css = { "prettier" },
           javascript = { "biome", "biome-organize-imports" },
           typescriptreact = { "biome", "biome-organize-imports" },

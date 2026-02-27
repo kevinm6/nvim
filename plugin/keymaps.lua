@@ -2,7 +2,7 @@
 -- title: keymaps.lua
 -- abstract: Keymaps for NeoVim
 -- author: Kevin
--- date: 02 Feb 2026, 10:36
+-- date: 23 Feb 2026, 21:14
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -438,15 +438,16 @@ imap {
       feedkeys "<C-n>"
     else
       -- feedkeys "<C-j>"
-      if next(vim.lsp.get_clients { bufnr = 0 }) then
-        vim.lsp.completion.get()
+      -- if next(vim.lsp.get_clients { bufnr = 0 }) then
+      --   vim.lsp.completion.get()
+      -- else
+      if vim.bo.omnifunc == "" then
+        -- feedkeys "<C-x><C-n>"
+        feedkeys "<C-j>"
       else
-        if vim.bo.omnifunc == "" then
-          feedkeys "<C-x><C-n>"
-        else
-          feedkeys "<C-x><C-o>"
-        end
+        feedkeys "<C-x><C-o>"
       end
+      -- end
     end
   end,
   "select next completion",
@@ -459,15 +460,16 @@ imap {
       feedkeys "<C-p>"
     else
       -- feedkeys "<C-k>"
-      if next(vim.lsp.get_clients { bufnr = 0 }) then
-        vim.lsp.completion.get()
-      else
+      -- if next(vim.lsp.get_clients { bufnr = 0 }) then
+      --   vim.lsp.completion.get()
+      -- else
       if vim.bo.omnifunc == "" then
-        feedkeys "<C-x><C-p>"
+        -- feedkeys "<C-x><C-p>"
+        feedkeys "<C-k>"
       else
         feedkeys "<C-x><C-o>"
       end
-      end
+      -- end
     end
   end,
   "Trigger/select next completion",

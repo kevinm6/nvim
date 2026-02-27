@@ -11,6 +11,13 @@ return {
         "-e",
         "SC2155", -- Declare and assign separately to avoid masking return values
       },
+      shfmt = {
+        binaryNextLine = false,
+        caseIndent = true,
+        funcNextLine = true,
+        simplifyCode = true,
+        -- spaceRedirects = false
+      }
     },
   },
 }

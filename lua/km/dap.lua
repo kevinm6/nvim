@@ -2,7 +2,7 @@
 -- title: dap.lua
 -- abstract: dap plugin config
 -- author: Kevin
--- date: 01 Jan 2026, 20:14
+-- date: 25 Feb 2026, 21:07
 -----------------------------------
 
 ---DAP
@@ -13,6 +13,8 @@ for _, v in pairs(dap_ft) do
 end
 
 local dap = require "dap"
+
+local mason_dir = vim.fn.stdpath "data" .. "/mason/packages"
 
 dap.defaults.fallback.external_terminal = {
   command = vim.fn.exepath "kitty",
@@ -65,12 +67,12 @@ dap.adapters["local-lua"] = {
   type = "executable",
   command = "node",
   args = {
-    vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode/extension/extension/debugAdapter.js"
+    mason_dir .. "/local-lua-debugger-vscode/extension/extension/debugAdapter.js"
   },
   enrich_config = function(config, on_config)
     if not config["extensionPath"] then
       local c = vim.deepcopy(config)
-      c.extensionPath = vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode/extension/"
+      c.extensionPath = mason_dir .. "/local-lua-debugger-vscode/extension/"
       on_config(c)
     else
       on_config(config)
@@ -117,7 +119,7 @@ dap.configurations.python = {
 dap.adapters.go = {
   type = "executable",
   command = "node",
-  args = { vim.fn.stdpath "data" .. "/mason/packages/go-debug-adapter/extension/dist/debugAdapter.js" },
+  args = { mason_dir .. "/go-debug-adapter/extension/dist/debugAdapter.js" },
 }
 dap.configurations.go = {
   {
@@ -173,7 +175,7 @@ dap.adapters["pwa-node"] = {
   executable = {
     command = "node",
     args = {
-      vim.fn.stdpath "data" .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+      mason_dir .. "/js-debug-adapter/js-debug/src/dapDebugServer.js",
       "${port}",
     },
   },
@@ -272,7 +274,7 @@ dap.adapters.php = {
   type = "executable",
   command = "node",
   args = {
-    vim.fn.stdpath "data" .. "~/.local/share/nvim/mason/packages/php-debug-adapter/extension/out/phpDebug.js",
+    mason_dir .. "/php-debug-adapter/extension/out/phpDebug.js",
   },
 }
 dap.configurations.php = {
@@ -287,7 +289,7 @@ dap.configurations.php = {
 -- Bash
 dap.adapters.bashdb = {
   type = "executable",
-  command = vim.fn.stdpath "data" .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
+  command = mason_dir .. "/bash-debug-adapter/bash-debug-adapter",
   name = "bashdb",
 }
 
@@ -297,8 +299,8 @@ dap.configurations.sh = {
     request = "launch",
     name = "Launch file",
     showDebugOutput = true,
-    pathBashdb = vim.fn.stdpath "data" .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
-    pathBashdbLib = vim.fn.stdpath "data" .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
+    pathBashdb = mason_dir .. "/bash-debug-adapter/extension/bashdb_dir/bashdb",
+    pathBashdbLib = mason_dir .. "/bash-debug-adapter/extension/bashdb_dir",
     trace = true,
     file = "${file}",
     program = "${file}",
@@ -321,24 +323,28 @@ dap.configurations.sh = {
 --   -- cwd = "${workspaceFolder}",
 -- }
 
--- dap.configurations.java = {
+---Groovy
+-- dap.adapters.java = function(cb)
+--   cb({
+--     type = "executable",
+--     host = "127.0.0.1",
+--     port = 5005,
+--   })
+-- end
+--
+-- dap.configurations.groovy = {
 --   {
---     name = "Gradle tasks",
---     request = "launch",
---     type = "gradle",
---     program = "${workspaceFolder}/gradlew",
---     cwd = "${workspaceFolder}",
---     args = { "${input:gradleCmd}" },
+--     type = "java",
+--     name = "Attach to Gradle Plugin",
+--     request = "attach",
+--     hostName = "127.0.0.1",
+--     port = 5005
+--     -- program = "${workspaceFolder}/gradlew",
+--     -- cwd = "${workspaceFolder}",
+--     -- args = { "${input:gradleCmd}" },
 --   },
---   -- inputs = {
---   --   {
---   --     id = "gradleCmd",
---   --     type = "promptString",
---   --     description = "Program to run: ",
---   --     default = "test",
---   --   },
---   -- },
 -- }
+-- dap.configurations.gradle = dap.configurations.groovy
 
 vim.fn.sign_define("DapBreakpoint", {
   text = " ",

@@ -26,7 +26,7 @@
   },
   "sysout": {
     "prefix": "println",
-    "body": ["println($0);"],
+    "body": ["println \"$0\""],
     "description": "Print to standard out"
   },
   "fori": {

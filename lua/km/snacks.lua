@@ -2,7 +2,7 @@
 -- title: snacks.lua
 -- abstract: snacks plugin config
 -- author: Kevin
--- date: 03 Feb 2026, 20:54
+-- date: 25 Feb 2026, 15:15
 -------------------------------------
 
 require("snacks").setup {
@@ -85,6 +85,7 @@ require("snacks").setup {
   picker = {
     sources = {
       pickers = {
+        exclude = { "*.class" },
         layout = {
           reverse = true,
           preview = false,
@@ -156,6 +157,7 @@ require("snacks").setup {
         },
       },
       smart = {
+        exclude = { "*.class" },
         layout = {
           reverse = true,
           preview = false,
@@ -176,6 +178,7 @@ require("snacks").setup {
         },
       },
       files = {
+        exclude = { "*.class", ".bin" },
         win = {
           input = {
             keys = {
