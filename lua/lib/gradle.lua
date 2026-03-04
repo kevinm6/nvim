@@ -2,7 +2,7 @@
 -- title: gradle.lua
 -- abstract: gradle utils functions
 -- author: Kevin
--- date: 27 Feb 2026, 20:56
+-- date: 03 Mar 2026, 09:39
 -------------------------------------
 
 local M = {}
@@ -51,13 +51,19 @@ end
 ---@param gradlew string the path for the gradle executable
 ---@param task string the task to run
 local function run_gradle_task(gradlew, task)
-  vim.notify("Gradle - " .. task)
+  vim.notify("Gradle => " .. task)
+  if state.buf then
+    vim.api.nvim_set_option_value("readonly", false, { buf = state.buf })
+    vim.api.nvim_buf_set_lines(state.buf, 0, -1, false, vim.split("   Gradle - running ⟩ " .. task, "\n"))
+    vim.api.nvim_set_option_value("readonly", true, { buf = state.buf })
+  end
   vim.system({ gradlew, task }, { text = true }, function(obj)
     local out = (obj.code ~= 0) and obj.stderr or obj.stdout
 
     vim.schedule(function()
       local sep = "---------------------------------"
-      local text = ("   OUTPUT⟩ gradle %s\n%s\n%s"):format(task, sep, out)
+      local date = os.date("%d %b %Y - %H:%M:%S")
+      local text = ("[%q]\n  OUTPUT⟩ gradle %s\n%s\n%s"):format(date, task, sep, out)
       local lines = vim.split(text, "\n")
 
       if not state.buf then

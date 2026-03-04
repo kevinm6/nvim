@@ -2,7 +2,7 @@
 -- title: ts_highlight_current_scope.lua
 -- abstract: utils function for treesitter (revamp of `nvim-treesitter-refactor`)
 -- author: Kevin
--- date: 01 Jan 2026, 20:17
+-- date: 25 Feb 2026, 19:56
 -------------------------------------
 
 local M = {}
@@ -61,6 +61,7 @@ function M.parsers_to_be_installed()
     "xml",
     "yaml",
     "ini",
+    "neverlang"
   }
 end
 

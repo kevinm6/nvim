@@ -2,7 +2,7 @@
 -- title: dap.lua
 -- abstract: dap plugin config
 -- author: Kevin
--- date: 25 Feb 2026, 21:07
+-- date: 01 Mar 2026, 17:42
 -----------------------------------
 
 ---DAP
@@ -323,28 +323,24 @@ dap.configurations.sh = {
 --   -- cwd = "${workspaceFolder}",
 -- }
 
----Groovy
--- dap.adapters.java = function(cb)
---   cb({
---     type = "executable",
---     host = "127.0.0.1",
---     port = 5005,
---   })
--- end
+--[[Groovy
+dap.adapters.java = {
+  type = "executable",
+  command = mason_dir .. "/java-debug-adapter/extension/dist/extension.js",
+  name = "java"
+}
 --
--- dap.configurations.groovy = {
---   {
---     type = "java",
---     name = "Attach to Gradle Plugin",
---     request = "attach",
---     hostName = "127.0.0.1",
---     port = 5005
---     -- program = "${workspaceFolder}/gradlew",
---     -- cwd = "${workspaceFolder}",
---     -- args = { "${input:gradleCmd}" },
---   },
--- }
--- dap.configurations.gradle = dap.configurations.groovy
+dap.configurations.groovy = {
+  {
+    type = "java",
+    request = "attach",
+    name = "Debug Gradle Plugin",
+    hostName = "127.0.0.1",
+    port = 5005
+  },
+}
+dap.configurations.gradle = dap.configurations.groovy
+]]
 
 vim.fn.sign_define("DapBreakpoint", {
   text = " ",

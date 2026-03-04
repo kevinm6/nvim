@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 25 Feb 2026, 21:23
+-- date: 02 Mar 2026, 21:07
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -168,16 +168,9 @@ vim.pack.add({
           php = { "php" },
           yaml = { "yamllint" },
         }
-        lint.linters["npm-groovy-lint"].args = {
-          "--config", vim.fn.expand "~/.groovylintrc.json"
-        }
-
-        -- lint.linters.markdownlint.args = {
-        --   "--disable MD013 MD001 MD033", -- rules for line-lenght, heading-increment, inline-html
+        -- lint.linters["npm-groovy-lint"].args = {
+        --   "--config", vim.fn.expand "~/.config/groovylint/.groovylintrc.json",
         -- }
-        lint.linters.flake8.args = {
-          "--extend-ignore E302,E111,E501,W391",
-        }
 
         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
           callback = function()
@@ -231,7 +224,7 @@ vim.pack.add({
         end
 
         opts.formatters = {
-          groovy = { "npm-groovy-lint" },
+          groovy = { "npm-groovy-lint", "--format" },
           beautysh = {
             args = { "$FILENAME" },
           },

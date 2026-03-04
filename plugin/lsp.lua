@@ -2,7 +2,7 @@
 -- title: lsp.lua
 -- abstract: lsp config nvim-0.11
 -- author: Kevin
--- date: 17 Dec 2025, 20:41
+-- date: 01 Mar 2026, 17:43
 -------------------------------------
 
 local lsp = vim.lsp
@@ -65,6 +65,6 @@ lsp.enable {
   "biome",
   "jdtls",
   -- "basicls",
-  -- "gradle_ls",
+  "gradle_ls",
   -- "metals",
 }

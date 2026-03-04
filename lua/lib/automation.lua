@@ -2,7 +2,7 @@
 -- title: automation.lua
 -- abstract: automatic functions lib triggered by events
 -- author: Kevin
--- date: 22 Feb 2026, 13:02
+-- date: 02 Mar 2026, 20:58
 -------------------------------------
 
 local M = {}
@@ -16,14 +16,16 @@ function M.auto_timestamp(exts)
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = group_id,
     pattern = exts,
-    callback = function()
+    callback = function(ev)
       if vim.opt_local.modified:get() == true then
-        -- ensures the timestamp update is undone along with the actual edit
-        vim.cmd.undojoin()
         local cursor_pos = vim.api.nvim_win_get_cursor(0)
         local lines = vim.api.nvim_buf_line_count(0)
         local max_range = math.min(lines, 6)
+        local ut = vim.fn.undotree(ev.buf)
         if max_range > 0 then
+          -- ensures the timestamp update is undone along with the actual edit
+          if ut.seq_cur == ut.seq_last then vim.cmd.undojoin() end
+
           local range = "0," .. max_range
           -- 1. "Last Modified: ..." (your original)
           -- 2. "date: ..." (standard YAML)
