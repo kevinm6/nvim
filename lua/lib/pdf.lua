@@ -2,7 +2,7 @@
 -- title: pdf.lua
 -- abstract: use Neovim as pdf reader (need pdftotext binaries)
 -- author: Kevin
--- date: 31 Jan 2026, 09:55
+-- date: 22 Mar 2026, 17:03
 -------------------------------------
 
 local M = {
@@ -61,7 +61,9 @@ function M.convert_md_to_pdf(cmd)
   local args = {
     "pandoc",
     "-V", "geometry:margin=1.5cm",
-    "--from=gfm", file_path,
+    -- "--template", "eisvogelk.latex",
+    "-f", "gfm+alerts",
+    file_path,
     "-o", pdf_out_path,
     "--syntax-highlighting", "tango",
   }

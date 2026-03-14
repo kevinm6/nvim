@@ -2,7 +2,7 @@
 -- title: lsp.lua
 -- abstract: lsp utility functions
 -- author: Kevin
--- date: 28 Dec 2025, 17:47
+-- date: 21 Mar 2026, 10:52
 -------------------------------------
 
 local M = {}
@@ -160,7 +160,7 @@ function M.set_buf_keymaps(client, bufnr)
     }
   end
 
-  map { "n", "<leader>ll", lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" } }
+  map { "n", "grx", lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" } }
 end
 
 --- Set buffer capabilities if supported by the passed client and buffer id

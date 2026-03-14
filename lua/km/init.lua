@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 02 Mar 2026, 21:07
+-- date: 09 Mar 2026, 09:06
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -277,11 +277,12 @@ vim.pack.add({
       config = function()
         local render_markdown = require "render-markdown"
         render_markdown.setup {
-          enabled = false, -- not rendering on enter md files
+          -- enabled = false, -- not rendering on enter md files
           file_types = { "markdown", "quarto", "markdown.mdx" },
-          anti_conceal = { enabled = false },
+          anti_conceal = { disable_modes = "i" },
           latex = { enabled = false, converter = "utftex" },
           acknowledge_conflicts = true,
+          debounce = 500,
           completions = { lsp = { enabled = true } },
           heading = {
             icons = { "󰉫 ", "󰉬 ", "󰉭 ", "󰉮 ", "󰉯 ", "󰉰 " },
