@@ -2,7 +2,7 @@
 -- title: keymaps.lua
 -- abstract: Keymaps for NeoVim
 -- author: Kevin
--- date: 23 Feb 2026, 21:14
+-- date: 18 Apr 2026, 09:29
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -305,6 +305,18 @@ nmap {
     require("lib.terminal").new_terminal_win("htop", true, { preset = "htop" })
   end,
   "Htop",
+}
+
+-- builtin undotree
+nmap {
+  "<leader>u",
+  function()
+    if package.loaded["undotree"] == nil then
+      vim.cmd.packadd("nvim.undotree")
+    end
+    require("undotree").open()
+  end,
+  "Undotree"
 }
 
 -- TERMINAL MODE

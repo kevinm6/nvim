@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 09 Mar 2026, 09:06
+-- date: 12 Apr 2026, 10:00
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -30,6 +30,18 @@ vim.api.nvim_create_autocmd("FileType", {
     ts_utils.attach(ev.buf)
   end
 })
+
+---builtin undotree
+require("lib.lazyload").command_stub("Undotree", function()
+  vim.cmd.packadd("nvim.undotree")
+  vim.cmd.Undotree()
+end)
+
+---builtin difftool
+require("lib.lazyload").command_stub("DiffTool", function()
+  vim.cmd.packadd("nvim.difftool")
+  vim.cmd.DiffTool()
+end)
 
 ---Add github prefix to url
 ---@param user_repo string the context part of the GitHub url, in format `user/repo`
@@ -400,10 +412,10 @@ vim.pack.add({
     data = { ft = "sql" }
   },
   ---Scala
-  {
-    src = gh("scalameta/nvim-metals"),
-    data = { ft = { "scala", "sbt" } }
-  },
+  -- {
+  --   src = gh("scalameta/nvim-metals"),
+  --   data = { ft = { "scala", "sbt" } }
+  -- },
   ---LaTex
   {
     src = gh("lervag/vimtex"),

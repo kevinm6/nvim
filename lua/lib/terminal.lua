@@ -2,7 +2,7 @@
 -- title: terminal.lua
 -- abstract: terminal utilities functions
 -- author: Kevin
--- date: 31 Dec 2025, 16:46
+-- date: 18 Apr 2026, 09:29
 -------------------------------------
 
 local M = {
@@ -12,7 +12,7 @@ local M = {
 M.presets = {
   lazygit = {
     title = "LazyGit",
-    height = math.ceil(vim.o.lines * 0.94),
+    height = math.ceil(vim.o.lines * 0.88),
     width = vim.o.columns,
     relative = "editor",
     title_pos = "center",
