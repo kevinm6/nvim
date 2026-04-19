@@ -1,7 +1,7 @@
 -------------------------------------
 -- Description  : useful plugins
 -- author: Kevin
--- date: 20 Mar 2026, 17:20
+-- date: 19 Apr 2026, 20:40
 --  NOTE
 --    Font    : Fira Code : 12.5 v|i 92, n/n 90
 --    Fallback: Source Code Pro : 13 v|i 92, n/n 90
@@ -212,16 +212,16 @@ vim.api.nvim_set_hl(0, "MiniDiffOverDelete", { fg = "NONE", bg = "#b2555b" })
 local mini_files = require("mini.files")
 local set_cwd = function()
   local path = (mini_files.get_fs_entry() or {}).path
-  if path == nil then return vim.notify("MiniFiles - cursor is not on valid entry") end
+  if path == nil then return vim.notify("MiniFiles: cursor is not on valid entry") end
   local dir_path = vim.fs.dirname(path)
   vim.fn.chdir(dir_path)
-  vim.notify("MiniFiles - tcd => " .. dir_path, vim.log.levels.INFO, { title = "Mini.Files" })
+  vim.notify("MiniFiles: tcd => " .. dir_path, vim.log.levels.INFO, { title = "Mini.Files" })
 end
 
 -- Yank in register full path of entry under cursor
 local yank_path = function()
   local path = (mini_files.get_fs_entry() or {}).path
-  if path == nil then return vim.notify("MiniFiles - cursor is not on valid entry") end
+  if path == nil then return vim.notify("MiniFiles: cursor is not on valid entry") end
   vim.fn.setreg(vim.v.register, path)
 end
 

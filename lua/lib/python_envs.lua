@@ -2,7 +2,7 @@
 -- title: python_envs.lua
 -- abstract: helper module to get and manage python_envs
 -- author: Kevin
--- date: 31 Dec 2025, 16:48
+-- date: 19 Apr 2026, 18:39
 -------------------------------------
 
 ---Python envs
@@ -54,10 +54,11 @@ function M.set_venv(venv)
     vim.fn.setenv("PATH", venv_bin_path .. ":" .. origin_path)
     vim.fn.setenv("VIRTUAL_ENV", venv.path)
 
-    vim.notify("Python-venvs - Virtual environment => " .. venv.path)
+    vim.api.nvim_echo({ { "Python-venvs:", "OkMsg" }, { " virtual environment ", "StdoutMsg" }, { venv.path, "Directory" } },
+      true, {})
     -- Restart the LSP server
     vim.defer_fn(function()
-      vim.notify("Python-venvs - Restarting LSP client... ")
+      vim.api.nvim_echo({ { "Python-venvs:", "OkMsg" }, { " restarting LSP client...", "WarningMsg" } }, true, {})
       local client = vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf(), name = "pyright" }
       if next(client) then
         client[1]:stop()
@@ -66,10 +67,12 @@ function M.set_venv(venv)
       end
       vim.lsp.start(vim.lsp.config.pyright)
       vim.cmd.edit()
-      vim.notify("Python-venvs - Restarted successfully")
+      vim.api.nvim_echo({ { "Python-venvs: restarted successfully", "OkMsg" } }, true, {})
     end, 1000)
   else
-    vim.notify("Python-venvs - given path is not a python venv => " .. venv_bin_path, vim.log.levels.WARN)
+    vim.api.nvim_echo(
+    { { "Python-venvs: given path is not a python venv", "ErrorMsg" }, { " => ", "StdoutMsg" }, { venv_bin_path, "Directory" } },
+      true, {})
   end
 end
 
@@ -107,7 +110,7 @@ function M.pick_venv()
   local venvs = get_venvs()
 
   if not next(venvs) then
-    vim.notify("Python-venvs - no virtual_envs found", vim.log.levels.WARN)
+    vim.api.nvim_echo({ { "Python-venvs: no virtual_envs found", "ErrorMsg" } }, false, {})
     return
   end
   vim.ui.select(venvs, {

@@ -2,7 +2,7 @@
 -- title: ts_highlight_current_scope.lua
 -- abstract: utils function for treesitter (revamp of `nvim-treesitter-refactor`)
 -- author: Kevin
--- date: 28 Mar 2026, 19:36
+-- date: 19 Apr 2026, 20:43
 -------------------------------------
 
 local M = {}
@@ -70,7 +70,7 @@ function M.uninstall_parsers()
   local parsers = vim.fn.glob(vim.fn.stdpath "data" .. "/site/parser/*.*", true, true)
   local numParsers = #parsers
   if numParsers < 1 then
-    vim.notify("TS Utils - no parser installed", vim.log.levels.INFO, { title = "TS Utils" })
+    vim.notify("TSutils: no parser installed", vim.log.levels.INFO, { title = "TS Utils" })
     return
   end
   vim.fn.confirm("Are you sure to uninstall all treesitter parsers?", "&Yes\n&No", 2, "WARN")
@@ -89,7 +89,7 @@ local function goto_variable_usage(direction)
   local node = ts.get_node({ ignore_injections = true })
 
   if not node then
-    vim.notify("Treesitter - no ts_node found under cursor", vim.log.levels.WARN)
+    vim.notify("Treesitter: no ts_node found under cursor", vim.log.levels.WARN)
     return
   end
 
@@ -99,7 +99,7 @@ local function goto_variable_usage(direction)
   end
 
   if not node or node:type() ~= "identifier" then
-    vim.notify("Treesitter - not on an identifier", vim.log.levels.WARN)
+    vim.notify("Treesitter: not on an identifier", vim.log.levels.WARN)
     return
   end
 
@@ -157,7 +157,7 @@ local function goto_variable_usage(direction)
     local row, col = target:range()
     vim.api.nvim_win_set_cursor(0, { row + 1, col })
   else
-    vim.notify("Treesitter -  no " .. direction .. " usage found", vim.log.levels.INFO)
+    vim.notify("Treesitter: no " .. direction .. " usage found", vim.log.levels.INFO)
   end
 end
 
@@ -167,7 +167,7 @@ local function goto_definition()
   local node = ts_utils.get_node({ ignore_injections = true })
 
   if not node then
-    vim.notify("Treesitter - no ts_node found", vim.log.levels.WARN)
+    vim.notify("Treesitter: no ts_node found", vim.log.levels.WARN)
     return
   end
 
@@ -177,7 +177,7 @@ local function goto_definition()
   end
 
   if not node then
-    vim.notify("Treesitter - not on an identifier", vim.log.levels.WARN)
+    vim.notify("Treesitter: not on an identifier", vim.log.levels.WARN)
     return
   end
 
@@ -221,7 +221,7 @@ local function goto_definition()
         return
       end
     end
-    vim.notify("Treesitter - definition not found (Treesitter or LSP)", vim.log.levels.INFO)
+    vim.notify("Treesitter: definition not found (Treesitter or LSP)", vim.log.levels.INFO)
   end
 end
 

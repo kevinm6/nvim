@@ -2,7 +2,7 @@
 -- title: session.lua
 -- abstract: module to manage vim builtin sessions
 -- author: Kevin
--- date: 31 Dec 2025, 16:47
+-- date: 19 Apr 2026, 18:28
 -------------------------------------
 
 local M = {
@@ -41,12 +41,13 @@ local function delete_session()
         local deleted = vim.fn.delete(choice)
         if deleted == 0 then
           local choice_name = vim.fn.fnamemodify(choice, ":t")
-          vim.notify("Session - session < " .. choice_name .. " > deleted", vim.log.levels.WARN)
+          vim.api.nvim_echo({ { "Session: ", "OkMsg" }, { choice_name, "MatchParen" }, { " deleted", "WarningMsg" } },
+            true, {})
         end
       end
     end)
   else
-    vim.notify("Session - no sessions to delete", vim.log.levels.WARN)
+    vim.api.nvim_echo({ { "Session: ", "OkMsg" }, { "no sessions to delete", "ErrorMsg" } }, true, {})
   end
 end
 
@@ -67,11 +68,11 @@ local function restore_session()
         local s_name = vim.fn.fnamemodify(choice, ":p:t:r")
         vim.cmd.source(choice)
         require("lib.ui.statusline").session_name = s_name
-        vim.notify("Session - session < " .. s_name .. " > restored", vim.log.levels.INFO)
+        vim.api.nvim_echo({ { "Session: ", "OkMsg" }, { s_name, "MatchParen" }, { " restored", "OkMsg" } }, true, {})
       end
     end)
   else
-    vim.notify("Session - no sessions to restore", vim.log.levels.WARN)
+    vim.api.nvim_echo({ { "Session: ", "OkMsg" }, { "no sessions to restore", "ErrorMsg" } }, true, {})
   end
 end
 
@@ -100,7 +101,7 @@ local function save_session()
         op = "updated"
       end
       vim.cmd.mksession { session_file_path, bang = true }
-      vim.notify("Session - session < " .. input .. " > " .. op, vim.log.levels.INFO)
+      vim.api.nvim_echo({ { "Session: ", "OkMsg" }, { " session <", "StdoutMsg" }, { op, "Function" } }, true, {})
     else
       print "  canceled"
     end
@@ -126,8 +127,8 @@ function M.select(arg)
   elseif M[arg] then
     M[arg]()
   else
-    vim.notify("Session - invalid argument.\nUsage -> :Session [save|restore|delete]", vim.log.levels.WARN,
-      { title = "Session" })
+    vim.api.nvim_echo({ { "Session: invalid argument", "WarningMsg" }, { "Usage -> :Session [save|restore|delete]" } },
+      true, {})
   end
 end
 

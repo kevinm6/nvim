@@ -41,7 +41,7 @@ local function dump()
   if not vim.b.hex then
     utils.dump_to_hex(hex.config.dump_cmd)
   else
-    vim.notify("Hex - already dumped!", vim.log.levels.WARN)
+    vim.notify("Hex: already dumped!", vim.log.levels.WARN)
   end
 end
 
@@ -49,7 +49,7 @@ local function assemble()
   if vim.b.hex then
     utils.assemble_from_hex(hex.config.assemble_cmd)
   else
-    vim.notify("Hex - already assembled!", vim.log.levels.WARN)
+    vim.notify("Hex: already assembled!", vim.log.levels.WARN)
   end
   vim.g.hex_dumped = true
 end

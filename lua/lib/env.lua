@@ -2,7 +2,7 @@
 -- title: env.lua
 -- abstract: environment variables in telescope or listed
 -- author: Kevin
--- date: 31 Dec 2025, 16:47
+-- date: 19 Apr 2026, 18:29
 -------------------------------------
 
 local M = {}
@@ -48,8 +48,7 @@ local function show_environment_variables(_)
           if input then
             local new_var, new_value = unpack(vim.split(input, "="))
             vim.env[new_var] = tostring(new_value)
-            local msg = ("Env - set env var '%s' to '%s'"):format(new_var, new_value)
-            vim.notify(msg, vim.log.levels.INFO, { title = "Env" })
+            vim.api.nvim_echo({ {"Env: ", "OkMsg" }, {"set env var '", "StdoutMsg" }, { new_var, "Function" }, { "' to '", "StdoutMsg" }, { new_value, "Function" }, { "'", "StdoutMsg"} }, true, {})
           end
         end)
       end,
@@ -61,8 +60,7 @@ local function show_environment_variables(_)
         vim.ui.input({ prompt = prompt }, function(input)
           if input then
             vim.env[c_word] = tostring(input)
-            local msg = "Env - update env var '" .. c_word .. "' to '" .. input .. "'"
-            vim.notify(msg, vim.log.levels.INFO, { title = "Env" })
+            vim.api.nvim_echo({ {"Env: ", "OkMsg" }, {"update env var '", "StdoutMsg" }, { c_word, "Function" }, { "' to '", "StdoutMsg" }, { input, "Function" }, { "'", "StdoutMsg"} }, true, {})
           end
         end)
       end,

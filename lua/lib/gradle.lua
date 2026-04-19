@@ -2,7 +2,7 @@
 -- title: gradle.lua
 -- abstract: gradle utils functions
 -- author: Kevin
--- date: 03 Mar 2026, 09:39
+-- date: 19 Apr 2026, 20:43
 -------------------------------------
 
 local M = {}
@@ -140,7 +140,7 @@ function M.setup(opts)
   end
 
   if not gradle then
-    vim.notify("Gradle - no gradle available in cwd and globally", vim.log.levels.WARN, { title = "Gradle" })
+    vim.notify("Gradle: no gradle available in cwd and globally", vim.log.levels.WARN, { title = "Gradle" })
     return
   end
   M.root_dir = root_dir

@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 12 Apr 2026, 10:00
+-- date: 19 Apr 2026, 20:43
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
       local name, build = ev.data.spec.name, ev.data.spec.data.build
       if not build then return end
       if kind == "update" and not ev.data.active then vim.cmd.packadd { args = { name }, bang = false } end
-      vim.notify("vim.pack: Running build (" .. kind .. ") - " .. name, vim.log.levels.INFO, { title = "PackChanged" })
+      vim.api.nvim_echo({ { "vim.pack: ", "OkMsg" }, { "running build (", "StdoutMsg" }, { kind, "PmenuMatch" }, { ") - ", "StdoutMsg" }, { name, "MatchParen" } }, true, {})
       pcall(build)
     end
   end
@@ -364,7 +364,7 @@ vim.pack.add({
         if vim.fn.executable(dap_py_venv) then
           require "dap-python".setup(dap_py_venv)
         else
-          vim.notify("Nvim-dap-python - python not found", vim.log.levels.WARN, { title = "Nvim-dap-python" })
+          vim.notify("Nvim-dap-python: python not found", vim.log.levels.WARN, { title = "Nvim-dap-python" })
         end
       end
     }

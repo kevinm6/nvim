@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: various utilities functions
 -- author: Kevin
--- date: 05 Jan 2026, 10:51
+-- date: 19 Apr 2026, 20:46
 -------------------------------------
 
 local M = {}
@@ -12,7 +12,7 @@ local M = {}
 function M.toggle_option(option)
   local value = not vim.api.nvim_get_option_value(option, {})
   vim.opt[option] = value
-  vim.notify("Opts - " .. option .. " set to " .. tostring(value), vim.log.levels.INFO)
+  vim.api.nvim_echo({ { "Opts: ", "OkMsg" }, { option, "PmenuMatch" }, { " set to ", "StdoutMsg" }, { tostring(value), "PmenuMatch" } }, true, {})
 end
 
 ---Dev FOLDER
@@ -110,7 +110,7 @@ function M.projects()
     }, function(choice)
       if choice then
         vim.cmd.tcd(choice)
-        vim.notify("Projects - twd => " .. choice, vim.log.levels.INFO)
+        vim.notify("Projects: twd => " .. choice, vim.log.levels.INFO)
         local has_mini, mini_files = pcall(require, "mini.files")
         if has_mini then
           mini_files.open(choice)
@@ -267,10 +267,10 @@ function M.run_brew_service(service, async)
   if async then
     vim.notify("Brew Services - creating async service")
     vim.system({ "brew", "services", "run", service }, { text = true, timeout = 6000 }, function(obj)
-      vim.notify("Brew Services - stdout => " .. obj.stdout, vim.log.levels.INFO, { title = "Brew Services" })
+      vim.notify("Brew Services: stdout => " .. obj.stdout, vim.log.levels.INFO, { title = "Brew Services" })
 
       if obj.code ~= 0 then
-        vim.notify("Brew Services - stderr => " .. obj.stderr, vim.log.levels.WARN)
+        vim.notify("Brew Services: stderr => " .. obj.stderr, vim.log.levels.WARN)
       else
         autocmd_stop_service()
       end
@@ -279,9 +279,9 @@ function M.run_brew_service(service, async)
     local job = vim.system({ "brew", "services", "run", service }, { text = true }):wait(6000)
 
     if job.code ~= 0 then
-      vim.notify("Brew Services - stderr => " .. job.stderr, vim.log.levels.WARN)
+      vim.notify("Brew Services: stderr => " .. job.stderr, vim.log.levels.WARN)
     else
-      vim.notify("Brew Services - stdout => " .. job.stdout, vim.log.levels.INFO, { title = "Brew Services" })
+      vim.notify("Brew Services: stdout => " .. job.stdout, vim.log.levels.INFO, { title = "Brew Services" })
       autocmd_stop_service()
     end
   end

@@ -45,12 +45,12 @@ end
 ---@param cmd? string extra command args
 function M.convert_md_to_pdf(cmd)
   if vim.bo.ft ~= 'markdown' then
-    local err_msg = "TOpdf - fileType < %s > not supported" .. vim.bo.ft
+    local err_msg = "TOpdf: fileType < %s > not supported" .. vim.bo.ft
     vim.notify(err_msg, vim.log.levels.ERROR, { title = "PDF export" })
     return
   end
 
-  assert(vim.fn.executable 'pandoc' == 1, "TOpdf - pandoc binary is required")
+  assert(vim.fn.executable 'pandoc' == 1, "TOpdf: pandoc binary is required")
 
   local file_path = vim.api.nvim_buf_get_name(0)
   local pdf_out_path = string.sub(file_path, 1, -3) .. 'pdf'
@@ -72,11 +72,11 @@ function M.convert_md_to_pdf(cmd)
     vim.list_extend(args, extra_args)
   end
 
-  vim.notify("TOpdf - starting conversion...\n executing => " .. table.concat(args, " "))
+  vim.notify("TOpdf: starting conversion...\n executing => " .. table.concat(args, " "))
   vim.system(args, { text = true }, function(obj)
     if obj.stderr ~= "" then
       vim.schedule(function()
-        vim.notify(("TOpdf - stderr =>\n%q"):format(obj.stderr), vim.log.levels.ERROR, { title = "TOpdf - export" })
+        vim.notify(("TOpdf: stderr =>\n%q"):format(obj.stderr), vim.log.levels.ERROR, { title = "TOpdf: export" })
         vim.fn.chdir(old_cwd)
       end)
       return
@@ -84,12 +84,12 @@ function M.convert_md_to_pdf(cmd)
 
     if obj.stdout ~= "" then
       vim.schedule(function()
-        vim.notify("TOpdf - stdout => " .. obj.stdout)
+        vim.notify("TOpdf: stdout => " .. obj.stdout)
       end)
     end
 
     vim.schedule(function()
-      vim.notify("TOpdf - conversion complete")
+      vim.notify("TOpdf: conversion complete")
       vim.fn.chdir(old_cwd)
       vim.ui.open(pdf_out_path)
     end)

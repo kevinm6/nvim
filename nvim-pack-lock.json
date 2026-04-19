@@ -106,7 +106,7 @@
       "src": "https://github.com/dhruvasagar/vim-table-mode"
     },
     "vimtex": {
-      "rev": "9306903316c3ddd250676b7cf97c84a84c9c8f99",
+      "rev": "0f42a5130432d4af2e6fd21fb93a76915ff1f090",
       "src": "https://github.com/lervag/vimtex"
     }
   }

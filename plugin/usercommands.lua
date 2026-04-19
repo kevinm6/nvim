@@ -2,7 +2,7 @@
 -- title: usercommands.lua
 -- abstract: User commands config
 -- author: Kevin
--- date: 10 Feb 2026, 20:28
+-- date: 19 Apr 2026, 20:32
 -------------------------------------
 
 
@@ -54,7 +54,7 @@ user_command("WipeReg", function()
   for _, v in pairs(regs) do
     vim.call("setreg", v, "")
   end
-  vim.notify("Registers - all Registers wiped", vim.log.levels.WARN, { title = "Registers" })
+  vim.notify("Registers: all Registers wiped", vim.log.levels.WARN, { title = "Registers" })
 end, { desc = "Wipe all Registers" })
 
 ---Sessions
@@ -156,10 +156,8 @@ user_command("ToggleAutoTimeStamp", function()
     vim.api.nvim_del_augroup_by_id(vim.g.autoupdate_timestamp)
     vim.g.autoupdate_timestamp = nil
   end
-  local state = vim.g.autoupdate_timestamp and "enabled" or "disabled"
-  vim.notify("ToggleAutoTimeStamp => " .. state, vim.log.levels.INFO, {
-    title = "AutoTimeStamp"
-  })
+  local state = vim.g.autoupdate_timestamp and { "enabled", "PmenuMatch" } or { "disabled", "MsgArea" }
+  vim.api.nvim_echo({ { "ToggleAutoTimeStamp: ", "OkMsg" }, state }, true, {})
 end, { desc = "Toggle auto update timestamp on file" })
 
 ---User command to toggle auto trim trailing space on save
@@ -170,8 +168,6 @@ user_command("ToggleAutoTrimTrailSpaces", function()
     vim.api.nvim_del_augroup_by_id(vim.g.autoremove_trailingspace)
     vim.g.autoremove_trailingspace = nil
   end
-  local state = vim.g.autoremove_trailingspace and "enabled" or "disabled"
-  vim.notify("ToggleAutoTrimTrailSpaces => " .. state, vim.log.levels.INFO, {
-    title = "AutoTrailingSpaces"
-  })
+  local state = vim.g.autoremove_trailingspace and { "enabled", "PmenuMatch" } or { "disabled", "MsgArea" }
+  vim.api.nvim_echo({ { "ToggleAutoTrimTrailSpaces: ", "OkMsg" }, state }, true, {})
 end, { desc = "Toggle auto remove trailing spaces on file" })
