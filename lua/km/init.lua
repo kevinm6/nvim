@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 19 Apr 2026, 20:43
+-- date: 21 Apr 2026, 08:58
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -134,6 +134,18 @@ vim.pack.add({
     src = gh("igorlfs/nvim-dap-view"),
     name = "dap-view",
     data = { on_demand = true },
+  },
+
+  ---AI
+  {
+    src = gh("folke/sidekick.nvim"),
+    data = {
+      cmd = { "Sidekick" },
+      ev = "InsertEnter",
+      config = function()
+        require "km.ai"
+      end
+    }
   },
 
   ---Mason
@@ -669,20 +681,6 @@ vim.pack.add({
     }
   },
 
-  ---AI
-  {
-    src = gh("milanglacier/minuet-ai.nvim"),
-    name = "minuet",
-    data = {
-      config = function()
-        ---NOTE: create user_command ad hoc to enable, since AI must be on-demand
-        vim.api.nvim_create_user_command("AIcompletion", function()
-          require "km.ai"
-          vim.api.nvim_del_user_command "AIcompletion"
-        end, {})
-      end
-    }
-  }
 }, {
   load = function(p)
     local p_name = p.spec.name or ""

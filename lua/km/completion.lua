@@ -2,7 +2,7 @@
 -- title: completion.lua
 -- abstract: completion config
 -- author: Kevin
--- date: 18 Jan 2026, 19:14
+-- date: 21 Apr 2026, 09:07
 -------------------------------------
 
 --NOTE: snippets variables
@@ -20,7 +20,13 @@ require("blink.cmp").setup {
     ["<C-i>"] = { "snippet_forward", "fallback" },
     ["<C-S-i>"] = { "snippet_backward", "fallback" },
     ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-    ["<M-l>"] = vim.g.ai_completion and require("minuet").make_blink_map() or {},
+    ["<Tab>"] = {
+      "snippet_forward",
+      function()   -- sidekick next edit suggestion
+        return require("sidekick").nes_jump_or_apply()
+      end,
+      "fallback",
+    },
   },
   term = { enabled = true, keymap = { preset = "inherit" } },
   cmdline = {

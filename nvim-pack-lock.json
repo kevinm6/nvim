@@ -18,7 +18,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "dap-view": {
-      "rev": "03c22bb2bc0d6ed60ee6f7351f8a5e65dd2e80d3",
+      "rev": "134c018903abc2c9b6fd5fc34c64d906db468c9f",
       "src": "https://github.com/igorlfs/nvim-dap-view"
     },
     "data-viewer.nvim": {
@@ -30,20 +30,16 @@
       "src": "https://github.com/ray-x/go.nvim"
     },
     "markdown.nvim": {
-      "rev": "0fd43fb4b1f073931c4b481f5f3b7cea3749e190",
+      "rev": "d67113f11384c0dad96fced2f7b91f1fc811e97f",
       "src": "https://github.com/MeanderingProgrammer/markdown.nvim"
     },
     "mason.nvim": {
-      "rev": "b03fb0f20bc1d43daf558cda981a2be22e73ac42",
+      "rev": "12ddd182d9efbdc848b540f16484a583d52da0fb",
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "418ef4930ddabe80f449c6f1323f8b6abb172d1c",
+      "rev": "5849ef04c32a6a8e55957b946c0a275801d87530",
       "src": "https://github.com/echasnovski/mini.nvim"
-    },
-    "minuet": {
-      "rev": "ee03326381c93f6417fa66aeb2ca85a26c0706e7",
-      "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
     "molten-nvim": {
       "rev": "c1db39e78fe18559d8f2204bf5c4d476bdc80d3e",
@@ -92,6 +88,10 @@
     "rest.nvim": {
       "rev": "714d5512aaec5565d55652480c16c26f8d95645d",
       "src": "https://github.com/rest-nvim/rest.nvim"
+    },
+    "sidekick.nvim": {
+      "rev": "17447a05f9385e5f8372b61530f6f9329cb82421",
+      "src": "https://github.com/folke/sidekick.nvim"
     },
     "snacks.nvim": {
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",

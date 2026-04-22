@@ -66,5 +66,6 @@ lsp.enable {
   "jdtls",
   -- "basicls",
   "gradle_ls",
+  "copilot",
   -- "metals",
 }
