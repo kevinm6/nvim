@@ -2,7 +2,7 @@
 -- title: completion.lua
 -- abstract: completion config
 -- author: Kevin
--- date: 21 Apr 2026, 09:07
+-- date: 23 Apr 2026, 21:54
 -------------------------------------
 
 --NOTE: snippets variables
@@ -16,15 +16,16 @@ require("blink.cmp").setup {
     ["<Down>"] = {},
     ["<C-k>"] = { "select_prev", "fallback" },
     ["<C-j>"] = { "select_next", "fallback" },
-    ["<C-l>"] = { "select_and_accept" },
+    ["<C-l>"] = { "select_and_accept", "fallback" },
     ["<C-i>"] = { "snippet_forward", "fallback" },
     ["<C-S-i>"] = { "snippet_backward", "fallback" },
     ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-    ["<Tab>"] = {
+    ["<C-S-L>"] = {
       "snippet_forward",
-      function()   -- sidekick next edit suggestion
-        return require("sidekick").nes_jump_or_apply()
+      function()
+        return require("sidekick").nes_jump_or_apply() -- sidekick next edit suggestion
       end,
+      function() return vim.lsp.inline_completion.get() end,
       "fallback",
     },
   },

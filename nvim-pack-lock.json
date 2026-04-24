@@ -1,7 +1,7 @@
 {
   "plugins": {
     "SchemaStore.nvim": {
-      "rev": "250aed7415ddd6cb3ea321490c7b35094ed9148d",
+      "rev": "d09eb13366fe95deeecf3deba7a4639f0c82fcdc",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "blink.cmp": {
@@ -14,7 +14,7 @@
       "src": "https://github.com/ziontee113/color-picker.nvim"
     },
     "conform.nvim": {
-      "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
+      "rev": "dca1a190aa85f9065979ef35802fb77131911106",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "dap-view": {
@@ -82,7 +82,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "quarto-nvim": {
-      "rev": "d923bb7cfc2bde41143e1c531c28190f0fade3a2",
+      "rev": "17f1e5d664bc615478230dc0240666329efacf9b",
       "src": "https://github.com/quarto-dev/quarto-nvim"
     },
     "rest.nvim": {
@@ -90,7 +90,7 @@
       "src": "https://github.com/rest-nvim/rest.nvim"
     },
     "sidekick.nvim": {
-      "rev": "17447a05f9385e5f8372b61530f6f9329cb82421",
+      "rev": "208e1c5b8170c01fd1d07df0139322a76479b235",
       "src": "https://github.com/folke/sidekick.nvim"
     },
     "snacks.nvim": {

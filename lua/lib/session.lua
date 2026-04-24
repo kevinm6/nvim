@@ -2,7 +2,7 @@
 -- title: session.lua
 -- abstract: module to manage vim builtin sessions
 -- author: Kevin
--- date: 19 Apr 2026, 18:28
+-- date: 24 Apr 2026, 12:16
 -------------------------------------
 
 local M = {
@@ -93,15 +93,21 @@ local function save_session()
     if input ~= "" then
       local op = "created"
       local session_file_path = M.dir .. "/" .. input .. ".vim"
-
+      local res, err = nil, nil
       if vim.fn.isdirectory(M.dir) ~= 1 then
-        vim.fn.mkdir(M.dir, "pR")
+        _, err = vim.schedule(function()
+          vim.fn.mkdir(M.dir, "p")
+        end):wait()
       end
       if vim.fn.filewritable(session_file_path) == 1 then
         op = "updated"
       end
-      vim.cmd.mksession { session_file_path, bang = true }
-      vim.api.nvim_echo({ { "Session: ", "OkMsg" }, { " session <", "StdoutMsg" }, { op, "Function" } }, true, {})
+        if not err then
+          vim.cmd.mksession { session_file_path, bang = true }
+          vim.api.nvim_echo({ { "\nSession: ", "OkMsg" }, { " session ", "StdoutMsg" }, { input, "Type" }, { " " .. op, "Function" } }, true, {})
+        else
+          vim.api.nvim_echo({ { "\nSession: ", "OkMsg" }, { "failed to create session ", "ErrorMsg" }, { input, "Type" } , { "\n" .. err, "ErrorMsg" } }, true, {})
+        end
     else
       print "  canceled"
     end

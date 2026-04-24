@@ -2,7 +2,7 @@
 -- title: ai.lua
 -- abstract: AI interops with Neovim
 -- author: Kevin
--- date: 21 Apr 2026, 09:06
+-- date: 22 Apr 2026, 21:37
 -------------------------------------
 
 require("sidekick").setup {
@@ -16,7 +16,7 @@ require("sidekick").setup {
   },
 }
 
-vim.keymap.set("i", "<tab>", function()
+vim.keymap.set("n", "<tab>", function()
     -- if there is a next edit, jump to it, otherwise apply it if any
     if not require("sidekick").nes_jump_or_apply() then
       return "<Tab>" -- fallback to normal tab

@@ -2,7 +2,7 @@
 -- title: lsp.lua
 -- abstract: lsp utility functions
 -- author: Kevin
--- date: 21 Mar 2026, 10:52
+-- date: 24 Apr 2026, 12:14
 -------------------------------------
 
 local M = {}
@@ -160,7 +160,20 @@ function M.set_buf_keymaps(client, bufnr)
     }
   end
 
-  map { "n", "grx", lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" } }
+  -- if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+  --   map {
+  --     'i',
+  --     '<C-S-L>',
+  --     vim.lsp.inline_completion.get,
+  --     { desc = 'LSP: accept inline completion', buffer = bufnr }
+  --   }
+  --   map {
+  --     'i',
+  --     '<C-G>',
+  --     vim.lsp.inline_completion.select,
+  --     { desc = 'LSP: switch inline completion', buffer = bufnr }
+  --   }
+  -- end
 end
 
 --- Set buffer capabilities if supported by the passed client and buffer id
@@ -182,6 +195,12 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
   --   end
   --   client.server_capabilities.completionProvider.triggerCharacters = chars
   --   lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+  -- end
+
+  -- InlineCompletion
+  -- NOTE: the check is not working
+  -- if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion) then
+  vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
   -- end
 
   -- InlayHints
