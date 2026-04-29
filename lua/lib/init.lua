@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: various utilities functions
 -- author: Kevin
--- date: 19 Apr 2026, 20:46
+-- date: 29 Apr 2026, 20:26
 -------------------------------------
 
 local M = {}
@@ -238,15 +238,15 @@ function M.set_highlights(hls)
 end
 
 ---Shift registers
----@param reg Register
----@class Register
-function M.shift_reg(reg)
-  for i = 8, 1, -1 do
-    local str_reg = tostring(i)
-    vim.fn.setreg(tostring(i + 1), vim.fn.getreg(str_reg), vim.fn.getregtype(str_reg))
-  end
-  vim.fn.setreg("1", reg.val, reg.typ)
-end
+-- ---@param reg Register
+-- ---@class Register
+-- function M.shift_reg(reg)
+--   for i = 8, 1, -1 do
+--     local str_reg = tostring(i)
+--     vim.fn.setreg(tostring(i + 1), vim.fn.getreg(str_reg), vim.fn.getregtype(str_reg))
+--   end
+--   vim.fn.setreg("1", reg.val, reg.typ)
+-- end
 
 ---Run Brew service
 ---@param service string name of the brew service

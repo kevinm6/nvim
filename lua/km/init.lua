@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 21 Apr 2026, 08:58
+-- date: 17 May 2026, 11:19
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -418,16 +418,6 @@ vim.pack.add({
     src = gh("b0o/SchemaStore.nvim"),
     data = { ft = { "json", "json5" } }
   },
-  ---SQL
-  {
-    src = gh("nanotee/sqls.nvim"),
-    data = { ft = "sql" }
-  },
-  ---Scala
-  -- {
-  --   src = gh("scalameta/nvim-metals"),
-  --   data = { ft = { "scala", "sbt" } }
-  -- },
   ---LaTex
   {
     src = gh("lervag/vimtex"),

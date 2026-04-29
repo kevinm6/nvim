@@ -2,7 +2,7 @@
 -- title: prefs.lua
 -- abstract: NeoVim & VimR preferences
 -- author: Kevin
--- date: 24 Feb 2026, 08:55
+-- date: 29 Apr 2026, 20:42
 -------------------------------------
 
 local settings = {
@@ -46,6 +46,7 @@ local settings = {
   fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "❭", diff = " " },
   timeoutlen = 350,
   ttimeoutlen = 100,
+  -- autocomplete = true, -- NOTE: till nvim supports custom snippets, can't use it
   complete = { "o", ".", "w", "b", "u" },
   completeopt = { "fuzzy", "menuone", "noselect", "popup" },
   matchpairs = vim.opt.matchpairs:append "<:>",
@@ -75,7 +76,7 @@ local settings = {
   foldexpr = "v:lua.vim.treesitter.foldexpr()",
   foldtext = "v:lua.require'lib.folds'.fold_text()",
 
-  diffopt = { "internal", "closeoff", "context:3", "algorithm:histogram", "linematch:200", "indent-heuristic", "inline:char" },
+  diffopt = vim.opt.diffopt:append { "context:3", "algorithm:histogram", "linematch:60" },
 
   colorcolumn = "90",
 

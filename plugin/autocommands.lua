@@ -2,7 +2,7 @@
 -- title: autocommands.lua
 -- abstract: Autocommands config
 -- author: Kevin
--- date: 13 Feb 2026, 20:32
+-- date: 29 Apr 2026, 20:25
 -------------------------------------
 
 local augroup = vim.api.nvim_create_augroup
@@ -13,16 +13,16 @@ local autocmd = vim.api.nvim_create_autocmd
 --------------------------------
 
 ---Hightlight on yank
-autocmd("TextYankPost", {
-  group = augroup("_highlight_yank", { clear = true }),
-  pattern = "*",
-  callback = function()
-    if vim.v.event.operator == "y" then
-      vim.highlight.on_yank { higroup = "TextYankPost", timeout = 80, on_macro = true }
-      require("lib").shift_reg { val = vim.fn.getreg "0", typ = vim.fn.getregtype "0" }
-    end
-  end,
-})
+-- autocmd("TextYankPost", {
+--   group = augroup("_highlight_yank", { clear = true }),
+--   pattern = "*",
+--   callback = function()
+--     if vim.v.event.operator == "y" then
+--       vim.highlight.on_yank { higroup = "TextYankPost", timeout = 80, on_macro = true }
+--       require("lib").shift_reg { val = vim.fn.getreg "0", typ = vim.fn.getregtype "0" }
+--     end
+--   end,
+-- })
 
 ---Exit on q for some filetypes
 autocmd("FileType", {
