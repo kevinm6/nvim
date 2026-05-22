@@ -2,17 +2,18 @@
 -- title: ai.lua
 -- abstract: AI interops with Neovim
 -- author: Kevin
--- date: 22 Apr 2026, 21:37
+-- date: 22 May 2026, 20:36
 -------------------------------------
 
 require("sidekick").setup {
-  opts = {
-    cli = {
-      mux = {
-        -- backend = "zellij",
-        enabled = false,
+  cli = {
+    mux = { enabled = false, },
+    win = {
+      layout = "left",
+      split = {
+        width = 0.36,
       },
-    },
+    }
   },
 }
 
