@@ -2,7 +2,7 @@
 -- title: winbar.lua
 -- abstract: Personal winbar config
 -- author: Kevin Manca
--- date: 31 Dec 2025, 16:41
+-- date: 23 May 2026, 13:27
 -----------------------------------------
 
 local winbar = {
@@ -16,17 +16,17 @@ local winbar = {
     snacks_picker_list = true,
     snacks_picker_preview = true,
     toggleterm = true,
-    lazy = true,
     mason = true,
     checkhealth = true,
     notify = true,
     cmpmenu = true,
     vim = true,
-    oil = true,
     help = true,
     query = true,
     httpResult = true,
+    ["dap-repl"] = true,
     ["dap-view"] = true,
+    ["dap-view-term"] = true,
     ["dap-float"] = true,
     minifiles = true,
   },
@@ -58,7 +58,7 @@ local function get_filename()
 
     file_icon = has_icons and icons.get("filetype", extension) or ""
 
-    return ("%%#FileIconColor%s#%s%%* %s"):format(extension, file_icon, filename)
+    return ("%%#FileIconColor%s#%s%%* %s"):format(extension, file_icon, filename:gsub("%%", ""))
   end
   return ""
 end
@@ -93,7 +93,7 @@ function winbar.toggle()
       callback = function(cb)
         if vim.g.winbar ~= nil then
           if not vim.api.nvim_win_get_config(0).relative ~= "" and not winbar.to_exclude[vim.bo.filetype] then
-            vim.wo.winbar = get_filename()
+            vim.wo.winbar =  get_filename()
           end
         else
           set_color_groups()

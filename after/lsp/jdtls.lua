@@ -55,6 +55,10 @@ return {
             path = "/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home",
           },
           {
+            name = "JavaSE-21",
+            path = "/Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home",
+          },
+          {
             name = "JavaSE-25",
             path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
           },

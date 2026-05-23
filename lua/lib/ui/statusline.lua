@@ -2,7 +2,7 @@
 -- title: statusline.lua
 -- abstract: Personal statusline config
 -- author: Kevin Manca
--- date: 10 Feb 2026, 20:18
+-- date: 23 May 2026, 13:29
 -----------------------------------------
 
 local M = {}
@@ -53,7 +53,6 @@ M.to_exclude = {
   terminal = true,
   checkhealth = true,
   query = true,
-  oil = true,
   httpResult = true,
   minifiles = true,
   gradle_output = true,
@@ -453,6 +452,7 @@ local function disabled_statusline()
     ["dap-float"] = icons.dapui_watches .. " DapUI❭ Hover",
     ["dap-repl"] = icons.robots .. " DapUI❭ Repl",
     ["dap-view"] = icons.dapui_watches .. " DapUI",
+    ["dap-view-term"] = icons.dapui_watches .. " DapUI❭ Terminal",
   }
   local custom_ft = special_filetypes[vim.bo.filetype]
 
