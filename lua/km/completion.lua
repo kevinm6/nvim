@@ -2,7 +2,7 @@
 -- title: completion.lua
 -- abstract: completion config
 -- author: Kevin
--- date: 23 Apr 2026, 21:54
+-- date: 29 May 2026, 18:51
 -------------------------------------
 
 --NOTE: snippets variables
@@ -29,7 +29,7 @@ require("blink.cmp").setup {
       "fallback",
     },
   },
-  term = { enabled = true, keymap = { preset = "inherit" } },
+  term = { enabled = true },
   cmdline = {
     keymap = {
       ["<C-i>"] = { 'show_and_insert', 'select_next' },
@@ -45,7 +45,6 @@ require("blink.cmp").setup {
   },
 
   sources = {
-    -- default = { "snippets", "lsp", "path", "buffer", },
     providers = {
       buffer = {
         opts = {

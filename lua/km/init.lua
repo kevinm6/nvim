@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 17 May 2026, 11:19
+-- date: 30 May 2026, 09:40
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -190,7 +190,7 @@ vim.pack.add({
           python = { "ruff" },
           gitcommit = { "commitlint" },
           php = { "php" },
-          yaml = { "yamllint" },
+          -- yaml = { "yamllint" },
         }
         -- lint.linters["npm-groovy-lint"].args = {
         --   "--config", vim.fn.expand "~/.config/groovylint/.groovylintrc.json",
@@ -236,7 +236,7 @@ vim.pack.add({
           html = { "biome" },
           json = { "biome" },
           -- json = { "biome" },
-          yaml = { "yamlfmt", "prettier" },
+          -- yaml = { "yamlfmt", "prettier" },
           -- java = { "google-java-format" },
         }
 

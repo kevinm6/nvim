@@ -2,7 +2,7 @@
 -- title: lsp.lua
 -- abstract: lsp utility functions
 -- author: Kevin
--- date: 24 Apr 2026, 12:14
+-- date: 30 May 2026, 09:52
 -------------------------------------
 
 local M = {}
@@ -160,20 +160,18 @@ function M.set_buf_keymaps(client, bufnr)
     }
   end
 
-  -- if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
-  --   map {
-  --     'i',
-  --     '<C-S-L>',
-  --     vim.lsp.inline_completion.get,
-  --     { desc = 'LSP: accept inline completion', buffer = bufnr }
-  --   }
-  --   map {
-  --     'i',
-  --     '<C-G>',
-  --     vim.lsp.inline_completion.select,
-  --     { desc = 'LSP: switch inline completion', buffer = bufnr }
-  --   }
-  -- end
+  map {
+    "i",
+    "<C-f>",
+    vim.lsp.inline_completion.get,
+    { desc = "LSP: accept inline completion", buffer = bufnr }
+  }
+  map {
+    "i",
+    "<C-g>",
+    vim.lsp.inline_completion.select,
+    { desc = "LSP: switch inline completion", buffer = bufnr }
+  }
 end
 
 --- Set buffer capabilities if supported by the passed client and buffer id
@@ -183,19 +181,6 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
   local lsp = vim.lsp
   local autocmd = vim.api.nvim_create_autocmd
   local usercmd = vim.api.nvim_create_user_command
-
-
-  -- Completion
-  -- NOTE nvim-0.11: still not useful for me, doesn't supports custom snippets
-  -- if client:supports_method "textDocument/completion" then
-  --   -- trigger autocompletion on EVERY keypress. May be slow!
-  --   local chars = {}
-  --   for i = 32, 126 do
-  --     table.insert(chars, string.char(i))
-  --   end
-  --   client.server_capabilities.completionProvider.triggerCharacters = chars
-  --   lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-  -- end
 
   -- InlineCompletion
   -- NOTE: the check is not working
@@ -239,7 +224,7 @@ function M.set_buf_funcs_for_capabilities(client, bufnr)
 
   usercmd("ToggleDiagnostics", function()
     require("lib.lsp").toggle_diagnostics(bufnr)
-  end, { desc = "List server capabilities" })
+  end, { desc = "Toggle diagnostics" })
 
   usercmd("LspLog", function()
     vim.cmd.split(vim.fn.stdpath "state" .. "/lsp.log")

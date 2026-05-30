@@ -2,7 +2,7 @@
 -- title: keymaps.lua
 -- abstract: Keymaps for NeoVim
 -- author: Kevin
--- date: 18 Apr 2026, 09:29
+-- date: 30 May 2026, 10:06
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -48,10 +48,6 @@ nmap { "<c-w>/", function()
   end
 end, "Search first occurence cword in other window" }
 
--- nmap { "<C-h>", "<C-w>h" }
--- nmap { "<C-j>", "<C-w>j" }
--- nmap { "<C-k>", "<C-w>k" }
--- nmap { "<C-l>", "<C-w>l" }
 nmap { "<C-d>", "<C-d>zz" }
 nmap { "<C-u>", "<C-u>zz" }
 
@@ -63,9 +59,7 @@ nmap {
   end,
   "Save buffer",
 }
--- map("n", "<leader>H", function()
---    vim.cmd.nohlsearch()
--- end, { desc = "No Highlight" })
+
 nmap {
   "<leader>c",
   function()
@@ -116,8 +110,8 @@ nmap {
     pcall(vim.cmd.edit, "#")
   end,
 }
--- nmap { "<S-l>", function() pcall(vim.cmd.bnext) end }
--- nmap { "<S-h>", function() pcall(vim.cmd.bNext) end }
+
+
 nmap { "<Esc>", "<cmd>nohlsearch<cr>" }
 nmap {
   "Q",

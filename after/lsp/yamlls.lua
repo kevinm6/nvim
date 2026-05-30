@@ -14,11 +14,15 @@ return {
       validate = true,
       schemaStore = {
         enable = false,
-        -- url = "",
+        url = "",
       },
       editor = {
         tabSize = 2
-      }
+      },
+      format = {
+        enable = true,
+        bracketSpacing = true,
+      },
     },
   },
   docs = {

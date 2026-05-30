@@ -2,7 +2,7 @@
 -- title: ts_highlight_current_scope.lua
 -- abstract: utils function for treesitter (revamp of `nvim-treesitter-refactor`)
 -- author: Kevin
--- date: 19 Apr 2026, 20:43
+-- date: 30 May 2026, 10:07
 -------------------------------------
 
 local M = {}
@@ -89,7 +89,7 @@ local function goto_variable_usage(direction)
   local node = ts.get_node({ ignore_injections = true })
 
   if not node then
-    vim.notify("Treesitter: no ts_node found under cursor", vim.log.levels.WARN)
+    vim.notify("TS❭ no ts_node found under cursor", vim.log.levels.WARN)
     return
   end
 
@@ -99,7 +99,7 @@ local function goto_variable_usage(direction)
   end
 
   if not node or node:type() ~= "identifier" then
-    vim.notify("Treesitter: not on an identifier", vim.log.levels.WARN)
+    vim.notify("TS❭ not on an identifier", vim.log.levels.WARN)
     return
   end
 
@@ -157,7 +157,7 @@ local function goto_variable_usage(direction)
     local row, col = target:range()
     vim.api.nvim_win_set_cursor(0, { row + 1, col })
   else
-    vim.notify("Treesitter: no " .. direction .. " usage found", vim.log.levels.INFO)
+    vim.notify("TS❭ no " .. direction .. " usage found", vim.log.levels.INFO)
   end
 end
 
@@ -167,7 +167,7 @@ local function goto_definition()
   local node = ts_utils.get_node({ ignore_injections = true })
 
   if not node then
-    vim.notify("Treesitter: no ts_node found", vim.log.levels.WARN)
+    vim.notify("TS❭ no ts_node found", vim.log.levels.WARN)
     return
   end
 
@@ -177,7 +177,7 @@ local function goto_definition()
   end
 
   if not node then
-    vim.notify("Treesitter: not on an identifier", vim.log.levels.WARN)
+    vim.notify("TS❭ not on an identifier", vim.log.levels.WARN)
     return
   end
 
@@ -221,7 +221,7 @@ local function goto_definition()
         return
       end
     end
-    vim.notify("Treesitter: definition not found (Treesitter or LSP)", vim.log.levels.INFO)
+    vim.notify("TS❭ definition not found (Treesitter or LSP)", vim.log.levels.INFO)
   end
 end
 
@@ -230,22 +230,20 @@ local function detach(bufnr)
   local del_keymap = vim.api.nvim_buf_del_keymap
   del_keymap(bufnr, "n", "<C-j>")
   del_keymap(bufnr, "n", "<C-k>")
-  del_keymap(bufnr, "n", "gd")
-  del_keymap(bufnr, "n", "gD")
-  del_keymap(bufnr, "n", "gO")
+  del_keymap(bufnr, "n", "grd")
 end
 
 function M.attach(bufnr)
   local set_keymap = vim.keymap.set
   set_keymap("n", "<C-j>", function()
     goto_variable_usage("next")
-  end, { buffer = bufnr, silent = true, noremap = true, desc = "goto_next_usage" })
+  end, { buffer = bufnr, silent = true, noremap = true, desc = "TS❭ goto_next_usage" })
   set_keymap("n", "<C-k>", function()
     goto_variable_usage("prev")
-  end, { buffer = bufnr, silent = true, noremap = true, desc = "goto_previous_usage" })
-  set_keymap("n", "gd", function()
+  end, { buffer = bufnr, silent = true, noremap = true, desc = "TS❭ goto_previous_usage" })
+  set_keymap("n", "grd", function()
     goto_definition()
-  end, { buffer = bufnr, silent = true, noremap = true, desc = "goto_definition" })
+  end, { buffer = bufnr, silent = true, noremap = true, desc = "TS❭ goto_definition" })
 
   vim.api.nvim_create_autocmd("BufDelete", {
     pattern = M.parsers_to_be_installed(),
