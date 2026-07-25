@@ -2,7 +2,7 @@
 -- title: winbar.lua
 -- abstract: Personal winbar config
 -- author: Kevin Manca
--- date: 23 May 2026, 13:27
+-- date: 12 Jun 2026, 18:13
 -----------------------------------------
 
 local winbar = {
@@ -93,7 +93,7 @@ function winbar.toggle()
       callback = function(cb)
         if vim.g.winbar ~= nil then
           if not vim.api.nvim_win_get_config(0).relative ~= "" and not winbar.to_exclude[vim.bo.filetype] then
-            vim.wo.winbar =  get_filename()
+            vim.wo.winbar = get_filename()
           end
         else
           set_color_groups()

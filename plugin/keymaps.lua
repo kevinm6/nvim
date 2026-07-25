@@ -2,7 +2,7 @@
 -- title: keymaps.lua
 -- abstract: Keymaps for NeoVim
 -- author: Kevin
--- date: 30 May 2026, 10:06
+-- date: 25 Jul 2026, 10:21
 -------------------------------------
 
 local map = require("lib.keys").map
@@ -48,6 +48,10 @@ nmap { "<c-w>/", function()
   end
 end, "Search first occurence cword in other window" }
 
+-- nmap { "<C-h>", "<C-w>h" }
+-- nmap { "<C-j>", "<C-w>j" }
+-- nmap { "<C-k>", "<C-w>k" }
+-- nmap { "<C-l>", "<C-w>l" }
 nmap { "<C-d>", "<C-d>zz" }
 nmap { "<C-u>", "<C-u>zz" }
 
@@ -59,7 +63,9 @@ nmap {
   end,
   "Save buffer",
 }
-
+-- map("n", "<leader>H", function()
+--    vim.cmd.nohlsearch()
+-- end, { desc = "No Highlight" })
 nmap {
   "<leader>c",
   function()
@@ -110,8 +116,8 @@ nmap {
     pcall(vim.cmd.edit, "#")
   end,
 }
-
-
+-- nmap { "<S-l>", function() pcall(vim.cmd.bnext) end }
+-- nmap { "<S-h>", function() pcall(vim.cmd.bNext) end }
 nmap { "<Esc>", "<cmd>nohlsearch<cr>" }
 nmap {
   "Q",
@@ -249,7 +255,7 @@ nmap {
       listed = true,
       width = width,
       win = -1,
-      split = "right",
+      split = "left",
     })
   end,
   "Terminal - vertical",
@@ -284,10 +290,12 @@ nmap {
   "<leader>tl",
   function()
     local has_snacks, snacks = pcall(require, "snacks")
+    local dir = vim.fs.root(0, ".git")
+    local cmd = dir and "lazygit -p " .. dir or "lazygit"
     if has_snacks then
-      snacks.lazygit()
+      snacks.lazygit { cwd = dir }
     else
-      require("lib.terminal").new_terminal_win("lazygit", true, { preset = "lazygit" })
+      require("lib.terminal").new_terminal_win(cmd, true, { preset = "lazygit" })
     end
   end,
   "LazyGit",
@@ -299,18 +307,6 @@ nmap {
     require("lib.terminal").new_terminal_win("htop", true, { preset = "htop" })
   end,
   "Htop",
-}
-
--- builtin undotree
-nmap {
-  "<leader>u",
-  function()
-    if package.loaded["undotree"] == nil then
-      vim.cmd.packadd("nvim.undotree")
-    end
-    require("undotree").open()
-  end,
-  "Undotree"
 }
 
 -- TERMINAL MODE
@@ -329,11 +325,6 @@ map {
   end,
   { expr = true, noremap = true },
 }
-
--- tmap { "<C-h>", [[<C-\><C-n><C-w>h]] }
--- tmap { "<C-j>", [[<C-\><C-n><C-w>j]] }
--- tmap { "<C-k>", [[<C-\><C-n><C-w>k]] }
--- tmap { "<C-l>", [[<C-\><C-n><C-w>l]] }
 
 -- INSERT MODE
 imap { "<M-Left>", "<Esc>bi" }
@@ -448,9 +439,9 @@ imap {
       --   vim.lsp.completion.get()
       -- else
       if vim.bo.omnifunc == "" then
-        -- feedkeys "<C-x><C-n>"
-        feedkeys "<C-j>"
+        feedkeys "<C-x><C-n>"
       else
+        -- feedkeys "<C-j>"
         feedkeys "<C-x><C-o>"
       end
       -- end
@@ -470,8 +461,7 @@ imap {
       --   vim.lsp.completion.get()
       -- else
       if vim.bo.omnifunc == "" then
-        -- feedkeys "<C-x><C-p>"
-        feedkeys "<C-k>"
+        feedkeys "<C-x><C-p>"
       else
         feedkeys "<C-x><C-o>"
       end
@@ -494,7 +484,7 @@ imap {
 -- }
 
 map {
-  { "i", "x" },
+  { "i",                                "x" },
   "<C-l>",
   function()
     if pumvisible() then
@@ -507,7 +497,7 @@ map {
 }
 
 map {
-  { "i", "x" },
+  { "i",                                         "x" },
   "<C-u>",
   function()
     if pumvisible() then
@@ -520,7 +510,7 @@ map {
 }
 
 map {
-  { "i", "s" },
+  { "i",                           "s" },
   "<C-i>",
   function()
     if vim.snippet.active { direction = 1 } then
@@ -536,7 +526,7 @@ map {
 
 -- prev position of snippet $x -> $x-1
 map {
-  { "i", "s" },
+  { "i",                           "s" },
   "<C-S-i>",
   function()
     if vim.snippet.active { direction = -1 } then

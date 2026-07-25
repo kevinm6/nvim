@@ -58,10 +58,10 @@ return {
             name = "JavaSE-21",
             path = "/Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home",
           },
-          {
-            name = "JavaSE-25",
-            path = "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home",
-          },
+          -- {
+          --   name = "JavaSE-25",
+          --   path = "/opt/homebrew/Cellar/Java/JavaVirtualMachines/openjdk.jdk/openjdk.jdk/Contents/Home",
+          -- },
         },
       },
       testsCodeLens = { enabled = true },

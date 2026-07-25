@@ -2,7 +2,7 @@
 -- title: init.lua
 -- abstract: plugin init scheme
 -- author: Kevin
--- date: 30 May 2026, 09:40
+-- date: 25 Jul 2026, 10:09
 -------------------------------------
 
 ---Hooks to be used for some plugins installation or updates that requires more steps
@@ -59,24 +59,6 @@ end
 
 vim.pack.add({
   ---Plugin: load on start
-  ---QoL plugins
-  {
-    src = gh("echasnovski/mini.nvim"),
-    data = {
-      config = function()
-        require "km.coding_helper"
-      end
-    }
-  },
-
-  {
-    src = gh("folke/snacks.nvim"),
-    data = {
-      config = function()
-        require "km.snacks"
-      end
-    },
-  },
 
   ---Treesitter
   {
@@ -90,6 +72,27 @@ vim.pack.add({
   },
 
   ---Plugin: lazy loading
+  ---QoL plugins
+  {
+    src = gh("echasnovski/mini.nvim"),
+    data = {
+      ev = { "VimEnter" },
+      config = function()
+        require "km.coding_helper"
+      end
+    }
+  },
+
+  {
+    src = gh("folke/snacks.nvim"),
+    data = {
+      ev = { "VimEnter" },
+      config = function()
+        require "km.snacks"
+      end
+    },
+  },
+  ---
   ---Completion
   {
     src = gh("saghen/blink.cmp"),
@@ -620,7 +623,8 @@ vim.pack.add({
     src = gh("jmbuhr/otter.nvim"),
     data = {
       -- ev = "VimEnter",
-      ft = { "quarto", "html", "css", "php", "javascript" },
+      -- ft = { "quarto", "html", "css", "php", "javascript" },
+      cmd = { "OtterActivate", "OtterDeactivate" },
       config = function()
         vim.api.nvim_create_autocmd("FileType", {
           pattern = { "html", "css", "php", "javascript" },

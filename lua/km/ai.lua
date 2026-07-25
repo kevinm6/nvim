@@ -2,7 +2,7 @@
 -- title: ai.lua
 -- abstract: AI interops with Neovim
 -- author: Kevin
--- date: 22 May 2026, 20:36
+-- date: 14 Jun 2026, 10:47
 -------------------------------------
 
 require("sidekick").setup {
@@ -11,9 +11,14 @@ require("sidekick").setup {
     win = {
       layout = "left",
       split = {
-        width = 0.36,
+        width = 0.33,
       },
-    }
+    },
+    tools = {
+      antigravity = {
+        cmd = { "agy" },
+      }
+    },
   },
 }
 
