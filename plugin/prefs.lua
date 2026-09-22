@@ -2,11 +2,12 @@
 -- title: prefs.lua
 -- abstract: NeoVim & VimR preferences
 -- author: Kevin
--- date: 29 Apr 2026, 20:42
+-- date: 12 Sep 2026, 11:57
 -------------------------------------
 
 local settings = {
   path = "**",
+  rtp = vim.opt.rtp:prepend(vim.fn.exepath "fzf"),
   -- CURSOR
   guicursor = {
     "n-v-c:block",
